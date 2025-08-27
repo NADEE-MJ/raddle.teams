@@ -1,25 +1,59 @@
 {
-    "id": "tutorial",
-    "name": "Tutorial Puzzle",
     "words": [
         "DOWN",
         "SOUTH",
-        "MOUTH", 
+        "MOUTH",
+        "TONGUE",
+        "SHOE",
+        "SOLE",
+        "SOUL",
         "HEART",
         "EARTH"
     ],
     "clues": {
+        "DOWN": {
+            "backward": "Cardinal direction that's <ans> on a map, most of the time -> <hint>"
+        },
         "SOUTH": {
-            "forward": "CARDINAL DIRECTION THAT'S ____ ON A MAP, MOST OF THE TIME",
-            "backward": "CHANGE THE FIRST LETTER OF ________ TO GET A PART OF THE BODY -> MOUTH"
+            "forward": "Cardinal direction that's <hint> on a map, most of the time",
+            "backward": "Change the first letter of <ans> to get a part of the body -> <hint>"
         },
         "MOUTH": {
-            "forward": "CHANGE THE FIRST LETTER OF SOUTH TO GET A PART OF THE ____",
-            "backward": "ORGAN THAT SITS INSIDE THE ________ -> HEART"
+            "forward": "Change the first letter of <hint> to get a part of the body",
+            "backward": "Organ that sits inside the <ans> -> <hint>"
+        },
+        "TONGUE": {
+            "forward": "Organ that sits inside the <ans>",
+            "backward": "Piece of clothing that often has a <ans> -> <hint>"
+        },
+        "SHOE": {
+            "forward": "Piece of clothing that often has a <hint>",
+            "backward": "Rubber layer on the bottom of a <ans> -> <hint>"
+        },
+        "SOLE": {
+            "forward": "Rubber layer on the bottom of a <hint>",
+            "backward": "Kind of food or music that sounds like <ans> -> <hint>"
+        },
+        "SOUL": {
+            "forward": "Kind of food or music that sounds like <hint>",
+            "backward": "Popular piano duet \"<hint> and <ans>\""
         },
         "HEART": {
-            "forward": "ORGAN THAT SITS INSIDE THE ________",
-            "backward": "MOVE THE FIRST LETTER OF ________ TO THE END TO GET WHERE WE ARE -> EARTH"
+            "forward": "Popular piano duet \"<ans> and <hint>\"",
+            "backward": "Move the first letter of <ans> to the end to get where we are -> <hint>"
+        },
+        "EARTH": {
+            "forward": "Move the first letter of <hint> to the end to get where we are"
         }
+    },
+    "tips": {
+        "DOWN": "MEANS",
+        "SOUTH": "S->M",
+        "MOUTH": "CONTAINS THE",
+        "TONGUE": "IS ON A",
+        "SHOE": "CONTAINS A",
+        "SOLE": "SOUNDS LIKE",
+        "SOUL": "&",
+        "HEART": "H -> END"
     }
 }
