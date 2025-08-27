@@ -38,11 +38,19 @@ next word before earth is 5 letters
 
 Answer is HEART (hint was: Move the first letter of ________ to the end to get where we are → EARTH)
 
+For each word there are two hints that can be used, the first hint for that direction will let the players know which clue to use for that direction, the next hint will fill in the answer (I think this is too powerful and should be limited in some way, if the players get stuck the admin can help them along)
+
+words are all always capitalized and must be exact matches to the answers
+
 ## team based setup
 
-I want to have teams work together to solve these. Initially want it to be a jackbox style setup where everyone joins on their phone with a name of their choice in a lobby and there is an admin page where you control everything, you can see who joins and their names, then the admin selects the number of teams and can start the game, the players have x amount of time to pick their team name and now they are off
+I want to have teams work together to solve these. Initially want it to be a jackbox style setup where everyone joins on their phone with a name of their choice in a lobby and there is an admin page where you control everything, you can see who joins and their names, then the admin selects the number of teams and can start the game, players are randomly assigned to a team, the admin can switch the teams if needed, the players have x amount of time to pick their team name and now they are off
 
-Teams now have to compete to solve x number of puzzles in the fastest amount of time. The way people collaborate with each other is by discussing the clues and potential answers in real-time, using their phones to submit answers and see the progress of their team. You can see based on the current clue your team is trying to solve what answer have been submitted, each member can individually try to solve from the forwards or backwards direction. When one person on a team solves a word it solves it for everyone on the team. The team who finishes all their puzzles first wins.
+Teams now have to compete to solve x number of puzzles in the fastest amount of time. The way people collaborate with each other is by discussing the clues and potential answers in real-time, using their phones to submit answers and see the progress of their team. You can see based on the current clue your team is trying to solve what answer have been submitted, each member can individually try to solve from the forwards or backwards direction. When one person on a team solves a word it solves it for everyone on the team. Teammates should be able to see every guess that every other teammate makes in real time as well as a backlog for the current words being worked on in both the forward and backwards directions. If any clue is solved for a team in the forwards or backwards direction it solves it for everyone on the team, even if they are working on the other direction. The team who finishes all their puzzles first wins.
+
+Submissions are a free for all, whoever submits first gets the credit for solving that part of the puzzle. Need to have some logic for how to handle which requests get handled first for a team.
+
+potentially want to do something where the slowest team per puzzle gets eliminated or maybe everyone solves every puzzle at different times
 
 ## backend
 
@@ -68,8 +76,16 @@ the backend will be written in fastapi and require both a normal webserver and a
     }
 }
 
+there will be one of these json files per puzzle, including a tutorial puzzle
+
 a sqlite database will be used to track player progress, team information, and game state.
 When users join a game, their information will be stored in the database, and their progress will be updated in real-time as they solve puzzles or their teammates solve a puzzle, when a guess is submitted all players on the same team will be notified of the submission.
+
+if players disconnect they can rejoin the team that they were previously on, might need to have the admin involved in this somehow or ideally have this happen automatically
+
+websockets should be based on team name or team id, which will be generated at the start of the game. Only one game can be active at a time for now.
+
+All guesses per team should use optimistic locking to prevent overlapping submissions and race conditions, the first person to solve a clue gets their name added next to the word.
 
 ## frontend
 
@@ -77,4 +93,26 @@ the frontend will be made with react and vite, it should be as bare bones as pos
 
 ## admin page
 
-There should be an admin page where you can control the flow of the game, including starting and stopping the game, viewing player progress, and managing teams.
+There should be an admin page where you can control the flow of the game, including starting and stopping the game, viewing player progress, and managing teams. There is only one game going at a time, if people join late the admin will sort them into an existing team. Admins should be able to see exactly what a team has in terms of progress (how far they are, how many hints used, etc.)
+
+
+## building strategy
+
+Phase 1: Core Mechanics
+
+Basic lobby + team assignment
+Single puzzle solving with optimistic locking
+WebSocket real-time updates
+
+Phase 2: Competition Features
+
+Multiple puzzles + progress tracking
+Admin controls + team management
+Win conditions
+
+Phase 3: Polish
+
+Hint system + elimination mechanics
+Reconnection handling
+Enhanced admin dashboard
+
