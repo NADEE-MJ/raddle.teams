@@ -38,9 +38,11 @@ next word before earth is 5 letters
 
 Answer is HEART (hint was: Move the first letter of ________ to the end to get where we are → EARTH)
 
-For each word there are two hints that can be used, the first hint for that direction will let the players know which clue to use for that direction, the next hint will fill in the answer (I think this is too powerful and should be limited in some way, if the players get stuck the admin can help them along)
+For each word there are two hints that can be used, the first hint for that direction will let the players know which clue to use for that direction, the next hint will fill in the answer (I think this is too powerful and should be limited in some way, if the players get stuck the admin can help them along) (hints costing a time penalty would be good but it has to be significant)
 
 words are all always capitalized and must be exact matches to the answers
+
+teams will complete all the puzzles assigned to then until they are done they do not wait until the next team is done
 
 ## team based setup
 
@@ -85,7 +87,11 @@ if players disconnect they can rejoin the team that they were previously on, mig
 
 websockets should be based on team name or team id, which will be generated at the start of the game. Only one game can be active at a time for now.
 
-All guesses per team should use optimistic locking to prevent overlapping submissions and race conditions, the first person to solve a clue gets their name added next to the word.
+All guesses per team should use optimistic locking to prevent overlapping submissions and race conditions, the first person to solve a clue gets their name added next to the word. There should be some sort of lock for when the correct answer is submitted so that no other guesses are processed until the lock is released.
+- Lock team submissions for that specific word
+- Process the correct answer
+- Broadcast to all team members
+- Release lock for next word
 
 ## frontend
 
@@ -94,7 +100,6 @@ the frontend will be made with react and vite, it should be as bare bones as pos
 ## admin page
 
 There should be an admin page where you can control the flow of the game, including starting and stopping the game, viewing player progress, and managing teams. There is only one game going at a time, if people join late the admin will sort them into an existing team. Admins should be able to see exactly what a team has in terms of progress (how far they are, how many hints used, etc.)
-
 
 ## building strategy
 
@@ -116,3 +121,10 @@ Hint system + elimination mechanics
 Reconnection handling
 Enhanced admin dashboard
 
+## future ideas
+
+- Introduce elimination mechanics for teams that fall too far behind.
+- Enhance the admin dashboard with more detailed analytics and controls.
+- allow early finishers to spectate other teams.
+- Add more puzzles and variety in word chains.
+- add support for multi word answers (answers with spaces i.e. "NEW YORK")
