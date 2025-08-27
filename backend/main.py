@@ -199,7 +199,8 @@ async def handle_guess(player_id: str, guess: str, direction: str):
 # Mount static files for frontend (when built)
 import os
 if os.path.exists("frontend/dist"):
-    app.mount("/", StaticFiles(directory="frontend/dist", html=True), name="static")
+    # Serve static assets first
+    app.mount("/assets", StaticFiles(directory="frontend/dist/assets"), name="assets")
 
 
 @app.get("/")
@@ -207,3 +208,24 @@ async def read_index():
     if os.path.exists("frontend/dist/index.html"):
         return FileResponse("frontend/dist/index.html")
     return {"message": "Raddle Teams API", "status": "running", "phase": "1"}
+
+
+@app.get("/admin")
+async def read_admin():
+    if os.path.exists("frontend/dist/index.html"):
+        return FileResponse("frontend/dist/index.html")
+    return {"message": "Admin page not available"}
+
+
+# Catch-all route for SPA routing
+@app.get("/{full_path:path}")
+async def catch_all(full_path: str):
+    # If it's an API route, let it 404
+    if full_path.startswith("api/"):
+        raise HTTPException(status_code=404, detail="Not Found")
+    
+    # For other routes, serve the React app
+    if os.path.exists("frontend/dist/index.html"):
+        return FileResponse("frontend/dist/index.html")
+    
+    raise HTTPException(status_code=404, detail="Not Found")
