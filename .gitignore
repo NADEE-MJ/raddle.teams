@@ -205,3 +205,21 @@ cython_debug/
 marimo/_static/
 marimo/_lsp/
 __marimo__/
+
+# Frontend dependencies and build
+frontend/node_modules/
+frontend/dist/
+frontend/.vite/
+
+# Database
+*.db
+*.db-journal
+
+# Environment files
+.env.local
+.env.development
+.env.production
+
+# OS files
+.DS_Store
+Thumbs.db

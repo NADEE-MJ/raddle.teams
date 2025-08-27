@@ -1,0 +1,25 @@
+{
+    "id": "tutorial",
+    "name": "Tutorial Puzzle",
+    "words": [
+        "DOWN",
+        "SOUTH",
+        "MOUTH", 
+        "HEART",
+        "EARTH"
+    ],
+    "clues": {
+        "SOUTH": {
+            "forward": "CARDINAL DIRECTION THAT'S ____ ON A MAP, MOST OF THE TIME",
+            "backward": "CHANGE THE FIRST LETTER OF ________ TO GET A PART OF THE BODY -> MOUTH"
+        },
+        "MOUTH": {
+            "forward": "CHANGE THE FIRST LETTER OF SOUTH TO GET A PART OF THE ____",
+            "backward": "ORGAN THAT SITS INSIDE THE ________ -> HEART"
+        },
+        "HEART": {
+            "forward": "ORGAN THAT SITS INSIDE THE ________",
+            "backward": "MOVE THE FIRST LETTER OF ________ TO THE END TO GET WHERE WE ARE -> EARTH"
+        }
+    }
+}
