@@ -56,6 +56,8 @@ potentially want to do something where the slowest team per puzzle gets eliminat
 
 ## backend
 
+use poetry for dependency management
+
 the backend will be written in fastapi and require both a normal webserver and a websocket server to handle real-time communication between clients. The games will be stored as json files, here is an example of the structure, (not sure if this makes sense right now but will stick with it):
 {
     "words": [
