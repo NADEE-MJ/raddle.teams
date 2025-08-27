@@ -20,7 +20,7 @@ class GuessDirection(str, Enum):
 # Base models that can be used for both DB and API
 class PlayerBase(SQLModel):
     name: str
-    team_id: Optional[str] = None
+    team_id: Optional[str] = Field(default=None, foreign_key="teams.id")
     connected: bool = True
     joined_at: datetime = Field(default_factory=datetime.utcnow)
 
@@ -29,9 +29,6 @@ class Player(PlayerBase, table=True):
     __tablename__ = "players"
     
     id: Optional[str] = Field(default=None, primary_key=True)
-    
-    # Relationships
-    team: Optional["Team"] = Relationship(back_populates="players")
 
 
 class PlayerCreate(PlayerBase):
@@ -44,7 +41,7 @@ class PlayerResponse(PlayerBase):
 
 class TeamBase(SQLModel):
     name: str
-    game_id: str
+    game_id: str = Field(foreign_key="games.id")
     score: int = 0
     current_word_position: int = 0
     hints_used: int = 0
@@ -55,10 +52,6 @@ class Team(TeamBase, table=True):
     __tablename__ = "teams"
     
     id: Optional[str] = Field(default=None, primary_key=True)
-    
-    # Relationships
-    players: List[Player] = Relationship(back_populates="team")
-    game: Optional["Game"] = Relationship(back_populates="teams")
 
 
 class TeamCreate(TeamBase):
@@ -83,9 +76,6 @@ class Game(GameBase, table=True):
     __tablename__ = "games"
     
     id: Optional[str] = Field(default=None, primary_key=True)
-    
-    # Relationships
-    teams: List[Team] = Relationship(back_populates="game")
 
 
 class GameCreate(GameBase):

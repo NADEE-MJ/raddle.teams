@@ -1,11 +1,10 @@
-from sqlmodel import create_engine, SQLModel
+from sqlmodel import SQLModel
 from sqlalchemy.ext.asyncio import create_async_engine, AsyncSession
 from sqlalchemy.orm import sessionmaker
 from contextlib import asynccontextmanager
-import aiosqlite
 
 # Import all models to ensure they're registered with SQLModel
-from backend.db_models import Player, Team, Game, Guess
+from backend.db_models import Player, Team, Game, Guess  # noqa: F401
 
 DATABASE_URL = "sqlite+aiosqlite:///./raddle_teams.db"
 
