@@ -29,7 +29,7 @@ class ConnectionManager:
         for player_id, connection in self.active_connections.items():
             try:
                 await connection.send_text(json.dumps(message))
-            except:
+            except Exception:
                 disconnected.append(player_id)
         
         # Clean up disconnected players
@@ -47,7 +47,7 @@ class ConnectionManager:
             if self.player_teams.get(pid) == team_id:
                 try:
                     await connection.send_text(json.dumps(message))
-                except:
+                except Exception:
                     disconnected.append(pid)
         
         # Clean up disconnected players

@@ -1,17 +1,66 @@
+import json
+import os
+import uuid
+from contextlib import asynccontextmanager
+from datetime import datetime
+from typing import Optional, Dict, Any
+
 from fastapi import FastAPI, WebSocket, WebSocketDisconnect, HTTPException, Form
 from fastapi.middleware.cors import CORSMiddleware
 from fastapi.staticfiles import StaticFiles
 from fastapi.responses import FileResponse
-from contextlib import asynccontextmanager
-import json
-import asyncio
-from typing import Optional
-import uuid
-from datetime import datetime
 
 from backend.database import init_db
-from backend.db_models import Game, GameState, GuessDirection, Team, Player
+from backend.db_models import GameState, GuessDirection
 from backend.websocket_manager import ConnectionManager
+
+
+# Simple data classes for Phase 1 (not using SQLModel tables)
+class SimpleGame:
+    def __init__(self, id: str, state: GameState, num_teams: int, current_puzzle: str = None):
+        self.id = id
+        self.state = state
+        self.num_teams = num_teams
+        self.current_puzzle = current_puzzle
+        self.created_at = datetime.utcnow()
+
+class SimpleTeam:
+    def __init__(self, id: str, name: str, game_id: str):
+        self.id = id
+        self.name = name
+        self.game_id = game_id
+
+
+# Global game state
+current_game: Optional[SimpleGame] = None
+current_puzzle: Optional[Dict[str, Any]] = None
+
+
+def load_puzzle(puzzle_name: str = "tutorial") -> Dict[str, Any]:
+    """Load a puzzle from the puzzles directory"""
+    puzzle_path = f"puzzles/{puzzle_name}.json"
+    if os.path.exists(puzzle_path):
+        with open(puzzle_path, 'r') as f:
+            return json.load(f)
+    return {
+        "id": "tutorial",
+        "name": "Tutorial Puzzle", 
+        "words": ["DOWN", "SOUTH", "MOUTH", "HEART", "EARTH"],
+        "clues": {
+            "SOUTH": {
+                "forward": "CARDINAL DIRECTION THAT'S ____ ON A MAP, MOST OF THE TIME",
+                "backward": "CHANGE THE FIRST LETTER OF ________ TO GET A PART OF THE BODY -> MOUTH"
+            },
+            "MOUTH": {
+                "forward": "CHANGE THE FIRST LETTER OF SOUTH TO GET A PART OF THE ____",
+                "backward": "ORGAN THAT SITS INSIDE THE ________ -> HEART"
+            },
+            "HEART": {
+                "forward": "ORGAN THAT SITS INSIDE THE ________",
+                "backward": "MOVE THE FIRST LETTER OF ________ TO THE END TO GET WHERE WE ARE -> EARTH"
+            }
+        }
+    }
 
 
 @asynccontextmanager
@@ -36,7 +85,8 @@ app.add_middleware(
 manager = ConnectionManager()
 
 # Global game state
-current_game: Optional[Game] = None
+current_game: Optional[SimpleGame] = None
+current_puzzle: Optional[Dict[str, Any]] = None
 
 
 # API Routes
@@ -68,28 +118,32 @@ async def join_game(player_name: str = Form(...)):
 @app.post("/api/admin/start-game")
 async def start_game(num_teams: int = 2):
     """Admin endpoint to start the game"""
-    global current_game
+    global current_game, current_puzzle
     
     if current_game and current_game.state != GameState.LOBBY:
         raise HTTPException(status_code=400, detail="Game already in progress")
     
+    # Load the tutorial puzzle for Phase 1
+    current_puzzle = load_puzzle("tutorial")
+    
     # Create game instance
     game_id = str(uuid.uuid4())
-    current_game = Game(
+    current_game = SimpleGame(
         id=game_id,
         state=GameState.LOBBY,
         num_teams=num_teams,
-        created_at=datetime.utcnow()
+        current_puzzle=current_puzzle["id"]
     )
     
     # Notify all connected clients
     await manager.broadcast({
         "type": "game_started",
         "game_id": game_id,
-        "num_teams": num_teams
+        "num_teams": num_teams,
+        "puzzle": current_puzzle
     })
     
-    return {"game_id": game_id, "status": "started"}
+    return {"game_id": game_id, "status": "started", "puzzle": current_puzzle["name"]}
 
 
 @app.post("/api/admin/assign-teams")
@@ -109,35 +163,40 @@ async def assign_teams():
     # Simple random assignment for demo
     teams = []
     for i in range(current_game.num_teams):
-        teams.append(Team(
+        teams.append(SimpleTeam(
             id=str(uuid.uuid4()),
             name=f"Team {i+1}",
             game_id=current_game.id
         ))
     
     # Assign players to teams round-robin  
+    team_assignments = []
     for idx, player_id in enumerate(connected_players):
         team_idx = idx % len(teams)
-        # Note: In SQLModel, we'd handle the relationship properly
-        # For now, this is a simplified implementation
+        team = teams[team_idx]
+        # Assign player to team in the connection manager
+        manager.assign_player_to_team(player_id, team.id)
+        team_assignments.append({"player_id": player_id, "team_id": team.id})
     
     # Update game state
     current_game.state = GameState.TEAM_ASSIGNMENT
     
-    # Notify all clients
+    # Notify all clients with team assignments
     await manager.broadcast({
         "type": "teams_assigned", 
-        "teams": [{"id": t.id, "name": t.name, "players": []} for t in teams]
+        "teams": [{"id": t.id, "name": t.name, "players": []} for t in teams],
+        "assignments": team_assignments,
+        "puzzle": current_puzzle
     })
     
-    return {"teams": teams}
+    return {"teams": teams, "assignments": team_assignments}
 
 
 @app.get("/api/admin/status")
 async def get_admin_status():
     """Get current game status for admin"""
     if not current_game:
-        return {"game": None, "players": [], "teams": []}
+        return {"game": None, "players": [], "teams": [], "puzzle": None}
     
     connected_players = await manager.get_connected_players()
     
@@ -145,10 +204,12 @@ async def get_admin_status():
         "game": {
             "id": current_game.id,
             "state": current_game.state.value,
-            "num_teams": current_game.num_teams
+            "num_teams": current_game.num_teams,
+            "current_puzzle": current_game.current_puzzle
         },
         "players": connected_players,
-        "teams": []  # Simplified for demo
+        "teams": [],  # Simplified for demo
+        "puzzle": current_puzzle
     }
 
 
@@ -179,40 +240,43 @@ async def websocket_endpoint(websocket: WebSocket, player_id: str):
 
 async def handle_guess(player_id: str, guess: str, direction: GuessDirection):
     """Handle a player's guess submission"""
-    # Basic implementation for Phase 1
-    # In a real implementation, this would check against the puzzle
+    global current_puzzle
+    
+    if not current_puzzle:
+        return
+    
+    # Basic guess checking for Phase 1
+    is_correct = False
+    guess_upper = guess.upper().strip()
+    
+    # Check if the guess matches any word in the puzzle
+    if guess_upper in current_puzzle["words"]:
+        is_correct = True
+    
     guess_result = {
         "type": "guess_result",
         "player_id": player_id,
-        "guess": guess,
+        "guess": guess_upper,
         "direction": direction.value,
-        "correct": False,  # Placeholder
+        "correct": is_correct,
         "timestamp": datetime.utcnow().isoformat()
     }
     
     # Broadcast to team members
     await manager.broadcast_to_team(player_id, guess_result)
-
-
-async def handle_guess(player_id: str, guess: str, direction: str):
-    """Handle a player's guess submission"""
-    # Basic implementation for Phase 1
-    # In a real implementation, this would check against the puzzle
-    guess_result = {
-        "type": "guess_result",
-        "player_id": player_id,
-        "guess": guess,
-        "direction": direction,
-        "correct": False,  # Placeholder
-        "timestamp": datetime.utcnow().isoformat()
-    }
     
-    # Broadcast to team members
-    await manager.broadcast_to_team(player_id, guess_result)
+    # If correct, also broadcast current puzzle state
+    if is_correct:
+        await manager.broadcast_to_team(player_id, {
+            "type": "word_solved",
+            "word": guess_upper,
+            "player_id": player_id,
+            "direction": direction.value,
+            "timestamp": datetime.utcnow().isoformat()
+        })
 
 
 # Mount static files for frontend (when built)
-import os
 if os.path.exists("frontend/dist"):
     # Serve static assets first
     app.mount("/assets", StaticFiles(directory="frontend/dist/assets"), name="assets")
