@@ -35,14 +35,31 @@ class PuzzleLoader:
     def get_word_chain(self, puzzle_name: str) -> List[str]:
         """Get the word chain for a puzzle."""
         puzzle = self.load_puzzle(puzzle_name)
-        return puzzle["words"]
+        return [item["word"] for item in puzzle["ladder"]]
 
     def get_clue(self, puzzle_name: str, word: str, direction: str) -> Optional[str]:
         """Get a clue for a specific word and direction."""
         puzzle = self.load_puzzle(puzzle_name)
-        clues = puzzle.get("clues", {})
-        word_clues = clues.get(word, {})
-        return word_clues.get(direction)
+        ladder = puzzle.get("ladder", [])
+        
+        # Find the word in the ladder
+        word_index = None
+        for i, item in enumerate(ladder):
+            if item["word"].upper() == word.upper():
+                word_index = i
+                break
+        
+        if word_index is None:
+            return None
+            
+        # For forward direction, use the current word's clue (to get to next word)
+        # For backward direction, use the previous word's clue (to get to current word)
+        if direction == "forward" and word_index < len(ladder) - 1:
+            return ladder[word_index]["clue"]
+        elif direction == "backward" and word_index > 0:
+            return ladder[word_index - 1]["clue"]
+        
+        return None
 
     def get_tip(self, puzzle_name: str, word: str) -> Optional[str]:
         """Get a tip for a specific word."""

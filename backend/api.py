@@ -22,6 +22,7 @@ from .schemas import (
     GameResponse,
     GuessCreate,
     GuessResponse,
+    JoinTeamRequest,
     PlayerCreate,
     PlayerResponse,
     TeamCreate,
@@ -145,12 +146,12 @@ async def get_teams(session: Session = Depends(get_session)):
 
 @router.post("/teams/{team_id}/join")
 async def join_team(
-    team_id: int, player_session_id: str, session: Session = Depends(get_session)
+    team_id: int, join_request: JoinTeamRequest, session: Session = Depends(get_session)
 ):
     """Add a player to a team."""
     # Find player by session_id
     player = session.exec(
-        select(Player).where(Player.session_id == player_session_id)
+        select(Player).where(Player.session_id == join_request.player_session_id)
     ).first()
 
     if not player:

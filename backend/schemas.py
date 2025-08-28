@@ -56,6 +56,12 @@ class GameResponse(BaseModel):
     finished_at: Optional[datetime]
 
 
+class JoinTeamRequest(BaseModel):
+    """Schema for joining a team."""
+
+    player_session_id: str
+
+
 class GuessCreate(BaseModel):
     """Schema for creating a guess."""
 
