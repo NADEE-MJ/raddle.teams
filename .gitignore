@@ -3,3 +3,9 @@ node_modules/
 
 # build files
 static/
+
+# log files
+*.log
+
+# database files
+*.db
