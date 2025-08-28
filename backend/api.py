@@ -27,6 +27,7 @@ from .schemas import (
     TeamCreate,
     TeamResponse,
 )
+from .websocket import notify_game_state_change, notify_team_guess, notify_team_progress
 
 router = APIRouter()
 
@@ -120,7 +121,7 @@ async def create_team(team_data: TeamCreate, session: Session = Depends(get_sess
         current_word_index=len(
             game_manager.puzzle_loader.get_word_chain(current_game.puzzle_name)
         )
-        // 2,
+        // 2,  # Start in middle - teams can work forward or backward
     )
     session.add(team)
     session.commit()
@@ -225,6 +226,29 @@ async def submit_guess(
         session.commit()
         session.refresh(guess)
 
+        # Notify team members of the new guess via WebSocket
+        await notify_team_guess(
+            team.id,
+            {
+                "id": guess.id,
+                "player_name": player.name,
+                "word_index": guess.word_index,
+                "direction": guess.direction,
+                "guess": guess.guess,
+                "is_correct": guess.is_correct,
+                "submitted_at": guess.submitted_at.isoformat(),
+            },
+        )
+
+        # If correct, also notify about progress update
+        if is_correct:
+            progress_data = {
+                "team_id": team.id,
+                "current_word_index": team.current_word_index,
+                "completed": team.completed_at is not None,
+            }
+            await notify_team_progress(team.id, progress_data)
+
         return guess
 
 
@@ -298,5 +322,8 @@ async def start_game(game_id: int, session: Session = Depends(get_session)):
     game.started_at = datetime.utcnow()
     session.add(game)
     session.commit()
+
+    # Notify all players that the game has started
+    await notify_game_state_change(GameState.ACTIVE)
 
     return {"message": "Game started successfully"}

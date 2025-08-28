@@ -1,4 +1,3 @@
-import React from 'react'
 import { Routes, Route } from 'react-router-dom'
 import { PlayerProvider } from './context/PlayerContext'
 import { GameProvider } from './context/GameContext'
