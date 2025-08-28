@@ -1,4 +1,4 @@
-import { useCallback, useEffect, useState } from "react";
+import { useCallback, useEffect, useMemo, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { usePlayer } from "../context/PlayerContext";
 import { useGame } from "../context/GameContext";
@@ -17,16 +17,6 @@ export default function GamePage() {
   const { game, teamProgress, setTeamProgress } = useGame();
   const navigate = useNavigate();
 
-  const { isConnected } = useWebSocket(
-    player?.team_id || null,
-    player?.session_id || null,
-    {
-      onMessage: handleWebSocketMessage,
-      onConnect: () => console.log("Connected to team chat"),
-      onDisconnect: () => console.log("Disconnected from team chat"),
-    },
-  );
-
   const loadTeamProgress = useCallback(async () => {
     if (!player?.team_id) return;
 
@@ -40,21 +30,7 @@ export default function GamePage() {
     }
   }, [player?.team_id, setTeamProgress]);
 
-  useEffect(() => {
-    if (!player || !player.team_id) {
-      navigate("/lobby");
-      return;
-    }
-
-    if (!game || game.state !== "active") {
-      navigate("/lobby");
-      return;
-    }
-
-    loadTeamProgress();
-  }, [player, game, navigate, loadTeamProgress]);
-
-  function handleWebSocketMessage(message: WebSocketMessage) {
+  const handleWebSocketMessage = useCallback((message: WebSocketMessage) => {
     switch (message.type) {
       case "new_guess":
         if (
@@ -96,7 +72,36 @@ export default function GamePage() {
         // Handle team chat messages if needed
         break;
     }
-  }
+  }, [loadTeamProgress, setTeamProgress]);
+
+  const onConnect = useCallback(() => console.log("Connected to team chat"), []);
+  const onDisconnect = useCallback(() => console.log("Disconnected from team chat"), []);
+  
+  const webSocketOptions = useMemo(() => ({
+    onMessage: handleWebSocketMessage,
+    onConnect,
+    onDisconnect,
+  }), [handleWebSocketMessage, onConnect, onDisconnect]);
+
+  const { isConnected } = useWebSocket(
+    player?.team_id || null,
+    player?.session_id || null,
+    webSocketOptions,
+  );
+
+  useEffect(() => {
+    if (!player || !player.team_id) {
+      navigate("/lobby");
+      return;
+    }
+
+    if (!game || game.state !== "active") {
+      navigate("/lobby");
+      return;
+    }
+
+    loadTeamProgress();
+  }, [player, game, navigate, loadTeamProgress]);
 
   const handleSubmitGuess = async (e: React.FormEvent) => {
     e.preventDefault();

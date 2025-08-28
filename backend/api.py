@@ -22,6 +22,7 @@ from .schemas import (
     GameResponse,
     GuessCreate,
     GuessResponse,
+    JoinTeamRequest,
     PlayerCreate,
     PlayerResponse,
     TeamCreate,
@@ -145,12 +146,12 @@ async def get_teams(session: Session = Depends(get_session)):
 
 @router.post("/teams/{team_id}/join")
 async def join_team(
-    team_id: int, player_session_id: str, session: Session = Depends(get_session)
+    team_id: int, join_request: JoinTeamRequest, session: Session = Depends(get_session)
 ):
     """Add a player to a team."""
     # Find player by session_id
     player = session.exec(
-        select(Player).where(Player.session_id == player_session_id)
+        select(Player).where(Player.session_id == join_request.player_session_id)
     ).first()
 
     if not player:
@@ -165,6 +166,10 @@ async def join_team(
     player.team_id = team_id
     session.add(player)
     session.commit()
+
+    # Notify the player via WebSocket if they're connected
+    from .websocket import notify_player_team_assignment
+    await notify_player_team_assignment(player.session_id, team_id, team.name)
 
     return {"message": f"Player {player.name} joined team {team.name}"}
 

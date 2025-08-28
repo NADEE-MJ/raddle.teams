@@ -28,6 +28,12 @@ if os.path.exists(static_path):
     app.mount("/static", StaticFiles(directory="static"), name="static")
 
 
+@app.get("/api/health")
+async def health_check():
+    """Health check endpoint."""
+    return {"status": "healthy", "message": "Raddle Teams API is running"}
+
+
 # Serve the frontend index.html for all routes not starting with /api or /ws
 @app.get("/{full_path:path}")
 async def serve_frontend(full_path: str):
@@ -55,9 +61,3 @@ async def serve_frontend(full_path: str):
     return {
         "message": "Frontend not built yet. Run 'npm run build' to build the frontend."
     }
-
-
-@app.get("/api/health")
-async def health_check():
-    """Health check endpoint."""
-    return {"status": "healthy", "message": "Raddle Teams API is running"}

@@ -22,7 +22,8 @@ export default function LobbyPage() {
         const currentGame = await apiService.getCurrentGame();
         setGame(currentGame);
 
-        if (currentGame.state === "active") {
+        // Only redirect to game if player is assigned to a team AND game is active
+        if (currentGame.state === "active" && player?.team_id) {
           navigate("/game");
           return;
         }
@@ -40,7 +41,7 @@ export default function LobbyPage() {
     } finally {
       setLoading(false);
     }
-  }, [setGame, navigate]);
+  }, [setGame, navigate, player]);
 
   useEffect(() => {
     if (!player) {
