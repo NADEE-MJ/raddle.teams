@@ -1,7 +1,3 @@
-"""
-WebSocket handlers for real-time communication.
-"""
-
 import json
 from typing import Dict, List
 
@@ -146,7 +142,9 @@ async def notify_game_state_change(state: GameState):
     await manager.broadcast_to_all({"type": "game_state_change", "state": state.value})
 
 
-async def notify_player_team_assignment(player_session_id: str, team_id: int, team_name: str):
+async def notify_player_team_assignment(
+    player_session_id: str, team_id: int, team_name: str
+):
     """Notify a specific player that they've been assigned to a team."""
     # Find the player's connection across all teams
     for team_connections in manager.team_connections.values():
@@ -155,11 +153,15 @@ async def notify_player_team_assignment(player_session_id: str, team_id: int, te
                 info = manager.connection_info[connection]
                 if info["player_session_id"] == player_session_id:
                     try:
-                        await connection.send_text(json.dumps({
-                            "type": "team_assignment",
-                            "team_id": team_id,
-                            "team_name": team_name
-                        }))
+                        await connection.send_text(
+                            json.dumps(
+                                {
+                                    "type": "team_assignment",
+                                    "team_id": team_id,
+                                    "team_name": team_name,
+                                }
+                            )
+                        )
                     except Exception:
                         pass  # Connection might be closed
                     return

@@ -1,7 +1,3 @@
-"""
-Pydantic schemas for API request/response models.
-"""
-
 from datetime import datetime
 from typing import Optional
 

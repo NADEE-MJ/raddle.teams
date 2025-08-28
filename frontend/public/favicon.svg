@@ -1,0 +1,19 @@
+<svg width="32" height="32" viewBox="0 0 32 32" fill="none" xmlns="http://www.w3.org/2000/svg">
+  <!-- Orange background -->
+  <rect width="32" height="32" fill="#FF8C00" rx="4"/>
+  
+  <!-- Ladder sides -->
+  <rect x="6" y="2" width="3" height="28" fill="#4A2C17" rx="1"/>
+  <rect x="23" y="2" width="3" height="28" fill="#4A2C17" rx="1"/>
+
+  <!-- Ladder rungs -->
+  <rect x="6" y="5" width="20" height="2" fill="#6B3E1A" rx="1"/>
+  <rect x="6" y="10" width="20" height="2" fill="#6B3E1A" rx="1"/>
+  <rect x="6" y="15" width="20" height="2" fill="#6B3E1A" rx="1"/>
+  <rect x="6" y="20" width="20" height="2" fill="#6B3E1A" rx="1"/>
+  <rect x="6" y="25" width="20" height="2" fill="#6B3E1A" rx="1"/>
+
+  <!-- Shadow/depth effect -->
+  <rect x="7" y="3" width="1" height="26" fill="#2F1A0E" opacity="0.8"/>
+  <rect x="24" y="3" width="1" height="26" fill="#A0522D" opacity="0.6"/>
+</svg>

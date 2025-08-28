@@ -1,7 +1,3 @@
-"""
-Game logic for handling puzzles, teams, and game state.
-"""
-
 import json
 import os
 from threading import Lock
@@ -11,14 +7,11 @@ from .database import Game, Team
 
 
 class PuzzleLoader:
-    """Handles loading and parsing puzzle JSON files."""
-
     def __init__(self, puzzles_dir: str = "puzzles"):
         self.puzzles_dir = puzzles_dir
         self._puzzle_cache: Dict[str, dict] = {}
 
     def load_puzzle(self, puzzle_name: str) -> dict:
-        """Load a puzzle from JSON file."""
         if puzzle_name in self._puzzle_cache:
             return self._puzzle_cache[puzzle_name]
 
@@ -41,24 +34,24 @@ class PuzzleLoader:
         """Get a clue for a specific word and direction."""
         puzzle = self.load_puzzle(puzzle_name)
         ladder = puzzle.get("ladder", [])
-        
+
         # Find the word in the ladder
         word_index = None
         for i, item in enumerate(ladder):
             if item["word"].upper() == word.upper():
                 word_index = i
                 break
-        
+
         if word_index is None:
             return None
-            
+
         # For forward direction, use the current word's clue (to get to next word)
         # For backward direction, use the previous word's clue (to get to current word)
         if direction == "forward" and word_index < len(ladder) - 1:
             return ladder[word_index]["clue"]
         elif direction == "backward" and word_index > 0:
             return ladder[word_index - 1]["clue"]
-        
+
         return None
 
     def get_tip(self, puzzle_name: str, word: str) -> Optional[str]:
@@ -77,7 +70,6 @@ class GameManager:
         self.current_game: Optional[Game] = None
 
     def get_team_lock(self, team_id: int) -> Lock:
-        """Get or create a lock for a team."""
         if team_id not in self.team_locks:
             self.team_locks[team_id] = Lock()
         return self.team_locks[team_id]
@@ -85,7 +77,6 @@ class GameManager:
     def check_answer(
         self, puzzle_name: str, word_index: int, guess: str, direction: str
     ) -> bool:
-        """Check if a guess is correct."""
         try:
             words = self.puzzle_loader.get_word_chain(puzzle_name)
 
@@ -131,7 +122,6 @@ class GameManager:
         """Check if a team has completed the puzzle."""
         try:
             words = self.puzzle_loader.get_word_chain(puzzle_name)
-            # Team completes when they reach either end of the chain
             return (
                 team.current_word_index == 0
                 or team.current_word_index == len(words) - 1
@@ -150,5 +140,4 @@ class GameManager:
         return True
 
 
-# Global game manager instance
 game_manager = GameManager()

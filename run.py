@@ -59,7 +59,3 @@ def run_server():
 if __name__ == "__main__":
     file_logger.info("Starting application via run.py")
     run_server()
-
-    # from database import print_all_data
-
-    # print_all_data()

@@ -1,7 +1,3 @@
-"""
-API routes for the Raddle Teams game.
-"""
-
 from datetime import datetime
 from typing import List
 
@@ -169,6 +165,7 @@ async def join_team(
 
     # Notify the player via WebSocket if they're connected
     from .websocket import notify_player_team_assignment
+
     await notify_player_team_assignment(player.session_id, team_id, team.name)
 
     return {"message": f"Player {player.name} joined team {team.name}"}
