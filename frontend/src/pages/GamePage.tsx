@@ -1,10 +1,10 @@
-import { useEffect, useState } from 'react'
+import { useCallback, useEffect, useState } from 'react'
 import { useNavigate } from 'react-router-dom'
 import { usePlayer } from '../context/PlayerContext'
 import { useGame } from '../context/GameContext'
 import { useWebSocket } from '../hooks/useWebSocket'
 import { apiService } from '../services/api'
-import { Guess, WebSocketMessage } from '../types'
+import { Guess, TeamProgress, WebSocketMessage } from '../types'
 
 export default function GamePage() {
     const [guess, setGuess] = useState('')
@@ -27,6 +27,19 @@ export default function GamePage() {
         }
     )
 
+    const loadTeamProgress = useCallback(async () => {
+        if (!player?.team_id) return
+
+        try {
+            const progress = await apiService.getTeamProgress(player.team_id)
+            setTeamProgress(progress)
+            setRecentGuesses(progress.recent_guesses || [])
+        } catch (err) {
+            setError('Failed to load team progress')
+            console.error('Error loading team progress:', err)
+        }
+    }, [player?.team_id, setTeamProgress])
+
     useEffect(() => {
         if (!player || !player.team_id) {
             navigate('/lobby')
@@ -39,34 +52,29 @@ export default function GamePage() {
         }
 
         loadTeamProgress()
-    }, [player, game, navigate])
-
-    const loadTeamProgress = async () => {
-        if (!player?.team_id) return
-
-        try {
-            const progress = await apiService.getTeamProgress(player.team_id)
-            setTeamProgress(progress)
-            setRecentGuesses(progress.recent_guesses || [])
-        } catch (err) {
-            setError('Failed to load team progress')
-            console.error('Error loading team progress:', err)
-        }
-    }
+    }, [player, game, navigate, loadTeamProgress])
 
     function handleWebSocketMessage(message: WebSocketMessage) {
         switch (message.type) {
             case 'new_guess':
-                if (message.data) {
-                    setRecentGuesses(prev => [message.data, ...prev.slice(0, 9)])
-                    if (message.data.is_correct) {
-                        loadTeamProgress() // Reload progress on correct guess
+                if (message.data && typeof message.data === 'object' && message.data !== null) {
+                    // Type guard to ensure message.data has the right properties for Guess
+                    const guessData = message.data as Partial<Guess>
+                    if (guessData.id && guessData.team_id && guessData.player_id) {
+                        setRecentGuesses(prev => [guessData as Guess, ...prev.slice(0, 9)])
+                        if (guessData.is_correct) {
+                            loadTeamProgress() // Reload progress on correct guess
+                        }
                     }
                 }
                 break
             case 'progress_update':
-                if (message.data) {
-                    setTeamProgress(message.data)
+                if (message.data && typeof message.data === 'object' && message.data !== null) {
+                    // Type guard to ensure message.data has the right properties for TeamProgress
+                    const progressData = message.data as Partial<TeamProgress>
+                    if (progressData.team_id && progressData.team_name && progressData.current_word !== undefined) {
+                        setTeamProgress(progressData as TeamProgress)
+                    }
                 }
                 break
             case 'team_message':

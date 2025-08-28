@@ -29,7 +29,7 @@ export default [
     },
     settings: {
       react: {
-        version: "18.2",
+        version: "19.2",
       },
     },
     plugins: {

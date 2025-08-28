@@ -36,6 +36,7 @@ export function GameProvider({ children }: { children: React.ReactNode }) {
     )
 }
 
+// eslint-disable-next-line react-refresh/only-export-components
 export function useGame() {
     const context = useContext(GameContext)
     if (context === undefined) {

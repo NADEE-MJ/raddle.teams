@@ -1,4 +1,4 @@
-import { useEffect, useState } from 'react'
+import { useCallback, useEffect, useState } from 'react'
 import { useNavigate } from 'react-router-dom'
 import { usePlayer } from '../context/PlayerContext'
 import { useGame } from '../context/GameContext'
@@ -13,16 +13,7 @@ export default function LobbyPage() {
     const { game, setGame } = useGame()
     const navigate = useNavigate()
 
-    useEffect(() => {
-        if (!player) {
-            navigate('/')
-            return
-        }
-
-        loadGameData()
-    }, [player, navigate])
-
-    const loadGameData = async () => {
+    const loadGameData = useCallback(async () => {
         try {
             setLoading(true)
 
@@ -35,9 +26,9 @@ export default function LobbyPage() {
                     navigate('/game')
                     return
                 }
-            } catch (err) {
+            } catch (error) {
                 // No game exists, that's okay
-                console.log('No active game found')
+                console.log('No active game found:', error)
             }
 
             // Load players
@@ -50,7 +41,16 @@ export default function LobbyPage() {
         } finally {
             setLoading(false)
         }
-    }
+    }, [setGame, navigate])
+
+    useEffect(() => {
+        if (!player) {
+            navigate('/')
+            return
+        }
+
+        loadGameData()
+    }, [player, navigate, loadGameData])
 
     if (loading) {
         return (

@@ -24,8 +24,8 @@ export default function AdminPage() {
             try {
                 const currentGame = await apiService.getCurrentGame()
                 setGame(currentGame)
-            } catch (err) {
-                console.log('No active game found')
+            } catch (error) {
+                console.log('No active game found:', error)
             }
 
             // Load teams and players

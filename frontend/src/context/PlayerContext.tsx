@@ -27,7 +27,8 @@ export function PlayerProvider({ children }: { children: React.ReactNode }) {
         if (storedPlayer) {
             try {
                 setPlayer(JSON.parse(storedPlayer))
-            } catch (e) {
+            } catch (error) {
+                console.error('Failed to parse stored player:', error)
                 localStorage.removeItem('raddle_player')
             }
         }
@@ -49,6 +50,7 @@ export function PlayerProvider({ children }: { children: React.ReactNode }) {
     )
 }
 
+// eslint-disable-next-line react-refresh/only-export-components
 export function usePlayer() {
     const context = useContext(PlayerContext)
     if (context === undefined) {

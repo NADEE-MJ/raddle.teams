@@ -1,4 +1,4 @@
-import { useEffect, useRef, useState } from "react";
+import { useCallback, useEffect, useRef, useState } from "react";
 import { WebSocketMessage } from "../types";
 
 interface UseWebSocketOptions {
@@ -17,7 +17,7 @@ export function useWebSocket(
   const [error, setError] = useState<string | null>(null);
   const wsRef = useRef<WebSocket | null>(null);
 
-  const connect = () => {
+  const connect = useCallback(() => {
     if (!teamId || !playerSessionId) return;
 
     try {
@@ -36,8 +36,8 @@ export function useWebSocket(
         try {
           const message: WebSocketMessage = JSON.parse(event.data);
           options.onMessage?.(message);
-        } catch (e) {
-          console.error("Failed to parse WebSocket message:", e);
+        } catch (error) {
+          console.error("Failed to parse WebSocket message:", error);
         }
       };
 
@@ -50,10 +50,11 @@ export function useWebSocket(
         setError("WebSocket connection error");
         options.onError?.(error);
       };
-    } catch (e) {
+    } catch (error) {
+      console.error('Failed to create WebSocket connection:', error)
       setError("Failed to create WebSocket connection");
     }
-  };
+  }, [teamId, playerSessionId, options]);
 
   const disconnect = () => {
     if (wsRef.current) {
@@ -62,7 +63,7 @@ export function useWebSocket(
     }
   };
 
-  const sendMessage = (message: any) => {
+  const sendMessage = (message: Record<string, unknown>) => {
     if (wsRef.current && isConnected) {
       wsRef.current.send(JSON.stringify(message));
     }
@@ -76,7 +77,7 @@ export function useWebSocket(
     return () => {
       disconnect();
     };
-  }, [teamId, playerSessionId]);
+  }, [teamId, playerSessionId, connect]);
 
   return {
     isConnected,

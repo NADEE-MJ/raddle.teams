@@ -248,7 +248,7 @@ This project is licensed under the MIT License - see the [LICENSE](LICENSE) file
 
 1. **Start the backend server**
    ```bash
-   poetry run python run_server.py
+   poetry run python run.py
    ```
 
 2. **Access the application**
@@ -284,7 +284,7 @@ This project is licensed under the MIT License - see the [LICENSE](LICENSE) file
 
 **Backend Development:**
 ```bash
-poetry run python run_server.py
+poetry run python run.py
 ```
 
 **Frontend Development:**
