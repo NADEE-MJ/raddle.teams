@@ -53,9 +53,9 @@ export interface TeamProgress {
 
 export interface WebSocketMessage {
   type: string;
-  data?: any;
+  data?: Record<string, unknown>;
   player_session_id?: string;
-  message?: any;
+  message?: Record<string, unknown>;
   team_id?: number;
   state?: string;
 }

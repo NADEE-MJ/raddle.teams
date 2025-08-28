@@ -4,14 +4,14 @@ This is a web-based multiplayer game. The way the game works is similar to the o
 
 DOWN -----> EARTH
 clues in the forward direction (out of order): [
-    Cardinal direction that's DOWN on a map, most of the time
-    Change the first letter of DOWN to get a part of the body
-    Kind of food or music that sounds like DOWN
-    Move the first letter of DOWN to the end to get where we are
-    Organ that sits inside the DOWN
-    Piece of clothing that often has a DOWN
-    Popular piano duet “________ & DOWN”
-    Rubber layer on the bottom of a DOWN
+Cardinal direction that's DOWN on a map, most of the time
+Change the first letter of DOWN to get a part of the body
+Kind of food or music that sounds like DOWN
+Move the first letter of DOWN to the end to get where we are
+Organ that sits inside the DOWN
+Piece of clothing that often has a DOWN
+Popular piano duet “________ & DOWN”
+Rubber layer on the bottom of a DOWN
 ]
 
 next word after down is 5 letters
@@ -26,17 +26,17 @@ Solving from the way up the clues are reversed so:
 DOWN <--- EARTH
 
 clues in the reverse direction: [
-    Kind of food or music that sounds like ________ → EARTH
-    Move the first letter of ________ to the end to get where we are → EARTH
-    Organ that sits inside the ________ → EARTH
-    Piece of clothing that often has a ________ → EARTH
-    Popular piano duet “EARTH & ________”
-    Rubber layer on the bottom of a ________ → EARTH
+Kind of food or music that sounds like ________ → EARTH
+Move the first letter of ________ to the end to get where we are → EARTH
+Organ that sits inside the ________ → EARTH
+Piece of clothing that often has a ________ → EARTH
+Popular piano duet “EARTH & ________”
+Rubber layer on the bottom of a ________ → EARTH
 ]
 
 next word before earth is 5 letters
 
-Answer is HEART (hint was: Move the first letter of ________ to the end to get where we are → EARTH)
+Answer is HEART (hint was: Move the first letter of **\_\_\_\_** to the end to get where we are → EARTH)
 
 For each word there are two hints that can be used, the first hint for that direction will let the players know which clue to use for that direction, the next hint will fill in the answer (I think this is too powerful and should be limited in some way, if the players get stuck the admin can help them along) (hints costing a time penalty would be good but it has to be significant)
 
@@ -60,24 +60,23 @@ use poetry for dependency management
 
 the backend will be written in fastapi and require both a normal webserver and a websocket server to handle real-time communication between clients. The games will be stored as json files, here is an example of the structure, (not sure if this makes sense right now but will stick with it):
 {
-    "words": [
-        "DOWN",
-        "SOUTH",
-        "HEART",
-        "EARTH"
-    ],
-    "clues": {
-        # DOWN AND EARTH ARE NOT INCLUDED HERE
-        "SOUTH": {
-            "forward": "CARDINAL DIRECTION THAT'S ____ ON A MAP, MOST OF THE TIME",
-            "backward": "CHANGE THE FIRST LETTER OF ________ TO GET A PART OF THE BODY -> MOUTH"
-        },
-        "HEART": {
-            "forward": "ORGAN THAT SITS INSIDE THE ________",
-            "backward": "CHANGE THE FIRST LETTER OF ________ TO GET A PART OF THE BODY -> EARTH"
-        },
-        etc...
-    }
+"words": [
+"DOWN",
+"SOUTH",
+"HEART",
+"EARTH"
+],
+"clues": { # DOWN AND EARTH ARE NOT INCLUDED HERE
+"SOUTH": {
+"forward": "CARDINAL DIRECTION THAT'S \_**\_ ON A MAP, MOST OF THE TIME",
+"backward": "CHANGE THE FIRST LETTER OF **\_\_\***\* TO GET A PART OF THE BODY -> MOUTH"
+},
+"HEART": {
+"forward": "ORGAN THAT SITS INSIDE THE **\_\_\_\_**",
+"backward": "CHANGE THE FIRST LETTER OF **\_\_\_\_\*\* TO GET A PART OF THE BODY -> EARTH"
+},
+etc...
+}
 }
 
 there will be one of these json files per puzzle, including a tutorial puzzle
@@ -90,6 +89,7 @@ if players disconnect they can rejoin the team that they were previously on, mig
 websockets should be based on team name or team id, which will be generated at the start of the game. Only one game can be active at a time for now.
 
 All guesses per team should use optimistic locking to prevent overlapping submissions and race conditions, the first person to solve a clue gets their name added next to the word. There should be some sort of lock for when the correct answer is submitted so that no other guesses are processed until the lock is released.
+
 - Lock team submissions for that specific word
 - Process the correct answer
 - Broadcast to all team members

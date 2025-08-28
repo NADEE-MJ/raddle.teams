@@ -29,7 +29,7 @@ export default [
     },
     settings: {
       react: {
-        version: "18.2",
+        version: "19.2",
       },
     },
     plugins: {
@@ -49,7 +49,10 @@ export default [
       "@typescript-eslint/no-explicit-any": "warn",
 
       // Custom rules
-      "react-refresh/only-export-components": ["warn", { allowConstantExport: true }],
+      "react-refresh/only-export-components": [
+        "warn",
+        { allowConstantExport: true },
+      ],
       "react/prop-types": "off",
       "react/react-in-jsx-scope": "off",
       "no-unused-vars": "off",
