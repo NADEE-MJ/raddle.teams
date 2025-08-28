@@ -1,41 +1,62 @@
-# raddle.teams
-A team-based version of raddle.quest
+# Raddle Teams 🎯
 
-## Phase 1 Implementation Complete! 🎉
+A team-based multiplayer word chain puzzle game inspired by raddle.quest. Players work together in teams to solve word puzzles by connecting words through clever clues.
 
-This repository contains the initial Phase 1 implementation of Raddle Teams, featuring the core mechanics for team-based word puzzle gaming.
+## 🚀 Current Status: Phase 1 Complete!
 
-### Features Implemented
+The initial implementation is complete with core multiplayer mechanics and real-time team collaboration features.
 
-**✅ Core Mechanics (Phase 1)**
-- **Basic Lobby System**: Players can join games with their chosen names
-- **Team Assignment**: Admin can create games and assign players to teams
-- **WebSocket Real-time Updates**: Live communication between players and admin
-- **Admin Controls**: Complete admin interface for game management
-- **Database Integration**: SQLite database for persistent game state
+## ✨ Features
 
-### Technology Stack
+### Phase 1 (✅ Implemented)
+- **🎮 Core Game Mechanics**: Word chain puzzles with forward/backward solving
+- **👥 Team-based Multiplayer**: Real-time team collaboration with WebSocket communication
+- **🎲 Lobby System**: Players join with custom names, automatic session management
+- **👨‍💼 Admin Controls**: Complete game management interface
+- **🔒 Optimistic Locking**: Race condition prevention for simultaneous guesses
+- **📱 Responsive Design**: Mobile-first UI with Tailwind CSS v4
 
-**Backend:**
-- FastAPI with Python 3.11+
-- SQLite database with SQLAlchemy ORM
-- WebSocket support for real-time communication
-- Poetry for dependency management
+### Phase 2 (🔄 Planned)
+- Multiple puzzles + progress tracking
+- Enhanced admin dashboard with analytics
+- Win conditions and leaderboards
 
-**Frontend:**
-- React 18 with TypeScript
-- Vite for build tooling
-- Modern CSS for styling
-- WebSocket client for real-time updates
+### Phase 3 (🔮 Future)
+- Hint system with time penalties
+- Team elimination mechanics
+- Reconnection handling
+- Spectator mode for finished teams
 
-### Getting Started
+## 🛠️ Technology Stack
 
-#### Prerequisites
-- Python 3.11 or higher
-- Node.js 23 or higher
-- Poetry (for Python dependency management)
+### Backend
+- **FastAPI** - Modern Python web framework
+- **SQLModel** - Type-safe database models with SQLite
+- **WebSockets** - Real-time bidirectional communication
+- **Poetry** - Python dependency management
+- **Uvicorn** - High-performance ASGI server
 
-#### Installation
+### Frontend
+- **React 18** - Modern React with hooks and context
+- **TypeScript** - Type-safe JavaScript
+- **Tailwind CSS v4** - Utility-first CSS framework with latest features
+- **Vite** - Lightning-fast build tool and dev server
+- **React Router** - Client-side routing
+
+### Key Technologies
+- **Real-time Communication**: WebSocket-based team chat and game updates
+- **Database**: SQLite with SQLAlchemy ORM for data persistence
+- **Modern CSS**: CSS layers, registered properties, OKLCH colors
+- **Type Safety**: Full TypeScript coverage across frontend and API
+
+## 🏁 Quick Start
+
+### Prerequisites
+- **Python 3.11+**
+- **Node.js 20.19+** (for Vite compatibility)
+- **Poetry** (install from [python-poetry.org](https://python-poetry.org/))
+
+### Installation
 
 1. **Clone the repository**
    ```bash
@@ -43,10 +64,170 @@ This repository contains the initial Phase 1 implementation of Raddle Teams, fea
    cd raddle.teams
    ```
 
-2. **Install backend dependencies**
+2. **Install Python dependencies**
    ```bash
-   poetry install --no-root
+   poetry install
    ```
+
+3. **Install JavaScript dependencies**
+   ```bash
+   npm install
+   ```
+
+4. **Build the frontend**
+   ```bash
+   npm run build
+   ```
+
+### Running the Application
+
+#### Option 1: Full Application (Recommended)
+```bash
+# Starts the FastAPI server serving both backend API and frontend
+poetry run python run.py
+```
+Then open http://localhost:8000
+
+#### Option 2: Development Mode
+```bash
+# Terminal 1: Start backend
+poetry run python run.py
+
+# Terminal 2: Start frontend dev server (optional)
+npm run dev
+```
+- Backend: http://localhost:8000
+- Frontend dev: http://localhost:5173 (if running dev server)
+
+## 🎮 How to Play
+
+### For Players:
+1. Go to http://localhost:8000
+2. Enter your name and join the game
+3. Wait in the lobby for the admin to create teams
+4. Once assigned to a team, wait for the game to start
+5. Solve word chain puzzles with your teammates in real-time!
+
+### For Admins:
+1. Go to http://localhost:8000/admin
+2. Create a new game
+3. Create teams and assign players
+4. Start the game when ready
+5. Monitor team progress and manage the game
+
+## 📁 Project Structure
+
+```
+raddle.teams/
+├── backend/              # FastAPI backend application
+│   ├── __init__.py
+│   ├── api.py           # REST API endpoints
+│   ├── database.py      # Database models and configuration
+│   ├── game_logic.py    # Game mechanics and puzzle logic
+│   ├── schemas.py       # Pydantic request/response models
+│   └── websocket.py     # WebSocket handlers for real-time features
+├── frontend/            # React frontend application
+│   ├── src/
+│   │   ├── components/  # Reusable React components
+│   │   ├── context/     # React context providers
+│   │   ├── hooks/       # Custom React hooks
+│   │   ├── pages/       # Main application pages
+│   │   ├── services/    # API service layer
+│   │   ├── types/       # TypeScript type definitions
+│   │   ├── App.tsx      # Main React application
+│   │   ├── main.tsx     # React entry point
+│   │   └── index.css    # Tailwind CSS imports
+│   ├── index.html       # HTML template
+│   └── public/          # Static assets
+├── puzzles/             # Game puzzle definitions
+│   └── tutorial.json    # Tutorial puzzle
+├── static/              # Built frontend assets (generated)
+├── main.py              # FastAPI application entry point
+├── run.py               # Development server launcher
+├── pyproject.toml       # Python dependencies
+├── package.json         # JavaScript dependencies
+├── vite.config.ts       # Vite build configuration
+├── tailwind.config.ts   # Tailwind CSS configuration
+└── README.md           # This file
+```
+
+## 🔧 Development
+
+### Backend Development
+```bash
+# Run with auto-reload
+poetry run python run.py
+
+# Run tests (when available)
+poetry run pytest
+
+# Format code
+poetry run ruff format .
+
+# Lint code
+poetry run ruff check .
+```
+
+### Frontend Development
+```bash
+# Start development server
+npm run dev
+
+# Build for production
+npm run build
+
+# Type check
+npm run type-check
+
+# Lint
+npm run lint
+
+# Format
+npm run format
+```
+
+### API Documentation
+- **Swagger UI**: http://localhost:8000/docs
+- **ReDoc**: http://localhost:8000/redoc
+
+## 🎯 Game Mechanics
+
+### Word Chain Puzzles
+Players solve word chains by connecting a starting word to an ending word through intermediate words, using clues that describe the relationship between consecutive words.
+
+**Example:**
+```
+DOWN → SOUTH → MOUTH → TONGUE → SHOE → SOLE → SOUL → HEART → EARTH
+```
+
+### Team Collaboration
+- **Real-time guessing**: All team members can submit guesses simultaneously
+- **Shared progress**: When one player solves a word, the entire team advances
+- **Live updates**: See all teammate guesses and progress in real-time
+- **Direction switching**: Teams can work forwards or backwards through the chain
+
+### Optimistic Locking
+- Prevents race conditions when multiple players guess simultaneously
+- First correct answer wins and advances the team
+- All other guesses for that word are invalidated
+
+## 🤝 Contributing
+
+1. Fork the repository
+2. Create a feature branch (`git checkout -b feature/amazing-feature`)
+3. Commit your changes (`git commit -m 'Add amazing feature'`)
+4. Push to the branch (`git push origin feature/amazing-feature`)
+5. Open a Pull Request
+
+## 📄 License
+
+This project is licensed under the MIT License - see the [LICENSE](LICENSE) file for details.
+
+## 🙏 Acknowledgments
+
+- Inspired by [raddle.quest](https://raddle.quest)
+- Built with modern web technologies
+- Designed for real-time multiplayer collaboration
 
 3. **Install frontend dependencies**
    ```bash
