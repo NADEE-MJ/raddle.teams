@@ -4,7 +4,7 @@ from typing import List
 from fastapi import APIRouter, Depends, HTTPException
 from sqlmodel import Session, select
 
-from .database import (
+from .database.database import (
     Game,
     GameState,
     Guess,
@@ -24,7 +24,11 @@ from .schemas import (
     TeamCreate,
     TeamResponse,
 )
-from .websocket import notify_game_state_change, notify_team_guess, notify_team_progress
+from .websocket.managers import (
+    notify_game_state_change,
+    notify_team_guess,
+    notify_team_progress,
+)
 
 router = APIRouter()
 
@@ -164,7 +168,7 @@ async def join_team(
     session.commit()
 
     # Notify the player via WebSocket if they're connected
-    from .websocket import notify_player_team_assignment
+    from .websocket.managers import notify_player_team_assignment
 
     await notify_player_team_assignment(player.session_id, team_id, team.name)
 

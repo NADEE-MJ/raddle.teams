@@ -2,6 +2,7 @@ from datetime import datetime, timezone
 from typing import Optional
 
 from sqlmodel import Field, SQLModel
+
 from backend.enums import GameState
 
 
@@ -9,8 +10,9 @@ class Player(SQLModel, table=True):
     id: Optional[int] = Field(default=None, primary_key=True)
     name: str
     session_id: str = Field(unique=True)
+    lobby_id: int = Field(foreign_key="lobby.id")
     team_id: Optional[int] = Field(default=None, foreign_key="team.id")
-    connected: bool = Field(default=True)
+    connected: bool = Field(default=False)
     created_at: datetime = Field(default_factory=datetime.now(tz=timezone.utc))
 
 
@@ -18,8 +20,16 @@ class Team(SQLModel, table=True):
     id: Optional[int] = Field(default=None, primary_key=True)
     name: str
     game_id: int = Field(foreign_key="game.id")
+    lobby_id: int = Field(foreign_key="lobby.id")
     current_word_index: int = Field(default=0)
     completed_at: Optional[datetime] = Field(default=None)
+    created_at: datetime = Field(default_factory=datetime.now(tz=timezone.utc))
+
+
+class Lobby(SQLModel, table=True):
+    id: Optional[int] = Field(default=None, primary_key=True)
+    code: str = Field(unique=True, index=True)
+    name: str
     created_at: datetime = Field(default_factory=datetime.now(tz=timezone.utc))
 
 

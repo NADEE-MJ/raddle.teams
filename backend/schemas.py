@@ -3,7 +3,7 @@ from typing import Optional
 
 from pydantic import BaseModel
 
-from .database import GameState
+from .database.database import GameState
 
 
 class PlayerCreate(BaseModel):

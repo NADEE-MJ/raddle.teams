@@ -1,7 +1,7 @@
 <svg width="32" height="32" viewBox="0 0 32 32" fill="none" xmlns="http://www.w3.org/2000/svg">
   <!-- Orange background -->
   <rect width="32" height="32" fill="#FF8C00" rx="4"/>
-  
+
   <!-- Ladder sides -->
   <rect x="6" y="2" width="3" height="28" fill="#4A2C17" rx="1"/>
   <rect x="23" y="2" width="3" height="28" fill="#4A2C17" rx="1"/>
