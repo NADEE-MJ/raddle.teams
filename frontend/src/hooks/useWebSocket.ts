@@ -11,7 +11,7 @@ interface UseWebSocketOptions {
 export function useWebSocket(
   teamId: number | null,
   playerSessionId: string | null,
-  options: UseWebSocketOptions = {}
+  options: UseWebSocketOptions = {},
 ) {
   const [isConnected, setIsConnected] = useState(false);
   const [error, setError] = useState<string | null>(null);
@@ -51,7 +51,7 @@ export function useWebSocket(
         options.onError?.(error);
       };
     } catch (error) {
-      console.error('Failed to create WebSocket connection:', error)
+      console.error("Failed to create WebSocket connection:", error);
       setError("Failed to create WebSocket connection");
     }
   }, [teamId, playerSessionId, options]);

@@ -3,7 +3,10 @@ import { Player, Team, Game, Guess, TeamProgress } from "../types";
 const API_BASE = "/api";
 
 class ApiService {
-  private async request<T>(endpoint: string, options?: RequestInit): Promise<T> {
+  private async request<T>(
+    endpoint: string,
+    options?: RequestInit,
+  ): Promise<T> {
     const url = `${API_BASE}${endpoint}`;
     const response = await fetch(url, {
       headers: {
@@ -61,7 +64,10 @@ class ApiService {
     return this.request<Team[]>("/teams");
   }
 
-  async joinTeam(teamId: number, playerSessionId: string): Promise<{ message: string }> {
+  async joinTeam(
+    teamId: number,
+    playerSessionId: string,
+  ): Promise<{ message: string }> {
     return this.request<{ message: string }>(`/teams/${teamId}/join`, {
       method: "POST",
       body: JSON.stringify({ player_session_id: playerSessionId }),
@@ -76,7 +82,7 @@ class ApiService {
   async submitGuess(
     playerSessionId: string,
     guess: string,
-    direction: "forward" | "backward"
+    direction: "forward" | "backward",
   ): Promise<Guess> {
     return this.request<Guess>("/guess", {
       method: "POST",
