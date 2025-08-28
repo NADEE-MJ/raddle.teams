@@ -1,4 +1,4 @@
-import { useCallback, useEffect, useState } from "react";
+import { useCallback, useEffect, useMemo, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { usePlayer } from "../context/PlayerContext";
 import { useGame } from "../context/GameContext";
@@ -76,18 +76,18 @@ export default function GamePage() {
 
   const onConnect = useCallback(() => console.log("Connected to team chat"), []);
   const onDisconnect = useCallback(() => console.log("Disconnected from team chat"), []);
+  
+  const webSocketOptions = useMemo(() => ({
+    onMessage: handleWebSocketMessage,
+    onConnect,
+    onDisconnect,
+  }), [handleWebSocketMessage, onConnect, onDisconnect]);
 
-  // Temporarily disable WebSocket to fix infinite loop
-  // const { isConnected } = useWebSocket(
-  //   player?.team_id || null,
-  //   player?.session_id || null,
-  //   {
-  //     onMessage: handleWebSocketMessage,
-  //     onConnect,
-  //     onDisconnect,
-  //   },
-  // );
-  const isConnected = false;
+  const { isConnected } = useWebSocket(
+    player?.team_id || null,
+    player?.session_id || null,
+    webSocketOptions,
+  );
 
   useEffect(() => {
     if (!player || !player.team_id) {
