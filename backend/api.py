@@ -167,6 +167,10 @@ async def join_team(
     session.add(player)
     session.commit()
 
+    # Notify the player via WebSocket if they're connected
+    from .websocket import notify_player_team_assignment
+    await notify_player_team_assignment(player.session_id, team_id, team.name)
+
     return {"message": f"Player {player.name} joined team {team.name}"}
 
 
