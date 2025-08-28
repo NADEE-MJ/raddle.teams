@@ -97,7 +97,7 @@ All guesses per team should use optimistic locking to prevent overlapping submis
 
 ## frontend
 
-the frontend will be made with react and vite, it should be as bare bones as possible using very basic js and react setups, make sure you are using typescript as well.
+the frontend will be made with react and vite, it should be as bare bones as possible using very basic js and react setups, make sure you are using typescript and tailwind as well.
 
 ## admin page
 

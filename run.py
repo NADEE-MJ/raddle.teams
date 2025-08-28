@@ -2,12 +2,13 @@ import os
 import sys
 
 import uvicorn
+
 from custom_logging import file_logger
 
 
 def run_server():
     host = "localhost"
-    port = 5000
+    port = 8000
     # whether to enable auto-reload on code changes
     reload = True
     # options: "critical", "error", "warning", "info", "debug", "trace"
@@ -32,7 +33,7 @@ def run_server():
     sys.path.insert(0, cwd)
 
     # add the packages/functions/test directory to the sys.path from the current working directory
-    sys.path.insert(0, f"{cwd}/api")
+    sys.path.insert(0, f"{cwd}/backend")
     sys.path.insert(0, f"{cwd}/")
 
     file_logger.debug(f"Python path updated: {sys.path[:3]}")

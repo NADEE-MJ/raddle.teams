@@ -32,7 +32,7 @@ This repository contains the initial Phase 1 implementation of Raddle Teams, fea
 
 #### Prerequisites
 - Python 3.11 or higher
-- Node.js 18 or higher
+- Node.js 23 or higher
 - Poetry (for Python dependency management)
 
 #### Installation
@@ -45,7 +45,6 @@ This repository contains the initial Phase 1 implementation of Raddle Teams, fea
 
 2. **Install backend dependencies**
    ```bash
-   pip install poetry
    poetry install --no-root
    ```
 
