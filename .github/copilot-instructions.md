@@ -7,7 +7,7 @@
 ### Key Technologies
 
 - **Backend**: Python 3.11+ with FastAPI, SQLModel, SQLite, WebSockets
-- **Frontend**: React 18 with TypeScript, Tailwind CSS v4, Vite
+- **Frontend**: React 19 with TypeScript, Tailwind CSS v4, Vite
 - **Build Tools**: Poetry (Python), npm (JavaScript), Vite (bundling)
 - **Development**: Hot reload for both frontend and backend
 
@@ -25,14 +25,14 @@
 **Required versions**:
 
 - Python 3.11 or higher
-- Node.js 20.19 or higher (required for Vite compatibility)
+- Node.js 23 or higher (required for Vite v7 compatibility)
 - Poetry (install via `pip install poetry`)
 
 ### Initial Setup (Run Once)
 
 ```bash
 # 1. Install Python dependencies (creates .venv virtual environment)
-poetry install
+poetry install --sync
 
 # 2. Install JavaScript dependencies
 npm install
@@ -49,26 +49,13 @@ npm run build
 
 ```bash
 # Start the complete application (serves both API + frontend)
-poetry run python run.py
+npm run server
 ```
 
 - Server: http://localhost:8000 (serves both frontend and API)
 - API docs: http://localhost:8000/docs
 - Takes ~2-3 seconds to start
-
-#### Option 2: Split Development
-
-```bash
-# Terminal 1: Backend only
-poetry run python run.py
-
-# Terminal 2: Frontend dev server (optional, for faster frontend iteration)
-npx vite
-# Note: Use npx vite instead of npm run dev - the dev script is not defined in package.json
-```
-
-- Backend: http://localhost:8000
-- Frontend dev: http://localhost:5173 (starts in ~500ms)
+- Features hot module reload for frontend changes
 
 ### Code Quality and Validation
 
@@ -76,13 +63,17 @@ npx vite
 
 ```bash
 # Lint check (very fast, <1 second)
+npm run lint:python
+# or
 poetry run ruff check .
 
 # Auto-format code
+npm run format:python
+# or
 poetry run ruff format .
 
 # Both checks together
-poetry run ruff check . && poetry run ruff format .
+npm run lint:python && npm run format:python
 ```
 
 #### Frontend (JavaScript/TypeScript)
@@ -205,14 +196,12 @@ Database file: `raddle_teams.db` (auto-created, excluded by .gitignore)
 3. **Port conflicts**: Default ports are 8000 (backend) and 5173 (frontend dev)
 4. **Build timing**: Frontend build takes 1-2 seconds, backend linting is under 1 second
 5. **Vite not found**: If `npm run build` fails with "vite: not found", the issue is usually with the PATH in that terminal session. Use `npx vite build` as a workaround or start a fresh terminal session.
-6. **Dependencies out of sync**: If you encounter import errors, run `poetry install && npm install` to ensure all dependencies are properly installed
+6. **Dependencies out of sync**: If you encounter import errors, run `poetry install --sync && npm install` to ensure all dependencies are properly installed
 
 ### Making Changes
 
-1. **Backend changes**: Files auto-reload when using `poetry run python run.py`
-2. **Frontend changes**:
-   - In dev mode (`npx vite`): Instant hot reload
-   - In production mode: Requires `npm run build` to see changes
+1. **Backend changes**: Files auto-reload when using `npm run server`
+2. **Frontend changes**: Hot module reload automatically updates the browser when frontend files change
 3. **Database changes**: Delete `raddle_teams.db` to reset (auto-recreated)
 
 ### File Locations for Common Tasks
