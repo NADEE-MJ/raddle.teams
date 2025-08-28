@@ -1,0 +1,13 @@
+# Dependencies
+node_modules/
+.venv/
+
+# Build artifacts
+static/
+dist/
+
+# Log files
+*.log
+
+# Database files
+*.db
