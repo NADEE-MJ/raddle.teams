@@ -40,6 +40,17 @@ async def join_lobby(
     if not lobby:
         raise HTTPException(status_code=404, detail="Lobby not found")
 
+    # check if that session_id already exists and if so, move this player to this lobby
+    existing_player = db.exec(
+        select(Player).where(Player.session_id == player_data.session_id)
+    ).first()
+    if existing_player:
+        existing_player.lobby_id = lobby.id
+        db.add(existing_player)
+        db.commit()
+        db.refresh(existing_player)
+        return existing_player
+
     player = Player(**player_data.model_dump(), lobby_id=lobby.id)
     db.add(player)
     db.commit()
@@ -49,10 +60,25 @@ async def join_lobby(
     return player
 
 
+@router.get("/lobby/{session_id}", response_model=Lobby)
+async def get_lobby_for_player_by_session(
+    session_id: str, db: Session = Depends(get_session)
+):
+    player = db.exec(select(Player).where(Player.session_id == session_id)).first()
+    if not player:
+        raise HTTPException(status_code=404, detail="Player not found")
+
+    lobby = db.get(Lobby, player.lobby_id)
+    if not lobby:
+        raise HTTPException(status_code=404, detail="Lobby not found")
+
+    return lobby
+
+
 class LobbyInfo(BaseModel):
     lobby: Lobby
     players: list[Player]
-    players_by_team: dict[str, list[Player]] | None
+    players_by_team: dict[int, list[Player]] | None
     teams: list[Team] | None
     game: None = None
 
@@ -67,6 +93,8 @@ async def get_lobby(lobby_id: int, db: Session = Depends(get_session)):
 
     players_by_team = {}
     for player in players:
+        if player.team_id is None:
+            continue
         if player.team_id not in players_by_team:
             players_by_team[player.team_id] = []
         players_by_team[player.team_id].append(player)

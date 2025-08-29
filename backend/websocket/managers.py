@@ -48,7 +48,12 @@ class AdminWebSocketManager:
     async def disconnect(self, web_session_id: str):
         connection = self.admin_websockets.pop(web_session_id, None)
         if connection:
-            await connection["websocket"].close()
+            try:
+                # Try to close the WebSocket gracefully
+                await connection["websocket"].close()
+            except Exception:
+                # WebSocket might already be closed, ignore the error
+                pass
 
 
 admin_web_socket_manager = AdminWebSocketManager()
@@ -74,8 +79,7 @@ class LobbyWebSocketManager:
 
         self.lobby_websockets.setdefault(lobby_id, {})[player_session_id] = websocket
 
-        self.broadcast_to_lobby(
-            websocket,
+        await self.broadcast_to_lobby(
             lobby_id,
             JoinedLobbyEvent(lobby_id=lobby_id, player_session_id=player_session_id),
         )
@@ -84,7 +88,12 @@ class LobbyWebSocketManager:
         if lobby_id in self.lobby_websockets:
             websocket = self.lobby_websockets[lobby_id].pop(player_session_id, None)
             if websocket:
-                await websocket.close()
+                try:
+                    # Try to close the WebSocket gracefully
+                    await websocket.close()
+                except Exception:
+                    # WebSocket might already be closed, ignore the error
+                    pass
 
     # async def broadcast_to_session(
     #     self, lobby_id: int, player_session_id: str, event: LobbyEvent
@@ -104,7 +113,7 @@ class LobbyWebSocketManager:
                 # TODO not sure about this
                 # Ignore failed sends, cleanup will happen elsewhere
                 pass
-        self.admin_web_socket_manager.broadcast_to_lobby(lobby_id, event)
+        await self.admin_web_socket_manager.broadcast_to_lobby(lobby_id, event)
 
     async def continuous_listening(self, websocket: WebSocket):
         while True:

@@ -35,28 +35,6 @@ class DisconnectedLobbyEvent(LobbyEvent):
     type: LobbyWebSocketEvents = LobbyWebSocketEvents.DISCONNECTED
 
 
-# class TeamAssignedEvent(LobbyEvent):
-#     team_id: int
-#     team_name: str | None
-
-
-# class TeamChangedEvent(LobbyEvent):
-#     team_id: int
-#     team_name: str | None
-
-
 ####################################################################
 # ? ADMIN EVENTS
 ####################################################################
-# class AdminWebSocketEvents(Enum):
-#     PLAYER_JOINED = "player_joined"
-
-
-# class AdminEvent(BaseModel):
-#     admin_id: str
-#     message: str
-#     type: LobbyWebSocketEvents
-
-
-# class AdminPlayerJoinedLobbyEvent(AdminEvent):
-#     type: AdminWebSocketEvents = AdminWebSocketEvents.PLAYER_JOINED

@@ -13,7 +13,7 @@ class Player(SQLModel, table=True):
     lobby_id: int = Field(foreign_key="lobby.id")
     team_id: Optional[int] = Field(default=None, foreign_key="team.id")
     connected: bool = Field(default=False)
-    created_at: datetime = Field(default_factory=datetime.now(tz=timezone.utc))
+    created_at: datetime = Field(default_factory=lambda: datetime.now(tz=timezone.utc))
 
 
 class Team(SQLModel, table=True):
@@ -23,21 +23,21 @@ class Team(SQLModel, table=True):
     lobby_id: int = Field(foreign_key="lobby.id")
     current_word_index: int = Field(default=0)
     completed_at: Optional[datetime] = Field(default=None)
-    created_at: datetime = Field(default_factory=datetime.now(tz=timezone.utc))
+    created_at: datetime = Field(default_factory=lambda: datetime.now(tz=timezone.utc))
 
 
 class Lobby(SQLModel, table=True):
     id: Optional[int] = Field(default=None, primary_key=True)
     code: str = Field(unique=True, index=True)
     name: str
-    created_at: datetime = Field(default_factory=datetime.now(tz=timezone.utc))
+    created_at: datetime = Field(default_factory=lambda: datetime.now(tz=timezone.utc))
 
 
 class Game(SQLModel, table=True):
     id: Optional[int] = Field(default=None, primary_key=True)
     state: GameState = Field(default=GameState.LOBBY)
     puzzle_name: str = Field(default="tutorial")
-    created_at: datetime = Field(default_factory=datetime.now(tz=timezone.utc))
+    created_at: datetime = Field(default_factory=lambda: datetime.now(tz=timezone.utc))
     started_at: Optional[datetime] = Field(default=None)
     finished_at: Optional[datetime] = Field(default=None)
 
@@ -50,4 +50,6 @@ class Guess(SQLModel, table=True):
     direction: str  # "forward" or "backward"
     guess: str
     is_correct: bool = Field(default=False)
-    submitted_at: datetime = Field(default_factory=datetime.now(tz=timezone.utc))
+    submitted_at: datetime = Field(
+        default_factory=lambda: datetime.now(tz=timezone.utc)
+    )
