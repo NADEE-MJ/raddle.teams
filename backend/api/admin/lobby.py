@@ -29,3 +29,12 @@ async def create_lobby(
 @router.get("/lobby", response_model=list[Lobby])
 async def get_all_lobbies(db: Session = Depends(get_session)):
     return db.exec(select(Lobby)).all()
+
+
+@router.get("/check", response_model=dict)
+async def check_admin_credentials():
+    """
+    Simple endpoint to validate admin credentials.
+    Returns success if the admin token is valid.
+    """
+    return {"status": "authenticated", "message": "Admin credentials are valid"}
