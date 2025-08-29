@@ -1,14 +1,32 @@
-from fastapi import APIRouter, WebSocket, WebSocketDisconnect
+from fastapi import APIRouter, Query, WebSocket, WebSocketDisconnect
 
-from backend.websocket.managers import lobby_websocket_manager
+from backend.websocket.managers import admin_web_socket_manager, lobby_websocket_manager
+from settings import settings
 
 router = APIRouter()
 
-# @router.websocket("/ws/admin")
-# async def admin_websocket(websocket: WebSocket):
-#     # need to make sure only admins can access this route
-#     await websocket.accept()
-#     # Handle admin-specific websocket logic here
+
+@router.websocket("/ws/admin/{web_session_id}")
+async def admin_websocket(
+    websocket: WebSocket,
+    web_session_id: str,
+    token: str = Query(...),
+):
+    # Validate admin token before accepting connection
+    if not token or token != settings.ADMIN_PASSWORD:
+        await websocket.close(code=4001, reason="Unauthorized")
+        return
+
+    # Handle admin-specific websocket logic here
+    await admin_web_socket_manager.connect(websocket, web_session_id)
+
+    try:
+        await admin_web_socket_manager.continuous_listening(websocket)
+    except WebSocketDisconnect:
+        await admin_web_socket_manager.disconnect(websocket)
+    except Exception:
+        # TODO: Handle other exceptions in a better way
+        await admin_web_socket_manager.disconnect(websocket)
 
 
 @router.websocket("/ws/{lobby_id}/{player_session_id}")
@@ -20,10 +38,10 @@ async def lobby_websocket(websocket: WebSocket, lobby_id: int, player_session_id
     try:
         await lobby_websocket_manager.continuous_listening(websocket)
     except WebSocketDisconnect:
-        lobby_websocket_manager.disconnect(websocket)
+        await lobby_websocket_manager.disconnect(websocket)
     except Exception:
         # TODO: Handle other exceptions in a better way
-        lobby_websocket_manager.disconnect(websocket)
+        await lobby_websocket_manager.disconnect(websocket)
 
 
 # @router.websocket("/ws/{team_id}/{player_session_id}")

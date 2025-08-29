@@ -14,7 +14,7 @@ class AdminWebSocketConnection(TypedDict):
 
 class AdminWebSocketManager:
     def __init__(self):
-        # str is a web_session_id
+        # keyed by web_session_id
         self.admin_websockets: Dict[str, AdminWebSocketConnection] = {}
 
     async def connect(self, websocket: WebSocket, web_session_id: str):
@@ -28,6 +28,27 @@ class AdminWebSocketManager:
         for connection in self.admin_websockets.values():
             if lobby_id in connection["subscribed_lobbies"]:
                 await connection["websocket"].send_text(json.dumps(event.model_dump()))
+
+    async def continuous_listening(self, websocket: WebSocket):
+        while True:
+            data = await websocket.receive_text()
+            message = json.loads(data)
+
+            file_logger.debug(f"Received message: {message}")
+
+            # TODO maybe use this
+            # # Echo message to all team members
+            # await self.broadcast_to_all(
+            #     {
+            #         "player_session_id": player_session_id,
+            #         "message": message,
+            #     },
+            # )
+
+    async def disconnect(self, web_session_id: str):
+        connection = self.admin_websockets.pop(web_session_id, None)
+        if connection:
+            await connection["websocket"].close()
 
 
 admin_web_socket_manager = AdminWebSocketManager()
@@ -53,29 +74,27 @@ class LobbyWebSocketManager:
 
         self.lobby_websockets.setdefault(lobby_id, {})[player_session_id] = websocket
 
-        self.broadcast_to_all(
+        self.broadcast_to_lobby(
             websocket,
             lobby_id,
             JoinedLobbyEvent(lobby_id=lobby_id, player_session_id=player_session_id),
         )
-        self.admin_web_socket_manager.broadcast_to_lobby(
-            lobby_id,
-            JoinedLobbyEvent(lobby_id=lobby_id, player_session_id=player_session_id),
-        )
 
-    def disconnect(self, lobby_id: int, player_session_id: str):
+    async def disconnect(self, lobby_id: int, player_session_id: str):
         if lobby_id in self.lobby_websockets:
-            self.lobby_websockets[lobby_id].pop(player_session_id, None)
+            websocket = self.lobby_websockets[lobby_id].pop(player_session_id, None)
+            if websocket:
+                await websocket.close()
 
-    async def broadcast_to_session(
-        self, lobby_id: int, player_session_id: str, event: LobbyEvent
-    ):
-        websocket = self.lobby_websockets.get(lobby_id, {}).get(player_session_id)
-        if websocket:
-            await websocket.send_text(json.dumps(event.model_dump()))
-        else:
-            # TODO catch this
-            raise ValueError("WebSocket is not connected")
+    # async def broadcast_to_session(
+    #     self, lobby_id: int, player_session_id: str, event: LobbyEvent
+    # ):
+    #     websocket = self.lobby_websockets.get(lobby_id, {}).get(player_session_id)
+    #     if websocket:
+    #         await websocket.send_text(json.dumps(event.model_dump()))
+    #     else:
+    #         # TODO catch this
+    #         raise ValueError("WebSocket is not connected")
 
     async def broadcast_to_lobby(self, lobby_id: int, event: LobbyEvent):
         for websocket in self.lobby_websockets.get(lobby_id, {}).values():
@@ -85,6 +104,7 @@ class LobbyWebSocketManager:
                 # TODO not sure about this
                 # Ignore failed sends, cleanup will happen elsewhere
                 pass
+        self.admin_web_socket_manager.broadcast_to_lobby(lobby_id, event)
 
     async def continuous_listening(self, websocket: WebSocket):
         while True:
