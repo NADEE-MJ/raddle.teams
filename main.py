@@ -2,6 +2,7 @@ from datetime import datetime
 from pathlib import Path
 
 from fastapi import FastAPI
+from fastapi.responses import FileResponse
 from fastapi.staticfiles import StaticFiles
 
 from backend.api.admin.lobby import router as admin_lobby_router
@@ -22,8 +23,8 @@ app.include_router(admin_lobby_router, prefix="/api/admin")
 app.include_router(websocket_router)
 
 current_dir = Path(__file__).parent
-
 static_path = current_dir / "static"
+
 if static_path.exists():
     app.mount("/", StaticFiles(directory=str(static_path), html=True), name="static")
     file_logger.info(f"Static files mounted from: {static_path}")
@@ -43,13 +44,20 @@ async def api_root():
     }
 
 
-@app.get("/{path:path}")
-async def serve_frontend(path: str):
-    file_logger.debug(f"Catch-all route accessed with path: {path}")
+@app.get("/{full_path:path}")
+async def serve_frontend(full_path: str):
+    file_logger.debug(f"Catch-all route accessed with path: {full_path}")
 
-    if path.startswith(("api/", "ws/", "docs", "redoc", "openapi.json")):
-        file_logger.warning(f"endpoint not found: {path}")
+    # If it's an API or WebSocket route, return 404
+    if full_path.startswith(("api/", "ws/", "docs", "redoc", "openapi.json")):
+        file_logger.warning(f"API endpoint not found: {full_path}")
         return {"error": "endpoint not found"}
 
-    file_logger.warning(f"File not found: {path}")
-    return {"error": "Not found"}
+    # For all other routes, serve the frontend index.html to support SPA routing
+    index_file = static_path / "index.html"
+    if index_file.exists():
+        file_logger.debug(f"Serving index.html for SPA route: {full_path}")
+        return FileResponse(str(index_file))
+    else:
+        file_logger.error(f"index.html not found at: {index_file}")
+        return {"error": "Frontend not built. Run 'npm run build' first."}
