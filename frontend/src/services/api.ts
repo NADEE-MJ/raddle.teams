@@ -49,6 +49,10 @@ class ApiService {
     return this.request<Lobby[]>("/admin/lobby");
   }
 
+  async checkAdminCredentials(): Promise<{ status: string; message: string }> {
+    return this.request<{ status: string; message: string }>("/admin/check");
+  }
+
   // Player endpoints
   async joinLobby(lobbyCode: string, name: string, sessionId: string): Promise<Player> {
     return this.request<Player>(`/lobby/${lobbyCode}/join`, {
