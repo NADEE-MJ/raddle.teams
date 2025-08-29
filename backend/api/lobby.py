@@ -25,6 +25,7 @@ async def join_lobby(
         select(Player).where(Player.session_id == player_data.session_id)
     ).first()
     if existing_player:
+        existing_player.name = player_data.name  # Update the player's name
         existing_player.lobby_id = lobby.id
         db.add(existing_player)
         db.commit()
@@ -40,7 +41,7 @@ async def join_lobby(
     return player
 
 
-@router.get("/lobby/{session_id}", response_model=Lobby)
+@router.get("/player/{session_id}/lobby", response_model=Lobby)
 async def get_lobby_for_player_by_session(
     session_id: str, db: Session = Depends(get_session)
 ):

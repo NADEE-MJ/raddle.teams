@@ -58,7 +58,7 @@ class ApiService {
   }
 
   async getActiveLobbyForPlayer(sessionId: string): Promise<Lobby> {
-    return this.request<Lobby>(`/lobby/${sessionId}`);
+    return this.request<Lobby>(`/player/${sessionId}/lobby`);
   }
 
   async getLobbyInfo(lobbyId: number): Promise<LobbyInfo> {
