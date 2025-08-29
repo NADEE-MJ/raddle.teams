@@ -15,3 +15,6 @@ static/
 
 #.env files
 *.env
+
+# test files
+tests/recordings/*

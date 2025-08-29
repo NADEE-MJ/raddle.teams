@@ -18,6 +18,17 @@ app = FastAPI(
 
 create_db_and_tables()
 
+
+# Define specific API routes BEFORE the catch-all route
+@app.get("/api", tags=["Root"])
+async def api_root():
+    return {
+        "message": "Welcome to the Raddle Teams API",
+        "timestamp": datetime.now().isoformat(),
+        "documentation_endpoints": {"OpenAPI": "/api/docs", "ReDoc": "/api/redoc"},
+    }
+
+
 app.include_router(lobby_router, prefix="/api")
 app.include_router(admin_lobby_router, prefix="/api/admin")
 app.include_router(websocket_router)
@@ -33,15 +44,6 @@ else:
     file_logger.error(f"Static directory not found. Looked for: {static_path}")
     print(f"⚠️  Warning: Static directory not found. Looked for: {static_path}")
     exit(1)
-
-
-@app.get("/api", tags=["Root"])
-async def api_root():
-    return {
-        "message": "Welcome to the Raddle Teams API",
-        "timestamp": datetime.now().isoformat(),
-        "documentation_endpoints": {"OpenAPI": "/api/docs", "ReDoc": "/api/redoc"},
-    }
 
 
 @app.get("/{full_path:path}")
