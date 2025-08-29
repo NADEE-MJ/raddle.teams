@@ -1,28 +1,31 @@
 import { useCallback, useEffect, useRef, useState } from "react";
 import { WebSocketMessage } from "../types";
+import { apiService } from "../services/api";
 
-interface UseWebSocketOptions {
+interface UseAdminWebSocketOptions {
   onMessage?: (message: WebSocketMessage) => void;
   onConnect?: () => void;
   onDisconnect?: () => void;
   onError?: (error: Event) => void;
 }
 
-export function useWebSocket(
-  lobbyId: number | null,
-  playerSessionId: string | null,
-  options: UseWebSocketOptions = {},
+export function useAdminWebSocket(
+  webSessionId: string | null,
+  options: UseAdminWebSocketOptions = {},
 ) {
   const [isConnected, setIsConnected] = useState(false);
   const [error, setError] = useState<string | null>(null);
   const wsRef = useRef<WebSocket | null>(null);
 
   const connect = useCallback(() => {
-    if (!lobbyId || !playerSessionId) return;
+    if (!webSessionId) return;
+
+    const adminToken = apiService.getAdminToken();
+    if (!adminToken) return;
 
     try {
       const protocol = window.location.protocol === "https:" ? "wss:" : "ws:";
-      const wsUrl = `${protocol}//${window.location.host}/ws/lobby/${lobbyId}/player/${playerSessionId}`;
+      const wsUrl = `${protocol}//${window.location.host}/ws/admin/${webSessionId}?token=${adminToken}`;
 
       wsRef.current = new WebSocket(wsUrl);
 
@@ -51,39 +54,41 @@ export function useWebSocket(
         options.onError?.(error);
       };
     } catch (error) {
-      console.error("Failed to create WebSocket connection:", error);
       setError("Failed to create WebSocket connection");
+      console.error("WebSocket connection error:", error);
     }
-  }, [lobbyId, playerSessionId, options]);
+  }, [webSessionId, options]);
 
-  const disconnect = () => {
+  const disconnect = useCallback(() => {
     if (wsRef.current) {
       wsRef.current.close();
       wsRef.current = null;
     }
-  };
+  }, []);
 
-  const sendMessage = (message: Record<string, unknown>) => {
-    if (wsRef.current && isConnected) {
+  const sendMessage = useCallback((message: WebSocketMessage) => {
+    if (wsRef.current && wsRef.current.readyState === WebSocket.OPEN) {
       wsRef.current.send(JSON.stringify(message));
+    } else {
+      console.warn("WebSocket is not connected");
     }
-  };
+  }, []);
 
   useEffect(() => {
-    if (lobbyId && playerSessionId) {
+    if (webSessionId) {
       connect();
     }
 
     return () => {
       disconnect();
     };
-  }, [lobbyId, playerSessionId, connect]);
+  }, [webSessionId, connect, disconnect]);
 
   return {
     isConnected,
     error,
-    sendMessage,
     connect,
     disconnect,
+    sendMessage,
   };
 }

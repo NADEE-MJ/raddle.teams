@@ -3,8 +3,6 @@ from typing import Optional
 
 from sqlmodel import Field, SQLModel
 
-from backend.enums import GameState
-
 
 class Player(SQLModel, table=True):
     id: Optional[int] = Field(default=None, primary_key=True)
@@ -19,7 +17,7 @@ class Player(SQLModel, table=True):
 class Team(SQLModel, table=True):
     id: Optional[int] = Field(default=None, primary_key=True)
     name: str
-    game_id: int = Field(foreign_key="game.id")
+    # game_id: int = Field(foreign_key="game.id")
     lobby_id: int = Field(foreign_key="lobby.id")
     current_word_index: int = Field(default=0)
     completed_at: Optional[datetime] = Field(default=None)
@@ -33,13 +31,13 @@ class Lobby(SQLModel, table=True):
     created_at: datetime = Field(default_factory=lambda: datetime.now(tz=timezone.utc))
 
 
-class Game(SQLModel, table=True):
-    id: Optional[int] = Field(default=None, primary_key=True)
-    state: GameState = Field(default=GameState.LOBBY)
-    puzzle_name: str = Field(default="tutorial")
-    created_at: datetime = Field(default_factory=lambda: datetime.now(tz=timezone.utc))
-    started_at: Optional[datetime] = Field(default=None)
-    finished_at: Optional[datetime] = Field(default=None)
+# class Game(SQLModel, table=True):
+#     id: Optional[int] = Field(default=None, primary_key=True)
+#     state: GameState = Field(default=GameState.LOBBY)
+#     puzzle_name: str = Field(default="tutorial")
+#     created_at: datetime = Field(default_factory=lambda: datetime.now(tz=timezone.utc))
+#     started_at: Optional[datetime] = Field(default=None)
+#     finished_at: Optional[datetime] = Field(default=None)
 
 
 class Guess(SQLModel, table=True):

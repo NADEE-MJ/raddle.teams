@@ -1,13 +1,9 @@
 import React, { createContext, useContext, useState } from "react";
-import { Game, Team, TeamProgress } from "../types";
+import { LobbyInfo } from "../types";
 
 interface GameContextType {
-  game: Game | null;
-  setGame: (game: Game | null) => void;
-  teams: Team[];
-  setTeams: (teams: Team[]) => void;
-  teamProgress: TeamProgress | null;
-  setTeamProgress: (progress: TeamProgress | null) => void;
+  currentLobby: LobbyInfo | null;
+  setCurrentLobby: (lobby: LobbyInfo | null) => void;
   loading: boolean;
   setLoading: (loading: boolean) => void;
 }
@@ -15,20 +11,14 @@ interface GameContextType {
 const GameContext = createContext<GameContextType | undefined>(undefined);
 
 export function GameProvider({ children }: { children: React.ReactNode }) {
-  const [game, setGame] = useState<Game | null>(null);
-  const [teams, setTeams] = useState<Team[]>([]);
-  const [teamProgress, setTeamProgress] = useState<TeamProgress | null>(null);
+  const [currentLobby, setCurrentLobby] = useState<LobbyInfo | null>(null);
   const [loading, setLoading] = useState(false);
 
   return (
     <GameContext.Provider
       value={{
-        game,
-        setGame,
-        teams,
-        setTeams,
-        teamProgress,
-        setTeamProgress,
+        currentLobby,
+        setCurrentLobby,
         loading,
         setLoading,
       }}

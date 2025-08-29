@@ -2,6 +2,7 @@ export interface Player {
   id: number;
   name: string;
   session_id: string;
+  lobby_id: number;
   team_id?: number;
   connected: boolean;
   created_at: string;
@@ -11,9 +12,25 @@ export interface Team {
   id: number;
   name: string;
   game_id: number;
+  lobby_id: number;
   current_word_index: number;
   completed_at?: string;
   created_at: string;
+}
+
+export interface Lobby {
+  id: number;
+  code: string;
+  name: string;
+  created_at: string;
+}
+
+export interface LobbyInfo {
+  lobby: Lobby;
+  players: Player[];
+  players_by_team: Record<number, Player[]> | null;
+  teams: Team[] | null;
+  game: null;
 }
 
 export interface Game {
@@ -34,21 +51,6 @@ export interface Guess {
   guess: string;
   is_correct: boolean;
   submitted_at: string;
-}
-
-export interface TeamProgress {
-  team_id: number;
-  team_name: string;
-  current_word: string;
-  current_word_index: number;
-  total_words: number;
-  forward_clue?: string;
-  backward_clue?: string;
-  forward_next_length?: number;
-  backward_next_length?: number;
-  recent_guesses: Guess[];
-  completed: boolean;
-  completed_at?: string;
 }
 
 export interface WebSocketMessage {

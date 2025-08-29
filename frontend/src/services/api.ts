@@ -1,8 +1,22 @@
-import { Player, Team, Game, Guess, TeamProgress } from "../types";
+import { Player, Lobby, LobbyInfo } from "../types";
 
 const API_BASE = "/api";
 
 class ApiService {
+  private getAuthHeaders(): HeadersInit {
+    const adminToken = localStorage.getItem("adminToken");
+    
+    const headers: HeadersInit = {
+      "Content-Type": "application/json",
+    };
+
+    if (adminToken) {
+      headers["Authorization"] = `Bearer ${adminToken}`;
+    }
+
+    return headers;
+  }
+
   private async request<T>(
     endpoint: string,
     options?: RequestInit,
@@ -10,7 +24,7 @@ class ApiService {
     const url = `${API_BASE}${endpoint}`;
     const response = await fetch(url, {
       headers: {
-        "Content-Type": "application/json",
+        ...this.getAuthHeaders(),
         ...options?.headers,
       },
       ...options,
@@ -23,80 +37,54 @@ class ApiService {
     return response.json();
   }
 
-  // Player endpoints
-  async createPlayer(name: string, sessionId: string): Promise<Player> {
-    return this.request<Player>("/players", {
-      method: "POST",
-      body: JSON.stringify({ name, session_id: sessionId }),
-    });
-  }
-
-  async getPlayers(): Promise<Player[]> {
-    return this.request<Player[]>("/players");
-  }
-
-  // Game endpoints
-  async createGame(): Promise<Game> {
-    return this.request<Game>("/games", {
-      method: "POST",
-    });
-  }
-
-  async getCurrentGame(): Promise<Game> {
-    return this.request<Game>("/games/current");
-  }
-
-  async startGame(gameId: number): Promise<{ message: string }> {
-    return this.request<{ message: string }>(`/games/${gameId}/start`, {
-      method: "POST",
-    });
-  }
-
-  // Team endpoints
-  async createTeam(name: string): Promise<Team> {
-    return this.request<Team>("/teams", {
+  // Admin endpoints
+  async createLobby(name: string): Promise<Lobby> {
+    return this.request<Lobby>("/admin/lobby", {
       method: "POST",
       body: JSON.stringify({ name }),
     });
   }
 
-  async getTeams(): Promise<Team[]> {
-    return this.request<Team[]>("/teams");
+  async getAllLobbies(): Promise<Lobby[]> {
+    return this.request<Lobby[]>("/admin/lobby");
   }
 
-  async joinTeam(
-    teamId: number,
-    playerSessionId: string,
-  ): Promise<{ message: string }> {
-    return this.request<{ message: string }>(`/teams/${teamId}/join`, {
+  // Player endpoints
+  async joinLobby(lobbyCode: string, name: string, sessionId: string): Promise<Player> {
+    return this.request<Player>(`/lobby/${lobbyCode}/join`, {
       method: "POST",
-      body: JSON.stringify({ player_session_id: playerSessionId }),
+      body: JSON.stringify({ name, session_id: sessionId }),
     });
   }
 
-  async getTeamProgress(teamId: number): Promise<TeamProgress> {
-    return this.request<TeamProgress>(`/teams/${teamId}/progress`);
+  async getActiveLobbyForPlayer(sessionId: string): Promise<Lobby> {
+    return this.request<Lobby>(`/lobby/${sessionId}`);
   }
 
-  // Guess endpoints
-  async submitGuess(
-    playerSessionId: string,
-    guess: string,
-    direction: "forward" | "backward",
-  ): Promise<Guess> {
-    return this.request<Guess>("/guess", {
-      method: "POST",
-      body: JSON.stringify({
-        player_session_id: playerSessionId,
-        guess,
-        direction,
-      }),
-    });
+  async getLobbyInfo(lobbyId: number): Promise<LobbyInfo> {
+    return this.request<LobbyInfo>(`/lobby/${lobbyId}`);
   }
 
-  // Health check
-  async healthCheck(): Promise<{ status: string; message: string }> {
-    return this.request<{ status: string; message: string }>("/health");
+  // Authentication helpers
+  setAdminToken(token: string): void {
+    localStorage.setItem("adminToken", token);
+  }
+
+  setUserToken(token: string): void {
+    localStorage.setItem("userToken", token);
+  }
+
+  getAdminToken(): string | null {
+    return localStorage.getItem("adminToken");
+  }
+
+  getUserToken(): string | null {
+    return localStorage.getItem("userToken");
+  }
+
+  clearTokens(): void {
+    localStorage.removeItem("adminToken");
+    localStorage.removeItem("userToken");
   }
 }
 

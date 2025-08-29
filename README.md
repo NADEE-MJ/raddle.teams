@@ -2,52 +2,63 @@
 
 A team-based multiplayer word chain puzzle game inspired by raddle.quest. Players work together in teams to solve word puzzles by connecting words through clever clues.
 
-## 🚀 Current Status: Phase 1 Implementation
+## 🚀 Current Status: Phase 1 Implementation Complete
 
-The core multiplayer mechanics are implemented and functional. Players can join lobbies, form teams, and solve word chain puzzles together in real-time.
+The core lobby and team management system is implemented and functional. The backend has been completely reworked to support the new lobby-based architecture.
 
 ## ✨ Features
 
 ### Phase 1 (🟢 Complete)
 
-- **🎮 Core Game Mechanics**: Word chain puzzles with forward/backward solving
-- **👥 Team-based Multiplayer**: Real-time team collaboration with WebSocket communication
-- **🎲 Lobby System**: Players join with custom names, automatic session management
-- **👨‍💼 Admin Controls**: Game creation, team management, and game starting
-- **🔒 Optimistic Locking**: Race condition prevention for simultaneous team guesses
-- **📱 Responsive Design**: Mobile-first UI with Tailwind CSS v4
-- **💾 Data Persistence**: SQLite database with proper session management
+**Admin Features:**
+- **🔐 Token-based Authentication**: Secure admin access with token storage
+- **🏢 Lobby Management**: Create and view all lobbies
+- **� Lobby Inspection**: Peak into lobbies to see players and teams
+- **🌐 Admin WebSocket Support**: Real-time admin dashboard updates
 
-### Phase 2 (🔄 Planned)
+**Player Features:**
+- **� Lobby Joining**: Join lobbies using 6-character codes
+- **👤 Player Management**: Automatic player creation and session handling
+- **� Reconnection Support**: Get active lobby for reconnecting players
+- **📊 Lobby Information**: View real-time lobby details and player status
 
-- Multiple puzzles + progress tracking
-- Enhanced admin dashboard with analytics
-- Win conditions and leaderboards
+**Technical Features:**
+- **� Token Storage**: Admin and user tokens stored in localStorage
+- **🔗 API Integration**: RESTful endpoints matching new backend structure
+- **📱 Responsive UI**: Mobile-first design with Tailwind CSS
+- **⚡ Real-time Updates**: WebSocket connections for live updates
+
+### Phase 2 (🔄 Next)
+
+- Actual game mechanics (word chain puzzles)
+- Team assignment and management
+- Game state management
+- Puzzle solving with optimistic locking
 
 ### Phase 3 (🔮 Future)
 
+- Multiple puzzles + progress tracking
 - Hint system with time penalties
 - Team elimination mechanics
-- Reconnection handling
-- Spectator mode for finished teams
+- Enhanced admin dashboard with analytics
 
 ## 🛠️ Technology Stack
 
 ### Backend
 
-- **FastAPI** - Modern Python web framework
+- **FastAPI** - Modern Python web framework with new lobby-based architecture
 - **SQLModel** - Type-safe database models with SQLite
-- **WebSockets** - Real-time bidirectional communication
+- **WebSockets** - Real-time bidirectional communication for admin and players
 - **Poetry** - Python dependency management
-- **Uvicorn** - High-performance ASGI server
+- **Bearer Token Auth** - Secure admin authentication
 
 ### Frontend
 
 - **React 18** - Modern React with hooks and context
-- **TypeScript** - Type-safe JavaScript
-- **Tailwind CSS v4** - Utility-first CSS framework with latest features
+- **TypeScript** - Type-safe JavaScript with updated type definitions
+- **Tailwind CSS** - Utility-first CSS framework
 - **Vite** - Lightning-fast build tool and dev server
-- **React Router** - Client-side routing
+- **React Router** - Client-side routing for lobby system
 
 ### Key Technologies
 

@@ -1,47 +1,33 @@
 import { useCallback, useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { usePlayer } from "../context/PlayerContext";
-import { useGame } from "../context/GameContext";
 import { apiService } from "../services/api";
-import { Player } from "../types";
+import { LobbyInfo } from "../types";
 
 export default function LobbyPage() {
-  const [players, setPlayers] = useState<Player[]>([]);
+  const [lobbyInfo, setLobbyInfo] = useState<LobbyInfo | null>(null);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState("");
   const { player } = usePlayer();
-  const { game, setGame } = useGame();
   const navigate = useNavigate();
 
-  const loadGameData = useCallback(async () => {
+  const loadLobbyData = useCallback(async () => {
+    if (!player) return;
+
     try {
       setLoading(true);
+      setError("");
 
-      // Try to get current game
-      try {
-        const currentGame = await apiService.getCurrentGame();
-        setGame(currentGame);
-
-        // Only redirect to game if player is assigned to a team AND game is active
-        if (currentGame.state === "active" && player?.team_id) {
-          navigate("/game");
-          return;
-        }
-      } catch (error) {
-        // No game exists, that's okay
-        console.log("No active game found:", error);
-      }
-
-      // Load players
-      const playersData = await apiService.getPlayers();
-      setPlayers(playersData);
+      // Get lobby info for the player's lobby
+      const lobbyData = await apiService.getLobbyInfo(player.lobby_id);
+      setLobbyInfo(lobbyData);
     } catch (err) {
-      setError("Failed to load game data");
-      console.error("Error loading game data:", err);
+      setError("Failed to load lobby data");
+      console.error("Error loading lobby data:", err);
     } finally {
       setLoading(false);
     }
-  }, [setGame, navigate, player]);
+  }, [player]);
 
   useEffect(() => {
     if (!player) {
@@ -49,15 +35,39 @@ export default function LobbyPage() {
       return;
     }
 
-    loadGameData();
-  }, [player, navigate, loadGameData]);
+    loadLobbyData();
+    
+    // Set up polling to refresh lobby data every 3 seconds
+    const interval = setInterval(loadLobbyData, 3000);
+    return () => clearInterval(interval);
+  }, [player, navigate, loadLobbyData]);
 
-  if (loading) {
+  const handleLeave = () => {
+    navigate("/");
+  };
+
+  if (loading && !lobbyInfo) {
     return (
       <div className="min-h-screen flex items-center justify-center">
         <div className="text-center">
           <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-blue-600 mx-auto"></div>
-          <p className="mt-4 text-gray-600">Loading...</p>
+          <p className="mt-4 text-gray-600">Loading lobby...</p>
+        </div>
+      </div>
+    );
+  }
+
+  if (!lobbyInfo) {
+    return (
+      <div className="min-h-screen flex items-center justify-center">
+        <div className="text-center">
+          <p className="text-red-600 mb-4">Failed to load lobby information</p>
+          <button
+            onClick={() => navigate("/")}
+            className="bg-blue-600 hover:bg-blue-700 text-white px-4 py-2 rounded-md"
+          >
+            Back to Home
+          </button>
         </div>
       </div>
     );
@@ -65,12 +75,23 @@ export default function LobbyPage() {
 
   return (
     <div className="min-h-screen bg-gray-100 p-4">
-      <div className="max-w-4xl mx-auto">
-        <div className="bg-white rounded-lg shadow-lg p-6">
+      <div className="max-w-6xl mx-auto">
+        <div className="bg-white rounded-lg shadow-lg p-6 mb-6">
           <div className="flex justify-between items-center mb-6">
-            <h1 className="text-2xl font-bold text-gray-900">Game Lobby</h1>
-            <div className="text-sm text-gray-600">
-              Welcome, {player?.name}!
+            <div>
+              <h1 className="text-3xl font-bold text-gray-900">{lobbyInfo.lobby.name}</h1>
+              <p className="text-gray-600">
+                Lobby Code: <span className="font-mono text-lg font-bold">{lobbyInfo.lobby.code}</span>
+              </p>
+            </div>
+            <div className="text-right">
+              <p className="text-sm text-gray-600">Welcome, {player?.name}!</p>
+              <button
+                onClick={handleLeave}
+                className="mt-2 bg-red-600 hover:bg-red-700 text-white px-4 py-2 rounded-md transition duration-200"
+              >
+                Leave Lobby
+              </button>
             </div>
           </div>
 
@@ -80,66 +101,111 @@ export default function LobbyPage() {
             </div>
           )}
 
-          {!game && (
-            <div className="text-center py-8">
-              <p className="text-gray-600 mb-4">
-                Waiting for admin to start the game...
-              </p>
-              <div className="animate-pulse">
-                <div className="h-2 bg-gray-200 rounded w-1/3 mx-auto"></div>
-              </div>
-            </div>
-          )}
-
-          {game && game.state === "lobby" && (
-            <div className="text-center py-8">
-              <p className="text-gray-600 mb-4">
-                Game created! Waiting for teams to be set up...
-              </p>
-            </div>
-          )}
-
-          <div className="mt-8">
-            <h2 className="text-lg font-semibold text-gray-900 mb-4">
-              Players in Lobby ({players.length})
-            </h2>
-            <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-3">
-              {players.map((p: Player) => (
-                <div
-                  key={p.id}
-                  className={`p-3 rounded-lg border ${
-                    p.connected
-                      ? "bg-green-50 border-green-200"
-                      : "bg-gray-50 border-gray-200"
-                  }`}
-                >
-                  <div className="flex items-center space-x-2">
+          <div className="grid md:grid-cols-2 gap-6">
+            {/* Players Section */}
+            <div className="bg-gray-50 rounded-lg p-4">
+              <h2 className="text-xl font-semibold text-gray-900 mb-4">
+                Players ({lobbyInfo.players.length})
+              </h2>
+              {lobbyInfo.players.length === 0 ? (
+                <p className="text-gray-500">No players in lobby yet</p>
+              ) : (
+                <div className="space-y-2 max-h-64 overflow-y-auto">
+                  {lobbyInfo.players.map((playerItem) => (
                     <div
-                      className={`w-3 h-3 rounded-full ${
-                        p.connected ? "bg-green-500" : "bg-gray-400"
+                      key={playerItem.id}
+                      className={`flex justify-between items-center p-3 rounded-md ${
+                        playerItem.id === player?.id
+                          ? "bg-blue-100 border-2 border-blue-300"
+                          : "bg-white border border-gray-200"
                       }`}
-                    ></div>
-                    <span className="text-sm font-medium text-gray-900">
-                      {p.name}
-                    </span>
-                  </div>
-                  {p.team_id && (
-                    <div className="text-xs text-gray-500 mt-1">
-                      Team: {p.team_id}
+                    >
+                      <div className="flex items-center gap-3">
+                        <span className={`w-3 h-3 rounded-full ${playerItem.connected ? 'bg-green-500' : 'bg-red-500'}`}></span>
+                        <span className="font-medium">
+                          {playerItem.name}
+                          {playerItem.id === player?.id && " (You)"}
+                        </span>
+                      </div>
+                      <div className="text-sm text-gray-500">
+                        {playerItem.team_id ? `Team ${playerItem.team_id}` : 'No team'}
+                      </div>
                     </div>
-                  )}
+                  ))}
                 </div>
-              ))}
+              )}
+            </div>
+
+            {/* Teams Section */}
+            <div className="bg-gray-50 rounded-lg p-4">
+              <h2 className="text-xl font-semibold text-gray-900 mb-4">
+                Teams {lobbyInfo.teams ? `(${lobbyInfo.teams.length})` : '(0)'}
+              </h2>
+              {!lobbyInfo.teams || lobbyInfo.teams.length === 0 ? (
+                <p className="text-gray-500">No teams created yet. Waiting for admin to set up teams...</p>
+              ) : (
+                <div className="space-y-3">
+                  {lobbyInfo.teams.map((team) => (
+                    <div key={team.id} className="bg-white border border-gray-200 rounded-lg p-4">
+                      <h3 className="font-semibold text-lg mb-2">{team.name}</h3>
+                      <div className="text-sm text-gray-600 mb-2">
+                        Progress: Word {team.current_word_index + 1}
+                      </div>
+                      {lobbyInfo.players_by_team && lobbyInfo.players_by_team[team.id] && (
+                        <div>
+                          <p className="text-sm font-medium text-gray-700 mb-1">Members:</p>
+                          <div className="flex flex-wrap gap-1">
+                            {lobbyInfo.players_by_team[team.id].map((teamPlayer) => (
+                              <span
+                                key={teamPlayer.id}
+                                className={`inline-block px-2 py-1 text-xs rounded-md ${
+                                  teamPlayer.id === player?.id
+                                    ? "bg-blue-200 text-blue-800 font-semibold"
+                                    : "bg-gray-200 text-gray-700"
+                                }`}
+                              >
+                                {teamPlayer.name}
+                              </span>
+                            ))}
+                          </div>
+                        </div>
+                      )}
+                    </div>
+                  ))}
+                </div>
+              )}
             </div>
           </div>
 
-          <div className="mt-8 text-center">
-            <button
-              onClick={loadGameData}
-              className="bg-blue-600 text-white px-4 py-2 rounded-md hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2"
-            >
-              Refresh
-            </button>
+          {/* Game Status */}
+          <div className="mt-6 p-4 bg-blue-50 rounded-lg">
+            <h3 className="text-lg font-semibold text-blue-900 mb-2">Game Status</h3>
+            {!lobbyInfo.game ? (
+              <p className="text-blue-700">Waiting for admin to start the game...</p>
+            ) : (
+              <div className="text-blue-700">
+                <p>Game Status: <span className="capitalize font-semibold">{lobbyInfo.game}</span></p>
+                {player?.team_id ? (
+                  <p className="mt-2">You are assigned to Team {player.team_id}</p>
+                ) : (
+                  <p className="mt-2">You are not assigned to a team yet</p>
+                )}
+              </div>
+            )}
+          </div>
+
+          {/* Auto-refresh indicator */}
+          <div className="mt-4 text-center">
+            <p className="text-sm text-gray-500">
+              {loading && lobbyInfo ? (
+                <span className="flex items-center justify-center gap-2">
+                  <div className="w-4 h-4 border-2 border-gray-300 border-t-blue-500 rounded-full animate-spin"></div>
+                  Refreshing...
+                </span>
+              ) : (
+                "Auto-refreshing every 3 seconds"
+              )}
+            </p>
           </div>
         </div>
       </div>
