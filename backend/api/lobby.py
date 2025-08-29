@@ -1,30 +1,10 @@
-from uuid import uuid4
-
 from fastapi import APIRouter, Depends, HTTPException
 from pydantic import BaseModel
 from sqlmodel import Session, select
 
 from backend.database import Lobby, Player, Team, get_session
-from backend.dependencies import check_admin_token
 
 router = APIRouter()
-
-
-class LobbyCreate(BaseModel):
-    name: str
-
-
-@router.post("/lobby", response_model=Lobby)
-async def create_lobby(
-    lobby_data: LobbyCreate,
-    db: Session = Depends(get_session),
-    authenticated: bool = Depends(check_admin_token),
-):
-    lobby = Lobby(**lobby_data.model_dump(), code=uuid4().hex[:6])
-    db.add(lobby)
-    db.commit()
-    db.refresh(lobby)
-    return lobby
 
 
 class PlayerCreate(BaseModel):
@@ -104,10 +84,3 @@ async def get_lobby(lobby_id: int, db: Session = Depends(get_session)):
     return LobbyInfo(
         lobby=lobby, players=players, players_by_team=players_by_team, teams=teams
     )
-
-
-@router.get("/lobby", response_model=list[Lobby])
-async def get_all_lobbies(
-    db: Session = Depends(get_session), authenticated: bool = Depends(check_admin_token)
-):
-    return db.exec(select(Lobby)).all()
