@@ -1,7 +1,7 @@
-from fastapi import APIRouter, Query, WebSocket, WebSocketDisconnect
+from fastapi import APIRouter, Depends, WebSocket, WebSocketDisconnect
 
+from backend.dependencies import check_admin_token_query
 from backend.websocket.managers import admin_web_socket_manager, lobby_websocket_manager
-from settings import settings
 
 router = APIRouter()
 
@@ -10,13 +10,8 @@ router = APIRouter()
 async def admin_websocket(
     websocket: WebSocket,
     web_session_id: str,
-    token: str = Query(...),
+    is_admin: bool = Depends(check_admin_token_query),
 ):
-    # Validate admin token before accepting connection
-    if not token or token != settings.ADMIN_PASSWORD:
-        await websocket.close(code=4001, reason="Unauthorized")
-        return
-
     # Handle admin-specific websocket logic here
     await admin_web_socket_manager.connect(websocket, web_session_id)
 

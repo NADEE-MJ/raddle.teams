@@ -1,4 +1,4 @@
-from fastapi import Depends, HTTPException, status
+from fastapi import Depends, HTTPException, Query, status
 from fastapi.security import HTTPAuthorizationCredentials, HTTPBearer
 
 from settings import settings
@@ -33,6 +33,39 @@ def check_admin_token(
             status_code=status.HTTP_401_UNAUTHORIZED,
             detail="Invalid admin credentials",
             headers={"WWW-Authenticate": "Bearer"},
+        )
+
+    return True
+
+
+def check_admin_token_query(
+    token: str = Query(..., description="Admin authentication token"),
+) -> bool:
+    """
+    FastAPI dependency that validates admin token from query parameters.
+
+    Expects a token query parameter that matches the admin password
+    from environment settings.
+
+    Args:
+        token: Admin token from query parameter
+
+    Raises:
+        HTTPException: 401 if token is invalid or missing
+
+    Returns:
+        bool: True if authentication successful
+    """
+    if not token:
+        raise HTTPException(
+            status_code=status.HTTP_401_UNAUTHORIZED,
+            detail="Missing authentication token",
+        )
+
+    if token != settings.ADMIN_PASSWORD:
+        raise HTTPException(
+            status_code=status.HTTP_401_UNAUTHORIZED,
+            detail="Invalid admin credentials",
         )
 
     return True
