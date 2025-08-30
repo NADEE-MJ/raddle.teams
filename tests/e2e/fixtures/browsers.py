@@ -1,7 +1,7 @@
 import os
 from typing import Dict
 
-from playwright.async_api import Browser, BrowserContext, Page, async_playwright
+from playwright.async_api import Browser, BrowserContext, Page
 
 
 class BrowserSession:

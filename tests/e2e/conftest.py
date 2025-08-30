@@ -2,6 +2,7 @@ import os
 import sys
 from typing import AsyncGenerator
 
+import httpx
 import pytest
 from playwright.async_api import Page, async_playwright
 
@@ -25,6 +26,12 @@ def server():
 @pytest.fixture(scope="session", autouse=True)
 def server_url(server):
     return server.url
+
+
+@pytest.fixture(scope="function", autouse=True)
+def reset_database(server_url):
+    with httpx.Client() as client:
+        client.delete(f"{server_url}/api/reset-db")
 
 
 @pytest.fixture()

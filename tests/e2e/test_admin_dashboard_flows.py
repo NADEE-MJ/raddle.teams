@@ -73,13 +73,15 @@ class TestAdminDashboardFlows:
         await actions.goto_admin_page()
         await actions.login(settings.ADMIN_PASSWORD)
 
-        lobby_code = await actions.get_first_lobby()
+        # Create a lobby first since database is reset between tests
+        lobby_code = await actions.create_lobby("View Details Test Lobby")
 
+        # Now view its details
         await actions.peek_into_lobby(lobby_code)
 
         await expect(page.locator("text=Lobby Details:")).to_be_visible()
         await expect(
-            page.locator('h2:has-text("Lobby Details: E2E Test Lobby")')
+            page.locator('h2:has-text("Lobby Details: View Details Test Lobby")')
         ).to_be_visible()
         lobby_info_section = page.locator("h3:has-text('Lobby Info')").locator("..")
         await expect(lobby_info_section.locator(f"text={lobby_code}")).to_be_visible()
@@ -128,3 +130,40 @@ class TestAdminDashboardFlows:
 
         await browser.screenshot("admin_navigation")
         await browser.stop()
+
+    async def test_admin_multiple_lobbies_management(
+        self, admin_actions: AdminFixture, settings: Settings
+    ):
+        actions, page, browser = admin_actions
+        browser.set_name("admin_multiple_lobbies")
+
+        await actions.goto_admin_page()
+        await actions.login(settings.ADMIN_PASSWORD)
+
+        lobby1_code = await actions.create_lobby("First Test Lobby")
+        lobby2_code = await actions.create_lobby("Second Test Lobby")
+
+        await expect(page.locator(f"text=Code: {lobby1_code}")).to_be_visible()
+        await expect(page.locator(f"text=Code: {lobby2_code}")).to_be_visible()
+        await expect(page.locator('h3:has-text("First Test Lobby")')).to_be_visible()
+        await expect(page.locator('h3:has-text("Second Test Lobby")')).to_be_visible()
+
+        await actions.refresh_lobbies()
+        await expect(page.locator(f"text=Code: {lobby1_code}")).to_be_visible()
+        await expect(page.locator(f"text=Code: {lobby2_code}")).to_be_visible()
+
+        await browser.screenshot("admin_multiple_lobbies")
+
+    async def test_admin_empty_lobby_list(
+        self, admin_actions: AdminFixture, settings: Settings
+    ):
+        actions, page, browser = admin_actions
+        browser.set_name("admin_empty_lobby_list")
+
+        await actions.goto_admin_page()
+        await actions.login(settings.ADMIN_PASSWORD)
+
+        await actions.view_all_lobbies()
+        await expect(page.locator("text=No lobbies created yet")).to_be_visible()
+
+        await browser.screenshot("admin_empty_lobby_list")

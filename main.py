@@ -19,6 +19,14 @@ app = FastAPI(
 
 if os.environ.get("RADDLE_ENV") == "testing":
     drop_all_tables()
+
+    @app.delete("/api/reset-db")
+    async def reset_db():
+        drop_all_tables()
+        create_db_and_tables()
+        return {"message": "Database reset successful"}
+
+
 create_db_and_tables()
 
 
