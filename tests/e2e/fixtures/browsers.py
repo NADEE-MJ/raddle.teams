@@ -59,22 +59,21 @@ class BrowserSession:
             await self.context.close()
             self.context = None
 
-    async def screenshot(self, name: str):
+    async def screenshot(self, name: str = None):
+        if name is None:
+            name = self.name
+
         if self.page:
-            screenshot_path = f"{self.recording_dir}/screenshots/{self.name}.png"
+            screenshot_path = f"{self.recording_dir}/screenshots/{name}.png"
             await self.page.screenshot(path=screenshot_path)
             return screenshot_path
 
 
 class MultiBrowserManager:
-    def __init__(self):
-        self.playwright = None
-        self.browser = None
+    def __init__(self, playwright, browser):
+        self.playwright = playwright
+        self.browser = browser
         self.sessions: Dict[str, BrowserSession] = {}
-
-    async def start(self):
-        self.playwright = await async_playwright().start()
-        self.browser = await self.playwright.chromium.connect("ws://127.0.0.1:3000/")
 
     async def create_session(self, key: str) -> Page:
         session = BrowserSession(self.browser)
