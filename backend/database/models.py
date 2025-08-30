@@ -10,7 +10,6 @@ class Player(SQLModel, table=True):
     session_id: str = Field(unique=True)
     lobby_id: int = Field(foreign_key="lobby.id")
     team_id: Optional[int] = Field(default=None, foreign_key="team.id")
-    connected: bool = Field(default=False)
     created_at: datetime = Field(default_factory=lambda: datetime.now(tz=timezone.utc))
 
 

@@ -4,7 +4,7 @@ from logging.handlers import RotatingFileHandler
 
 def create_file_logger() -> logging.Logger:
     logger = logging.getLogger("raddle_teams_logger")
-    level = logging.DEBUG
+    level = logging.INFO
     logger.setLevel(level)
     logger.propagate = False
 

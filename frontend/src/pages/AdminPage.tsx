@@ -217,7 +217,7 @@ export default function AdminPage() {
                 Refresh
               </button>
             </div>
-            
+
             {lobbies.length === 0 ? (
               <p className="text-gray-500 text-center py-8">No lobbies created yet</p>
             ) : (
@@ -277,7 +277,6 @@ export default function AdminPage() {
                       <div key={player.id} className="flex justify-between items-center p-2 bg-gray-50 rounded">
                         <span>{player.name}</span>
                         <div className="flex items-center gap-2">
-                          <span className={`w-2 h-2 rounded-full ${player.connected ? 'bg-green-500' : 'bg-red-500'}`}></span>
                           <span className="text-sm text-gray-500">
                             {player.team_id ? `Team ${player.team_id}` : 'No team'}
                           </span>

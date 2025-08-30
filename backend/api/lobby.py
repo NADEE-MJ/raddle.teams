@@ -3,6 +3,9 @@ from pydantic import BaseModel
 from sqlmodel import Session, select
 
 from backend.database import Lobby, Player, Team, get_session
+from backend.websocket.events import DisconnectedLobbyEvent, JoinedLobbyEvent
+from backend.websocket.managers import lobby_websocket_manager
+from custom_logging import file_logger
 
 router = APIRouter()
 
@@ -30,6 +33,19 @@ async def join_lobby(
         db.add(existing_player)
         db.commit()
         db.refresh(existing_player)
+        # notify connected websockets that a player joined/changed
+        try:
+            await lobby_websocket_manager.broadcast_to_lobby(
+                lobby.id,
+                JoinedLobbyEvent(
+                    lobby_id=lobby.id, player_session_id=existing_player.session_id
+                ),
+            )
+        except Exception as e:
+            file_logger.exception(
+                f"Failed to broadcast lobby join for session {existing_player.session_id}: {e}"
+            )
+
         return existing_player
 
     player = Player(**player_data.model_dump(), lobby_id=lobby.id)
@@ -38,7 +54,48 @@ async def join_lobby(
     db.refresh(player)
 
     # TODO maybe set the session in the cookies or leave it in local storage, not sure what to do here?
+    # notify connected websockets that a new player joined
+    try:
+        await lobby_websocket_manager.broadcast_to_lobby(
+            lobby.id,
+            JoinedLobbyEvent(lobby_id=lobby.id, player_session_id=player.session_id),
+        )
+    except Exception as e:
+        file_logger.exception(
+            f"Failed to broadcast lobby join for session {player.session_id}: {e}"
+        )
+
     return player
+
+
+@router.delete("/player/{session_id}/leave")
+async def leave_lobby(session_id: str, db: Session = Depends(get_session)):
+    """Remove the player identified by session_id from their lobby and notify others."""
+    player = db.exec(select(Player).where(Player.session_id == session_id)).first()
+    if not player:
+        # Nothing to do
+        return {"status": "ok", "message": "player not found"}
+
+    lobby_id = player.lobby_id
+    try:
+        db.delete(player)
+        db.commit()
+    except Exception as e:
+        file_logger.exception(f"Failed to delete player {session_id}: {e}")
+        raise HTTPException(status_code=500, detail="Failed to remove player")
+
+    # Broadcast disconnect event
+    try:
+        await lobby_websocket_manager.broadcast_to_lobby(
+            lobby_id,
+            DisconnectedLobbyEvent(lobby_id=lobby_id, player_session_id=session_id),
+        )
+    except Exception as e:
+        file_logger.exception(
+            f"Failed to broadcast player left for session {session_id}: {e}"
+        )
+
+    return {"status": "ok", "message": "left"}
 
 
 @router.get("/player/{session_id}/lobby", response_model=Lobby)

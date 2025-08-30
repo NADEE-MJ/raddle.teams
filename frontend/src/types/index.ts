@@ -4,7 +4,6 @@ export interface Player {
   session_id: string;
   lobby_id: number;
   team_id?: number;
-  connected: boolean;
   created_at: string;
 }
 

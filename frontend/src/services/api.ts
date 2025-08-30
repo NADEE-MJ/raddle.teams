@@ -5,7 +5,7 @@ const API_BASE = "/api";
 class ApiService {
   private getAuthHeaders(): HeadersInit {
     const adminToken = localStorage.getItem("adminToken");
-    
+
     const headers: HeadersInit = {
       "Content-Type": "application/json",
     };
@@ -17,10 +17,7 @@ class ApiService {
     return headers;
   }
 
-  private async request<T>(
-    endpoint: string,
-    options?: RequestInit,
-  ): Promise<T> {
+  private async request<T>(endpoint: string, options?: RequestInit): Promise<T> {
     const url = `${API_BASE}${endpoint}`;
     const response = await fetch(url, {
       headers: {
@@ -67,6 +64,12 @@ class ApiService {
 
   async getLobbyInfo(lobbyId: number): Promise<LobbyInfo> {
     return this.request<LobbyInfo>(`/lobby/${lobbyId}`);
+  }
+
+  async leaveLobby(sessionId: string): Promise<{ status: string; message: string }> {
+    return this.request<{ status: string; message: string }>(`/player/${sessionId}/leave`, {
+      method: "DELETE",
+    });
   }
 
   // Authentication helpers
