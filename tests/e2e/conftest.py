@@ -3,7 +3,7 @@ from typing import AsyncGenerator
 import pytest
 from playwright.async_api import Page, async_playwright
 
-from settings import settings
+from settings import settings as env
 from tests.e2e.fixtures.browsers import BrowserSession, MultiBrowserManager
 from tests.e2e.fixtures.server import ServerManager
 from tests.e2e.utilities.admin_actions import AdminActions
@@ -30,12 +30,17 @@ async def multi_browser():
     await manager.close_all()
 
 
+@pytest.fixture()
+async def playwright():
+    async with async_playwright() as p:
+        yield p
+
+
 BrowserFixture = AsyncGenerator[tuple[BrowserSession, Page]]
 
 
-@pytest.fixture(scope="module")
-async def browser() -> BrowserFixture:
-    playwright = await async_playwright().start()
+@pytest.fixture
+async def browser(playwright) -> BrowserFixture:
     browser = await playwright.chromium.connect("ws://127.0.0.1:3000/")
 
     session = BrowserSession(browser)
@@ -46,12 +51,11 @@ async def browser() -> BrowserFixture:
 
     await session.stop()
     await browser.close()
-    await playwright.stop()
 
 
 @pytest.fixture(scope="session", autouse=True)
-def settings() -> settings:
-    return settings
+def settings():
+    return env
 
 
 @pytest.fixture

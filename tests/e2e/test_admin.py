@@ -10,11 +10,11 @@ AdminFixture = tuple[AdminActions, Page, BrowserSession]
 
 
 class TestAdmin:
-    async def test_admin_login_flow(self, browser, settings: Settings, server_url: str):
-        browser, page = browser
+    async def test_admin_login_flow(
+        self, admin_actions: AdminFixture, settings: Settings
+    ):
+        actions, page, browser = admin_actions
         browser.set_name("admin_login_flow")
-
-        actions = AdminActions(page, server_url)
 
         await actions.goto_admin_page()
 
@@ -27,18 +27,14 @@ class TestAdmin:
         await expect(page.locator("text=Create New Lobby")).to_be_visible()
         await expect(page.locator("text=All Lobbies")).to_be_visible()
 
-        await browser.screenshot("admin_logged_in")
+        await browser.screenshot()
 
     async def test_admin_login_invalid_password(
         self,
-        server_url: str,
-        browser,
-        admin_actions: Callable[[Page], AdminActions],
+        admin_actions: AdminFixture,
     ):
-        """Test admin login with incorrect password."""
-        browser, page = browser
-        browser.set_name("admin_login_invalid_password")
         actions, page, browser = admin_actions
+        browser.set_name("admin_login_invalid_password")
 
         await actions.goto_admin_page()
 
@@ -53,8 +49,7 @@ class TestAdmin:
         await expect(page.locator("text=Invalid admin token")).to_be_visible()
         await expect(page.locator("h1:has-text('Admin Login')")).to_be_visible()
 
-        await browser.screenshot("admin_login_failed")
-        # await browser.stop()
+        await browser.screenshot()
 
     async def test_admin_create_lobby(
         self,

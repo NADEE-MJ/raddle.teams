@@ -59,7 +59,7 @@ class BrowserSession:
             await self.context.close()
             self.context = None
 
-    async def screenshot(self):
+    async def screenshot(self, name: str):
         if self.page:
             screenshot_path = f"{self.recording_dir}/screenshots/{self.name}.png"
             await self.page.screenshot(path=screenshot_path)
