@@ -64,7 +64,7 @@ class BrowserSession:
             name = self.name
 
         if self.page:
-            screenshot_path = f"{self.recording_dir}/screenshots/{self.name}.png"
+            screenshot_path = f"{self.recording_dir}/screenshots/{name}.png"
             await self.page.screenshot(path=screenshot_path)
             return screenshot_path
 
