@@ -3,6 +3,10 @@ from typing import AsyncGenerator
 import pytest
 from playwright.async_api import Page, async_playwright
 
+import sys
+import os
+sys.path.insert(0, os.path.dirname(os.path.dirname(os.path.dirname(__file__))))
+
 from settings import settings as env
 from tests.e2e.fixtures.browsers import BrowserSession, MultiBrowserManager
 from tests.e2e.fixtures.server import ServerManager
@@ -36,7 +40,7 @@ async def playwright():
         yield p
 
 
-BrowserFixture = AsyncGenerator[tuple[BrowserSession, Page]]
+BrowserFixture = AsyncGenerator[tuple[BrowserSession, Page], None]
 
 
 @pytest.fixture
