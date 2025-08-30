@@ -42,7 +42,7 @@ async def playwright():
 
 @pytest.fixture(scope="module")
 async def multi_browser(playwright):
-    browser = await playwright.chromium.connect("ws://127.0.0.1:3000/")
+    browser = await playwright.chromium.launch()
     manager = MultiBrowserManager(playwright, browser)
     await manager.start()
     yield manager
@@ -55,7 +55,7 @@ BrowserFixture = AsyncGenerator[tuple[BrowserSession, Page], None]
 
 @pytest.fixture
 async def browser(playwright) -> BrowserFixture:
-    browser = await playwright.chromium.connect("ws://127.0.0.1:3000/")
+    browser = await playwright.chromium.launch()
     session = BrowserSession(browser)
     page = await session.start()
 
