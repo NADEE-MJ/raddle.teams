@@ -1,3 +1,4 @@
+import os
 from datetime import datetime
 from pathlib import Path
 
@@ -7,7 +8,7 @@ from fastapi.staticfiles import StaticFiles
 
 from backend.api.admin.lobby import router as admin_lobby_router
 from backend.api.lobby import router as lobby_router
-from backend.database import create_db_and_tables
+from backend.database import create_db_and_tables, drop_all_tables
 from backend.websocket.api import router as websocket_router
 from custom_logging import file_logger
 
@@ -16,6 +17,8 @@ app = FastAPI(
     description="A team-based word chain puzzle game",
 )
 
+if os.environ.get("RADDLE_ENV") == "testing":
+    drop_all_tables()
 create_db_and_tables()
 
 

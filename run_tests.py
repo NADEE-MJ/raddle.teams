@@ -141,7 +141,11 @@ def test(
         print("Playwright server is not accepting connections. Exiting.")
         sys.exit(1)
 
-    sys.exit(pytest.main(command_line_args))
+    try:
+        os.environ["RADDLE_ENV"] = "testing"
+        sys.exit(pytest.main(command_line_args))
+    finally:
+        del os.environ["RADDLE_ENV"]
 
 
 if __name__ == "__main__":

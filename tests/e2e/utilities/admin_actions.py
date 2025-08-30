@@ -42,7 +42,7 @@ class AdminActions:
         create_button = self.page.locator('button:has-text("Create Lobby")')
         await create_button.click()
 
-        lobby_code_element = self.page.locator("span.font-mono.font-bold").first()
+        lobby_code_element = self.page.locator("span.font-mono.font-bold").first
         await expect(lobby_code_element).to_be_visible()
         lobby_code = await lobby_code_element.text_content()
 
@@ -53,6 +53,14 @@ class AdminActions:
         await refresh_button.click()
 
         await expect(self.page.locator("text=All Lobbies")).to_be_visible()
+
+    async def get_first_lobby(self):
+        await self.view_all_lobbies()
+
+        lobby_code_element = self.page.locator("span.font-mono.font-bold").first
+        await expect(lobby_code_element).to_be_visible()
+        code = await lobby_code_element.text_content()
+        return code.strip() if code else ""
 
     async def peek_into_lobby(self, lobby_code: str):
         lobby_card = self.page.locator(f"text=Code: {lobby_code}").locator("..")

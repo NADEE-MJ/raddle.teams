@@ -11,6 +11,7 @@ from settings import settings as env
 from tests.e2e.fixtures.browsers import BrowserSession, MultiBrowserManager
 from tests.e2e.fixtures.server import ServerManager
 from tests.e2e.utilities.admin_actions import AdminActions
+from tests.e2e.utilities.player_actions import PlayerActions
 
 
 @pytest.fixture(scope="session", autouse=True)
@@ -68,3 +69,11 @@ def admin_actions(
 ) -> tuple[AdminActions, Page, BrowserSession]:
     session, page = browser
     return AdminActions(page, server_url), page, session
+
+
+@pytest.fixture
+def player_actions(
+    browser: BrowserFixture, server_url: str
+) -> tuple[PlayerActions, Page, BrowserSession]:
+    session, page = browser
+    return PlayerActions(page, server_url), page, session
