@@ -45,14 +45,13 @@ BrowserFixture = AsyncGenerator[tuple[BrowserSession, Page], None]
 
 @pytest.fixture
 async def browser(playwright) -> BrowserFixture:
-    browser = await playwright.chromium.connect("ws://127.0.0.1:3000/")
-
+    # Use the built-in browser instead of connecting to external service
+    browser = await playwright.chromium.launch()
     session = BrowserSession(browser)
-
     page = await session.start()
-
+    
     yield session, page
-
+    
     await session.stop()
     await browser.close()
 
