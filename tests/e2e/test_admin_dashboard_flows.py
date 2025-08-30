@@ -38,14 +38,12 @@ class TestAdmin:
 
         await actions.goto_admin_page()
 
-        # Try to login with wrong password
         token_input = page.locator('input[type="password"]')
         await token_input.fill("wrong_password")
 
         login_button = page.locator('button:has-text("Login")')
         await login_button.click()
 
-        # Should show error message and stay on login page
         await expect(page.locator("text=Invalid admin token")).to_be_visible()
         await expect(page.locator("h1:has-text('Admin Login')")).to_be_visible()
 

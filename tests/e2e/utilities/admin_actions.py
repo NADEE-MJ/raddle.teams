@@ -11,7 +11,7 @@ class AdminActions:
         self.server_url = server_url
 
     async def goto_admin_page(self):
-        await self.page.goto(f"{self.server_url}/admin", wait_until="domcontentloaded")
+        await self.page.goto(f"{self.server_url}/admin", wait_until="networkidle")
 
         await expect(
             self.page.locator(
@@ -33,7 +33,6 @@ class AdminActions:
         )
         await login_button.click()
 
-        # Wait for successful login - admin dashboard should appear
         await expect(self.page.locator("text=Admin Dashboard")).to_be_visible()
 
     async def create_lobby(self, lobby_name: str = "Test Lobby") -> str:
@@ -43,8 +42,6 @@ class AdminActions:
         create_button = self.page.locator('button:has-text("Create Lobby")')
         await create_button.click()
 
-        # Wait for the lobby to appear in the lobbies list
-        # The lobby code is displayed in a span with font-mono font-bold
         lobby_code_element = self.page.locator("span.font-mono.font-bold").first()
         await expect(lobby_code_element).to_be_visible()
         lobby_code = await lobby_code_element.text_content()
@@ -55,28 +52,22 @@ class AdminActions:
         refresh_button = self.page.locator('button:has-text("Refresh")')
         await refresh_button.click()
 
-        # Wait for the lobbies section to be visible
         await expect(self.page.locator("text=All Lobbies")).to_be_visible()
 
     async def peek_into_lobby(self, lobby_code: str):
-        # Find the lobby card that contains the lobby code
         lobby_card = self.page.locator(f"text=Code: {lobby_code}").locator("..")
         view_details_button = lobby_card.locator('button:has-text("View Details")')
         await view_details_button.click()
 
-        # Wait for the lobby details section to appear
         await expect(self.page.locator("text=Lobby Details:")).to_be_visible()
 
     async def logout(self):
-        """Logout from admin dashboard."""
         logout_button = self.page.locator('button:has-text("Logout")')
         await logout_button.click()
 
-        # Wait for redirect to login page
         await expect(self.page.locator("h1:has-text('Admin Login')")).to_be_visible()
 
     async def refresh_lobbies(self):
-        """Click the refresh button to reload lobbies."""
         refresh_button = self.page.locator('button:has-text("Refresh")')
         await refresh_button.click()
 
@@ -94,14 +85,14 @@ class AdminActions:
             self.page.locator(f"text=/{expected_count} players?/")
         ).to_be_visible(timeout=timeout)
 
-    async def monitor_websocket_messages(self):
-        messages = []
+    # async def monitor_websocket_messages(self):
+    #     messages = []
 
-        def handle_websocket(ws):
-            def on_message(payload):
-                messages.append(payload)
+    #     def handle_websocket(ws):
+    #         def on_message(payload):
+    #             messages.append(payload)
 
-            ws.on("framereceived", on_message)
+    #         ws.on("framereceived", on_message)
 
-        self.page.on("websocket", handle_websocket)
-        return messages
+    #     self.page.on("websocket", handle_websocket)
+    #     return messages

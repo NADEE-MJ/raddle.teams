@@ -1,10 +1,10 @@
+import os
+import sys
 from typing import AsyncGenerator
 
 import pytest
 from playwright.async_api import Page, async_playwright
 
-import sys
-import os
 sys.path.insert(0, os.path.dirname(os.path.dirname(os.path.dirname(__file__))))
 
 from settings import settings as env
@@ -26,18 +26,20 @@ def server_url(server):
     return server.url
 
 
-@pytest.fixture(scope="module")
-async def multi_browser():
-    manager = MultiBrowserManager()
-    await manager.start()
-    yield manager
-    await manager.close_all()
-
-
 @pytest.fixture()
 async def playwright():
     async with async_playwright() as p:
         yield p
+
+
+@pytest.fixture(scope="module")
+async def multi_browser(playwright):
+    browser = await playwright.chromium.connect("ws://127.0.0.1:3000/")
+    manager = MultiBrowserManager(playwright, browser)
+    await manager.start()
+    yield manager
+    await manager.close_all()
+    await browser.close()
 
 
 BrowserFixture = AsyncGenerator[tuple[BrowserSession, Page], None]
@@ -45,13 +47,12 @@ BrowserFixture = AsyncGenerator[tuple[BrowserSession, Page], None]
 
 @pytest.fixture
 async def browser(playwright) -> BrowserFixture:
-    # Use the built-in browser instead of connecting to external service
-    browser = await playwright.chromium.launch()
+    browser = await playwright.chromium.connect("ws://127.0.0.1:3000/")
     session = BrowserSession(browser)
     page = await session.start()
-    
+
     yield session, page
-    
+
     await session.stop()
     await browser.close()
 
