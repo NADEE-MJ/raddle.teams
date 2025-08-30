@@ -12,8 +12,6 @@ from playwright.async_api import Page
 
 
 class TestAPIEndpoints:
-    """Test API endpoints directly."""
-
     async def test_api_root_endpoint(self, server_url: str):
         """Test that the API root endpoint responds correctly."""
         async with httpx.AsyncClient() as client:

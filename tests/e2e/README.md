@@ -539,3 +539,6 @@ python run_tests.py --scenario phase1
 3. **Phase 3 Polish**: Performance, reliability, and user experience refinement
 
 The testing platform foundation is complete and ready to support all development phases. Focus now shifts to debugging and fixing the Phase 1 functionality to unlock the full testing capabilities! 🚀
+
+
+docker run --network=host --rm --init -it --workdir /home/pwuser --user pwuser mcr.microsoft.com/playwright:v1.55.0-noble /bin/sh -c "npx -y playwright@1.55.0 run-server --port 3000 --host 0.0.0.0"
