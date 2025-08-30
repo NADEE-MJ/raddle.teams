@@ -16,11 +16,9 @@ def run_server():
 
     file_logger.info("Initializing FastAPI server startup")
 
-    print("🖨️ Starting Mock Print FastAPI Server...")
-    print(f"🌐 Server will be available at: http://{host}:{port}")
-    print(f"⚙️ Configuration UI will be available at: http://{host}:{port}")
+    print(f"Server will be available at: http://{host}:{port}")
     print(f"📖 API docs will be available at: http://{host}:{port}/docs")
-    print(f"📚 ReDoc will be available at: http://{host}:{port}/redoc")
+    print(f"📚 ReDoc will be available at: http://{host}:{port}/redoc\n\n")
 
     file_logger.info(
         f"Server configuration - Host: {host}, Port: {port}, Reload: {reload}, Log Level: {log_level}"

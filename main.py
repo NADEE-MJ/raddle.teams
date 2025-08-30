@@ -37,13 +37,25 @@ current_dir = Path(__file__).parent
 static_path = current_dir / "static"
 
 if static_path.exists():
-    app.mount("/", StaticFiles(directory=str(static_path), html=True), name="static")
+    app.mount(
+        "/assets",
+        StaticFiles(directory=str(static_path / "assets"), html=True),
+        name="assets",
+    )
     file_logger.info(f"Static files mounted from: {static_path}")
     print(f"📁 Static files mounted from: {static_path}")
 else:
     file_logger.error(f"Static directory not found. Looked for: {static_path}")
     print(f"⚠️  Warning: Static directory not found. Looked for: {static_path}")
     exit(1)
+
+
+@app.get("/favicon.svg")
+async def serve_favicon():
+    favicon_path = static_path / "favicon.svg"
+    if favicon_path.exists():
+        return FileResponse(str(favicon_path))
+    return {"error": "Favicon not found"}
 
 
 @app.get("/{full_path:path}")

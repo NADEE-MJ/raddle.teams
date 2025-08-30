@@ -1,11 +1,10 @@
-from pydantic_settings import BaseSettings
+from pydantic_settings import BaseSettings, SettingsConfigDict
 
 
 class Settings(BaseSettings):
-    ADMIN_PASSWORD: str = "your_admin_password"
+    model_config = SettingsConfigDict(env_file=".env", env_file_encoding="utf-8")
 
-    class Config:
-        env_file = ".env"
+    ADMIN_PASSWORD: str = "your_admin_password"
 
 
 settings = Settings()
