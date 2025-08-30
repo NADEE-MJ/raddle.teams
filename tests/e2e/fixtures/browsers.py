@@ -74,7 +74,8 @@ class MultiBrowserManager:
 
     async def start(self):
         self.playwright = await async_playwright().start()
-        self.browser = await self.playwright.chromium.connect("ws://127.0.0.1:3000/")
+        # Use launch instead of connect
+        self.browser = await self.playwright.chromium.launch()
 
     async def create_session(self, key: str) -> Page:
         session = BrowserSession(self.browser)
