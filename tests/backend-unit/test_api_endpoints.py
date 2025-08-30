@@ -7,9 +7,6 @@ Tests the backend API functionality:
 - Player joining functionality
 """
 
-import httpx
-from playwright.async_api import Page
-
 
 class TestAPIEndpoints:
     async def test_api_root_endpoint(self, server_url: str):
