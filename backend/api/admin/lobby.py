@@ -80,4 +80,4 @@ async def delete_lobby(lobby_id: int, db: Session = Depends(get_session)):
     db.commit()
     api_logger.info(f"Successfully deleted lobby_id={lobby_id} name={lobby.name}")
 
-    return {"status": "ok", "message": f"Lobby '{lobby.name}' deleted successfully"}
+    return {"status": "success", "message": f"Lobby '{lobby.name}' deleted successfully"}

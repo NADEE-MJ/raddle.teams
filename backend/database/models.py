@@ -24,7 +24,6 @@ class Player(SQLModel, table=True):
 class Team(SQLModel, table=True):
     id: Optional[int] = Field(default=None, primary_key=True)
     name: str
-    # game_id: int = Field(foreign_key="game.id")
     lobby_id: int = Field(
         sa_column=Column(SA_ForeignKey("lobby.id", ondelete="CASCADE"))
     )
@@ -40,15 +39,6 @@ class Lobby(SQLModel, table=True):
     created_at: datetime = Field(default_factory=lambda: datetime.now(tz=timezone.utc))
 
 
-# class Game(SQLModel, table=True):
-#     id: Optional[int] = Field(default=None, primary_key=True)
-#     state: GameState = Field(default=GameState.LOBBY)
-#     puzzle_name: str = Field(default="tutorial")
-#     created_at: datetime = Field(default_factory=lambda: datetime.now(tz=timezone.utc))
-#     started_at: Optional[datetime] = Field(default=None)
-#     finished_at: Optional[datetime] = Field(default=None)
-
-
 class Guess(SQLModel, table=True):
     id: Optional[int] = Field(default=None, primary_key=True)
     team_id: int = Field(sa_column=Column(SA_ForeignKey("team.id", ondelete="CASCADE")))
@@ -56,7 +46,7 @@ class Guess(SQLModel, table=True):
         sa_column=Column(SA_ForeignKey("player.id", ondelete="CASCADE"))
     )
     word_index: int
-    direction: str  # "forward" or "backward"
+    direction: str = Field(description="Direction of guess: 'forward' or 'backward'")
     guess: str
     is_correct: bool = Field(default=False)
     submitted_at: datetime = Field(

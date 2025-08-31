@@ -36,7 +36,6 @@ async def join_lobby(
         f"New player created session_id={player.session_id} lobby_id={lobby.id} name={player.name}"
     )
 
-    # TODO maybe set the session in the cookies or leave it in local storage, not sure what to do here?
     try:
         await lobby_websocket_manager.broadcast_to_lobby(
             lobby.id,
@@ -47,14 +46,12 @@ async def join_lobby(
             f"Failed to broadcast lobby join for session {player.session_id}: {e}"
         )
 
-    # include session id in response so frontend can store it when a new one was generated
     return player
 
 
 @router.get("/lobby/active", response_model=Player)
 async def get_active_user(
     player: Player = Depends(require_player_session),
-    db: Session = Depends(get_session),
 ):
     api_logger.info(
         f"Player requesting active user info: session_id={player.session_id}"
@@ -72,13 +69,6 @@ async def get_current_lobby(
     db: Session = Depends(get_session),
 ):
     api_logger.info(f"Player requesting current lobby: session_id={player.session_id}")
-
-    lobby = db.get(Lobby, player.lobby_id)
-    if not lobby:
-        api_logger.warning(
-            f"Current lobby fetch failed: player not found session_id={player.session_id}"
-        )
-        raise HTTPException(status_code=404, detail="Player not found")
 
     lobby = db.get(Lobby, player.lobby_id)
     if not lobby:
@@ -124,7 +114,7 @@ async def leave_current_lobby(
             f"Failed to broadcast player left for session {player.session_id}: {e}"
         )
 
-    return {"status": "ok", "message": "left"}
+    return {"status": "success", "message": "Player left lobby successfully"}
 
 
 @router.get("/lobby/{lobby_id}", response_model=LobbyInfo)
@@ -141,25 +131,16 @@ async def get_lobby_info(
         api_logger.warning(f"Lobby not found lobby_id={lobby_id}")
         raise HTTPException(status_code=404, detail="Lobby not found")
 
-    player = db.exec(
-        select(Player).where(Player.session_id == player.session_id)
-    ).first()
-    if not player:
-        api_logger.warning(
-            f"Unauthorized lobby access: player not found session_id={player.session_id}"
-        )
-        raise HTTPException(status_code=401, detail="Player not found")
-
     players = db.exec(select(Player).where(Player.lobby_id == lobby.id)).all()
     api_logger.info(f"Found {len(players)} players in lobby_id={lobby.id}")
 
     players_by_team = {}
-    for player in players:
-        if player.team_id is None:
+    for p in players:
+        if p.team_id is None:
             continue
-        if player.team_id not in players_by_team:
-            players_by_team[player.team_id] = []
-        players_by_team[player.team_id].append(player)
+        if p.team_id not in players_by_team:
+            players_by_team[p.team_id] = []
+        players_by_team[p.team_id].append(p)
 
     teams = db.exec(select(Team).where(Team.lobby_id == lobby.id)).all()
     api_logger.info(

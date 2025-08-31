@@ -63,14 +63,7 @@ class AdminWebSocketManager:
                 data = await websocket.receive_text()
                 message = json.loads(data)
                 websocket_logger.debug(f"Admin WS received message: {message}")
-                # TODO maybe use this
-                # # Echo message to all team members
-                # await self.broadcast_to_all(
-                #     {
-                #         "player_session_id": player_session_id,
-                #         "message": message,
-                #     },
-                # )
+                # TODO Message handling would be implemented here for future features
             except Exception:
                 websocket_logger.exception(
                     "Error while reading from admin websocket. Stopping continuous listening."
@@ -201,14 +194,7 @@ class LobbyWebSocketManager:
                 data = await websocket.receive_text()
                 message = json.loads(data)
                 websocket_logger.debug(f"Player WS received message: {message}")
-                # TODO maybe use this
-                # # Echo message to all team members
-                # await self.broadcast_to_all(
-                #     {
-                #         "player_session_id": player_session_id,
-                #         "message": message,
-                #     },
-                # )
+                # TODO Message handling would be implemented here for future features
             except Exception:
                 websocket_logger.exception(
                     "Error while reading from player websocket. Stopping continuous listening."

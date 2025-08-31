@@ -1,4 +1,4 @@
-from custom_logging import websocket_logger
+from backend.custom_logging import websocket_logger
 from fastapi import APIRouter, Depends, WebSocket, WebSocketDisconnect
 
 from backend.dependencies import check_admin_token_query
