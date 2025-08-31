@@ -141,9 +141,9 @@ export const apiService = {
       return api.admin.lobby.getInfo(lobbyId, adminToken);
     }
     
-    const userToken = this.getUserToken();
-    if (!userToken) throw new Error("No authentication token available");
-    return api.player.lobby.getInfo(lobbyId, userToken);
+    // For player lobby info, we need to call the lobby/{lobby_id} endpoint which requires auth
+    // This endpoint is no longer available in the updated API, so we'll throw an error for now
+    throw new Error("Player lobby info endpoint no longer available - use admin access");
   },
 
   async checkAdminCredentials(): Promise<{ status: string; message: string }> {
@@ -160,7 +160,13 @@ export const apiService = {
   async getCurrentLobby(): Promise<Lobby> {
     const token = this.getUserToken();
     if (!token) throw new Error("No user token available");
-    return api.player.lobby.getCurrent(token);
+    return api.player.lobby.getInfo(token);  // Updated method name
+  },
+
+  async getActiveUser(): Promise<Player> {
+    const token = this.getUserToken();
+    if (!token) throw new Error("No user token available");
+    return api.player.lobby.activeUser(token);
   },
 
   async leaveLobby(sessionId: string): Promise<{ status: string; message: string }> {

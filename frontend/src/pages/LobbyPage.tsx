@@ -2,6 +2,7 @@ import { useCallback, useEffect, useRef, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { apiService } from "../services/api";
 import { useWebSocket } from "../hooks/useWebSocket";
+import { usePlayer } from "../context/PlayerContext";
 import { LobbyInfo, WebSocketMessage } from "../types";
 
 export default function LobbyPage() {

@@ -86,6 +86,21 @@ async def join_lobby(
     return player
 
 
+@router.get("/lobby/active", response_model=Player)
+async def get_active_user(
+    session_id: str = Depends(require_user_session), db: Session = Depends(get_session)
+):
+    """Get the active user (player) for the authenticated session."""
+    api_logger.info(f"Player requesting active user info: session_id={session_id}")
+    player = db.exec(select(Player).where(Player.session_id == session_id)).first()
+    if not player:
+        api_logger.warning(f"Active user fetch failed: player not found session_id={session_id}")
+        raise HTTPException(status_code=404, detail="Player not found")
+
+    api_logger.info(f"Returning active user session_id={session_id} lobby_id={player.lobby_id}")
+    return player
+
+
 @router.get("/lobby", response_model=Lobby)
 async def get_current_lobby(
     session_id: str = Depends(require_user_session), db: Session = Depends(get_session)
@@ -108,7 +123,7 @@ async def get_current_lobby(
     return lobby
 
 
-@router.delete("/lobby/leave")
+@router.delete("/lobby")
 async def leave_current_lobby(
     session_id: str = Depends(require_user_session), db: Session = Depends(get_session)
 ):
