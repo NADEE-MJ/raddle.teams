@@ -2,7 +2,7 @@ import re
 
 from playwright.async_api import Page, expect
 
-from settings import settings
+from backend.settings import settings
 
 
 class AdminActions:

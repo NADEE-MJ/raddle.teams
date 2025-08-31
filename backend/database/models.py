@@ -6,7 +6,7 @@ from sqlmodel import Field, SQLModel
 
 class Player(SQLModel, table=True):
     id: Optional[int] = Field(default=None, primary_key=True)
-    name: str
+    name: str = Field(unique=True)
     session_id: str = Field(unique=True)
     lobby_id: int = Field(foreign_key="lobby.id")
     team_id: Optional[int] = Field(default=None, foreign_key="team.id")

@@ -8,7 +8,7 @@ from playwright.async_api import Page, async_playwright
 
 sys.path.insert(0, os.path.dirname(os.path.dirname(os.path.dirname(__file__))))
 
-from settings import settings as env
+from backend.settings import settings as env
 from tests.e2e.fixtures.browsers import BrowserSession, MultiBrowserManager
 from tests.e2e.fixtures.server import ServerManager
 from tests.e2e.utilities.admin_actions import AdminActions

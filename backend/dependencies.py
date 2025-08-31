@@ -1,7 +1,8 @@
 from fastapi import Depends, HTTPException, Query, status
 from fastapi.security import HTTPAuthorizationCredentials, HTTPBearer
 
-from settings import settings
+from backend.custom_logging import api_logger
+from backend.settings import settings
 
 security = HTTPBearer()
 
@@ -22,6 +23,7 @@ def check_admin_token(
         bool: True if authentication successful
     """
     if not credentials or not credentials.credentials:
+        api_logger.warning("Missing admin auth token in Authorization header")
         raise HTTPException(
             status_code=status.HTTP_401_UNAUTHORIZED,
             detail="Missing authentication token",
@@ -29,12 +31,16 @@ def check_admin_token(
         )
 
     if credentials.credentials != settings.ADMIN_PASSWORD:
+        api_logger.warning(
+            "Invalid admin credentials provided via Authorization header"
+        )
         raise HTTPException(
             status_code=status.HTTP_401_UNAUTHORIZED,
             detail="Invalid admin credentials",
             headers={"WWW-Authenticate": "Bearer"},
         )
 
+    api_logger.info("Admin authenticated via Authorization header")
     return True
 
 
@@ -57,15 +63,18 @@ def check_admin_token_query(
         bool: True if authentication successful
     """
     if not token:
+        api_logger.warning("Missing admin token in query parameter")
         raise HTTPException(
             status_code=status.HTTP_401_UNAUTHORIZED,
             detail="Missing authentication token",
         )
 
     if token != settings.ADMIN_PASSWORD:
+        api_logger.warning("Invalid admin credentials provided via query parameter")
         raise HTTPException(
             status_code=status.HTTP_401_UNAUTHORIZED,
             detail="Invalid admin credentials",
         )
 
+    api_logger.info("Admin authenticated via query parameter")
     return True

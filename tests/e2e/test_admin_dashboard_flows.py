@@ -1,6 +1,6 @@
 from playwright.async_api import Page, expect
 
-from settings import Settings
+from backend.settings import Settings
 from tests.e2e.fixtures.browsers import BrowserSession
 from tests.e2e.utilities.admin_actions import AdminActions
 

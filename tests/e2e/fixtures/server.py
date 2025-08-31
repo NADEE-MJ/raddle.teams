@@ -22,7 +22,7 @@ class ServerManager:
         self.stop_existing_server()
 
         self.process = subprocess.Popen(
-            ["poetry", "run", "python", "run.py"],
+            ["npm", "run", "testing-server"],
             cwd=os.getcwd(),
             stdout=subprocess.PIPE,
             stderr=subprocess.PIPE,

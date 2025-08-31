@@ -11,7 +11,7 @@ static/
 *.log
 
 # database files
-*.db
+databases/
 
 #.env files
 *.env
