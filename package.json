@@ -6,7 +6,9 @@
     "scripts": {
         "build": "vite build",
         "build:watch": "vite build --watch",
+        "preserver": "npm run build",
         "server": "poetry run python bin/run_server.py development",
+        "pretesting-server": "npm run build",
         "testing-server": "poetry run python bin/run_server.py testing",
         "lint": "eslint . --report-unused-disable-directives --max-warnings 15",
         "lint:fix": "eslint . --fix",
