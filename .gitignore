@@ -9,6 +9,7 @@ static/
 
 # log files
 *.log
+logs/*
 
 # database files
 databases/

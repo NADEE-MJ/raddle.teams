@@ -1,37 +1,14 @@
-import { useGameOutletContext } from "@/hooks/useGameOutletContext";
 import { useNavigate } from "react-router-dom";
+import { Player, Team } from "@/types";
 
-export default function GamePage() {
-  const { gameId, player, sessionId, team, isLoading } = useGameOutletContext();
+interface GameContentProps {
+  gameId: string;
+  player: Player;
+  team: Team | null;
+}
 
+export default function GameContent({ gameId, player, team }: GameContentProps) {
   const navigate = useNavigate();
-
-  if (!sessionId || !player) {
-    return (
-      <div className="min-h-screen flex items-center justify-center bg-gray-50">
-        <div className="text-center">
-          <p className="text-red-600 mb-4">No active session found</p>
-          <button
-            onClick={() => navigate("/")}
-            className="bg-blue-600 hover:bg-blue-700 text-white px-4 py-2 rounded-lg"
-          >
-            Back to Home
-          </button>
-        </div>
-      </div>
-    );
-  }
-
-  if (isLoading) {
-    return (
-      <div className="min-h-screen flex items-center justify-center bg-gray-50">
-        <div className="text-center">
-          <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-blue-600 mx-auto"></div>
-          <p className="mt-4 text-gray-600">Loading game...</p>
-        </div>
-      </div>
-    );
-  }
 
   return (
     <div className="min-h-screen flex items-center justify-center bg-gradient-to-br from-green-500 to-blue-600 p-4">
