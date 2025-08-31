@@ -1,132 +1,215 @@
-# main game concept
+# Raddle Teams - Development Plan
 
-This is a web-based multiplayer game. The way the game works is similar to the online game Raddle.quest. Players attempt to join two words together in a chain using clues along the way. You get the first and last words and a bank of clues. You can either start from the top down or bottom up and switch as you go along. All you know for each word you are currently on is the number of letters in the next word, here is an example:
+## 🎯 Game Concept
 
+Raddle Teams is a web-based multiplayer word chain puzzle game inspired by [Raddle.quest](https://raddle.quest). Teams collaborate to solve word chains by connecting two words using clues.
+
+### How Word Chains Work
+
+Players receive a **start word** and **end word**, then must find the intermediate words using clues:
+
+```
 DOWN -----> EARTH
-clues in the forward direction (out of order): [
-Cardinal direction that's DOWN on a map, most of the time
-Change the first letter of DOWN to get a part of the body
-Kind of food or music that sounds like DOWN
-Move the first letter of DOWN to the end to get where we are
-Organ that sits inside the DOWN
-Piece of clothing that often has a DOWN
-Popular piano duet “________ & DOWN”
-Rubber layer on the bottom of a DOWN
-]
+```
 
-next word after down is 5 letters
+**Available Clues** (out of order):
+- Cardinal direction that's DOWN on a map, most of the time
+- Change the first letter of DOWN to get a part of the body  
+- Kind of food or music that sounds like DOWN
+- Move the first letter of DOWN to the end to get where we are
+- Organ that sits inside the DOWN
+- Piece of clothing that often has a DOWN
+- Popular piano duet "________ & DOWN"
+- Rubber layer on the bottom of a DOWN
 
-answer is SOUTH (hint was: Cardinal direction that's DOWN on a map, most of the time)
+### Solving Process
 
-next word after south is 5 letters
+**Forward Direction (DOWN → EARTH):**
+1. Next word after DOWN is **5 letters**
+2. Answer: **SOUTH** (Cardinal direction that's DOWN on a map)
+3. Next word after SOUTH is **5 letters** 
+4. Answer: **MOUTH** (Change first letter of SOUTH to get a body part)
+5. Continue until reaching EARTH...
 
-answer is MOUTH (hint was: Change the first letter of SOUTH to get a part of the body)
+**Backward Direction (EARTH ← DOWN):**
+Players can also work backwards from EARTH, with clues reversed:
+- "Move the first letter of _______ to the end to get where we are → EARTH"
+- Answer: **HEART**
 
-Solving from the way up the clues are reversed so:
-DOWN <--- EARTH
+### Game Rules
 
-clues in the reverse direction: [
-Kind of food or music that sounds like ________ → EARTH
-Move the first letter of ________ to the end to get where we are → EARTH
-Organ that sits inside the ________ → EARTH
-Piece of clothing that often has a ________ → EARTH
-Popular piano duet “EARTH & ________”
-Rubber layer on the bottom of a ________ → EARTH
-]
+- **Exact matches only**: All words must be CAPITALIZED and exact
+- **Bidirectional solving**: Teams can work forward, backward, or switch directions
+- **First correct wins**: When any team member solves a word, it advances the whole team
+- **No waiting**: Teams work independently at their own pace
 
-next word before earth is 5 letters
+---
 
-Answer is HEART (hint was: Move the first letter of **\_\_\_\_** to the end to get where we are → EARTH)
+## 👥 Team-Based Gameplay
 
-For each word there are two hints that can be used, the first hint for that direction will let the players know which clue to use for that direction, the next hint will fill in the answer (I think this is too powerful and should be limited in some way, if the players get stuck the admin can help them along) (hints costing a time penalty would be good but it has to be significant)
+### Lobby System (Jackbox Style)
 
-words are all always capitalized and must be exact matches to the answers
+1. **Player Join**: Everyone joins on their phone with chosen names
+2. **Admin Control**: Admin sees all players and manages the game
+3. **Team Formation**: Admin sets number of teams, players randomly assigned
+4. **Team Names**: Players have limited time to choose team names
+5. **Game Start**: Teams compete to solve puzzles fastest
 
-teams will complete all the puzzles assigned to then until they are done they do not wait until the next team is done
+### Real-Time Collaboration
 
-## team based setup
+**Team Features:**
+- **Live submissions**: See every guess from teammates in real-time
+- **Dual direction work**: Members can work forward/backward simultaneously  
+- **Shared progress**: When one member solves, everyone advances
+- **Guess history**: Full backlog of attempts for current words
+- **Optimistic locking**: First correct submission wins
 
-I want to have teams work together to solve these. Initially want it to be a jackbox style setup where everyone joins on their phone with a name of their choice in a lobby and there is an admin page where you control everything, you can see who joins and their names, then the admin selects the number of teams and can start the game, players are randomly assigned to a team, the admin can switch the teams if needed, the players have x amount of time to pick their team name and now they are off
+**Winning Condition:**
+- First team to complete all assigned puzzles wins
+- Teams work independently (no waiting for others)
 
-Teams now have to compete to solve x number of puzzles in the fastest amount of time. The way people collaborate with each other is by discussing the clues and potential answers in real-time, using their phones to submit answers and see the progress of their team. You can see based on the current clue your team is trying to solve what answer have been submitted, each member can individually try to solve from the forwards or backwards direction. When one person on a team solves a word it solves it for everyone on the team. Teammates should be able to see every guess that every other teammate makes in real time as well as a backlog for the current words being worked on in both the forward and backwards directions. If any clue is solved for a team in the forwards or backwards direction it solves it for everyone on the team, even if they are working on the other direction. The team who finishes all their puzzles first wins.
+---
 
-Submissions are a free for all, whoever submits first gets the credit for solving that part of the puzzle. Need to have some logic for how to handle which requests get handled first for a team.
+## 🏗️ Technical Architecture
 
-potentially want to do something where the slowest team per puzzle gets eliminated or maybe everyone solves every puzzle at different times
+### Backend (FastAPI + SQLite)
 
-## backend
+**Core Technologies:**
+- **FastAPI**: Web server with REST API endpoints
+- **WebSockets**: Real-time team communication  
+- **SQLite**: Player progress, teams, and game state
+- **Poetry**: Python dependency management
 
-use poetry for dependency management
+**Database Design:**
+- Player information and session management
+- Team assignments and progress tracking
+- Real-time game state synchronization
+- Automatic reconnection support
 
-the backend will be written in fastapi and require both a normal webserver and a websocket server to handle real-time communication between clients. The games will be stored as json files, here is an example of the structure, (not sure if this makes sense right now but will stick with it):
+**Optimistic Locking System:**
+1. Lock team submissions for specific word
+2. Process the correct answer
+3. Broadcast to all team members  
+4. Release lock for next word
+
+### Puzzle Data Structure
+
+Puzzles stored as JSON files:
+
+```json
 {
-"words": [
-"DOWN",
-"SOUTH",
-"HEART",
-"EARTH"
-],
-"clues": { # DOWN AND EARTH ARE NOT INCLUDED HERE
-"SOUTH": {
-"forward": "CARDINAL DIRECTION THAT'S \_**\_ ON A MAP, MOST OF THE TIME",
-"backward": "CHANGE THE FIRST LETTER OF **\_\_\***\* TO GET A PART OF THE BODY -> MOUTH"
-},
-"HEART": {
-"forward": "ORGAN THAT SITS INSIDE THE **\_\_\_\_**",
-"backward": "CHANGE THE FIRST LETTER OF **\_\_\_\_\*\* TO GET A PART OF THE BODY -> EARTH"
-},
-etc...
+  "words": ["DOWN", "SOUTH", "MOUTH", "HEART", "EARTH"],
+  "clues": {
+    "SOUTH": {
+      "forward": "Cardinal direction that's DOWN on a map, most of the time",
+      "backward": "Change the first letter of ____ to get a part of the body → MOUTH"
+    },
+    "MOUTH": {
+      "forward": "Change the first letter of SOUTH to get a part of the body",
+      "backward": "Popular piano duet 'HEART & ____'"
+    }
+  }
 }
-}
+```
 
-there will be one of these json files per puzzle, including a tutorial puzzle
+### Frontend (React + TypeScript)
 
-a sqlite database will be used to track player progress, team information, and game state.
-When users join a game, their information will be stored in the database, and their progress will be updated in real-time as they solve puzzles or their teammates solve a puzzle, when a guess is submitted all players on the same team will be notified of the submission.
+**Core Technologies:**
+- **React 18**: Modern hooks and context
+- **TypeScript**: Full type safety
+- **Vite**: Fast build tool and dev server
+- **Tailwind CSS**: Utility-first styling
+- **WebSocket Client**: Real-time updates
 
-if players disconnect they can rejoin the team that they were previously on, might need to have the admin involved in this somehow or ideally have this happen automatically
+**Design Philosophy:**
+- Minimal, bare-bones interface
+- Mobile-first responsive design
+- Real-time collaboration focus
 
-websockets should be based on team name or team id, which will be generated at the start of the game. Only one game can be active at a time for now.
+---
 
-All guesses per team should use optimistic locking to prevent overlapping submissions and race conditions, the first person to solve a clue gets their name added next to the word. There should be some sort of lock for when the correct answer is submitted so that no other guesses are processed until the lock is released.
+## 🔧 Admin Dashboard
 
-- Lock team submissions for that specific word
-- Process the correct answer
-- Broadcast to all team members
-- Release lock for next word
+### Game Management Features
 
-## frontend
+- **Lobby Control**: Start/stop games, view player list
+- **Team Management**: Create teams, assign/reassign players  
+- **Progress Monitoring**: See exactly where each team stands
+- **Late Joiners**: Sort new players into existing teams
+- **Game Flow**: Control hints, time penalties, elimination
 
-the frontend will be made with react and vite, it should be as bare bones as possible using very basic js and react setups, make sure you are using typescript and tailwind as well.
+### Admin Capabilities
 
-## admin page
+- View detailed team progress (completion %, hints used)
+- Override team assignments as needed
+- Provide hints with time penalties
+- Monitor real-time submissions and guesses
 
-There should be an admin page where you can control the flow of the game, including starting and stopping the game, viewing player progress, and managing teams. There is only one game going at a time, if people join late the admin will sort them into an existing team. Admins should be able to see exactly what a team has in terms of progress (how far they are, how many hints used, etc.)
+---
 
-## building strategy
+## 🚀 Development Phases
 
-Phase 1: Core Mechanics
+### ✅ Phase 1: Core Mechanics (COMPLETED)
 
-Basic lobby + team assignment
-Single puzzle solving with optimistic locking
-WebSocket real-time updates
+- [x] **Lobby System**: Player join with 6-character codes
+- [x] **Team Assignment**: Basic team creation and management  
+- [x] **WebSocket Infrastructure**: Real-time communication
+- [x] **Admin Authentication**: Token-based admin access
+- [x] **Database Layer**: SQLite with proper models
 
-Phase 2: Competition Features
+### 🔄 Phase 2: Game Implementation (CURRENT)
 
-Multiple puzzles + progress tracking
-Admin controls + team management
-Win conditions
+- [ ] **Puzzle Engine**: Load and serve word chain puzzles
+- [ ] **Team Gameplay**: Real-time collaborative solving
+- [ ] **Optimistic Locking**: Race condition prevention
+- [ ] **Progress Tracking**: Team advancement through puzzles
+- [ ] **Win Conditions**: First team to finish wins
 
-Phase 3: Polish
+### 🔮 Phase 3: Advanced Features (FUTURE)
 
-Hint system + elimination mechanics
-Reconnection handling
-Enhanced admin dashboard
+- [ ] **Hint System**: Controlled hints with time penalties
+- [ ] **Elimination Mechanics**: Remove slowest teams per puzzle
+- [ ] **Enhanced Admin**: Detailed analytics and controls
+- [ ] **Spectator Mode**: Early finishers watch other teams
+- [ ] **Multi-word Answers**: Support spaces in answers (e.g., "NEW YORK")
 
-## future ideas
+---
 
-- Introduce elimination mechanics for teams that fall too far behind.
-- Enhance the admin dashboard with more detailed analytics and controls.
-- allow early finishers to spectate other teams.
-- Add more puzzles and variety in word chains.
-- add support for multi word answers (answers with spaces i.e. "NEW YORK")
+## 💡 Future Enhancement Ideas
+
+### Gameplay Features
+- **Progressive Elimination**: Remove teams that fall too far behind
+- **Spectator Mode**: Finished teams can watch others compete
+- **Hint Penalties**: Strategic hint usage with time costs
+- **Multi-word Support**: Answers with spaces ("NEW YORK", "ROYAL FLUSH")
+
+### Technical Improvements  
+- **Multiple Concurrent Games**: Support multiple lobbies simultaneously
+- **Enhanced Reconnection**: Seamless player reconnection handling
+- **Advanced Analytics**: Detailed team performance metrics
+- **Puzzle Variety**: Different chain lengths and difficulty levels
+
+### Admin Dashboard Enhancements
+- **Real-time Analytics**: Live team performance graphs
+- **Game Templates**: Pre-configured game setups
+- **Player Management**: Advanced player assignment tools
+- **Custom Puzzles**: In-game puzzle creation and editing
+
+---
+
+## 📋 Technical Implementation Notes
+
+### WebSocket Architecture
+- **Team-based channels**: Messages broadcast by team ID
+- **Session management**: Handle disconnections and reconnections
+- **Message types**: Submissions, progress updates, team assignments
+
+### Database Considerations
+- **Concurrent access**: Handle multiple players per team
+- **State consistency**: Ensure all team members see same state
+- **Performance**: Optimize for real-time updates
+
+### Security Requirements
+- **Admin authentication**: Secure token-based access
+- **Input validation**: Sanitize all player submissions  
+- **Rate limiting**: Prevent spam submissions
