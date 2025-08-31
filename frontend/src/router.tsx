@@ -7,6 +7,8 @@ const LandingPage = lazy(() => import('@/pages/LandingPage'));
 const LobbyPage = lazy(() => import('@/pages/LobbyPage'));
 const AdminPage = lazy(() => import('@/pages/AdminPage'));
 const GamePage = lazy(() => import('@/pages/GamePage'));
+const InvalidLobbyPage = lazy(() => import('@/pages/InvalidLobbyPage'));
+const InvalidGamePage = lazy(() => import('@/pages/InvalidGamePage'));
 
 const NotFound: React.FC = () => (
     <div className='flex min-h-screen items-center justify-center bg-gray-50'>
@@ -50,22 +52,7 @@ const router = createBrowserRouter([
                 children: [
                     {
                         index: true,
-                        element: (
-                            <div className='flex min-h-screen items-center justify-center bg-gray-50'>
-                                <div className='text-center'>
-                                    <h1 className='mb-4 text-2xl font-bold text-gray-900'>Invalid Lobby Access</h1>
-                                    <p className='mb-6 text-gray-600'>
-                                        Please use a valid lobby link or join from the home page.
-                                    </p>
-                                    <a
-                                        href='/'
-                                        className='rounded-lg bg-blue-600 px-4 py-2 text-white transition duration-200 hover:bg-blue-700'
-                                    >
-                                        Back to Home
-                                    </a>
-                                </div>
-                            </div>
-                        ),
+                        element: withSuspense(<InvalidLobbyPage />),
                     },
                     { path: ':lobbyCode', element: withSuspense(<LobbyPage />) },
                 ],
@@ -81,22 +68,7 @@ const router = createBrowserRouter([
                 children: [
                     {
                         index: true,
-                        element: (
-                            <div className='flex min-h-screen items-center justify-center bg-gray-50'>
-                                <div className='text-center'>
-                                    <h1 className='mb-4 text-2xl font-bold text-gray-900'>Invalid Game Access</h1>
-                                    <p className='mb-6 text-gray-600'>
-                                        Please use a valid game link or join from the home page.
-                                    </p>
-                                    <a
-                                        href='/'
-                                        className='rounded-lg bg-blue-600 px-4 py-2 text-white transition duration-200 hover:bg-blue-700'
-                                    >
-                                        Back to Home
-                                    </a>
-                                </div>
-                            </div>
-                        ),
+                        element: withSuspense(<InvalidGamePage />),
                     },
                     { path: ':gameId', element: withSuspense(<GamePage />) },
                 ],
