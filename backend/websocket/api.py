@@ -71,8 +71,3 @@ async def lobby_websocket(websocket: WebSocket, lobby_id: int, player_session_id
         await lobby_websocket_manager.disconnect(
             lobby_id=lobby_id, player_session_id=player_session_id
         )
-
-
-# @router.websocket("/ws/{team_id}/{player_session_id}")
-# async def team_websocket(websocket: WebSocket, team_id: int, player_session_id: str):
-#     pass
