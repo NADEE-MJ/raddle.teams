@@ -8,7 +8,9 @@ from tests.e2e.utilities.admin_actions import AdminActions
 from tests.e2e.utilities.player_actions import PlayerActions
 
 type AdminFixture = Callable[[], Awaitable[tuple[AdminActions, Page, BrowserSession]]]
-type PlayerFixture = Callable[[], Awaitable[tuple[PlayerActions, Page, BrowserSession]]]
+type PlayerFixture = Callable[
+    [str], Awaitable[tuple[PlayerActions, Page, BrowserSession]]
+]
 
 
 class TestAdminWebSocketFlows:
@@ -122,7 +124,9 @@ class TestAdminWebSocketFlows:
         await expect(player_page.locator("h1:has-text('Raddle Teams')")).to_be_visible()
 
         # Wait for player to disappear via WebSocket - check for "No players" text
-        await expect(admin_page.locator("text=No players in this lobby yet")).to_be_visible(timeout=5000)
+        await expect(
+            admin_page.locator("text=No players in this lobby yet")
+        ).to_be_visible(timeout=5000)
 
         await admin_session.screenshot()
 

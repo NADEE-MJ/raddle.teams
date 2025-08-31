@@ -1,5 +1,6 @@
+from typing import Awaitable, Callable
+
 from playwright.async_api import Page, expect
-from typing import Callable, Awaitable
 
 from backend.settings import Settings
 from tests.e2e.fixtures.browsers import BrowserSession
@@ -7,7 +8,9 @@ from tests.e2e.utilities.admin_actions import AdminActions
 from tests.e2e.utilities.player_actions import PlayerActions
 
 type AdminFixture = Callable[[], Awaitable[tuple[AdminActions, Page, BrowserSession]]]
-type PlayerFixture = Callable[[], Awaitable[tuple[PlayerActions, Page, BrowserSession]]]
+type PlayerFixture = Callable[
+    [str], Awaitable[tuple[PlayerActions, Page, BrowserSession]]
+]
 
 
 class TestPlayerLobbyFlows:
