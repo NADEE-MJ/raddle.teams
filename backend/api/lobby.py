@@ -8,6 +8,7 @@ from backend.database import Lobby, Player, Team, get_session
 from backend.websocket.events import DisconnectedLobbyEvent, JoinedLobbyEvent
 from backend.websocket.managers import lobby_websocket_manager
 from backend.dependencies import get_optional_user_session, require_user_session
+from backend.schemas import LobbyInfo
 
 router = APIRouter()
 
@@ -85,6 +86,63 @@ async def join_lobby(
     return player
 
 
+@router.get("/lobby", response_model=Lobby)
+async def get_current_lobby(
+    session_id: str = Depends(require_user_session), db: Session = Depends(get_session)
+):
+    """Get the current lobby for the authenticated player."""
+    api_logger.info(f"Player requesting current lobby: session_id={session_id}")
+    player = db.exec(select(Player).where(Player.session_id == session_id)).first()
+    if not player:
+        api_logger.warning(f"Current lobby fetch failed: player not found session_id={session_id}")
+        raise HTTPException(status_code=404, detail="Player not found")
+
+    lobby = db.get(Lobby, player.lobby_id)
+    if not lobby:
+        api_logger.warning(
+            f"Current lobby fetch failed: lobby not found for player session_id={session_id} lobby_id={player.lobby_id}"
+        )
+        raise HTTPException(status_code=404, detail="Lobby not found")
+
+    api_logger.info(f"Returning current lobby id={lobby.id} for player session_id={session_id}")
+    return lobby
+
+
+@router.delete("/lobby/leave")
+async def leave_current_lobby(
+    session_id: str = Depends(require_user_session), db: Session = Depends(get_session)
+):
+    """Remove the authenticated player from their current lobby and notify others."""
+    api_logger.info(f"Player leave request: session_id={session_id}")
+    player = db.exec(select(Player).where(Player.session_id == session_id)).first()
+    if not player:
+        api_logger.warning(f"Leave noop: player not found session_id={session_id}")
+        # Nothing to do
+        return {"status": "ok", "message": "player not found"}
+
+    lobby_id = player.lobby_id
+    try:
+        db.delete(player)
+        db.commit()
+        api_logger.info(f"Player deleted session_id={session_id} lobby_id={lobby_id}")
+    except Exception as e:
+        api_logger.exception(f"Failed to delete player {session_id}: {e}")
+        raise HTTPException(status_code=500, detail="Failed to remove player")
+
+    # Broadcast disconnect event
+    try:
+        await lobby_websocket_manager.broadcast_to_lobby(
+            lobby_id,
+            DisconnectedLobbyEvent(lobby_id=lobby_id, player_session_id=session_id),
+        )
+    except Exception as e:
+        api_logger.exception(
+            f"Failed to broadcast player left for session {session_id}: {e}"
+        )
+
+    return {"status": "ok", "message": "left"}
+
+
 @router.delete("/player/{session_id}/leave")
 async def leave_lobby(
     session_id: str = Depends(require_user_session), db: Session = Depends(get_session)
@@ -141,21 +199,23 @@ async def get_lobby_for_player_by_session(
     return lobby
 
 
-class LobbyInfo(BaseModel):
-    lobby: Lobby
-    players: list[Player]
-    players_by_team: dict[int, list[Player]] | None
-    teams: list[Team] | None
-    game: None = None
-
-
 @router.get("/lobby/{lobby_id}", response_model=LobbyInfo)
-async def get_lobby(lobby_id: int, db: Session = Depends(get_session)):
-    api_logger.info(f"Fetching lobby info lobby_id={lobby_id}")
+async def get_lobby(
+    lobby_id: int, 
+    session_id: str = Depends(require_user_session), 
+    db: Session = Depends(get_session)
+):
+    api_logger.info(f"Player requesting lobby info: lobby_id={lobby_id}, session_id={session_id}")
     lobby = db.get(Lobby, lobby_id)
     if not lobby:
         api_logger.warning(f"Lobby not found lobby_id={lobby_id}")
         raise HTTPException(status_code=404, detail="Lobby not found")
+
+    # Verify the player exists and has access to this lobby info
+    player = db.exec(select(Player).where(Player.session_id == session_id)).first()
+    if not player:
+        api_logger.warning(f"Unauthorized lobby access: player not found session_id={session_id}")
+        raise HTTPException(status_code=401, detail="Player not found")
 
     players = db.exec(select(Player).where(Player.lobby_id == lobby.id)).all()
     api_logger.info(f"Found {len(players)} players in lobby_id={lobby.id}")
@@ -169,7 +229,7 @@ async def get_lobby(lobby_id: int, db: Session = Depends(get_session)):
         players_by_team[player.team_id].append(player)
 
     teams = db.exec(select(Team).where(Team.lobby_id == lobby.id)).all()
-    api_logger.info(f"Returning {len(teams)} teams for lobby_id={lobby.id}")
+    api_logger.info(f"Player returning lobby info for {lobby_id}: {len(teams)} teams, {len(players)} players")
 
     return LobbyInfo(
         lobby=lobby, players=players, players_by_team=players_by_team, teams=teams

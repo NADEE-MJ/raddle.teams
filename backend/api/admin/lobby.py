@@ -1,12 +1,13 @@
 from uuid import uuid4
 
-from fastapi import APIRouter, Depends
+from fastapi import APIRouter, Depends, HTTPException
 from pydantic import BaseModel
 from sqlmodel import Session, select
 
 from backend.custom_logging import api_logger
-from backend.database import Lobby, get_session
+from backend.database import Lobby, Player, Team, get_session
 from backend.dependencies import check_admin_token
+from backend.schemas import LobbyInfo
 
 router = APIRouter(dependencies=[Depends(check_admin_token)])
 
@@ -37,7 +38,56 @@ async def get_all_lobbies(db: Session = Depends(get_session)):
     return lobbies
 
 
-@router.get("/check", response_model=dict)
-async def check_admin_credentials():
-    api_logger.info("Admin credentials check endpoint called")
-    return {"status": "authenticated", "message": "Admin credentials are valid"}
+@router.get("/lobby/{lobby_id}", response_model=LobbyInfo)
+async def get_lobby_info(lobby_id: int, db: Session = Depends(get_session)):
+    api_logger.info(f"Admin requested lobby info: lobby_id={lobby_id}")
+    lobby = db.get(Lobby, lobby_id)
+    if not lobby:
+        api_logger.warning(f"Lobby not found lobby_id={lobby_id}")
+        raise HTTPException(status_code=404, detail="Lobby not found")
+
+    players = db.exec(select(Player).where(Player.lobby_id == lobby.id)).all()
+    api_logger.info(f"Found {len(players)} players in lobby_id={lobby.id}")
+
+    players_by_team = {}
+    for player in players:
+        if player.team_id is None:
+            continue
+        if player.team_id not in players_by_team:
+            players_by_team[player.team_id] = []
+        players_by_team[player.team_id].append(player)
+
+    teams = db.exec(select(Team).where(Team.lobby_id == lobby.id)).all()
+    api_logger.info(f"Admin returning lobby info for {lobby_id}: {len(teams)} teams, {len(players)} players")
+
+    return LobbyInfo(
+        lobby=lobby, players=players, players_by_team=players_by_team, teams=teams
+    )
+
+
+@router.delete("/lobby/{lobby_id}", response_model=dict)
+async def delete_lobby(lobby_id: int, db: Session = Depends(get_session)):
+    api_logger.info(f"Admin requested lobby deletion: lobby_id={lobby_id}")
+    lobby = db.get(Lobby, lobby_id)
+    if not lobby:
+        api_logger.warning(f"Delete failed: lobby not found lobby_id={lobby_id}")
+        raise HTTPException(status_code=404, detail="Lobby not found")
+
+    # Delete all related players first
+    players = db.exec(select(Player).where(Player.lobby_id == lobby.id)).all()
+    for player in players:
+        db.delete(player)
+    api_logger.info(f"Deleted {len(players)} players from lobby_id={lobby_id}")
+
+    # Delete all related teams
+    teams = db.exec(select(Team).where(Team.lobby_id == lobby.id)).all()
+    for team in teams:
+        db.delete(team)
+    api_logger.info(f"Deleted {len(teams)} teams from lobby_id={lobby_id}")
+
+    # Delete the lobby itself
+    db.delete(lobby)
+    db.commit()
+    api_logger.info(f"Successfully deleted lobby_id={lobby_id} name={lobby.name}")
+
+    return {"status": "ok", "message": f"Lobby '{lobby.name}' deleted successfully"}

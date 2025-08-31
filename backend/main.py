@@ -1,4 +1,3 @@
-import os
 from datetime import datetime
 from pathlib import Path
 
@@ -8,6 +7,7 @@ from fastapi.responses import FileResponse
 from fastapi.staticfiles import StaticFiles
 
 from backend.api.admin.lobby import router as admin_lobby_router
+from backend.api.admin.auth import router as admin_auth_router
 from backend.api.lobby import router as lobby_router
 from backend.database import create_db_and_tables, drop_all_tables
 from backend.settings import settings
@@ -52,6 +52,8 @@ app.include_router(lobby_router, prefix="/api")
 server_logger.info("Included lobby router at /api")
 app.include_router(admin_lobby_router, prefix="/api/admin")
 server_logger.info("Included admin lobby router at /api/admin")
+app.include_router(admin_auth_router, prefix="/api/admin")
+server_logger.info("Included admin auth router at /api/admin")
 app.include_router(websocket_router, prefix="/ws")
 server_logger.info("Included websocket router at /ws")
 
