@@ -32,8 +32,8 @@ const NotFound: React.FC = () => (
 );
 
 const LoadingSpinner: React.FC = () => (
-  <div className="min-h-screen flex items-center justify-center bg-gray-50">
-    <div className="text-center">
+  <div className="fixed inset-0 flex items-center justify-center bg-gradient-to-br from-blue-500 to-purple-600">
+    <div className="bg-white p-6 rounded-lg shadow-lg text-center" style={{ width: '200px' }}>
       <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-blue-600 mx-auto"></div>
       <p className="mt-4 text-gray-600">Loading...</p>
     </div>
@@ -58,6 +58,23 @@ const router = createBrowserRouter([
         path: "lobby",
         element: <LobbyLayout />,
         children: [
+          {
+            index: true,
+            element: <div className="min-h-screen flex items-center justify-center bg-gray-50">
+              <div className="text-center">
+                <h1 className="text-2xl font-bold text-gray-900 mb-4">Invalid Lobby Access</h1>
+                <p className="text-gray-600 mb-6">
+                  Please use a valid lobby link or join from the home page.
+                </p>
+                <a
+                  href="/"
+                  className="bg-blue-600 hover:bg-blue-700 text-white px-4 py-2 rounded-lg transition duration-200"
+                >
+                  Back to Home
+                </a>
+              </div>
+            </div>
+          },
           { path: ":lobbyCode", element: withSuspense(<LobbyPage />) },
         ],
       },
@@ -69,7 +86,26 @@ const router = createBrowserRouter([
       {
         path: "game",
         element: <GameLayout />,
-        children: [{ path: ":gameId", element: withSuspense(<GamePage />) }],
+        children: [
+          {
+            index: true,
+            element: <div className="min-h-screen flex items-center justify-center bg-gray-50">
+              <div className="text-center">
+                <h1 className="text-2xl font-bold text-gray-900 mb-4">Invalid Game Access</h1>
+                <p className="text-gray-600 mb-6">
+                  Please use a valid game link or join from the home page.
+                </p>
+                <a
+                  href="/"
+                  className="bg-blue-600 hover:bg-blue-700 text-white px-4 py-2 rounded-lg transition duration-200"
+                >
+                  Back to Home
+                </a>
+              </div>
+            </div>
+          },
+          { path: ":gameId", element: withSuspense(<GamePage />) },
+        ],
       },
       { path: "*", element: <NotFound /> },
     ],
