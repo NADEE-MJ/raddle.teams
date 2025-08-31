@@ -7,13 +7,16 @@ import typer
 app = typer.Typer()
 
 
-@app.command()
+@app.command(context_settings={"allow_extra_args": True, "ignore_unknown_options": True})
 def test(
+    ctx: typer.Context,
     v: bool = typer.Option(False, "--verbose", "-v"),
     vv: bool = typer.Option(False, "--very-verbose", "-vv"),
     vvv: bool = typer.Option(False, "--very-very-verbose", "-vvv"),
     filter: str = typer.Option(None, "--filter", "-f"),
     coverage: bool = typer.Option(False, "--coverage", "-c"),
+    record: bool = typer.Option(False, "--record", "-r", help="Enable video/trace recording"),
+    slow_mo: bool = typer.Option(False, "--slow-mo", "-s", help="Enable slow motion mode (headless=False, slow_mo=150)"),
 ):
     # get the current working directory
     cwd = os.getcwd()
@@ -49,7 +52,7 @@ def test(
     if vvv:
         command_line_args.append("-vvv")
     if filter:
-        command_line_args.append(f"-k {filter}")
+        command_line_args.extend(["-k", filter])
 
     # if coverage:
     #     command_line_args.append("--cov=packages")
@@ -60,11 +63,23 @@ def test(
     # command_line_args.append("-n")
     # command_line_args.append("4")
 
+    # Add any additional pytest arguments passed through
+    if ctx.params:
+        command_line_args.extend(ctx.args)
+
     try:
         os.environ["RADDLE_ENV"] = "testing"
+        if record:
+            os.environ["PYTEST_RECORD"] = "1"
+        if slow_mo:
+            os.environ["PYTEST_SLOW_MO"] = "1"
         sys.exit(pytest.main(command_line_args))
     finally:
         del os.environ["RADDLE_ENV"]
+        if "PYTEST_RECORD" in os.environ:
+            del os.environ["PYTEST_RECORD"]
+        if "PYTEST_SLOW_MO" in os.environ:
+            del os.environ["PYTEST_SLOW_MO"]
 
 
 if __name__ == "__main__":

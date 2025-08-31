@@ -18,13 +18,13 @@ This file provides guidance to Claude Code (claude.ai/code) when working with co
 - `npm run testing-server` - Start server in testing mode
 - `npm run lint:python` - Lint Python code with ruff
 - `npm run format:python` - Format Python code with ruff
-- `npm run test` - Run Python test suite using bin/run_tests.py
 
-**Alternative Python commands:**
-- `poetry run python bin/run_server.py development` - Start development server directly
-- `poetry run python bin/run_tests.py` - Run tests directly with pytest
-- `poetry run python bin/run_tests.py -v` - Run tests with verbose output
-- `poetry run python bin/run_tests.py -f <pattern>` - Run specific tests matching pattern
+**Testing:**
+- `npm run test` - Run Python e2e test suite using bin/run_tests.py
+- `npm run test -- --filter <pattern>` - Run specific tests matching pattern
+- `npm run test -- -v` - Run tests with verbose output
+- `npm run test -- --record` - Run tests with video/trace recording enabled
+- `npm run test -- tests/e2e/path/to/test.py` - Run specific test file
 
 ## Project Architecture
 

@@ -13,6 +13,7 @@ const LobbyLayout: React.FC = () => {
     const [lobbyInfo, setLobbyInfo] = useState<LobbyInfo | null>(null);
     const [isLoading, setIsLoading] = useState(true);
     const [error, setError] = useState<string | null>(null);
+    const [lobbyIdForWebSocket, setLobbyIdForWebSocket] = useState<number | null>(null);
 
     const setSessionId = useCallback((id: string | null) => {
         if (id) {
@@ -27,16 +28,18 @@ const LobbyLayout: React.FC = () => {
 
     const refreshLobbyInfo = useCallback(async () => {
         if (!sessionId) return;
-        
+
         try {
             setIsLoading(true);
             setError(null);
             const playerData = await api.player.lobby.activeUser(sessionId);
             setPlayer(playerData);
-            
+
             const lobbyData = await api.player.lobby.getInfo(sessionId);
             setLobby(lobbyData);
-            
+
+            setLobbyIdForWebSocket(playerData.lobby_id);
+
             const lobbyInfoData = await api.player.lobby.getLobbyInfo(playerData.lobby_id, sessionId);
             setLobbyInfo(lobbyInfoData);
         } catch (err) {
@@ -77,7 +80,7 @@ const LobbyLayout: React.FC = () => {
     }, [sessionId, refreshLobbyInfo]);
 
     useWebSocket(
-        player?.lobby_id || null,
+        lobbyIdForWebSocket,
         sessionId,
         {
             onMessage: handleWebSocketMessage,

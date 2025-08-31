@@ -1,3 +1,4 @@
+import os
 import httpx
 import pytest
 from playwright.async_api import async_playwright
@@ -34,29 +35,26 @@ async def playwright():
         yield p
 
 
-@pytest.fixture
-async def browser(playwright, request):
-    browsers = []
+@pytest.fixture()
+async def shared_browser(playwright):
+    slow_mo_enabled = os.getenv("PYTEST_SLOW_MO") == "1"
 
-    async def create():
-        browser = await playwright.chromium.launch()
-        browsers.append(browser)
-        session = BrowserSession(browser, request)
-        page = await session.start()
-        return session, page
+    if slow_mo_enabled:
+        browser = await playwright.chromium.launch(headless=False, slow_mo=500)
+    else:
+        browser = await playwright.chromium.launch(headless=True)
 
-    yield create
-
-    for browser in browsers:
-        await browser.close()
+    yield browser
+    await browser.close()
 
 
 @pytest.fixture
-async def admin_actions(browser, server_url, request):
+async def admin_actions(shared_browser, server_url, request):
     sessions = []
 
     async def create():
-        session, page = await browser()
+        session = BrowserSession(shared_browser, request)
+        page = await session.start()
         sessions.append(session)
         return AdminActions(page, server_url), page, session
 
@@ -70,11 +68,12 @@ async def admin_actions(browser, server_url, request):
 
 
 @pytest.fixture
-async def player_actions(browser, server_url, request):
+async def player_actions(shared_browser, server_url, request):
     sessions = []
 
     async def create(name):
-        session, page = await browser()
+        session = BrowserSession(shared_browser, request)
+        page = await session.start()
         sessions.append(session)
         return PlayerActions(page, server_url, name), page, session
 

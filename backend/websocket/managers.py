@@ -47,7 +47,7 @@ class AdminWebSocketManager:
             f"Broadcasting event to admins for lobby={lobby_id}. Event={event.model_dump()}. Recipients={len(recipients)}"
         )
         if not recipients:
-            websocket_logger.debug(f"No admin subscribers for lobby={lobby_id}")
+            websocket_logger.debug("No admin connections available")
         for connection in recipients:
             try:
                 await connection["websocket"].send_text(json.dumps(event.model_dump()))
