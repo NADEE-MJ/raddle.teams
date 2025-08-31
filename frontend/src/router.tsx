@@ -26,10 +26,12 @@ const NotFound: React.FC = () => (
 );
 
 const LoadingSpinner: React.FC = () => (
-  <div className='flex h-96 items-center justify-center bg-gray-50'>
-    <div className='text-center'>
-      <div className='mx-auto h-12 w-12 animate-spin rounded-full border-b-2 border-blue-600'></div>
-      <p className='mt-4 text-gray-600'>Loading...</p>
+  <div className='flex h-64 items-center justify-center'>
+    <div className='rounded-lg bg-white p-6 shadow-lg'>
+      <div className='text-center'>
+        <div className='mx-auto h-8 w-8 animate-spin rounded-full border-b-2 border-blue-600'></div>
+        <p className='mt-3 text-sm text-gray-600'>Loading...</p>
+      </div>
     </div>
   </div>
 );
