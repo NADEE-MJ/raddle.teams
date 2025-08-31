@@ -8,18 +8,12 @@ from tests.e2e.utilities.admin_actions import AdminActions
 from tests.e2e.utilities.player_actions import PlayerActions
 
 type AdminFixture = Callable[[], Awaitable[tuple[AdminActions, Page, BrowserSession]]]
-type PlayerFixture = Callable[
-    [str], Awaitable[tuple[PlayerActions, Page, BrowserSession]]
-]
+type PlayerFixture = Callable[[str], Awaitable[tuple[PlayerActions, Page, BrowserSession]]]
 
 
 class TestPlayerLobbyFlows:
-    async def test_home_page_loads(
-        self, player_actions_fixture: PlayerFixture, server_url: str
-    ):
-        player_actions, player_page, player_session = await player_actions_fixture(
-            "Test User"
-        )
+    async def test_home_page_loads(self, player_actions_fixture: PlayerFixture, server_url: str):
+        player_actions, player_page, player_session = await player_actions_fixture("Test User")
         player_session.set_name("test_home_page_loads")
 
         await player_page.goto(f"{server_url}/")
@@ -44,9 +38,7 @@ class TestPlayerLobbyFlows:
     ):
         admin_actions, admin_page, admin_session = await admin_actions_fixture()
         admin_session.set_name("player_join_lobby_flow_ADMIN")
-        player_actions, player_page, player_session = await player_actions_fixture(
-            "Test Player"
-        )
+        player_actions, player_page, player_session = await player_actions_fixture("Test Player")
         player_session.set_name("player_join_lobby_flow_PLAYER")
 
         await admin_actions.goto_admin_page()
@@ -58,23 +50,13 @@ class TestPlayerLobbyFlows:
         await player_actions.join_lobby()
 
         await expect(player_page.locator("p:has-text('Lobby Code:')")).to_be_visible()
-        await expect(
-            player_page.locator(
-                f"span.font-mono.text-lg.font-bold:has-text('{lobby_code}')"
-            )
-        ).to_be_visible()
-        await expect(
-            player_page.locator("p:has-text('Welcome, Test Player!')")
-        ).to_be_visible()
+        await expect(player_page.locator(f"span.font-mono.text-lg.font-bold:has-text('{lobby_code}')")).to_be_visible()
+        await expect(player_page.locator("p:has-text('Welcome, Test Player!')")).to_be_visible()
 
         await player_session.screenshot()
 
-    async def test_player_join_nonexistent_lobby(
-        self, player_actions_fixture: PlayerFixture, server_url: str
-    ):
-        player_actions, player_page, player_session = await player_actions_fixture(
-            "Test Player"
-        )
+    async def test_player_join_nonexistent_lobby(self, player_actions_fixture: PlayerFixture, server_url: str):
+        player_actions, player_page, player_session = await player_actions_fixture("Test Player")
         player_session.set_name("test_player_join_nonexistent_lobby")
 
         await player_actions.goto_home_page()
@@ -86,12 +68,8 @@ class TestPlayerLobbyFlows:
 
         await player_session.screenshot()
 
-    async def test_player_empty_name_validation(
-        self, player_actions_fixture: PlayerFixture, server_url: str
-    ):
-        player_actions, player_page, player_session = await player_actions_fixture(
-            "Test Player"
-        )
+    async def test_player_empty_name_validation(self, player_actions_fixture: PlayerFixture, server_url: str):
+        player_actions, player_page, player_session = await player_actions_fixture("Test Player")
         player_session.set_name("test_player_empty_name_validation")
 
         await player_actions.goto_home_page()
@@ -112,9 +90,7 @@ class TestPlayerLobbyFlows:
     ):
         admin_actions, admin_page, admin_session = await admin_actions_fixture()
         admin_session.set_name("test_player_lobby_info_display_ADMIN")
-        player_actions, player_page, player_session = await player_actions_fixture(
-            "Info Test Player"
-        )
+        player_actions, player_page, player_session = await player_actions_fixture("Info Test Player")
         player_session.set_name("test_player_lobby_info_display_PLAYER")
 
         await admin_actions.goto_admin_page()
@@ -126,15 +102,9 @@ class TestPlayerLobbyFlows:
         await player_actions.join_lobby()
 
         await expect(player_page.locator("p:has-text('Lobby Code:')")).to_be_visible()
-        await expect(
-            player_page.locator(
-                f"span.font-mono.text-lg.font-bold:has-text('{lobby_code}')"
-            )
-        ).to_be_visible()
+        await expect(player_page.locator(f"span.font-mono.text-lg.font-bold:has-text('{lobby_code}')")).to_be_visible()
         await expect(player_page.locator("text=Lobby Info Test")).to_be_visible()
-        await expect(
-            player_page.locator("p:has-text('Welcome, Info Test Player!')")
-        ).to_be_visible()
+        await expect(player_page.locator("p:has-text('Welcome, Info Test Player!')")).to_be_visible()
         await expect(player_page.locator("text=Players (1)")).to_be_visible()
 
         await player_session.screenshot()
@@ -147,9 +117,7 @@ class TestPlayerLobbyFlows:
     ):
         admin_actions, admin_page, admin_session = await admin_actions_fixture()
         admin_session.set_name("test_player_leave_lobby_flow_ADMIN")
-        player_actions, player_page, player_session = await player_actions_fixture(
-            "Leave Test Player"
-        )
+        player_actions, player_page, player_session = await player_actions_fixture("Leave Test Player")
         player_session.set_name("test_player_leave_lobby_flow_PLAYER")
 
         await admin_actions.goto_admin_page()
@@ -177,9 +145,7 @@ class TestPlayerLobbyFlows:
     ):
         admin_actions, admin_page, admin_session = await admin_actions_fixture()
         admin_session.set_name("test_player_reconnection_flow_ADMIN")
-        player_actions, player_page, player_session = await player_actions_fixture(
-            "Reconnect Player"
-        )
+        player_actions, player_page, player_session = await player_actions_fixture("Reconnect Player")
         player_session.set_name("test_player_reconnection_flow_PLAYER")
 
         await admin_actions.goto_admin_page()
@@ -194,14 +160,8 @@ class TestPlayerLobbyFlows:
 
         await player_page.reload(wait_until="networkidle")
 
-        await expect(player_page.locator("p:has-text('Lobby Code:')")).to_be_visible(
-            timeout=10000
-        )
-        await expect(
-            player_page.locator(
-                f"span.font-mono.text-lg.font-bold:has-text('{lobby_code}')"
-            )
-        ).to_be_visible()
+        await expect(player_page.locator("p:has-text('Lobby Code:')")).to_be_visible(timeout=10000)
+        await expect(player_page.locator(f"span.font-mono.text-lg.font-bold:has-text('{lobby_code}')")).to_be_visible()
 
         await player_session.screenshot()
 
@@ -213,9 +173,7 @@ class TestPlayerLobbyFlows:
     ):
         admin_actions, admin_page, admin_session = await admin_actions_fixture()
         admin_session.set_name("test_player_navigation_flow_ADMIN")
-        player_actions, player_page, player_session = await player_actions_fixture(
-            "Nav Test Player"
-        )
+        player_actions, player_page, player_session = await player_actions_fixture("Nav Test Player")
         player_session.set_name("test_player_navigation_flow_PLAYER")
 
         await admin_actions.goto_admin_page()
@@ -233,29 +191,19 @@ class TestPlayerLobbyFlows:
 
         await player_page.wait_for_load_state("networkidle")
 
-        is_in_lobby = await player_page.locator(
-            "p:has-text('Lobby Code:')"
-        ).is_visible()
-        is_on_home = await player_page.locator(
-            "h1:has-text('Raddle Teams')"
-        ).is_visible()
+        is_in_lobby = await player_page.locator("p:has-text('Lobby Code:')").is_visible()
+        is_on_home = await player_page.locator("h1:has-text('Raddle Teams')").is_visible()
 
         page_title = await player_page.title()
         current_url = player_page.url
 
         if is_in_lobby:
-            await expect(
-                player_page.locator("p:has-text('Lobby Code:')")
-            ).to_be_visible()
+            await expect(player_page.locator("p:has-text('Lobby Code:')")).to_be_visible()
         elif is_on_home:
-            await expect(
-                player_page.locator("h1:has-text('Raddle Teams')")
-            ).to_be_visible()
+            await expect(player_page.locator("h1:has-text('Raddle Teams')")).to_be_visible()
         else:
             await player_session.screenshot()
-            print(
-                f"Debug: Page title={page_title}, URL={current_url}, in_lobby={is_in_lobby}, on_home={is_on_home}"
-            )
+            print(f"Debug: Page title={page_title}, URL={current_url}, in_lobby={is_in_lobby}, on_home={is_on_home}")
             assert admin_actions.server_url in current_url
 
         await player_session.screenshot()
@@ -268,9 +216,7 @@ class TestPlayerLobbyFlows:
     ):
         admin_actions, admin_page, admin_session = await admin_actions_fixture()
         admin_session.set_name("test_multiple_players_join_same_lobby_ADMIN")
-        player1_actions, player1_page, player1_session = await player_actions_fixture(
-            "Player One"
-        )
+        player1_actions, player1_page, player1_session = await player_actions_fixture("Player One")
         player1_session.set_name("test_multiple_players_join_same_lobby_PLAYER1")
 
         await admin_actions.goto_admin_page()
@@ -281,22 +227,16 @@ class TestPlayerLobbyFlows:
         await player1_actions.fill_name_and_code("Player One", lobby_code)
         await player1_actions.join_lobby()
 
-        await expect(
-            player1_page.locator("p:has-text('Welcome, Player One!')")
-        ).to_be_visible()
+        await expect(player1_page.locator("p:has-text('Welcome, Player One!')")).to_be_visible()
         await player1_actions.wait_for_player_count(1)
 
-        player2_actions, player2_page, player2_session = await player_actions_fixture(
-            "Player Two"
-        )
+        player2_actions, player2_page, player2_session = await player_actions_fixture("Player Two")
         player2_session.set_name("test_multiple_players_join_same_lobby_PLAYER2")
         await player2_actions.goto_home_page()
         await player2_actions.fill_name_and_code("Player Two", lobby_code)
         await player2_actions.join_lobby()
 
-        await expect(
-            player2_page.locator("p:has-text('Welcome, Player Two!')")
-        ).to_be_visible()
+        await expect(player2_page.locator("p:has-text('Welcome, Player Two!')")).to_be_visible()
 
         # Add a small delay to ensure WebSocket connections are established
         # Wait for WebSocket updates to show both players
@@ -306,12 +246,8 @@ class TestPlayerLobbyFlows:
         await player2_session.screenshot()
         await player1_session.screenshot()
 
-    async def test_player_form_validation(
-        self, player_actions_fixture: PlayerFixture, server_url: str
-    ):
-        player_actions, player_page, player_session = await player_actions_fixture(
-            "Test Player"
-        )
+    async def test_player_form_validation(self, player_actions_fixture: PlayerFixture, server_url: str):
+        player_actions, player_page, player_session = await player_actions_fixture("Test Player")
         player_session.set_name("test_player_form_validation")
 
         await player_actions.goto_home_page()
@@ -327,9 +263,7 @@ class TestPlayerLobbyFlows:
         await player_page.fill("#lobbyCode", "")
         await join_button.click()
 
-        await expect(
-            player_page.locator("text=Please enter a lobby code")
-        ).to_be_visible()
+        await expect(player_page.locator("text=Please enter a lobby code")).to_be_visible()
         await expect(player_page.locator("h1:has-text('Raddle Teams')")).to_be_visible()
 
         await player_session.screenshot()

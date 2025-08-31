@@ -50,9 +50,7 @@ class ServerManager:
     def _kill_port_process(self) -> None:
         try:
             # Use lsof to find and kill process on port
-            result = subprocess.run(
-                ["lsof", "-ti", f":{self.port}"], capture_output=True, text=True
-            )
+            result = subprocess.run(["lsof", "-ti", f":{self.port}"], capture_output=True, text=True)
             if result.stdout:
                 pid = int(result.stdout.strip())
                 os.kill(pid, signal.SIGTERM)

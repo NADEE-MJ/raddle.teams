@@ -8,9 +8,7 @@ from tests.e2e.utilities.admin_actions import AdminActions
 from tests.e2e.utilities.player_actions import PlayerActions
 
 type AdminFixture = Callable[[], Awaitable[tuple[AdminActions, Page, BrowserSession]]]
-type PlayerFixture = Callable[
-    [str], Awaitable[tuple[PlayerActions, Page, BrowserSession]]
-]
+type PlayerFixture = Callable[[str], Awaitable[tuple[PlayerActions, Page, BrowserSession]]]
 
 
 class TestAdminWebSocketFlows:
@@ -22,9 +20,7 @@ class TestAdminWebSocketFlows:
     ):
         admin_actions, admin_page, admin_session = await admin_actions_fixture()
         admin_session.set_name("test_admin_player_join_ADMIN")
-        player_actions, player_page, player_session = await player_actions_fixture(
-            "Join Notify Player"
-        )
+        player_actions, player_page, player_session = await player_actions_fixture("Join Notify Player")
         player_session.set_name("test_admin_player_join_PLAYER")
 
         await admin_actions.goto_admin_page()
@@ -56,14 +52,10 @@ class TestAdminWebSocketFlows:
         admin_actions, admin_page, admin_session = await admin_actions_fixture()
         admin_session.set_name("test_admin_multiple_joins_ADMIN")
 
-        player1_actions, player1_page, player1_session = await player_actions_fixture(
-            "Multi Join One"
-        )
+        player1_actions, player1_page, player1_session = await player_actions_fixture("Multi Join One")
         player1_session.set_name("test_admin_multiple_joins_PLAYER1")
 
-        player2_actions, player2_page, player2_session = await player_actions_fixture(
-            "Multi Join Two"
-        )
+        player2_actions, player2_page, player2_session = await player_actions_fixture("Multi Join Two")
         player2_session.set_name("test_admin_multiple_joins_PLAYER2")
 
         await admin_actions.goto_admin_page()
@@ -99,9 +91,7 @@ class TestAdminWebSocketFlows:
     ):
         admin_actions, admin_page, admin_session = await admin_actions_fixture()
         admin_session.set_name("test_admin_player_leave_ADMIN")
-        player_actions, player_page, player_session = await player_actions_fixture(
-            "Leave Notify Player"
-        )
+        player_actions, player_page, player_session = await player_actions_fixture("Leave Notify Player")
         player_session.set_name("test_admin_player_leave_PLAYER")
 
         await admin_actions.goto_admin_page()
@@ -124,9 +114,7 @@ class TestAdminWebSocketFlows:
         await expect(player_page.locator("h1:has-text('Raddle Teams')")).to_be_visible()
 
         # Wait for player to disappear via WebSocket - check for "No players" text
-        await expect(
-            admin_page.locator("text=No players in this lobby yet")
-        ).to_be_visible(timeout=5000)
+        await expect(admin_page.locator("text=No players in this lobby yet")).to_be_visible(timeout=5000)
 
         await admin_session.screenshot()
 
@@ -139,14 +127,10 @@ class TestAdminWebSocketFlows:
         admin_actions, admin_page, admin_session = await admin_actions_fixture()
         admin_session.set_name("test_admin_management_ADMIN")
 
-        player1_actions, player1_page, player1_session = await player_actions_fixture(
-            "Active Player One"
-        )
+        player1_actions, player1_page, player1_session = await player_actions_fixture("Active Player One")
         player1_session.set_name("test_admin_management_PLAYER1")
 
-        player2_actions, player2_page, player2_session = await player_actions_fixture(
-            "Active Player Two"
-        )
+        player2_actions, player2_page, player2_session = await player_actions_fixture("Active Player Two")
         player2_session.set_name("test_admin_management_PLAYER2")
 
         await admin_actions.goto_admin_page()

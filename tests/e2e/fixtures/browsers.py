@@ -43,9 +43,7 @@ class BrowserSession:
         self.context = await self.browser.new_context(**final_options)
 
         if self.recording_enabled:
-            await self.context.tracing.start(
-                screenshots=True, snapshots=True, sources=True
-            )
+            await self.context.tracing.start(screenshots=True, snapshots=True, sources=True)
 
         self.page = await self.context.new_page()
         return self.page
@@ -62,9 +60,7 @@ class BrowserSession:
 
         if self.context:
             if self.recording_enabled:
-                await self.context.tracing.stop(
-                    path=f"{self.recording_dir}/traces/{self.name}.zip"
-                )
+                await self.context.tracing.stop(path=f"{self.recording_dir}/traces/{self.name}.zip")
             await self.context.close()
             self.context = None
 

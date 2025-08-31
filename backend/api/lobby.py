@@ -27,15 +27,11 @@ async def join_lobby(
 
     session_id = str(uuid.uuid4())
 
-    player = Player(
-        **player_data.model_dump(), session_id=session_id, lobby_id=lobby.id
-    )
+    player = Player(**player_data.model_dump(), session_id=session_id, lobby_id=lobby.id)
     db.add(player)
     db.commit()
     db.refresh(player)
-    api_logger.info(
-        f"New player created session_id={player.session_id} lobby_id={lobby.id} name={player.name}"
-    )
+    api_logger.info(f"New player created session_id={player.session_id} lobby_id={lobby.id} name={player.name}")
 
     try:
         await lobby_websocket_manager.broadcast_to_lobby(
@@ -43,9 +39,7 @@ async def join_lobby(
             JoinedLobbyEvent(lobby_id=lobby.id, player_session_id=player.session_id),
         )
     except Exception as e:
-        api_logger.exception(
-            f"Failed to broadcast lobby join for session {player.session_id}: {e}"
-        )
+        api_logger.exception(f"Failed to broadcast lobby join for session {player.session_id}: {e}")
 
     return player
 
@@ -54,13 +48,9 @@ async def join_lobby(
 async def get_active_user(
     player: Player = Depends(require_player_session),
 ):
-    api_logger.info(
-        f"Player requesting active user info: session_id={player.session_id}"
-    )
+    api_logger.info(f"Player requesting active user info: session_id={player.session_id}")
 
-    api_logger.info(
-        f"Returning active user session_id={player.session_id} lobby_id={player.lobby_id}"
-    )
+    api_logger.info(f"Returning active user session_id={player.session_id} lobby_id={player.lobby_id}")
     return player
 
 
@@ -80,9 +70,7 @@ async def get_current_lobby(
         )
         raise HTTPException(status_code=404, detail="Lobby not found")
 
-    api_logger.info(
-        f"Returning current lobby id={lobby.id} for player session_id={player.session_id}"
-    )
+    api_logger.info(f"Returning current lobby id={lobby.id} for player session_id={player.session_id}")
     return lobby
 
 
@@ -98,9 +86,7 @@ async def leave_current_lobby(
     try:
         db.delete(player)
         db.commit()
-        api_logger.info(
-            f"Player deleted session_id={player.session_id} lobby_id={lobby_id}"
-        )
+        api_logger.info(f"Player deleted session_id={player.session_id} lobby_id={lobby_id}")
     except Exception as e:
         api_logger.exception(f"Failed to delete player {player.session_id}: {e}")
         raise HTTPException(status_code=500, detail="Failed to remove player")
@@ -108,14 +94,10 @@ async def leave_current_lobby(
     try:
         await lobby_websocket_manager.broadcast_to_lobby(
             lobby_id,
-            DisconnectedLobbyEvent(
-                lobby_id=lobby_id, player_session_id=player.session_id
-            ),
+            DisconnectedLobbyEvent(lobby_id=lobby_id, player_session_id=player.session_id),
         )
     except Exception as e:
-        api_logger.exception(
-            f"Failed to broadcast player left for session {player.session_id}: {e}"
-        )
+        api_logger.exception(f"Failed to broadcast player left for session {player.session_id}: {e}")
 
     return MessageResponse(status=True, message="Player left lobby successfully")
 
@@ -126,14 +108,10 @@ async def get_lobby_info(
     player: Player = Depends(require_player_session),
     db: Session = Depends(get_session),
 ):
-    api_logger.info(
-        f"Player requesting lobby info: lobby_id={lobby_id}, session_id={player.session_id}"
-    )
+    api_logger.info(f"Player requesting lobby info: lobby_id={lobby_id}, session_id={player.session_id}")
     # Use eager loading to get lobby with relationships
     lobby = db.exec(
-        select(Lobby)
-        .options(selectinload(Lobby.players), selectinload(Lobby.teams))
-        .where(Lobby.id == lobby_id)
+        select(Lobby).options(selectinload(Lobby.players), selectinload(Lobby.teams)).where(Lobby.id == lobby_id)
     ).first()
     if not lobby:
         api_logger.warning(f"Lobby not found lobby_id={lobby_id}")
@@ -150,10 +128,6 @@ async def get_lobby_info(
         if p.team_id not in players_by_team:
             players_by_team[p.team_id] = []
         players_by_team[p.team_id].append(p)
-    api_logger.info(
-        f"Player returning lobby info for {lobby_id}: {len(teams)} teams, {len(players)} players"
-    )
+    api_logger.info(f"Player returning lobby info for {lobby_id}: {len(teams)} teams, {len(players)} players")
 
-    return LobbyInfo(
-        lobby=lobby, players=players, players_by_team=players_by_team, teams=teams
-    )
+    return LobbyInfo(lobby=lobby, players=players, players_by_team=players_by_team, teams=teams)

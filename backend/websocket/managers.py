@@ -20,13 +20,9 @@ class AdminWebSocketManager:
     async def connect(self, websocket: WebSocket, web_session_id: str):
         try:
             await websocket.accept()
-            websocket_logger.debug(
-                f"Admin websocket.accept() succeeded: web_session_id={web_session_id}"
-            )
+            websocket_logger.debug(f"Admin websocket.accept() succeeded: web_session_id={web_session_id}")
         except Exception:
-            websocket_logger.exception(
-                f"Admin websocket.accept() failed: web_session_id={web_session_id}"
-            )
+            websocket_logger.exception(f"Admin websocket.accept() failed: web_session_id={web_session_id}")
             raise
 
         self.admin_websockets[web_session_id] = {
@@ -38,11 +34,7 @@ class AdminWebSocketManager:
         )
 
     async def broadcast_to_lobby(self, lobby_id: int, event: LobbyEvent):
-        recipients = [
-            conn
-            for conn in self.admin_websockets.values()
-            if lobby_id in conn["subscribed_lobbies"]
-        ]
+        recipients = [conn for conn in self.admin_websockets.values() if lobby_id in conn["subscribed_lobbies"]]
         websocket_logger.debug(
             f"Broadcasting event to admins for lobby={lobby_id}. Event={event.model_dump()}. Recipients={len(recipients)}"
         )
@@ -53,9 +45,7 @@ class AdminWebSocketManager:
                 await connection["websocket"].send_text(json.dumps(event.model_dump()))
                 websocket_logger.debug("Sent event to admin websocket")
             except Exception:
-                websocket_logger.exception(
-                    "Failed to send event to admin websocket; continuing."
-                )
+                websocket_logger.exception("Failed to send event to admin websocket; continuing.")
 
     async def subscribe_to_lobby(self, web_session_id: str, lobby_id: int):
         connection = self.admin_websockets.get(web_session_id)
@@ -67,13 +57,9 @@ class AdminWebSocketManager:
 
         if lobby_id not in connection["subscribed_lobbies"]:
             connection["subscribed_lobbies"].append(lobby_id)
-            websocket_logger.info(
-                f"Admin web_session_id={web_session_id} subscribed to lobby_id={lobby_id}"
-            )
+            websocket_logger.info(f"Admin web_session_id={web_session_id} subscribed to lobby_id={lobby_id}")
         else:
-            websocket_logger.debug(
-                f"Admin web_session_id={web_session_id} already subscribed to lobby_id={lobby_id}"
-            )
+            websocket_logger.debug(f"Admin web_session_id={web_session_id} already subscribed to lobby_id={lobby_id}")
 
     async def unsubscribe_from_lobby(self, web_session_id: str, lobby_id: int):
         connection = self.admin_websockets.get(web_session_id)
@@ -85,13 +71,9 @@ class AdminWebSocketManager:
 
         try:
             connection["subscribed_lobbies"].remove(lobby_id)
-            websocket_logger.info(
-                f"Admin web_session_id={web_session_id} unsubscribed from lobby_id={lobby_id}"
-            )
+            websocket_logger.info(f"Admin web_session_id={web_session_id} unsubscribed from lobby_id={lobby_id}")
         except ValueError:
-            websocket_logger.debug(
-                f"Admin web_session_id={web_session_id} was not subscribed to lobby_id={lobby_id}"
-            )
+            websocket_logger.debug(f"Admin web_session_id={web_session_id} was not subscribed to lobby_id={lobby_id}")
 
     async def handle_message(self, web_session_id: str, message: dict):
         action = message.get("action")
@@ -112,24 +94,18 @@ class AdminWebSocketManager:
                 websocket_logger.debug(f"Admin WS received message: {message}")
                 await self.handle_message(web_session_id, message)
             except Exception:
-                websocket_logger.exception(
-                    "Error while reading from admin websocket. Stopping continuous listening."
-                )
+                websocket_logger.exception("Error while reading from admin websocket. Stopping continuous listening.")
                 break
 
     async def disconnect(self, web_session_id: str):
         connection = self.admin_websockets.pop(web_session_id, None)
         if not connection:
-            websocket_logger.debug(
-                f"Tried to disconnect unknown admin web_session_id={web_session_id}"
-            )
+            websocket_logger.debug(f"Tried to disconnect unknown admin web_session_id={web_session_id}")
             return
 
         try:
             await connection["websocket"].close()
-            websocket_logger.debug(
-                f"Admin websocket.close() succeeded: web_session_id={web_session_id}"
-            )
+            websocket_logger.debug(f"Admin websocket.close() succeeded: web_session_id={web_session_id}")
         except Exception:
             websocket_logger.debug(
                 f"Admin websocket close failed (probably already closed): web_session_id={web_session_id}"
@@ -155,9 +131,7 @@ class LobbyWebSocketManager:
         """
         self.admin_web_socket_manager = admin_web_socket_manager
 
-    async def connect(
-        self, websocket: WebSocket, lobby_id: int, player_session_id: str
-    ):
+    async def connect(self, websocket: WebSocket, lobby_id: int, player_session_id: str):
         try:
             await websocket.accept()
             websocket_logger.debug(
@@ -212,20 +186,14 @@ class LobbyWebSocketManager:
     #         raise ValueError("WebSocket is not connected")
 
     async def broadcast_to_lobby(self, lobby_id: int, event: LobbyEvent):
-        websocket_logger.debug(
-            f"Broadcasting event to lobby {lobby_id}: {event.model_dump()}"
-        )
+        websocket_logger.debug(f"Broadcasting event to lobby {lobby_id}: {event.model_dump()}")
         members = self.lobby_websockets.get(lobby_id, {})
         if not members:
-            websocket_logger.debug(
-                f"No connected players in lobby={lobby_id} to broadcast to"
-            )
+            websocket_logger.debug(f"No connected players in lobby={lobby_id} to broadcast to")
         for ws_id, websocket in list(members.items()):
             try:
                 await websocket.send_text(json.dumps(event.model_dump()))
-                websocket_logger.debug(
-                    f"Sent event to player_session_id={ws_id} in lobby={lobby_id}"
-                )
+                websocket_logger.debug(f"Sent event to player_session_id={ws_id} in lobby={lobby_id}")
             except Exception:
                 websocket_logger.exception(
                     f"Failed to send event to player_session_id={ws_id} in lobby={lobby_id}; removing or ignoring."
@@ -243,12 +211,8 @@ class LobbyWebSocketManager:
                 websocket_logger.debug(f"Player WS received message: {message}")
                 # TODO Message handling would be implemented here for future features
             except Exception:
-                websocket_logger.exception(
-                    "Error while reading from player websocket. Stopping continuous listening."
-                )
+                websocket_logger.exception("Error while reading from player websocket. Stopping continuous listening.")
                 break
 
 
-lobby_websocket_manager = LobbyWebSocketManager(
-    admin_web_socket_manager=admin_web_socket_manager
-)
+lobby_websocket_manager = LobbyWebSocketManager(admin_web_socket_manager=admin_web_socket_manager)

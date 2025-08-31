@@ -7,9 +7,7 @@ import typer
 app = typer.Typer()
 
 
-@app.command(
-    context_settings={"allow_extra_args": True, "ignore_unknown_options": True}
-)
+@app.command(context_settings={"allow_extra_args": True, "ignore_unknown_options": True})
 def test(
     ctx: typer.Context,
     v: bool = typer.Option(False, "--verbose", "-v"),
@@ -17,9 +15,7 @@ def test(
     vvv: bool = typer.Option(False, "--very-very-verbose", "-vvv"),
     filter: str = typer.Option(None, "--filter", "-f"),
     coverage: bool = typer.Option(False, "--coverage", "-c"),
-    record: bool = typer.Option(
-        False, "--record", "-r", help="Enable video/trace recording"
-    ),
+    record: bool = typer.Option(False, "--record", "-r", help="Enable video/trace recording"),
     slow_mo: bool = typer.Option(
         False,
         "--slow-mo",

@@ -11,11 +11,7 @@ class AdminActions:
     async def goto_admin_page(self):
         await self.page.goto(f"{self.server_url}/admin", wait_until="networkidle")
 
-        await expect(
-            self.page.locator(
-                "h1:has-text('Admin Login'), h1:has-text('Admin Dashboard')"
-            )
-        ).to_be_visible()
+        await expect(self.page.locator("h1:has-text('Admin Login'), h1:has-text('Admin Dashboard')")).to_be_visible()
 
     async def login(self, admin_token: str = None):
         if admin_token is None:
@@ -26,9 +22,7 @@ class AdminActions:
         )
         await token_input.fill(admin_token)
 
-        login_button = self.page.locator(
-            'button:has-text("Login"), button[type="submit"]'
-        )
+        login_button = self.page.locator('button:has-text("Login"), button[type="submit"]')
         await login_button.click()
 
         await expect(self.page.locator("text=Admin Dashboard")).to_be_visible()
@@ -79,23 +73,17 @@ class AdminActions:
 
     async def get_lobby_player_count(self, lobby_code: str) -> int:
         lobby_info = self.page.locator(f"text={lobby_code}").locator("..")
-        player_count_text = await lobby_info.locator(
-            "text=/\\d+ players?/"
-        ).text_content()
+        player_count_text = await lobby_info.locator("text=/\\d+ players?/").text_content()
 
         match = re.search(r"(\d+)", player_count_text)
         return int(match.group(1)) if match else 0
 
     async def wait_for_players(self, expected_count: int, timeout: int = 30000):
-        await expect(
-            self.page.locator(f"text=/Players \\({expected_count}\\)/")
-        ).to_be_visible(timeout=timeout)
+        await expect(self.page.locator(f"text=/Players \\({expected_count}\\)/")).to_be_visible(timeout=timeout)
 
     async def delete_lobby(self, lobby_code: str):
         lobby_card = self.page.locator(f"text=Code: {lobby_code}").locator("..")
         delete_button = lobby_card.locator('button:has-text("Delete")')
         await delete_button.click()
 
-        await expect(self.page.locator(f"text=Code: {lobby_code}")).not_to_be_visible(
-            timeout=5000
-        )
+        await expect(self.page.locator(f"text=Code: {lobby_code}")).not_to_be_visible(timeout=5000)

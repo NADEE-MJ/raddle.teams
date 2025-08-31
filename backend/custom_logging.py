@@ -13,13 +13,9 @@ def create_logger(name: str, level, include_console: bool = False) -> logging.Lo
         logger.handlers.clear()
 
     if settings.TESTING:
-        file_handler = RotatingFileHandler(
-            f"logs/testing_{name}.log", maxBytes=10 * 1024 * 1024, backupCount=5
-        )
+        file_handler = RotatingFileHandler(f"logs/testing_{name}.log", maxBytes=10 * 1024 * 1024, backupCount=5)
     else:
-        file_handler = RotatingFileHandler(
-            f"logs/{name}.log", maxBytes=10 * 1024 * 1024, backupCount=5
-        )
+        file_handler = RotatingFileHandler(f"logs/{name}.log", maxBytes=10 * 1024 * 1024, backupCount=5)
     file_handler.setLevel(level)
 
     formatter = logging.Formatter("[%(asctime)s] (%(levelname)s) - %(message)s")

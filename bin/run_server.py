@@ -28,9 +28,7 @@ def run_server(environment: str):
     server_logger.info(f"📖 API docs will be available at: http://{host}:{port}/docs")
     server_logger.info(f"📚 ReDoc will be available at: http://{host}:{port}/redoc")
 
-    server_logger.info(
-        f"Server configuration - Host: {host}, Port: {port}, Reload: {reload}, Log Level: {log_level}"
-    )
+    server_logger.info(f"Server configuration - Host: {host}, Port: {port}, Reload: {reload}, Log Level: {log_level}")
 
     cwd = os.getcwd()
     server_logger.debug(f"Current working directory: {cwd}")

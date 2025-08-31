@@ -8,9 +8,7 @@ from tests.e2e.utilities.admin_actions import AdminActions
 from tests.e2e.utilities.player_actions import PlayerActions
 
 type AdminFixture = Callable[[], Awaitable[tuple[AdminActions, Page, BrowserSession]]]
-type PlayerFixture = Callable[
-    [str], Awaitable[tuple[PlayerActions, Page, BrowserSession]]
-]
+type PlayerFixture = Callable[[str], Awaitable[tuple[PlayerActions, Page, BrowserSession]]]
 
 
 class TestAdvancedPlayerFlows:
@@ -22,9 +20,7 @@ class TestAdvancedPlayerFlows:
     ):
         admin_actions, admin_page, admin_session = await admin_actions_fixture()
         admin_session.set_name("test_player_rejoin_ADMIN")
-        player_actions, player_page, player_session = await player_actions_fixture(
-            "Rejoin Player"
-        )
+        player_actions, player_page, player_session = await player_actions_fixture("Rejoin Player")
         player_session.set_name("test_player_rejoin_PLAYER")
 
         await admin_actions.goto_admin_page()
@@ -59,14 +55,8 @@ class TestAdvancedPlayerFlows:
             print(f"Rejoin failed. Page content: {error_text[:500]}")
             raise e
         await expect(player_page.locator("p:has-text('Lobby Code:')")).to_be_visible()
-        await expect(
-            player_page.locator(
-                f"span.font-mono.text-lg.font-bold:has-text('{lobby_code}')"
-            )
-        ).to_be_visible()
-        await expect(
-            player_page.locator("p:has-text('Welcome, Rejoin Player!')")
-        ).to_be_visible()
+        await expect(player_page.locator(f"span.font-mono.text-lg.font-bold:has-text('{lobby_code}')")).to_be_visible()
+        await expect(player_page.locator("p:has-text('Welcome, Rejoin Player!')")).to_be_visible()
 
         await player_session.screenshot()
 
@@ -78,9 +68,7 @@ class TestAdvancedPlayerFlows:
     ):
         admin_actions, admin_page, admin_session = await admin_actions_fixture()
         admin_session.set_name("test_player_reconnection_ADMIN")
-        player_actions, player_page, player_session = await player_actions_fixture(
-            "Reconnect Player"
-        )
+        player_actions, player_page, player_session = await player_actions_fixture("Reconnect Player")
         player_session.set_name("test_player_reconnection_PLAYER")
 
         await admin_actions.goto_admin_page()
@@ -94,17 +82,9 @@ class TestAdvancedPlayerFlows:
 
         await player_page.reload(wait_until="networkidle")
 
-        await expect(player_page.locator("p:has-text('Lobby Code:')")).to_be_visible(
-            timeout=5000
-        )
-        await expect(
-            player_page.locator(
-                f"span.font-mono.text-lg.font-bold:has-text('{lobby_code}')"
-            )
-        ).to_be_visible()
-        await expect(
-            player_page.locator("p:has-text('Welcome, Reconnect Player!')")
-        ).to_be_visible()
+        await expect(player_page.locator("p:has-text('Lobby Code:')")).to_be_visible(timeout=5000)
+        await expect(player_page.locator(f"span.font-mono.text-lg.font-bold:has-text('{lobby_code}')")).to_be_visible()
+        await expect(player_page.locator("p:has-text('Welcome, Reconnect Player!')")).to_be_visible()
 
         await player_session.screenshot()
 
@@ -117,14 +97,10 @@ class TestAdvancedPlayerFlows:
         admin_actions, admin_page, admin_session = await admin_actions_fixture()
         admin_session.set_name("test_realtime_updates_ADMIN")
 
-        player1_actions, player1_page, player1_session = await player_actions_fixture(
-            "Player One"
-        )
+        player1_actions, player1_page, player1_session = await player_actions_fixture("Player One")
         player1_session.set_name("test_realtime_updates_PLAYER1")
 
-        player2_actions, player2_page, player2_session = await player_actions_fixture(
-            "Player Two"
-        )
+        player2_actions, player2_page, player2_session = await player_actions_fixture("Player Two")
         player2_session.set_name("test_realtime_updates_PLAYER2")
 
         await admin_actions.goto_admin_page()
@@ -159,19 +135,13 @@ class TestAdvancedPlayerFlows:
         admin_actions, admin_page, admin_session = await admin_actions_fixture()
         admin_session.set_name("test_concurrent_joins_ADMIN")
 
-        player1_actions, player1_page, player1_session = await player_actions_fixture(
-            "Concurrent One"
-        )
+        player1_actions, player1_page, player1_session = await player_actions_fixture("Concurrent One")
         player1_session.set_name("test_concurrent_joins_PLAYER1")
 
-        player2_actions, player2_page, player2_session = await player_actions_fixture(
-            "Concurrent Two"
-        )
+        player2_actions, player2_page, player2_session = await player_actions_fixture("Concurrent Two")
         player2_session.set_name("test_concurrent_joins_PLAYER2")
 
-        player3_actions, player3_page, player3_session = await player_actions_fixture(
-            "Concurrent Three"
-        )
+        player3_actions, player3_page, player3_session = await player_actions_fixture("Concurrent Three")
         player3_session.set_name("test_concurrent_joins_PLAYER3")
 
         await admin_actions.goto_admin_page()
@@ -197,15 +167,9 @@ class TestAdvancedPlayerFlows:
         await player3_actions.wait_for_player_count(3, timeout=8000)
 
         for player_page in [player1_page, player2_page, player3_page]:
-            await expect(
-                player_page.locator("span:has-text('Concurrent One')").nth(0)
-            ).to_be_visible()
-            await expect(
-                player_page.locator("span:has-text('Concurrent Two')").nth(0)
-            ).to_be_visible()
-            await expect(
-                player_page.locator("span:has-text('Concurrent Three')").nth(0)
-            ).to_be_visible()
+            await expect(player_page.locator("span:has-text('Concurrent One')").nth(0)).to_be_visible()
+            await expect(player_page.locator("span:has-text('Concurrent Two')").nth(0)).to_be_visible()
+            await expect(player_page.locator("span:has-text('Concurrent Three')").nth(0)).to_be_visible()
 
         await player1_session.screenshot()
         await player2_session.screenshot()
@@ -220,14 +184,10 @@ class TestAdvancedPlayerFlows:
         admin_actions, admin_page, admin_session = await admin_actions_fixture()
         admin_session.set_name("test_leave_updates_ADMIN")
 
-        player1_actions, player1_page, player1_session = await player_actions_fixture(
-            "Staying Player"
-        )
+        player1_actions, player1_page, player1_session = await player_actions_fixture("Staying Player")
         player1_session.set_name("test_leave_updates_PLAYER1")
 
-        player2_actions, player2_page, player2_session = await player_actions_fixture(
-            "Leaving Player"
-        )
+        player2_actions, player2_page, player2_session = await player_actions_fixture("Leaving Player")
         player2_session.set_name("test_leave_updates_PLAYER2")
 
         await admin_actions.goto_admin_page()

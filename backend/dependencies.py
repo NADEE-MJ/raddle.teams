@@ -42,9 +42,7 @@ def check_admin_token(
         )
 
     if credentials.credentials != settings.ADMIN_PASSWORD:
-        api_logger.warning(
-            "Invalid admin credentials provided via Authorization header"
-        )
+        api_logger.warning("Invalid admin credentials provided via Authorization header")
         raise HTTPException(
             status_code=status.HTTP_401_UNAUTHORIZED,
             detail="Invalid admin credentials",
@@ -107,14 +105,10 @@ def require_player_session(
             headers={"WWW-Authenticate": "Bearer"},
         )
 
-    player = db.exec(
-        select(Player).where(Player.session_id == credentials.credentials)
-    ).first()
+    player = db.exec(select(Player).where(Player.session_id == credentials.credentials)).first()
 
     if not player:
-        api_logger.warning(
-            "Invalid player session token provided in Authorization header"
-        )
+        api_logger.warning("Invalid player session token provided in Authorization header")
         raise HTTPException(
             status_code=status.HTTP_401_UNAUTHORIZED,
             detail="Invalid authentication token",

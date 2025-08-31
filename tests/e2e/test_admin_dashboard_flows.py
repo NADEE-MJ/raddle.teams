@@ -10,9 +10,7 @@ type AdminFixture = Callable[[], Awaitable[tuple[AdminActions, Page, BrowserSess
 
 
 class TestAdminDashboardFlows:
-    async def test_admin_login_flow(
-        self, admin_actions_fixture: AdminFixture, settings: Settings
-    ):
+    async def test_admin_login_flow(self, admin_actions_fixture: AdminFixture, settings: Settings):
         actions, page, browser = await admin_actions_fixture()
         browser.set_name("admin_login_flow")
 
@@ -49,9 +47,7 @@ class TestAdminDashboardFlows:
 
         await browser.screenshot()
 
-    async def test_admin_create_lobby(
-        self, admin_actions_fixture: AdminFixture, settings: Settings
-    ):
+    async def test_admin_create_lobby(self, admin_actions_fixture: AdminFixture, settings: Settings):
         actions, page, browser = await admin_actions_fixture()
         browser.set_name("admin_create_lobby")
 
@@ -65,9 +61,7 @@ class TestAdminDashboardFlows:
 
         await browser.screenshot("admin_lobby_created")
 
-    async def test_admin_view_lobby_details(
-        self, admin_actions_fixture: AdminFixture, settings: Settings
-    ):
+    async def test_admin_view_lobby_details(self, admin_actions_fixture: AdminFixture, settings: Settings):
         actions, page, browser = await admin_actions_fixture()
         browser.set_name("admin_view_lobby_details")
 
@@ -81,18 +75,14 @@ class TestAdminDashboardFlows:
         await actions.peek_into_lobby(lobby_code)
 
         await expect(page.locator("text=Lobby Details:")).to_be_visible()
-        await expect(
-            page.locator('h2:has-text("Lobby Details: View Details Test Lobby")')
-        ).to_be_visible()
+        await expect(page.locator('h2:has-text("Lobby Details: View Details Test Lobby")')).to_be_visible()
         lobby_info_section = page.locator("h3:has-text('Lobby Info')").locator("..")
         await expect(lobby_info_section.locator(f"text={lobby_code}")).to_be_visible()
         await expect(page.locator("text=No players in this lobby yet")).to_be_visible()
 
         await browser.screenshot()
 
-    async def test_admin_logout(
-        self, admin_actions_fixture: AdminFixture, settings: Settings
-    ):
+    async def test_admin_logout(self, admin_actions_fixture: AdminFixture, settings: Settings):
         actions, page, browser = await admin_actions_fixture()
         browser.set_name("admin_logout")
 
@@ -133,9 +123,7 @@ class TestAdminDashboardFlows:
 
         await browser.screenshot("admin_navigation")
 
-    async def test_admin_multiple_lobbies_management(
-        self, admin_actions_fixture: AdminFixture, settings: Settings
-    ):
+    async def test_admin_multiple_lobbies_management(self, admin_actions_fixture: AdminFixture, settings: Settings):
         actions, page, browser = await admin_actions_fixture()
         browser.set_name("admin_multiple_lobbies")
 
@@ -156,9 +144,7 @@ class TestAdminDashboardFlows:
 
         await browser.screenshot("admin_multiple_lobbies")
 
-    async def test_admin_empty_lobby_list(
-        self, admin_actions_fixture: AdminFixture, settings: Settings
-    ):
+    async def test_admin_empty_lobby_list(self, admin_actions_fixture: AdminFixture, settings: Settings):
         actions, page, browser = await admin_actions_fixture()
         browser.set_name("admin_empty_lobby_list")
 
@@ -170,9 +156,7 @@ class TestAdminDashboardFlows:
 
         await browser.screenshot("admin_empty_lobby_list")
 
-    async def test_admin_delete_lobby(
-        self, admin_actions_fixture: AdminFixture, settings: Settings
-    ):
+    async def test_admin_delete_lobby(self, admin_actions_fixture: AdminFixture, settings: Settings):
         actions, page, browser = await admin_actions_fixture()
         browser.set_name("admin_delete_lobby")
 
@@ -191,8 +175,6 @@ class TestAdminDashboardFlows:
 
         # Verify lobby is gone
         await expect(page.locator(f"text=Code: {lobby_code}")).not_to_be_visible()
-        await expect(
-            page.locator('h3:has-text("Delete Test Lobby")')
-        ).not_to_be_visible()
+        await expect(page.locator('h3:has-text("Delete Test Lobby")')).not_to_be_visible()
 
         await browser.screenshot("admin_delete_lobby_success")

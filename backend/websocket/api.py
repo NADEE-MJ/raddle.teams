@@ -13,30 +13,22 @@ async def admin_websocket(
     web_session_id: str,
     is_admin: bool = Depends(check_admin_token_query),
 ):
-    websocket_logger.info(
-        f"Admin websocket endpoint invoked: web_session_id={web_session_id} is_admin={is_admin}"
-    )
+    websocket_logger.info(f"Admin websocket endpoint invoked: web_session_id={web_session_id} is_admin={is_admin}")
     # Handle admin-specific websocket logic here
     try:
         await admin_web_socket_manager.connect(websocket, web_session_id)
     except Exception:
-        websocket_logger.exception(
-            f"Failed to establish admin websocket connection: web_session_id={web_session_id}"
-        )
+        websocket_logger.exception(f"Failed to establish admin websocket connection: web_session_id={web_session_id}")
         # Unable to accept/connect, nothing more to do
         return
 
     try:
         await admin_web_socket_manager.continuous_listening(websocket, web_session_id)
     except WebSocketDisconnect:
-        websocket_logger.info(
-            f"Admin websocket disconnected (WebSocketDisconnect): web_session_id={web_session_id}"
-        )
+        websocket_logger.info(f"Admin websocket disconnected (WebSocketDisconnect): web_session_id={web_session_id}")
         await admin_web_socket_manager.disconnect(web_session_id)
     except Exception:
-        websocket_logger.exception(
-            f"Unexpected error in admin websocket: web_session_id={web_session_id}"
-        )
+        websocket_logger.exception(f"Unexpected error in admin websocket: web_session_id={web_session_id}")
         await admin_web_socket_manager.disconnect(web_session_id)
 
 
@@ -46,9 +38,7 @@ async def lobby_websocket(websocket: WebSocket, lobby_id: int, player_session_id
         f"Player websocket endpoint invoked: lobby_id={lobby_id} player_session_id={player_session_id}"
     )
     try:
-        await lobby_websocket_manager.connect(
-            websocket, lobby_id=lobby_id, player_session_id=player_session_id
-        )
+        await lobby_websocket_manager.connect(websocket, lobby_id=lobby_id, player_session_id=player_session_id)
     except Exception:
         websocket_logger.exception(
             f"Failed to establish player websocket: lobby_id={lobby_id} player_session_id={player_session_id}"
@@ -61,13 +51,9 @@ async def lobby_websocket(websocket: WebSocket, lobby_id: int, player_session_id
         websocket_logger.info(
             f"Player websocket disconnected (WebSocketDisconnect): lobby_id={lobby_id} player_session_id={player_session_id}"
         )
-        await lobby_websocket_manager.disconnect(
-            lobby_id=lobby_id, player_session_id=player_session_id
-        )
+        await lobby_websocket_manager.disconnect(lobby_id=lobby_id, player_session_id=player_session_id)
     except Exception:
         websocket_logger.exception(
             f"Unexpected error in player websocket: lobby_id={lobby_id} player_session_id={player_session_id}"
         )
-        await lobby_websocket_manager.disconnect(
-            lobby_id=lobby_id, player_session_id=player_session_id
-        )
+        await lobby_websocket_manager.disconnect(lobby_id=lobby_id, player_session_id=player_session_id)
