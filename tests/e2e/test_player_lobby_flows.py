@@ -11,9 +11,9 @@ PlayerFixture = tuple[PlayerActions, Page, BrowserSession]
 
 class TestPlayerLobbyFlows:
     async def test_home_page_loads(
-        self, player_actions: PlayerFixture, server_url: str
+        self, player_actions, server_url: str
     ):
-        player_actions, player_page, player_session = player_actions
+        player_actions, player_page, player_session = await player_actions()
         player_session.set_name("test_home_page_loads")
 
         await player_page.goto(f"{server_url}/")
@@ -32,13 +32,13 @@ class TestPlayerLobbyFlows:
 
     async def test_player_join_lobby_flow(
         self,
-        player_actions: PlayerFixture,
-        admin_actions: AdminFixture,
+        player_actions,
+        admin_actions,
         settings: Settings,
     ):
-        admin_actions, admin_page, admin_session = admin_actions
+        admin_actions, admin_page, admin_session = await admin_actions()
         admin_session.set_name("player_join_lobby_flow_ADMIN")
-        player_actions, player_page, player_session = player_actions
+        player_actions, player_page, player_session = await player_actions()
         player_session.set_name("player_join_lobby_flow_PLAYER")
 
         await admin_actions.goto_admin_page()
@@ -58,9 +58,9 @@ class TestPlayerLobbyFlows:
         await player_session.screenshot()
 
     async def test_player_join_nonexistent_lobby(
-        self, player_actions: PlayerFixture, server_url: str
+        self, player_actions, server_url: str
     ):
-        player_actions, player_page, player_session = player_actions
+        player_actions, player_page, player_session = await player_actions()
         player_session.set_name("test_player_join_nonexistent_lobby")
 
         await player_actions.goto_home_page()
@@ -73,9 +73,9 @@ class TestPlayerLobbyFlows:
         await player_session.screenshot()
 
     async def test_player_empty_name_validation(
-        self, player_actions: PlayerFixture, server_url: str
+        self, player_actions, server_url: str
     ):
-        player_actions, player_page, player_session = player_actions
+        player_actions, player_page, player_session = await player_actions()
         player_session.set_name("test_player_empty_name_validation")
 
         await player_actions.goto_home_page()
@@ -90,13 +90,13 @@ class TestPlayerLobbyFlows:
 
     async def test_player_lobby_info_display(
         self,
-        player_actions: PlayerFixture,
-        admin_actions: AdminFixture,
+        player_actions,
+        admin_actions,
         settings: Settings,
     ):
-        admin_actions, admin_page, admin_session = admin_actions
+        admin_actions, admin_page, admin_session = await admin_actions()
         admin_session.set_name("test_player_lobby_info_display_ADMIN")
-        player_actions, player_page, player_session = player_actions
+        player_actions, player_page, player_session = await player_actions()
         player_session.set_name("test_player_lobby_info_display_PLAYER")
 
         await admin_actions.goto_admin_page()
@@ -119,13 +119,13 @@ class TestPlayerLobbyFlows:
 
     async def test_player_leave_lobby_flow(
         self,
-        player_actions: PlayerFixture,
-        admin_actions: AdminFixture,
+        player_actions,
+        admin_actions,
         settings: Settings,
     ):
-        admin_actions, admin_page, admin_session = admin_actions
+        admin_actions, admin_page, admin_session = await admin_actions()
         admin_session.set_name("test_player_leave_lobby_flow_ADMIN")
-        player_actions, player_page, player_session = player_actions
+        player_actions, player_page, player_session = await player_actions()
         player_session.set_name("test_player_leave_lobby_flow_PLAYER")
 
         await admin_actions.goto_admin_page()
@@ -147,13 +147,13 @@ class TestPlayerLobbyFlows:
 
     async def test_player_reconnection_flow(
         self,
-        player_actions: PlayerFixture,
-        admin_actions: AdminFixture,
+        player_actions,
+        admin_actions,
         settings: Settings,
     ):
-        admin_actions, admin_page, admin_session = admin_actions
+        admin_actions, admin_page, admin_session = await admin_actions()
         admin_session.set_name("test_player_reconnection_flow_ADMIN")
-        player_actions, player_page, player_session = player_actions
+        player_actions, player_page, player_session = await player_actions()
         player_session.set_name("test_player_reconnection_flow_PLAYER")
 
         await admin_actions.goto_admin_page()
@@ -177,13 +177,13 @@ class TestPlayerLobbyFlows:
 
     async def test_player_navigation_flow(
         self,
-        player_actions: PlayerFixture,
-        admin_actions: AdminFixture,
+        player_actions,
+        admin_actions,
         settings: Settings,
     ):
-        admin_actions, admin_page, admin_session = admin_actions
+        admin_actions, admin_page, admin_session = await admin_actions()
         admin_session.set_name("test_player_navigation_flow_ADMIN")
-        player_actions, player_page, player_session = player_actions
+        player_actions, player_page, player_session = await player_actions()
         player_session.set_name("test_player_navigation_flow_PLAYER")
 
         await admin_actions.goto_admin_page()
@@ -207,13 +207,13 @@ class TestPlayerLobbyFlows:
 
     async def test_multiple_players_join_same_lobby(
         self,
-        player_actions: PlayerFixture,
-        admin_actions: AdminFixture,
+        player_actions,
+        admin_actions,
         settings: Settings,
     ):
-        admin_actions, admin_page, admin_session = admin_actions
+        admin_actions, admin_page, admin_session = await admin_actions()
         admin_session.set_name("test_multiple_players_join_same_lobby_ADMIN")
-        player_actions, player_page, player_session = player_actions
+        player_actions, player_page, player_session = await player_actions()
         player_session.set_name("test_multiple_players_join_same_lobby_PLAYER1")
 
         await admin_actions.goto_admin_page()
@@ -248,9 +248,9 @@ class TestPlayerLobbyFlows:
         await player_session.screenshot()
 
     async def test_player_form_validation(
-        self, player_actions: PlayerFixture, server_url: str
+        self, player_actions, server_url: str
     ):
-        player_actions, player_page, player_session = player_actions
+        player_actions, player_page, player_session = await player_actions()
         player_session.set_name("test_player_form_validation")
 
         await player_actions.goto_home_page()

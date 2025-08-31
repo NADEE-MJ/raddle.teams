@@ -14,7 +14,7 @@ DOWN -----> EARTH
 
 **Available Clues** (out of order):
 - Cardinal direction that's DOWN on a map, most of the time
-- Change the first letter of DOWN to get a part of the body  
+- Change the first letter of DOWN to get a part of the body
 - Kind of food or music that sounds like DOWN
 - Move the first letter of DOWN to the end to get where we are
 - Organ that sits inside the DOWN
@@ -27,7 +27,7 @@ DOWN -----> EARTH
 **Forward Direction (DOWN → EARTH):**
 1. Next word after DOWN is **5 letters**
 2. Answer: **SOUTH** (Cardinal direction that's DOWN on a map)
-3. Next word after SOUTH is **5 letters** 
+3. Next word after SOUTH is **5 letters**
 4. Answer: **MOUTH** (Change first letter of SOUTH to get a body part)
 5. Continue until reaching EARTH...
 
@@ -59,7 +59,7 @@ Players can also work backwards from EARTH, with clues reversed:
 
 **Team Features:**
 - **Live submissions**: See every guess from teammates in real-time
-- **Dual direction work**: Members can work forward/backward simultaneously  
+- **Dual direction work**: Members can work forward/backward simultaneously
 - **Shared progress**: When one member solves, everyone advances
 - **Guess history**: Full backlog of attempts for current words
 - **Optimistic locking**: First correct submission wins
@@ -76,7 +76,7 @@ Players can also work backwards from EARTH, with clues reversed:
 
 **Core Technologies:**
 - **FastAPI**: Web server with REST API endpoints
-- **WebSockets**: Real-time team communication  
+- **WebSockets**: Real-time team communication
 - **SQLite**: Player progress, teams, and game state
 - **Poetry**: Python dependency management
 
@@ -89,7 +89,7 @@ Players can also work backwards from EARTH, with clues reversed:
 **Optimistic Locking System:**
 1. Lock team submissions for specific word
 2. Process the correct answer
-3. Broadcast to all team members  
+3. Broadcast to all team members
 4. Release lock for next word
 
 ### Puzzle Data Structure
@@ -98,17 +98,30 @@ Puzzles stored as JSON files:
 
 ```json
 {
-  "words": ["DOWN", "SOUTH", "MOUTH", "HEART", "EARTH"],
-  "clues": {
-    "SOUTH": {
-      "forward": "Cardinal direction that's DOWN on a map, most of the time",
-      "backward": "Change the first letter of ____ to get a part of the body → MOUTH"
+  "title": "Tutorial Puzzle",
+  "ladder": [
+    {
+      "word": "DOWN",
+      "clue": "Cardinal direction that's <> on a map, most of the time",
+      "transform": "MEANS"
     },
-    "MOUTH": {
-      "forward": "Change the first letter of SOUTH to get a part of the body",
-      "backward": "Popular piano duet 'HEART & ____'"
+    {
+      "word": "SOUTH",
+      "clue": "Change the first letter of <> to get a part of the body",
+      "transform": "S->M"
+    },
+    {
+      "word": "MOUTH",
+      "clue": "Organ that sits inside the <>",
+      "transform": "CONTAINS THE"
+    },
+    etc...
+    {
+      "word": "EARTH",
+      "clue": null,
+      "transform": null
     }
-  }
+  ]
 }
 ```
 
@@ -133,7 +146,7 @@ Puzzles stored as JSON files:
 ### Game Management Features
 
 - **Lobby Control**: Start/stop games, view player list
-- **Team Management**: Create teams, assign/reassign players  
+- **Team Management**: Create teams, assign/reassign players
 - **Progress Monitoring**: See exactly where each team stands
 - **Late Joiners**: Sort new players into existing teams
 - **Game Flow**: Control hints, time penalties, elimination
@@ -152,7 +165,7 @@ Puzzles stored as JSON files:
 ### ✅ Phase 1: Core Mechanics (COMPLETED)
 
 - [x] **Lobby System**: Player join with 6-character codes
-- [x] **Team Assignment**: Basic team creation and management  
+- [x] **Team Assignment**: Basic team creation and management
 - [x] **WebSocket Infrastructure**: Real-time communication
 - [x] **Admin Authentication**: Token-based admin access
 - [x] **Database Layer**: SQLite with proper models
@@ -183,7 +196,7 @@ Puzzles stored as JSON files:
 - **Hint Penalties**: Strategic hint usage with time costs
 - **Multi-word Support**: Answers with spaces ("NEW YORK", "ROYAL FLUSH")
 
-### Technical Improvements  
+### Technical Improvements
 - **Multiple Concurrent Games**: Support multiple lobbies simultaneously
 - **Enhanced Reconnection**: Seamless player reconnection handling
 - **Advanced Analytics**: Detailed team performance metrics
@@ -211,5 +224,5 @@ Puzzles stored as JSON files:
 
 ### Security Requirements
 - **Admin authentication**: Secure token-based access
-- **Input validation**: Sanitize all player submissions  
+- **Input validation**: Sanitize all player submissions
 - **Rate limiting**: Prevent spam submissions

@@ -1,15 +1,17 @@
 import os
 
+import pytest
 from playwright.async_api import Browser, BrowserContext, Page
 
 
 class BrowserSession:
-    def __init__(self, browser: Browser):
+    def __init__(self, browser: Browser, request=None):
         self.browser: Browser = browser
         self.context: BrowserContext = None
         self.page: Page = None
         self.recording_dir: str = "tests/e2e/recordings"
         self.name = "session"
+        self.request = request
 
     def set_name(self, name: str):
         self.name = name
@@ -37,25 +39,29 @@ class BrowserSession:
         self.page = await self.context.new_page()
         return self.page
 
-    async def stop(
-        self,
-        save_trace: bool = True,
-        save_video: bool = True,
-    ):
+    async def stop(self, test_failed: bool):
+        video_path = None
         if self.page:
+            if self.page.video:
+                video_path = await self.page.video.path()
+
             await self.page.close()
-            if self.page.video and save_video:
-                await self.page.video.save_as(
-                    f"{self.recording_dir}/videos/{self.name}.mp4"
-                )
             self.page = None
+
         if self.context:
-            if save_trace:
-                await self.context.tracing.stop(
-                    path=f"{self.recording_dir}/traces/{self.name}.zip"
-                )
+            await self.context.tracing.stop(
+                path=f"{self.recording_dir}/traces/{self.name}.zip"
+            )
             await self.context.close()
             self.context = None
+
+        if video_path:
+            if test_failed:
+                os.rename(video_path, f"{self.recording_dir}/videos/{self.name}.mp4")
+            else:
+                # Delete video if test passed
+                if os.path.exists(video_path):
+                    os.remove(video_path)
 
     async def screenshot(self, name: str = None):
         if self.page:

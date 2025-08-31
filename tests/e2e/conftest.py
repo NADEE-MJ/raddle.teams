@@ -35,30 +35,56 @@ async def playwright():
 
 
 @pytest.fixture
-async def browser(playwright):
+async def browser(playwright, request):
+    browsers = []
+
     async def create():
         browser = await playwright.chromium.launch()
-        session = BrowserSession(browser)
+        browsers.append(browser)
+        session = BrowserSession(browser, request)
         page = await session.start()
+        return session, page
 
-        yield session, page
+    yield create
 
-        await session.stop()
+    for browser in browsers:
         await browser.close()
 
-    return create
+
+@pytest.fixture
+async def admin_actions(browser, server_url, request):
+    sessions = []
+
+    async def create():
+        session, page = await browser()
+        sessions.append(session)
+        return AdminActions(page, server_url), page, session
+
+    yield create
+
+    test_failed = False
+    if hasattr(request.node, "rep_call"):
+        test_failed = request.node.rep_call.failed
+    for session in sessions:
+        await session.stop(test_failed)
 
 
 @pytest.fixture
-async def admin_actions(browser, server_url):
-    session, page = await browser()
-    return AdminActions(page, server_url), page, session
+async def player_actions(browser, server_url, request):
+    sessions = []
 
+    async def create():
+        session, page = await browser()
+        sessions.append(session)
+        return PlayerActions(page, server_url), page, session
 
-@pytest.fixture
-async def player_actions(browser, server_url):
-    session, page = await browser()
-    return PlayerActions(page, server_url), page, session
+    yield create
+
+    test_failed = False
+    if hasattr(request.node, "rep_call"):
+        test_failed = request.node.rep_call.failed
+    for session in sessions:
+        await session.stop(test_failed)
 
 
 @pytest.fixture(scope="session")
