@@ -20,7 +20,7 @@ This file provides guidance to Claude Code (claude.ai/code) when working with co
 - `npm run format:python` - Format Python code with ruff
 
 **Testing:**
-- `npm run test` - Run Python e2e test suite using bin/run_tests.py
+- `npm run test` - Run Python e2e test suite using bin/run_tests.py (auto runs build)
 - `npm run test -- --filter <pattern>` - Run specific tests matching pattern
 - `npm run test -- -v` - Run tests with verbose output
 - `npm run test -- --record` - Run tests with video/trace recording enabled
