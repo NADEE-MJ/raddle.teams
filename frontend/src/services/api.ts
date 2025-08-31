@@ -1,4 +1,4 @@
-import { Player, Lobby, LobbyInfo } from "../types";
+import { Player, Lobby, LobbyInfo } from "@/types";
 
 const API_BASE = "/api";
 

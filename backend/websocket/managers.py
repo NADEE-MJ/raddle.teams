@@ -170,6 +170,7 @@ class LobbyWebSocketManager:
     #     else:
     #         # TODO catch this
     #         raise ValueError("WebSocket is not connected")
+
     async def broadcast_to_lobby(self, lobby_id: int, event: LobbyEvent):
         websocket_logger.debug(
             f"Broadcasting event to lobby {lobby_id}: {event.model_dump()}"

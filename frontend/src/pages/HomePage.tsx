@@ -1,6 +1,5 @@
 import { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
-import { usePlayer } from "../context/PlayerContext";
 import { apiService } from "../services/api";
 
 export default function HomePage() {

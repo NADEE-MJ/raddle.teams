@@ -1,6 +1,5 @@
 import { useCallback, useEffect, useRef, useState } from "react";
 import { useNavigate } from "react-router-dom";
-import { usePlayer } from "../context/PlayerContext";
 import { apiService } from "../services/api";
 import { useWebSocket } from "../hooks/useWebSocket";
 import { LobbyInfo, WebSocketMessage } from "../types";
@@ -19,7 +18,6 @@ export default function LobbyPage() {
       setLoading(true);
       setError("");
 
-      // Get lobby info for the player's lobby
       const lobbyData = await apiService.getLobbyInfo(player.lobby_id);
       setLobbyInfo(lobbyData);
     } catch (err) {

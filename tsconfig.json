@@ -15,7 +15,11 @@
     "strict": true,
     "noUnusedLocals": true,
     "noUnusedParameters": true,
-    "noFallthroughCasesInSwitch": true
+    "noFallthroughCasesInSwitch": true,
+    "baseUrl": "frontend/src",
+    "paths": {
+      "@/*": ["*"]
+    }
   },
   "include": ["frontend/src", "vite.config.ts"]
 }
