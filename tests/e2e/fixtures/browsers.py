@@ -1,5 +1,4 @@
 import os
-from typing import Dict
 
 from playwright.async_api import Browser, BrowserContext, Page
 
@@ -36,7 +35,6 @@ class BrowserSession:
         await self.context.tracing.start(screenshots=True, snapshots=True, sources=True)
 
         self.page = await self.context.new_page()
-
         return self.page
 
     async def stop(
@@ -60,36 +58,8 @@ class BrowserSession:
             self.context = None
 
     async def screenshot(self, name: str = None):
-        if name is None:
-            name = self.name
-
         if self.page:
+            name = name or self.name
             screenshot_path = f"{self.recording_dir}/screenshots/{name}.png"
             await self.page.screenshot(path=screenshot_path)
             return screenshot_path
-
-
-class MultiBrowserManager:
-    def __init__(self, playwright, browser):
-        self.playwright = playwright
-        self.browser = browser
-        self.sessions: Dict[str, BrowserSession] = {}
-
-    async def create_session(self, key: str) -> Page:
-        session = BrowserSession(self.browser)
-        page = await session.start()
-        self.sessions[key] = session
-        return page
-
-    async def close_all(self):
-        for session in self.sessions.values():
-            await session.stop()
-        self.sessions.clear()
-
-        if self.browser:
-            await self.browser.close()
-        if self.playwright:
-            await self.playwright.stop()
-
-    def get_session(self, session_key: str) -> BrowserSession:
-        return self.sessions.get(session_key)

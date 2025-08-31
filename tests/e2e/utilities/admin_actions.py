@@ -1,7 +1,5 @@
 import re
-
 from playwright.async_api import Page, expect
-
 from backend.settings import settings
 
 
@@ -92,15 +90,3 @@ class AdminActions:
         await expect(
             self.page.locator(f"text=/{expected_count} players?/")
         ).to_be_visible(timeout=timeout)
-
-    # async def monitor_websocket_messages(self):
-    #     messages = []
-
-    #     def handle_websocket(ws):
-    #         def on_message(payload):
-    #             messages.append(payload)
-
-    #         ws.on("framereceived", on_message)
-
-    #     self.page.on("websocket", handle_websocket)
-    #     return messages

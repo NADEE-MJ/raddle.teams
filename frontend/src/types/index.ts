@@ -60,3 +60,8 @@ export interface WebSocketMessage {
   team_id?: number;
   state?: string;
 }
+
+export interface ApiResponse {
+  status: boolean;
+  message: string;
+}

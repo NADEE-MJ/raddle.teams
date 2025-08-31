@@ -1,21 +1,15 @@
-import os
-import sys
-from typing import AsyncGenerator
-
 import httpx
 import pytest
-from playwright.async_api import Page, async_playwright
+from playwright.async_api import async_playwright
 
-sys.path.insert(0, os.path.dirname(os.path.dirname(os.path.dirname(__file__))))
-
-from backend.settings import settings as env
-from tests.e2e.fixtures.browsers import BrowserSession, MultiBrowserManager
+from backend.settings import settings as app_settings
+from tests.e2e.fixtures.browsers import BrowserSession
 from tests.e2e.fixtures.server import ServerManager
 from tests.e2e.utilities.admin_actions import AdminActions
 from tests.e2e.utilities.player_actions import PlayerActions
 
 
-@pytest.fixture(scope="session", autouse=True)
+@pytest.fixture(scope="session")
 def server():
     manager = ServerManager()
     manager.start()
@@ -23,12 +17,12 @@ def server():
     manager.stop()
 
 
-@pytest.fixture(scope="session", autouse=True)
+@pytest.fixture(scope="session")
 def server_url(server):
     return server.url
 
 
-@pytest.fixture(scope="function", autouse=True)
+@pytest.fixture(autouse=True)
 def reset_database(server_url):
     with httpx.Client() as client:
         client.delete(f"{server_url}/api/reset-db")
@@ -40,47 +34,33 @@ async def playwright():
         yield p
 
 
-@pytest.fixture(scope="module")
-async def multi_browser(playwright):
-    browser = await playwright.chromium.launch()
-    manager = MultiBrowserManager(playwright, browser)
-    await manager.start()
-    yield manager
-    await manager.close_all()
-    await browser.close()
+@pytest.fixture
+async def browser(playwright):
+    async def create():
+        browser = await playwright.chromium.launch()
+        session = BrowserSession(browser)
+        page = await session.start()
 
+        yield session, page
 
-BrowserFixture = AsyncGenerator[tuple[BrowserSession, Page], None]
+        await session.stop()
+        await browser.close()
+
+    return create
 
 
 @pytest.fixture
-async def browser(playwright) -> BrowserFixture:
-    browser = await playwright.chromium.launch()
-    session = BrowserSession(browser)
-    page = await session.start()
-
-    yield session, page
-
-    await session.stop()
-    await browser.close()
-
-
-@pytest.fixture(scope="session", autouse=True)
-def settings():
-    return env
-
-
-@pytest.fixture
-def admin_actions(
-    browser: BrowserFixture, server_url: str
-) -> tuple[AdminActions, Page, BrowserSession]:
-    session, page = browser
+async def admin_actions(browser, server_url):
+    session, page = await browser()
     return AdminActions(page, server_url), page, session
 
 
 @pytest.fixture
-def player_actions(
-    browser: BrowserFixture, server_url: str
-) -> tuple[PlayerActions, Page, BrowserSession]:
-    session, page = browser
+async def player_actions(browser, server_url):
+    session, page = await browser()
     return PlayerActions(page, server_url), page, session
+
+
+@pytest.fixture(scope="session")
+def settings():
+    return app_settings

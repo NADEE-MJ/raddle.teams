@@ -1,1 +1,1 @@
-pytest_plugins = ["playwright"]
+pytest_plugins = ["tests.e2e.conftest"]

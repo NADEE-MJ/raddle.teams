@@ -1,4 +1,4 @@
-import { Player, Lobby, LobbyInfo } from "@/types";
+import { Player, Lobby, LobbyInfo, ApiResponse } from "@/types";
 
 const API_BASE = "/api";
 
@@ -43,8 +43,8 @@ export const api = {
       async delete(
         lobbyId: number,
         bearerToken: string
-      ): Promise<{ status: boolean; message: string }> {
-        return request<{ status: boolean; message: string }>(
+      ): Promise<ApiResponse> {
+        return request<ApiResponse>(
           `/admin/lobby/${lobbyId}`,
           {
             method: "DELETE",
@@ -56,8 +56,8 @@ export const api = {
         return request<LobbyInfo>(`/admin/lobby/${lobbyId}`, {}, bearerToken);
       },
     },
-    async checkCredentials(bearerToken: string): Promise<{ status: boolean; message: string }> {
-      return request<{ status: boolean; message: string }>("/admin/check", {}, bearerToken);
+    async checkCredentials(bearerToken: string): Promise<ApiResponse> {
+      return request<ApiResponse>("/admin/check", {}, bearerToken);
     },
   },
   player: {
@@ -81,8 +81,8 @@ export const api = {
       async getLobbyInfo(lobbyId: number, sessionId: string): Promise<LobbyInfo> {
         return request<LobbyInfo>(`/lobby/${lobbyId}`, {}, sessionId);
       },
-      async leave(sessionId: string): Promise<{ status: boolean; message: string }> {
-        return request<{ status: boolean; message: string }>(
+      async leave(sessionId: string): Promise<ApiResponse> {
+        return request<ApiResponse>(
           `/lobby`,
           {
             method: "DELETE",

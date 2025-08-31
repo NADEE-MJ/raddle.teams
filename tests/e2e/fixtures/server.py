@@ -1,10 +1,10 @@
 import os
+import signal
 import subprocess
 import time
 from typing import Optional
 
 import httpx
-import psutil
 
 
 class ServerManager:
@@ -16,62 +16,55 @@ class ServerManager:
 
     def start(self) -> None:
         if self.is_running():
-            print(f"Server already running at {self.url}")
             return
 
-        self.stop_existing_server()
+        # Kill any existing process on the port
+        self._kill_port_process()
 
+        # Start new server process
         self.process = subprocess.Popen(
             ["npm", "run", "testing-server"],
-            cwd=os.getcwd(),
-            stdout=subprocess.PIPE,
-            stderr=subprocess.PIPE,
-            text=True,
+            stdout=subprocess.DEVNULL,
+            stderr=subprocess.DEVNULL,
         )
 
-        self.wait_for_server()
+        # Wait for server to be ready
+        self._wait_for_server()
 
     def stop(self) -> None:
         if self.process:
             self.process.terminate()
             try:
-                self.process.wait(timeout=5)
+                self.process.wait(timeout=3)
             except subprocess.TimeoutExpired:
                 self.process.kill()
-                self.process.wait()
             self.process = None
-
-    def stop_existing_server(self) -> None:
-        for proc in psutil.process_iter(["pid", "name"]):
-            try:
-                connections = proc.net_connections()
-                for conn in connections:
-                    if conn.laddr.port == self.port:
-                        print(
-                            f"Killing existing process {proc.info['pid']} on port {self.port}"
-                        )
-                        proc.kill()
-                        break
-            except (psutil.NoSuchProcess, psutil.AccessDenied, psutil.ZombieProcess):
-                pass
-
-    def wait_for_server(self, timeout: int = 5) -> None:
-        start_time = time.time()
-        while time.time() - start_time < timeout:
-            try:
-                response = httpx.get(f"{self.url}/api", timeout=1.0)
-                if response.status_code == 200:
-                    print(f"Server ready at {self.url}")
-                    return
-            except (httpx.RequestError, httpx.TimeoutException):
-                pass
-            time.sleep(0.5)
-
-        raise RuntimeError(f"Server failed to start within {timeout} seconds")
 
     def is_running(self) -> bool:
         try:
             response = httpx.get(f"{self.url}/api", timeout=1.0)
             return response.status_code == 200
-        except (httpx.RequestError, httpx.TimeoutException):
+        except Exception:
             return False
+
+    def _kill_port_process(self) -> None:
+        try:
+            # Use lsof to find and kill process on port
+            result = subprocess.run(
+                ["lsof", "-ti", f":{self.port}"], capture_output=True, text=True
+            )
+            if result.stdout:
+                pid = int(result.stdout.strip())
+                os.kill(pid, signal.SIGTERM)
+                time.sleep(0.5)
+        except Exception:
+            pass
+
+    def _wait_for_server(self, timeout: int = 10) -> None:
+        start = time.time()
+        while time.time() - start < timeout:
+            if self.is_running():
+                return
+            time.sleep(0.1)
+
+        raise RuntimeError(f"Server failed to start within {timeout} seconds")
