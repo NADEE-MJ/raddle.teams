@@ -57,8 +57,9 @@ This is a full-stack team-based multiplayer word puzzle game with real-time WebS
 
 **Database Models:**
 - Player: name, session_id, lobby_id, team_id
-- Team: name, lobby_id
-- Lobby: code (6-character), state management
+- Team: name, lobby_id, current_word_index, completed_at
+- Lobby: code (6-character), name, created_at
+- Guess: team_id, player_id, word_index, direction, guess, is_correct
 - Uses foreign key cascading deletes
 
 **Real-time Architecture:**
