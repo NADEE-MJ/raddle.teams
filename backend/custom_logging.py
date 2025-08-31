@@ -35,7 +35,7 @@ def create_logger(name: str, level, include_console: bool = False) -> logging.Lo
     return logger
 
 
-server_logger = create_logger("server", logging.INFO, include_console=True)
-api_logger = create_logger("api", logging.INFO)
-database_logger = create_logger("database", logging.INFO)
-websocket_logger = create_logger("websocket", logging.INFO)
+server_logger = create_logger("server", logging.DEBUG, include_console=True)
+api_logger = create_logger("api", logging.DEBUG)
+database_logger = create_logger("database", logging.DEBUG)
+websocket_logger = create_logger("websocket", logging.DEBUG)

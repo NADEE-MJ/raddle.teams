@@ -1,4 +1,4 @@
-import { useState, useEffect } from "react";
+import { useState, useEffect, useCallback, useRef } from "react";
 import { useNavigate } from "react-router-dom";
 import { useAdminOutletContext } from "@/hooks/useAdminOutletContext";
 import { api } from "@/services/api";
@@ -14,6 +14,8 @@ export default function AdminPage() {
     isLoading: contextLoading,
     error: contextError,
     sendWebSocketMessage,
+    onLobbyUpdate,
+    offLobbyUpdate,
   } = useAdminOutletContext();
   
   const [selectedLobby, setSelectedLobby] = useState<LobbyInfo | null>(null);
@@ -22,6 +24,12 @@ export default function AdminPage() {
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState("");
   const navigate = useNavigate();
+  const selectedLobbyRef = useRef<LobbyInfo | null>(null);
+
+  // Keep ref in sync with state
+  useEffect(() => {
+    selectedLobbyRef.current = selectedLobby;
+  }, [selectedLobby]);
 
   const handleLogin = async (e: React.FormEvent) => {
     e.preventDefault();
@@ -65,6 +73,21 @@ export default function AdminPage() {
       setLoading(false);
     }
   };
+
+  const handleLobbyUpdate = useCallback((lobbyId: number) => {
+    // Use current state instead of closure to avoid dependency issues
+    setSelectedLobby(current => {
+      if (current && current.lobby.id === lobbyId && adminToken) {
+        // Refresh the selected lobby
+        api.admin.lobby.getInfo(current.lobby.id, adminToken).then(lobbyInfo => {
+          setSelectedLobby(lobbyInfo);
+        }).catch(err => {
+          console.error("Error refreshing selected lobby:", err);
+        });
+      }
+      return current;
+    });
+  }, [adminToken]);
 
   const viewLobbyDetails = async (lobbyId: number) => {
     if (!adminToken) return;
@@ -125,17 +148,28 @@ export default function AdminPage() {
     }
   };
 
+  // Register/unregister lobby update callback
+  useEffect(() => {
+    if (onLobbyUpdate && offLobbyUpdate) {
+      onLobbyUpdate(handleLobbyUpdate);
+      return () => {
+        offLobbyUpdate(handleLobbyUpdate);
+      };
+    }
+  }, [handleLobbyUpdate, onLobbyUpdate, offLobbyUpdate]);
+
   // Cleanup subscription on component unmount
   useEffect(() => {
     return () => {
-      if (selectedLobby && sendWebSocketMessage) {
+      // Use ref to get current value at cleanup time
+      if (selectedLobbyRef.current && sendWebSocketMessage) {
         sendWebSocketMessage({
           action: "unsubscribe_lobby",
-          lobby_id: selectedLobby.lobby.id
+          lobby_id: selectedLobbyRef.current.lobby.id
         });
       }
     };
-  }, [selectedLobby, sendWebSocketMessage]);
+  }, [sendWebSocketMessage]);
 
   if (!isAdmin) {
     return (

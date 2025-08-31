@@ -58,6 +58,7 @@ export interface WebSocketMessage {
   player_session_id?: string;
   message?: Record<string, unknown>;
   team_id?: number;
+  lobby_id?: number;
   state?: string;
 }
 

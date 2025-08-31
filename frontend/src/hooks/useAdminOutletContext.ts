@@ -10,6 +10,8 @@ export type AdminOutletContext = {
   isLoading: boolean;
   error: string | null;
   sendWebSocketMessage?: (message: object) => void;
+  onLobbyUpdate: (callback: (lobbyId: number) => void) => void;
+  offLobbyUpdate: (callback: (lobbyId: number) => void) => void;
 };
 
 export function useAdminOutletContext() {

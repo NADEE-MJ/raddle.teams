@@ -5,7 +5,7 @@ This file provides guidance to Claude Code (claude.ai/code) when working with co
 ## Development Commands
 
 **Frontend:**
-- `npm run build` - Build the React frontend for production
+- `npm run build` - Build the React frontend for production/testing (need to run this after every frontend change)
 - `npm run build:watch` - Build with file watching enabled
 - `npm run type-check` - Run TypeScript type checking
 - `npm run lint` - Run ESLint (max 15 warnings allowed)
@@ -103,6 +103,7 @@ This is a full-stack team-based multiplayer word puzzle game with real-time WebS
 - E2E tests with Playwright support
 - Tests organized in `/tests` directory with subdirectories for different test types
 - Recording cleanup (screenshots, videos, traces) on test runs
+- Logs go to `/logs/testing_*.log`
 
 **Frontend Testing:**
 - TypeScript type checking with `tsc --noEmit`

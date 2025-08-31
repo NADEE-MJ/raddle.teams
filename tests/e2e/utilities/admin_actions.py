@@ -88,7 +88,7 @@ class AdminActions:
 
     async def wait_for_players(self, expected_count: int, timeout: int = 30000):
         await expect(
-            self.page.locator(f"text=/{expected_count} players?/")
+            self.page.locator(f"text=/Players \\({expected_count}\\)/")
         ).to_be_visible(timeout=timeout)
 
     async def delete_lobby(self, lobby_code: str):

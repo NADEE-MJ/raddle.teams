@@ -31,14 +31,15 @@ class TestAdminWebSocketFlows:
 
         await expect(admin_page.locator(f"text=Code: {lobby_code}")).to_be_visible()
 
+        await admin_actions.peek_into_lobby(lobby_code)
+
         await player_actions.goto_home_page()
         await player_actions.fill_name_and_code("Join Notify Player", lobby_code)
         await player_actions.join_lobby()
         await expect(player_page.locator("p:has-text('Lobby Code:')")).to_be_visible()
 
-        await admin_actions.refresh_lobbies()
+        await admin_actions.wait_for_players(1, 1000)
 
-        await admin_actions.peek_into_lobby(lobby_code)
         await expect(admin_page.locator("text=Players (1)")).to_be_visible()
         await expect(admin_page.locator("text=Join Notify Player")).to_be_visible()
 

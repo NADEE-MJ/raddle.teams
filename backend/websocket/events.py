@@ -7,7 +7,7 @@ from pydantic import BaseModel
 ####################################################################
 
 
-class LobbyWebSocketEvents(Enum):
+class LobbyWebSocketEvents(str, Enum):
     CONNECTION_CONFIRMED = "connection_confirmed"
     GAME_STARTED = "game_started"
     NEW_LOBBY_CREATED = "new_lobby_created"

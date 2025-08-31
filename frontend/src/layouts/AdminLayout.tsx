@@ -11,6 +11,7 @@ const AdminLayout: React.FC = () => {
     const [isLoading, setIsLoading] = useState(true);
     const [error, setError] = useState<string | null>(null);
     const webSessionIdRef = useRef<string | null>(null);
+    const lobbyUpdateCallbacksRef = useRef<Set<(lobbyId: number) => void>>(new Set());
 
     const setAdminToken = useCallback((token: string | null) => {
         if (token) {
@@ -61,9 +62,28 @@ const AdminLayout: React.FC = () => {
         }
     }, [adminToken, refreshLobbies]);
 
+    const onLobbyUpdate = useCallback((callback: (lobbyId: number) => void) => {
+        lobbyUpdateCallbacksRef.current.add(callback);
+    }, []);
+
+    const offLobbyUpdate = useCallback((callback: (lobbyId: number) => void) => {
+        lobbyUpdateCallbacksRef.current.delete(callback);
+    }, []);
+
     const handleAdminWebSocketMessage = useCallback((message: WebSocketMessage) => {
         console.debug("Admin received WebSocket message:", message);
         refreshLobbies();
+        
+        // Notify specific lobby update callbacks
+        if (message.lobby_id !== undefined) {
+            lobbyUpdateCallbacksRef.current.forEach(callback => {
+                try {
+                    callback(message.lobby_id!);
+                } catch (error) {
+                    console.error("Error calling lobby update callback:", error);
+                }
+            });
+        }
     }, [refreshLobbies]);
 
     const { sendMessage } = useAdminWebSocket(
@@ -83,6 +103,8 @@ const AdminLayout: React.FC = () => {
         isLoading,
         error,
         sendWebSocketMessage: sendMessage,
+        onLobbyUpdate,
+        offLobbyUpdate,
     };
 
     return (
