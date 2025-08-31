@@ -144,13 +144,11 @@ class TestAdminRouteFlows:
         await actions.goto_admin_page()
         await actions.login(settings.ADMIN_PASSWORD)
 
-        lobby_name_input = page.locator('input[placeholder="Enter lobby name"]')
+        lobby_name_input = page.locator('input[placeholder="Lobby name"]')
         await lobby_name_input.fill("")
 
         create_button = page.locator('button:has-text("Create Lobby")')
-        await create_button.click()
-
-        await expect(page.locator("text=Lobby name cannot be empty")).to_be_visible()
+        await expect(create_button).to_be_disabled()
 
         await browser.screenshot()
 

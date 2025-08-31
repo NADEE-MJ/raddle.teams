@@ -219,7 +219,7 @@ class TestLobbyRouteFlows:
         await player_page.goto(f"{server_url}/lobby/TESTCODE")
         await player_page.wait_for_load_state("networkidle")
 
-        await expect(player_page.locator("text=No session found")).to_be_visible()
+        await expect(player_page.locator("h1:has-text('Raddle Teams')")).to_be_visible()
 
         await player_session.screenshot()
 
@@ -423,10 +423,10 @@ class TestLobbyRouteWebSocketFlows:
         await player1_actions.wait_for_player_count(2, timeout=8000)
         await player2_actions.wait_for_player_count(2, timeout=3000)
 
-        await expect(player1_page.locator("text=Player One")).to_be_visible()
-        await expect(player1_page.locator("text=Player Two")).to_be_visible()
-        await expect(player2_page.locator("text=Player One")).to_be_visible()
-        await expect(player2_page.locator("text=Player Two")).to_be_visible()
+        await expect(player1_page.locator("span.font-medium:has-text('Player One (You)')")).to_be_visible()
+        await expect(player1_page.locator("span.font-medium:has-text('Player Two')")).to_be_visible()
+        await expect(player2_page.locator("span.font-medium:has-text('Player One')")).to_be_visible()
+        await expect(player2_page.locator("span.font-medium:has-text('Player Two (You)')")).to_be_visible()
 
         await player1_session.screenshot()
         await player2_session.screenshot()
