@@ -1,10 +1,19 @@
 from fastapi import Depends, HTTPException, Query, status
 from fastapi.security import HTTPAuthorizationCredentials, HTTPBearer
+from typing import Optional
 
 from backend.custom_logging import api_logger
 from backend.settings import settings
 
+# security instance used for admin checks (required)
 security = HTTPBearer()
+
+# user token security which does not auto-error when missing. Used to optionally
+# extract a user session id from a Bearer token. Frontend will send a Bearer
+# token containing the user's session id in Authorization: Bearer <session_id>.
+# We keep auto_error=False so endpoints can decide whether a missing session is
+# fatal (require_user_session) or acceptable (get_optional_user_session).
+user_security = HTTPBearer(auto_error=False)
 
 
 def check_admin_token(
@@ -78,3 +87,38 @@ def check_admin_token_query(
 
     api_logger.info("Admin authenticated via query parameter")
     return True
+
+
+def get_optional_user_session(
+    credentials: Optional[HTTPAuthorizationCredentials] = Depends(user_security),
+) -> Optional[str]:
+    """
+    FastAPI dependency that returns the user session id from a Bearer token
+    when present, otherwise returns None. This is used by endpoints that may
+    create a new session for the player (e.g. join endpoint).
+    """
+    if not credentials or not credentials.credentials:
+        api_logger.debug("No user session token provided in Authorization header")
+        return None
+
+    api_logger.info("User session extracted from Authorization header")
+    return credentials.credentials
+
+
+def require_user_session(
+    credentials: HTTPAuthorizationCredentials = Depends(user_security),
+) -> str:
+    """
+    FastAPI dependency that requires a user session id to be present in the
+    Authorization Bearer token. Raises 401 when missing.
+    """
+    if not credentials or not credentials.credentials:
+        api_logger.warning("Missing user session token in Authorization header")
+        raise HTTPException(
+            status_code=status.HTTP_401_UNAUTHORIZED,
+            detail="Missing authentication token",
+            headers={"WWW-Authenticate": "Bearer"},
+        )
+
+    api_logger.info("User session authenticated via Authorization header")
+    return credentials.credentials

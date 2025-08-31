@@ -2,97 +2,86 @@ import { Player, Lobby, LobbyInfo } from "@/types";
 
 const API_BASE = "/api";
 
-class ApiService {
-  private getAuthHeaders(): HeadersInit {
-    const adminToken = localStorage.getItem("adminToken");
+const request = async <T>(
+  endpoint: string,
+  options?: RequestInit,
+  bearerToken?: string
+): Promise<T> => {
+  const url = `${API_BASE}${endpoint}`;
+  const response = await fetch(url, {
+    headers: {
+      ...options?.headers,
+      ...(bearerToken ? { Authorization: `Bearer ${bearerToken}` } : {}),
+    },
+    ...options,
+  });
 
-    const headers: HeadersInit = {
-      "Content-Type": "application/json",
-    };
-
-    if (adminToken) {
-      headers["Authorization"] = `Bearer ${adminToken}`;
-    }
-
-    return headers;
+  if (!response.ok) {
+    throw new Error(`API error: ${response.status} ${response.statusText}`);
   }
 
-  private async request<T>(endpoint: string, options?: RequestInit): Promise<T> {
-    const url = `${API_BASE}${endpoint}`;
-    const response = await fetch(url, {
-      headers: {
-        ...this.getAuthHeaders(),
-        ...options?.headers,
+  return response.json();
+};
+
+export const api = {
+  admin: {
+    lobby: {
+      async create(name: string, bearerToken: string): Promise<Lobby> {
+        return request<Lobby>(
+          "/admin/lobby",
+          {
+            method: "POST",
+            body: JSON.stringify({ name }),
+          },
+          bearerToken
+        );
       },
-      ...options,
-    });
-
-    if (!response.ok) {
-      throw new Error(`API error: ${response.status} ${response.statusText}`);
-    }
-
-    return response.json();
-  }
-
-  // Admin endpoints
-  async createLobby(name: string): Promise<Lobby> {
-    return this.request<Lobby>("/admin/lobby", {
-      method: "POST",
-      body: JSON.stringify({ name }),
-    });
-  }
-
-  async getAllLobbies(): Promise<Lobby[]> {
-    return this.request<Lobby[]>("/admin/lobby");
-  }
-
-  async checkAdminCredentials(): Promise<{ status: string; message: string }> {
-    return this.request<{ status: string; message: string }>("/admin/check");
-  }
-
-  // Player endpoints
-  async joinLobby(lobbyCode: string, name: string, sessionId: string): Promise<Player> {
-    return this.request<Player>(`/lobby/${lobbyCode}/join`, {
-      method: "POST",
-      body: JSON.stringify({ name, session_id: sessionId }),
-    });
-  }
-
-  async getActiveLobbyForPlayer(sessionId: string): Promise<Lobby> {
-    return this.request<Lobby>(`/player/${sessionId}/lobby`);
-  }
-
-  async getLobbyInfo(lobbyId: number): Promise<LobbyInfo> {
-    return this.request<LobbyInfo>(`/lobby/${lobbyId}`);
-  }
-
-  async leaveLobby(sessionId: string): Promise<{ status: string; message: string }> {
-    return this.request<{ status: string; message: string }>(`/player/${sessionId}/leave`, {
-      method: "DELETE",
-    });
-  }
-
-  // Authentication helpers
-  setAdminToken(token: string): void {
-    localStorage.setItem("adminToken", token);
-  }
-
-  setUserToken(token: string): void {
-    localStorage.setItem("userToken", token);
-  }
-
-  getAdminToken(): string | null {
-    return localStorage.getItem("adminToken");
-  }
-
-  getUserToken(): string | null {
-    return localStorage.getItem("userToken");
-  }
-
-  clearTokens(): void {
-    localStorage.removeItem("adminToken");
-    localStorage.removeItem("userToken");
-  }
-}
-
-export const apiService = new ApiService();
+      async getAll(bearerToken: string): Promise<Lobby[]> {
+        return request<Lobby[]>("/admin/lobby", {}, bearerToken);
+      },
+      async delete(
+        lobbyId: number,
+        bearerToken: string
+      ): Promise<{ status: string; message: string }> {
+        return request<{ status: string; message: string }>(
+          `/admin/lobby/${lobbyId}`,
+          {
+            method: "DELETE",
+          },
+          bearerToken
+        );
+      },
+      async getInfo(lobbyId: number, bearerToken: string): Promise<LobbyInfo> {
+        return request<LobbyInfo>(`/admin/lobby/${lobbyId}`, {}, bearerToken);
+      },
+    },
+    async checkCredentials(bearerToken: string): Promise<{ status: string; message: string }> {
+      return request<{ status: string; message: string }>("/admin/check", {}, bearerToken);
+    },
+  },
+  player: {
+    lobby: {
+      async join(lobbyCode: string, name: string, sessionId: string): Promise<Player> {
+        return request<Player>(`/lobby/${lobbyCode}/join`, {
+          method: "POST",
+          body: JSON.stringify({ name, session_id: sessionId }),
+        });
+      },
+      async getCurrent(bearerToken: string): Promise<Lobby> {
+        return request<Lobby>(`/lobby`, {}, bearerToken);
+      },
+      async getInfo(lobbyId: number, bearerToken: string): Promise<LobbyInfo> {
+        return request<LobbyInfo>(`/lobby/${lobbyId}`, {}, bearerToken);
+      },
+      async leave(bearerToken: string): Promise<{ status: string; message: string }> {
+        return request<{ status: string; message: string }>(
+          `/lobby/leave`,
+          {
+            method: "DELETE",
+          },
+          bearerToken
+        );
+      },
+    },
+  },
+};

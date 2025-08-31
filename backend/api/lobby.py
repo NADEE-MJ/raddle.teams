@@ -1,36 +1,42 @@
 from fastapi import APIRouter, Depends, HTTPException
 from pydantic import BaseModel
 from sqlmodel import Session, select
+import uuid
 
 from backend.custom_logging import api_logger
 from backend.database import Lobby, Player, Team, get_session
 from backend.websocket.events import DisconnectedLobbyEvent, JoinedLobbyEvent
 from backend.websocket.managers import lobby_websocket_manager
+from backend.dependencies import get_optional_user_session, require_user_session
 
 router = APIRouter()
 
 
 class PlayerCreate(BaseModel):
     name: str
-    session_id: str
 
 
 @router.post("/lobby/{lobby_code}/join", response_model=Player)
 async def join_lobby(
-    lobby_code: str, player_data: PlayerCreate, db: Session = Depends(get_session)
+    lobby_code: str,
+    player_data: PlayerCreate,
+    db: Session = Depends(get_session),
+    user_session: str | None = Depends(get_optional_user_session),
 ):
     api_logger.info(
-        f"Player join attempt: session_id={player_data.session_id} lobby_code={lobby_code} name={player_data.name}"
+        f"Player join attempt: session_id={user_session} lobby_code={lobby_code} name={player_data.name}"
     )
     lobby = db.exec(select(Lobby).where(Lobby.code == lobby_code)).first()
     if not lobby:
         api_logger.warning(f"Join failed: lobby not found for code={lobby_code}")
         raise HTTPException(status_code=404, detail="Lobby not found")
 
+    # determine session id: use provided bearer token session if present,
+    # otherwise generate a new uuid4 session id for the player.
+    session_id = user_session or str(uuid.uuid4())
+
     # check if that session_id already exists and if so, move this player to this lobby
-    existing_player = db.exec(
-        select(Player).where(Player.session_id == player_data.session_id)
-    ).first()
+    existing_player = db.exec(select(Player).where(Player.session_id == session_id)).first()
     if existing_player:
         existing_player.name = player_data.name  # Update the player's name
         existing_player.lobby_id = lobby.id
@@ -56,7 +62,7 @@ async def join_lobby(
 
         return existing_player
 
-    player = Player(**player_data.model_dump(), lobby_id=lobby.id)
+    player = Player(**player_data.model_dump(), session_id=session_id, lobby_id=lobby.id)
     db.add(player)
     db.commit()
     db.refresh(player)
@@ -75,11 +81,14 @@ async def join_lobby(
             f"Failed to broadcast lobby join for session {player.session_id}: {e}"
         )
 
+    # include session id in response so frontend can store it when a new one was generated
     return player
 
 
 @router.delete("/player/{session_id}/leave")
-async def leave_lobby(session_id: str, db: Session = Depends(get_session)):
+async def leave_lobby(
+    session_id: str = Depends(require_user_session), db: Session = Depends(get_session)
+):
     """Remove the player identified by session_id from their lobby and notify others."""
     api_logger.info(f"Player leave request: session_id={session_id}")
     player = db.exec(select(Player).where(Player.session_id == session_id)).first()

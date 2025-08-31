@@ -1,55 +1,13 @@
 import { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
-import { apiService } from "../services/api";
+import { api } from "@/services/api";
 
-export default function HomePage() {
+export default function LandingPage() {
   const [name, setName] = useState("");
   const [lobbyCode, setLobbyCode] = useState("");
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState("");
-  const [checkingExistingSession, setCheckingExistingSession] = useState(true);
-  const { player, sessionId, setPlayer } = usePlayer();
   const navigate = useNavigate();
-
-  // Check if user is already logged in when component mounts
-  useEffect(() => {
-    const checkExistingSession = async () => {
-      if (player && player.lobby_id) {
-        try {
-          // Try to get the active lobby for this player
-          const lobby = await apiService.getActiveLobbyForPlayer(sessionId);
-          if (lobby) {
-            // Player has an active lobby, redirect them there
-            navigate("/lobby");
-            return;
-          }
-        } catch {
-          // If fetching lobby fails, clear the stored player
-          console.log("No active lobby found for player, clearing stored data");
-          setPlayer(null);
-        }
-      } else if (player) {
-        // Player exists but no lobby_id, try to get their active lobby anyway
-        try {
-          const lobby = await apiService.getActiveLobbyForPlayer(sessionId);
-          if (lobby) {
-            // Update player with the lobby info and redirect
-            const updatedPlayer = { ...player, lobby_id: lobby.id };
-            setPlayer(updatedPlayer);
-            navigate("/lobby");
-            return;
-          }
-        } catch {
-          // No active lobby found, clear the stored player
-          console.log("No active lobby found, clearing stored player data");
-          setPlayer(null);
-        }
-      }
-      setCheckingExistingSession(false);
-    };
-
-    checkExistingSession();
-  }, [player, sessionId, setPlayer, navigate]);
 
   const handleJoinLobby = async (e: React.FormEvent) => {
     e.preventDefault();
@@ -66,8 +24,7 @@ export default function HomePage() {
     setError("");
 
     try {
-      const player = await apiService.joinLobby(lobbyCode.trim().toUpperCase(), name.trim(), sessionId);
-      setPlayer(player);
+      // const player = await apiService.joinLobby(lobbyCode.trim().toUpperCase(), name.trim());
       navigate("/lobby");
     } catch (err) {
       setError("Failed to join lobby. Please check the lobby code and try again.");
@@ -81,25 +38,8 @@ export default function HomePage() {
     navigate("/admin");
   };
 
-  // Show loading spinner while checking for existing session
-  if (checkingExistingSession) {
-    return (
-      <div className="min-h-screen flex items-center justify-center bg-gradient-to-br from-blue-500 to-purple-600">
-        <div className="bg-white rounded-lg shadow-xl p-8 w-full max-w-md">
-          <div className="text-center">
-            <h1 className="text-3xl font-bold text-gray-900 mb-4">
-              Raddle Teams
-            </h1>
-            <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-blue-600 mx-auto"></div>
-            <p className="mt-4 text-gray-600">Checking for existing session...</p>
-          </div>
-        </div>
-      </div>
-    );
-  }
-
   return (
-    <div className="min-h-screen flex items-center justify-center bg-gradient-to-br from-blue-500 to-purple-600">
+    <div className="">
       <div className="bg-white rounded-lg shadow-xl p-8 w-full max-w-md">
         <div className="text-center mb-8">
           <h1 className="text-3xl font-bold text-gray-900 mb-2">
