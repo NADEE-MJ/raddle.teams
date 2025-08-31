@@ -38,10 +38,10 @@ async def playwright():
 
 @pytest.fixture()
 async def shared_browser(playwright):
-    slow_mo_enabled = os.getenv("PYTEST_SLOW_MO") == "1"
+    slow_mo_enabled = os.getenv("PYTEST_SLOW_MO") is not None
 
     if slow_mo_enabled:
-        browser = await playwright.chromium.launch(headless=False, slow_mo=500)
+        browser = await playwright.chromium.launch(headless=False, slow_mo=int(os.getenv("PYTEST_SLOW_MO")))
     else:
         browser = await playwright.chromium.launch(headless=True)
 

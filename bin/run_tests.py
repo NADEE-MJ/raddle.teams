@@ -19,8 +19,12 @@ def test(
     slow_mo: bool = typer.Option(
         False,
         "--slow-mo",
-        "-s",
-        help="Enable slow motion mode (headless=False, slow_mo=150)",
+        help="Enable slow motion mode when running tests, will run headless and operate slowly",
+    ),
+    super_slow_mo: bool = typer.Option(
+        False,
+        "--super-slow-mo",
+        help="Enable super slow motion mode when running tests, will run headless and operate very slowly",
     ),
 ):
     # get the current working directory
@@ -76,8 +80,11 @@ def test(
         os.environ["RADDLE_ENV"] = "testing"
         if record:
             os.environ["PYTEST_RECORD"] = "1"
-        if slow_mo:
-            os.environ["PYTEST_SLOW_MO"] = "1"
+        if slow_mo or super_slow_mo:
+            time_between_actions = "500"
+            if super_slow_mo:
+                time_between_actions = "1000"
+            os.environ["PYTEST_SLOW_MO"] = time_between_actions
         sys.exit(pytest.main(command_line_args))
     finally:
         del os.environ["RADDLE_ENV"]
