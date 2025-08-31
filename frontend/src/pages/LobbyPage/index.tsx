@@ -39,7 +39,7 @@ export default function LobbyPage() {
     <div className="min-h-screen bg-gray-50 p-4">
       <div className="max-w-6xl mx-auto">
         <div className="bg-white rounded-lg shadow-xl p-6 mb-6">
-          <LobbyHeader 
+          <LobbyHeader
             lobby={lobbyInfo.lobby}
             player={player}
             sessionId={sessionId!}
@@ -53,12 +53,9 @@ export default function LobbyPage() {
           )}
 
           <div className="grid md:grid-cols-2 gap-6">
-            <PlayersList 
-              players={lobbyInfo.players}
-              currentPlayer={player}
-            />
-            
-            <TeamsList 
+            <PlayersList players={lobbyInfo.players} currentPlayer={player} />
+
+            <TeamsList
               teams={lobbyInfo.teams}
               playersByTeam={lobbyInfo.players_by_team}
               currentPlayer={player}

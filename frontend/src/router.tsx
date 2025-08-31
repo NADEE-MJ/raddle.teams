@@ -60,20 +60,24 @@ const router = createBrowserRouter([
         children: [
           {
             index: true,
-            element: <div className="min-h-screen flex items-center justify-center bg-gray-50">
-              <div className="text-center">
-                <h1 className="text-2xl font-bold text-gray-900 mb-4">Invalid Lobby Access</h1>
-                <p className="text-gray-600 mb-6">
-                  Please use a valid lobby link or join from the home page.
-                </p>
-                <a
-                  href="/"
-                  className="bg-blue-600 hover:bg-blue-700 text-white px-4 py-2 rounded-lg transition duration-200"
-                >
-                  Back to Home
-                </a>
+            element: (
+              <div className="min-h-screen flex items-center justify-center bg-gray-50">
+                <div className="text-center">
+                  <h1 className="text-2xl font-bold text-gray-900 mb-4">
+                    Invalid Lobby Access
+                  </h1>
+                  <p className="text-gray-600 mb-6">
+                    Please use a valid lobby link or join from the home page.
+                  </p>
+                  <a
+                    href="/"
+                    className="bg-blue-600 hover:bg-blue-700 text-white px-4 py-2 rounded-lg transition duration-200"
+                  >
+                    Back to Home
+                  </a>
+                </div>
               </div>
-            </div>
+            ),
           },
           { path: ":lobbyCode", element: withSuspense(<LobbyPage />) },
         ],
@@ -89,20 +93,24 @@ const router = createBrowserRouter([
         children: [
           {
             index: true,
-            element: <div className="min-h-screen flex items-center justify-center bg-gray-50">
-              <div className="text-center">
-                <h1 className="text-2xl font-bold text-gray-900 mb-4">Invalid Game Access</h1>
-                <p className="text-gray-600 mb-6">
-                  Please use a valid game link or join from the home page.
-                </p>
-                <a
-                  href="/"
-                  className="bg-blue-600 hover:bg-blue-700 text-white px-4 py-2 rounded-lg transition duration-200"
-                >
-                  Back to Home
-                </a>
+            element: (
+              <div className="min-h-screen flex items-center justify-center bg-gray-50">
+                <div className="text-center">
+                  <h1 className="text-2xl font-bold text-gray-900 mb-4">
+                    Invalid Game Access
+                  </h1>
+                  <p className="text-gray-600 mb-6">
+                    Please use a valid game link or join from the home page.
+                  </p>
+                  <a
+                    href="/"
+                    className="bg-blue-600 hover:bg-blue-700 text-white px-4 py-2 rounded-lg transition duration-200"
+                  >
+                    Back to Home
+                  </a>
+                </div>
               </div>
-            </div>
+            ),
           },
           { path: ":gameId", element: withSuspense(<GamePage />) },
         ],

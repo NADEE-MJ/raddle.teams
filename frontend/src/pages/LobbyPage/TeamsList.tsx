@@ -6,7 +6,11 @@ interface TeamsListProps {
   currentPlayer: Player;
 }
 
-export default function TeamsList({ teams, playersByTeam, currentPlayer }: TeamsListProps) {
+export default function TeamsList({
+  teams,
+  playersByTeam,
+  currentPlayer,
+}: TeamsListProps) {
   return (
     <div className="bg-gray-50 rounded-lg p-4">
       <h2 className="text-xl font-semibold text-gray-900 mb-4">
@@ -23,9 +27,7 @@ export default function TeamsList({ teams, playersByTeam, currentPlayer }: Teams
               key={team.id}
               className="bg-white border border-gray-200 rounded-lg p-4"
             >
-              <h3 className="font-semibold text-lg mb-2">
-                {team.name}
-              </h3>
+              <h3 className="font-semibold text-lg mb-2">{team.name}</h3>
               <div className="text-sm text-gray-600 mb-2">
                 Progress: Word {team.current_word_index + 1}
               </div>

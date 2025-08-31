@@ -13,7 +13,7 @@ interface UseWebSocketOptions {
 export function useWebSocket(
   lobbyId: number | null,
   sessionId: string | null,
-  options: UseWebSocketOptions = {}
+  options: UseWebSocketOptions = {},
 ) {
   const {
     onMessage,
@@ -120,7 +120,7 @@ export function useWebSocket(
 export function useAdminWebSocket(
   webSessionId: string | null,
   adminToken: string | null,
-  options: UseWebSocketOptions = {}
+  options: UseWebSocketOptions = {},
 ) {
   const {
     onMessage,
@@ -194,7 +194,10 @@ export function useAdminWebSocket(
     if (wsRef.current && wsRef.current.readyState === WebSocket.OPEN) {
       wsRef.current.send(JSON.stringify(message));
     } else {
-      console.warn("Admin WebSocket is not connected, cannot send message:", message);
+      console.warn(
+        "Admin WebSocket is not connected, cannot send message:",
+        message,
+      );
     }
   }, []);
 

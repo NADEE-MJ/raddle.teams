@@ -7,7 +7,11 @@ interface AdminLoginProps {
   error: string;
 }
 
-export default function AdminLogin({ onLogin, loading, error }: AdminLoginProps) {
+export default function AdminLogin({
+  onLogin,
+  loading,
+  error,
+}: AdminLoginProps) {
   const [localAdminToken, setLocalAdminToken] = useState("");
   const navigate = useNavigate();
 

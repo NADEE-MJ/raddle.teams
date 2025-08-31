@@ -10,11 +10,11 @@ interface LobbyHeaderProps {
   setSessionId: (sessionId: string | null) => void;
 }
 
-export default function LobbyHeader({ 
-  lobby, 
-  player, 
-  sessionId, 
-  setSessionId 
+export default function LobbyHeader({
+  lobby,
+  player,
+  sessionId,
+  setSessionId,
 }: LobbyHeaderProps) {
   const [loading, setLoading] = useState(false);
   const navigate = useNavigate();
@@ -36,20 +36,14 @@ export default function LobbyHeader({
   return (
     <div className="flex justify-between items-center mb-6">
       <div>
-        <h1 className="text-3xl font-bold text-gray-900">
-          {lobby.name}
-        </h1>
+        <h1 className="text-3xl font-bold text-gray-900">{lobby.name}</h1>
         <p className="text-gray-600 mt-1">
           Lobby Code:{" "}
-          <span className="font-mono text-lg font-bold">
-            {lobby.code}
-          </span>
+          <span className="font-mono text-lg font-bold">{lobby.code}</span>
         </p>
       </div>
       <div className="text-right">
-        <p className="text-sm text-gray-600 mb-2">
-          Welcome, {player.name}!
-        </p>
+        <p className="text-sm text-gray-600 mb-2">Welcome, {player.name}!</p>
         <button
           onClick={handleLeave}
           disabled={loading}

@@ -6,17 +6,17 @@ interface CreateLobbyFormProps {
   contextLoading: boolean;
 }
 
-export default function CreateLobbyForm({ 
-  onCreateLobby, 
-  loading, 
-  contextLoading 
+export default function CreateLobbyForm({
+  onCreateLobby,
+  loading,
+  contextLoading,
 }: CreateLobbyFormProps) {
   const [newLobbyName, setNewLobbyName] = useState("");
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     if (!newLobbyName.trim()) return;
-    
+
     await onCreateLobby(newLobbyName.trim());
     setNewLobbyName("");
   };

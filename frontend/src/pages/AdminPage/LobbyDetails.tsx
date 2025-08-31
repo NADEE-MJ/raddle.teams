@@ -5,7 +5,10 @@ interface LobbyDetailsProps {
   onClose: () => void;
 }
 
-export default function LobbyDetails({ selectedLobby, onClose }: LobbyDetailsProps) {
+export default function LobbyDetails({
+  selectedLobby,
+  onClose,
+}: LobbyDetailsProps) {
   return (
     <div className="bg-white rounded-lg shadow-xl p-6">
       <div className="flex justify-between items-center mb-6">
@@ -26,9 +29,7 @@ export default function LobbyDetails({ selectedLobby, onClose }: LobbyDetailsPro
           <div className="space-y-2">
             <p>
               <strong>Code:</strong>{" "}
-              <span className="font-mono">
-                {selectedLobby.lobby.code}
-              </span>
+              <span className="font-mono">{selectedLobby.lobby.code}</span>
             </p>
             <p>
               <strong>Name:</strong> {selectedLobby.lobby.name}
@@ -55,9 +56,7 @@ export default function LobbyDetails({ selectedLobby, onClose }: LobbyDetailsPro
                 >
                   <span className="font-medium">{player.name}</span>
                   <span className="text-sm text-gray-500 bg-gray-100 px-2 py-1 rounded">
-                    {player.team_id
-                      ? `Team ${player.team_id}`
-                      : "No team"}
+                    {player.team_id ? `Team ${player.team_id}` : "No team"}
                   </span>
                 </div>
               ))}
@@ -77,9 +76,7 @@ export default function LobbyDetails({ selectedLobby, onClose }: LobbyDetailsPro
                 key={team.id}
                 className="border border-gray-200 rounded-lg p-4 bg-gray-50"
               >
-                <h4 className="font-semibold text-lg mb-2">
-                  {team.name}
-                </h4>
+                <h4 className="font-semibold text-lg mb-2">{team.name}</h4>
                 <p className="text-sm text-gray-600 mb-3">
                   Current word index: {team.current_word_index}
                 </p>

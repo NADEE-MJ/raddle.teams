@@ -5,7 +5,10 @@ interface PlayersListProps {
   currentPlayer: Player;
 }
 
-export default function PlayersList({ players, currentPlayer }: PlayersListProps) {
+export default function PlayersList({
+  players,
+  currentPlayer,
+}: PlayersListProps) {
   return (
     <div className="bg-gray-50 rounded-lg p-4">
       <h2 className="text-xl font-semibold text-gray-900 mb-4">
@@ -31,9 +34,7 @@ export default function PlayersList({ players, currentPlayer }: PlayersListProps
                 </span>
               </div>
               <div className="text-sm text-gray-500 bg-gray-100 px-2 py-1 rounded">
-                {playerItem.team_id
-                  ? `Team ${playerItem.team_id}`
-                  : "No team"}
+                {playerItem.team_id ? `Team ${playerItem.team_id}` : "No team"}
               </div>
             </div>
           ))}

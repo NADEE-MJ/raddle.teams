@@ -9,20 +9,18 @@ interface LobbiesListProps {
   contextLoading: boolean;
 }
 
-export default function LobbiesList({ 
-  lobbies, 
-  onRefresh, 
-  onViewDetails, 
-  onDeleteLobby, 
-  loading, 
-  contextLoading 
+export default function LobbiesList({
+  lobbies,
+  onRefresh,
+  onViewDetails,
+  onDeleteLobby,
+  loading,
+  contextLoading,
 }: LobbiesListProps) {
   return (
     <div className="mb-8">
       <div className="flex justify-between items-center mb-4">
-        <h2 className="text-xl font-semibold text-gray-900">
-          All Lobbies
-        </h2>
+        <h2 className="text-xl font-semibold text-gray-900">All Lobbies</h2>
         <button
           onClick={onRefresh}
           disabled={loading || contextLoading}
@@ -33,9 +31,7 @@ export default function LobbiesList({
       </div>
 
       {lobbies.length === 0 ? (
-        <p className="text-gray-500 text-center py-8">
-          No lobbies created yet
-        </p>
+        <p className="text-gray-500 text-center py-8">No lobbies created yet</p>
       ) : (
         <div className="grid gap-4 md:grid-cols-2 lg:grid-cols-3">
           {lobbies.map((lobby) => (
@@ -45,8 +41,7 @@ export default function LobbiesList({
             >
               <h3 className="font-semibold text-lg mb-1">{lobby.name}</h3>
               <p className="text-gray-600 mb-1">
-                Code:{" "}
-                <span className="font-mono font-bold">{lobby.code}</span>
+                Code: <span className="font-mono font-bold">{lobby.code}</span>
               </p>
               <p className="text-gray-500 text-sm mb-3">
                 Created: {new Date(lobby.created_at).toLocaleString()}

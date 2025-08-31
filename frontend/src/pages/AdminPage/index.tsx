@@ -172,13 +172,7 @@ export default function AdminPage() {
   }, [sendWebSocketMessage]);
 
   if (!isAdmin) {
-    return (
-      <AdminLogin 
-        onLogin={handleLogin}
-        loading={loading}
-        error={error}
-      />
-    );
+    return <AdminLogin onLogin={handleLogin} loading={loading} error={error} />;
   }
 
   return (
@@ -193,13 +187,13 @@ export default function AdminPage() {
             </div>
           )}
 
-          <CreateLobbyForm 
+          <CreateLobbyForm
             onCreateLobby={createLobby}
             loading={loading}
             contextLoading={contextLoading}
           />
 
-          <LobbiesList 
+          <LobbiesList
             lobbies={lobbies}
             onRefresh={refreshLobbies}
             onViewDetails={viewLobbyDetails}
@@ -210,7 +204,7 @@ export default function AdminPage() {
         </div>
 
         {selectedLobby && (
-          <LobbyDetails 
+          <LobbyDetails
             selectedLobby={selectedLobby}
             onClose={closeLobbyDetails}
           />

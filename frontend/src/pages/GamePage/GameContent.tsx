@@ -7,7 +7,11 @@ interface GameContentProps {
   team: Team | null;
 }
 
-export default function GameContent({ gameId, player, team }: GameContentProps) {
+export default function GameContent({
+  gameId,
+  player,
+  team,
+}: GameContentProps) {
   const navigate = useNavigate();
 
   return (
