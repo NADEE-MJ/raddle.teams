@@ -1,5 +1,5 @@
-import { useEffect, useRef, useCallback, useState } from 'react';
-import { WebSocketMessage } from '@/types';
+import { useEffect, useRef, useCallback, useState } from "react";
+import { WebSocketMessage } from "@/types";
 
 interface UseWebSocketOptions {
   onMessage?: (message: WebSocketMessage) => void;
@@ -13,7 +13,7 @@ interface UseWebSocketOptions {
 export function useWebSocket(
   lobbyId: number | null,
   sessionId: string | null,
-  options: UseWebSocketOptions = {}
+  options: UseWebSocketOptions = {},
 ) {
   const {
     onMessage,
@@ -33,8 +33,8 @@ export function useWebSocket(
   const connect = useCallback(() => {
     if (!lobbyId || !sessionId || !shouldConnectRef.current) return;
 
-    const wsUrl = `${window.location.protocol === 'https:' ? 'wss:' : 'ws:'}//${window.location.host}/ws/lobby/${lobbyId}/player/${sessionId}`;
-    
+    const wsUrl = `${window.location.protocol === "https:" ? "wss:" : "ws:"}//${window.location.host}/ws/lobby/${lobbyId}/player/${sessionId}`;
+
     try {
       const ws = new WebSocket(wsUrl);
       wsRef.current = ws;
@@ -50,7 +50,7 @@ export function useWebSocket(
           const message: WebSocketMessage = JSON.parse(event.data);
           onMessage?.(message);
         } catch (err) {
-          console.error('Failed to parse WebSocket message:', err);
+          console.error("Failed to parse WebSocket message:", err);
         }
       };
 
@@ -65,18 +65,27 @@ export function useWebSocket(
       };
 
       ws.onerror = (error) => {
-        setError('WebSocket connection failed');
+        setError("WebSocket connection failed");
         onError?.(error);
       };
     } catch (err) {
-      setError('Failed to create WebSocket connection');
-      console.error('WebSocket connection error:', err);
+      setError("Failed to create WebSocket connection");
+      console.error("WebSocket connection error:", err);
     }
-  }, [lobbyId, sessionId, onMessage, onConnect, onDisconnect, onError, autoReconnect, reconnectInterval]);
+  }, [
+    lobbyId,
+    sessionId,
+    onMessage,
+    onConnect,
+    onDisconnect,
+    onError,
+    autoReconnect,
+    reconnectInterval,
+  ]);
 
   const disconnect = useCallback(() => {
     shouldConnectRef.current = false;
-    
+
     if (reconnectTimeoutRef.current) {
       clearTimeout(reconnectTimeoutRef.current);
       reconnectTimeoutRef.current = null;
@@ -86,7 +95,7 @@ export function useWebSocket(
       wsRef.current.close();
       wsRef.current = null;
     }
-    
+
     setIsConnected(false);
   }, []);
 
@@ -111,7 +120,7 @@ export function useWebSocket(
 export function useAdminWebSocket(
   webSessionId: string | null,
   adminToken: string | null,
-  options: UseWebSocketOptions = {}
+  options: UseWebSocketOptions = {},
 ) {
   const {
     onMessage,
@@ -131,8 +140,8 @@ export function useAdminWebSocket(
   const connect = useCallback(() => {
     if (!webSessionId || !adminToken || !shouldConnectRef.current) return;
 
-    const wsUrl = `${window.location.protocol === 'https:' ? 'wss:' : 'ws:'}//${window.location.host}/ws/admin/${webSessionId}?token=${encodeURIComponent(adminToken)}`;
-    
+    const wsUrl = `${window.location.protocol === "https:" ? "wss:" : "ws:"}//${window.location.host}/ws/admin/${webSessionId}?token=${encodeURIComponent(adminToken)}`;
+
     try {
       const ws = new WebSocket(wsUrl);
       wsRef.current = ws;
@@ -148,7 +157,7 @@ export function useAdminWebSocket(
           const message: WebSocketMessage = JSON.parse(event.data);
           onMessage?.(message);
         } catch (err) {
-          console.error('Failed to parse WebSocket message:', err);
+          console.error("Failed to parse WebSocket message:", err);
         }
       };
 
@@ -163,26 +172,38 @@ export function useAdminWebSocket(
       };
 
       ws.onerror = (error) => {
-        setError('Admin WebSocket connection failed');
+        setError("Admin WebSocket connection failed");
         onError?.(error);
       };
     } catch (err) {
-      setError('Failed to create admin WebSocket connection');
-      console.error('Admin WebSocket connection error:', err);
+      setError("Failed to create admin WebSocket connection");
+      console.error("Admin WebSocket connection error:", err);
     }
-  }, [webSessionId, adminToken, onMessage, onConnect, onDisconnect, onError, autoReconnect, reconnectInterval]);
+  }, [
+    webSessionId,
+    adminToken,
+    onMessage,
+    onConnect,
+    onDisconnect,
+    onError,
+    autoReconnect,
+    reconnectInterval,
+  ]);
 
   const sendMessage = useCallback((message: object) => {
     if (wsRef.current && wsRef.current.readyState === WebSocket.OPEN) {
       wsRef.current.send(JSON.stringify(message));
     } else {
-      console.warn('Admin WebSocket is not connected, cannot send message:', message);
+      console.warn(
+        "Admin WebSocket is not connected, cannot send message:",
+        message,
+      );
     }
   }, []);
 
   const disconnect = useCallback(() => {
     shouldConnectRef.current = false;
-    
+
     if (reconnectTimeoutRef.current) {
       clearTimeout(reconnectTimeoutRef.current);
       reconnectTimeoutRef.current = null;
@@ -192,7 +213,7 @@ export function useAdminWebSocket(
       wsRef.current.close();
       wsRef.current = null;
     }
-    
+
     setIsConnected(false);
   }, []);
 

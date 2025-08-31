@@ -11,3 +11,10 @@ dist/
 
 # Database files
 *.db
+
+# markdown files
+*.md
+
+# yaml files
+*.yaml
+*.yml

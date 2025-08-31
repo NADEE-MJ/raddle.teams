@@ -9,7 +9,15 @@ import tsparser from "@typescript-eslint/parser";
 export default [
   {
     // Global ignores
-    ignores: ["dist/**", "static/**", "**/*.config.js", "**/*.config.ts"],
+    ignores: [
+      "static/**",
+      "**/*.config.js",
+      "**/*.config.ts",
+      "logs/**",
+      "node_modules/**",
+      ".venv/**",
+      "__pycache__/**",
+    ],
   },
   {
     // Base configuration for all files

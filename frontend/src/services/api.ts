@@ -5,7 +5,7 @@ const API_BASE = "/api";
 const request = async <T>(
   endpoint: string,
   options?: RequestInit,
-  bearerToken?: string
+  bearerToken?: string,
 ): Promise<T> => {
   const url = `${API_BASE}${endpoint}`;
   const response = await fetch(url, {
@@ -34,22 +34,19 @@ export const api = {
             method: "POST",
             body: JSON.stringify({ name }),
           },
-          bearerToken
+          bearerToken,
         );
       },
       async getAll(bearerToken: string): Promise<Lobby[]> {
         return request<Lobby[]>("/admin/lobby", {}, bearerToken);
       },
-      async delete(
-        lobbyId: number,
-        bearerToken: string
-      ): Promise<ApiResponse> {
+      async delete(lobbyId: number, bearerToken: string): Promise<ApiResponse> {
         return request<ApiResponse>(
           `/admin/lobby/${lobbyId}`,
           {
             method: "DELETE",
           },
-          bearerToken
+          bearerToken,
         );
       },
       async getInfo(lobbyId: number, bearerToken: string): Promise<LobbyInfo> {
@@ -65,20 +62,27 @@ export const api = {
       async activeUser(sessionId: string): Promise<Player> {
         return request<Player>(`/lobby/active`, {}, sessionId);
       },
-      async join(lobbyCode: string, name: string, sessionId?: string): Promise<Player> {
+      async join(
+        lobbyCode: string,
+        name: string,
+        sessionId?: string,
+      ): Promise<Player> {
         return request<Player>(
           `/lobby/${lobbyCode}`,
           {
             method: "POST",
             body: JSON.stringify({ name }),
           },
-          sessionId
+          sessionId,
         );
       },
       async getInfo(sessionId: string): Promise<Lobby> {
         return request<Lobby>(`/lobby`, {}, sessionId);
       },
-      async getLobbyInfo(lobbyId: number, sessionId: string): Promise<LobbyInfo> {
+      async getLobbyInfo(
+        lobbyId: number,
+        sessionId: string,
+      ): Promise<LobbyInfo> {
         return request<LobbyInfo>(`/lobby/${lobbyId}`, {}, sessionId);
       },
       async leave(sessionId: string): Promise<ApiResponse> {
@@ -87,7 +91,7 @@ export const api = {
           {
             method: "DELETE",
           },
-          sessionId
+          sessionId,
         );
       },
     },

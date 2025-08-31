@@ -17,7 +17,7 @@ export default function AdminPage() {
     onLobbyUpdate,
     offLobbyUpdate,
   } = useAdminOutletContext();
-  
+
   const [selectedLobby, setSelectedLobby] = useState<LobbyInfo | null>(null);
   const [newLobbyName, setNewLobbyName] = useState("");
   const [localAdminToken, setLocalAdminToken] = useState("");
@@ -74,34 +74,40 @@ export default function AdminPage() {
     }
   };
 
-  const handleLobbyUpdate = useCallback((lobbyId: number) => {
-    // Use current state instead of closure to avoid dependency issues
-    setSelectedLobby(current => {
-      if (current && current.lobby.id === lobbyId && adminToken) {
-        // Refresh the selected lobby
-        api.admin.lobby.getInfo(current.lobby.id, adminToken).then(lobbyInfo => {
-          setSelectedLobby(lobbyInfo);
-        }).catch(err => {
-          console.error("Error refreshing selected lobby:", err);
-        });
-      }
-      return current;
-    });
-  }, [adminToken]);
+  const handleLobbyUpdate = useCallback(
+    (lobbyId: number) => {
+      // Use current state instead of closure to avoid dependency issues
+      setSelectedLobby((current) => {
+        if (current && current.lobby.id === lobbyId && adminToken) {
+          // Refresh the selected lobby
+          api.admin.lobby
+            .getInfo(current.lobby.id, adminToken)
+            .then((lobbyInfo) => {
+              setSelectedLobby(lobbyInfo);
+            })
+            .catch((err) => {
+              console.error("Error refreshing selected lobby:", err);
+            });
+        }
+        return current;
+      });
+    },
+    [adminToken],
+  );
 
   const viewLobbyDetails = async (lobbyId: number) => {
     if (!adminToken) return;
-    
+
     try {
       setLoading(true);
       const lobbyInfo = await api.admin.lobby.getInfo(lobbyId, adminToken);
       setSelectedLobby(lobbyInfo);
-      
+
       // Subscribe to lobby updates via WebSocket
       if (sendWebSocketMessage) {
         sendWebSocketMessage({
           action: "subscribe_lobby",
-          lobby_id: lobbyId
+          lobby_id: lobbyId,
         });
       }
     } catch (err) {
@@ -117,7 +123,7 @@ export default function AdminPage() {
       // Unsubscribe from lobby updates
       sendWebSocketMessage({
         action: "unsubscribe_lobby",
-        lobby_id: selectedLobby.lobby.id
+        lobby_id: selectedLobby.lobby.id,
       });
     }
     setSelectedLobby(null);
@@ -125,7 +131,7 @@ export default function AdminPage() {
 
   const deleteLobby = async (lobbyId: number) => {
     if (!adminToken) return;
-    
+
     try {
       setLoading(true);
       await api.admin.lobby.delete(lobbyId, adminToken);
@@ -135,7 +141,7 @@ export default function AdminPage() {
         if (sendWebSocketMessage) {
           sendWebSocketMessage({
             action: "unsubscribe_lobby",
-            lobby_id: lobbyId
+            lobby_id: lobbyId,
           });
         }
         setSelectedLobby(null);
@@ -165,7 +171,7 @@ export default function AdminPage() {
       if (selectedLobbyRef.current && sendWebSocketMessage) {
         sendWebSocketMessage({
           action: "unsubscribe_lobby",
-          lobby_id: selectedLobbyRef.current.lobby.id
+          lobby_id: selectedLobbyRef.current.lobby.id,
         });
       }
     };
@@ -173,54 +179,58 @@ export default function AdminPage() {
 
   if (!isAdmin) {
     return (
-      <div className="min-h-screen flex items-center justify-center bg-gray-100">
-        <div className="bg-white rounded-lg shadow-xl p-8 w-full max-w-md">
-          <div className="text-center mb-8">
-            <h1 className="text-3xl font-bold text-gray-900 mb-2">
-              Admin Login
-            </h1>
-            <p className="text-gray-600">Enter your admin token to access the admin panel</p>
-          </div>
-
-          <form onSubmit={handleLogin} className="space-y-6">
-            <div>
-              <label
-                htmlFor="adminToken"
-                className="block text-sm font-medium text-gray-700 mb-2"
-              >
-                Admin Token
-              </label>
-              <input
-                type="password"
-                id="adminToken"
-                value={localAdminToken}
-                onChange={(e) => setLocalAdminToken(e.target.value)}
-                className="w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-blue-500 focus:border-blue-500"
-                placeholder="Enter admin token"
-                disabled={loading}
-              />
+      <div className="min-h-screen flex items-center justify-center bg-gray-50 p-4">
+        <div className="w-full max-w-md">
+          <div className="bg-white rounded-lg shadow-xl p-8">
+            <div className="text-center mb-8">
+              <h1 className="text-3xl font-bold text-gray-900 mb-2">
+                Admin Login
+              </h1>
+              <p className="text-gray-600">
+                Enter your admin token to access the admin panel
+              </p>
             </div>
 
-            {error && (
-              <div className="text-red-600 text-sm text-center">{error}</div>
-            )}
+            <form onSubmit={handleLogin} className="space-y-6">
+              <div>
+                <label
+                  htmlFor="adminToken"
+                  className="block text-sm font-medium text-gray-700 mb-2"
+                >
+                  Admin Token
+                </label>
+                <input
+                  type="password"
+                  id="adminToken"
+                  value={localAdminToken}
+                  onChange={(e) => setLocalAdminToken(e.target.value)}
+                  className="w-full px-3 py-2 border border-gray-300 rounded-lg shadow-sm focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
+                  placeholder="Enter admin token"
+                  disabled={loading}
+                />
+              </div>
 
-            <button
-              type="submit"
-              disabled={loading}
-              className="w-full bg-blue-600 hover:bg-blue-700 disabled:bg-blue-400 text-white font-medium py-2 px-4 rounded-md transition duration-200"
-            >
-              {loading ? "Logging in..." : "Login"}
-            </button>
-          </form>
+              {error && (
+                <div className="text-red-600 text-sm text-center">{error}</div>
+              )}
 
-          <div className="mt-6 pt-6 border-t border-gray-200">
-            <button
-              onClick={() => navigate("/")}
-              className="w-full bg-gray-600 hover:bg-gray-700 text-white font-medium py-2 px-4 rounded-md transition duration-200"
-            >
-              Back to Home
-            </button>
+              <button
+                type="submit"
+                disabled={loading}
+                className="w-full bg-blue-600 hover:bg-blue-700 disabled:bg-blue-400 text-white font-medium py-2 px-4 rounded-lg transition duration-200"
+              >
+                {loading ? "Logging in..." : "Login"}
+              </button>
+            </form>
+
+            <div className="mt-6 pt-6 border-t border-gray-200">
+              <button
+                onClick={() => navigate("/")}
+                className="w-full bg-gray-600 hover:bg-gray-700 text-white font-medium py-2 px-4 rounded-lg transition duration-200"
+              >
+                Back to Home
+              </button>
+            </div>
           </div>
         </div>
       </div>
@@ -228,21 +238,23 @@ export default function AdminPage() {
   }
 
   return (
-    <div className="min-h-screen bg-gray-100 p-6">
+    <div className="min-h-screen bg-gray-50 p-6">
       <div className="max-w-6xl mx-auto">
         <div className="bg-white rounded-lg shadow-xl p-6 mb-6">
           <div className="flex justify-between items-center mb-6">
-            <h1 className="text-3xl font-bold text-gray-900">Admin Dashboard</h1>
-            <div className="space-x-4">
+            <h1 className="text-3xl font-bold text-gray-900">
+              Admin Dashboard
+            </h1>
+            <div className="flex gap-3">
               <button
                 onClick={() => navigate("/")}
-                className="bg-gray-600 hover:bg-gray-700 text-white px-4 py-2 rounded-md transition duration-200"
+                className="bg-gray-600 hover:bg-gray-700 text-white px-4 py-2 rounded-lg transition duration-200"
               >
                 Home
               </button>
               <button
                 onClick={handleLogout}
-                className="bg-red-600 hover:bg-red-700 text-white px-4 py-2 rounded-md transition duration-200"
+                className="bg-red-600 hover:bg-red-700 text-white px-4 py-2 rounded-lg transition duration-200"
               >
                 Logout
               </button>
@@ -250,26 +262,28 @@ export default function AdminPage() {
           </div>
 
           {(error || contextError) && (
-            <div className="mb-6 p-4 bg-red-100 text-red-700 rounded-md">
+            <div className="mb-6 bg-red-50 border border-red-200 text-red-700 px-4 py-3 rounded-lg">
               {error || contextError}
             </div>
           )}
 
           <div className="mb-8">
-            <h2 className="text-xl font-semibold text-gray-900 mb-4">Create New Lobby</h2>
+            <h2 className="text-xl font-semibold text-gray-900 mb-4">
+              Create New Lobby
+            </h2>
             <form onSubmit={createLobby} className="flex gap-4">
               <input
                 type="text"
                 value={newLobbyName}
                 onChange={(e) => setNewLobbyName(e.target.value)}
                 placeholder="Lobby name"
-                className="flex-1 px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-blue-500 focus:border-blue-500"
+                className="flex-1 px-3 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
                 disabled={loading || contextLoading}
               />
               <button
                 type="submit"
                 disabled={loading || contextLoading || !newLobbyName.trim()}
-                className="bg-blue-600 hover:bg-blue-700 disabled:bg-blue-400 text-white px-6 py-2 rounded-md transition duration-200"
+                className="bg-blue-600 hover:bg-blue-700 disabled:bg-blue-400 text-white px-6 py-2 rounded-lg transition duration-200"
               >
                 Create Lobby
               </button>
@@ -278,37 +292,47 @@ export default function AdminPage() {
 
           <div className="mb-8">
             <div className="flex justify-between items-center mb-4">
-              <h2 className="text-xl font-semibold text-gray-900">All Lobbies</h2>
+              <h2 className="text-xl font-semibold text-gray-900">
+                All Lobbies
+              </h2>
               <button
                 onClick={refreshLobbies}
                 disabled={loading || contextLoading}
-                className="bg-green-600 hover:bg-green-700 disabled:bg-green-400 text-white px-4 py-2 rounded-md transition duration-200"
+                className="bg-green-600 hover:bg-green-700 disabled:bg-green-400 text-white px-4 py-2 rounded-lg transition duration-200"
               >
                 Refresh
               </button>
             </div>
 
             {lobbies.length === 0 ? (
-              <p className="text-gray-500 text-center py-8">No lobbies created yet</p>
+              <p className="text-gray-500 text-center py-8">
+                No lobbies created yet
+              </p>
             ) : (
               <div className="grid gap-4 md:grid-cols-2 lg:grid-cols-3">
                 {lobbies.map((lobby) => (
-                  <div key={lobby.id} className="border border-gray-200 rounded-lg p-4">
-                    <h3 className="font-semibold text-lg">{lobby.name}</h3>
-                    <p className="text-gray-600">Code: <span className="font-mono font-bold">{lobby.code}</span></p>
-                    <p className="text-gray-500 text-sm">
+                  <div
+                    key={lobby.id}
+                    className="border border-gray-200 rounded-lg p-4 hover:shadow-md transition-shadow"
+                  >
+                    <h3 className="font-semibold text-lg mb-1">{lobby.name}</h3>
+                    <p className="text-gray-600 mb-1">
+                      Code:{" "}
+                      <span className="font-mono font-bold">{lobby.code}</span>
+                    </p>
+                    <p className="text-gray-500 text-sm mb-3">
                       Created: {new Date(lobby.created_at).toLocaleString()}
                     </p>
-                    <div className="mt-2 space-y-2">
+                    <div className="flex flex-col gap-2">
                       <button
                         onClick={() => viewLobbyDetails(lobby.id)}
-                        className="bg-blue-600 hover:bg-blue-700 text-white px-4 py-2 rounded-md transition duration-200 w-full"
+                        className="bg-blue-600 hover:bg-blue-700 text-white px-4 py-2 rounded-lg transition duration-200 text-sm"
                       >
                         View Details
                       </button>
                       <button
                         onClick={() => deleteLobby(lobby.id)}
-                        className="bg-red-600 hover:bg-red-700 text-white px-4 py-2 rounded-md transition duration-200 w-full"
+                        className="bg-red-600 hover:bg-red-700 text-white px-4 py-2 rounded-lg transition duration-200 text-sm"
                       >
                         Delete
                       </button>
@@ -328,36 +352,51 @@ export default function AdminPage() {
               </h2>
               <button
                 onClick={closeLobbyDetails}
-                className="text-gray-600 hover:text-gray-800"
+                className="text-gray-500 hover:text-gray-700 text-xl font-bold px-3 py-1 rounded-lg hover:bg-gray-100 transition-colors"
               >
-                ✕ Close
+                ✕
               </button>
             </div>
 
             <div className="grid md:grid-cols-2 gap-6">
-              <div>
+              <div className="bg-gray-50 rounded-lg p-4">
                 <h3 className="text-lg font-semibold mb-3">Lobby Info</h3>
                 <div className="space-y-2">
-                  <p><strong>Code:</strong> <span className="font-mono">{selectedLobby.lobby.code}</span></p>
-                  <p><strong>Name:</strong> {selectedLobby.lobby.name}</p>
-                  <p><strong>Created:</strong> {new Date(selectedLobby.lobby.created_at).toLocaleString()}</p>
+                  <p>
+                    <strong>Code:</strong>{" "}
+                    <span className="font-mono">
+                      {selectedLobby.lobby.code}
+                    </span>
+                  </p>
+                  <p>
+                    <strong>Name:</strong> {selectedLobby.lobby.name}
+                  </p>
+                  <p>
+                    <strong>Created:</strong>{" "}
+                    {new Date(selectedLobby.lobby.created_at).toLocaleString()}
+                  </p>
                 </div>
               </div>
 
-              <div>
-                <h3 className="text-lg font-semibold mb-3">Players ({selectedLobby.players.length})</h3>
+              <div className="bg-gray-50 rounded-lg p-4">
+                <h3 className="text-lg font-semibold mb-3">
+                  Players ({selectedLobby.players.length})
+                </h3>
                 {selectedLobby.players.length === 0 ? (
                   <p className="text-gray-500">No players in this lobby yet</p>
                 ) : (
                   <div className="space-y-2 max-h-48 overflow-y-auto">
                     {selectedLobby.players.map((player) => (
-                      <div key={player.id} className="flex justify-between items-center p-2 bg-gray-50 rounded">
-                        <span>{player.name}</span>
-                        <div className="flex items-center gap-2">
-                          <span className="text-sm text-gray-500">
-                            {player.team_id ? `Team ${player.team_id}` : 'No team'}
-                          </span>
-                        </div>
+                      <div
+                        key={player.id}
+                        className="flex justify-between items-center p-2 bg-white rounded border"
+                      >
+                        <span className="font-medium">{player.name}</span>
+                        <span className="text-sm text-gray-500 bg-gray-100 px-2 py-1 rounded">
+                          {player.team_id
+                            ? `Team ${player.team_id}`
+                            : "No team"}
+                        </span>
                       </div>
                     ))}
                   </div>
@@ -367,24 +406,39 @@ export default function AdminPage() {
 
             {selectedLobby.teams && selectedLobby.teams.length > 0 && (
               <div className="mt-6">
-                <h3 className="text-lg font-semibold mb-3">Teams ({selectedLobby.teams.length})</h3>
+                <h3 className="text-lg font-semibold mb-4">
+                  Teams ({selectedLobby.teams.length})
+                </h3>
                 <div className="grid gap-4 md:grid-cols-2">
                   {selectedLobby.teams.map((team) => (
-                    <div key={team.id} className="border border-gray-200 rounded-lg p-4">
-                      <h4 className="font-semibold">{team.name}</h4>
-                      <p className="text-sm text-gray-600">Current word index: {team.current_word_index}</p>
-                      {selectedLobby.players_by_team && selectedLobby.players_by_team[team.id] && (
-                        <div className="mt-2">
-                          <p className="text-sm font-medium">Players:</p>
-                          <div className="text-sm text-gray-600">
-                            {selectedLobby.players_by_team[team.id].map((player) => (
-                              <span key={player.id} className="inline-block mr-2">
-                                {player.name}
-                              </span>
-                            ))}
+                    <div
+                      key={team.id}
+                      className="border border-gray-200 rounded-lg p-4 bg-gray-50"
+                    >
+                      <h4 className="font-semibold text-lg mb-2">
+                        {team.name}
+                      </h4>
+                      <p className="text-sm text-gray-600 mb-3">
+                        Current word index: {team.current_word_index}
+                      </p>
+                      {selectedLobby.players_by_team &&
+                        selectedLobby.players_by_team[team.id] && (
+                          <div>
+                            <p className="text-sm font-medium mb-2">Members:</p>
+                            <div className="flex flex-wrap gap-1">
+                              {selectedLobby.players_by_team[team.id].map(
+                                (player) => (
+                                  <span
+                                    key={player.id}
+                                    className="inline-block bg-blue-100 text-blue-800 text-xs px-2 py-1 rounded"
+                                  >
+                                    {player.name}
+                                  </span>
+                                ),
+                              )}
+                            </div>
                           </div>
-                        </div>
-                      )}
+                        )}
                     </div>
                   ))}
                 </div>

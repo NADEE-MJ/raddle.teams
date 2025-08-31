@@ -13,6 +13,7 @@
     "lint:python": "poetry run ruff check .",
     "test": "poetry run python bin/run_tests.py",
     "trace": "playwright show-trace",
+    "format": "prettier --write .",
     "format:check": "prettier --check .",
     "format:python": "poetry run ruff format .",
     "type-check": "tsc --noEmit",

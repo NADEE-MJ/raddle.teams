@@ -174,7 +174,7 @@ class TestAdminWebSocketFlows:
         await expect(admin_page.locator("text=Active Player One")).to_be_visible()
         await expect(admin_page.locator("text=Active Player Two")).to_be_visible()
 
-        close_button = admin_page.locator("button:has-text('✕ Close')")
+        close_button = admin_page.locator("button:has-text('✕')")
         await close_button.click()
 
         # Test that lobby2 exists but might be empty since both players joined lobby1

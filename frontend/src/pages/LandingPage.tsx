@@ -25,13 +25,15 @@ export default function LandingPage() {
 
     try {
       const player = await api.player.lobby.join(
-        lobbyCode.trim().toUpperCase(), 
-        name.trim()
+        lobbyCode.trim().toUpperCase(),
+        name.trim(),
       );
-      localStorage.setItem('raddle_session_id', player.session_id);
+      localStorage.setItem("raddle_session_id", player.session_id);
       navigate(`/lobby/${lobbyCode.trim().toUpperCase()}`);
     } catch (err) {
-      setError("Failed to join lobby. Please check the lobby code and try again.");
+      setError(
+        "Failed to join lobby. Please check the lobby code and try again.",
+      );
       console.error("Error joining lobby:", err);
     } finally {
       setLoading(false);
@@ -43,8 +45,8 @@ export default function LandingPage() {
   };
 
   return (
-    <div className="">
-      <div className="bg-white rounded-lg shadow-xl p-8 w-full max-w-md">
+    <div className="w-full max-w-md">
+      <div className="bg-white rounded-lg shadow-xl p-8">
         <div className="text-center mb-8">
           <h1 className="text-3xl font-bold text-gray-900 mb-2">
             Raddle Teams
@@ -65,7 +67,7 @@ export default function LandingPage() {
               id="name"
               value={name}
               onChange={(e) => setName(e.target.value)}
-              className="w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-blue-500 focus:border-blue-500"
+              className="w-full px-3 py-2 border border-gray-300 rounded-lg shadow-sm focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
               placeholder="Enter your name"
               disabled={loading}
             />
@@ -83,7 +85,7 @@ export default function LandingPage() {
               id="lobbyCode"
               value={lobbyCode}
               onChange={(e) => setLobbyCode(e.target.value.toUpperCase())}
-              className="w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-blue-500 focus:border-blue-500 uppercase"
+              className="w-full px-3 py-2 border border-gray-300 rounded-lg shadow-sm focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500 uppercase"
               placeholder="ABCDEF"
               maxLength={6}
               disabled={loading}
@@ -97,7 +99,7 @@ export default function LandingPage() {
           <button
             type="submit"
             disabled={loading}
-            className="w-full bg-blue-600 hover:bg-blue-700 disabled:bg-blue-400 text-white font-medium py-2 px-4 rounded-md transition duration-200"
+            className="w-full bg-blue-600 hover:bg-blue-700 disabled:bg-blue-400 text-white font-medium py-2 px-4 rounded-lg transition duration-200"
           >
             {loading ? "Joining..." : "Join Lobby"}
           </button>
@@ -106,7 +108,7 @@ export default function LandingPage() {
         <div className="mt-6 pt-6 border-t border-gray-200">
           <button
             onClick={goToAdminPage}
-            className="w-full bg-gray-600 hover:bg-gray-700 text-white font-medium py-2 px-4 rounded-md transition duration-200"
+            className="w-full bg-gray-600 hover:bg-gray-700 text-white font-medium py-2 px-4 rounded-lg transition duration-200"
           >
             Admin Panel
           </button>

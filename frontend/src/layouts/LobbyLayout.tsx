@@ -1,110 +1,111 @@
-import React, { useState, useEffect, useCallback, useRef } from 'react';
-import { Outlet, useParams } from 'react-router-dom';
-import { LobbyOutletContext } from '@/hooks/useLobbyOutletContext';
-import { useWebSocket } from '@/hooks/useWebSocket';
-import { api } from '@/services/api';
-import { Player, Lobby, LobbyInfo, WebSocketMessage } from '@/types';
+import React, { useState, useEffect, useCallback, useRef } from "react";
+import { Outlet, useParams } from "react-router-dom";
+import { LobbyOutletContext } from "@/hooks/useLobbyOutletContext";
+import { useWebSocket } from "@/hooks/useWebSocket";
+import { api } from "@/services/api";
+import { Player, Lobby, LobbyInfo, WebSocketMessage } from "@/types";
 
 const LobbyLayout: React.FC = () => {
-    const { lobbyCode } = useParams<{ lobbyCode: string }>();
-    const [sessionId, setSessionIdState] = useState<string | null>(null);
-    const [player, setPlayer] = useState<Player | null>(null);
-    const [lobby, setLobby] = useState<Lobby | null>(null);
-    const [lobbyInfo, setLobbyInfo] = useState<LobbyInfo | null>(null);
-    const [isLoading, setIsLoading] = useState(true);
-    const [error, setError] = useState<string | null>(null);
-    const [lobbyIdForWebSocket, setLobbyIdForWebSocket] = useState<number | null>(null);
+  const { lobbyCode } = useParams<{ lobbyCode: string }>();
+  const [sessionId, setSessionIdState] = useState<string | null>(null);
+  const [player, setPlayer] = useState<Player | null>(null);
+  const [lobby, setLobby] = useState<Lobby | null>(null);
+  const [lobbyInfo, setLobbyInfo] = useState<LobbyInfo | null>(null);
+  const [isLoading, setIsLoading] = useState(true);
+  const [error, setError] = useState<string | null>(null);
+  const [lobbyIdForWebSocket, setLobbyIdForWebSocket] = useState<number | null>(
+    null,
+  );
 
-    const setSessionId = useCallback((id: string | null) => {
-        if (id) {
-            localStorage.setItem('raddle_session_id', id);
-        } else {
-            localStorage.removeItem('raddle_session_id');
-        }
-        setSessionIdState(id);
-    }, []);
+  const setSessionId = useCallback((id: string | null) => {
+    if (id) {
+      localStorage.setItem("raddle_session_id", id);
+    } else {
+      localStorage.removeItem("raddle_session_id");
+    }
+    setSessionIdState(id);
+  }, []);
 
-    const reloadDebounceRef = useRef<NodeJS.Timeout | null>(null);
+  const reloadDebounceRef = useRef<NodeJS.Timeout | null>(null);
 
-    const refreshLobbyInfo = useCallback(async () => {
-        if (!sessionId) return;
+  const refreshLobbyInfo = useCallback(async () => {
+    if (!sessionId) return;
 
-        try {
-            setIsLoading(true);
-            setError(null);
-            const playerData = await api.player.lobby.activeUser(sessionId);
-            setPlayer(playerData);
+    try {
+      setIsLoading(true);
+      setError(null);
+      const playerData = await api.player.lobby.activeUser(sessionId);
+      setPlayer(playerData);
 
-            const lobbyData = await api.player.lobby.getInfo(sessionId);
-            setLobby(lobbyData);
+      const lobbyData = await api.player.lobby.getInfo(sessionId);
+      setLobby(lobbyData);
 
-            setLobbyIdForWebSocket(playerData.lobby_id);
+      setLobbyIdForWebSocket(playerData.lobby_id);
 
-            const lobbyInfoData = await api.player.lobby.getLobbyInfo(playerData.lobby_id, sessionId);
-            setLobbyInfo(lobbyInfoData);
-        } catch (err) {
-            setError(err instanceof Error ? err.message : 'Failed to fetch lobby data');
-        } finally {
-            setIsLoading(false);
-        }
-    }, [sessionId]);
-
-    const scheduleReload = useCallback(() => {
-        if (reloadDebounceRef.current) {
-            clearTimeout(reloadDebounceRef.current);
-        }
-        reloadDebounceRef.current = setTimeout(() => {
-            refreshLobbyInfo();
-            reloadDebounceRef.current = null;
-        }, 200);
-    }, [refreshLobbyInfo]);
-
-    const handleWebSocketMessage = useCallback((message: WebSocketMessage) => {
-        console.debug("Received WebSocket message:", message);
-        scheduleReload();
-    }, [scheduleReload]);
-
-    useEffect(() => {
-        const storedSessionId = localStorage.getItem('raddle_session_id');
-        if (storedSessionId) {
-            setSessionIdState(storedSessionId);
-        } else {
-            setIsLoading(false);
-        }
-    }, []);
-
-    useEffect(() => {
-        if (sessionId) {
-            refreshLobbyInfo();
-        }
-    }, [sessionId, refreshLobbyInfo]);
-
-    useWebSocket(
-        lobbyIdForWebSocket,
+      const lobbyInfoData = await api.player.lobby.getLobbyInfo(
+        playerData.lobby_id,
         sessionId,
-        {
-            onMessage: handleWebSocketMessage,
-        }
-    );
+      );
+      setLobbyInfo(lobbyInfoData);
+    } catch (err) {
+      setError(
+        err instanceof Error ? err.message : "Failed to fetch lobby data",
+      );
+    } finally {
+      setIsLoading(false);
+    }
+  }, [sessionId]);
 
-    const context: LobbyOutletContext = {
-        lobbyCode: lobbyCode || '',
-        player,
-        sessionId,
-        setSessionId,
-        lobby,
-        lobbyInfo,
-        refreshLobbyInfo,
-        isLoading,
-        error,
-    };
+  const scheduleReload = useCallback(() => {
+    if (reloadDebounceRef.current) {
+      clearTimeout(reloadDebounceRef.current);
+    }
+    reloadDebounceRef.current = setTimeout(() => {
+      refreshLobbyInfo();
+      reloadDebounceRef.current = null;
+    }, 200);
+  }, [refreshLobbyInfo]);
 
-    return (
-        <div className="p-4">
-            <h2 className="text-xl font-semibold mb-2">Lobby: {lobbyCode}</h2>
-            <Outlet context={context} />
-        </div>
-    );
+  const handleWebSocketMessage = useCallback(
+    (message: WebSocketMessage) => {
+      console.debug("Received WebSocket message:", message);
+      scheduleReload();
+    },
+    [scheduleReload],
+  );
+
+  useEffect(() => {
+    const storedSessionId = localStorage.getItem("raddle_session_id");
+    if (storedSessionId) {
+      setSessionIdState(storedSessionId);
+    } else {
+      setIsLoading(false);
+    }
+  }, []);
+
+  useEffect(() => {
+    if (sessionId) {
+      refreshLobbyInfo();
+    }
+  }, [sessionId, refreshLobbyInfo]);
+
+  useWebSocket(lobbyIdForWebSocket, sessionId, {
+    onMessage: handleWebSocketMessage,
+  });
+
+  const context: LobbyOutletContext = {
+    lobbyCode: lobbyCode || "",
+    player,
+    sessionId,
+    setSessionId,
+    lobby,
+    lobbyInfo,
+    refreshLobbyInfo,
+    isLoading,
+    error,
+  };
+
+  return <Outlet context={context} />;
 };
 
 export default LobbyLayout;
