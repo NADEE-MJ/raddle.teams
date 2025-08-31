@@ -296,19 +296,9 @@ class TestPlayerLobbyFlows:
         ).to_be_visible()
 
         # Add a small delay to ensure WebSocket connections are established
-        await player1_actions.wait_for_websocket_update(2000)
-        await player2_actions.wait_for_websocket_update(1000)
-
-        try:
-            await player1_actions.wait_for_player_count(2, timeout=8000)
-            await player2_actions.wait_for_player_count(2, timeout=3000)
-        except AssertionError:
-            # TODO If real-time updates don't work, manually refresh for now, THESE SHOULD ALWAYS WORK
-            print("WebSocket updates not working, falling back to manual refresh")
-            await player1_page.reload(wait_until="networkidle")
-            await player2_page.reload(wait_until="networkidle")
-            await player1_actions.wait_for_player_count(2, timeout=5000)
-            await player2_actions.wait_for_player_count(2, timeout=5000)
+        # Wait for WebSocket updates to show both players
+        await player1_actions.wait_for_player_count(2, timeout=8000)
+        await player2_actions.wait_for_player_count(2, timeout=3000)
 
         await player2_session.screenshot()
         await player1_session.screenshot()

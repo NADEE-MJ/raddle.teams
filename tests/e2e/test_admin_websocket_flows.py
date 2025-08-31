@@ -68,18 +68,22 @@ class TestAdminWebSocketFlows:
         await admin_actions.login(settings.ADMIN_PASSWORD)
         lobby_code = await admin_actions.create_lobby("Multi Join Test")
 
+        # Admin must peek into lobby first to subscribe to WebSocket updates
+        await admin_actions.peek_into_lobby(lobby_code)
+
         await player1_actions.goto_home_page()
         await player1_actions.fill_name_and_code("Multi Join One", lobby_code)
         await player1_actions.join_lobby()
+
+        # Wait for first player to appear via WebSocket
+        await admin_actions.wait_for_players(1, 5000)
 
         await player2_actions.goto_home_page()
         await player2_actions.fill_name_and_code("Multi Join Two", lobby_code)
         await player2_actions.join_lobby()
 
-        await admin_actions.refresh_lobbies()
-        await admin_actions.peek_into_lobby(lobby_code)
-
-        await expect(admin_page.locator("text=Players (2)")).to_be_visible()
+        # Wait for second player to appear via WebSocket
+        await admin_actions.wait_for_players(2, 5000)
         await expect(admin_page.locator("text=Multi Join One")).to_be_visible()
         await expect(admin_page.locator("text=Multi Join Two")).to_be_visible()
 
@@ -102,27 +106,23 @@ class TestAdminWebSocketFlows:
         await admin_actions.login(settings.ADMIN_PASSWORD)
         lobby_code = await admin_actions.create_lobby("Leave Notification Test")
 
+        # Admin must peek into lobby first to subscribe to WebSocket updates
+        await admin_actions.peek_into_lobby(lobby_code)
+
         await player_actions.goto_home_page()
         await player_actions.fill_name_and_code("Leave Notify Player", lobby_code)
         await player_actions.join_lobby()
 
-        await admin_actions.refresh_lobbies()
-        await admin_actions.peek_into_lobby(lobby_code)
-        await expect(admin_page.locator("text=Players (1)")).to_be_visible()
+        # Wait for player to appear via WebSocket
+        await admin_actions.wait_for_players(1, 5000)
         await expect(admin_page.locator("text=Leave Notify Player")).to_be_visible()
 
-        close_button = admin_page.locator("button:has-text('✕ Close')")
-        await close_button.click()
-
+        # Keep lobby details open to receive leave notifications via WebSocket
         await player_actions.leave_lobby()
         await expect(player_page.locator("h1:has-text('Raddle Teams')")).to_be_visible()
 
-        await admin_actions.refresh_lobbies()
-        await admin_actions.peek_into_lobby(lobby_code)
-
-        await expect(
-            admin_page.locator("text=No players in this lobby yet")
-        ).to_be_visible()
+        # Wait for player to disappear via WebSocket - check for "No players" text
+        await expect(admin_page.locator("text=No players in this lobby yet")).to_be_visible(timeout=5000)
 
         await admin_session.screenshot()
 
@@ -149,39 +149,23 @@ class TestAdminWebSocketFlows:
         await admin_actions.login(settings.ADMIN_PASSWORD)
         lobby1_code = await admin_actions.create_lobby("Active Lobby 1")
         lobby2_code = await admin_actions.create_lobby("Active Lobby 2")
-        print(f"Created lobby1_code: {lobby1_code}")
-        print(f"Created lobby2_code: {lobby2_code}")
+
+        # Admin must peek into lobby1 first to subscribe to WebSocket updates
+        await admin_actions.peek_into_lobby(lobby1_code)
 
         await player1_actions.goto_home_page()
         await player1_actions.fill_name_and_code("Active Player One", lobby1_code)
         await player1_actions.join_lobby()
 
-        # Navigate to home page to ensure clean state for player 2
+        # Wait for first player to appear via WebSocket
+        await admin_actions.wait_for_players(1, 5000)
+
         await player2_actions.goto_home_page()
-        await player2_actions.fill_name_and_code("Active Player Two", lobby2_code)
+        await player2_actions.fill_name_and_code("Active Player Two", lobby1_code)
         await player2_actions.join_lobby()
 
-        # Debug: Check what lobby player2 actually joined
-        player2_content = await player2_page.text_content("body")
-        print(f"Player 2 page content: {player2_content[:300]}")
-
-        await admin_actions.refresh_lobbies()
-
-        await admin_actions.peek_into_lobby(lobby1_code)
-
-        try:
-            # Since both players end up in the same lobby, check for Players (2)
-            await expect(admin_page.locator("text=Players (2)")).to_be_visible(
-                timeout=5000
-            )
-        except AssertionError:
-            # TODO this should never fail, if its failing we are doing something wrong
-            # If real-time update didn't work, refresh the lobby details
-            close_button = admin_page.locator("button:has-text('✕ Close')")
-            await close_button.click()
-            await admin_actions.refresh_lobbies()
-            await admin_actions.peek_into_lobby(lobby1_code)
-            await expect(admin_page.locator("text=Players (2)")).to_be_visible()
+        # Wait for second player to appear via WebSocket
+        await admin_actions.wait_for_players(2, 5000)
 
         await expect(admin_page.locator("text=Active Player One")).to_be_visible()
         await expect(admin_page.locator("text=Active Player Two")).to_be_visible()
