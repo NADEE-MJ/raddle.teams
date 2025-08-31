@@ -112,6 +112,18 @@ export default function AdminPage() {
         }
     };
 
+    const refreshSelectedLobby = async () => {
+        if (!selectedLobby || !adminToken) return;
+        
+        try {
+            const lobbyInfo = await api.admin.lobby.getInfo(selectedLobby.lobby.id, adminToken);
+            setSelectedLobby(lobbyInfo);
+        } catch (err) {
+            setError('Failed to refresh lobby details');
+            console.error('Error refreshing lobby details:', err);
+        }
+    };
+
     const closeLobbyDetails = () => {
         if (selectedLobby && sendWebSocketMessage) {
             // Unsubscribe from lobby updates
@@ -199,7 +211,7 @@ export default function AdminPage() {
                     />
                 </div>
 
-                {selectedLobby && <LobbyDetails selectedLobby={selectedLobby} onClose={closeLobbyDetails} />}
+                {selectedLobby && <LobbyDetails selectedLobby={selectedLobby} onClose={closeLobbyDetails} onRefresh={refreshSelectedLobby} />}
             </div>
         </div>
     );

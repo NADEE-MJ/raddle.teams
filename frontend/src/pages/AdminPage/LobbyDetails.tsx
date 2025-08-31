@@ -1,11 +1,13 @@
 import { LobbyInfo } from '@/types';
+import GameManagement from './GameManagement';
 
 interface LobbyDetailsProps {
     selectedLobby: LobbyInfo;
     onClose: () => void;
+    onRefresh: () => void;
 }
 
-export default function LobbyDetails({ selectedLobby, onClose }: LobbyDetailsProps) {
+export default function LobbyDetails({ selectedLobby, onClose, onRefresh }: LobbyDetailsProps) {
     return (
         <div className='rounded-lg bg-white p-6 shadow-xl'>
             <div className='mb-6 flex items-center justify-between'>
@@ -86,6 +88,8 @@ export default function LobbyDetails({ selectedLobby, onClose }: LobbyDetailsPro
                     </div>
                 </div>
             )}
+            
+            <GameManagement selectedLobby={selectedLobby} onRefresh={onRefresh} />
         </div>
     );
 }

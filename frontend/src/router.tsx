@@ -9,6 +9,7 @@ const AdminPage = lazy(() => import('@/pages/AdminPage'));
 const GamePage = lazy(() => import('@/pages/GamePage'));
 const InvalidLobbyPage = lazy(() => import('@/pages/InvalidLobbyPage'));
 const InvalidGamePage = lazy(() => import('@/pages/InvalidGamePage'));
+const TutorialPage = lazy(() => import('@/pages/TutorialPage'));
 
 const NotFound: React.FC = () => (
   <div className='flex min-h-screen items-center justify-center bg-gray-50'>
@@ -48,6 +49,7 @@ const router = createBrowserRouter([
         element: <LandingLayout />,
         children: [{ index: true, element: withSuspense(<LandingPage />) }],
       },
+  { path: 'tutorial', element: withSuspense(<TutorialPage />) },
       {
         path: 'lobby',
         element: <LobbyLayout />,

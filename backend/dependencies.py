@@ -117,3 +117,17 @@ def require_player_session(
 
     api_logger.debug(f"Player session authenticated: player_id={player.id}")
     return player
+
+
+def get_admin_user(
+    admin_check: bool = Depends(check_admin_token),
+) -> str:
+    """Get admin user (just return admin identifier after auth check)."""
+    return "admin"
+
+
+def get_player_user(
+    player: Player = Depends(require_player_session),
+) -> Player:
+    """Get authenticated player."""
+    return player

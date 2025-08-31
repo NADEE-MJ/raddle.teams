@@ -4,7 +4,7 @@ from sqlalchemy import event
 from sqlmodel import Session, SQLModel, create_engine
 
 from backend.custom_logging import database_logger
-from backend.database.models import Guess, Lobby, Player, Team  # noqa: F401
+from backend.database.models import Game, Guess, Lobby, Player, PuzzleWord, Team  # noqa: F401
 from backend.settings import settings
 
 DATABASE_URL = settings.DATABASE_URL
@@ -60,6 +60,10 @@ def drop_all_tables():
 
 def create_db_and_tables():
     SQLModel.metadata.create_all(engine)
+
+
+def get_engine():
+    return engine
 
 
 def get_session():

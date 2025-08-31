@@ -22,12 +22,14 @@ class Team(SQLModel, table=True):
     id: Optional[int] = Field(default=None, primary_key=True)
     name: str
     lobby_id: int = Field(foreign_key="lobby.id", ondelete="CASCADE")
+    game_id: Optional[int] = Field(default=None, foreign_key="game.id", ondelete="CASCADE")
     current_word_index: int = Field(default=0)
     completed_at: Optional[datetime] = Field(default=None)
     created_at: datetime = Field(default_factory=lambda: datetime.now(tz=timezone.utc))
 
     # Relationships
     lobby: "Lobby" = Relationship(back_populates="teams")
+    game: Optional["Game"] = Relationship(back_populates="teams")
     players: list["Player"] = Relationship(back_populates="team", cascade_delete=True, passive_deletes=True)
     guesses: list["Guess"] = Relationship(back_populates="team", cascade_delete=True, passive_deletes=True)
 
@@ -41,6 +43,36 @@ class Lobby(SQLModel, table=True):
     # Relationships
     players: list["Player"] = Relationship(back_populates="lobby", cascade_delete=True, passive_deletes=True)
     teams: list["Team"] = Relationship(back_populates="lobby", cascade_delete=True, passive_deletes=True)
+    games: list["Game"] = Relationship(back_populates="lobby", cascade_delete=True, passive_deletes=True)
+
+
+class Game(SQLModel, table=True):
+    id: Optional[int] = Field(default=None, primary_key=True)
+    lobby_id: int = Field(foreign_key="lobby.id", ondelete="CASCADE")
+    state: str = Field(default="lobby", description="Game state: 'lobby', 'team_setup', 'active', 'finished'")
+    puzzle_name: str = Field(description="Name of the puzzle JSON file (without .json extension)")
+    created_at: datetime = Field(default_factory=lambda: datetime.now(tz=timezone.utc))
+    started_at: Optional[datetime] = Field(default=None)
+    finished_at: Optional[datetime] = Field(default=None)
+
+    # Relationships
+    lobby: "Lobby" = Relationship(back_populates="games")
+    teams: list["Team"] = Relationship(back_populates="game", cascade_delete=True, passive_deletes=True)
+
+
+class PuzzleWord(SQLModel, table=True):
+    id: Optional[int] = Field(default=None, primary_key=True)
+    puzzle_name: str = Field(index=True, description="Name of the puzzle this word belongs to")
+    word_index: int = Field(description="Position in the word chain (0-based)")
+    word: str = Field(description="The word itself (e.g., 'DOWN', 'SOUTH')")
+    clue: Optional[str] = Field(default=None, description="Clue for getting to this word from previous")
+    transform: Optional[str] = Field(default=None, description="Description of transformation from previous word")
+
+    class Config:
+        # Composite index for efficient lookups
+        indexes = [
+            ("puzzle_name", "word_index"),
+        ]
 
 
 class Guess(SQLModel, table=True):
