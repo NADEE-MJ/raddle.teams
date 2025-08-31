@@ -57,13 +57,60 @@ class AdminWebSocketManager:
                     "Failed to send event to admin websocket; continuing."
                 )
 
-    async def continuous_listening(self, websocket: WebSocket):
+    async def subscribe_to_lobby(self, web_session_id: str, lobby_id: int):
+        connection = self.admin_websockets.get(web_session_id)
+        if not connection:
+            websocket_logger.warning(
+                f"Cannot subscribe unknown admin web_session_id={web_session_id} to lobby_id={lobby_id}"
+            )
+            return
+
+        if lobby_id not in connection["subscribed_lobbies"]:
+            connection["subscribed_lobbies"].append(lobby_id)
+            websocket_logger.info(
+                f"Admin web_session_id={web_session_id} subscribed to lobby_id={lobby_id}"
+            )
+        else:
+            websocket_logger.debug(
+                f"Admin web_session_id={web_session_id} already subscribed to lobby_id={lobby_id}"
+            )
+
+    async def unsubscribe_from_lobby(self, web_session_id: str, lobby_id: int):
+        connection = self.admin_websockets.get(web_session_id)
+        if not connection:
+            websocket_logger.warning(
+                f"Cannot unsubscribe unknown admin web_session_id={web_session_id} from lobby_id={lobby_id}"
+            )
+            return
+
+        try:
+            connection["subscribed_lobbies"].remove(lobby_id)
+            websocket_logger.info(
+                f"Admin web_session_id={web_session_id} unsubscribed from lobby_id={lobby_id}"
+            )
+        except ValueError:
+            websocket_logger.debug(
+                f"Admin web_session_id={web_session_id} was not subscribed to lobby_id={lobby_id}"
+            )
+
+    async def handle_message(self, web_session_id: str, message: dict):
+        action = message.get("action")
+        lobby_id = message.get("lobby_id")
+
+        if action == "subscribe_lobby" and lobby_id is not None:
+            await self.subscribe_to_lobby(web_session_id, lobby_id)
+        elif action == "unsubscribe_lobby" and lobby_id is not None:
+            await self.unsubscribe_from_lobby(web_session_id, lobby_id)
+        else:
+            websocket_logger.warning(f"Unknown admin websocket message: {message}")
+
+    async def continuous_listening(self, websocket: WebSocket, web_session_id: str):
         while True:
             try:
                 data = await websocket.receive_text()
                 message = json.loads(data)
                 websocket_logger.debug(f"Admin WS received message: {message}")
-                # TODO Message handling would be implemented here for future features
+                await self.handle_message(web_session_id, message)
             except Exception:
                 websocket_logger.exception(
                     "Error while reading from admin websocket. Stopping continuous listening."

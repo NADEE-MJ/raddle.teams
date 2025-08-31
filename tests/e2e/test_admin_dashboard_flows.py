@@ -1,15 +1,19 @@
+from typing import Awaitable, Callable
+
 from playwright.async_api import Page, expect
 
 from backend.settings import Settings
 from tests.e2e.fixtures.browsers import BrowserSession
 from tests.e2e.utilities.admin_actions import AdminActions
 
-AdminFixture = tuple[AdminActions, Page, BrowserSession]
+type AdminFixture = Callable[[], Awaitable[tuple[AdminActions, Page, BrowserSession]]]
 
 
 class TestAdminDashboardFlows:
-    async def test_admin_login_flow(self, admin_actions, settings: Settings):
-        actions, page, browser = await admin_actions()
+    async def test_admin_login_flow(
+        self, admin_actions_fixture: AdminFixture, settings: Settings
+    ):
+        actions, page, browser = await admin_actions_fixture()
         browser.set_name("admin_login_flow")
 
         await actions.goto_admin_page()
@@ -27,9 +31,9 @@ class TestAdminDashboardFlows:
 
     async def test_admin_login_invalid_password(
         self,
-        admin_actions,
+        admin_actions_fixture: AdminFixture,
     ):
-        actions, page, browser = await admin_actions()
+        actions, page, browser = await admin_actions_fixture()
         browser.set_name("admin_login_invalid_password")
 
         await actions.goto_admin_page()
@@ -45,8 +49,10 @@ class TestAdminDashboardFlows:
 
         await browser.screenshot()
 
-    async def test_admin_create_lobby(self, admin_actions, settings: Settings):
-        actions, page, browser = await admin_actions()
+    async def test_admin_create_lobby(
+        self, admin_actions_fixture: AdminFixture, settings: Settings
+    ):
+        actions, page, browser = await admin_actions_fixture()
         browser.set_name("admin_create_lobby")
 
         await actions.goto_admin_page()
@@ -59,8 +65,10 @@ class TestAdminDashboardFlows:
 
         await browser.screenshot("admin_lobby_created")
 
-    async def test_admin_view_lobby_details(self, admin_actions, settings: Settings):
-        actions, page, browser = await admin_actions()
+    async def test_admin_view_lobby_details(
+        self, admin_actions_fixture: AdminFixture, settings: Settings
+    ):
+        actions, page, browser = await admin_actions_fixture()
         browser.set_name("admin_view_lobby_details")
 
         await actions.goto_admin_page()
@@ -82,8 +90,10 @@ class TestAdminDashboardFlows:
 
         await browser.screenshot()
 
-    async def test_admin_logout(self, admin_actions, settings: Settings):
-        actions, page, browser = await admin_actions()
+    async def test_admin_logout(
+        self, admin_actions_fixture: AdminFixture, settings: Settings
+    ):
+        actions, page, browser = await admin_actions_fixture()
         browser.set_name("admin_logout")
 
         await actions.goto_admin_page()
@@ -101,11 +111,11 @@ class TestAdminDashboardFlows:
 
     async def test_admin_navigation(
         self,
-        admin_actions,
+        admin_actions_fixture: AdminFixture,
         settings: Settings,
         server_url: str,
     ):
-        actions, page, browser = await admin_actions()
+        actions, page, browser = await admin_actions_fixture()
         browser.set_name("admin_navigation")
 
         await actions.goto_admin_page()
@@ -124,9 +134,9 @@ class TestAdminDashboardFlows:
         await browser.screenshot("admin_navigation")
 
     async def test_admin_multiple_lobbies_management(
-        self, admin_actions, settings: Settings
+        self, admin_actions_fixture: AdminFixture, settings: Settings
     ):
-        actions, page, browser = await admin_actions()
+        actions, page, browser = await admin_actions_fixture()
         browser.set_name("admin_multiple_lobbies")
 
         await actions.goto_admin_page()
@@ -146,8 +156,10 @@ class TestAdminDashboardFlows:
 
         await browser.screenshot("admin_multiple_lobbies")
 
-    async def test_admin_empty_lobby_list(self, admin_actions, settings: Settings):
-        actions, page, browser = await admin_actions()
+    async def test_admin_empty_lobby_list(
+        self, admin_actions_fixture: AdminFixture, settings: Settings
+    ):
+        actions, page, browser = await admin_actions_fixture()
         browser.set_name("admin_empty_lobby_list")
 
         await actions.goto_admin_page()
@@ -158,8 +170,10 @@ class TestAdminDashboardFlows:
 
         await browser.screenshot("admin_empty_lobby_list")
 
-    async def test_admin_delete_lobby(self, admin_actions, settings: Settings):
-        actions, page, browser = await admin_actions()
+    async def test_admin_delete_lobby(
+        self, admin_actions_fixture: AdminFixture, settings: Settings
+    ):
+        actions, page, browser = await admin_actions_fixture()
         browser.set_name("admin_delete_lobby")
 
         await actions.goto_admin_page()
@@ -167,7 +181,7 @@ class TestAdminDashboardFlows:
 
         # Create a lobby to delete
         lobby_code = await actions.create_lobby("Delete Test Lobby")
-        
+
         # Verify lobby exists
         await expect(page.locator(f"text=Code: {lobby_code}")).to_be_visible()
         await expect(page.locator('h3:has-text("Delete Test Lobby")')).to_be_visible()
@@ -177,6 +191,8 @@ class TestAdminDashboardFlows:
 
         # Verify lobby is gone
         await expect(page.locator(f"text=Code: {lobby_code}")).not_to_be_visible()
-        await expect(page.locator('h3:has-text("Delete Test Lobby")')).not_to_be_visible()
+        await expect(
+            page.locator('h3:has-text("Delete Test Lobby")')
+        ).not_to_be_visible()
 
         await browser.screenshot("admin_delete_lobby_success")

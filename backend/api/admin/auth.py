@@ -10,6 +10,4 @@ router = APIRouter(dependencies=[Depends(check_admin_token)])
 @router.get("/check", response_model=MessageResponse)
 async def check_admin_credentials():
     api_logger.info("Admin credentials check endpoint called")
-    return MessageResponse(
-        status=True, message="Admin credentials are valid"
-    )
+    return MessageResponse(status=True, message="Admin credentials are valid")

@@ -9,6 +9,7 @@ export type AdminOutletContext = {
   refreshLobbies: () => Promise<void>;
   isLoading: boolean;
   error: string | null;
+  sendWebSocketMessage?: (message: object) => void;
 };
 
 export function useAdminOutletContext() {

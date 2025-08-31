@@ -2,11 +2,11 @@ from uuid import uuid4
 
 from fastapi import APIRouter, Depends, HTTPException
 from pydantic import BaseModel
-from sqlmodel import Session, select
 from sqlalchemy.orm import selectinload
+from sqlmodel import Session, select
 
 from backend.custom_logging import api_logger
-from backend.database import Lobby, Player, Team, get_session
+from backend.database import Lobby, get_session
 from backend.dependencies import check_admin_token
 from backend.schemas import LobbyInfo, MessageResponse
 

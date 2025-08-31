@@ -28,9 +28,7 @@ if settings.TESTING:
         drop_all_tables()
         create_db_and_tables()
         api_logger.info("Database reset successful")
-        return MessageResponse(
-            status=True, message="Database reset successful"
-        )
+        return MessageResponse(status=True, message="Database reset successful")
 
 
 try:
@@ -102,4 +100,6 @@ async def serve_frontend(full_path: str):
         api_logger.debug("Serving index.html for SPA route: %s", full_path)
         return FileResponse(str(index_file))
     api_logger.error("index.html not found at: %s", index_file)
-    raise HTTPException(status_code=500, detail="Frontend not built. Run 'npm run build' first.")
+    raise HTTPException(
+        status_code=500, detail="Frontend not built. Run 'npm run build' first."
+    )

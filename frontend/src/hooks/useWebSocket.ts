@@ -172,6 +172,14 @@ export function useAdminWebSocket(
     }
   }, [webSessionId, adminToken, onMessage, onConnect, onDisconnect, onError, autoReconnect, reconnectInterval]);
 
+  const sendMessage = useCallback((message: object) => {
+    if (wsRef.current && wsRef.current.readyState === WebSocket.OPEN) {
+      wsRef.current.send(JSON.stringify(message));
+    } else {
+      console.warn('Admin WebSocket is not connected, cannot send message:', message);
+    }
+  }, []);
+
   const disconnect = useCallback(() => {
     shouldConnectRef.current = false;
     
@@ -203,5 +211,6 @@ export function useAdminWebSocket(
     isConnected,
     error,
     disconnect,
+    sendMessage,
   };
 }

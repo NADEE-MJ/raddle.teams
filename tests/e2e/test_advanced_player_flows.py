@@ -1,3 +1,5 @@
+from typing import Awaitable, Callable
+
 from playwright.async_api import Page, expect
 
 from backend.settings import Settings
@@ -5,20 +7,20 @@ from tests.e2e.fixtures.browsers import BrowserSession
 from tests.e2e.utilities.admin_actions import AdminActions
 from tests.e2e.utilities.player_actions import PlayerActions
 
-AdminFixture = tuple[AdminActions, Page, BrowserSession]
-PlayerFixture = tuple[PlayerActions, Page, BrowserSession]
+type AdminFixture = Callable[[], Awaitable[tuple[AdminActions, Page, BrowserSession]]]
+type PlayerFixture = Callable[[], Awaitable[tuple[PlayerActions, Page, BrowserSession]]]
 
 
 class TestAdvancedPlayerFlows:
     async def test_player_rejoin_after_leaving(
         self,
-        player_actions: PlayerFixture,
-        admin_actions: AdminFixture,
+        player_actions_fixture: PlayerFixture,
+        admin_actions_fixture: AdminFixture,
         settings: Settings,
     ):
-        admin_actions, admin_page, admin_session = await admin_actions()
+        admin_actions, admin_page, admin_session = await admin_actions_fixture()
         admin_session.set_name("test_player_rejoin_ADMIN")
-        player_actions, player_page, player_session = await player_actions(
+        player_actions, player_page, player_session = await player_actions_fixture(
             "Rejoin Player"
         )
         player_session.set_name("test_player_rejoin_PLAYER")
@@ -69,13 +71,13 @@ class TestAdvancedPlayerFlows:
 
     async def test_player_reconnection_after_page_refresh(
         self,
-        player_actions: PlayerFixture,
-        admin_actions: AdminFixture,
+        player_actions_fixture: PlayerFixture,
+        admin_actions_fixture: AdminFixture,
         settings: Settings,
     ):
-        admin_actions, admin_page, admin_session = await admin_actions()
+        admin_actions, admin_page, admin_session = await admin_actions_fixture()
         admin_session.set_name("test_player_reconnection_ADMIN")
-        player_actions, player_page, player_session = await player_actions(
+        player_actions, player_page, player_session = await player_actions_fixture(
             "Reconnect Player"
         )
         player_session.set_name("test_player_reconnection_PLAYER")
@@ -107,19 +109,19 @@ class TestAdvancedPlayerFlows:
 
     async def test_multiple_players_realtime_updates(
         self,
-        player_actions: PlayerFixture,
-        admin_actions: AdminFixture,
+        player_actions_fixture: PlayerFixture,
+        admin_actions_fixture: AdminFixture,
         settings: Settings,
     ):
-        admin_actions, admin_page, admin_session = await admin_actions()
+        admin_actions, admin_page, admin_session = await admin_actions_fixture()
         admin_session.set_name("test_realtime_updates_ADMIN")
 
-        player1_actions, player1_page, player1_session = await player_actions(
+        player1_actions, player1_page, player1_session = await player_actions_fixture(
             "Player One"
         )
         player1_session.set_name("test_realtime_updates_PLAYER1")
 
-        player2_actions, player2_page, player2_session = await player_actions(
+        player2_actions, player2_page, player2_session = await player_actions_fixture(
             "Player Two"
         )
         player2_session.set_name("test_realtime_updates_PLAYER2")
@@ -174,24 +176,24 @@ class TestAdvancedPlayerFlows:
 
     async def test_concurrent_player_joins(
         self,
-        player_actions: PlayerFixture,
-        admin_actions: AdminFixture,
+        player_actions_fixture: PlayerFixture,
+        admin_actions_fixture: AdminFixture,
         settings: Settings,
     ):
-        admin_actions, admin_page, admin_session = await admin_actions()
+        admin_actions, admin_page, admin_session = await admin_actions_fixture()
         admin_session.set_name("test_concurrent_joins_ADMIN")
 
-        player1_actions, player1_page, player1_session = await player_actions(
+        player1_actions, player1_page, player1_session = await player_actions_fixture(
             "Concurrent One"
         )
         player1_session.set_name("test_concurrent_joins_PLAYER1")
 
-        player2_actions, player2_page, player2_session = await player_actions(
+        player2_actions, player2_page, player2_session = await player_actions_fixture(
             "Concurrent Two"
         )
         player2_session.set_name("test_concurrent_joins_PLAYER2")
 
-        player3_actions, player3_page, player3_session = await player_actions(
+        player3_actions, player3_page, player3_session = await player_actions_fixture(
             "Concurrent Three"
         )
         player3_session.set_name("test_concurrent_joins_PLAYER3")
@@ -248,19 +250,19 @@ class TestAdvancedPlayerFlows:
 
     async def test_player_leave_realtime_updates(
         self,
-        player_actions: PlayerFixture,
-        admin_actions: AdminFixture,
+        player_actions_fixture: PlayerFixture,
+        admin_actions_fixture: AdminFixture,
         settings: Settings,
     ):
-        admin_actions, admin_page, admin_session = await admin_actions()
+        admin_actions, admin_page, admin_session = await admin_actions_fixture()
         admin_session.set_name("test_leave_updates_ADMIN")
 
-        player1_actions, player1_page, player1_session = await player_actions(
+        player1_actions, player1_page, player1_session = await player_actions_fixture(
             "Staying Player"
         )
         player1_session.set_name("test_leave_updates_PLAYER1")
 
-        player2_actions, player2_page, player2_session = await player_actions(
+        player2_actions, player2_page, player2_session = await player_actions_fixture(
             "Leaving Player"
         )
         player2_session.set_name("test_leave_updates_PLAYER2")

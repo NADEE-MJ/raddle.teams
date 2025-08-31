@@ -1,3 +1,5 @@
+from typing import Awaitable, Callable
+
 from playwright.async_api import Page, expect
 
 from backend.settings import Settings
@@ -5,20 +7,20 @@ from tests.e2e.fixtures.browsers import BrowserSession
 from tests.e2e.utilities.admin_actions import AdminActions
 from tests.e2e.utilities.player_actions import PlayerActions
 
-AdminFixture = tuple[AdminActions, Page, BrowserSession]
-PlayerFixture = tuple[PlayerActions, Page, BrowserSession]
+type AdminFixture = Callable[[], Awaitable[tuple[AdminActions, Page, BrowserSession]]]
+type PlayerFixture = Callable[[], Awaitable[tuple[PlayerActions, Page, BrowserSession]]]
 
 
 class TestAdminWebSocketFlows:
     async def test_admin_sees_player_join_updates(
         self,
-        player_actions: PlayerFixture,
-        admin_actions: AdminFixture,
+        player_actions_fixture: PlayerFixture,
+        admin_actions_fixture: AdminFixture,
         settings: Settings,
     ):
-        admin_actions, admin_page, admin_session = await admin_actions()
+        admin_actions, admin_page, admin_session = await admin_actions_fixture()
         admin_session.set_name("test_admin_player_join_ADMIN")
-        player_actions, player_page, player_session = await player_actions(
+        player_actions, player_page, player_session = await player_actions_fixture(
             "Join Notify Player"
         )
         player_session.set_name("test_admin_player_join_PLAYER")
@@ -44,19 +46,19 @@ class TestAdminWebSocketFlows:
 
     async def test_admin_sees_multiple_players_join(
         self,
-        player_actions: PlayerFixture,
-        admin_actions: AdminFixture,
+        player_actions_fixture: PlayerFixture,
+        admin_actions_fixture: AdminFixture,
         settings: Settings,
     ):
-        admin_actions, admin_page, admin_session = await admin_actions()
+        admin_actions, admin_page, admin_session = await admin_actions_fixture()
         admin_session.set_name("test_admin_multiple_joins_ADMIN")
 
-        player1_actions, player1_page, player1_session = await player_actions(
+        player1_actions, player1_page, player1_session = await player_actions_fixture(
             "Multi Join One"
         )
         player1_session.set_name("test_admin_multiple_joins_PLAYER1")
 
-        player2_actions, player2_page, player2_session = await player_actions(
+        player2_actions, player2_page, player2_session = await player_actions_fixture(
             "Multi Join Two"
         )
         player2_session.set_name("test_admin_multiple_joins_PLAYER2")
@@ -84,13 +86,13 @@ class TestAdminWebSocketFlows:
 
     async def test_admin_sees_player_leave_updates(
         self,
-        player_actions: PlayerFixture,
-        admin_actions: AdminFixture,
+        player_actions_fixture: PlayerFixture,
+        admin_actions_fixture: AdminFixture,
         settings: Settings,
     ):
-        admin_actions, admin_page, admin_session = await admin_actions()
+        admin_actions, admin_page, admin_session = await admin_actions_fixture()
         admin_session.set_name("test_admin_player_leave_ADMIN")
-        player_actions, player_page, player_session = await player_actions(
+        player_actions, player_page, player_session = await player_actions_fixture(
             "Leave Notify Player"
         )
         player_session.set_name("test_admin_player_leave_PLAYER")
@@ -125,19 +127,19 @@ class TestAdminWebSocketFlows:
 
     async def test_admin_lobby_management_with_active_players(
         self,
-        player_actions: PlayerFixture,
-        admin_actions: AdminFixture,
+        player_actions_fixture: PlayerFixture,
+        admin_actions_fixture: AdminFixture,
         settings: Settings,
     ):
-        admin_actions, admin_page, admin_session = await admin_actions()
+        admin_actions, admin_page, admin_session = await admin_actions_fixture()
         admin_session.set_name("test_admin_management_ADMIN")
 
-        player1_actions, player1_page, player1_session = await player_actions(
+        player1_actions, player1_page, player1_session = await player_actions_fixture(
             "Active Player One"
         )
         player1_session.set_name("test_admin_management_PLAYER1")
 
-        player2_actions, player2_page, player2_session = await player_actions(
+        player2_actions, player2_page, player2_session = await player_actions_fixture(
             "Active Player Two"
         )
         player2_session.set_name("test_admin_management_PLAYER2")

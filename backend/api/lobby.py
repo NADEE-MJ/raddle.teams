@@ -5,7 +5,7 @@ from sqlmodel import Session, select
 from sqlalchemy.orm import selectinload
 
 from backend.custom_logging import api_logger
-from backend.database import Lobby, Player, Team, get_session
+from backend.database import Lobby, Player, get_session
 from backend.dependencies import require_player_session
 from backend.schemas import LobbyInfo, MessageResponse, PlayerCreate
 from backend.websocket.events import DisconnectedLobbyEvent, JoinedLobbyEvent
@@ -117,9 +117,7 @@ async def leave_current_lobby(
             f"Failed to broadcast player left for session {player.session_id}: {e}"
         )
 
-    return MessageResponse(
-        status=True, message="Player left lobby successfully"
-    )
+    return MessageResponse(status=True, message="Player left lobby successfully")
 
 
 @router.get("/lobby/{lobby_id}", response_model=LobbyInfo)

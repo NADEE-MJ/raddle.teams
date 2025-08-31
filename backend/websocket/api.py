@@ -27,7 +27,7 @@ async def admin_websocket(
         return
 
     try:
-        await admin_web_socket_manager.continuous_listening(websocket)
+        await admin_web_socket_manager.continuous_listening(websocket, web_session_id)
     except WebSocketDisconnect:
         websocket_logger.info(
             f"Admin websocket disconnected (WebSocketDisconnect): web_session_id={web_session_id}"

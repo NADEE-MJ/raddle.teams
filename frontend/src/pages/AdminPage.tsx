@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import { useAdminOutletContext } from "@/hooks/useAdminOutletContext";
 import { api } from "@/services/api";
@@ -13,6 +13,7 @@ export default function AdminPage() {
     refreshLobbies,
     isLoading: contextLoading,
     error: contextError,
+    sendWebSocketMessage,
   } = useAdminOutletContext();
   
   const [selectedLobby, setSelectedLobby] = useState<LobbyInfo | null>(null);
@@ -72,12 +73,31 @@ export default function AdminPage() {
       setLoading(true);
       const lobbyInfo = await api.admin.lobby.getInfo(lobbyId, adminToken);
       setSelectedLobby(lobbyInfo);
+      
+      // Subscribe to lobby updates via WebSocket
+      if (sendWebSocketMessage) {
+        sendWebSocketMessage({
+          action: "subscribe_lobby",
+          lobby_id: lobbyId
+        });
+      }
     } catch (err) {
       setError("Failed to load lobby details");
       console.error("Error loading lobby details:", err);
     } finally {
       setLoading(false);
     }
+  };
+
+  const closeLobbyDetails = () => {
+    if (selectedLobby && sendWebSocketMessage) {
+      // Unsubscribe from lobby updates
+      sendWebSocketMessage({
+        action: "unsubscribe_lobby",
+        lobby_id: selectedLobby.lobby.id
+      });
+    }
+    setSelectedLobby(null);
   };
 
   const deleteLobby = async (lobbyId: number) => {
@@ -88,6 +108,13 @@ export default function AdminPage() {
       await api.admin.lobby.delete(lobbyId, adminToken);
       await refreshLobbies();
       if (selectedLobby?.lobby.id === lobbyId) {
+        // Unsubscribe before closing
+        if (sendWebSocketMessage) {
+          sendWebSocketMessage({
+            action: "unsubscribe_lobby",
+            lobby_id: lobbyId
+          });
+        }
         setSelectedLobby(null);
       }
     } catch (err) {
@@ -97,6 +124,18 @@ export default function AdminPage() {
       setLoading(false);
     }
   };
+
+  // Cleanup subscription on component unmount
+  useEffect(() => {
+    return () => {
+      if (selectedLobby && sendWebSocketMessage) {
+        sendWebSocketMessage({
+          action: "unsubscribe_lobby",
+          lobby_id: selectedLobby.lobby.id
+        });
+      }
+    };
+  }, [selectedLobby, sendWebSocketMessage]);
 
   if (!isAdmin) {
     return (
@@ -254,7 +293,7 @@ export default function AdminPage() {
                 Lobby Details: {selectedLobby.lobby.name}
               </h2>
               <button
-                onClick={() => setSelectedLobby(null)}
+                onClick={closeLobbyDetails}
                 className="text-gray-600 hover:text-gray-800"
               >
                 ✕ Close

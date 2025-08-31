@@ -1,4 +1,5 @@
 import os
+
 import httpx
 import pytest
 from playwright.async_api import async_playwright
@@ -49,7 +50,7 @@ async def shared_browser(playwright):
 
 
 @pytest.fixture
-async def admin_actions(shared_browser, server_url, request):
+async def admin_actions_fixture(shared_browser, server_url, request):
     sessions = []
 
     async def create():
@@ -68,7 +69,7 @@ async def admin_actions(shared_browser, server_url, request):
 
 
 @pytest.fixture
-async def player_actions(shared_browser, server_url, request):
+async def player_actions_fixture(shared_browser, server_url, request):
     sessions = []
 
     async def create(name):

@@ -66,7 +66,7 @@ const AdminLayout: React.FC = () => {
         refreshLobbies();
     }, [refreshLobbies]);
 
-    useAdminWebSocket(
+    const { sendMessage } = useAdminWebSocket(
         webSessionIdRef.current,
         adminToken,
         {
@@ -82,6 +82,7 @@ const AdminLayout: React.FC = () => {
         refreshLobbies,
         isLoading,
         error,
+        sendWebSocketMessage: sendMessage,
     };
 
     return (
