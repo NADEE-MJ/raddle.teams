@@ -10,6 +10,7 @@ const request = async <T>(
   const url = `${API_BASE}${endpoint}`;
   const response = await fetch(url, {
     headers: {
+      "Content-Type": "application/json",
       ...options?.headers,
       ...(bearerToken ? { Authorization: `Bearer ${bearerToken}` } : {}),
     },
@@ -61,25 +62,29 @@ export const api = {
   },
   player: {
     lobby: {
-      async activeUser(bearerToken: string): Promise<Player> {
-        return request<Player>(`/lobby/active`, {}, bearerToken);
+      async activeUser(sessionId: string): Promise<Player> {
+        return request<Player>(`/lobby/active`, {}, sessionId);
       },
-      async join(lobbyCode: string, name: string, sessionId: string): Promise<Player> {
-        return request<Player>(`/lobby/${lobbyCode}/join`, {
-          method: "POST",
-          body: JSON.stringify({ name, session_id: sessionId }),
-        });
+      async join(lobbyCode: string, name: string, sessionId?: string): Promise<Player> {
+        return request<Player>(
+          `/lobby/${lobbyCode}`,
+          {
+            method: "POST",
+            body: JSON.stringify({ name }),
+          },
+          sessionId
+        );
       },
-      async getInfo(bearerToken: string): Promise<Lobby> {
-        return request<Lobby>(`/lobby`, {}, bearerToken);
+      async getInfo(sessionId: string): Promise<Lobby> {
+        return request<Lobby>(`/lobby`, {}, sessionId);
       },
-      async leave(bearerToken: string): Promise<{ status: string; message: string }> {
+      async leave(sessionId: string): Promise<{ status: string; message: string }> {
         return request<{ status: string; message: string }>(
           `/lobby`,
           {
             method: "DELETE",
           },
-          bearerToken
+          sessionId
         );
       },
     },

@@ -8,7 +8,6 @@ export default function LobbyPage() {
   const [lobbyInfo, setLobbyInfo] = useState<LobbyInfo | null>(null);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState("");
-  const { player, setPlayer, sessionId } = usePlayer();
   const navigate = useNavigate();
 
   const loadLobbyData = useCallback(async () => {
