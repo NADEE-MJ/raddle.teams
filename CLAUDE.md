@@ -23,6 +23,8 @@ This file provides guidance to Claude Code (claude.ai/code) when working with co
 **Alternative Python commands:**
 - `poetry run python bin/run_server.py development` - Start development server directly
 - `poetry run python bin/run_tests.py` - Run tests directly with pytest
+- `poetry run python bin/run_tests.py -v` - Run tests with verbose output
+- `poetry run python bin/run_tests.py -f <pattern>` - Run specific tests matching pattern
 
 ## Project Architecture
 
@@ -92,3 +94,18 @@ This is a full-stack team-based multiplayer word puzzle game with real-time WebS
 - Database auto-creates on startup, supports testing mode with reset endpoint
 - WebSocket connections handle both player gameplay and admin monitoring
 - Uses modern React patterns: hooks, context, lazy loading, Suspense
+
+## Testing Architecture
+
+**Python Tests:**
+- Uses pytest with custom test runner at `bin/run_tests.py`
+- Test environment automatically set via `RADDLE_ENV=testing`
+- E2E tests with Playwright support
+- Tests organized in `/tests` directory with subdirectories for different test types
+- Recording cleanup (screenshots, videos, traces) on test runs
+
+**Frontend Testing:**
+- TypeScript type checking with `tsc --noEmit`
+- ESLint with max 15 warnings policy
+- Prettier formatting checks
+- Combined validation via `npm run check`
