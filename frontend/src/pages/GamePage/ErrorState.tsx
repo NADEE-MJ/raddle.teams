@@ -1,23 +1,23 @@
-import { useNavigate } from "react-router-dom";
+import { useNavigate } from 'react-router-dom';
 
 interface ErrorStateProps {
-  message: string;
+    message: string;
 }
 
 export default function ErrorState({ message }: ErrorStateProps) {
-  const navigate = useNavigate();
+    const navigate = useNavigate();
 
-  return (
-    <div className="min-h-screen flex items-center justify-center bg-gray-50">
-      <div className="text-center">
-        <p className="text-red-600 mb-4">{message}</p>
-        <button
-          onClick={() => navigate("/")}
-          className="bg-blue-600 hover:bg-blue-700 text-white px-4 py-2 rounded-lg"
-        >
-          Back to Home
-        </button>
-      </div>
-    </div>
-  );
+    return (
+        <div className='flex min-h-screen items-center justify-center bg-gray-50'>
+            <div className='text-center'>
+                <p className='mb-4 text-red-600'>{message}</p>
+                <button
+                    onClick={() => navigate('/')}
+                    className='rounded-lg bg-blue-600 px-4 py-2 text-white hover:bg-blue-700'
+                >
+                    Back to Home
+                </button>
+            </div>
+        </div>
+    );
 }
