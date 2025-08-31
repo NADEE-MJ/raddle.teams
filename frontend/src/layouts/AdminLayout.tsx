@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useCallback } from 'react';
+import React, { useState, useEffect, useCallback, useRef } from 'react';
 import { Outlet } from 'react-router-dom';
 import { AdminOutletContext } from '../hooks/useAdminOutletContext';
 import { useAdminWebSocket } from '@/hooks/useWebSocket';
@@ -10,12 +10,19 @@ const AdminLayout: React.FC = () => {
     const [lobbies, setLobbies] = useState<Lobby[]>([]);
     const [isLoading, setIsLoading] = useState(true);
     const [error, setError] = useState<string | null>(null);
+    const webSessionIdRef = useRef<string | null>(null);
 
     const setAdminToken = useCallback((token: string | null) => {
         if (token) {
             localStorage.setItem('raddle_admin_token', token);
+            // Generate stable session ID when admin token is set
+            if (!webSessionIdRef.current) {
+                webSessionIdRef.current = `admin_${Date.now()}_${Math.random().toString(36).substr(2, 9)}`;
+            }
         } else {
             localStorage.removeItem('raddle_admin_token');
+            // Clear session ID when logging out
+            webSessionIdRef.current = null;
         }
         setAdminTokenState(token);
     }, []);
@@ -39,6 +46,10 @@ const AdminLayout: React.FC = () => {
         const token = localStorage.getItem('raddle_admin_token');
         if (token) {
             setAdminTokenState(token);
+            // Generate stable session ID for existing token
+            if (!webSessionIdRef.current) {
+                webSessionIdRef.current = `admin_${Date.now()}_${Math.random().toString(36).substr(2, 9)}`;
+            }
         } else {
             setIsLoading(false);
         }
@@ -55,10 +66,8 @@ const AdminLayout: React.FC = () => {
         refreshLobbies();
     }, [refreshLobbies]);
 
-    const webSessionId = adminToken ? `admin_${Date.now()}` : null;
-    
     useAdminWebSocket(
-        webSessionId,
+        webSessionIdRef.current,
         adminToken,
         {
             onMessage: handleAdminWebSocketMessage,
