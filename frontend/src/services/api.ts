@@ -10,6 +10,7 @@ const request = async <T>(
   const url = `${API_BASE}${endpoint}`;
   const response = await fetch(url, {
     headers: {
+      "Content-Type": "application/json",
       ...options?.headers,
       ...(bearerToken ? { Authorization: `Bearer ${bearerToken}` } : {}),
     },
