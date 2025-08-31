@@ -1,6 +1,7 @@
 from datetime import datetime, timezone
 from typing import Optional
 
+from sqlalchemy import Column, ForeignKey as SA_ForeignKey
 from sqlmodel import Field, SQLModel
 
 
@@ -8,8 +9,8 @@ class Player(SQLModel, table=True):
     id: Optional[int] = Field(default=None, primary_key=True)
     name: str = Field(unique=True)
     session_id: str = Field(unique=True)
-    lobby_id: int = Field(foreign_key="lobby.id")
-    team_id: Optional[int] = Field(default=None, foreign_key="team.id")
+    lobby_id: int = Field(sa_column=Column(SA_ForeignKey("lobby.id", ondelete="CASCADE")))
+    team_id: Optional[int] = Field(default=None, sa_column=Column(SA_ForeignKey("team.id", ondelete="CASCADE")))
     created_at: datetime = Field(default_factory=lambda: datetime.now(tz=timezone.utc))
 
 
@@ -17,7 +18,7 @@ class Team(SQLModel, table=True):
     id: Optional[int] = Field(default=None, primary_key=True)
     name: str
     # game_id: int = Field(foreign_key="game.id")
-    lobby_id: int = Field(foreign_key="lobby.id")
+    lobby_id: int = Field(sa_column=Column(SA_ForeignKey("lobby.id", ondelete="CASCADE")))
     current_word_index: int = Field(default=0)
     completed_at: Optional[datetime] = Field(default=None)
     created_at: datetime = Field(default_factory=lambda: datetime.now(tz=timezone.utc))
@@ -41,8 +42,8 @@ class Lobby(SQLModel, table=True):
 
 class Guess(SQLModel, table=True):
     id: Optional[int] = Field(default=None, primary_key=True)
-    team_id: int = Field(foreign_key="team.id")
-    player_id: int = Field(foreign_key="player.id")
+    team_id: int = Field(sa_column=Column(SA_ForeignKey("team.id", ondelete="CASCADE")))
+    player_id: int = Field(sa_column=Column(SA_ForeignKey("player.id", ondelete="CASCADE")))
     word_index: int
     direction: str  # "forward" or "backward"
     guess: str

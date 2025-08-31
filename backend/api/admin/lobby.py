@@ -58,7 +58,9 @@ async def get_lobby_info(lobby_id: int, db: Session = Depends(get_session)):
         players_by_team[player.team_id].append(player)
 
     teams = db.exec(select(Team).where(Team.lobby_id == lobby.id)).all()
-    api_logger.info(f"Admin returning lobby info for {lobby_id}: {len(teams)} teams, {len(players)} players")
+    api_logger.info(
+        f"Admin returning lobby info for {lobby_id}: {len(teams)} teams, {len(players)} players"
+    )
 
     return LobbyInfo(
         lobby=lobby, players=players, players_by_team=players_by_team, teams=teams
@@ -73,19 +75,7 @@ async def delete_lobby(lobby_id: int, db: Session = Depends(get_session)):
         api_logger.warning(f"Delete failed: lobby not found lobby_id={lobby_id}")
         raise HTTPException(status_code=404, detail="Lobby not found")
 
-    # Delete all related players first
-    players = db.exec(select(Player).where(Player.lobby_id == lobby.id)).all()
-    for player in players:
-        db.delete(player)
-    api_logger.info(f"Deleted {len(players)} players from lobby_id={lobby_id}")
-
-    # Delete all related teams
-    teams = db.exec(select(Team).where(Team.lobby_id == lobby.id)).all()
-    for team in teams:
-        db.delete(team)
-    api_logger.info(f"Deleted {len(teams)} teams from lobby_id={lobby_id}")
-
-    # Delete the lobby itself
+    # this cascades delete all related players and teams
     db.delete(lobby)
     db.commit()
     api_logger.info(f"Successfully deleted lobby_id={lobby_id} name={lobby.name}")

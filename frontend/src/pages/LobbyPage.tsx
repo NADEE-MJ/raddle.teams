@@ -2,14 +2,12 @@ import { useCallback, useEffect, useRef, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { apiService } from "../services/api";
 import { useWebSocket } from "../hooks/useWebSocket";
-import { usePlayer } from "../context/PlayerContext";
 import { LobbyInfo, WebSocketMessage } from "../types";
 
 export default function LobbyPage() {
   const [lobbyInfo, setLobbyInfo] = useState<LobbyInfo | null>(null);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState("");
-  const { player, setPlayer, sessionId } = usePlayer();
   const navigate = useNavigate();
 
   const loadLobbyData = useCallback(async () => {

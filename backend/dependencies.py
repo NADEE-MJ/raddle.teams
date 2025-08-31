@@ -1,8 +1,12 @@
-from fastapi import Depends, HTTPException, Query, status
-from fastapi.security import HTTPAuthorizationCredentials, HTTPBearer
 from typing import Optional
 
+from fastapi import Depends, HTTPException, Query, status
+from fastapi.security import HTTPAuthorizationCredentials, HTTPBearer
+from sqlmodel import select
+
 from backend.custom_logging import api_logger
+from backend.database import Session, get_session
+from backend.database.models import Player
 from backend.settings import settings
 
 # security instance used for admin checks (required)
@@ -12,7 +16,7 @@ security = HTTPBearer()
 # extract a user session id from a Bearer token. Frontend will send a Bearer
 # token containing the user's session id in Authorization: Bearer <session_id>.
 # We keep auto_error=False so endpoints can decide whether a missing session is
-# fatal (require_user_session) or acceptable (get_optional_user_session).
+# fatal (require_player_session) or acceptable (get_optional_player_session).
 user_security = HTTPBearer(auto_error=False)
 
 
@@ -89,36 +93,35 @@ def check_admin_token_query(
     return True
 
 
-def get_optional_user_session(
-    credentials: Optional[HTTPAuthorizationCredentials] = Depends(user_security),
-) -> Optional[str]:
-    """
-    FastAPI dependency that returns the user session id from a Bearer token
-    when present, otherwise returns None. This is used by endpoints that may
-    create a new session for the player (e.g. join endpoint).
-    """
-    if not credentials or not credentials.credentials:
-        api_logger.debug("No user session token provided in Authorization header")
-        return None
-
-    api_logger.info("User session extracted from Authorization header")
-    return credentials.credentials
-
-
-def require_user_session(
+def require_player_session(
     credentials: HTTPAuthorizationCredentials = Depends(user_security),
-) -> str:
+    db: Session = Depends(get_session),
+) -> Player:
     """
-    FastAPI dependency that requires a user session id to be present in the
+    FastAPI dependency that requires a player session id to be present in the
     Authorization Bearer token. Raises 401 when missing.
     """
     if not credentials or not credentials.credentials:
-        api_logger.warning("Missing user session token in Authorization header")
+        api_logger.warning("Missing player session token in Authorization header")
         raise HTTPException(
             status_code=status.HTTP_401_UNAUTHORIZED,
             detail="Missing authentication token",
             headers={"WWW-Authenticate": "Bearer"},
         )
 
-    api_logger.info("User session authenticated via Authorization header")
-    return credentials.credentials
+    player = db.exec(
+        select(Player).where(Player.session_id == credentials.credentials)
+    ).first()
+
+    if not player:
+        api_logger.warning(
+            "Invalid player session token provided in Authorization header"
+        )
+        raise HTTPException(
+            status_code=status.HTTP_401_UNAUTHORIZED,
+            detail="Invalid authentication token",
+            headers={"WWW-Authenticate": "Bearer"},
+        )
+
+    api_logger.debug(f"Player session authenticated: player_id={player.id}")
+    return player
