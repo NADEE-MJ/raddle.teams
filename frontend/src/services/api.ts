@@ -62,21 +62,21 @@ export const api = {
   },
   player: {
     lobby: {
+      async activeUser(bearerToken: string): Promise<Player> {
+        return request<Player>(`/lobby/active`, {}, bearerToken);
+      },
       async join(lobbyCode: string, name: string, sessionId: string): Promise<Player> {
         return request<Player>(`/lobby/${lobbyCode}/join`, {
           method: "POST",
           body: JSON.stringify({ name }),
         }, sessionId); // sessionId becomes the bearer token
       },
-      async getCurrent(bearerToken: string): Promise<Lobby> {
+      async getInfo(bearerToken: string): Promise<Lobby> {
         return request<Lobby>(`/lobby`, {}, bearerToken);
-      },
-      async getInfo(lobbyId: number, bearerToken: string): Promise<LobbyInfo> {
-        return request<LobbyInfo>(`/lobby/${lobbyId}`, {}, bearerToken);
       },
       async leave(bearerToken: string): Promise<{ status: string; message: string }> {
         return request<{ status: string; message: string }>(
-          `/lobby/leave`,
+          `/lobby`,
           {
             method: "DELETE",
           },
