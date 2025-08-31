@@ -9,7 +9,16 @@ class PlayerActions:
 
     async def goto_home_page(self):
         await self.page.goto(f"{self.server_url}/", wait_until="networkidle")
-        await expect(self.page.locator("h1:has-text('Raddle Teams')")).to_be_visible()
+        try:
+            await expect(
+                self.page.locator("h1:has-text('Raddle Teams')")
+            ).to_be_visible(timeout=2000)
+        except AssertionError:
+            if await self.page.locator("p:has-text('Lobby Code:')").is_visible():
+                return
+            await expect(
+                self.page.locator("h1:has-text('Raddle Teams')")
+            ).to_be_visible()
 
     async def fill_name_and_code(self, name: str, lobby_code: str):
         name_input = self.page.locator(
@@ -126,3 +135,11 @@ class PlayerActions:
     async def refresh_lobby(self):
         await self.page.reload(wait_until="networkidle")
         await self.wait_in_lobby()
+
+    async def wait_for_player_count(self, expected_count: int, timeout: int = 15000):
+        await expect(
+            self.page.locator(f"text=Players ({expected_count})")
+        ).to_be_visible(timeout=timeout)
+
+    async def wait_for_websocket_update(self, delay: int = 1000):
+        await self.page.wait_for_timeout(delay)

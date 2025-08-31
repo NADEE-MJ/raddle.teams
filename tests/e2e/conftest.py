@@ -73,10 +73,10 @@ async def admin_actions(browser, server_url, request):
 async def player_actions(browser, server_url, request):
     sessions = []
 
-    async def create():
+    async def create(name):
         session, page = await browser()
         sessions.append(session)
-        return PlayerActions(page, server_url), page, session
+        return PlayerActions(page, server_url, name), page, session
 
     yield create
 

@@ -157,3 +157,26 @@ class TestAdminDashboardFlows:
         await expect(page.locator("text=No lobbies created yet")).to_be_visible()
 
         await browser.screenshot("admin_empty_lobby_list")
+
+    async def test_admin_delete_lobby(self, admin_actions, settings: Settings):
+        actions, page, browser = await admin_actions()
+        browser.set_name("admin_delete_lobby")
+
+        await actions.goto_admin_page()
+        await actions.login(settings.ADMIN_PASSWORD)
+
+        # Create a lobby to delete
+        lobby_code = await actions.create_lobby("Delete Test Lobby")
+        
+        # Verify lobby exists
+        await expect(page.locator(f"text=Code: {lobby_code}")).to_be_visible()
+        await expect(page.locator('h3:has-text("Delete Test Lobby")')).to_be_visible()
+
+        # Delete the lobby
+        await actions.delete_lobby(lobby_code)
+
+        # Verify lobby is gone
+        await expect(page.locator(f"text=Code: {lobby_code}")).not_to_be_visible()
+        await expect(page.locator('h3:has-text("Delete Test Lobby")')).not_to_be_visible()
+
+        await browser.screenshot("admin_delete_lobby_success")

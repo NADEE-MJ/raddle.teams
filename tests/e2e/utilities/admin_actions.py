@@ -90,3 +90,12 @@ class AdminActions:
         await expect(
             self.page.locator(f"text=/{expected_count} players?/")
         ).to_be_visible(timeout=timeout)
+
+    async def delete_lobby(self, lobby_code: str):
+        lobby_card = self.page.locator(f"text=Code: {lobby_code}").locator("..")
+        delete_button = lobby_card.locator('button:has-text("Delete")')
+        await delete_button.click()
+
+        await expect(self.page.locator(f"text=Code: {lobby_code}")).not_to_be_visible(
+            timeout=5000
+        )
