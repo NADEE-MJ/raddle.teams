@@ -43,8 +43,8 @@ export const api = {
       async delete(
         lobbyId: number,
         bearerToken: string
-      ): Promise<{ status: string; message: string }> {
-        return request<{ status: string; message: string }>(
+      ): Promise<{ status: boolean; message: string }> {
+        return request<{ status: boolean; message: string }>(
           `/admin/lobby/${lobbyId}`,
           {
             method: "DELETE",
@@ -56,8 +56,8 @@ export const api = {
         return request<LobbyInfo>(`/admin/lobby/${lobbyId}`, {}, bearerToken);
       },
     },
-    async checkCredentials(bearerToken: string): Promise<{ status: string; message: string }> {
-      return request<{ status: string; message: string }>("/admin/check", {}, bearerToken);
+    async checkCredentials(bearerToken: string): Promise<{ status: boolean; message: string }> {
+      return request<{ status: boolean; message: string }>("/admin/check", {}, bearerToken);
     },
   },
   player: {
@@ -78,8 +78,11 @@ export const api = {
       async getInfo(sessionId: string): Promise<Lobby> {
         return request<Lobby>(`/lobby`, {}, sessionId);
       },
-      async leave(sessionId: string): Promise<{ status: string; message: string }> {
-        return request<{ status: string; message: string }>(
+      async getLobbyInfo(lobbyId: number, sessionId: string): Promise<LobbyInfo> {
+        return request<LobbyInfo>(`/lobby/${lobbyId}`, {}, sessionId);
+      },
+      async leave(sessionId: string): Promise<{ status: boolean; message: string }> {
+        return request<{ status: boolean; message: string }>(
           `/lobby`,
           {
             method: "DELETE",

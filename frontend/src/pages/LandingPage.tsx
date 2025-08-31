@@ -1,5 +1,6 @@
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
+import { api } from "@/services/api";
 
 export default function LandingPage() {
   const [name, setName] = useState("");
@@ -23,8 +24,12 @@ export default function LandingPage() {
     setError("");
 
     try {
-      // const player = await apiService.joinLobby(lobbyCode.trim().toUpperCase(), name.trim());
-      navigate("/lobby");
+      const player = await api.player.lobby.join(
+        lobbyCode.trim().toUpperCase(), 
+        name.trim()
+      );
+      localStorage.setItem('raddle_session_id', player.session_id);
+      navigate(`/lobby/${lobbyCode.trim().toUpperCase()}`);
     } catch (err) {
       setError("Failed to join lobby. Please check the lobby code and try again.");
       console.error("Error joining lobby:", err);

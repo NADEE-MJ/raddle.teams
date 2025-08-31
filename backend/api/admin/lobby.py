@@ -3,6 +3,7 @@ from uuid import uuid4
 from fastapi import APIRouter, Depends, HTTPException
 from pydantic import BaseModel
 from sqlmodel import Session, select
+from sqlalchemy.orm import selectinload
 
 from backend.custom_logging import api_logger
 from backend.database import Lobby, Player, Team, get_session
@@ -41,12 +42,17 @@ async def get_all_lobbies(db: Session = Depends(get_session)):
 @router.get("/lobby/{lobby_id}", response_model=LobbyInfo)
 async def get_lobby_info(lobby_id: int, db: Session = Depends(get_session)):
     api_logger.info(f"Admin requested lobby info: lobby_id={lobby_id}")
-    lobby = db.get(Lobby, lobby_id)
+    lobby = db.exec(
+        select(Lobby)
+        .options(selectinload(Lobby.players), selectinload(Lobby.teams))
+        .where(Lobby.id == lobby_id)
+    ).first()
     if not lobby:
         api_logger.warning(f"Lobby not found lobby_id={lobby_id}")
         raise HTTPException(status_code=404, detail="Lobby not found")
 
-    players = db.exec(select(Player).where(Player.lobby_id == lobby.id)).all()
+    players = lobby.players
+    teams = lobby.teams
     api_logger.info(f"Found {len(players)} players in lobby_id={lobby.id}")
 
     players_by_team = {}
@@ -56,8 +62,6 @@ async def get_lobby_info(lobby_id: int, db: Session = Depends(get_session)):
         if player.team_id not in players_by_team:
             players_by_team[player.team_id] = []
         players_by_team[player.team_id].append(player)
-
-    teams = db.exec(select(Team).where(Team.lobby_id == lobby.id)).all()
     api_logger.info(
         f"Admin returning lobby info for {lobby_id}: {len(teams)} teams, {len(players)} players"
     )

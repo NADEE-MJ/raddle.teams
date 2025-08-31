@@ -2,6 +2,7 @@ import uuid
 
 from fastapi import APIRouter, Depends, HTTPException
 from sqlmodel import Session, select
+from sqlalchemy.orm import selectinload
 
 from backend.custom_logging import api_logger
 from backend.database import Lobby, Player, Team, get_session
@@ -70,7 +71,9 @@ async def get_current_lobby(
 ):
     api_logger.info(f"Player requesting current lobby: session_id={player.session_id}")
 
-    lobby = db.get(Lobby, player.lobby_id)
+    # Use the relationship to get the lobby
+    db.refresh(player, ["lobby"])
+    lobby = player.lobby
     if not lobby:
         api_logger.warning(
             f"Current lobby fetch failed: lobby not found for player session_id={player.session_id} lobby_id={player.lobby_id}"
@@ -128,12 +131,18 @@ async def get_lobby_info(
     api_logger.info(
         f"Player requesting lobby info: lobby_id={lobby_id}, session_id={player.session_id}"
     )
-    lobby = db.get(Lobby, lobby_id)
+    # Use eager loading to get lobby with relationships
+    lobby = db.exec(
+        select(Lobby)
+        .options(selectinload(Lobby.players), selectinload(Lobby.teams))
+        .where(Lobby.id == lobby_id)
+    ).first()
     if not lobby:
         api_logger.warning(f"Lobby not found lobby_id={lobby_id}")
         raise HTTPException(status_code=404, detail="Lobby not found")
 
-    players = db.exec(select(Player).where(Player.lobby_id == lobby.id)).all()
+    players = lobby.players
+    teams = lobby.teams
     api_logger.info(f"Found {len(players)} players in lobby_id={lobby.id}")
 
     players_by_team = {}
@@ -143,8 +152,6 @@ async def get_lobby_info(
         if p.team_id not in players_by_team:
             players_by_team[p.team_id] = []
         players_by_team[p.team_id].append(p)
-
-    teams = db.exec(select(Team).where(Team.lobby_id == lobby.id)).all()
     api_logger.info(
         f"Player returning lobby info for {lobby_id}: {len(teams)} teams, {len(players)} players"
     )

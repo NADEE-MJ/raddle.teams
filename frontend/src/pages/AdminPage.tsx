@@ -1,31 +1,30 @@
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import { useNavigate } from "react-router-dom";
-import { apiService } from "../services/api";
-import { Lobby, LobbyInfo } from "../types";
+import { useAdminOutletContext } from "@/hooks/useAdminOutletContext";
+import { api } from "@/services/api";
+import { LobbyInfo } from "@/types";
 
 export default function AdminPage() {
-  const [lobbies, setLobbies] = useState<Lobby[]>([]);
+  const {
+    isAdmin,
+    adminToken,
+    setAdminToken,
+    lobbies,
+    refreshLobbies,
+    isLoading: contextLoading,
+    error: contextError,
+  } = useAdminOutletContext();
+  
   const [selectedLobby, setSelectedLobby] = useState<LobbyInfo | null>(null);
   const [newLobbyName, setNewLobbyName] = useState("");
-  const [adminToken, setAdminToken] = useState("");
-  const [isAuthenticated, setIsAuthenticated] = useState(false);
+  const [localAdminToken, setLocalAdminToken] = useState("");
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState("");
   const navigate = useNavigate();
 
-  useEffect(() => {
-    // Check if admin token is stored
-    const storedToken = apiService.getAdminToken();
-    if (storedToken) {
-      setIsAuthenticated(true);
-      setAdminToken(storedToken);
-      loadLobbies();
-    }
-  }, []);
-
   const handleLogin = async (e: React.FormEvent) => {
     e.preventDefault();
-    if (!adminToken.trim()) {
+    if (!localAdminToken.trim()) {
       setError("Please enter admin token");
       return;
     }
@@ -34,14 +33,10 @@ export default function AdminPage() {
     setError("");
 
     try {
-      // Store the token and try to fetch lobbies to validate
-      apiService.setAdminToken(adminToken.trim());
-      await apiService.getAllLobbies();
-      setIsAuthenticated(true);
-      await loadLobbies();
+      await api.admin.checkCredentials(localAdminToken.trim());
+      setAdminToken(localAdminToken.trim());
     } catch (err) {
       setError("Invalid admin token");
-      apiService.clearTokens();
       console.error("Auth error:", err);
     } finally {
       setLoading(false);
@@ -49,35 +44,19 @@ export default function AdminPage() {
   };
 
   const handleLogout = () => {
-    apiService.clearTokens();
-    setIsAuthenticated(false);
-    setAdminToken("");
-    setLobbies([]);
+    setAdminToken(null);
     setSelectedLobby(null);
-  };
-
-  const loadLobbies = async () => {
-    try {
-      setLoading(true);
-      const lobbiesData = await apiService.getAllLobbies();
-      setLobbies(lobbiesData);
-    } catch (err) {
-      setError("Failed to load lobbies");
-      console.error("Error loading lobbies:", err);
-    } finally {
-      setLoading(false);
-    }
   };
 
   const createLobby = async (e: React.FormEvent) => {
     e.preventDefault();
-    if (!newLobbyName.trim()) return;
+    if (!newLobbyName.trim() || !adminToken) return;
 
     try {
       setLoading(true);
-      await apiService.createLobby(newLobbyName.trim());
+      await api.admin.lobby.create(newLobbyName.trim(), adminToken);
       setNewLobbyName("");
-      await loadLobbies();
+      await refreshLobbies();
     } catch (err) {
       setError("Failed to create lobby");
       console.error("Error creating lobby:", err);
@@ -87,9 +66,11 @@ export default function AdminPage() {
   };
 
   const viewLobbyDetails = async (lobbyId: number) => {
+    if (!adminToken) return;
+    
     try {
       setLoading(true);
-      const lobbyInfo = await apiService.getLobbyInfo(lobbyId);
+      const lobbyInfo = await api.admin.lobby.getInfo(lobbyId, adminToken);
       setSelectedLobby(lobbyInfo);
     } catch (err) {
       setError("Failed to load lobby details");
@@ -99,7 +80,25 @@ export default function AdminPage() {
     }
   };
 
-  if (!isAuthenticated) {
+  const deleteLobby = async (lobbyId: number) => {
+    if (!adminToken) return;
+    
+    try {
+      setLoading(true);
+      await api.admin.lobby.delete(lobbyId, adminToken);
+      await refreshLobbies();
+      if (selectedLobby?.lobby.id === lobbyId) {
+        setSelectedLobby(null);
+      }
+    } catch (err) {
+      setError("Failed to delete lobby");
+      console.error("Error deleting lobby:", err);
+    } finally {
+      setLoading(false);
+    }
+  };
+
+  if (!isAdmin) {
     return (
       <div className="min-h-screen flex items-center justify-center bg-gray-100">
         <div className="bg-white rounded-lg shadow-xl p-8 w-full max-w-md">
@@ -121,8 +120,8 @@ export default function AdminPage() {
               <input
                 type="password"
                 id="adminToken"
-                value={adminToken}
-                onChange={(e) => setAdminToken(e.target.value)}
+                value={localAdminToken}
+                onChange={(e) => setLocalAdminToken(e.target.value)}
                 className="w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-blue-500 focus:border-blue-500"
                 placeholder="Enter admin token"
                 disabled={loading}
@@ -177,13 +176,12 @@ export default function AdminPage() {
             </div>
           </div>
 
-          {error && (
+          {(error || contextError) && (
             <div className="mb-6 p-4 bg-red-100 text-red-700 rounded-md">
-              {error}
+              {error || contextError}
             </div>
           )}
 
-          {/* Create Lobby Section */}
           <div className="mb-8">
             <h2 className="text-xl font-semibold text-gray-900 mb-4">Create New Lobby</h2>
             <form onSubmit={createLobby} className="flex gap-4">
@@ -193,11 +191,11 @@ export default function AdminPage() {
                 onChange={(e) => setNewLobbyName(e.target.value)}
                 placeholder="Lobby name"
                 className="flex-1 px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-blue-500 focus:border-blue-500"
-                disabled={loading}
+                disabled={loading || contextLoading}
               />
               <button
                 type="submit"
-                disabled={loading || !newLobbyName.trim()}
+                disabled={loading || contextLoading || !newLobbyName.trim()}
                 className="bg-blue-600 hover:bg-blue-700 disabled:bg-blue-400 text-white px-6 py-2 rounded-md transition duration-200"
               >
                 Create Lobby
@@ -205,13 +203,12 @@ export default function AdminPage() {
             </form>
           </div>
 
-          {/* Lobbies List */}
           <div className="mb-8">
             <div className="flex justify-between items-center mb-4">
               <h2 className="text-xl font-semibold text-gray-900">All Lobbies</h2>
               <button
-                onClick={loadLobbies}
-                disabled={loading}
+                onClick={refreshLobbies}
+                disabled={loading || contextLoading}
                 className="bg-green-600 hover:bg-green-700 disabled:bg-green-400 text-white px-4 py-2 rounded-md transition duration-200"
               >
                 Refresh
@@ -229,12 +226,20 @@ export default function AdminPage() {
                     <p className="text-gray-500 text-sm">
                       Created: {new Date(lobby.created_at).toLocaleString()}
                     </p>
-                    <button
-                      onClick={() => viewLobbyDetails(lobby.id)}
-                      className="mt-2 bg-blue-600 hover:bg-blue-700 text-white px-4 py-2 rounded-md transition duration-200 w-full"
-                    >
-                      View Details
-                    </button>
+                    <div className="mt-2 space-y-2">
+                      <button
+                        onClick={() => viewLobbyDetails(lobby.id)}
+                        className="bg-blue-600 hover:bg-blue-700 text-white px-4 py-2 rounded-md transition duration-200 w-full"
+                      >
+                        View Details
+                      </button>
+                      <button
+                        onClick={() => deleteLobby(lobby.id)}
+                        className="bg-red-600 hover:bg-red-700 text-white px-4 py-2 rounded-md transition duration-200 w-full"
+                      >
+                        Delete
+                      </button>
+                    </div>
                   </div>
                 ))}
               </div>
@@ -242,7 +247,6 @@ export default function AdminPage() {
           </div>
         </div>
 
-        {/* Lobby Details Section */}
         {selectedLobby && (
           <div className="bg-white rounded-lg shadow-xl p-6">
             <div className="flex justify-between items-center mb-6">
