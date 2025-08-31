@@ -270,7 +270,8 @@ class TestLobbyRouteFlows:
 
         await player_page.go_back()
 
-        await expect(player_page.locator("h1:has-text('Raddle Teams')")).to_be_visible()
+        await expect(player_page.locator("p:has-text('Lobby Code:')")).to_be_visible()
+        await expect(player_page.locator(f"span.font-mono.text-lg.font-bold:has-text('{lobby_code}')")).to_be_visible()
 
         await player_session.screenshot()
 

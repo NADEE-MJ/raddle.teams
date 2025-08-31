@@ -21,11 +21,11 @@ export default function LobbyPage() {
     const navigate = useNavigate();
 
     useEffect(() => {
-        if (!sessionId || !player) {
+        if (!contextLoading && (!sessionId || !player)) {
             navigate('/');
             return;
         }
-    }, [sessionId, player, navigate]);
+    }, [contextLoading, sessionId, player, navigate]);
 
     if (contextLoading) {
         return <LoadingState />;
