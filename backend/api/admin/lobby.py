@@ -7,7 +7,7 @@ from sqlmodel import Session, select
 from backend.custom_logging import api_logger
 from backend.database import Lobby, Player, Team, get_session
 from backend.dependencies import check_admin_token
-from backend.schemas import LobbyInfo
+from backend.schemas import LobbyInfo, MessageResponse
 
 router = APIRouter(dependencies=[Depends(check_admin_token)])
 
@@ -67,7 +67,7 @@ async def get_lobby_info(lobby_id: int, db: Session = Depends(get_session)):
     )
 
 
-@router.delete("/lobby/{lobby_id}", response_model=dict)
+@router.delete("/lobby/{lobby_id}", response_model=MessageResponse)
 async def delete_lobby(lobby_id: int, db: Session = Depends(get_session)):
     api_logger.info(f"Admin requested lobby deletion: lobby_id={lobby_id}")
     lobby = db.get(Lobby, lobby_id)
@@ -80,4 +80,6 @@ async def delete_lobby(lobby_id: int, db: Session = Depends(get_session)):
     db.commit()
     api_logger.info(f"Successfully deleted lobby_id={lobby_id} name={lobby.name}")
 
-    return {"status": "success", "message": f"Lobby '{lobby.name}' deleted successfully"}
+    return MessageResponse(
+        status=True, message=f"Lobby '{lobby.name}' deleted successfully"
+    )

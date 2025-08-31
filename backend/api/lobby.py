@@ -6,7 +6,7 @@ from sqlmodel import Session, select
 from backend.custom_logging import api_logger
 from backend.database import Lobby, Player, Team, get_session
 from backend.dependencies import require_player_session
-from backend.schemas import LobbyInfo, PlayerCreate
+from backend.schemas import LobbyInfo, MessageResponse, PlayerCreate
 from backend.websocket.events import DisconnectedLobbyEvent, JoinedLobbyEvent
 from backend.websocket.managers import lobby_websocket_manager
 
@@ -83,7 +83,7 @@ async def get_current_lobby(
     return lobby
 
 
-@router.delete("/lobby")
+@router.delete("/lobby", response_model=MessageResponse)
 async def leave_current_lobby(
     player: Player = Depends(require_player_session),
     db: Session = Depends(get_session),
@@ -114,7 +114,9 @@ async def leave_current_lobby(
             f"Failed to broadcast player left for session {player.session_id}: {e}"
         )
 
-    return {"status": "success", "message": "Player left lobby successfully"}
+    return MessageResponse(
+        status=True, message="Player left lobby successfully"
+    )
 
 
 @router.get("/lobby/{lobby_id}", response_model=LobbyInfo)

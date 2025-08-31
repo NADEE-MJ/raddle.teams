@@ -1,3 +1,4 @@
+from datetime import datetime
 from pydantic import BaseModel
 
 from backend.database.models import Lobby, Player, Team
@@ -12,3 +13,14 @@ class LobbyInfo(BaseModel):
 
 class PlayerCreate(BaseModel):
     name: str
+
+
+class MessageResponse(BaseModel):
+    status: bool
+    message: str
+
+
+class ApiRootResponse(BaseModel):
+    message: str
+    timestamp: str
+    documentation_endpoints: dict[str, str]

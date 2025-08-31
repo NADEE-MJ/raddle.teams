@@ -10,6 +10,7 @@ from backend.api.admin.lobby import router as admin_lobby_router
 from backend.api.lobby import router as lobby_router
 from backend.custom_logging import api_logger, server_logger
 from backend.database import create_db_and_tables, drop_all_tables
+from backend.schemas import ApiRootResponse, MessageResponse
 from backend.settings import settings
 from backend.websocket.api import router as websocket_router
 
@@ -21,13 +22,15 @@ app = FastAPI(
 
 if settings.TESTING:
 
-    @app.delete("/api/reset-db")
+    @app.delete("/api/reset-db", response_model=MessageResponse)
     async def reset_db():
         api_logger.info("Resetting database (TESTING mode)")
         drop_all_tables()
         create_db_and_tables()
         api_logger.info("Database reset successful")
-        return {"message": "Database reset successful"}
+        return MessageResponse(
+            status=True, message="Database reset successful"
+        )
 
 
 try:
@@ -39,14 +42,14 @@ except Exception as exc:
 
 
 # Define specific API routes BEFORE the catch-all route
-@app.get("/api", tags=["Root"])
+@app.get("/api", tags=["Root"], response_model=ApiRootResponse)
 async def api_root():
     api_logger.info("API root accessed")
-    return {
-        "message": "Welcome to the Raddle Teams API",
-        "timestamp": datetime.now().isoformat(),
-        "documentation_endpoints": {"OpenAPI": "/api/docs", "ReDoc": "/api/redoc"},
-    }
+    return ApiRootResponse(
+        message="Welcome to the Raddle Teams API",
+        timestamp=datetime.now().isoformat(),
+        documentation_endpoints={"OpenAPI": "/docs", "ReDoc": "/redoc"},
+    )
 
 
 app.include_router(lobby_router, prefix="/api")
