@@ -33,3 +33,8 @@ these seem like they will never happen but maybe should add ways to handle this 
 │ │ - Test WebSocket message ordering: Ensure events arrive in correct sequence during rapid operations                                                                                                                                                                │ │
 │ │ - Test admin permission conflicts: Two admins trying to modify same player simultaneously                                                                                                                                                                          │ │
 │ │ - Test admin session isolation: One admin's actions don't affect other admin's WebSocket connections                                                                                                                                                               │ │
+
+
+
+pages to fix:
+Tutorial page
