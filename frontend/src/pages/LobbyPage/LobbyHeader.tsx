@@ -33,7 +33,7 @@ export default function LobbyHeader({ lobby, player, sessionId, setSessionId }: 
             <div>
                 <h1 className='text-3xl font-bold text-gray-900'>{lobby.name}</h1>
                 <p className='mt-1 text-gray-600'>
-                    Lobby Code: <span className='font-mono text-lg font-bold'>{lobby.code}</span>
+                    Lobby Code: <span className='font-mono text-lg font-bold' data-testid="lobby-code">{lobby.code}</span>
                 </p>
             </div>
             <div className='text-right'>

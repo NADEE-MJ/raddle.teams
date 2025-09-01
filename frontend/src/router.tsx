@@ -4,6 +4,7 @@ import { createBrowserRouter, RouterProvider } from 'react-router-dom';
 import { AdminLayout, GameLayout, GlobalLayout, LandingLayout, LobbyLayout } from '@/layouts';
 
 const LandingPage = lazy(() => import('@/pages/LandingPage'));
+const TutorialPage = lazy(() => import('@/pages/TutorialPage'));
 const LobbyPage = lazy(() => import('@/pages/LobbyPage'));
 const AdminPage = lazy(() => import('@/pages/AdminPage'));
 const GamePage = lazy(() => import('@/pages/GamePage'));
@@ -46,7 +47,10 @@ const router = createBrowserRouter([
             {
                 path: '',
                 element: <LandingLayout />,
-                children: [{ index: true, element: withSuspense(<LandingPage />) }],
+                children: [
+                    { index: true, element: withSuspense(<LandingPage />) },
+                    { path: 'tutorial', element: withSuspense(<TutorialPage />) },
+                ],
             },
             {
                 path: 'lobby',

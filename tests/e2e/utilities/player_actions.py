@@ -27,7 +27,7 @@ class PlayerActions:
         join_button = self.page.locator('button:has-text("Join Lobby"), button:has-text("Join")')
         await join_button.click()
 
-        await expect(self.page.locator("p:has-text('Lobby Code:')")).to_be_visible()
+        await expect(self.page.locator('[data-testid="lobby-code"]')).to_be_visible()
 
     async def join_lobby_expect_error(self):
         join_button = self.page.locator('button:has-text("Join Lobby"), button:has-text("Join")')
@@ -42,7 +42,7 @@ class PlayerActions:
         await expect(self.page.locator("h1:has-text('Raddle Teams')")).to_be_visible()
 
     async def wait_in_lobby(self):
-        await expect(self.page.locator("p:has-text('Lobby Code:')")).to_be_visible()
+        await expect(self.page.locator('[data-testid="lobby-code"]')).to_be_visible()
 
     async def wait_for_game_start(self, timeout: int = 60000):
         await expect(self.page.locator("text=Game Started, text=Puzzle")).to_be_visible(timeout=timeout)
