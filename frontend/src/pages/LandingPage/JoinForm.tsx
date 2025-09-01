@@ -27,6 +27,7 @@ export default function JoinForm({ loading, setLoading }: JoinFormProps) {
         setLoading(true);
         setError('');
 
+
         try {
             const player = await api.player.lobby.join(lobbyCode.trim().toUpperCase(), name.trim());
             localStorage.setItem('raddle_session_id', player.session_id);

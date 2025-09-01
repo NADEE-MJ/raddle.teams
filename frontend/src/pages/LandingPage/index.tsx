@@ -1,8 +1,7 @@
 import { useState } from 'react';
-import { Link } from 'react-router-dom';
-import Header from './Header';
+import { Link, } from 'react-router-dom';
 import JoinForm from './JoinForm';
-import AdminButton from './AdminButton';
+import { BookOpenIcon } from "@heroicons/react/24/outline";
 
 export default function LandingPage() {
     const [loading, setLoading] = useState(false);
@@ -10,23 +9,29 @@ export default function LandingPage() {
     return (
         <div className='w-full max-w-md'>
             <div className='rounded-lg bg-white p-8 shadow-xl'>
-                <Header />
-                
-                {/* Tutorial Button */}
-                <div className='mb-6 text-center'>
+                <div className='mb-8 text-center'>
+                    <h1 className='mb-2 text-3xl font-bold text-gray-900'>Raddle Teams</h1>
+                    <p className='text-gray-600'>Join the word chain challenge!</p>
+                </div>
+
+                <JoinForm loading={loading} setLoading={setLoading} />
+
+                <div className='mt-6 flex justify-center border-t border-gray-200 pt-6'>
+                    <Link
+                        to='/admin'
+                        className='mr-3 rounded-lg bg-gray-600 px-4 py-2 font-medium text-white transition duration-200 hover:bg-gray-700'
+                    >
+                        Admin Panel
+                    </Link>
+
                     <Link
                         to='/tutorial'
                         className='inline-flex items-center rounded-lg bg-green-600 px-4 py-2 text-white transition duration-200 hover:bg-green-700'
                     >
-                        <svg className='mr-2 h-4 w-4' fill='none' stroke='currentColor' viewBox='0 0 24 24'>
-                            <path strokeLinecap='round' strokeLinejoin='round' strokeWidth={2} d='M12 6.253v13m0-13C10.832 5.477 9.246 5 7.5 5S4.168 5.477 3 6.253v13C4.168 18.477 5.754 18 7.5 18s3.332.477 4.5 1.253m0-13C13.168 5.477 14.754 5 16.5 5c1.746 0 3.332.477 4.5 1.253v13C19.832 18.477 18.246 18 16.5 18c-1.746 0-3.332.477-4.5 1.253' />
-                        </svg>
+                        <BookOpenIcon className='mr-2 h-4 w-4' />
                         How to Play
                     </Link>
                 </div>
-                
-                <JoinForm loading={loading} setLoading={setLoading} />
-                <AdminButton />
             </div>
         </div>
     );
