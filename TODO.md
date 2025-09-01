@@ -45,7 +45,7 @@ You can provide a way better UX than this when your app throws errors by providi
 pages to fix:
 Tutorial page
 1. on initial load of the tutorial the first hint should be instantly selected
-2. cant really solve going upwards, it just breaks
+2. fix the issues with the clues, especially when going backwards
 lobby, lobby context, layout
 admin, admin context, layout
 Game, game context, layout
