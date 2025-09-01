@@ -36,36 +36,36 @@ const TUTORIAL_PUZZLE: Puzzle = {
             "transform": "S->M",
             "solved": false
         },
-        // {
-        //     "word": "MOUTH",
-        //     "clue": "Organ that sits inside the <>",
-        //     "transform": "CONTAINS THE",
-        //     "solved": false
-        // },
-        // {
-        //     "word": "TONGUE",
-        //     "clue": "Piece of clothing that often has a <>",
-        //     "transform": "IS ON A",
-        //     "solved": false
-        // },
-        // {
-        //     "word": "SHOE",
-        //     "clue": "Rubber layer on the bottom of a <>",
-        //     "transform": "CONTAINS A",
-        //     "solved": false
-        // },
-        // {
-        //     "word": "SOLE",
-        //     "clue": "Kind of food or music that sounds like <>",
-        //     "transform": "SOUNDS LIKE",
-        //     "solved": false
-        // },
-        // {
-        //     "word": "SOUL",
-        //     "clue": "Popular piano duet \"{} and <>\"",
-        //     "transform": "IS",
-        //     "solved": false
-        // },
+        {
+            "word": "MOUTH",
+            "clue": "Organ that sits inside the <>",
+            "transform": "CONTAINS THE",
+            "solved": false
+        },
+        {
+            "word": "TONGUE",
+            "clue": "Piece of clothing that often has a <>",
+            "transform": "IS ON A",
+            "solved": false
+        },
+        {
+            "word": "SHOE",
+            "clue": "Rubber layer on the bottom of a <>",
+            "transform": "CONTAINS A",
+            "solved": false
+        },
+        {
+            "word": "SOLE",
+            "clue": "Kind of food or music that sounds like <>",
+            "transform": "SOUNDS LIKE",
+            "solved": false
+        },
+        {
+            "word": "SOUL",
+            "clue": "Popular piano duet \"{} and <>\"",
+            "transform": "IS",
+            "solved": false
+        },
         {
             "word": "HEART",
             "clue": "Move the first letter of <> to the end to get where we are",
@@ -83,7 +83,7 @@ const TUTORIAL_PUZZLE: Puzzle = {
 
 export default function Tutorial({ setCompleted, completed }: WordChainGameProps) {
     const [currentGuess, setCurrentGuess] = useState('');
-    const [direction, setDirection] = useState<'forward' | 'backward'>('forward');
+    const [direction, setDirection] = useState<'downward' | 'upward'>('downward');
     const inputRef = useRef<HTMLInputElement>(null);
     const [puzzle, setPuzzle] = useState<Puzzle>(TUTORIAL_PUZZLE);
     const [solvingIndex, setSolvingIndex] = useState(-1);
@@ -107,7 +107,7 @@ export default function Tutorial({ setCompleted, completed }: WordChainGameProps
     }, [puzzle]);
 
     const getHintWord = (newSolvingIndex: number) => {
-        if (direction === 'forward') {
+        if (direction === 'downward') {
             return puzzle.ladder[newSolvingIndex - 1].word;
         } else {
             return puzzle.ladder[newSolvingIndex + 1].word;
@@ -119,9 +119,7 @@ export default function Tutorial({ setCompleted, completed }: WordChainGameProps
     };
 
     const checkCompletion = (newPuzzle: Puzzle) => {
-        console.info(newPuzzle, { answer, hintWord, solvingIndex, puzzle, direction });
         const allSolved = newPuzzle.ladder.every((step) => step.solved);
-        console.log({ allSolved });
         setCompleted(allSolved);
         return allSolved;
     };
@@ -146,12 +144,12 @@ export default function Tutorial({ setCompleted, completed }: WordChainGameProps
         updatePuzzleState(1);
     }, []); // eslint-disable-line
 
-    const handleDirectionChange = (newDirection: 'forward' | 'backward') => {
+    const handleDirectionChange = (newDirection: 'downward' | 'upward') => {
         setDirection(newDirection);
         setCurrentGuess('');
 
         let newSolvingIndex = -1;
-        if (newDirection === 'forward') {
+        if (newDirection === 'downward') {
             if (!puzzle.ladder[0].solved) {
                 newSolvingIndex = 1;
             } else {
@@ -185,6 +183,7 @@ export default function Tutorial({ setCompleted, completed }: WordChainGameProps
         const parts: (string | JSX.Element)[] = [];
         let remainingText = clue;
 
+
         while (remainingText.length > 0) {
             const hintIndex = remainingText.indexOf(hintPlaceholder);
             const answerIndex = remainingText.indexOf(answerPlaceholder);
@@ -212,11 +211,14 @@ export default function Tutorial({ setCompleted, completed }: WordChainGameProps
 
             if (isHintPlaceholder && hintWordRendered) {
                 parts.push(hintWordRendered);
-                remainingText = remainingText.substring(nextPlaceholderIndex + hintPlaceholder.length);
+            } else if (isHintPlaceholder) {
+                parts.push('_'.repeat(hintWord.length));
             } else if (answerWordRendered) {
                 parts.push(answerWordRendered);
-                remainingText = remainingText.substring(nextPlaceholderIndex + answerPlaceholder.length);
+            } else {
+                parts.push('_'.repeat(answer.length));
             }
+            remainingText = remainingText.substring(nextPlaceholderIndex + 2);
         }
 
         return parts;
@@ -251,23 +253,22 @@ export default function Tutorial({ setCompleted, completed }: WordChainGameProps
         setCurrentGuess(guess);
 
         if (guess === answer) {
-            const clueToRemove = clues[hintWord];
-
-            setClues(prev => {
-                const newClues = { ...prev };
-                delete newClues[hintWord];
-                return newClues;
-            });
+            const clueToRemove = `${clues[hintWord]}`;
 
             setUsedClues(prev => ({
                 ...prev,
                 [hintWord]: renderSolvedClue(clueToRemove, hintWord, answer)
             }));
 
+            setClues(prev => {
+                const newClues = { ...prev };
+                delete newClues[answer];
+                return newClues;
+            });
+
             const newPuzzle = { ...puzzle };
             const newLadder = newPuzzle.ladder.map((step, index) => {
-                console.log(step, { index, solvingIndex });
-                if (direction === 'forward') {
+                if (direction === 'downward') {
                     if (index === solvingIndex - 1) {
                         return { ...step, solved: true };
                     } else if (index === solvingIndex && solvingIndex === puzzle.ladder.length - 1) {
@@ -285,12 +286,11 @@ export default function Tutorial({ setCompleted, completed }: WordChainGameProps
             newPuzzle.ladder = newLadder;
             setPuzzle(newPuzzle);
             if (checkCompletion(newPuzzle)) {
-                console.log('here');
                 return;
             }
 
             let newSolvingIndex = -1;
-            if (direction === 'forward') {
+            if (direction === 'downward') {
                 newSolvingIndex = solvingIndex + 1;
             } else {
                 newSolvingIndex = solvingIndex - 1;
@@ -300,7 +300,7 @@ export default function Tutorial({ setCompleted, completed }: WordChainGameProps
         }
     };
 
-    const renderForwardClue = (clue: string) => {
+    const renderDownwardClue = (clue: string) => {
         const hintWordRendered = <span className="bg-green-100 text-green-700 font-mono px-1 pt-[6px] pb-[3px]">{hintWord}</span>;
 
         const parts = renderClueParts(clue, hintWordRendered, null);
@@ -312,7 +312,7 @@ export default function Tutorial({ setCompleted, completed }: WordChainGameProps
         );
     };
 
-    const renderBackwardClue = (clue: string) => {
+    const renderUpwardClue = (clue: string) => {
         const answerWordRendered = <span className="bg-yellow-50 font-mono px-1 pt-[6px] pb-[3px]">{answer}</span>;
 
         const parts = renderClueParts(clue, null, answerWordRendered);
@@ -335,7 +335,7 @@ export default function Tutorial({ setCompleted, completed }: WordChainGameProps
             isTarget = index === solvingIndex;
             if (isTarget) {
                 bgColor = 'bg-yellow-50';
-            } else if (direction === 'forward') {
+            } else if (direction === 'downward') {
                 if (index === solvingIndex - 1) {
                     shouldReveal = true;
                     bgColor = 'bg-green-100';
@@ -440,58 +440,43 @@ export default function Tutorial({ setCompleted, completed }: WordChainGameProps
                         return renderLadderStep(step, index);
                     })}
 
-                    {completed || (direction === 'forward' && (solvingIndex === puzzle.ladder.length - 2 || solvingIndex === puzzle.ladder.length - 1)) || (direction === 'backward' && (solvingIndex === 0 || solvingIndex === 1)) ?
+                    {completed || (direction === 'downward' && (solvingIndex === puzzle.ladder.length - 2 || solvingIndex === puzzle.ladder.length - 1)) || (direction === 'upward' && (solvingIndex === 0 || solvingIndex === 1)) ?
                         (<div>
                             <div className="hidden md:block p-3"></div>
                         </div>)
                         :
                         <button
-                            onClick={() => handleDirectionChange(direction === 'forward' ? 'backward' : 'forward')}
+                            onClick={() => handleDirectionChange(direction === 'downward' ? 'upward' : 'downward')}
                             className="w-full text-xs text-gray-400 italic transition duration-200 hover:bg-white"
                         >
-                            Switch to solving {direction === 'forward' ? '↑ upwards' : '↓ downwards'}
+                            Switch to solving {direction === 'downward' ? '↑ upward' : '↓ downward'}
                         </button>}
                 </div>
             </div>
 
-            {/*
             <div className="leading-[24px] text-sm md:text-base lg:text-lg md:p-0">
                 <div className="text-gray-500 text-sm uppercase tracking-wide mb-3">Clues, out of order</div>
 
-                {clues.map((hint) => (
-                    <div key={hint.index} className="mr-1 md:mr-0 mb-2 pt-1 pb-0 md:pt-2 md:pb-1 rounded-md border border-gray-300 bg-white px-2 py-1">
-                        {direction === 'backward' && targetWord ?
-                            renderBackwardClue(hint.processedClue, targetWord) :
-                            renderClueWithHighlight(hint.processedClue)
+                {Object.entries(clues).map(([word, clue]) => (
+                    <div key={word} className="mr-1 md:mr-0 mb-2 pt-1 pb-0 md:pt-2 md:pb-1 rounded-md border border-gray-300 bg-white px-2 py-1">
+                        {direction === 'upward' ?
+                            renderUpwardClue(clue) :
+                            renderDownwardClue(clue)
                         }
                     </div>
                 ))}
 
-                {TUTORIAL_PUZZLE.ladder.map((step, index) => {
-                    if (!step.clue || availableHints.find(h => h.index === index) || usedHintsList.find(h => TUTORIAL_PUZZLE.ladder.findIndex(s => s.clue === h.clue) === index)) return null;
-
-                    return (
-                        <div key={index} className="mr-1 md:mr-0 mb-2 pt-1 pb-0 md:pt-2 md:pb-1 rounded-md border border-gray-300 bg-white px-2 py-1 opacity-25">
-                            {direction === 'backward' && targetWord ?
-                                renderBackwardClue(step.clue, targetWord) :
-                                renderClueWithHighlight(step.clue)
-                            }
-                        </div>
-                    );
-                })}
-
-                {usedClues.map && (
+                {Object.entries(usedClues).length > 0 && (
                     <div className="mt-6">
                         <h4 className="text-gray-500 text-sm uppercase tracking-wide mb-3">Used Clues</h4>
-                        {usedHintsList.map((hint, index) => (
-                            <div key={index} className="mr-1 md:mr-0 mb-2 pt-1 pb-0 md:pt-2 md:pb-1 rounded-md border border-gray-300 bg-gray-50 px-2 py-1 text-gray-500">
-                                {renderClueWithHighlight(hint.processedClue, true)}
+                        {Object.entries(usedClues).map(([word, renderedClue]) => (
+                            <div key={word} className="mr-1 md:mr-0 mb-2 pt-1 pb-0 md:pt-2 md:pb-1 rounded-md border border-gray-300 bg-gray-50 px-2 py-1 text-gray-500">
+                                {renderedClue}
                             </div>
                         ))}
                     </div>
                 )}
             </div>
-            */}
         </div>
     );
 }
@@ -560,7 +545,7 @@ export default function Tutorial({ setCompleted, completed }: WordChainGameProps
 //     }
 
 //     if (currentStep === 6) {
-//         return "When solving upwards, the clues flip around — now they show you the answer, and you need to figure out what word belongs in the green box. This direction can be more challenging. If you&apos;re stuck, tap the lightbulb. Type your answer when you&apos;ve figured it out.";
+//         return "When solving upward, the clues flip around — now they show you the answer, and you need to figure out what word belongs in the green box. This direction can be more challenging. If you&apos;re stuck, tap the lightbulb. Type your answer when you&apos;ve figured it out.";
 //     }
 
 //     return "Keep going! Solve the remaining clues to complete the ladder.";
