@@ -87,17 +87,22 @@ export default function LobbyDetails({
                                 {selectedLobby.players.map(player => (
                                     <div
                                         key={player.id}
+                                        data-testid={`player-row-${player.name}`}
                                         className='flex items-center justify-between rounded border bg-white p-2'
                                     >
                                         <div className='flex items-center gap-3'>
                                             <span className='font-medium'>{player.name}</span>
-                                            <span className='rounded bg-gray-100 px-2 py-1 text-sm text-gray-500'>
+                                            <span 
+                                                className='rounded bg-gray-100 px-2 py-1 text-sm text-gray-500'
+                                                data-testid={`team-status-${player.name}`}
+                                            >
                                                 {player.team_id ? `Team ${player.team_id}` : 'No team'}
                                             </span>
                                         </div>
                                         <div className='flex items-center gap-2'>
                                             {selectedLobby.teams && selectedLobby.teams.length > 0 && (
                                                 <select
+                                                    data-testid={`team-dropdown-${player.name}`}
                                                     value={player.team_id || ''}
                                                     onChange={e =>
                                                         handleMovePlayer(
@@ -117,6 +122,7 @@ export default function LobbyDetails({
                                                 </select>
                                             )}
                                             <button
+                                                data-testid={`kick-button-${player.name}`}
                                                 onClick={() => handleKickPlayer(player.id!)}
                                                 className='rounded bg-red-600 px-2 py-1 text-xs text-white hover:bg-red-700'
                                                 disabled={loading}
@@ -133,7 +139,7 @@ export default function LobbyDetails({
 
                 {(!selectedLobby.teams || selectedLobby.teams.length === 0) && selectedLobby.players.length > 0 && (
                     <div className='mb-6 rounded-lg bg-blue-50 p-4'>
-                        <h3 className='mb-3 text-lg font-semibold'>Create Teams</h3>
+                        <h3 className='mb-3 text-lg font-semibold' data-testid='create-teams-heading'>Create Teams</h3>
                         <div className='flex items-center gap-4'>
                             <label className='text-sm font-medium'>Number of teams:</label>
                             <input
@@ -145,6 +151,7 @@ export default function LobbyDetails({
                                 className='w-20 rounded border px-2 py-1'
                             />
                             <button
+                                data-testid='create-teams-button'
                                 onClick={handleCreateTeams}
                                 disabled={isCreatingTeams || numTeams < 2}
                                 className='rounded bg-green-600 px-4 py-2 text-white hover:bg-green-700 disabled:bg-green-400'
@@ -160,7 +167,7 @@ export default function LobbyDetails({
 
                 {selectedLobby.teams && selectedLobby.teams.length > 0 && (
                     <div className='mt-6'>
-                        <h3 className='mb-4 text-lg font-semibold'>Teams ({selectedLobby.teams.length})</h3>
+                        <h3 className='mb-4 text-lg font-semibold' data-testid='teams-heading'>Teams ({selectedLobby.teams.length})</h3>
                         <div className='grid gap-4 md:grid-cols-2'>
                             {selectedLobby.teams.map(team => (
                                 <div key={team.id} className='rounded-lg border border-gray-200 bg-gray-50 p-4'>
@@ -191,16 +198,18 @@ export default function LobbyDetails({
 
                 {unassignedPlayers.length > 0 && selectedLobby.teams && selectedLobby.teams.length > 0 && (
                     <div className='mt-6'>
-                        <h3 className='mb-4 text-lg font-semibold'>Unassigned Players ({unassignedPlayers.length})</h3>
+                        <h3 className='mb-4 text-lg font-semibold' data-testid='unassigned-players-heading'>Unassigned Players ({unassignedPlayers.length})</h3>
                         <div className='space-y-2'>
                             {unassignedPlayers.map(player => (
                                 <div
                                     key={player.id}
+                                    data-testid={`unassigned-player-row-${player.name}`}
                                     className='flex items-center justify-between rounded border bg-yellow-50 p-2'
                                 >
                                     <span className='font-medium'>{player.name}</span>
                                     <div className='flex items-center gap-2'>
                                         <select
+                                            data-testid={`unassigned-team-dropdown-${player.name}`}
                                             value=''
                                             onChange={e => handleMovePlayer(player.id!, parseInt(e.target.value))}
                                             disabled={movingPlayerId === player.id}

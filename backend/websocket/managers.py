@@ -222,6 +222,13 @@ class LobbyWebSocketManager:
                 if lobby_id in self.lobby_websockets and player_session_id in self.lobby_websockets[lobby_id]:
                     del self.lobby_websockets[lobby_id][player_session_id]
                     websocket_logger.info(f"Player {player_session_id} removed from lobby {lobby_id} after kick")
+        
+        # Notify other players in the lobby about the kick
+        kick_notification_event = PlayerKickedEvent(lobby_id=lobby_id, player_session_id=player_session_id)
+        await self.broadcast_to_lobby(lobby_id, kick_notification_event)
+        
+        # Also notify admin clients
+        await self.admin_web_socket_manager.broadcast_to_lobby(lobby_id, kick_notification_event)
 
     async def continuous_listening(self, websocket: WebSocket):
         while True:

@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import { useState, useEffect } from 'react';
 import { Outlet, useParams } from 'react-router-dom';
 import { GameOutletContext } from '@/hooks/useGameOutletContext';
 import { Player, Game, Team } from '@/types';

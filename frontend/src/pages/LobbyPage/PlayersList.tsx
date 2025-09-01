@@ -16,20 +16,25 @@ export default function PlayersList({ players, currentPlayer }: PlayersListProps
                     {players.map(playerItem => (
                         <div
                             key={playerItem.id}
-                            className={`flex items-center justify-between rounded-lg p-3 ${
-                                playerItem.id === currentPlayer.id
+                            data-testid={`player-list-row-${playerItem.name}`}
+                            className={`flex items-center justify-between rounded-lg p-3 ${playerItem.id === currentPlayer.id
                                     ? 'border-2 border-blue-300 bg-blue-100'
                                     : 'border border-gray-200 bg-white'
-                            }`}
+                                }`}
                         >
                             <div className='flex items-center gap-3'>
-                                <span className='font-medium'>
+                                <span className='font-medium' data-testid={`player-name-${playerItem.name}`}>
                                     {playerItem.name}
                                     {playerItem.id === currentPlayer.id && ' (You)'}
                                 </span>
                             </div>
-                            <div className='rounded bg-gray-100 px-2 py-1 text-sm text-gray-500'>
-                                {playerItem.team_id ? `Team ${playerItem.team_id}` : 'No team'}
+                            <div className='team-status-container' data-testid={`team-status-container-${playerItem.name}`}>
+                                <span
+                                    className='rounded bg-gray-100 px-2 py-1 text-sm text-gray-500'
+                                    data-testid={`team-status-${playerItem.name}`}
+                                >
+                                    {playerItem.team_id ? `Team ${playerItem.team_id}` : 'No team'}
+                                </span>
                             </div>
                         </div>
                     ))}
