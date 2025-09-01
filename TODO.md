@@ -38,3 +38,6 @@ these seem like they will never happen but maybe should add ways to handle this 
 
 pages to fix:
 Tutorial page
+lobby, lobby context, layout
+admin, admin context, layout
+Game, game context, layout

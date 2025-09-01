@@ -27,7 +27,6 @@ export default function WordChainGame({ puzzle, onComplete, completed, targetWor
     const [feedback, setFeedback] = useState<string>('');
 
     useEffect(() => {
-        // Reset state when puzzle changes
         setSolvedWords(new Set([0, puzzle.ladder.length - 1]));
         setUsedHints(new Set());
         setCurrentGuess('');
@@ -67,7 +66,7 @@ export default function WordChainGame({ puzzle, onComplete, completed, targetWor
     const getNextTargetIndex = () => {
         const current = getCurrentWord();
         if (!current) return null;
-        
+
         if (direction === 'forward') {
             return current.index + 1;
         } else {
@@ -111,7 +110,7 @@ export default function WordChainGame({ puzzle, onComplete, completed, targetWor
 
     const checkAndSubmit = (guess: string) => {
         const trimmedGuess = guess.toUpperCase().trim();
-        
+
         const targetIndex = getNextTargetIndex();
         if (targetIndex === null) {
             return;
@@ -122,14 +121,14 @@ export default function WordChainGame({ puzzle, onComplete, completed, targetWor
         if (trimmedGuess === correctAnswer) {
             // Add to solved words
             setSolvedWords(prev => new Set([...prev, targetIndex]));
-            
+
             // Move the corresponding hint to used hints (this is the hint that helped find this word)
             setUsedHints(prev => new Set([...prev, targetIndex]));
-            
+
             setFeedback(`🎉 Correct! "${correctAnswer}" solved!`);
             setCurrentGuess('');
-            
-            // Auto-update word length for next word if possible  
+
+            // Auto-update word length for next word if possible
             const nextTargetIndex = direction === 'forward' ? targetIndex + 1 : targetIndex - 1;
             if (nextTargetIndex >= 0 && nextTargetIndex < puzzle.ladder.length) {
                 setWordLength(puzzle.ladder[nextTargetIndex].word.length);
@@ -140,7 +139,7 @@ export default function WordChainGame({ puzzle, onComplete, completed, targetWor
     const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
         const value = e.target.value.toUpperCase();
         setCurrentGuess(value);
-        
+
         // Auto-submit if the word is complete and correct
         const targetIndex = getNextTargetIndex();
         if (targetIndex !== null) {
@@ -155,9 +154,9 @@ export default function WordChainGame({ puzzle, onComplete, completed, targetWor
         setDirection(newDirection);
         setFeedback('');
         setCurrentGuess('');
-        
+
         // Update word length for the new direction
-        const targetIndex = newDirection === 'forward' 
+        const targetIndex = newDirection === 'forward'
             ? Math.min(...Array.from(solvedWords).filter(i => {
                 const sorted = Array.from(solvedWords).sort((a, b) => a - b);
                 const idx = sorted.indexOf(i);
@@ -168,7 +167,7 @@ export default function WordChainGame({ puzzle, onComplete, completed, targetWor
                 const idx = sorted.indexOf(i);
                 return idx > 0 && i - sorted[idx - 1] > 1;
             })) - 1;
-            
+
         if (targetIndex >= 0 && targetIndex < puzzle.ladder.length) {
             setWordLength(puzzle.ladder[targetIndex].word.length);
         }
@@ -178,30 +177,75 @@ export default function WordChainGame({ puzzle, onComplete, completed, targetWor
         return (
             <div className="mb-6">
                 <h3 className="text-lg font-semibold mb-4 text-center">{puzzle.title}</h3>
-                <div className="flex flex-col items-center space-y-2">
+                <div className="flex flex-col items-center space-y-4">
                     {puzzle.ladder.map((step, index) => {
                         const isSolved = solvedWords.has(index);
                         const isTarget = index === getNextTargetIndex();
-                        
+
                         return (
-                            <div key={index} className="flex items-center">
-                                <div className={`px-4 py-2 rounded border-2 font-mono text-lg font-bold min-w-[120px] text-center ${
-                                    isSolved 
-                                        ? 'bg-green-100 border-green-500 text-green-800'
-                                        : isTarget
-                                        ? 'bg-blue-100 border-blue-500 text-blue-800'
-                                        : 'bg-gray-100 border-gray-300 text-gray-500'
-                                }`}>
-                                    {isSolved ? step.word : '?'.repeat(step.word.length)}
-                                </div>
-                                {index < puzzle.ladder.length - 1 && (
-                                    <div className="text-gray-400 mx-2">↓</div>
+                            <div key={index} className="flex flex-col items-center">
+                                {!isTarget && (
+                                    <>
+                                        <div className="flex items-center gap-1">
+                                            {step.word.split('').map((letter, letterIndex) => (
+                                                <div key={letterIndex} className={`w-10 h-10 border-2 rounded flex items-center justify-center font-mono text-lg font-bold ${isSolved
+                                                    ? 'bg-green-100 border-green-500 text-green-800'
+                                                    : 'bg-gray-100 border-gray-300 text-gray-500'
+                                                    }`}>
+                                                    {isSolved ? letter : '?'}
+                                                </div>
+                                            ))}
+                                        </div>
+                                        <div className="text-sm text-gray-500 mt-1">
+                                            ({step.word.length})
+                                        </div>
+                                    </>
+                                )}
+                                {isTarget && (
+                                    <div className="mt-2 flex flex-col items-center gap-2">
+                                        <div className="flex gap-2">
+                                            <button
+                                                onClick={() => handleDirectionChange('backward')}
+                                                className={`px-2 py-1 text-xs rounded border ${direction === 'backward'
+                                                    ? 'bg-blue-600 text-white border-blue-600'
+                                                    : 'bg-white text-blue-600 border-blue-300 hover:bg-blue-50'
+                                                    }`}
+                                            >
+                                                ← Backward
+                                            </button>
+                                            <button
+                                                onClick={() => handleDirectionChange('forward')}
+                                                className={`px-2 py-1 text-xs rounded border ${direction === 'forward'
+                                                    ? 'bg-blue-600 text-white border-blue-600'
+                                                    : 'bg-white text-blue-600 border-blue-300 hover:bg-blue-50'
+                                                    }`}
+                                            >
+                                                Forward →
+                                            </button>
+                                        </div>
+                                        <div className="flex items-center gap-2">
+                                            <div className="flex items-center justify-center w-8 h-8 bg-blue-100 border border-blue-300 rounded text-blue-800 text-sm font-bold">
+                                                {step.word.length}
+                                            </div>
+                                            <input
+                                                type="text"
+                                                value={currentGuess}
+                                                onChange={handleInputChange}
+                                                placeholder="Enter word"
+                                                className="px-3 py-2 border border-gray-300 rounded focus:border-blue-500 focus:outline-none font-mono uppercase text-center"
+                                                maxLength={step.word.length}
+                                            />
+                                            <button className="w-8 h-8 bg-yellow-100 border border-yellow-300 rounded flex items-center justify-center text-yellow-600 hover:bg-yellow-200">
+                                                💡
+                                            </button>
+                                        </div>
+                                    </div>
                                 )}
                             </div>
                         );
                     })}
                 </div>
-                
+
                 <div className="mt-4 text-center text-sm text-gray-600">
                     <div className="flex justify-center space-x-4">
                         <span className="flex items-center">
@@ -209,8 +253,8 @@ export default function WordChainGame({ puzzle, onComplete, completed, targetWor
                             Solved
                         </span>
                         <span className="flex items-center">
-                            <div className="w-4 h-4 bg-blue-100 border-2 border-blue-500 rounded mr-2"></div>
-                            Solving next
+                            <div className="w-4 h-4 bg-yellow-100 border-2 border-yellow-500 rounded mr-2"></div>
+                            Current
                         </span>
                         <span className="flex items-center">
                             <div className="w-4 h-4 bg-gray-100 border-2 border-gray-300 rounded mr-2"></div>
@@ -222,62 +266,6 @@ export default function WordChainGame({ puzzle, onComplete, completed, targetWor
         );
     };
 
-    const renderControls = () => {
-        const currentWord = getCurrentWord();
-        if (!currentWord) return null;
-
-        return (
-            <div className="mb-6 p-4 bg-blue-50 rounded-lg border border-blue-200">
-                <h4 className="font-semibold mb-3">Solving Controls</h4>
-                
-                {/* Direction Selection */}
-                <div className="mb-4">
-                    <label className="block text-sm font-medium mb-2">Direction:</label>
-                    <div className="flex gap-2">
-                        <button
-                            onClick={() => handleDirectionChange('forward')}
-                            className={`px-3 py-2 rounded border ${
-                                direction === 'forward'
-                                    ? 'bg-blue-600 text-white border-blue-600'
-                                    : 'bg-white text-blue-600 border-blue-300 hover:bg-blue-50'
-                            }`}
-                        >
-                            Forward (from {currentWord.word})
-                        </button>
-                        <button
-                            onClick={() => handleDirectionChange('backward')}
-                            className={`px-3 py-2 rounded border ${
-                                direction === 'backward'
-                                    ? 'bg-blue-600 text-white border-blue-600'
-                                    : 'bg-white text-blue-600 border-blue-300 hover:bg-blue-50'
-                            }`}
-                        >
-                            Backward (from {currentWord.word})
-                        </button>
-                    </div>
-                </div>
-
-                {/* Word Length */}
-                <div className="mb-4">
-                    <label className="block text-sm font-medium mb-2">
-                        Next word is {wordLength} letters long
-                    </label>
-                </div>
-
-                {/* Input */}
-                <div className="flex gap-2">
-                    <input
-                        type="text"
-                        value={currentGuess}
-                        onChange={handleInputChange}
-                        placeholder={`Type ${wordLength}-letter word (auto-submits when correct)`}
-                        className="flex-1 px-3 py-2 border border-gray-300 rounded focus:border-blue-500 focus:outline-none font-mono uppercase"
-                        maxLength={wordLength}
-                    />
-                </div>
-            </div>
-        );
-    };
 
     const renderHints = () => {
         const availableHints = getAvailableHints();
@@ -316,31 +304,29 @@ export default function WordChainGame({ puzzle, onComplete, completed, targetWor
         );
     };
 
-    if (completed) {
-        return (
-            <div className="text-center">
-                {renderLadder()}
-                <div className="bg-green-100 p-4 rounded-lg text-green-800">
-                    <p className="font-semibold">✅ Tutorial section completed!</p>
-                    <p>You&apos;ve learned how to solve word ladders using direction and hints!</p>
-                </div>
-            </div>
-        );
-    }
+    // if (completed) {
+    //     return (
+    //         <div className="text-center">
+    //             {renderLadder()}
+    //             <div className="bg-green-100 p-4 rounded-lg text-green-800">
+    //                 <p className="font-semibold">✅ Tutorial section completed!</p>
+    //                 <p>You&apos;ve learned how to solve word ladders using direction and hints!</p>
+    //             </div>
+    //         </div>
+    //     );
+    // }
 
     return (
         <div>
             {renderLadder()}
-            {renderControls()}
-            
+
             {feedback && (
-                <div className={`mb-4 p-3 rounded ${
-                    feedback.includes('🎉') ? 'bg-green-100 text-green-800' : 'bg-orange-100 text-orange-800'
-                }`}>
+                <div className={`mb-4 p-3 rounded ${feedback.includes('🎉') ? 'bg-green-100 text-green-800' : 'bg-orange-100 text-orange-800'
+                    }`}>
                     {feedback}
                 </div>
             )}
-            
+
             {renderHints()}
         </div>
     );

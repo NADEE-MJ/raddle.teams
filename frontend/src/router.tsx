@@ -27,6 +27,7 @@ const router = createBrowserRouter([
                 children: [
                     { index: true, element: withSuspense(<LandingPage />) },
                     { path: 'tutorial', element: withSuspense(<TutorialPage />) },
+                    { path: '*', element: <NotFoundPage /> },
                 ],
             },
             {
@@ -56,7 +57,6 @@ const router = createBrowserRouter([
                     { path: ':gameId', element: withSuspense(<GamePage />) },
                 ],
             },
-            { path: '*', element: <NotFoundPage /> },
         ],
     },
 ]);

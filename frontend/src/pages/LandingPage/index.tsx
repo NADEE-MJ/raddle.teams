@@ -20,6 +20,7 @@ export default function LandingPage() {
                     <Link
                         to='/admin'
                         className='mr-3 rounded-lg bg-gray-600 px-4 py-2 font-medium text-white transition duration-200 hover:bg-gray-700'
+                        data-testid='admin-panel-link'
                     >
                         Admin Panel
                     </Link>
@@ -27,6 +28,7 @@ export default function LandingPage() {
                     <Link
                         to='/tutorial'
                         className='inline-flex items-center rounded-lg bg-green-600 px-4 py-2 text-white transition duration-200 hover:bg-green-700'
+                        data-testid='tutorial-link'
                     >
                         <BookOpenIcon className='mr-2 h-4 w-4' />
                         How to Play

@@ -54,6 +54,7 @@ export default function JoinForm({ loading, setLoading }: JoinFormProps) {
                     className='w-full rounded-lg border border-gray-300 px-3 py-2 shadow-sm focus:border-blue-500 focus:ring-2 focus:ring-blue-500 focus:outline-none'
                     placeholder='Enter your name'
                     disabled={loading}
+                    data-testid='name-input'
                 />
             </div>
 
@@ -70,6 +71,7 @@ export default function JoinForm({ loading, setLoading }: JoinFormProps) {
                     placeholder='ABCDEF'
                     maxLength={6}
                     disabled={loading}
+                    data-testid='lobby-code-input'
                 />
             </div>
 
@@ -79,6 +81,7 @@ export default function JoinForm({ loading, setLoading }: JoinFormProps) {
                 type='submit'
                 disabled={loading}
                 className='w-full rounded-lg bg-blue-600 px-4 py-2 font-medium text-white transition duration-200 hover:bg-blue-700 disabled:bg-blue-400'
+                data-testid='join-lobby-button'
             >
                 {loading ? 'Joining...' : 'Join Lobby'}
             </button>
