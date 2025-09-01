@@ -262,7 +262,7 @@ export default function Tutorial({ setCompleted, completed }: WordChainGameProps
 
             setClues(prev => {
                 const newClues = { ...prev };
-                delete newClues[answer];
+                delete newClues[hintWord];
                 return newClues;
             });
 
