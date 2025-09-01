@@ -123,6 +123,57 @@ export default function AdminPage() {
         setSelectedLobby(null);
     };
 
+    const createTeams = async (lobbyId: number, numTeams: number) => {
+        if (!adminToken) return;
+
+        try {
+            setLoading(true);
+            await api.admin.lobby.team.create(lobbyId, numTeams, adminToken);
+            // Refresh the selected lobby to show new teams
+            const lobbyInfo = await api.admin.lobby.getInfo(lobbyId, adminToken);
+            setSelectedLobby(lobbyInfo);
+        } catch (err) {
+            setError('Failed to create teams');
+            console.error('Error creating teams:', err);
+        } finally {
+            setLoading(false);
+        }
+    };
+
+    const movePlayer = async (playerId: number, teamId: number) => {
+        if (!adminToken || !selectedLobby) return;
+
+        try {
+            setLoading(true);
+            await api.admin.lobby.team.move(playerId, teamId, adminToken);
+            // Refresh the selected lobby to show updated teams
+            const lobbyInfo = await api.admin.lobby.getInfo(selectedLobby.lobby.id, adminToken);
+            setSelectedLobby(lobbyInfo);
+        } catch (err) {
+            setError('Failed to move player');
+            console.error('Error moving player:', err);
+        } finally {
+            setLoading(false);
+        }
+    };
+
+    const kickPlayer = async (playerId: number) => {
+        if (!adminToken || !selectedLobby) return;
+
+        try {
+            setLoading(true);
+            await api.admin.lobby.player.kick(playerId, adminToken);
+            // Refresh the selected lobby to show updated players
+            const lobbyInfo = await api.admin.lobby.getInfo(selectedLobby.lobby.id, adminToken);
+            setSelectedLobby(lobbyInfo);
+        } catch (err) {
+            setError('Failed to kick player');
+            console.error('Error kicking player:', err);
+        } finally {
+            setLoading(false);
+        }
+    };
+
     const deleteLobby = async (lobbyId: number) => {
         if (!adminToken) return;
 
@@ -199,7 +250,16 @@ export default function AdminPage() {
                     />
                 </div>
 
-                {selectedLobby && <LobbyDetails selectedLobby={selectedLobby} onClose={closeLobbyDetails} />}
+                {selectedLobby && (
+                    <LobbyDetails
+                        selectedLobby={selectedLobby}
+                        onClose={closeLobbyDetails}
+                        onCreateTeams={createTeams}
+                        onMovePlayer={movePlayer}
+                        onKickPlayer={kickPlayer}
+                        loading={loading}
+                    />
+                )}
             </div>
         </div>
     );

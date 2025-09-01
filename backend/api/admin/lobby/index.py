@@ -1,20 +1,16 @@
 from uuid import uuid4
 
 from fastapi import APIRouter, Depends, HTTPException
-from pydantic import BaseModel
 from sqlalchemy.orm import selectinload
 from sqlmodel import Session, select
 
 from backend.custom_logging import api_logger
-from backend.database import Lobby, get_session
+from backend.database import Lobby, Player, get_session
 from backend.dependencies import check_admin_token
-from backend.schemas import LobbyInfo, MessageResponse
+from backend.schemas import LobbyCreate, LobbyInfo, MessageResponse
+from backend.websocket.managers import lobby_websocket_manager
 
 router = APIRouter(dependencies=[Depends(check_admin_token)])
-
-
-class LobbyCreate(BaseModel):
-    name: str
 
 
 @router.post("/lobby", response_model=Lobby)
@@ -63,6 +59,32 @@ async def get_lobby_info(lobby_id: int, db: Session = Depends(get_session)):
     api_logger.info(f"Admin returning lobby info for {lobby_id}: {len(teams)} teams, {len(players)} players")
 
     return LobbyInfo(lobby=lobby, players=players, players_by_team=players_by_team, teams=teams)
+
+
+@router.delete("/lobby/player/{player_id}", response_model=MessageResponse)
+async def kick_player(
+    player_id: int,
+    db: Session = Depends(get_session),
+):
+    api_logger.info(f"Admin requested player kick: player_id={player_id}")
+
+    player = db.get(Player, player_id)
+    if not player:
+        api_logger.warning(f"Player kick failed: player not found player_id={player_id}")
+        raise HTTPException(status_code=404, detail="Player not found")
+
+    player_name = player.name
+    lobby_id = player.lobby_id
+    player_session_id = player.session_id
+
+    await lobby_websocket_manager.kick_player(lobby_id, player_session_id)
+
+    # Delete player (this will cascade delete related guesses)
+    db.delete(player)
+    db.commit()
+
+    api_logger.info(f"Successfully kicked player {player_name} (id={player_id}) from lobby_id={lobby_id}")
+    return MessageResponse(status=True, message=f"Player '{player_name}' has been kicked from the lobby")
 
 
 @router.delete("/lobby/{lobby_id}", response_model=MessageResponse)

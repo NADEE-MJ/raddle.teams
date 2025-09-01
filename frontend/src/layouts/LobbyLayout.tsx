@@ -1,5 +1,5 @@
 import React, { useState, useEffect, useCallback, useRef } from 'react';
-import { Outlet, useParams } from 'react-router-dom';
+import { Outlet, useParams, useNavigate } from 'react-router-dom';
 import { LobbyOutletContext } from '@/hooks/useLobbyOutletContext';
 import { useWebSocket } from '@/hooks/useWebSocket';
 import { api } from '@/services/api';
@@ -7,6 +7,7 @@ import { Player, Lobby, LobbyInfo, WebSocketMessage } from '@/types';
 
 const LobbyLayout: React.FC = () => {
     const { lobbyCode } = useParams<{ lobbyCode: string }>();
+    const navigate = useNavigate();
     const [sessionId, setSessionIdState] = useState<string | null>(null);
     const [player, setPlayer] = useState<Player | null>(null);
     const [lobby, setLobby] = useState<Lobby | null>(null);
@@ -62,9 +63,21 @@ const LobbyLayout: React.FC = () => {
     const handleWebSocketMessage = useCallback(
         (message: WebSocketMessage) => {
             console.debug('Received WebSocket message:', message);
+
+            if (message.type === 'player_kicked') {
+                alert('You have been kicked from the lobby by an admin.');
+                // Clear session and redirect to home
+                setSessionId(null);
+                setPlayer(null);
+                setLobby(null);
+                setLobbyInfo(null);
+                navigate('/');
+                return;
+            }
+
             scheduleReload();
         },
-        [scheduleReload]
+        [scheduleReload, setSessionId, navigate]
     );
 
     useEffect(() => {

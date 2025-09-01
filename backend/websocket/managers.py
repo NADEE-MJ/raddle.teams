@@ -4,7 +4,7 @@ from typing import Dict, TypedDict
 from fastapi import WebSocket
 
 from backend.custom_logging import websocket_logger
-from backend.websocket.events import LobbyEvent
+from backend.websocket.events import LobbyEvent, PlayerKickedEvent
 
 
 class AdminWebSocketConnection(TypedDict):
@@ -175,15 +175,18 @@ class LobbyWebSocketManager:
             f"Player disconnected: lobby_id={lobby_id} player_session_id={player_session_id}. Remaining in lobby={len(self.lobby_websockets.get(lobby_id, {}))}"
         )
 
-    # async def broadcast_to_session(
-    #     self, lobby_id: int, player_session_id: str, event: LobbyEvent
-    # ):
-    #     websocket = self.lobby_websockets.get(lobby_id, {}).get(player_session_id)
-    #     if websocket:
-    #         await websocket.send_text(json.dumps(event.model_dump()))
-    #     else:
-    #         # TODO catch this
-    #         raise ValueError("WebSocket is not connected")
+    async def send_to_player(self, lobby_id: int, player_session_id: str, event: LobbyEvent):
+        websocket = self.lobby_websockets.get(lobby_id, {}).get(player_session_id)
+        if websocket:
+            try:
+                await websocket.send_text(json.dumps(event.model_dump()))
+                websocket_logger.debug(f"Sent event to player_session_id={player_session_id} in lobby={lobby_id}")
+            except Exception:
+                websocket_logger.exception(
+                    f"Failed to send event to player_session_id={player_session_id} in lobby={lobby_id}"
+                )
+        else:
+            websocket_logger.debug(f"No websocket found for player_session_id={player_session_id} in lobby={lobby_id}")
 
     async def broadcast_to_lobby(self, lobby_id: int, event: LobbyEvent):
         websocket_logger.debug(f"Broadcasting event to lobby {lobby_id}: {event.model_dump()}")
@@ -202,6 +205,23 @@ class LobbyWebSocketManager:
                 # Ignore failed sends, cleanup will happen elsewhere
                 pass
         await self.admin_web_socket_manager.broadcast_to_lobby(lobby_id, event)
+
+    async def kick_player(self, lobby_id: int, player_session_id: str):
+        websocket_logger.info(f"Kicking player: lobby_id={lobby_id} player_session_id={player_session_id}")
+        websocket = self.lobby_websockets.get(lobby_id, {}).get(player_session_id)
+        if websocket:
+            try:
+                kick_event = PlayerKickedEvent(lobby_id=lobby_id, player_session_id=player_session_id)
+                await websocket.send_text(json.dumps(kick_event.model_dump()))
+                # Force close the connection, 1008 is Policy Violation
+                await websocket.close(code=1008, reason="Player kicked by admin")
+            except Exception:
+                websocket_logger.exception(f"Error while kicking player {player_session_id}")
+            finally:
+                # Remove from active connections
+                if lobby_id in self.lobby_websockets and player_session_id in self.lobby_websockets[lobby_id]:
+                    del self.lobby_websockets[lobby_id][player_session_id]
+                    websocket_logger.info(f"Player {player_session_id} removed from lobby {lobby_id} after kick")
 
     async def continuous_listening(self, websocket: WebSocket):
         while True:

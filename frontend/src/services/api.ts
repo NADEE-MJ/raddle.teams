@@ -48,6 +48,38 @@ export const api = {
             async getInfo(lobbyId: number, bearerToken: string): Promise<LobbyInfo> {
                 return request<LobbyInfo>(`/admin/lobby/${lobbyId}`, {}, bearerToken);
             },
+            team: {
+                async create(lobbyId: number, numTeams: number, bearerToken: string): Promise<ApiResponse> {
+                    return request<ApiResponse>(
+                        `/admin/lobby/${lobbyId}/team`,
+                        {
+                            method: 'POST',
+                            body: JSON.stringify({ num_teams: numTeams }),
+                        },
+                        bearerToken
+                    );
+                },
+                async move(playerId: number, teamId: number, bearerToken: string): Promise<ApiResponse> {
+                    return request<ApiResponse>(
+                        `/admin/lobby/team/${teamId}/player/${playerId}`,
+                        {
+                            method: 'PUT',
+                        },
+                        bearerToken
+                    );
+                },
+            },
+            player: {
+                async kick(playerId: number, bearerToken: string): Promise<ApiResponse> {
+                    return request<ApiResponse>(
+                        `/admin/lobby/player/${playerId}`,
+                        {
+                            method: 'DELETE',
+                        },
+                        bearerToken
+                    );
+                },
+            },
         },
         async checkCredentials(bearerToken: string): Promise<ApiResponse> {
             return request<ApiResponse>('/admin/check', {}, bearerToken);
