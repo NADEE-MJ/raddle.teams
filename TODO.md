@@ -35,9 +35,17 @@ these seem like they will never happen but maybe should add ways to handle this 
 │ │ - Test admin session isolation: One admin's actions don't affect other admin's WebSocket connections                                                                                                                                                               │ │
 
 
+other things ot fix:
+fix the vite error config
+💿 Hey developer 👋
+
+You can provide a way better UX than this when your app throws errors by providing your own ErrorBoundary or errorElement prop on your route.
+
 
 pages to fix:
 Tutorial page
+1. on initial load of the tutorial the first hint should be instantly selected
 lobby, lobby context, layout
 admin, admin context, layout
 Game, game context, layout
+
