@@ -52,14 +52,24 @@ export interface Guess {
     submitted_at: string;
 }
 
+export enum LobbyWebSocketEvents {
+    CONNECTION_CONFIRMED = 'connection_confirmed',
+    TEAM_ASSIGNED = 'team_assigned',
+    TEAM_CHANGED = 'team_changed',
+    DISCONNECTED = 'disconnected',
+    PLAYER_KICKED = 'player_kicked',
+}
+
 export interface WebSocketMessage {
-    type: string;
+    type: LobbyWebSocketEvents | string;
     data?: Record<string, unknown>;
     player_session_id?: string;
     message?: Record<string, unknown>;
     team_id?: number;
     lobby_id?: number;
     state?: string;
+    old_team_id?: number;
+    new_team_id?: number;
 }
 
 export interface ApiResponse {

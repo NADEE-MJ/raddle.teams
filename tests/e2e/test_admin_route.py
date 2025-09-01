@@ -320,3 +320,68 @@ class TestAdminRouteWebSocketFlows:
 
         await admin1_session.screenshot()
         await admin2_session.screenshot()
+
+
+class TestAdminTeamManagementFeatures:
+    """Team management features for admin users"""
+
+    async def test_admin_modal_lobby_details_display(self, admin_actions_fixture: AdminFixture, settings: Settings):
+        """Test that lobby details are now displayed in a modal instead of inline"""
+        actions, page, browser = await admin_actions_fixture()
+        browser.set_name("admin_modal_lobby_details")
+
+        await actions.goto_admin_page()
+        await actions.login(settings.ADMIN_PASSWORD)
+
+        lobby_code = await actions.create_lobby("Modal Test Lobby")
+        await actions.peek_into_lobby(lobby_code)
+
+        # Check that modal elements are present
+        await expect(page.locator(".fixed.inset-0.z-50")).to_be_visible()  # Modal backdrop
+        await expect(page.locator(".bg-opacity-80.bg-black")).to_be_visible()  # Modal overlay
+        await expect(page.locator("h2:has-text('Lobby Details: Modal Test Lobby')")).to_be_visible()
+
+        # Check close button works
+        close_button = page.locator("button:has-text('✕')")
+        await expect(close_button).to_be_visible()
+        await close_button.click()
+        
+        # Modal should close
+        await expect(page.locator(".fixed.inset-0.z-50")).not_to_be_visible()
+        await browser.screenshot()
+
+    async def test_admin_scrollable_lobby_list(self, admin_actions_fixture: AdminFixture, settings: Settings):
+        """Test that lobby list is scrollable when there are many lobbies"""
+        actions, page, browser = await admin_actions_fixture()
+        browser.set_name("admin_scrollable_lobby_list")
+
+        await actions.goto_admin_page()
+        await actions.login(settings.ADMIN_PASSWORD)
+
+        # Create multiple lobbies to test scrolling
+        for i in range(5):
+            await actions.create_lobby(f"Scroll Test Lobby {i+1}")
+
+        # Check that lobbies are in a scrollable container
+        lobby_container = page.locator(".max-h-96.overflow-y-auto")
+        await expect(lobby_container).to_be_visible()
+        
+        # Verify multiple lobbies are visible
+        await expect(page.locator("text=Scroll Test Lobby")).to_have_count(5)
+        await browser.screenshot()
+
+    async def test_admin_team_creation_validation(self, admin_actions_fixture: AdminFixture, settings: Settings):
+        """Test validation rules for team creation"""
+        actions, page, browser = await admin_actions_fixture()
+        browser.set_name("admin_team_creation_validation")
+
+        await actions.goto_admin_page()
+        await actions.login(settings.ADMIN_PASSWORD)
+        lobby_code = await actions.create_lobby("Validation Test Lobby")
+
+        await actions.peek_into_lobby(lobby_code)
+
+        # With no players, create teams section should not be visible
+        await expect(page.locator("h3:has-text('Create Teams')")).not_to_be_visible()
+        
+        await browser.screenshot()

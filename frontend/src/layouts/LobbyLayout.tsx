@@ -3,7 +3,7 @@ import { Outlet, useParams, useNavigate } from 'react-router-dom';
 import { LobbyOutletContext } from '@/hooks/useLobbyOutletContext';
 import { useWebSocket } from '@/hooks/useWebSocket';
 import { api } from '@/services/api';
-import { Player, Lobby, LobbyInfo, WebSocketMessage } from '@/types';
+import { Player, Lobby, LobbyInfo, WebSocketMessage, LobbyWebSocketEvents } from '@/types';
 
 const LobbyLayout: React.FC = () => {
     const { lobbyCode } = useParams<{ lobbyCode: string }>();
@@ -64,7 +64,7 @@ const LobbyLayout: React.FC = () => {
         (message: WebSocketMessage) => {
             console.debug('Received WebSocket message:', message);
 
-            if (message.type === 'player_kicked') {
+            if (message.type === LobbyWebSocketEvents.PLAYER_KICKED) {
                 alert('You have been kicked from the lobby by an admin.');
                 // Clear session and redirect to home
                 setSessionId(null);
