@@ -1,4 +1,5 @@
 import logging
+import os
 
 from sqlalchemy import event
 from sqlmodel import Session, SQLModel, create_engine
@@ -8,6 +9,8 @@ from backend.database.models import Lobby, Player, Team  # noqa: F401
 from backend.settings import settings
 
 DATABASE_URL = settings.DATABASE_URL
+
+os.makedirs("databases", exist_ok=True)
 
 engine = create_engine(DATABASE_URL, connect_args={"check_same_thread": False})
 

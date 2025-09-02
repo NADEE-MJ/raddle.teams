@@ -50,3 +50,7 @@ lobby, lobby context, layout
 admin, admin context, layout
 Game, game context, layout
 
+add setup instructions
+
+npm ci && poetry install --sync
+create .env file with new envs

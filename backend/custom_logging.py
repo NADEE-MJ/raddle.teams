@@ -1,7 +1,10 @@
 import logging
+import os
 from logging.handlers import RotatingFileHandler
 
 from backend.settings import settings
+
+os.makedirs("logs", exist_ok=True)
 
 
 def create_logger(name: str, level, include_console: bool = False) -> logging.Logger:
