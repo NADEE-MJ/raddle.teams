@@ -18,12 +18,12 @@ class TestLandingPageFlows:
 
         await expect(player_page).to_have_title("Raddle Teams")
 
-        await player_page.fill("#name", "Test User")
+        await player_page.fill('[data-testid="name-input"]', "Test User")
 
-        await expect(player_page.locator("#name")).to_have_value("Test User")
+        await expect(player_page.locator('[data-testid="name-input"]')).to_have_value("Test User")
 
-        await player_page.fill("#lobbyCode", "TEST12")
-        await expect(player_page.locator("#lobbyCode")).to_have_value("TEST12")
+        await player_page.fill('[data-testid="lobby-code-input"]', "TEST12")
+        await expect(player_page.locator('[data-testid="lobby-code-input"]')).to_have_value("TEST12")
 
         await player_session.screenshot()
 
@@ -34,12 +34,12 @@ class TestLandingPageFlows:
         await player_page.goto(f"{server_url}/")
         await player_page.wait_for_load_state("networkidle")
 
-        await expect(player_page.locator("h1:has-text('Raddle Teams')")).to_be_visible()
+        await expect(player_page.locator('[data-testid="landing-page-title"]')).to_be_visible()
 
-        admin_button = player_page.locator("button:has-text('Admin Panel')")
+        admin_button = player_page.locator('[data-testid="admin-panel-link"]')
         await admin_button.click()
 
-        await expect(player_page.locator("h1:has-text('Admin Login')")).to_be_visible()
+        await expect(player_page.locator('[data-testid="admin-login-title"]')).to_be_visible()
 
         await player_session.screenshot()
 
@@ -50,17 +50,17 @@ class TestLandingPageFlows:
         await player_actions.goto_home_page()
 
         await player_actions.fill_name_and_code("", "TEST123")
-        join_button = player_page.locator('button:has-text("Join Lobby")')
+        join_button = player_page.locator('[data-testid="join-lobby-button"]')
         await join_button.click()
 
-        await expect(player_page.locator("text=Please enter your name")).to_be_visible()
-        await expect(player_page.locator("h1:has-text('Raddle Teams')")).to_be_visible()
+        await expect(player_page.locator('[data-testid="join-form-error"]:has-text("Please enter your name")')).to_be_visible()
+        await expect(player_page.locator('[data-testid="landing-page-title"]')).to_be_visible()
 
-        await player_page.fill("#name", "Test Player")
-        await player_page.fill("#lobbyCode", "")
+        await player_page.fill('[data-testid="name-input"]', "Test Player")
+        await player_page.fill('[data-testid="lobby-code-input"]', "")
         await join_button.click()
 
-        await expect(player_page.locator("text=Please enter a lobby code")).to_be_visible()
-        await expect(player_page.locator("h1:has-text('Raddle Teams')")).to_be_visible()
+        await expect(player_page.locator('[data-testid="join-form-error"]:has-text("Please enter a lobby code")')).to_be_visible()
+        await expect(player_page.locator('[data-testid="landing-page-title"]')).to_be_visible()
 
         await player_session.screenshot()

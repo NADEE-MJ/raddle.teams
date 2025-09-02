@@ -18,48 +18,58 @@ export default function LobbiesList({
     contextLoading,
 }: LobbiesListProps) {
     return (
-        <div className='mb-8'>
-            <div className='mb-4 flex items-center justify-between'>
-                <h2 className='text-xl font-semibold text-gray-900'>All Lobbies</h2>
+        <div className='mb-6'>
+            <div className='mb-3 flex items-center justify-between'>
+                <div className="text-gray-500 text-sm uppercase tracking-wide" data-testid="all-lobbies-heading">All Lobbies</div>
                 <button
                     onClick={onRefresh}
                     disabled={loading || contextLoading}
-                    className='rounded-lg bg-green-600 px-4 py-2 text-white transition duration-200 hover:bg-green-700 disabled:bg-green-400'
+                    className='px-3 py-1 bg-gray-50 border border-gray-300 hover:bg-gray-200 text-gray-800 rounded-md cursor-pointer font-medium transition duration-200 disabled:opacity-50 disabled:cursor-not-allowed text-sm'
+                    data-testid='refresh-lobbies-button'
                 >
                     Refresh
                 </button>
             </div>
 
             {lobbies.length === 0 ? (
-                <p className='py-8 text-center text-gray-500'>No lobbies created yet</p>
+                <div className="mr-1 md:mr-0 pt-6 pb-6 md:pt-8 md:pb-8 rounded-md border border-gray-300 bg-white px-4 py-3 text-center text-gray-500">
+                    No lobbies created yet
+                </div>
             ) : (
                 <div className='max-h-96 overflow-y-auto'>
-                    <div className='grid gap-4 md:grid-cols-2 lg:grid-cols-3'>
+                    <div className='space-y-2'>
                         {lobbies.map(lobby => (
                             <div
                                 key={lobby.id}
-                                className='rounded-lg border border-gray-200 p-4 transition-shadow hover:shadow-md'
+                                className="mr-1 md:mr-0 mb-2 pt-1 pb-0 md:pt-2 md:pb-1 rounded-md border border-gray-300 bg-white px-4 py-3"
                             >
-                                <h3 className='mb-1 text-lg font-semibold'>{lobby.name}</h3>
-                                <p className='mb-1 text-gray-600'>
-                                    Code: <span className='font-mono font-bold'>{lobby.code}</span>
-                                </p>
-                                <p className='mb-3 text-sm text-gray-500'>
-                                    Created: {new Date(lobby.created_at).toLocaleString()}
-                                </p>
-                                <div className='flex flex-col gap-2'>
-                                    <button
-                                        onClick={() => onViewDetails(lobby.id)}
-                                        className='rounded-lg bg-blue-600 px-4 py-2 text-sm text-white transition duration-200 hover:bg-blue-700'
-                                    >
-                                        View Details
-                                    </button>
-                                    <button
-                                        onClick={() => onDeleteLobby(lobby.id)}
-                                        className='rounded-lg bg-red-600 px-4 py-2 text-sm text-white transition duration-200 hover:bg-red-700'
-                                    >
-                                        Delete
-                                    </button>
+                                <div className='flex flex-col md:flex-row md:items-center justify-between gap-3'>
+                                    <div className='flex-1'>
+                                        <h3 className='font-semibold text-gray-900 mb-1'>{lobby.name}</h3>
+                                        <div className='flex flex-col md:flex-row gap-2 text-sm text-gray-600'>
+                                            <span>Code: <span className='font-mono font-bold bg-green-100 text-green-700 px-1 rounded'>{lobby.code}</span></span>
+                                            <span className="hidden md:inline">•</span>
+                                            <span>Created: {new Date(lobby.created_at).toLocaleDateString()}</span>
+                                        </div>
+                                    </div>
+                                    <div className='flex gap-2'>
+                                        <button
+                                            onClick={() => onViewDetails(lobby.id)}
+                                            disabled={loading || contextLoading}
+                                            className='px-3 py-1 bg-blue-50 border border-blue-300 hover:bg-blue-200 text-blue-800 rounded-md cursor-pointer font-medium transition duration-200 disabled:opacity-50 disabled:cursor-not-allowed text-sm'
+                                            data-testid={`view-lobby-${lobby.id}-button`}
+                                        >
+                                            View Details
+                                        </button>
+                                        <button
+                                            onClick={() => onDeleteLobby(lobby.id)}
+                                            disabled={loading || contextLoading}
+                                            className='px-3 py-1 bg-red-50 border border-red-300 hover:bg-red-200 text-red-800 rounded-md cursor-pointer font-medium transition duration-200 disabled:opacity-50 disabled:cursor-not-allowed text-sm'
+                                            data-testid={`delete-lobby-${lobby.id}-button`}
+                                        >
+                                            Delete
+                                        </button>
+                                    </div>
                                 </div>
                             </div>
                         ))}

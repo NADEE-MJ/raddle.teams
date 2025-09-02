@@ -18,14 +18,14 @@ class TestAdminRouteFlows:
 
         await actions.goto_admin_page()
 
-        await expect(page.locator("h1:has-text('Admin Login')")).to_be_visible()
-        await expect(page.locator('input[type="password"]')).to_be_visible()
+        await expect(page.locator('[data-testid="admin-login-title"]')).to_be_visible()
+        await expect(page.locator('[data-testid="admin-token-input"]')).to_be_visible()
 
         await actions.login(settings.ADMIN_PASSWORD)
 
-        await expect(page.locator("h1:has-text('Admin Dashboard')")).to_be_visible()
-        await expect(page.locator("text=Create New Lobby")).to_be_visible()
-        await expect(page.locator("text=All Lobbies")).to_be_visible()
+        await expect(page.locator('[data-testid="admin-dashboard-title"]')).to_be_visible()
+        await expect(page.locator('[data-testid="create-lobby-heading"]')).to_be_visible()
+        await expect(page.locator('[data-testid="all-lobbies-heading"]')).to_be_visible()
 
         await browser.screenshot()
 
@@ -38,14 +38,14 @@ class TestAdminRouteFlows:
 
         await actions.goto_admin_page()
 
-        token_input = page.locator('input[type="password"]')
+        token_input = page.locator('[data-testid="admin-token-input"]')
         await token_input.fill("wrong_password")
 
-        login_button = page.locator('button:has-text("Login")')
+        login_button = page.locator('[data-testid="admin-login-submit"]')
         await login_button.click()
 
-        await expect(page.locator("text=Invalid admin token")).to_be_visible()
-        await expect(page.locator("h1:has-text('Admin Login')")).to_be_visible()
+        await expect(page.locator('[data-testid="admin-login-error"]:has-text("Invalid admin token")')).to_be_visible()
+        await expect(page.locator('[data-testid="admin-login-title"]')).to_be_visible()
 
         await browser.screenshot()
 
@@ -89,13 +89,13 @@ class TestAdminRouteFlows:
         await actions.goto_admin_page()
         await actions.login(settings.ADMIN_PASSWORD)
 
-        await expect(page.locator("h1:has-text('Admin Dashboard')")).to_be_visible()
+        await expect(page.locator('[data-testid="admin-dashboard-title"]')).to_be_visible()
 
-        logout_button = page.locator('button:has-text("Logout")')
+        logout_button = page.locator('[data-testid="logout-button"]')
         await logout_button.click()
 
-        await expect(page.locator("h1:has-text('Admin Login')")).to_be_visible()
-        await expect(page.locator('input[type="password"]')).to_be_visible()
+        await expect(page.locator('[data-testid="admin-login-title"]')).to_be_visible()
+        await expect(page.locator('[data-testid="admin-token-input"]')).to_be_visible()
 
         await browser.screenshot()
 
@@ -144,10 +144,10 @@ class TestAdminRouteFlows:
         await actions.goto_admin_page()
         await actions.login(settings.ADMIN_PASSWORD)
 
-        lobby_name_input = page.locator('input[placeholder="Lobby name"]')
+        lobby_name_input = page.locator('[data-testid="lobby-name-input"]')
         await lobby_name_input.fill("")
 
-        create_button = page.locator('button:has-text("Create Lobby")')
+        create_button = page.locator('[data-testid="create-lobby-submit"]')
         await expect(create_button).to_be_disabled()
 
         await browser.screenshot()

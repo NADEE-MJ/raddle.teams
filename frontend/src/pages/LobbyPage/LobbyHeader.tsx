@@ -42,6 +42,7 @@ export default function LobbyHeader({ lobby, player, sessionId, setSessionId }: 
                     onClick={handleLeave}
                     disabled={loading}
                     className='rounded-lg bg-red-600 px-4 py-2 text-white transition duration-200 hover:bg-red-700 disabled:bg-red-400'
+                    data-testid='leave-lobby-button'
                 >
                     {loading ? 'Leaving...' : 'Leave Lobby'}
                 </button>

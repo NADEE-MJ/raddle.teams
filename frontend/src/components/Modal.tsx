@@ -29,9 +29,9 @@ export default function Modal({ isOpen, onClose, children, maxWidth = 'max-w-4xl
     if (!isOpen) return null;
 
     return (
-        <div className='fixed inset-0 z-50 flex items-center justify-center p-4'>
-            <div className='bg-opacity-80 absolute inset-0 bg-black transition-opacity' onClick={onClose} />
-            <div className={`relative w-full ${maxWidth} max-h-[90vh] overflow-auto rounded-lg bg-white shadow-xl`}>
+        <div className='fixed inset-0 z-50 flex items-start justify-center p-4 pt-24 pointer-events-auto' onClick={onClose}>
+            <div className='absolute inset-0 backdrop-blur-sm pointer-events-none' />
+            <div className={`relative w-full ${maxWidth} max-h-[90vh] overflow-auto rounded-lg bg-white shadow-xl pointer-events-auto`} onClick={(e) => e.stopPropagation()}>
                 {children}
             </div>
         </div>

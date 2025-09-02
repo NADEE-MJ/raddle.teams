@@ -1,9 +1,89 @@
-import { Outlet } from 'react-router-dom';
+import { Outlet, Link, useLocation } from 'react-router-dom';
+import { useState, useEffect } from 'react';
 
 const GlobalLayout: React.FC = () => {
+    const location = useLocation();
+    const [isLoggedInAdmin, setIsLoggedInAdmin] = useState(false);
+    const [isLoggedInLobby, setIsLoggedInLobby] = useState(false);
+    
+    const isAdminPage = location.pathname.startsWith('/admin');
+    const isLobbyPage = location.pathname.startsWith('/lobby');
+    
+    useEffect(() => {
+        const adminToken = localStorage.getItem('raddle_admin_token');
+        const sessionId = localStorage.getItem('raddle_session_id');
+        setIsLoggedInAdmin(!!adminToken);
+        setIsLoggedInLobby(!!sessionId);
+    }, [location]);
+    
+    const showLogout = (isAdminPage && isLoggedInAdmin) || (isLobbyPage && isLoggedInLobby);
+    
+    const handleAdminLogout = () => {
+        localStorage.removeItem('raddle_admin_token');
+        window.location.href = '/';
+    };
+    
+    const handleLobbyLogout = () => {
+        localStorage.removeItem('raddle_session_id');
+        window.location.href = '/';
+    };
+
     return (
-        <div className='flex min-h-screen items-center justify-center bg-gradient-to-br from-blue-500 to-purple-600 p-4'>
-            <Outlet />
+        <div className="min-h-screen layout font-sans bg-slate-100">
+            <nav className="bg-white shadow-md">
+                <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
+                    <div className="flex justify-between h-16 items-center">
+                        <div className="flex items-center gap-4">
+                            <h1 className="text-2xl font-bold">
+                                <Link to="/" className="flex items-center">
+                                    R<span className="w-6 h-6 inline-block brightness-75 relative -top-[3px]">🪜</span>DDLE
+                                </Link>
+                            </h1>
+                            <span className="hidden md:inline text-gray-600">Word Transformation Game</span>
+                        </div>
+                        <div className="text-gray-600">
+                            {showLogout ? (
+                                <button
+                                    onClick={isAdminPage ? handleAdminLogout : handleLobbyLogout}
+                                    className="text-red-600 hover:text-red-800"
+                                    data-testid="logout-button"
+                                >
+                                    Logout
+                                </button>
+                            ) : (
+                                <>
+                                    <Link to="/tutorial" className="text-blue-600 hover:text-blue-800">✌️ How to Play</Link>
+                                    {' • '}
+                                    <Link to="/admin" className="text-blue-600 hover:text-blue-800" data-testid="admin-panel-link">🔧 Admin</Link>
+                                </>
+                            )}
+                        </div>
+                    </div>
+                </div>
+            </nav>
+            
+            <main className="bg-slate-100 pt-4 md:p-4">
+                <Outlet />
+            </main>
+
+            <footer className="max-w-6xl mx-auto mt-4 border-t border-slate-300">
+                <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 py-6">
+                    <div className="flex flex-col md:flex-row justify-between items-center gap-4">
+                        <div className="flex items-center gap-4">
+                            <div className="w-12 h-12 rounded bg-gray-200 flex items-center justify-center text-2xl">🎲</div>
+                            <div className="text-sm text-gray-600">
+                                <p className="mb-1">© 2025 Raddle Teams</p>
+                                <p className="mb-1">A team-based word game</p>
+                                <p>Built for collaborative fun</p>
+                            </div>
+                        </div>
+                        <div className="flex gap-4 text-sm text-gray-600">
+                            <Link to="/tutorial" className="hover:text-gray-900">✌️ How to Play</Link>
+                            <Link to="/admin" className="hover:text-gray-900" data-testid="footer-admin-link">🔧 Admin</Link>
+                        </div>
+                    </div>
+                </div>
+            </footer>
         </div>
     );
 };

@@ -53,53 +53,57 @@ export default function LobbyDetails({
         <Modal isOpen={true} onClose={onClose} maxWidth='max-w-6xl'>
             <div className='p-6'>
                 <div className='mb-6 flex items-center justify-between'>
-                    <h2 className='text-2xl font-semibold text-gray-900'>Lobby Details: {selectedLobby.lobby.name}</h2>
+                    <div>
+                        <h2 className='text-2xl font-semibold mb-1 text-gray-900'>Lobby Details</h2>
+                        <p className="text-gray-600">{selectedLobby.lobby.name}</p>
+                    </div>
                     <button
                         onClick={onClose}
-                        className='rounded-lg px-3 py-1 text-xl font-bold text-gray-500 transition-colors hover:bg-gray-100 hover:text-gray-700'
+                        className='px-3 py-1 bg-gray-50 border border-gray-300 hover:bg-gray-200 text-gray-800 rounded-md cursor-pointer font-medium transition duration-200 text-lg'
+                        data-testid='close-lobby-details-button'
                     >
                         ✕
                     </button>
                 </div>
 
-                <div className='grid gap-6 md:grid-cols-2'>
-                    <div className='rounded-lg bg-gray-50 p-4'>
-                        <h3 className='mb-3 text-lg font-semibold'>Lobby Info</h3>
-                        <div className='space-y-2'>
+                <div className='grid gap-6 md:grid-cols-2 mb-6'>
+                    <div className="mr-1 md:mr-0 pt-2 pb-2 md:pt-3 md:pb-3 rounded-md border border-gray-300 bg-white px-4 py-3">
+                        <div className="text-gray-500 text-sm uppercase tracking-wide mb-3">Lobby Info</div>
+                        <div className='space-y-2 text-sm'>
                             <p>
-                                <strong>Code:</strong> <span className='font-mono'>{selectedLobby.lobby.code}</span>
+                                <strong>Code:</strong> <span className='font-mono bg-green-100 text-green-700 px-1 rounded'>{selectedLobby.lobby.code}</span>
                             </p>
                             <p>
                                 <strong>Name:</strong> {selectedLobby.lobby.name}
                             </p>
                             <p>
-                                <strong>Created:</strong> {new Date(selectedLobby.lobby.created_at).toLocaleString()}
+                                <strong>Created:</strong> {new Date(selectedLobby.lobby.created_at).toLocaleDateString()}
                             </p>
                         </div>
                     </div>
 
-                    <div className='rounded-lg bg-gray-50 p-4'>
-                        <h3 className='mb-3 text-lg font-semibold'>Players ({selectedLobby.players.length})</h3>
+                    <div className="mr-1 md:mr-0 pt-2 pb-2 md:pt-3 md:pb-3 rounded-md border border-gray-300 bg-white px-4 py-3">
+                        <div className="text-gray-500 text-sm uppercase tracking-wide mb-3">Players ({selectedLobby.players.length})</div>
                         {selectedLobby.players.length === 0 ? (
-                            <p className='text-gray-500'>No players in this lobby yet</p>
+                            <p className='text-gray-500 text-center py-4'>No players in this lobby yet</p>
                         ) : (
                             <div className='max-h-48 space-y-2 overflow-y-auto'>
                                 {selectedLobby.players.map(player => (
                                     <div
                                         key={player.id}
                                         data-testid={`player-row-${player.name}`}
-                                        className='flex items-center justify-between rounded border bg-white p-2'
+                                        className='flex items-center justify-between p-2 bg-gray-50 rounded border'
                                     >
-                                        <div className='flex items-center gap-3'>
-                                            <span className='font-medium'>{player.name}</span>
+                                        <div className='flex items-center gap-2'>
+                                            <span className='font-medium text-sm'>{player.name}</span>
                                             <span 
-                                                className='rounded bg-gray-100 px-2 py-1 text-sm text-gray-500'
+                                                className='bg-blue-100 text-blue-700 px-1 rounded text-xs'
                                                 data-testid={`team-status-${player.name}`}
                                             >
                                                 {player.team_id ? `Team ${player.team_id}` : 'No team'}
                                             </span>
                                         </div>
-                                        <div className='flex items-center gap-2'>
+                                        <div className='flex items-center gap-1'>
                                             {selectedLobby.teams && selectedLobby.teams.length > 0 && (
                                                 <select
                                                     data-testid={`team-dropdown-${player.name}`}
@@ -111,7 +115,7 @@ export default function LobbyDetails({
                                                         )
                                                     }
                                                     disabled={movingPlayerId === player.id}
-                                                    className='rounded border px-2 py-1 text-sm'
+                                                    className='px-2 py-1 border border-gray-300 rounded text-xs'
                                                 >
                                                     <option value=''>No team</option>
                                                     {selectedLobby.teams?.map(team => (
@@ -124,7 +128,7 @@ export default function LobbyDetails({
                                             <button
                                                 data-testid={`kick-button-${player.name}`}
                                                 onClick={() => handleKickPlayer(player.id!)}
-                                                className='rounded bg-red-600 px-2 py-1 text-xs text-white hover:bg-red-700'
+                                                className='px-2 py-1 bg-red-50 border border-red-300 hover:bg-red-200 text-red-800 rounded cursor-pointer text-xs transition duration-200'
                                                 disabled={loading}
                                             >
                                                 Kick
@@ -138,46 +142,47 @@ export default function LobbyDetails({
                 </div>
 
                 {(!selectedLobby.teams || selectedLobby.teams.length === 0) && selectedLobby.players.length > 0 && (
-                    <div className='mb-6 rounded-lg bg-blue-50 p-4'>
-                        <h3 className='mb-3 text-lg font-semibold' data-testid='create-teams-heading'>Create Teams</h3>
-                        <div className='flex items-center gap-4'>
-                            <label className='text-sm font-medium'>Number of teams:</label>
+                    <div className="mr-1 md:mr-0 mb-4 pt-2 pb-2 md:pt-3 md:pb-3 rounded-md border border-blue-300 bg-blue-50 px-4 py-3">
+                        <div className="text-blue-700 text-sm uppercase tracking-wide mb-3" data-testid='create-teams-heading'>Create Teams</div>
+                        <div className='flex flex-col md:flex-row md:items-center gap-3'>
+                            <label className='text-sm font-medium text-blue-800'>Number of teams:</label>
                             <input
                                 type='number'
                                 min='2'
                                 max={Math.min(10, selectedLobby.players.length)}
                                 value={numTeams}
                                 onChange={e => setNumTeams(parseInt(e.target.value))}
-                                className='w-20 rounded border px-2 py-1'
+                                className='w-20 px-2 py-1 border border-blue-300 rounded text-sm'
+                                data-testid='num-teams-input'
                             />
                             <button
                                 data-testid='create-teams-button'
                                 onClick={handleCreateTeams}
                                 disabled={isCreatingTeams || numTeams < 2}
-                                className='rounded bg-green-600 px-4 py-2 text-white hover:bg-green-700 disabled:bg-green-400'
+                                className='px-4 py-2 bg-blue-50 border border-blue-300 hover:bg-blue-200 text-blue-800 rounded-md cursor-pointer font-medium transition duration-200 disabled:opacity-50 disabled:cursor-not-allowed text-sm'
                             >
                                 {isCreatingTeams ? 'Creating...' : 'Create Teams'}
                             </button>
                         </div>
-                        <p className='mt-2 text-sm text-gray-600'>
+                        <p className='mt-2 text-xs text-blue-700'>
                             Players will be randomly assigned to {numTeams} teams
                         </p>
                     </div>
                 )}
 
                 {selectedLobby.teams && selectedLobby.teams.length > 0 && (
-                    <div className='mt-6'>
-                        <h3 className='mb-4 text-lg font-semibold' data-testid='teams-heading'>Teams ({selectedLobby.teams.length})</h3>
-                        <div className='grid gap-4 md:grid-cols-2'>
+                    <div>
+                        <div className="text-gray-500 text-sm uppercase tracking-wide mb-3" data-testid='teams-heading'>Teams ({selectedLobby.teams.length})</div>
+                        <div className='grid gap-4 md:grid-cols-2 mb-6'>
                             {selectedLobby.teams.map(team => (
-                                <div key={team.id} className='rounded-lg border border-gray-200 bg-gray-50 p-4'>
-                                    <h4 className='mb-2 text-lg font-semibold'>{team.name}</h4>
-                                    <p className='mb-3 text-sm text-gray-600'>
-                                        Current word index: {team.current_word_index}
+                                <div key={team.id} className="mr-1 md:mr-0 pt-2 pb-2 md:pt-3 md:pb-3 rounded-md border border-gray-300 bg-white px-4 py-3">
+                                    <h4 className='mb-2 font-semibold text-gray-900'>{team.name}</h4>
+                                    <p className='mb-3 text-xs text-gray-600'>
+                                        Current word index: <span className="font-mono bg-yellow-100 text-yellow-700 px-1 rounded">{team.current_word_index}</span>
                                     </p>
                                     {selectedLobby.players_by_team && selectedLobby.players_by_team[team.id] && (
                                         <div>
-                                            <p className='mb-2 text-sm font-medium'>Members:</p>
+                                            <p className='mb-2 text-xs font-medium text-gray-500 uppercase tracking-wide'>Members:</p>
                                             <div className='flex flex-wrap gap-1'>
                                                 {selectedLobby.players_by_team[team.id].map(player => (
                                                     <span
@@ -197,38 +202,41 @@ export default function LobbyDetails({
                 )}
 
                 {unassignedPlayers.length > 0 && selectedLobby.teams && selectedLobby.teams.length > 0 && (
-                    <div className='mt-6'>
-                        <h3 className='mb-4 text-lg font-semibold' data-testid='unassigned-players-heading'>Unassigned Players ({unassignedPlayers.length})</h3>
+                    <div>
+                        <div className="text-orange-600 text-sm uppercase tracking-wide mb-3" data-testid='unassigned-players-heading'>Unassigned Players ({unassignedPlayers.length})</div>
                         <div className='space-y-2'>
                             {unassignedPlayers.map(player => (
                                 <div
                                     key={player.id}
                                     data-testid={`unassigned-player-row-${player.name}`}
-                                    className='flex items-center justify-between rounded border bg-yellow-50 p-2'
+                                    className="mr-1 md:mr-0 mb-2 pt-1 pb-0 md:pt-2 md:pb-1 rounded-md border border-orange-300 bg-orange-50 px-4 py-3"
                                 >
-                                    <span className='font-medium'>{player.name}</span>
-                                    <div className='flex items-center gap-2'>
-                                        <select
-                                            data-testid={`unassigned-team-dropdown-${player.name}`}
-                                            value=''
-                                            onChange={e => handleMovePlayer(player.id!, parseInt(e.target.value))}
-                                            disabled={movingPlayerId === player.id}
-                                            className='rounded border px-2 py-1 text-sm'
-                                        >
-                                            <option value=''>Assign to team...</option>
-                                            {selectedLobby.teams?.map(team => (
-                                                <option key={team.id} value={team.id}>
-                                                    {team.name}
-                                                </option>
-                                            ))}
-                                        </select>
-                                        <button
-                                            onClick={() => handleKickPlayer(player.id!)}
-                                            className='rounded bg-red-600 px-2 py-1 text-xs text-white hover:bg-red-700'
-                                            disabled={loading}
-                                        >
-                                            Kick
-                                        </button>
+                                    <div className='flex items-center justify-between'>
+                                        <span className='font-medium text-orange-900'>{player.name}</span>
+                                        <div className='flex items-center gap-2'>
+                                            <select
+                                                data-testid={`unassigned-team-dropdown-${player.name}`}
+                                                value=''
+                                                onChange={e => handleMovePlayer(player.id!, parseInt(e.target.value))}
+                                                disabled={movingPlayerId === player.id}
+                                                className='px-2 py-1 border border-orange-300 rounded text-sm bg-white'
+                                            >
+                                                <option value=''>Assign to team...</option>
+                                                {selectedLobby.teams?.map(team => (
+                                                    <option key={team.id} value={team.id}>
+                                                        {team.name}
+                                                    </option>
+                                                ))}
+                                            </select>
+                                            <button
+                                                onClick={() => handleKickPlayer(player.id!)}
+                                                className='px-2 py-1 bg-red-50 border border-red-300 hover:bg-red-200 text-red-800 rounded cursor-pointer text-xs transition duration-200'
+                                                disabled={loading}
+                                                data-testid={`unassigned-kick-button-${player.name}`}
+                                            >
+                                                Kick
+                                            </button>
+                                        </div>
                                     </div>
                                 </div>
                             ))}

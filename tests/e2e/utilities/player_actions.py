@@ -10,36 +10,36 @@ class PlayerActions:
     async def goto_home_page(self):
         await self.page.goto(f"{self.server_url}/", wait_until="networkidle")
         try:
-            await expect(self.page.locator("h1:has-text('Raddle Teams')")).to_be_visible(timeout=2000)
+            await expect(self.page.locator('[data-testid="landing-page-title"]')).to_be_visible(timeout=2000)
         except AssertionError:
             if await self.page.locator("p:has-text('Lobby Code:')").is_visible():
                 return
-            await expect(self.page.locator("h1:has-text('Raddle Teams')")).to_be_visible()
+            await expect(self.page.locator('[data-testid="landing-page-title"]')).to_be_visible()
 
     async def fill_name_and_code(self, name: str, lobby_code: str):
-        name_input = self.page.locator('#name, input[placeholder*="name"], input[placeholder*="Name"]')
+        name_input = self.page.locator('[data-testid="name-input"]')
         await name_input.fill(name)
 
-        code_input = self.page.locator('#lobbyCode, input[placeholder*="code"], input[placeholder*="Code"]')
+        code_input = self.page.locator('[data-testid="lobby-code-input"]')
         await code_input.fill(lobby_code)
 
     async def join_lobby(self):
-        join_button = self.page.locator('button:has-text("Join Lobby"), button:has-text("Join")')
+        join_button = self.page.locator('[data-testid="join-lobby-button"]')
         await join_button.click()
 
         await expect(self.page.locator('[data-testid="lobby-code"]')).to_be_visible()
 
     async def join_lobby_expect_error(self):
-        join_button = self.page.locator('button:has-text("Join Lobby"), button:has-text("Join")')
+        join_button = self.page.locator('[data-testid="join-lobby-button"]')
         await join_button.click()
 
-        await expect(self.page.locator("h1:has-text('Raddle Teams')")).to_be_visible()
+        await expect(self.page.locator('[data-testid="landing-page-title"]')).to_be_visible()
 
     async def leave_lobby(self):
-        leave_button = self.page.locator('button:has-text("Leave"), button:has-text("Leave Lobby")')
+        leave_button = self.page.locator('[data-testid="leave-lobby-button"]')
         await leave_button.click()
 
-        await expect(self.page.locator("h1:has-text('Raddle Teams')")).to_be_visible()
+        await expect(self.page.locator('[data-testid="landing-page-title"]')).to_be_visible()
 
     async def wait_in_lobby(self):
         await expect(self.page.locator('[data-testid="lobby-code"]')).to_be_visible()

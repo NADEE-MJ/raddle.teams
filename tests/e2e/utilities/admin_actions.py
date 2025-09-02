@@ -11,27 +11,25 @@ class AdminActions:
     async def goto_admin_page(self):
         await self.page.goto(f"{self.server_url}/admin", wait_until="networkidle")
 
-        await expect(self.page.locator("h1:has-text('Admin Login'), h1:has-text('Admin Dashboard')")).to_be_visible()
+        await expect(self.page.locator('[data-testid="admin-login-title"], [data-testid="admin-dashboard-title"]')).to_be_visible()
 
     async def login(self, admin_token: str = None):
         if admin_token is None:
             admin_token = settings.ADMIN_PASSWORD
 
-        token_input = self.page.locator(
-            'input[type="password"], input[placeholder*="token"], input[placeholder*="Token"]'
-        )
+        token_input = self.page.locator('[data-testid="admin-token-input"]')
         await token_input.fill(admin_token)
 
-        login_button = self.page.locator('button:has-text("Login"), button[type="submit"]')
+        login_button = self.page.locator('[data-testid="admin-login-submit"]')
         await login_button.click()
 
-        await expect(self.page.locator("text=Admin Dashboard")).to_be_visible()
+        await expect(self.page.locator('[data-testid="admin-dashboard-title"]')).to_be_visible()
 
     async def create_lobby(self, lobby_name: str = "Test Lobby") -> str:
-        name_input = self.page.locator('input[placeholder="Lobby name"]')
+        name_input = self.page.locator('[data-testid="lobby-name-input"]')
         await name_input.fill(lobby_name)
 
-        create_button = self.page.locator('button:has-text("Create Lobby")')
+        create_button = self.page.locator('[data-testid="create-lobby-submit"]')
         await create_button.click()
 
         lobby_code_element = self.page.locator("span.font-mono.font-bold").first
@@ -41,10 +39,10 @@ class AdminActions:
         return lobby_code.strip()
 
     async def view_all_lobbies(self):
-        refresh_button = self.page.locator('button:has-text("Refresh")')
+        refresh_button = self.page.locator('[data-testid="refresh-lobbies-button"]')
         await refresh_button.click()
 
-        await expect(self.page.locator("text=All Lobbies")).to_be_visible()
+        await expect(self.page.locator('[data-testid="all-lobbies-heading"]')).to_be_visible()
 
     async def get_first_lobby(self):
         await self.view_all_lobbies()
@@ -55,20 +53,25 @@ class AdminActions:
         return code.strip() if code else ""
 
     async def peek_into_lobby(self, lobby_code: str):
-        lobby_card = self.page.locator(f"text=Code: {lobby_code}").locator("..")
-        view_details_button = lobby_card.locator('button:has-text("View Details")')
+        # Find the lobby in the list and get its View Details button
+        # We'll look for any view details button since we can't easily get lobby ID from code
+        await expect(self.page.locator(f"text=Code: {lobby_code}")).to_be_visible()
+        
+        # Find the view details button associated with this lobby by finding the lobby card
+        lobby_row = self.page.locator(f"text=Code: {lobby_code}").locator("..").locator("..")
+        view_details_button = lobby_row.locator('button:has-text("View Details")')
         await view_details_button.click()
 
-        await expect(self.page.locator("text=Lobby Details:")).to_be_visible()
+        await expect(self.page.locator('h2:has-text("Lobby Details")')).to_be_visible()
 
     async def logout(self):
-        logout_button = self.page.locator('button:has-text("Logout")')
+        logout_button = self.page.locator('[data-testid="logout-button"]')
         await logout_button.click()
 
-        await expect(self.page.locator("h1:has-text('Admin Login')")).to_be_visible()
+        await expect(self.page.locator('[data-testid="admin-login-title"]')).to_be_visible()
 
     async def refresh_lobbies(self):
-        refresh_button = self.page.locator('button:has-text("Refresh")')
+        refresh_button = self.page.locator('[data-testid="refresh-lobbies-button"]')
         await refresh_button.click()
 
     async def get_lobby_player_count(self, lobby_code: str) -> int:

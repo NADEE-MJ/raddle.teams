@@ -227,13 +227,15 @@ export default function AdminPage() {
     }
 
     return (
-        <div className='min-h-screen bg-gray-50 p-6'>
-            <div className='mx-auto max-w-6xl'>
-                <div className='mb-6 rounded-lg bg-white p-6 shadow-xl'>
+        <main className="bg-slate-100 pt-4 md:p-4">
+            <div className="max-w-6xl mx-auto">
+                <div className="bg-white rounded-lg shadow-sm p-4 md:p-8 mb-6">
+                    <h1 className="text-3xl font-bold mb-6" data-testid="admin-dashboard-title">Admin Dashboard</h1>
+                    
                     <DashboardHeader onLogout={handleLogout} />
 
                     {(error || contextError) && (
-                        <div className='mb-6 rounded-lg border border-red-200 bg-red-50 px-4 py-3 text-red-700'>
+                        <div className='mb-6 rounded-lg border border-red-200 bg-red-50 px-4 py-3 text-red-700' data-testid='admin-error-message'>
                             {error || contextError}
                         </div>
                     )}
@@ -261,6 +263,6 @@ export default function AdminPage() {
                     />
                 )}
             </div>
-        </div>
+        </main>
     );
 }

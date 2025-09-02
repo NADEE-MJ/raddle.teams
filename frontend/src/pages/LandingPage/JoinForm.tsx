@@ -75,7 +75,7 @@ export default function JoinForm({ loading, setLoading }: JoinFormProps) {
                 />
             </div>
 
-            {error && <div className='text-center text-sm text-red-600'>{error}</div>}
+            {error && <div className='text-center text-sm text-red-600' data-testid='join-form-error'>{error}</div>}
 
             <button
                 type='submit'
