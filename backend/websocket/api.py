@@ -14,12 +14,10 @@ async def admin_websocket(
     is_admin: bool = Depends(check_admin_token_query),
 ):
     websocket_logger.info(f"Admin websocket endpoint invoked: web_session_id={web_session_id} is_admin={is_admin}")
-    # Handle admin-specific websocket logic here
     try:
         await admin_web_socket_manager.connect(websocket, web_session_id)
     except Exception:
         websocket_logger.exception(f"Failed to establish admin websocket connection: web_session_id={web_session_id}")
-        # Unable to accept/connect, nothing more to do
         return
 
     try:

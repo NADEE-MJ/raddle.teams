@@ -15,7 +15,6 @@ class Player(SQLModel, table=True):
     # Relationships
     lobby: "Lobby" = Relationship(back_populates="players")
     team: Optional["Team"] = Relationship(back_populates="players")
-    guesses: list["Guess"] = Relationship(back_populates="player", cascade_delete=True, passive_deletes=True)
 
 
 class Team(SQLModel, table=True):
@@ -29,7 +28,6 @@ class Team(SQLModel, table=True):
     # Relationships
     lobby: "Lobby" = Relationship(back_populates="teams")
     players: list["Player"] = Relationship(back_populates="team", cascade_delete=True, passive_deletes=True)
-    guesses: list["Guess"] = Relationship(back_populates="team", cascade_delete=True, passive_deletes=True)
 
 
 class Lobby(SQLModel, table=True):
@@ -41,18 +39,3 @@ class Lobby(SQLModel, table=True):
     # Relationships
     players: list["Player"] = Relationship(back_populates="lobby", cascade_delete=True, passive_deletes=True)
     teams: list["Team"] = Relationship(back_populates="lobby", cascade_delete=True, passive_deletes=True)
-
-
-class Guess(SQLModel, table=True):
-    id: Optional[int] = Field(default=None, primary_key=True)
-    team_id: int = Field(foreign_key="team.id", ondelete="CASCADE")
-    player_id: int = Field(foreign_key="player.id", ondelete="CASCADE")
-    word_index: int
-    direction: str = Field(description="Direction of guess: 'forward' or 'backward'")
-    guess: str
-    is_correct: bool = Field(default=False)
-    submitted_at: datetime = Field(default_factory=lambda: datetime.now(tz=timezone.utc))
-
-    # Relationships
-    team: "Team" = Relationship(back_populates="guesses")
-    player: "Player" = Relationship(back_populates="guesses")

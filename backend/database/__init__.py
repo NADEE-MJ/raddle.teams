@@ -4,7 +4,7 @@ from sqlalchemy import event
 from sqlmodel import Session, SQLModel, create_engine
 
 from backend.custom_logging import database_logger
-from backend.database.models import Guess, Lobby, Player, Team  # noqa: F401
+from backend.database.models import Lobby, Player, Team  # noqa: F401
 from backend.settings import settings
 
 DATABASE_URL = settings.DATABASE_URL
