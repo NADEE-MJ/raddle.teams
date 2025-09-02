@@ -306,7 +306,7 @@ export default function Tutorial({ setCompleted, completed }: WordChainGameProps
         const parts = renderClueParts(clue, hintWordRendered, null);
 
         return (
-            <div className="mr-1 md:mr-0 mb-2 opacity-75 text-gray-500 my-3">
+            <div className="mr-1 md:mr-0 mb-2 opacity-75 text-black">
                 {parts}
             </div>
         );
@@ -328,6 +328,7 @@ export default function Tutorial({ setCompleted, completed }: WordChainGameProps
         let isTarget = false;
         let shouldReveal = false;
         let bgColor = 'bg-white';
+        let stepId = `ladder-step-${index}`;
 
         if (completed) {
             shouldReveal = true;
@@ -356,8 +357,16 @@ export default function Tutorial({ setCompleted, completed }: WordChainGameProps
             }
         }
 
+        // TODO NEED TO FIGURE OUT HOW THIS ALL WORKS THIS IS MOSTLY FOR MOBILE
+        const isHidden = !completed && index > 1 && index < puzzle.ladder.length - 1 && !shouldReveal && !isTarget;
+
         return (
-            <div key={index} className={`relative font-mono text-sm md:text-lg ${bgColor}`}>
+            <div
+                key={index}
+                id={stepId}
+                data-active={isTarget}
+                className={`${isHidden ? 'hidden md:block' : ''} relative font-mono text-sm md:text-lg ${bgColor}`}
+            >
                 {shouldReveal && !isTarget ? (
                     <div className="relative">
                         <div className="py-3 tracking-wide text-center uppercase">
@@ -429,56 +438,96 @@ export default function Tutorial({ setCompleted, completed }: WordChainGameProps
     }
 
     return (
-        <div>
-            <div className="mb-6 bg-slate-100">
-                <h3 className="text-lg font-semibold mb-4 text-center">{TUTORIAL_PUZZLE.title}</h3>
-                <div className="divide-y-2 divide-slate-400 border-x-4 border-slate-400 bg-transparent max-w-md mx-auto">
-                    <div>
-                        <div className="hidden md:block p-3"></div>
-                    </div>
-                    {puzzle.ladder.map((step, index) => {
-                        return renderLadderStep(step, index);
-                    })}
+        <>
+            <div className="max-w-6xl mx-auto">
+                <div id="game-area" className="md:grid md:grid-cols-[2fr_3fr] md:gap-8">
+                    <div className="py-4 md:py-0 bg-slate-100 sticky md:static z-10 top-0">
+                        <div className="mx-4 md:mx-0 text-center">
+                            <div className="divide-y-2 divide-slate-400 border-x-5 border-slate-400 bg-transparent">
+                                <div>
+                                    <div className="hidden md:block p-3"></div>
+                                    <button type="button" className="md:hidden p-2 w-full text-xs text-gray-400 italic hover:bg-gray-50">
+                                        Show full ladder
+                                    </button>
+                                </div>
 
-                    {completed || (direction === 'downward' && (solvingIndex === puzzle.ladder.length - 2 || solvingIndex === puzzle.ladder.length - 1)) || (direction === 'upward' && (solvingIndex === 0 || solvingIndex === 1)) ?
-                        (<div>
-                            <div className="hidden md:block p-3"></div>
-                        </div>)
-                        :
-                        <button
-                            onClick={() => handleDirectionChange(direction === 'downward' ? 'upward' : 'downward')}
-                            className="w-full text-xs text-gray-400 italic transition duration-200 hover:bg-white"
-                        >
-                            Switch to solving {direction === 'downward' ? '↑ upward' : '↓ downward'}
-                        </button>}
+                                {puzzle.ladder.map((step, index) => {
+                                    return renderLadderStep(step, index);
+                                })}
+
+                                <div>
+                                    <div className="p-3 hidden"></div>
+                                    {!completed && !(direction === 'downward' && (solvingIndex === puzzle.ladder.length - 2 || solvingIndex === puzzle.ladder.length - 1)) && !(direction === 'upward' && (solvingIndex === 0 || solvingIndex === 1)) && (
+                                        <button
+                                            type="button"
+                                            onClick={() => handleDirectionChange(direction === 'downward' ? 'upward' : 'downward')}
+                                            className="p-2 w-full text-xs text-gray-400 italic hover:bg-gray-50"
+                                        >
+                                            Switch to solving {direction === 'downward' ? '↑ upward' : '↓ downward'}
+                                        </button>)}
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div className="mb-6 px-3 md:p-0 font-medium md:text-lg text-left">
+                        <div className="leading-[24px] text-sm md:text-base lg:text-lg md:p-0">
+                            {/* Current Clues Section */}
+                            {Object.entries(clues).length > 0 && (
+                                <>
+                                    <h2 className="uppercase text-sm pt-4 mb-4 border-b-1 border-slate-300 text-slate-500 font-bold">Clues, out of order</h2>
+                                    {Object.entries(clues).map(([word, clue]) => (
+                                        <div key={word} className="mr-1 md:mr-0 mb-2 pt-1 pb-0 rounded-md border-1 border-gray-300 bg-white px-2 py-1">
+                                            {direction === 'upward' ?
+                                                renderUpwardClue(clue) :
+                                                renderDownwardClue(clue)
+                                            }
+                                        </div>
+                                    ))}
+                                </>
+                            )}
+
+                            {/*
+                    old version below, i don't know which one is better
+                    <div className="text-gray-500 text-sm uppercase tracking-wide mb-3">Clues, out of order</div>
+
+                    {Object.entries(clues).map(([word, clue]) => (
+                        <div key={word} className="mr-1 md:mr-0 mb-2 pt-1 pb-0 md:pt-2 md:pb-1 rounded-md border border-gray-300 bg-white px-2 py-1">
+                            {direction === 'upward' ?
+                                renderUpwardClue(clue) :
+                                renderDownwardClue(clue)
+                            }
+                        </div>
+                    ))} */}
+
+                            {/* Used Clues Section */}
+                            {Object.entries(usedClues).length > 0 && (
+                                <>
+                                    <h2 className="uppercase text-sm pt-4 mb-2 border-b-1 border-slate-300 text-slate-500 font-bold">Used clues</h2>
+                                    {Object.entries(usedClues).map(([word, renderedClue]) => (
+                                        <div key={word} className="mr-1 md:mr-0 mb-2 opacity-75 text-gray-500 my-3">
+                                            {renderedClue}
+                                        </div>
+                                    ))}
+                                </>
+                            )}
+
+                            {/* old version below i don't know which one is better
+                    {Object.entries(usedClues).length > 0 && (
+                        <div className="mt-6">
+                            <h4 className="text-gray-500 text-sm uppercase tracking-wide mb-3">Used Clues</h4>
+                            {Object.entries(usedClues).map(([word, renderedClue]) => (
+                                <div key={word} className="mr-1 md:mr-0 mb-2 pt-1 pb-0 md:pt-2 md:pb-1 rounded-md border border-gray-300 bg-gray-50 px-2 py-1 text-gray-500">
+                                    {renderedClue}
+                                </div>
+                            ))}
+                        </div>
+                    )} */}
+                        </div>
+                    </div>
                 </div>
             </div>
-
-            <div className="leading-[24px] text-sm md:text-base lg:text-lg md:p-0">
-                <div className="text-gray-500 text-sm uppercase tracking-wide mb-3">Clues, out of order</div>
-
-                {Object.entries(clues).map(([word, clue]) => (
-                    <div key={word} className="mr-1 md:mr-0 mb-2 pt-1 pb-0 md:pt-2 md:pb-1 rounded-md border border-gray-300 bg-white px-2 py-1">
-                        {direction === 'upward' ?
-                            renderUpwardClue(clue) :
-                            renderDownwardClue(clue)
-                        }
-                    </div>
-                ))}
-
-                {Object.entries(usedClues).length > 0 && (
-                    <div className="mt-6">
-                        <h4 className="text-gray-500 text-sm uppercase tracking-wide mb-3">Used Clues</h4>
-                        {Object.entries(usedClues).map(([word, renderedClue]) => (
-                            <div key={word} className="mr-1 md:mr-0 mb-2 pt-1 pb-0 md:pt-2 md:pb-1 rounded-md border border-gray-300 bg-gray-50 px-2 py-1 text-gray-500">
-                                {renderedClue}
-                            </div>
-                        ))}
-                    </div>
-                )}
-            </div>
-        </div>
-    );
+        </>);
 }
 
 // const renderProgressBar = () => {

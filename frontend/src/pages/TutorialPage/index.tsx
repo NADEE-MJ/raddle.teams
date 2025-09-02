@@ -11,7 +11,7 @@ export default function TutorialPage() {
                 <div className="w-full text-center mb-4 md:mb-0">
                     <h2 className="text-2xl md:text-3xl font-semibold mb-1">Learn how to Raddle</h2>
                     <div className="text-sm flex align-middle justify-center items-center">
-                        <Link 
+                        <Link
                             to="/"
                             className="text-sm px-3 py-1 bg-blue-50 border border-blue-300 hover:bg-blue-200 text-blue-800 rounded-md cursor-pointer"
                         >
@@ -21,12 +21,10 @@ export default function TutorialPage() {
                 </div>
             </div>
 
-            <div id="game-area" className="md:grid md:grid-cols-[2fr_3fr] md:gap-8">
-                <Tutorial
-                    completed={completed}
-                    setCompleted={setCompleted}
-                />
-            </div>
+            <Tutorial
+                completed={completed}
+                setCompleted={setCompleted}
+            />
 
             {completed && (
                 <div className="mt-8 text-center">
