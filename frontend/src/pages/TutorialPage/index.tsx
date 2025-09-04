@@ -9,11 +9,11 @@ export default function TutorialPage() {
         <div className="max-w-6xl mx-auto text-center">
             <div className="text-center md:text-left flex flex-col md:flex-row w-full md:px-2 lg:px-8 mb-2 md:mb-6">
                 <div className="w-full text-center mb-4 md:mb-0">
-                    <h2 className="text-2xl md:text-3xl font-semibold mb-1">Learn how to Raddle</h2>
+                    <h2 className="text-2xl md:text-3xl font-semibold mb-1 text-gray-900 dark:text-white">Learn how to Raddle</h2>
                     <div className="text-sm flex align-middle justify-center items-center">
                         <Link
                             to="/"
-                            className="text-sm px-3 py-1 bg-blue-50 border border-blue-300 hover:bg-blue-200 text-blue-800 rounded-md cursor-pointer"
+                            className="text-sm px-3 py-1 bg-blue-50 dark:bg-blue-900/20 border border-blue-300 dark:border-blue-700 hover:bg-blue-200 dark:hover:bg-blue-800/30 text-blue-800 dark:text-blue-300 rounded-md cursor-pointer"
                         >
                             Skip tutorial
                         </Link>
@@ -30,7 +30,7 @@ export default function TutorialPage() {
                 <div className="mt-8 text-center">
                     <Link
                         to='/'
-                        className='inline-block px-6 py-3 bg-blue-600 text-white rounded-lg hover:bg-blue-700 font-medium transition duration-200'
+                        className='inline-block px-6 py-3 bg-blue-600 hover:bg-blue-700 dark:bg-blue-700 dark:hover:bg-blue-600 text-white rounded-lg font-medium transition duration-200'
                     >
                         Ready to Play with Teams! →
                     </Link>

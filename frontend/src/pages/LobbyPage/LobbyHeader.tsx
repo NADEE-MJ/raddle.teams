@@ -31,17 +31,17 @@ export default function LobbyHeader({ lobby, player, sessionId, setSessionId }: 
     return (
         <div className='mb-6 flex items-center justify-between'>
             <div>
-                <h1 className='text-3xl font-bold text-gray-900'>{lobby.name}</h1>
-                <p className='mt-1 text-gray-600'>
+                <h1 className='text-3xl font-bold text-gray-900 dark:text-white'>{lobby.name}</h1>
+                <p className='mt-1 text-gray-600 dark:text-gray-300'>
                     Lobby Code: <span className='font-mono text-lg font-bold' data-testid="lobby-code">{lobby.code}</span>
                 </p>
             </div>
             <div className='text-right'>
-                <p className='mb-2 text-sm text-gray-600'>Welcome, {player.name}!</p>
+                <p className='mb-2 text-sm text-gray-600 dark:text-gray-300'>Welcome, {player.name}!</p>
                 <button
                     onClick={handleLeave}
                     disabled={loading}
-                    className='rounded-lg bg-red-600 px-4 py-2 text-white transition duration-200 hover:bg-red-700 disabled:bg-red-400'
+                    className='rounded-lg bg-red-600 hover:bg-red-700 dark:bg-red-700 dark:hover:bg-red-600 px-4 py-2 text-white transition duration-200 disabled:bg-red-400 dark:disabled:bg-red-600'
                     data-testid='leave-lobby-button'
                 >
                     {loading ? 'Leaving...' : 'Leave Lobby'}

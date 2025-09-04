@@ -1,5 +1,6 @@
 import { Outlet, Link, useLocation } from 'react-router-dom';
 import { useState, useEffect } from 'react';
+import ThemeToggle from '@/components/ThemeToggle';
 
 const GlobalLayout: React.FC = () => {
     const location = useLocation();
@@ -29,57 +30,60 @@ const GlobalLayout: React.FC = () => {
     };
 
     return (
-        <div className="min-h-screen layout font-sans bg-slate-100">
-            <nav className="bg-white shadow-md">
+        <div className="min-h-screen layout font-sans bg-slate-100 dark:bg-slate-900">
+            <nav className="bg-white dark:bg-slate-800 shadow-md">
                 <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
                     <div className="flex justify-between h-16 items-center">
                         <div className="flex items-center gap-4">
-                            <h1 className="text-2xl font-bold">
+                            <h1 className="text-2xl font-bold text-gray-900 dark:text-white">
                                 <Link to="/" className="flex items-center">
                                     R<span className="w-6 h-6 inline-block brightness-75 relative -top-[3px]">🪜</span>DDLE
                                 </Link>
                             </h1>
-                            <span className="hidden md:inline text-gray-600">Word Transformation Game</span>
+                            <span className="hidden md:inline text-gray-600 dark:text-gray-300">Word Transformation Game</span>
                         </div>
-                        <div className="text-gray-600">
-                            {showLogout ? (
-                                <button
-                                    onClick={isAdminPage ? handleAdminLogout : handleLobbyLogout}
-                                    className="text-red-600 hover:text-red-800"
-                                    data-testid="logout-button"
-                                >
-                                    Logout
-                                </button>
-                            ) : (
-                                <>
-                                    <Link to="/tutorial" className="text-blue-600 hover:text-blue-800">✌️ How to Play</Link>
-                                    {' • '}
-                                    <Link to="/admin" className="text-blue-600 hover:text-blue-800" data-testid="admin-panel-link">🔧 Admin</Link>
-                                </>
-                            )}
+                        <div className="flex items-center gap-4">
+                            <ThemeToggle />
+                            <div className="text-gray-600 dark:text-gray-300">
+                                {showLogout ? (
+                                    <button
+                                        onClick={isAdminPage ? handleAdminLogout : handleLobbyLogout}
+                                        className="text-red-600 hover:text-red-800 dark:text-red-400 dark:hover:text-red-300"
+                                        data-testid="logout-button"
+                                    >
+                                        Logout
+                                    </button>
+                                ) : (
+                                    <>
+                                        <Link to="/tutorial" className="text-blue-600 hover:text-blue-800 dark:text-blue-400 dark:hover:text-blue-300">✌️ How to Play</Link>
+                                        {' • '}
+                                        <Link to="/admin" className="text-blue-600 hover:text-blue-800 dark:text-blue-400 dark:hover:text-blue-300" data-testid="admin-panel-link">🔧 Admin</Link>
+                                    </>
+                                )}
+                            </div>
                         </div>
                     </div>
                 </div>
             </nav>
             
-            <main className="bg-slate-100 pt-4 md:p-4">
+            <main className="bg-slate-100 dark:bg-slate-900 pt-4 md:p-4">
                 <Outlet />
             </main>
 
-            <footer className="max-w-6xl mx-auto mt-4 border-t border-slate-300">
+            <footer className="max-w-6xl mx-auto mt-4 border-t border-slate-300 dark:border-slate-600">
                 <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 py-6">
                     <div className="flex flex-col md:flex-row justify-between items-center gap-4">
                         <div className="flex items-center gap-4">
-                            <div className="w-12 h-12 rounded bg-gray-200 flex items-center justify-center text-2xl">🎲</div>
-                            <div className="text-sm text-gray-600">
+                            <div className="w-12 h-12 rounded bg-gray-200 dark:bg-gray-700 flex items-center justify-center text-2xl">🎲</div>
+                            <div className="text-sm text-gray-600 dark:text-gray-300">
                                 <p className="mb-1">© 2025 Raddle Teams</p>
                                 <p className="mb-1">A team-based word game</p>
                                 <p>Built for collaborative fun</p>
                             </div>
                         </div>
-                        <div className="flex gap-4 text-sm text-gray-600">
-                            <Link to="/tutorial" className="hover:text-gray-900">✌️ How to Play</Link>
-                            <Link to="/admin" className="hover:text-gray-900" data-testid="footer-admin-link">🔧 Admin</Link>
+                        <div className="flex gap-4 text-sm text-gray-600 dark:text-gray-300">
+                            <Link to="/tutorial" className="hover:text-gray-900 dark:hover:text-gray-100">✌️ How to Play</Link>
+                            <Link to="/admin" className="hover:text-gray-900 dark:hover:text-gray-100" data-testid="footer-admin-link">🔧 Admin</Link>
                         </div>
                     </div>
                 </div>

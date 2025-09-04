@@ -20,11 +20,11 @@ export default function LobbiesList({
     return (
         <div className='mb-6'>
             <div className='mb-3 flex items-center justify-between'>
-                <div className="text-gray-500 text-sm uppercase tracking-wide" data-testid="all-lobbies-heading">All Lobbies</div>
+                <div className="text-gray-500 dark:text-gray-400 text-sm uppercase tracking-wide" data-testid="all-lobbies-heading">All Lobbies</div>
                 <button
                     onClick={onRefresh}
                     disabled={loading || contextLoading}
-                    className='px-3 py-1 bg-gray-50 border border-gray-300 hover:bg-gray-200 text-gray-800 rounded-md cursor-pointer font-medium transition duration-200 disabled:opacity-50 disabled:cursor-not-allowed text-sm'
+                    className='px-3 py-1 bg-gray-50 dark:bg-gray-700 border border-gray-300 dark:border-gray-600 hover:bg-gray-200 dark:hover:bg-gray-600 text-gray-800 dark:text-gray-200 rounded-md cursor-pointer font-medium transition duration-200 disabled:opacity-50 disabled:cursor-not-allowed text-sm'
                     data-testid='refresh-lobbies-button'
                 >
                     Refresh
@@ -32,7 +32,7 @@ export default function LobbiesList({
             </div>
 
             {lobbies.length === 0 ? (
-                <div className="mr-1 md:mr-0 pt-6 pb-6 md:pt-8 md:pb-8 rounded-md border border-gray-300 bg-white px-4 py-3 text-center text-gray-500">
+                <div className="mr-1 md:mr-0 pt-6 pb-6 md:pt-8 md:pb-8 rounded-md border border-gray-300 dark:border-gray-600 bg-white dark:bg-slate-700 px-4 py-3 text-center text-gray-500 dark:text-gray-400">
                     No lobbies created yet
                 </div>
             ) : (
@@ -41,13 +41,13 @@ export default function LobbiesList({
                         {lobbies.map(lobby => (
                             <div
                                 key={lobby.id}
-                                className="mr-1 md:mr-0 mb-2 pt-1 pb-0 md:pt-2 md:pb-1 rounded-md border border-gray-300 bg-white px-4 py-3"
+                                className="mr-1 md:mr-0 mb-2 pt-1 pb-0 md:pt-2 md:pb-1 rounded-md border border-gray-300 dark:border-gray-600 bg-white dark:bg-slate-700 px-4 py-3"
                             >
                                 <div className='flex flex-col md:flex-row md:items-center justify-between gap-3'>
                                     <div className='flex-1'>
-                                        <h3 className='font-semibold text-gray-900 mb-1'>{lobby.name}</h3>
-                                        <div className='flex flex-col md:flex-row gap-2 text-sm text-gray-600'>
-                                            <span>Code: <span className='font-mono font-bold bg-green-100 text-green-700 px-1 rounded'>{lobby.code}</span></span>
+                                        <h3 className='font-semibold text-gray-900 dark:text-white mb-1'>{lobby.name}</h3>
+                                        <div className='flex flex-col md:flex-row gap-2 text-sm text-gray-600 dark:text-gray-300'>
+                                            <span>Code: <span className='font-mono font-bold bg-green-100 dark:bg-green-900/30 text-green-700 dark:text-green-400 px-1 rounded'>{lobby.code}</span></span>
                                             <span className="hidden md:inline">•</span>
                                             <span>Created: {new Date(lobby.created_at).toLocaleDateString()}</span>
                                         </div>
@@ -56,7 +56,7 @@ export default function LobbiesList({
                                         <button
                                             onClick={() => onViewDetails(lobby.id)}
                                             disabled={loading || contextLoading}
-                                            className='px-3 py-1 bg-blue-50 border border-blue-300 hover:bg-blue-200 text-blue-800 rounded-md cursor-pointer font-medium transition duration-200 disabled:opacity-50 disabled:cursor-not-allowed text-sm'
+                                            className='px-3 py-1 bg-blue-50 dark:bg-blue-900/20 border border-blue-300 dark:border-blue-700 hover:bg-blue-200 dark:hover:bg-blue-800/30 text-blue-800 dark:text-blue-300 rounded-md cursor-pointer font-medium transition duration-200 disabled:opacity-50 disabled:cursor-not-allowed text-sm'
                                             data-testid={`view-lobby-${lobby.id}-button`}
                                         >
                                             View Details
@@ -64,7 +64,7 @@ export default function LobbiesList({
                                         <button
                                             onClick={() => onDeleteLobby(lobby.id)}
                                             disabled={loading || contextLoading}
-                                            className='px-3 py-1 bg-red-50 border border-red-300 hover:bg-red-200 text-red-800 rounded-md cursor-pointer font-medium transition duration-200 disabled:opacity-50 disabled:cursor-not-allowed text-sm'
+                                            className='px-3 py-1 bg-red-50 dark:bg-red-900/20 border border-red-300 dark:border-red-700 hover:bg-red-200 dark:hover:bg-red-800/30 text-red-800 dark:text-red-300 rounded-md cursor-pointer font-medium transition duration-200 disabled:opacity-50 disabled:cursor-not-allowed text-sm'
                                             data-testid={`delete-lobby-${lobby.id}-button`}
                                         >
                                             Delete

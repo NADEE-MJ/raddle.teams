@@ -48,10 +48,6 @@ export default function AdminPage() {
         }
     };
 
-    const handleLogout = () => {
-        setAdminToken(null);
-        setSelectedLobby(null);
-    };
 
     const createLobby = async (name: string) => {
         if (!adminToken) return;
@@ -227,15 +223,15 @@ export default function AdminPage() {
     }
 
     return (
-        <main className="bg-slate-100 pt-4 md:p-4">
+        <main className="bg-slate-100 dark:bg-slate-900 pt-4 md:p-4">
             <div className="max-w-6xl mx-auto">
-                <div className="bg-white rounded-lg shadow-sm p-4 md:p-8 mb-6">
-                    <h1 className="text-3xl font-bold mb-6" data-testid="admin-dashboard-title">Admin Dashboard</h1>
+                <div className="bg-white dark:bg-slate-800 rounded-lg shadow-sm p-4 md:p-8 mb-6">
+                    <h1 className="text-3xl font-bold mb-6 text-gray-900 dark:text-white" data-testid="admin-dashboard-title">Admin Dashboard</h1>
                     
-                    <DashboardHeader onLogout={handleLogout} />
+                    <DashboardHeader />
 
                     {(error || contextError) && (
-                        <div className='mb-6 rounded-lg border border-red-200 bg-red-50 px-4 py-3 text-red-700' data-testid='admin-error-message'>
+                        <div className='mb-6 rounded-lg border border-red-200 dark:border-red-800 bg-red-50 dark:bg-red-900/20 px-4 py-3 text-red-700 dark:text-red-400' data-testid='admin-error-message'>
                             {error || contextError}
                         </div>
                     )}
