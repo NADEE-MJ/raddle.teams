@@ -25,6 +25,8 @@ PROJECT_ROOT = Path(__file__).parent.absolute()
 def rerun_in_poetry():
     if "VIRTUAL_ENV" not in os.environ and "POETRY_ACTIVE" not in os.environ:
         try:
+            # cd to the project root
+            os.chdir(PROJECT_ROOT)
             # Re-execute this script with poetry run
             os.execvp("poetry", ["poetry", "run", "python"] + sys.argv)
         except (subprocess.CalledProcessError, FileNotFoundError):
@@ -54,7 +56,6 @@ class LogLevel(str, Enum):
 
 @app.command()
 def build(watch: bool = typer.Option(False, "--watch", "-w", help="Watch for changes", is_flag=True)):
-    rerun_in_poetry()
     if watch:
         cmd = ["npx", "vite", "build", "--watch"]
         description = "Building frontend with watch mode"
