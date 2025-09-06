@@ -8,7 +8,10 @@ from pathlib import Path
 from typing import List
 
 import typer
-from typer import colors
+from rich.console import Console
+from rich.panel import Panel
+from rich.progress import Progress, SpinnerColumn, TextColumn
+from rich.text import Text
 
 app = typer.Typer(
     name="rt",
@@ -20,10 +23,12 @@ app = typer.Typer(
 )
 
 PROJECT_ROOT = Path(__file__).parent.absolute()
+console = Console()
 
 
 def rerun_in_poetry():
     if "VIRTUAL_ENV" not in os.environ and "POETRY_ACTIVE" not in os.environ:
+        console.print("[bright_yellow]🔄 Switching to Poetry environment...[/bright_yellow]")
         try:
             # cd to the project root
             os.chdir(PROJECT_ROOT)
@@ -31,18 +36,55 @@ def rerun_in_poetry():
             os.execvp("poetry", ["poetry", "run", "python"] + sys.argv)
         except (subprocess.CalledProcessError, FileNotFoundError):
             # Poetry not available or not a poetry project, exit gracefully
-            typer.secho("❌ Poetry is not installed or this is not a Poetry project.", fg=colors.RED)
+            console.print("[bold red]❌ Poetry is not installed or this is not a Poetry project.[/bold red]")
             raise typer.Exit(1)
 
 
 def run_command(cmd: List[str], description: str) -> int:
-    typer.echo(f"🔄 {description}...")
-    result = subprocess.run(cmd, cwd=PROJECT_ROOT)
-    if result.returncode == 0:
-        typer.secho(f"✅ {description} completed successfully!", fg=colors.GREEN)
-    else:
-        typer.secho(f"❌ {description} failed!", fg=colors.RED)
-    return result.returncode
+    with Progress(
+        SpinnerColumn(),
+        TextColumn("[bold blue]{task.description}"),
+        console=console,
+    ) as progress:
+        task = progress.add_task(f"[bright_yellow]🔄 {description}...", total=None)
+        console.print(f"[dim blue]   💻 Running: {' '.join(cmd)}[/dim blue]")
+
+        result = subprocess.run(cmd, cwd=PROJECT_ROOT)
+        progress.update(task, completed=True)
+
+        if result.returncode == 0:
+            console.print(f"[bold green]✅ {description} completed successfully![/bold green]")
+        else:
+            console.print(f"[bold red]❌ {description} failed![/bold red]")
+
+        return result.returncode
+
+
+def run_command_in_background(cmd: List[str], description: str) -> subprocess.Popen:
+    console.print(f"[bright_yellow]🔄 {description}...[/bright_yellow]")
+    console.print(f"[dim blue]   🌌 Running in background: {' '.join(cmd)}[/dim blue]")
+    process = subprocess.Popen(cmd, cwd=PROJECT_ROOT)
+    console.print(f"[green]✅ Started background process (PID: {process.pid})[/green]")
+    return process
+
+
+def add_command_and_aliases(command, name: str, aliases: List[str], help: str | None = None, *args, **kwargs):
+    help = help or command.__doc__
+
+    if aliases:
+        alias_str = ", ".join(aliases)
+        max_alias_length = 22
+        padding = max_alias_length - len(alias_str)
+        padding_str = " " * max(padding, 1)
+
+        if help:
+            help = f"[bold bright_green]{alias_str}[/bold bright_green]{padding_str}{help}"
+        else:
+            help = f"[bold bright_green]{alias_str}[/bold bright_green]"
+
+    app.command(name=name, *args, **kwargs, help=help)(command)
+    for alias in aliases:
+        app.command(name=alias, *args, **kwargs, hidden=True)(command)
 
 
 class LogLevel(str, Enum):
@@ -54,8 +96,11 @@ class LogLevel(str, Enum):
     TRACE = "trace"
 
 
-@app.command()
-def build(watch: bool = typer.Option(False, "--watch", "-w", help="Watch for changes", is_flag=True)):
+def build(
+    watch: bool = typer.Option(
+        False, "--watch", "-w", help="👀 Watch for changes and rebuild continuously", is_flag=True
+    ),
+):
     if watch:
         cmd = ["npx", "vite", "build", "--watch"]
         description = "Building frontend with watch mode"
@@ -66,18 +111,25 @@ def build(watch: bool = typer.Option(False, "--watch", "-w", help="Watch for cha
     return run_command(cmd, description)
 
 
-@app.command()
+add_command_and_aliases(
+    build,
+    "build",
+    ["b"],
+    help="🔨 Build the frontend assets using Vite",
+)
+
+
 def server(
-    port: int = typer.Option(8000, "--port", "-p", help="Port to run on"),
-    host: str = typer.Option("localhost", "--host", "-H", help="Host to run on"),
-    reload: bool = typer.Option(False, "--reload", "-r", help="Enable auto-reload on code changes", is_flag=True),
-    log_level: LogLevel = typer.Option(LogLevel.INFO, "--log-level", "-l", help="Logging level"),
-    no_build: bool = typer.Option(False, "--no-build", help="Skip building frontend", is_flag=True),
+    port: int = typer.Option(8000, "--port", "-p", help="🔌 Port to run on"),
+    host: str = typer.Option("localhost", "--host", "-H", help="🏠 Host to bind to"),
+    reload: bool = typer.Option(False, "--reload", "-r", help="🔄 Enable auto-reload on code changes", is_flag=True),
+    log_level: LogLevel = typer.Option(LogLevel.INFO, "--log-level", "-l", help="📝 Logging level"),
+    no_build: bool = typer.Option(False, "--no-build", help="⚡ Skip building frontend", is_flag=True),
     watch: bool = typer.Option(
         False,
         "--watch",
         "-w",
-        help="Watch for frontend changes and rebuild, (ignored with no-build flag)",
+        help="👀 Watch for frontend changes and rebuild (ignored with no-build flag)",
         is_flag=True,
     ),
 ):
@@ -87,8 +139,9 @@ def server(
         process = None
         if not no_build:
             if watch:
-                # spin up a separate process to watch and build the frontend, close it when this process ends
-                process = subprocess.Popen(["npx", "vite", "build", "--watch"])
+                process = run_command_in_background(
+                    ["npx", "vite", "build", "--watch"], "Building frontend with watch mode"
+                )
             else:
                 if build(False) != 0:
                     raise typer.Exit(1)
@@ -99,11 +152,27 @@ def server(
 
         from backend.custom_logging import server_logger
 
-        server_logger.info("Initializing FastAPI server startup")
+        startup_info = Text()
+        startup_info.append("🚀 Server: ", style="bold bright_yellow")
+        startup_info.append(f"http://{host}:{port}", style="bold blue underline")
+        startup_info.append("\n📖 API Docs: ", style="bold bright_yellow")
+        startup_info.append(f"http://{host}:{port}/docs", style="bold blue underline")
+        startup_info.append("\n📚 ReDoc: ", style="bold bright_yellow")
+        startup_info.append(f"http://{host}:{port}/redoc", style="bold blue underline")
 
+        panel = Panel(
+            startup_info,
+            title="🎯 Raddle Teams Server Starting",
+            title_align="left",
+            border_style="bright_green",
+            padding=(1, 2),
+        )
+        console.print(panel)
+
+        server_logger.info("Initializing FastAPI server startup")
         server_logger.info(f"Server will be available at: http://{host}:{port}")
-        server_logger.info(f"📖 API docs will be available at: http://{host}:{port}/docs")
-        server_logger.info(f"📚 ReDoc will be available at: http://{host}:{port}/redoc")
+        server_logger.info(f"API docs will be available at: http://{host}:{port}/docs")
+        server_logger.info(f"ReDoc will be available at: http://{host}:{port}/redoc")
 
         server_logger.info(
             f"Server configuration - Host: {host}, Port: {port}, Reload: {reload}, Log Level: {log_level}"
@@ -132,10 +201,10 @@ def server(
             )
         except KeyboardInterrupt:
             server_logger.info("Server stopped by user (KeyboardInterrupt)")
-            typer.secho("🛑 Server stopped by user", fg=colors.YELLOW)
+            console.print("[bold yellow]🛑 Server stopped by user[/bold yellow]")
         except Exception as e:
             server_logger.error(f"Error starting server: {e}")
-            typer.secho(f"❌ Error starting server: {e}", fg=colors.RED)
+            console.print(f"[bold red]❌ Error starting server: {e}[/bold red]")
             raise typer.Exit(1)
     finally:
         if not no_build and watch and process is not None:
@@ -144,30 +213,37 @@ def server(
                 process.wait()
             except Exception as e:
                 server_logger.error(f"Error stopping watch process: {e}")
-                typer.secho(f"❌ Error stopping watch process: {e}", fg=colors.RED)
+                console.print(f"[bold red]❌ Error stopping watch process: {e}[/bold red]")
 
 
-@app.command(context_settings={"allow_extra_args": True, "ignore_unknown_options": True})
+add_command_and_aliases(
+    server,
+    "server",
+    ["s", "serve"],
+    help="🚀 Start the FastAPI server with optional frontend building and watching",
+)
+
+
 def test(
     ctx: typer.Context,
-    v: bool = typer.Option(False, "--verbose", "-v"),
-    vv: bool = typer.Option(False, "--very-verbose", "-vv"),
-    vvv: bool = typer.Option(False, "--very-very-verbose", "-vvv"),
-    filter: str = typer.Option(None, "--filter", "-f"),
-    record: bool = typer.Option(False, "--record", "-r", help="Enable video/trace recording"),
+    v: bool = typer.Option(False, "--verbose", "-v", help="🔍 Enable verbose output"),
+    vv: bool = typer.Option(False, "--very-verbose", "-vv", help="🔍🔍 Enable very verbose output"),
+    vvv: bool = typer.Option(False, "--very-very-verbose", "-vvv", help="🔍🔍🔍 Enable very very verbose output"),
+    filter: str = typer.Option(None, "--filter", "-f", help="🔍 Filter tests by name"),
+    record: bool = typer.Option(False, "--record", "-r", help="📹 Enable video/trace recording"),
     slow_mo: bool = typer.Option(
         False,
         "--slow-mo",
         "-sm",
-        help="Enable slow motion mode when running tests, will run headless and operate slowly",
+        help="🐌 Enable slow motion mode when running tests, will run headless and operate slowly",
     ),
     super_slow_mo: bool = typer.Option(
         False,
         "--super-slow-mo",
         "-ssm",
-        help="Enable super slow motion mode when running tests, will run headless and operate very slowly",
+        help="🐢 Enable super slow motion mode when running tests, will run headless and operate very slowly",
     ),
-    debug: bool = typer.Option(False, "--debug", "-d", help="Enable playwrights debug mode", is_flag=True),
+    debug: bool = typer.Option(False, "--debug", "-d", help="🐛 Enable playwrights debug mode", is_flag=True),
 ):
     rerun_in_poetry()
 
@@ -193,13 +269,55 @@ def test(
         f"{cwd}/tests/e2e/recordings/videos",
         f"{cwd}/tests/e2e/recordings/traces",
     ]
-    for records_dir in records_dirs:
-        if os.path.exists(records_dir):
-            for root, dirs, files in os.walk(records_dir, topdown=False):
-                for name in files:
-                    os.remove(os.path.join(root, name))
-                for name in dirs:
-                    os.rmdir(os.path.join(root, name))
+
+    with Progress(
+        SpinnerColumn(),
+        TextColumn("[bold blue]{task.description}"),
+        console=console,
+    ) as progress:
+        cleanup_task = progress.add_task("[yellow]🧹 Cleaning up old test recordings...", total=None)
+
+        for records_dir in records_dirs:
+            if os.path.exists(records_dir):
+                for root, dirs, files in os.walk(records_dir, topdown=False):
+                    for name in files:
+                        os.remove(os.path.join(root, name))
+                    for name in dirs:
+                        os.rmdir(os.path.join(root, name))
+
+        progress.update(cleanup_task, completed=True)
+
+    console.print("[green]✨ Test recordings cleaned up![/green]")
+
+    test_config = Text()
+    test_config.append("🎦 Mode: ", style="bold bright_yellow")
+
+    modes = []
+    if record:
+        modes.append("📹 Recording")
+    if debug:
+        modes.append("🐛 Debug")
+    if slow_mo:
+        modes.append("🐌 Slow Motion")
+    if super_slow_mo:
+        modes.append("🐢 Super Slow")
+    if v or vv or vvv:
+        verbose_level = "v" * (1 if v else 2 if vv else 3)
+        modes.append(f"🔍 Verbose ({verbose_level})")
+
+    if modes:
+        test_config.append(", ".join(modes), style="blue")
+    else:
+        test_config.append("Standard", style="blue")
+
+    if filter:
+        test_config.append("\n🎯 Filter: ", style="bold bright_yellow")
+        test_config.append(filter, style="blue")
+
+    config_panel = Panel(
+        test_config, title="🧪 Test Configuration", title_align="left", border_style="bright_magenta", padding=(1, 2)
+    )
+    console.print(config_panel)
 
     command_line_args = []
 
@@ -234,7 +352,7 @@ def test(
         try:
             sys.exit(pytest.main(command_line_args))
         except Exception as e:
-            typer.secho(f"❌ Error running tests: {e}", fg=colors.RED)
+            console.print(f"[bold red]❌ Error running tests: {e}[/bold red]")
             typer.Exit(1)
     finally:
         del os.environ["RADDLE_ENV"]
@@ -245,20 +363,28 @@ def test(
         if "PYTEST_SLOW_MO" in os.environ:
             del os.environ["PYTEST_SLOW_MO"]
 
-        if "PW_DEBUG" in os.environ:
+        if "PWDEBUG" in os.environ:
             del os.environ["PWDEBUG"]
 
 
-@app.command()
+add_command_and_aliases(
+    test,
+    "test",
+    ["t"],
+    help="🧪 Run the Python e2e test suite with Playwright",
+    context_settings={"allow_extra_args": True, "ignore_unknown_options": True},
+)
+
+
 def format(
-    check: bool = typer.Option(False, "--check", help="Check formatting without changing files"),
-    frontend_only: bool = typer.Option(False, "--frontend-only", help="Only format frontend"),
-    backend_only: bool = typer.Option(False, "--backend-only", help="Only format backend"),
+    check: bool = typer.Option(False, "--check", help="🔍 Check formatting without changing files"),
+    frontend_only: bool = typer.Option(False, "--frontend-only", help="✨ Only format frontend"),
+    backend_only: bool = typer.Option(False, "--backend-only", help="🐍 Only format backend"),
 ):
     success = True
 
     if not backend_only:
-        typer.echo("🎨 Formatting frontend (Prettier)...")
+        console.print("[bold magenta]🎨 Formatting frontend (Prettier)...[/bold magenta]")
         if check:
             if run_command(["npx", "prettier", "--check", "."], "Checking frontend formatting (Prettier)") != 0:
                 success = False
@@ -287,25 +413,50 @@ def format(
                 success = False
 
     if success:
-        typer.secho("✅ All formatting completed successfully!", fg=colors.GREEN)
+        console.print("[bold green]✅ All formatting completed successfully![/bold green]")
         return 0
     else:
-        typer.secho("❌ Some formatting failed!", fg=colors.RED)
+        console.print("[bold red]❌ Some formatting failed![/bold red]")
         return 1
 
 
-@app.command()
+add_command_and_aliases(
+    format,
+    "format",
+    ["f", "fmt"],
+    help="🎨 Format code using Prettier (frontend) and Ruff (backend)",
+)
+
+
 def trace(
-    file: str = typer.Argument(..., help="Path to the trace file to view"),
+    file: str = typer.Argument(..., help="📄 Path to the trace file to view"),
 ):
     return run_command(["npx", "playwright", "show-trace", file], "Opening Playwright trace viewer")
 
 
-@app.command()
+add_command_and_aliases(
+    trace,
+    "trace",
+    ["tr", "view-trace"],
+    help="🔍 Open Playwright trace viewer for test recordings",
+)
+
+
 def install(
-    sync: bool = typer.Option(False, "--sync", "-s", help="Sync dependencies without reinstalling", is_flag=True),
+    sync: bool = typer.Option(False, "--sync", "-s", help="🔄 Sync dependencies without reinstalling", is_flag=True),
 ):
-    typer.echo("📥 Installing dependencies...")
+    install_info = Text()
+    install_info.append("🐍 Python: ", style="bold yellow")
+    install_info.append("poetry install", style="blue")
+    if sync:
+        install_info.append(" --sync", style="dim blue")
+    install_info.append("\n🟢 Node.js: ", style="bold yellow")
+    install_info.append("npm ci" if sync else "npm install", style="blue")
+
+    panel = Panel(
+        install_info, title="📦 Installing Dependencies", title_align="left", border_style="bright_cyan", padding=(1, 2)
+    )
+    console.print(panel)
 
     poetry_command = ["poetry", "install"]
     if sync:
@@ -321,8 +472,21 @@ def install(
     if run_command(npm_command, "Installing Node.js dependencies") != 0:
         raise typer.Exit(1)
 
-    typer.secho("✅ All dependencies installed successfully!", fg=colors.GREEN)
+    success_panel = Panel(
+        "[bold green]✅ All dependencies installed successfully![/bold green]\n[dim green]Ready to build and run! 🎉[/dim green]",
+        border_style="green",
+        padding=(1, 2),
+    )
+    console.print(success_panel)
     return 0
+
+
+add_command_and_aliases(
+    install,
+    "install",
+    ["i", "deps"],
+    help="📦 Install Python and Node.js dependencies",
+)
 
 
 if __name__ == "__main__":
