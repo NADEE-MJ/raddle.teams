@@ -489,5 +489,32 @@ add_command_and_aliases(
 )
 
 
+def version_callback(value: bool):
+    if value:
+        banner = Text()
+        banner.append("🎲 ", style="bold red")
+        banner.append("Raddle Teams", style="bold bright_white")
+        banner.append(" Command Runner", style="bold blue")
+        banner.append("\n📋 Version: ", style="bold bright_yellow")
+        banner.append("1.0.0", style="bold cyan")
+        banner.append("\n🚀 ", style="bold yellow")
+        banner.append("Ready for development!", style="bright_green")
+        banner.append("\n💻 ", style="bold blue")
+        banner.append("Built with Rich & Typer", style="dim white")
+
+        banner_panel = Panel(banner, border_style="bright_blue", padding=(1, 2), title="📖 About")
+        console.print(banner_panel)
+        raise typer.Exit()
+
+
+@app.callback(invoke_without_command=True)
+def main(
+    version: bool = typer.Option(
+        False, "--version", "-v", callback=version_callback, is_eager=True, help="📖 Show version information"
+    ),
+):
+    pass
+
+
 if __name__ == "__main__":
     app()

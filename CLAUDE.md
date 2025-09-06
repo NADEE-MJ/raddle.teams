@@ -2,29 +2,50 @@
 
 This file provides guidance to Claude Code (claude.ai/code) when working with code in this repository.
 
+## Command Line Tool
+
+**All development commands are accessed through the `./rt` command runner:**
+- The `rt` script is a Python CLI tool built with Rich and Typer
+- Run `./rt --help` to see all available commands and options
+
 ## Development Commands
 
-**Frontend:**
-- `npm run build` - Build the React frontend for production/testing (need to run this after every frontend change)
-- `npm run build:watch` - Build with file watching enabled
-- `npm run type-check` - Run TypeScript type checking
-- `npm run lint` - Run ESLint (max 15 warnings allowed)
-- `npm run lint:fix` - Auto-fix ESLint issues
-- `npm run format:check` - Check code formatting with Prettier
-- `npm run check` - Run type-check, lint, and format-check in sequence
+**Core Commands (using ./rt):**
+- `./rt build` or `./rt b` - 🏗️ Build the React frontend for production/testing (need to run this after every frontend change)
+- `./rt build --watch` or `./rt b -w` - 👀 Build with file watching enabled for continuous rebuilding
+- `./rt server` or `./rt s` - 🚀 Start development server (Python FastAPI, frontend is built before starting the server)
+- `./rt server -r` or `./rt s -r` - 🚀 Start development server (Python FastAPI with auto-reload)
+- `./rt server --watch` - 🚀👀 Start server with frontend watch mode (builds and serves)
+- `./rt server --no-build` - ⚡ Start server without building frontend first
+- `./rt test` or `./rt t` - 🧪 Run Python e2e test suite with Playwright (auto runs frontend build and testing server)
+- `./rt install` or `./rt i` - 📦 Install Python and Node.js dependencies
+- `./rt format` or `./rt f` - 🎨 Format code using Prettier (frontend) and Ruff (backend)
+- `./rt format --check` - 🔍 Check formatting without changing files
+- `./rt trace <file>` or `./rt tr <file>` - 🔍 Open Playwright trace viewer for test recordings
+- `./rt --version` or `./rt -V` - 📖 Show version information
 
-**Backend:**
-- `npm run server` - Start development server (Python FastAPI with auto-reload)
-- `npm run testing-server` - Start server in testing mode
-- `npm run lint:python` - Lint Python code with ruff
-- `npm run format:python` - Format Python code with ruff
+**Advanced Testing Options:**
+- `./rt test --filter <pattern>` or `./rt t -f <pattern>` - 🎯 Run specific tests matching pattern
+- `./rt test --verbose` or `./rt t -v` - 🔍 Run tests with verbose output
+- `./rt test --very-verbose` or `./rt t -vv` - 🔍🔍 Run tests with very verbose output
+- `./rt test --record` or `./rt t -r` - 📹 Run tests with video/trace recording enabled
+- `./rt test --slow-mo` or `./rt t -sm` - 🐌 Run tests in slow motion mode
+- `./rt test --debug` or `./rt t -d` - 🐛 Run tests in Playwright debug mode
+- `./rt test tests/e2e/path/to/test.py` - Run specific test file
 
-**Testing:**
-- `npm run test` - Run Python e2e test suite using bin/run_tests.py (auto runs build)
-- `npm run test -- --filter <pattern>` - Run specific tests matching pattern
-- `npm run test -- -v` - Run tests with verbose output
-- `npm run test -- --record` - Run tests with video/trace recording enabled
-- `npm run test -- tests/e2e/path/to/test.py` - Run specific test file
+**Server Options:**
+- `./rt server --port 9000` or `./rt s -p 9000` - 🔌 Run server on custom port
+- `./rt server --host 0.0.0.0` or `./rt s -H 0.0.0.0` - 🏠 Bind server to all interfaces
+- `./rt server --reload` or `./rt s -r` - 🔄 Enable auto-reload on code changes
+- `./rt server --log-level debug` or `./rt s -l debug` - 📝 Set custom logging level
+
+**Formatting Options:**
+- `./rt format --frontend-only` - ✨ Format only frontend code (Prettier + ESLint)
+- `./rt format --backend-only` - 🐍 Format only backend code (Ruff)
+- `./rt format --check` - 🔍 Check formatting without making changes
+
+**Installation Options:**
+- `./rt install --sync` or `./rt i -s` - 🔄 Sync dependencies (remove unused packages)
 
 ## Project Architecture
 
@@ -90,24 +111,25 @@ This is a full-stack team-based multiplayer word puzzle game with real-time WebS
 ## Key Development Notes
 
 - Frontend builds to `static/` directory, served by FastAPI in production
-- Development uses separate Vite dev server (port 5173) + FastAPI backend (port 8000)
-- All frontend requests proxy to backend in development
+- Use `./rt server --watch` for development with auto-rebuilding frontend
+- Use `./rt server --no-build` to skip frontend building and serve existing static files
 - Database auto-creates on startup, supports testing mode with reset endpoint
 - WebSocket connections handle both player gameplay and admin monitoring
 - Uses modern React patterns: hooks, context, lazy loading, Suspense
+- All development commands centralized in the `./rt` tool with rich UI feedback
 
 ## Testing Architecture
 
 **Python Tests:**
-- Uses pytest with custom test runner at `bin/run_tests.py`
+- Uses pytest integrated into the `./rt test` command
 - Test environment automatically set via `RADDLE_ENV=testing`
 - E2E tests with Playwright support
 - Tests organized in `/tests` directory with subdirectories for different test types
-- Recording cleanup (screenshots, videos, traces) on test runs
+- Automatic recording cleanup (screenshots, videos, traces) on test runs
 - Logs go to `/logs/testing_*.log`
 
-**Frontend Testing:**
-- TypeScript type checking with `tsc --noEmit`
-- ESLint with max 15 warnings policy
-- Prettier formatting checks
-- Combined validation via `npm run check`
+**Code Quality & Formatting:**
+- Use `./rt format` or `./rt f` for comprehensive code formatting
+- Frontend: Prettier formatting + ESLint fixing + TypeScript type checking
+- Use `./rt format --check` to validate without changing files and do type checking in frontend
+- All formatting integrated into the rt command for consistency
