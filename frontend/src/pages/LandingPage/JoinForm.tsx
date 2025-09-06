@@ -43,7 +43,7 @@ export default function JoinForm({ loading, setLoading }: JoinFormProps) {
     return (
         <form onSubmit={handleJoinLobby} className='space-y-6'>
             <div>
-                <label htmlFor='name' className='mb-2 block text-sm font-medium text-ayu-text-secondary'>
+                <label htmlFor='name' className='mb-2 block text-sm font-medium text-tx-secondary'>
                     Your Name
                 </label>
                 <input
@@ -51,7 +51,7 @@ export default function JoinForm({ loading, setLoading }: JoinFormProps) {
                     id='name'
                     value={name}
                     onChange={e => setName(e.target.value)}
-                    className='w-full rounded-lg border border-ayu-border px-3 py-2 shadow-sm bg-ayu-bg-tertiary text-ayu-text-primary focus:border-ayu-accent focus:ring-2 focus:ring-ayu-accent focus:outline-none'
+                    className='w-full rounded-lg border border-border px-3 py-2 shadow-sm bg-tertiary text-tx-primary focus:border-accent focus:ring-2 focus:ring-accent focus:outline-none'
                     placeholder='Enter your name'
                     disabled={loading}
                     data-testid='name-input'
@@ -59,7 +59,7 @@ export default function JoinForm({ loading, setLoading }: JoinFormProps) {
             </div>
 
             <div>
-                <label htmlFor='lobbyCode' className='mb-2 block text-sm font-medium text-ayu-text-secondary'>
+                <label htmlFor='lobbyCode' className='mb-2 block text-sm font-medium text-tx-secondary'>
                     Lobby Code
                 </label>
                 <input
@@ -67,7 +67,7 @@ export default function JoinForm({ loading, setLoading }: JoinFormProps) {
                     id='lobbyCode'
                     value={lobbyCode}
                     onChange={e => setLobbyCode(e.target.value.toUpperCase())}
-                    className='w-full rounded-lg border border-ayu-border px-3 py-2 uppercase shadow-sm bg-ayu-bg-tertiary text-ayu-text-primary focus:border-ayu-accent focus:ring-2 focus:ring-ayu-accent focus:outline-none'
+                    className='w-full rounded-lg border border-border px-3 py-2 uppercase shadow-sm bg-tertiary text-tx-primary focus:border-accent focus:ring-2 focus:ring-accent focus:outline-none'
                     placeholder='ABCDEF'
                     maxLength={6}
                     disabled={loading}
@@ -75,12 +75,12 @@ export default function JoinForm({ loading, setLoading }: JoinFormProps) {
                 />
             </div>
 
-            {error && <div className='text-center text-sm text-ayu-red' data-testid='join-form-error'>{error}</div>}
+            {error && <div className='text-center text-sm text-red' data-testid='join-form-error'>{error}</div>}
 
             <button
                 type='submit'
                 disabled={loading}
-                className='w-full rounded-lg bg-ayu-accent px-4 py-2 font-medium text-ayu-bg-primary transition duration-200 hover:bg-ayu-accent-hover disabled:bg-ayu-text-muted'
+                className='w-full rounded-lg bg-accent px-4 py-2 font-medium text-primary transition duration-200 hover:bg-accent-hover disabled:bg-tx-muted'
                 data-testid='join-lobby-button'
             >
                 {loading ? 'Joining...' : 'Join Lobby'}

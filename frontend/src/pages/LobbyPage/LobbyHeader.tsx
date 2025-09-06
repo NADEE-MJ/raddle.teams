@@ -31,13 +31,13 @@ export default function LobbyHeader({ lobby, player, sessionId, setSessionId }: 
     return (
         <div className='mb-6 flex items-center justify-between'>
             <div>
-                <h1 className='text-3xl font-bold text-gray-900 dark:text-ayu-text-primary'>{lobby.name}</h1>
-                <p className='mt-1 text-gray-600 dark:text-ayu-text-secondary'>
+                <h1 className='text-3xl font-bold text-gray-900 dark:text-tx-primary'>{lobby.name}</h1>
+                <p className='mt-1 text-gray-600 dark:text-tx-secondary'>
                     Lobby Code: <span className='font-mono text-lg font-bold' data-testid="lobby-code">{lobby.code}</span>
                 </p>
             </div>
             <div className='text-right'>
-                <p className='mb-2 text-sm text-gray-600 dark:text-ayu-text-secondary'>Welcome, {player.name}!</p>
+                <p className='mb-2 text-sm text-gray-600 dark:text-tx-secondary'>Welcome, {player.name}!</p>
                 <button
                     onClick={handleLeave}
                     disabled={loading}

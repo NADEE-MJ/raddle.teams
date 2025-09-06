@@ -1,30 +1,23 @@
 @import "tailwindcss";
 
 @theme {
-  --color-ayu-bg-primary: #0b0e14;
-  --color-ayu-bg-secondary: #0d1017;
-  --color-ayu-bg-tertiary: #0f131a;
-  --color-ayu-bg-elevated: #131721;
-  --color-ayu-border: #2d3748;
-  --color-ayu-border-light: #4a5568;
-  --color-ayu-text-primary: #bfbdb6;
-  --color-ayu-text-secondary: #565b66;
-  --color-ayu-text-muted: #acb6bf8c;
-  --color-ayu-accent: #e6b450;
-  --color-ayu-accent-hover: #e1af4b;
-  --color-ayu-blue: #39bae6;
-  --color-ayu-blue-bright: #59c2ff;
-  --color-ayu-green: #aad94c;
-  --color-ayu-orange: #ff8f40;
-  --color-ayu-red: #f07178;
-  --color-ayu-red-bright: #d95757;
-  --color-ayu-purple: #d2a6ff;
-  --color-ayu-cyan: #95e6cb;
-}
-
-@layer base {
-  html {
-    background-color: var(--color-ayu-bg-primary);
-    color: var(--color-ayu-text-primary);
-  }
+  --color-primary: #0b0e14;
+  --color-secondary: #0d1017;
+  --color-tertiary: #0f131a;
+  --color-elevated: #131721;
+  --color-border: #2d3748;
+  --color-border-light: #4a5568;
+  --color-tx-primary: #bfbdb6;
+  --color-tx-secondary: #565b66;
+  --color-tx-muted: #acb6bf8c;
+  --color-accent: #e6b450;
+  --color-accent-hover: #e1af4b;
+  --color-blue: #39bae6;
+  --color-blue-bright: #59c2ff;
+  --color-green: #aad94c;
+  --color-orange: #ff8f40;
+  --color-red: #f07178;
+  --color-red-bright: #d95757;
+  --color-purple: #d2a6ff;
+  --color-cyan: #95e6cb;
 }

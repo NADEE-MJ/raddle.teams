@@ -20,11 +20,11 @@ export default function LobbiesList({
     return (
         <div className='mb-6'>
             <div className='mb-3 flex items-center justify-between'>
-                <div className="text-gray-500 dark:text-ayu-text-secondary text-sm uppercase tracking-wide" data-testid="all-lobbies-heading">All Lobbies</div>
+                <div className="text-gray-500 dark:text-tx-secondary text-sm uppercase tracking-wide" data-testid="all-lobbies-heading">All Lobbies</div>
                 <button
                     onClick={onRefresh}
                     disabled={loading || contextLoading}
-                    className='px-3 py-1 bg-gray-50 dark:bg-ayu-bg-secondary border border-gray-300 dark:border-ayu-border hover:bg-gray-200 dark:hover:bg-ayu-bg-elevated text-gray-800 dark:text-ayu-text-primary rounded-md cursor-pointer font-medium transition duration-200 disabled:opacity-50 disabled:cursor-not-allowed text-sm'
+                    className='px-3 py-1 bg-gray-50 dark:bg-secondary border border-gray-300 dark:border-border hover:bg-gray-200 dark:hover:bg-elevated text-gray-800 dark:text-tx-primary rounded-md cursor-pointer font-medium transition duration-200 disabled:opacity-50 disabled:cursor-not-allowed text-sm'
                     data-testid='refresh-lobbies-button'
                 >
                     Refresh
@@ -32,7 +32,7 @@ export default function LobbiesList({
             </div>
 
             {lobbies.length === 0 ? (
-                <div className=" pt-6 pb-6 md:pt-8 md:pb-8 rounded-md border border-gray-300 dark:border-ayu-border bg-white dark:bg-ayu-bg-tertiary px-4 py-3 text-center text-gray-500 dark:text-ayu-text-muted">
+                <div className=" pt-6 pb-6 md:pt-8 md:pb-8 rounded-md border border-gray-300 dark:border-border bg-white dark:bg-tertiary px-4 py-3 text-center text-gray-500 dark:text-tx-muted">
                     No lobbies created yet
                 </div>
             ) : (
@@ -41,13 +41,13 @@ export default function LobbiesList({
                         {lobbies.map(lobby => (
                             <div
                                 key={lobby.id}
-                                className=" mb-2 py-2 rounded-md border border-gray-300 dark:border-ayu-border bg-white dark:bg-ayu-bg-tertiary px-4 py-3"
+                                className=" mb-2 py-2 rounded-md border border-gray-300 dark:border-border bg-white dark:bg-tertiary px-4 py-3"
                             >
                                 <div className='flex flex-col md:flex-row md:items-center justify-between gap-3'>
                                     <div className='flex-1'>
-                                        <h3 className='font-semibold text-gray-900 dark:text-ayu-text-primary mb-1'>{lobby.name}</h3>
-                                        <div className='flex flex-col md:flex-row gap-2 text-sm text-gray-600 dark:text-ayu-text-secondary'>
-                                            <span>Code: <span className='font-mono font-bold bg-green-100 dark:bg-ayu-green/20 text-green-700 dark:text-ayu-green px-1 rounded'>{lobby.code}</span></span>
+                                        <h3 className='font-semibold text-gray-900 dark:text-tx-primary mb-1'>{lobby.name}</h3>
+                                        <div className='flex flex-col md:flex-row gap-2 text-sm text-gray-600 dark:text-tx-secondary'>
+                                            <span>Code: <span className='font-mono font-bold bg-green-100 dark:bg-green/20 text-green-700 dark:text-green px-1 rounded'>{lobby.code}</span></span>
                                             <span className="hidden md:inline">•</span>
                                             <span>Created: {new Date(lobby.created_at).toLocaleDateString()}</span>
                                         </div>
@@ -56,7 +56,7 @@ export default function LobbiesList({
                                         <button
                                             onClick={() => onViewDetails(lobby.id)}
                                             disabled={loading || contextLoading}
-                                            className='px-3 py-1 bg-blue-50 dark:bg-ayu-bg-secondary border border-blue-300 dark:border-ayu-border hover:bg-blue-200 dark:hover:bg-ayu-bg-elevated text-blue-800 dark:text-ayu-blue rounded-md cursor-pointer font-medium transition duration-200 disabled:opacity-50 disabled:cursor-not-allowed text-sm'
+                                            className='px-3 py-1 bg-blue-50 dark:bg-secondary border border-blue-300 dark:border-border hover:bg-blue-200 dark:hover:bg-elevated text-blue-800 dark:text-blue rounded-md cursor-pointer font-medium transition duration-200 disabled:opacity-50 disabled:cursor-not-allowed text-sm'
                                             data-testid={`view-lobby-${lobby.id}-button`}
                                         >
                                             View Details
@@ -64,7 +64,7 @@ export default function LobbiesList({
                                         <button
                                             onClick={() => onDeleteLobby(lobby.id)}
                                             disabled={loading || contextLoading}
-                                            className='px-3 py-1 bg-red-50 dark:bg-ayu-bg-secondary border border-red-300 dark:border-ayu-red hover:bg-red-200 dark:hover:bg-ayu-bg-elevated text-red-800 dark:text-ayu-red rounded-md cursor-pointer font-medium transition duration-200 disabled:opacity-50 disabled:cursor-not-allowed text-sm'
+                                            className='px-3 py-1 bg-red-50 dark:bg-secondary border border-red-300 dark:border-red hover:bg-red-200 dark:hover:bg-elevated text-red-800 dark:text-red rounded-md cursor-pointer font-medium transition duration-200 disabled:opacity-50 disabled:cursor-not-allowed text-sm'
                                             data-testid={`delete-lobby-${lobby.id}-button`}
                                         >
                                             Delete

@@ -223,15 +223,15 @@ export default function AdminPage() {
     }
 
     return (
-        <main className="bg-ayu-bg-primary pt-4 md:p-4">
+        <main className="bg-primary pt-4 md:p-4">
             <div className="max-w-6xl mx-auto">
-                <div className="bg-ayu-bg-secondary border border-ayu-border rounded-lg shadow-sm p-4 md:p-8 mb-6">
-                    <h1 className="text-3xl font-bold mb-6 text-ayu-text-primary" data-testid="admin-dashboard-title">Admin Dashboard</h1>
-                    
+                <div className="bg-secondary border border-border rounded-lg shadow-sm p-4 md:p-8 mb-6">
+                    <h1 className="text-3xl font-bold mb-6 text-tx-primary" data-testid="admin-dashboard-title">Admin Dashboard</h1>
+
                     <DashboardHeader />
 
                     {(error || contextError) && (
-                        <div className='mb-6 rounded-lg border border-ayu-red bg-ayu-red/20 px-4 py-3 text-ayu-red' data-testid='admin-error-message'>
+                        <div className='mb-6 rounded-lg border border-red bg-red/20 px-4 py-3 text-red' data-testid='admin-error-message'>
                             {error || contextError}
                         </div>
                     )}
