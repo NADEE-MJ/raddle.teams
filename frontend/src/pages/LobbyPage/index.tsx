@@ -36,9 +36,9 @@ export default function LobbyPage() {
     }
 
     return (
-        <main className="bg-slate-100 dark:bg-slate-900 pt-4 md:p-4">
+        <main className="bg-ayu-bg-primary pt-4 md:p-4">
             <div className="max-w-6xl mx-auto">
-                <div className="bg-white dark:bg-slate-800 rounded-lg shadow-sm p-4 md:p-8 mb-6">
+                <div className="bg-ayu-bg-secondary border border-ayu-border rounded-lg shadow-sm p-4 md:p-8 mb-6">
                     <LobbyHeader
                         lobby={lobbyInfo.lobby}
                         player={player}
@@ -47,7 +47,7 @@ export default function LobbyPage() {
                     />
 
                     {contextError && (
-                        <div className='mb-6 rounded-lg border border-red-200 dark:border-red-800 bg-red-50 dark:bg-red-900/20 px-4 py-3 text-red-700 dark:text-red-400' data-testid='lobby-error-message'>
+                        <div className='mb-6 rounded-lg border border-ayu-red bg-ayu-red/20 px-4 py-3 text-ayu-red' data-testid='lobby-error-message'>
                             {contextError}
                         </div>
                     )}

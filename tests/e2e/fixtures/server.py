@@ -23,7 +23,7 @@ class ServerManager:
 
         # Start new server process
         self.process = subprocess.Popen(
-            ["npm", "run", "testing-server"],
+            ["rt", "server"],
             stdout=subprocess.DEVNULL,
             stderr=subprocess.DEVNULL,
         )

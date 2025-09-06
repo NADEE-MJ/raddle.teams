@@ -1,0 +1,328 @@
+#!/usr/bin/env python3
+
+import os
+import subprocess
+import sys
+from enum import Enum
+from pathlib import Path
+from typing import List
+
+import typer
+from typer import colors
+
+app = typer.Typer(
+    name="rt",
+    help="🎲 Raddle Teams Command Runner - Development tools for the Raddle Teams project",
+    rich_markup_mode="rich",
+    context_settings={"help_option_names": ["-h", "--help"]},
+    add_completion=True,
+    no_args_is_help=True,
+)
+
+PROJECT_ROOT = Path(__file__).parent.absolute()
+
+
+def rerun_in_poetry():
+    if "VIRTUAL_ENV" not in os.environ and "POETRY_ACTIVE" not in os.environ:
+        try:
+            # Re-execute this script with poetry run
+            os.execvp("poetry", ["poetry", "run", "python"] + sys.argv)
+        except (subprocess.CalledProcessError, FileNotFoundError):
+            # Poetry not available or not a poetry project, exit gracefully
+            typer.secho("❌ Poetry is not installed or this is not a Poetry project.", fg=colors.RED)
+            raise typer.Exit(1)
+
+
+def run_command(cmd: List[str], description: str) -> int:
+    typer.echo(f"🔄 {description}...")
+    result = subprocess.run(cmd, cwd=PROJECT_ROOT)
+    if result.returncode == 0:
+        typer.secho(f"✅ {description} completed successfully!", fg=colors.GREEN)
+    else:
+        typer.secho(f"❌ {description} failed!", fg=colors.RED)
+    return result.returncode
+
+
+class LogLevel(str, Enum):
+    CRITICAL = "critical"
+    ERROR = "error"
+    WARNING = "warning"
+    INFO = "info"
+    DEBUG = "debug"
+    TRACE = "trace"
+
+
+@app.command()
+def build(watch: bool = typer.Option(False, "--watch", "-w", help="Watch for changes", is_flag=True)):
+    rerun_in_poetry()
+    if watch:
+        cmd = ["npx", "vite", "build", "--watch"]
+        description = "Building frontend with watch mode"
+    else:
+        cmd = ["npx", "vite", "build"]
+        description = "Building frontend"
+
+    return run_command(cmd, description)
+
+
+@app.command()
+def server(
+    port: int = typer.Option(8000, "--port", "-p", help="Port to run on"),
+    host: str = typer.Option("localhost", "--host", "-H", help="Host to run on"),
+    reload: bool = typer.Option(False, "--reload", "-r", help="Enable auto-reload on code changes", is_flag=True),
+    log_level: LogLevel = typer.Option(LogLevel.INFO, "--log-level", "-l", help="Logging level"),
+    no_build: bool = typer.Option(False, "--no-build", help="Skip building frontend", is_flag=True),
+    watch: bool = typer.Option(
+        False,
+        "--watch",
+        "-w",
+        help="Watch for frontend changes and rebuild, (ignored with no-build flag)",
+        is_flag=True,
+    ),
+):
+    rerun_in_poetry()
+
+    try:
+        process = None
+        if not no_build:
+            if watch:
+                # spin up a separate process to watch and build the frontend, close it when this process ends
+                process = subprocess.Popen(["npx", "vite", "build", "--watch"])
+            else:
+                if build(False) != 0:
+                    raise typer.Exit(1)
+
+        import uvicorn
+
+        sys.path.insert(0, os.getcwd())
+
+        from backend.custom_logging import server_logger
+
+        server_logger.info("Initializing FastAPI server startup")
+
+        server_logger.info(f"Server will be available at: http://{host}:{port}")
+        server_logger.info(f"📖 API docs will be available at: http://{host}:{port}/docs")
+        server_logger.info(f"📚 ReDoc will be available at: http://{host}:{port}/redoc")
+
+        server_logger.info(
+            f"Server configuration - Host: {host}, Port: {port}, Reload: {reload}, Log Level: {log_level}"
+        )
+
+        cwd = os.getcwd()
+        server_logger.debug(f"Current working directory: {cwd}")
+
+        # add the current working directory to the sys.path
+        sys.path.insert(0, cwd)
+
+        # add the packages/functions/test directory to the sys.path from the current working directory
+        sys.path.insert(0, f"{cwd}/backend")
+        sys.path.insert(0, f"{cwd}/")
+
+        server_logger.debug(f"Python path updated: {sys.path[:3]}")
+
+        try:
+            server_logger.info("Starting uvicorn server")
+            uvicorn.run(
+                "backend.main:app",
+                host=host,
+                port=port,
+                log_level=log_level,
+                reload=reload,
+            )
+        except KeyboardInterrupt:
+            server_logger.info("Server stopped by user (KeyboardInterrupt)")
+            typer.secho("🛑 Server stopped by user", fg=colors.YELLOW)
+        except Exception as e:
+            server_logger.error(f"Error starting server: {e}")
+            typer.secho(f"❌ Error starting server: {e}", fg=colors.RED)
+            raise typer.Exit(1)
+    finally:
+        if not no_build and watch and process is not None:
+            try:
+                process.terminate()
+                process.wait()
+            except Exception as e:
+                server_logger.error(f"Error stopping watch process: {e}")
+                typer.secho(f"❌ Error stopping watch process: {e}", fg=colors.RED)
+
+
+@app.command(context_settings={"allow_extra_args": True, "ignore_unknown_options": True})
+def test(
+    ctx: typer.Context,
+    v: bool = typer.Option(False, "--verbose", "-v"),
+    vv: bool = typer.Option(False, "--very-verbose", "-vv"),
+    vvv: bool = typer.Option(False, "--very-very-verbose", "-vvv"),
+    filter: str = typer.Option(None, "--filter", "-f"),
+    record: bool = typer.Option(False, "--record", "-r", help="Enable video/trace recording"),
+    slow_mo: bool = typer.Option(
+        False,
+        "--slow-mo",
+        "-sm",
+        help="Enable slow motion mode when running tests, will run headless and operate slowly",
+    ),
+    super_slow_mo: bool = typer.Option(
+        False,
+        "--super-slow-mo",
+        "-ssm",
+        help="Enable super slow motion mode when running tests, will run headless and operate very slowly",
+    ),
+    debug: bool = typer.Option(False, "--debug", "-d", help="Enable playwrights debug mode", is_flag=True),
+):
+    rerun_in_poetry()
+
+    if build(False) != 0:
+        raise typer.Exit(1)
+
+    import pytest
+
+    # get the current working directory
+    cwd = os.getcwd()
+
+    # add the current working directory to the sys.path
+    sys.path.insert(0, cwd)
+
+    # add the test directory to the sys.path from the current working directory
+    sys.path.insert(0, f"{cwd}/tests")
+    sys.path.insert(0, f"{cwd}/tests/e2e")
+    sys.path.insert(0, f"{cwd}/tests/e2e/fixtures")
+    sys.path.insert(0, f"{cwd}/tests/e2e/utilities")
+
+    records_dirs = [
+        f"{cwd}/tests/e2e/recordings/screenshots",
+        f"{cwd}/tests/e2e/recordings/videos",
+        f"{cwd}/tests/e2e/recordings/traces",
+    ]
+    for records_dir in records_dirs:
+        if os.path.exists(records_dir):
+            for root, dirs, files in os.walk(records_dir, topdown=False):
+                for name in files:
+                    os.remove(os.path.join(root, name))
+                for name in dirs:
+                    os.rmdir(os.path.join(root, name))
+
+    command_line_args = []
+
+    if v:
+        command_line_args.append("-v")
+    if vv:
+        command_line_args.append("-vv")
+    if vvv:
+        command_line_args.append("-vvv")
+    if filter:
+        command_line_args.extend(["-k", filter])
+
+    # Add any additional pytest arguments passed through
+    if ctx.params:
+        command_line_args.extend(ctx.args)
+
+    try:
+        os.environ["RADDLE_ENV"] = "testing"
+
+        if record:
+            os.environ["PYTEST_RECORD"] = "1"
+
+        if slow_mo or super_slow_mo:
+            time_between_actions = "500"
+            if super_slow_mo:
+                time_between_actions = "1000"
+            os.environ["PYTEST_SLOW_MO"] = time_between_actions
+
+        if debug:
+            os.environ["PWDEBUG"] = "1"
+
+        try:
+            sys.exit(pytest.main(command_line_args))
+        except Exception as e:
+            typer.secho(f"❌ Error running tests: {e}", fg=colors.RED)
+            typer.Exit(1)
+    finally:
+        del os.environ["RADDLE_ENV"]
+
+        if "PYTEST_RECORD" in os.environ:
+            del os.environ["PYTEST_RECORD"]
+
+        if "PYTEST_SLOW_MO" in os.environ:
+            del os.environ["PYTEST_SLOW_MO"]
+
+        if "PW_DEBUG" in os.environ:
+            del os.environ["PWDEBUG"]
+
+
+@app.command()
+def format(
+    check: bool = typer.Option(False, "--check", help="Check formatting without changing files"),
+    frontend_only: bool = typer.Option(False, "--frontend-only", help="Only format frontend"),
+    backend_only: bool = typer.Option(False, "--backend-only", help="Only format backend"),
+):
+    success = True
+
+    if not backend_only:
+        typer.echo("🎨 Formatting frontend (Prettier)...")
+        if check:
+            if run_command(["npx", "prettier", "--check", "."], "Checking frontend formatting (Prettier)") != 0:
+                success = False
+            if (
+                run_command(
+                    ["npx", "eslint", ".", "--report-unused-disable-directives", "--max-warnings", "0"],
+                    "Checking frontend formatting (ESLint)",
+                )
+                != 0
+            ):
+                success = False
+            if run_command(["npx", "tsc", "--noEmit"], "Checking TypeScript types") != 0:
+                success = False
+        else:
+            if run_command(["npx", "prettier", "--write", "."], "Formatting frontend (Prettier)") != 0:
+                success = False
+            if run_command(["npx", "eslint", ".", "--fix"], "Formatting frontend (ESLint)") != 0:
+                success = False
+
+    if not frontend_only:
+        if check:
+            if run_command(["poetry", "run", "ruff", "check", "."], "Checking backend formatting (Ruff)") != 0:
+                success = False
+        else:
+            if run_command(["poetry", "run", "ruff", "format", "."], "Formatting backend (Ruff)") != 0:
+                success = False
+
+    if success:
+        typer.secho("✅ All formatting completed successfully!", fg=colors.GREEN)
+        return 0
+    else:
+        typer.secho("❌ Some formatting failed!", fg=colors.RED)
+        return 1
+
+
+@app.command()
+def trace(
+    file: str = typer.Argument(..., help="Path to the trace file to view"),
+):
+    return run_command(["npx", "playwright", "show-trace", file], "Opening Playwright trace viewer")
+
+
+@app.command()
+def install(
+    sync: bool = typer.Option(False, "--sync", "-s", help="Sync dependencies without reinstalling", is_flag=True),
+):
+    typer.echo("📥 Installing dependencies...")
+
+    poetry_command = ["poetry", "install"]
+    if sync:
+        poetry_command.append("--sync")
+    if run_command(poetry_command, "Installing Python dependencies") != 0:
+        raise typer.Exit(1)
+
+    if sync:
+        npm_command = ["npm", "ci"]
+    else:
+        npm_command = ["npm", "install"]
+
+    if run_command(npm_command, "Installing Node.js dependencies") != 0:
+        raise typer.Exit(1)
+
+    typer.secho("✅ All dependencies installed successfully!", fg=colors.GREEN)
+    return 0
+
+
+if __name__ == "__main__":
+    app()

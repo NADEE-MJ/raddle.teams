@@ -228,21 +228,21 @@ export default function Tutorial({ setCompleted, completed }: WordChainGameProps
         const hintPlaceholder = '<>';
         const answerPlaceholder = '{}';
 
-        const hintWordRendered = <span className="bg-green-100 dark:bg-green-900/30 text-green-700 dark:text-green-400 font-mono px-1 pt-[6px] pb-[3px]">{hintWord}</span>;
-        const answerWordRendered = <span className="bg-yellow-50 dark:bg-yellow-900/30 text-gray-900 dark:text-yellow-300 font-mono px-1 pt-[6px] pb-[3px]">{answerWord}</span>;
+        const hintWordRendered = <span className="bg-ayu-green/30 text-ayu-green font-mono px-1 pt-[6px] pb-[3px]">{hintWord}</span>;
+        const answerWordRendered = <span className="bg-ayu-accent/30 text-ayu-accent font-mono px-1 pt-[6px] pb-[3px]">{answerWord}</span>;
 
         const parts = renderClueParts(clue, hintWordRendered, answerWordRendered);
 
         if (clue.includes(hintPlaceholder) && clue.includes(answerPlaceholder)) {
             return (
-                <div className="mr-1 md:mr-0 mb-2 opacity-75 text-gray-500 dark:text-gray-400 my-3">
+                <div className=" mb-2 opacity-75 text-ayu-text-muted my-3">
                     {parts}
                 </div>
             );
         }
 
         return (
-            <div className="mr-1 md:mr-0 mb-2 opacity-75 text-gray-500 dark:text-gray-400 my-3">
+            <div className=" mb-2 opacity-75 text-ayu-text-muted my-3">
                 {parts} → {answerWordRendered}
             </div>
         );
@@ -301,24 +301,24 @@ export default function Tutorial({ setCompleted, completed }: WordChainGameProps
     };
 
     const renderDownwardClue = (clue: string) => {
-        const hintWordRendered = <span className="bg-green-100 dark:bg-green-900/30 text-green-700 dark:text-green-400 font-mono px-1 pt-[6px] pb-[3px]">{hintWord}</span>;
+        const hintWordRendered = <span className="bg-ayu-green/30 text-ayu-green font-mono px-1 pt-[6px] pb-[3px]">{hintWord}</span>;
 
         const parts = renderClueParts(clue, hintWordRendered, null);
 
         return (
-            <div className="mr-1 md:mr-0 mb-2 opacity-75 text-black dark:text-gray-200">
+            <div className=" mb-2 opacity-75 text-ayu-text-primary">
                 {parts}
             </div>
         );
     };
 
     const renderUpwardClue = (clue: string) => {
-        const answerWordRendered = <span className="bg-yellow-50 dark:bg-yellow-900/30 text-gray-900 dark:text-yellow-300 font-mono px-1 pt-[6px] pb-[3px]">{answer}</span>;
+        const answerWordRendered = <span className="bg-ayu-accent/30 text-ayu-accent font-mono px-1 pt-[6px] pb-[3px]">{answer}</span>;
 
         const parts = renderClueParts(clue, null, answerWordRendered);
 
         return (
-            <div className="mr-1 md:mr-0 mb-2 opacity-75 text-gray-500 dark:text-gray-400 my-3">
+            <div className=" mb-2 opacity-75 text-ayu-text-muted my-3">
                 {parts}
             </div>
         );
@@ -327,19 +327,18 @@ export default function Tutorial({ setCompleted, completed }: WordChainGameProps
     const renderLadderStep = (step: LadderStep, index: number) => {
         let isTarget = false;
         let shouldReveal = false;
-        let bgColor = 'bg-white dark:bg-slate-700';
-        let stepId = `ladder-step-${index}`;
+        let bgColor = 'bg-ayu-bg-secondary';
 
         if (completed) {
             shouldReveal = true;
         } else {
             isTarget = index === solvingIndex;
             if (isTarget) {
-                bgColor = 'bg-yellow-50 dark:bg-yellow-900/20';
+                bgColor = 'bg-ayu-accent/20';
             } else if (direction === 'downward') {
                 if (index === solvingIndex - 1) {
                     shouldReveal = true;
-                    bgColor = 'bg-green-100 dark:bg-green-900/30';
+                    bgColor = 'bg-ayu-green/30';
                 } else if (step.solved) {
                     shouldReveal = true;
                 } else if (index === puzzle.ladder.length - 1 && solvingIndex !== puzzle.ladder.length - 2) {
@@ -348,7 +347,7 @@ export default function Tutorial({ setCompleted, completed }: WordChainGameProps
             } else {
                 if (index === solvingIndex + 1) {
                     shouldReveal = true;
-                    bgColor = 'bg-green-100 dark:bg-green-900/30';
+                    bgColor = 'bg-ayu-green/30';
                 } else if (step.solved) {
                     shouldReveal = true;
                 } else if (index === 0 && solvingIndex !== 1) {
@@ -357,30 +356,28 @@ export default function Tutorial({ setCompleted, completed }: WordChainGameProps
             }
         }
 
-        // TODO NEED TO FIGURE OUT HOW THIS ALL WORKS THIS IS MOSTLY FOR MOBILE
         const isHidden = !completed && index > 1 && index < puzzle.ladder.length - 1 && !shouldReveal && !isTarget;
 
         return (
             <div
                 key={index}
-                id={stepId}
                 data-active={isTarget}
                 className={`${isHidden ? 'hidden md:block' : ''} relative font-mono text-sm md:text-lg ${bgColor}`}
             >
                 {shouldReveal && !isTarget ? (
                     <div className="relative">
-                        <div className="py-3 tracking-wide text-center uppercase text-gray-900 dark:text-white">
+                        <div className="py-3 tracking-wide text-center uppercase text-ayu-text-primary">
                             {step.word}
                         </div>
                         {
                             index !== puzzle.ladder.length - 1 &&
                                 step.solved ? (
-                                <span className="px-2 py-1 absolute bottom-0 translate-y-1/2 left-1/2 -translate-x-1/2 font-mono text-xs uppercase bg-white dark:bg-slate-700 rounded-sm border border-gray-200 dark:border-gray-600 text-gray-900 dark:text-white whitespace-nowrap z-50">
+                                <span className="px-2 py-1 absolute bottom-0 translate-y-1/2 left-1/2 -translate-x-1/2 font-mono text-xs uppercase bg-ayu-bg-secondary rounded-sm border border-ayu-border text-ayu-text-primary whitespace-nowrap z-50">
                                     {step.transform}
                                 </span>
                             ) : (
                                 index < puzzle.ladder.length - 1 && (
-                                    <span className="z-50 p-1 pb-[6px] absolute bottom-0 translate-y-1/2 left-1/2 -translate-x-1/2 w-[max-content] font-mono text-xs uppercase bg-white dark:bg-slate-700 rounded-sm border border-gray-200 dark:border-gray-600 text-gray-900 dark:text-white leading-1 min-w-25">
+                                    <span className="z-50 p-1 pb-[6px] absolute bottom-0 translate-y-1/2 left-1/2 -translate-x-1/2 w-[max-content] font-mono text-xs uppercase bg-ayu-bg-secondary rounded-sm border border-ayu-border text-ayu-text-primary leading-1 min-w-25">
                                         &nbsp;
                                     </span>
                                 )
@@ -389,7 +386,7 @@ export default function Tutorial({ setCompleted, completed }: WordChainGameProps
                     </div>
                 ) : isTarget ? (
                     <div className="relative">
-                        <span className="rounded-r-lg bg-slate-100 dark:bg-slate-700 border border-slate-300 dark:border-slate-600 border-l-0 py-1 pr-1 absolute top-1/2 -translate-y-1/2 left-0 text-sm md:text-base -translate-x-2/5 text-gray-900 dark:text-white">
+                        <span className="rounded-r-lg bg-ayu-bg-secondary border border-ayu-border border-l-0 py-1 pr-1 absolute top-1/2 -translate-y-1/2 left-0 text-sm md:text-base -translate-x-2/5 text-ayu-text-primary">
                             ({step.word.length})
                         </span>
                         <input
@@ -398,18 +395,18 @@ export default function Tutorial({ setCompleted, completed }: WordChainGameProps
                             value={currentGuess}
                             onChange={handleGuessChange}
                             placeholder=""
-                            className="w-full p-3 uppercase tracking-wide text-[16px] text-center md:text-lg focus:outline-none bg-transparent text-gray-900 dark:text-white"
+                            className="w-full p-3 uppercase tracking-wide text-[16px] text-center md:text-lg focus:outline-none bg-transparent text-ayu-text-primary"
                             maxLength={step.word.length}
                             autoComplete="off"
                             autoCorrect="off"
                             autoCapitalize="off"
                             spellCheck="false"
                         />
-                        <button className="absolute top-1/2 -translate-y-1/2 right-2 w-8 h-8 bg-blue-100 dark:bg-blue-900/30 border border-blue-300 dark:border-blue-700 rounded flex items-center justify-center hover:bg-blue-200 dark:hover:bg-blue-800/30">
+                        <button className="absolute top-1/2 -translate-y-1/2 right-2 w-8 h-8 bg-ayu-blue/20 border border-ayu-blue rounded flex items-center justify-center hover:bg-ayu-blue/30">
                             💡
                         </button>
                         {index < puzzle.ladder.length - 1 && (
-                            <span className="z-50 p-1 pb-[6px] absolute bottom-0 translate-y-1/2 left-1/2 -translate-x-1/2 w-[max-content] font-mono text-xs uppercase bg-white dark:bg-slate-700 rounded-sm border border-gray-200 dark:border-gray-600 text-gray-900 dark:text-white leading-1 min-w-25">
+                            <span className="z-50 p-1 pb-[6px] absolute bottom-0 translate-y-1/2 left-1/2 -translate-x-1/2 w-[max-content] font-mono text-xs uppercase bg-ayu-bg-secondary rounded-sm border border-ayu-border text-ayu-text-primary leading-1 min-w-25">
                                 &nbsp;
                             </span>
                         )}
@@ -419,7 +416,7 @@ export default function Tutorial({ setCompleted, completed }: WordChainGameProps
                         <input
                             type="text"
                             placeholder={'◼️'.repeat(step.word.length) + ` (${step.word.length})`}
-                            className="w-full p-3 uppercase tracking-wide text-[16px] text-center md:text-lg focus:outline-none bg-transparent text-gray-500 dark:text-gray-400"
+                            className="w-full p-3 uppercase tracking-wide text-[16px] text-center md:text-lg focus:outline-none bg-transparent text-ayu-text-muted"
                             disabled
                             autoComplete="off"
                             autoCorrect="off"
@@ -427,7 +424,7 @@ export default function Tutorial({ setCompleted, completed }: WordChainGameProps
                             spellCheck="false"
                         />
                         {index < puzzle.ladder.length - 1 && (
-                            <span className="z-50 p-1 pb-[6px] absolute bottom-0 translate-y-1/2 left-1/2 -translate-x-1/2 w-[max-content] font-mono text-xs uppercase bg-white dark:bg-slate-700 rounded-sm border border-gray-200 dark:border-gray-600 text-gray-900 dark:text-white leading-1 min-w-25">
+                            <span className="z-50 p-1 pb-[6px] absolute bottom-0 translate-y-1/2 left-1/2 -translate-x-1/2 w-[max-content] font-mono text-xs uppercase bg-ayu-bg-secondary rounded-sm border border-ayu-border text-ayu-text-primary leading-1 min-w-25">
                                 &nbsp;
                             </span>
                         )}
@@ -441,12 +438,12 @@ export default function Tutorial({ setCompleted, completed }: WordChainGameProps
         <>
             <div className="max-w-6xl mx-auto">
                 <div id="game-area" className="md:grid md:grid-cols-[2fr_3fr] md:gap-8">
-                    <div className="py-4 md:py-0 bg-slate-100 dark:bg-slate-800 sticky md:static z-10 top-0">
+                    <div className="py-4 md:py-0 bg-ayu-bg-secondary sticky md:static z-10 top-0">
                         <div className="mx-4 md:mx-0 text-center">
-                            <div className="divide-y-2 divide-slate-400 dark:divide-slate-600 border-x-5 border-slate-400 dark:border-slate-600 bg-transparent">
+                            <div className="divide-y-2 divide-ayu-border border-x-5 border-ayu-border bg-transparent">
                                 <div>
                                     <div className="hidden md:block p-3"></div>
-                                    <button type="button" className="md:hidden p-2 w-full text-xs text-gray-400 dark:text-gray-500 italic hover:bg-gray-50 dark:hover:bg-gray-700">
+                                    <button type="button" className="md:hidden p-2 w-full text-xs text-ayu-text-muted italic hover:bg-ayu-bg-tertiary">
                                         Show full ladder
                                     </button>
                                 </div>
@@ -461,7 +458,7 @@ export default function Tutorial({ setCompleted, completed }: WordChainGameProps
                                         <button
                                             type="button"
                                             onClick={() => handleDirectionChange(direction === 'downward' ? 'upward' : 'downward')}
-                                            className="p-2 w-full text-xs text-gray-400 dark:text-gray-500 italic hover:bg-gray-50 dark:hover:bg-gray-700"
+                                            className="p-2 w-full text-xs text-ayu-text-muted italic hover:bg-ayu-bg-tertiary"
                                         >
                                             Switch to solving {direction === 'downward' ? '↑ upward' : '↓ downward'}
                                         </button>)}
@@ -475,9 +472,9 @@ export default function Tutorial({ setCompleted, completed }: WordChainGameProps
                             {/* Current Clues Section */}
                             {Object.entries(clues).length > 0 && (
                                 <>
-                                    <h2 className="uppercase text-sm pt-4 mb-4 border-b-1 border-slate-300 dark:border-slate-600 text-slate-500 dark:text-slate-400 font-bold">Clues, out of order</h2>
+                                    <h2 className="uppercase text-sm pt-4 mb-4 border-b-1 border-ayu-border text-ayu-text-secondary font-bold">Clues, out of order</h2>
                                     {Object.entries(clues).map(([word, clue]) => (
-                                        <div key={word} className="mr-1 md:mr-0 mb-2 pt-1 pb-0 rounded-md border-1 border-gray-300 dark:border-gray-600 bg-white dark:bg-slate-700 px-2 py-1">
+                                        <div key={word} className=" mb-2 pt-1 pb-0 rounded-md border-1 border-ayu-border bg-ayu-bg-secondary px-2 py-1">
                                             {direction === 'upward' ?
                                                 renderUpwardClue(clue) :
                                                 renderDownwardClue(clue)
@@ -487,42 +484,19 @@ export default function Tutorial({ setCompleted, completed }: WordChainGameProps
                                 </>
                             )}
 
-                            {/*
-                    old version below, i don't know which one is better
-                    <div className="text-gray-500 text-sm uppercase tracking-wide mb-3">Clues, out of order</div>
-
-                    {Object.entries(clues).map(([word, clue]) => (
-                        <div key={word} className="mr-1 md:mr-0 mb-2 pt-1 pb-0 md:pt-2 md:pb-1 rounded-md border border-gray-300 bg-white px-2 py-1">
-                            {direction === 'upward' ?
-                                renderUpwardClue(clue) :
-                                renderDownwardClue(clue)
-                            }
-                        </div>
-                    ))} */}
 
                             {/* Used Clues Section */}
                             {Object.entries(usedClues).length > 0 && (
                                 <>
-                                    <h2 className="uppercase text-sm pt-4 mb-2 border-b-1 border-slate-300 dark:border-slate-600 text-slate-500 dark:text-slate-400 font-bold">Used clues</h2>
+                                    <h2 className="uppercase text-sm pt-4 mb-2 border-b-1 border-ayu-border text-ayu-text-secondary font-bold">Used clues</h2>
                                     {Object.entries(usedClues).map(([word, renderedClue]) => (
-                                        <div key={word} className="mr-1 md:mr-0 mb-2 opacity-75 text-gray-500 dark:text-gray-400 my-3">
+                                        <div key={word} className=" mb-2 opacity-75 text-ayu-text-muted my-3">
                                             {renderedClue}
                                         </div>
                                     ))}
                                 </>
                             )}
 
-                            {/* old version below i don't know which one is better
-                    {Object.entries(usedClues).length > 0 && (
-                        <div className="mt-6">
-                            <h4 className="text-gray-500 text-sm uppercase tracking-wide mb-3">Used Clues</h4>
-                            {Object.entries(usedClues).map(([word, renderedClue]) => (
-                                <div key={word} className="mr-1 md:mr-0 mb-2 pt-1 pb-0 md:pt-2 md:pb-1 rounded-md border border-gray-300 bg-gray-50 px-2 py-1 text-gray-500">
-                                    {renderedClue}
-                                </div>
-                            ))}
-                        </div>
-                    )} */}
                         </div>
                     </div>
                 </div>
@@ -530,72 +504,3 @@ export default function Tutorial({ setCompleted, completed }: WordChainGameProps
         </>);
 }
 
-// const renderProgressBar = () => {
-//     const totalSteps = 7;
-//     const currentStep = Math.min(solvedWords.size - 1, totalSteps);
-//     const isCompleted = completed || currentStep >= 7;
-
-//     return (
-//         <div className="bg-blue-100 p-4 mb-4 rounded-lg border border-blue-300 text-blue-800">
-//             <div className="flex mb-3 h-2">
-//                 {Array.from({ length: totalSteps }, (_, index) => (
-//                     <div
-//                         key={index}
-//                         className={`flex-1 h-full mr-0.5 last:mr-0 last:rounded-r-full first:rounded-l-full transition-colors duration-500 ${index < currentStep ? 'bg-blue-600' : 'bg-blue-200'
-//                             }`}
-//                     />
-//                 ))}
-//             </div>
-//             <div className="whitespace-pre-line">
-//                 {getTutorialMessage()}
-//             </div>
-//             {isCompleted && (
-//                 <div className="mt-4 space-y-2">
-//                     <button className="w-full p-2 text-blue-600 bg-white border border-blue-300 rounded hover:bg-blue-50">
-//                         📧 Sign up for TUTORIAL_PUZZLE alerts
-//                     </button>
-//                     <button className="w-full p-2 text-white bg-blue-600 rounded hover:bg-blue-700">
-//                         Play today&apos;s Raddle →
-//                     </button>
-//                 </div>
-//             )}
-//         </div>
-//     );
-// };
-
-
-// const getTutorialMessage = () => {
-//     const currentStep = Math.min(solvedWords.size - 1, 7);
-//     const nextTargetIndex = getNextTargetIndex();
-//     const wordLength = nextTargetIndex !== null ? TUTORIAL_PUZZLE.ladder[nextTargetIndex].word.length : 5;
-
-//     if (completed || currentStep >= 7) {
-//         return "All done! You&apos;re ready to play.";
-//     }
-
-//     if (currentStep === 1) {
-//         return `Welcome to Raddle! Let&apos;s learn how to play. Begin by solving the first clue below, then type your answer in the yellow box. Note the (5) next to the yellow box indicates that the answer is 5 letters long.`;
-//     }
-
-//     if (currentStep === 2) {
-//         return "Correct! That clue has moved to the 'Used Clues' list below.\n\nNow you see all of the remaining clues. In Raddle, the clues are out of order, and you have to determine which clue is right for this step. Figure out which clue makes sense, then type your answer in the yellow box.";
-//     }
-
-//     if (currentStep === 3) {
-//         return "Great! If you&apos;re ever stuck, you can tap the lightbulb button next to the yellow box for a hint that will reveal which of the clues is correct. Do that now.";
-//     }
-
-//     if (currentStep === 4) {
-//         return "When you use a hint, the incorrect clues will fade out slightly. Read the highlighted clue, and then enter your answer.\n\nStill stuck? Tap the eye button to reveal the answer and continue.";
-//     }
-
-//     if (currentStep === 5) {
-//         return "Nice. One final tip: if you&apos;re stuck moving down the ladder, you can switch direction and move up instead. Click the arrow (↑) button on the box next to it.";
-//     }
-
-//     if (currentStep === 6) {
-//         return "When solving upward, the clues flip around — now they show you the answer, and you need to figure out what word belongs in the green box. This direction can be more challenging. If you&apos;re stuck, tap the lightbulb. Type your answer when you&apos;ve figured it out.";
-//     }
-
-//     return "Keep going! Solve the remaining clues to complete the ladder.";
-// };

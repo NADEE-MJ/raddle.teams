@@ -1,12 +1,7 @@
 import AppRouter from '@/router';
-import { ThemeProvider } from '@/context/ThemeContext';
 
 function App() {
-    return (
-        <ThemeProvider>
-            <AppRouter />
-        </ThemeProvider>
-    );
+    return <AppRouter />;
 }
 
 export default App;
