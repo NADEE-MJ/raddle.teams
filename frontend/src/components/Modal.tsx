@@ -1,4 +1,4 @@
-import { ReactNode, useEffect } from 'react';
+import { ReactNode, useEffect, useCallback } from 'react';
 
 interface ModalProps {
     isOpen: boolean;
@@ -8,12 +8,13 @@ interface ModalProps {
 }
 
 export default function Modal({ isOpen, onClose, children, maxWidth = 'max-w-4xl' }: ModalProps) {
+    const handleEscape = useCallback((e: KeyboardEvent) => {
+        if (e.key === 'Escape') {
+            onClose();
+        }
+    }, [onClose]);
+
     useEffect(() => {
-        const handleEscape = (e: KeyboardEvent) => {
-            if (e.key === 'Escape') {
-                onClose();
-            }
-        };
 
         if (isOpen) {
             document.addEventListener('keydown', handleEscape);
@@ -24,7 +25,7 @@ export default function Modal({ isOpen, onClose, children, maxWidth = 'max-w-4xl
             document.removeEventListener('keydown', handleEscape);
             document.body.style.overflow = '';
         };
-    }, [isOpen, onClose]);
+    }, [isOpen, handleEscape]);
 
     if (!isOpen) return null;
 

@@ -1,4 +1,4 @@
-import { useEffect, useState } from 'react';
+import { useEffect, useState, useCallback } from 'react';
 import JoinForm from './JoinForm';
 import { useNavigate } from 'react-router-dom';
 import { api } from '@/services/api';
@@ -10,23 +10,23 @@ export default function LandingPage() {
     const { setSessionId, getSessionIdFromLocalStorage } = useGlobalOutletContext();
     const [pageLoading, setPageLoading] = useState(true);
 
-    useEffect(() => {
-        const redirectToLobby = async () => {
-            const sessionId = getSessionIdFromLocalStorage();
-            if (sessionId) {
-                try {
-                    const lobbyData = await api.player.lobby.getInfo(sessionId);
-                    navigate(`/lobby/${lobbyData.code}`);
-                } catch (error) {
-                    console.error('Failed to get lobby info for session:', error);
-                    setSessionId(null);
-                }
+    const redirectToLobby = useCallback(async () => {
+        const sessionId = getSessionIdFromLocalStorage();
+        if (sessionId) {
+            try {
+                const lobbyData = await api.player.lobby.getInfo(sessionId);
+                navigate(`/lobby/${lobbyData.code}`);
+            } catch (error) {
+                console.error('Failed to get lobby info for session:', error);
+                setSessionId(null);
             }
-        };
+        }
+    }, [getSessionIdFromLocalStorage, navigate, setSessionId]);
 
+    useEffect(() => {
         redirectToLobby();
         setPageLoading(false);
-    }, []); // eslint-disable-line react-hooks/exhaustive-deps
+    }, [redirectToLobby, setPageLoading]);
 
     return pageLoading ? <LoadingSpinner /> : (
         <div className="text-center">

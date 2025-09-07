@@ -1,4 +1,4 @@
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useCallback } from 'react';
 import { LobbyInfo } from '@/types';
 import Modal from '@/components/Modal';
 import { api } from '@/services/api';
@@ -26,11 +26,7 @@ export default function LobbyDetails({
     const [loading, setLoading] = useState(true);
     const [error, setError] = useState('');
 
-    useEffect(() => {
-        loadLobbyDetails();
-    }, []); // eslint-disable-line react-hooks/exhaustive-deps
-
-    const loadLobbyDetails = async () => {
+    const loadLobbyDetails = useCallback(async () => {
         if (!adminApiToken) {
             setError('Admin API token is required to load lobby details');
             setLoading(false);
@@ -48,9 +44,13 @@ export default function LobbyDetails({
         } finally {
             setLoading(false);
         }
-    };
+    }, [adminApiToken, lobbyId]);
 
-    const handleCreateTeams = async () => {
+    useEffect(() => {
+        loadLobbyDetails();
+    }, [loadLobbyDetails]);
+
+    const handleCreateTeams = useCallback(async () => {
         if (!adminApiToken || !selectedLobby) {
             setError(adminApiToken ? 'Lobby not selected' : 'Admin API token is required to create teams');
             return;
@@ -67,9 +67,9 @@ export default function LobbyDetails({
         } finally {
             setIsCreatingTeams(false);
         }
-    };
+    }, [adminApiToken, selectedLobby, numTeams, loadLobbyDetails]);
 
-    const handleMovePlayer = async (playerId: number, teamId: number) => {
+    const handleMovePlayer = useCallback(async (playerId: number, teamId: number) => {
         if (!adminApiToken || !selectedLobby) {
             setError(adminApiToken ? 'Lobby not selected' : 'Admin API token is required to move player');
             return;
@@ -86,7 +86,7 @@ export default function LobbyDetails({
         } finally {
             setMovingPlayerId(null);
         }
-    };
+    }, [adminApiToken, selectedLobby, loadLobbyDetails]);
 
     const handleKickPlayer = async (playerId: number) => {
         if (!adminApiToken || !selectedLobby) {
@@ -106,7 +106,7 @@ export default function LobbyDetails({
         }
     };
 
-    const handleDeleteLobby = async () => {
+    const handleDeleteLobby = useCallback(async () => {
         if (!adminApiToken || !selectedLobby) {
             setError(adminApiToken ? 'Lobby not selected' : 'Admin API token is required to delete lobby');
             return;
@@ -123,9 +123,9 @@ export default function LobbyDetails({
                 console.error('Error deleting lobby:', err);
             }
         }
-    };
+    }, [adminApiToken, selectedLobby, onLobbyDeleted, onClose]);
 
-    const handleCopyCode = async () => {
+    const handleCopyCode = useCallback(async () => {
         if (!selectedLobby) {
             setError('No lobby selected to copy code from');
             return;
@@ -138,7 +138,7 @@ export default function LobbyDetails({
         } catch (err) {
             console.error('Failed to copy code:', err);
         }
-    };
+    }, [selectedLobby]);
 
     if (loading) {
         return (

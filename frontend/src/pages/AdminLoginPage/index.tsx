@@ -1,4 +1,4 @@
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useCallback } from 'react';
 import { api } from '@/services/api';
 
 import { useGlobalOutletContext } from '@/hooks/useGlobalOutletContext';
@@ -19,8 +19,7 @@ export default function AdminLoginPage() {
     const [loading, setLoading] = useState(false);
     const [error, setError] = useState('');
 
-    useEffect(() => {
-        const checkAdminCredentials = async () => {
+    const checkAdminCredentials = useCallback(async () => {
             const adminTokenFromStorage = getAdminApiTokenFromLocalStorage();
             const adminSessionIdFromStorage = getAdminSessionIdFromLocalStorage();
 
@@ -42,10 +41,11 @@ export default function AdminLoginPage() {
             }
 
             setPageLoading(false);
-        };
+        }, [getAdminApiTokenFromLocalStorage, getAdminSessionIdFromLocalStorage, navigate, setAdminApiToken, setAdminSessionId]);
 
+    useEffect(() => {
         checkAdminCredentials();
-    }, []); // eslint-disable-line react-hooks/exhaustive-deps
+    }, [checkAdminCredentials]);
 
     const handleLogin = async (e: React.FormEvent) => {
         e.preventDefault();

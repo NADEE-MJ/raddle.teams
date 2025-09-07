@@ -1,4 +1,4 @@
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useCallback, use } from 'react';
 import LobbiesList from './LobbiesList';
 import LobbyDetails from './LobbyDetails';
 import { useGlobalOutletContext } from '@/hooks/useGlobalOutletContext';
@@ -16,18 +16,18 @@ export default function AdminPage() {
         }
     }, []); // eslint-disable-line react-hooks/exhaustive-deps
 
-    const handleViewDetails = (lobbyId: number) => {
+    const handleViewDetails = useCallback((lobbyId: number) => {
         setSelectedLobbyId(lobbyId);
-    };
+    }, [setSelectedLobbyId]);
 
-    const handleCloseLobbyDetails = () => {
+    const handleCloseLobbyDetails = useCallback(() => {
         setSelectedLobbyId(null);
-    };
+    }, [setSelectedLobbyId]);
 
-    const handleLobbyDeleted = () => {
+    const handleLobbyDeleted = useCallback(() => {
         setRefreshKey(prev => prev + 1); // Trigger refresh in LobbiesList
         setSelectedLobbyId(null); // Close the details modal
-    };
+    }, [setRefreshKey, setSelectedLobbyId]);
 
 
     return (

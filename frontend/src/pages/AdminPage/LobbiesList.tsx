@@ -1,5 +1,5 @@
 import { Lobby } from '@/types';
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useCallback } from 'react';
 import { api } from '@/services/api';
 import { useGlobalOutletContext } from '@/hooks/useGlobalOutletContext';
 import LoadingSpinner from '@/components/LoadingSpinner';
@@ -18,11 +18,7 @@ export default function LobbiesList({ onViewDetails, refreshKey }: LobbiesListPr
     const [error, setError] = useState('');
     const [copiedCode, setCopiedCode] = useState<string | null>(null);
 
-    useEffect(() => {
-        refreshLobbies();
-    }, [refreshKey]); // eslint-disable-line react-hooks/exhaustive-deps
-
-    const refreshLobbies = async () => {
+    const refreshLobbies = useCallback(async () => {
         if (!adminApiToken) {
             setError('Admin API token is required to fetch lobbies');
             console.error('Admin API token is missing');
@@ -40,7 +36,11 @@ export default function LobbiesList({ onViewDetails, refreshKey }: LobbiesListPr
         } finally {
             setLoading(false);
         }
-    };
+    }, [adminApiToken]);
+
+    useEffect(() => {
+        refreshLobbies();
+    }, [refreshKey, refreshLobbies]);
 
     const createLobby = async (name: string) => {
         if (!adminApiToken) {

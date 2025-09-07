@@ -1,7 +1,7 @@
 import { Outlet, Link, useLocation } from 'react-router-dom';
 import { GlobalOutletContext } from '@/hooks/useGlobalOutletContext';
 
-import { useState, useMemo, useEffect } from 'react';
+import { useState, useMemo, useEffect, useCallback } from 'react';
 import { api } from '@/services/api';
 
 const GlobalLayout: React.FC = () => {
@@ -28,46 +28,46 @@ const GlobalLayout: React.FC = () => {
 
     }, [location]);
 
-    const updateAdminApiToken = (token: string | null) => {
+    const updateAdminApiToken = useCallback((token: string | null) => {
         setAdminApiToken(token);
         if (token) {
             localStorage.setItem('raddle_admin_api_token', token);
         } else {
             localStorage.removeItem('raddle_admin_api_token');
         }
-    };
+    }, []);
 
-    const getAdminApiTokenFromLocalStorage = () => {
+    const getAdminApiTokenFromLocalStorage = useCallback(() => {
         return localStorage.getItem('raddle_admin_api_token');
-    }
+    }, []);
 
-    const updateAdminSessionId = (id: string | null) => {
+    const updateAdminSessionId = useCallback((id: string | null) => {
         setAdminSessionId(id);
         if (id) {
             localStorage.setItem('raddle_admin_session_id', id);
         } else {
             localStorage.removeItem('raddle_admin_session_id');
         }
-    };
+    }, []);
 
-    const getAdminSessionIdFromLocalStorage = () => {
+    const getAdminSessionIdFromLocalStorage = useCallback(() => {
         return localStorage.getItem('raddle_admin_session_id');
-    }
+    }, []);
 
-    const updateSessionId = (id: string | null) => {
+    const updateSessionId = useCallback((id: string | null) => {
         setSessionId(id);
         if (id) {
             localStorage.setItem('raddle_session_id', id);
         } else {
             localStorage.removeItem('raddle_session_id');
         }
-    };
+    }, []);
 
-    const getSessionIdFromLocalStorage = () => {
+    const getSessionIdFromLocalStorage = useCallback(() => {
         return localStorage.getItem('raddle_session_id');
-    }
+    }, []);
 
-    const handleLogout = async () => {
+    const handleLogout = useCallback(async () => {
         setIsLoggingOut(true);
         try {
             if (location.pathname.startsWith('/admin')) {
@@ -84,7 +84,7 @@ const GlobalLayout: React.FC = () => {
         } finally {
             setIsLoggingOut(false);
         }
-    };
+    }, [location.pathname, sessionId, updateAdminApiToken, updateAdminSessionId, updateSessionId]);
 
     const context: GlobalOutletContext = useMemo(() => ({
         sessionId,
@@ -98,8 +98,14 @@ const GlobalLayout: React.FC = () => {
         getAdminSessionIdFromLocalStorage,
     }), [
         sessionId,
+        updateSessionId,
+        getSessionIdFromLocalStorage,
         adminApiToken,
+        updateAdminApiToken,
+        getAdminApiTokenFromLocalStorage,
         adminSessionId,
+        updateAdminSessionId,
+        getAdminSessionIdFromLocalStorage,
     ]);
 
     return (

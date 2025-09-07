@@ -10,7 +10,7 @@ interface UseWebSocketOptions {
     reconnectInterval?: number;
 }
 
-export function useWebSocket(lobbyId: number | null, sessionId: string | null, options: UseWebSocketOptions = {}) {
+export function useWebSocket(wsUrl: string, options: UseWebSocketOptions = {}) {
     const { onMessage, onConnect, onDisconnect, onError, autoReconnect = true, reconnectInterval = 3000 } = options;
 
     const [isConnected, setIsConnected] = useState(false);
@@ -20,9 +20,9 @@ export function useWebSocket(lobbyId: number | null, sessionId: string | null, o
     const shouldConnectRef = useRef(true);
 
     const connect = useCallback(() => {
-        if (!lobbyId || !sessionId || !shouldConnectRef.current) return;
+        if (!wsUrl || !shouldConnectRef.current) return;
 
-        const wsUrl = `${window.location.protocol === 'https:' ? 'wss:' : 'ws:'}//${window.location.host}/ws/lobby/${lobbyId}/player/${sessionId}`;
+        const ws = new WebSocket(wsUrl);
 
         try {
             const ws = new WebSocket(wsUrl);
@@ -61,8 +61,14 @@ export function useWebSocket(lobbyId: number | null, sessionId: string | null, o
             setError('Failed to create WebSocket connection');
             console.error('WebSocket connection error:', err);
         }
-    }, [lobbyId, sessionId, onMessage, onConnect, onDisconnect, onError, autoReconnect, reconnectInterval]);
-
+    }, []); // eslint-disable-line react-hooks/exhaustive-deps
+    const sendMessage = useCallback((message: object) => {
+        if (wsRef.current && wsRef.current.readyState === WebSocket.OPEN) {
+            wsRef.current.send(JSON.stringify(message));
+        } else {
+            console.warn('Admin WebSocket is not connected, cannot send message:', message);
+        }
+    }, []);
     const disconnect = useCallback(() => {
         shouldConnectRef.current = false;
 
@@ -80,19 +86,18 @@ export function useWebSocket(lobbyId: number | null, sessionId: string | null, o
     }, []);
 
     useEffect(() => {
-        if (lobbyId && sessionId) {
-            shouldConnectRef.current = true;
-            connect();
-        }
+        shouldConnectRef.current = true;
+        connect();
 
         return () => {
             disconnect();
         };
-    }, [lobbyId, sessionId, connect, disconnect]);
+    }, []); // eslint-disable-line react-hooks/exhaustive-deps
 
     return {
         isConnected,
         error,
         disconnect,
+        sendMessage,
     };
 }
