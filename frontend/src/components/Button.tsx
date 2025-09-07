@@ -39,17 +39,10 @@ export default function Button({
     type = 'button',
     'data-testid': dataTestId,
 }: ButtonProps) {
-    const baseClasses =
-        'rounded-md cursor-pointer font-medium transition-all duration-200 active:scale-90';
+    const baseClasses = 'rounded-md cursor-pointer font-medium transition-all duration-200 active:scale-90';
     const disabledClasses = 'disabled:opacity-50 disabled:cursor-not-allowed disabled:active:scale-100';
 
-    const classes = [
-        baseClasses,
-        buttonVariants[variant],
-        buttonSizes[size],
-        disabledClasses,
-        className,
-    ]
+    const classes = [baseClasses, buttonVariants[variant], buttonSizes[size], disabledClasses, className]
         .filter(Boolean)
         .join(' ');
 

@@ -1,8 +1,9 @@
-import { useState, useEffect, useCallback, useRef, useMemo } from 'react';
+import { useState, useEffect, useCallback, useMemo } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { api } from '@/services/api';
 import { useWebSocket } from '@/hooks/useWebSocket';
 import { useGlobalOutletContext } from '@/hooks/useGlobalOutletContext';
+import { useDebounce } from '@/hooks/useDebounce';
 import { WebSocketMessage, LobbyWebSocketEvents, Player, LobbyInfo } from '@/types';
 import { LoadingSpinner, CopyableCode, Button, ErrorMessage, StatusIndicator, Alert } from '@/components';
 
@@ -15,8 +16,6 @@ export default function LobbyPage() {
     const [isLoading, setIsLoading] = useState(true);
     const [error, setError] = useState<string | null>(null);
     const [wsError, setWsError] = useState<string | null>(null);
-
-    const reloadDebounceRef = useRef<NodeJS.Timeout | null>(null);
 
     useEffect(() => {
         if (!sessionId) {
@@ -49,15 +48,7 @@ export default function LobbyPage() {
         }
     }, [sessionId]);
 
-    const scheduleReload = useCallback(() => {
-        if (reloadDebounceRef.current) {
-            return;
-        }
-        reloadDebounceRef.current = setTimeout(() => {
-            refreshLobbyInfo();
-            reloadDebounceRef.current = null;
-        }, 200);
-    }, [refreshLobbyInfo]);
+    const scheduleReload = useDebounce(refreshLobbyInfo);
 
     const onConnect = useCallback(() => {
         console.log('Lobby WebSocket connected');

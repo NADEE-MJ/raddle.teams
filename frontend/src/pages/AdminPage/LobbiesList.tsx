@@ -2,15 +2,17 @@ import { Lobby } from '@/types';
 import { useState, useEffect, useCallback } from 'react';
 import { api } from '@/services/api';
 import { useGlobalOutletContext } from '@/hooks/useGlobalOutletContext';
+import { useDebounce } from '@/hooks/useDebounce';
 import { LoadingSpinner, CopyableCode, Button, ErrorMessage, Card } from '@/components';
 import CreateLobbyForm from './CreateLobbyForm';
 
 interface LobbiesListProps {
     onViewDetails: (lobbyId: number) => void;
     refreshKey: number;
+    onDebouncedRefresh?: (refreshFn: () => void) => void;
 }
 
-export default function LobbiesList({ onViewDetails, refreshKey }: LobbiesListProps) {
+export default function LobbiesList({ onViewDetails, refreshKey, onDebouncedRefresh }: LobbiesListProps) {
     const { adminApiToken } = useGlobalOutletContext();
 
     const [lobbies, setLobbies] = useState<Lobby[]>([]);
@@ -37,9 +39,17 @@ export default function LobbiesList({ onViewDetails, refreshKey }: LobbiesListPr
         }
     }, [adminApiToken]);
 
+    const debouncedRefreshLobbies = useDebounce(refreshLobbies);
+
     useEffect(() => {
         refreshLobbies();
     }, [refreshKey, refreshLobbies]);
+
+    useEffect(() => {
+        if (onDebouncedRefresh) {
+            onDebouncedRefresh(debouncedRefreshLobbies);
+        }
+    }, [onDebouncedRefresh, debouncedRefreshLobbies]);
 
     const createLobby = async (name: string) => {
         if (!adminApiToken) {
@@ -71,7 +81,7 @@ export default function LobbiesList({ onViewDetails, refreshKey }: LobbiesListPr
                     All Lobbies
                 </div>
                 <Button
-                    onClick={refreshLobbies}
+                    onClick={debouncedRefreshLobbies}
                     disabled={loading}
                     variant='secondary'
                     size='sm'

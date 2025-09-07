@@ -143,8 +143,8 @@ const GlobalLayout: React.FC = () => {
                                         {isLoggingOut
                                             ? 'Logging out'
                                             : location.pathname.startsWith('/admin')
-                                                ? '🔒 Admin Logout'
-                                                : '🚪 Leave Lobby'}
+                                              ? '🔒 Admin Logout'
+                                              : '🚪 Leave Lobby'}
                                     </Button>
                                 ) : (
                                     <div className='flex gap-1'>

@@ -1,8 +1,9 @@
 import { useState, useEffect, useCallback } from 'react';
 import { LobbyInfo } from '@/types';
-import { Modal, CopyableCode, Button, TextInput, Select, ErrorMessage, Card, LoadingSpinner } from '@/components';
+import { Modal, CopyableCode, Button, TextInput, Select, ErrorMessage, Card } from '@/components';
 import { api } from '@/services/api';
 import { useGlobalOutletContext } from '@/hooks/useGlobalOutletContext';
+import { useDebounce } from '@/hooks/useDebounce';
 
 interface LobbyDetailsProps {
     lobbyId: number;
@@ -41,6 +42,8 @@ export default function LobbyDetails({ lobbyId, onClose, onLobbyDeleted, refresh
         }
     }, [adminApiToken, lobbyId]);
 
+    const scheduleReload = useDebounce(loadLobbyDetails);
+
     useEffect(() => {
         loadLobbyDetails();
     }, [loadLobbyDetails, refreshKey]);
@@ -55,14 +58,14 @@ export default function LobbyDetails({ lobbyId, onClose, onLobbyDeleted, refresh
         try {
             setError('');
             await api.admin.lobby.team.create(selectedLobby.lobby.id, numTeams, adminApiToken);
-            await loadLobbyDetails();
+            scheduleReload();
         } catch (err) {
             setError('Failed to create teams');
             console.error('Error creating teams:', err);
         } finally {
             setIsCreatingTeams(false);
         }
-    }, [adminApiToken, selectedLobby, numTeams, loadLobbyDetails]);
+    }, [adminApiToken, selectedLobby, numTeams, scheduleReload]);
 
     const handleMovePlayer = useCallback(
         async (playerId: number, teamId: number) => {
@@ -75,7 +78,7 @@ export default function LobbyDetails({ lobbyId, onClose, onLobbyDeleted, refresh
             try {
                 setError('');
                 await api.admin.lobby.team.move(playerId, teamId, adminApiToken);
-                await loadLobbyDetails();
+                scheduleReload();
             } catch (err) {
                 setError('Failed to move player');
                 console.error('Error moving player:', err);
@@ -83,7 +86,7 @@ export default function LobbyDetails({ lobbyId, onClose, onLobbyDeleted, refresh
                 setMovingPlayerId(null);
             }
         },
-        [adminApiToken, selectedLobby, loadLobbyDetails]
+        [adminApiToken, selectedLobby, scheduleReload]
     );
 
     const handleKickPlayer = async (playerId: number) => {
@@ -96,7 +99,7 @@ export default function LobbyDetails({ lobbyId, onClose, onLobbyDeleted, refresh
             try {
                 setError('');
                 await api.admin.lobby.player.kick(playerId, adminApiToken);
-                await loadLobbyDetails();
+                scheduleReload();
             } catch (err) {
                 setError('Failed to kick player');
                 console.error('Error kicking player:', err);
@@ -125,10 +128,8 @@ export default function LobbyDetails({ lobbyId, onClose, onLobbyDeleted, refresh
 
     if (loading) {
         return (
-            <Modal isOpen={true} onClose={onClose} maxWidth='max-w-6xl'>
-                <div className='flex justify-center p-6'>
-                    <LoadingSpinner />
-                </div>
+            <Modal isOpen={true} onClose={onClose} maxWidth='max-w-6xl' isLoading={true}>
+                <div></div>
             </Modal>
         );
     }
@@ -158,7 +159,7 @@ export default function LobbyDetails({ lobbyId, onClose, onLobbyDeleted, refresh
 
                     <div className='grid grid-cols-2 items-center gap-2 md:grid-cols-3'>
                         <Button
-                            onClick={loadLobbyDetails}
+                            onClick={scheduleReload}
                             disabled={loading}
                             variant='primary'
                             size='sm'

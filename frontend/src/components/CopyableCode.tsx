@@ -35,7 +35,7 @@ export default function CopyableCode({
     return (
         <button
             onClick={handleCopyCode}
-            className={`bg-green/20 text-green hover:bg-green/30 relative rounded px-2 py-1 font-bold transition-colors duration-200 ${className}`}
+            className={`bg-green/20 text-green hover:bg-green/30 relative cursor-pointer rounded px-2 py-1 font-bold transition-colors duration-200 ${className}`}
             title={title}
             data-testid={dataTestId}
         >

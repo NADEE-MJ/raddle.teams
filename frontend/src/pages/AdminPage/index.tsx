@@ -1,4 +1,4 @@
-import { useState, useEffect, useCallback, useMemo, useRef } from 'react';
+import { useState, useEffect, useCallback, useMemo } from 'react';
 import LobbiesList from './LobbiesList';
 import LobbyDetails from './LobbyDetails';
 import { useGlobalOutletContext } from '@/hooks/useGlobalOutletContext';
@@ -14,18 +14,17 @@ export default function AdminPage() {
     const [lobbyRefreshKey, setLobbyRefreshKey] = useState(0);
     const [allLobbiesRefreshKey, setAllLobbiesRefreshKey] = useState(0);
     const [wsError, setWsError] = useState<string | null>(null);
-
-    const reloadDebounceRef = useRef<NodeJS.Timeout | null>(null);
+    const [debouncedLobbiesRefresh, setDebouncedLobbiesRefresh] = useState<(() => void) | null>(null);
 
     const scheduleReload = useCallback(() => {
-        if (reloadDebounceRef.current) {
-            return;
-        }
-        reloadDebounceRef.current = setTimeout(() => {
-            setLobbyRefreshKey(prev => prev + 1);
-            reloadDebounceRef.current = null;
-        }, 200);
+        setLobbyRefreshKey(prev => prev + 1);
     }, []);
+
+    const scheduleLobbiesReload = useCallback(() => {
+        if (debouncedLobbiesRefresh) {
+            debouncedLobbiesRefresh();
+        }
+    }, [debouncedLobbiesRefresh]);
 
     const onConnect = useCallback(() => {
         console.log('Admin WebSocket connected');
@@ -51,14 +50,17 @@ export default function AdminPage() {
                 case LobbyWebSocketEvents.TEAM_CHANGED:
                 case LobbyWebSocketEvents.DISCONNECTED:
                 case LobbyWebSocketEvents.PLAYER_KICKED:
+                    // Refresh both the selected lobby details and the lobbies list
                     scheduleReload();
+                    scheduleLobbiesReload();
                     break;
                 default:
                     console.log('Unknown admin WebSocket message type:', message.type);
                     scheduleReload();
+                    scheduleLobbiesReload();
             }
         },
-        [scheduleReload]
+        [scheduleReload, scheduleLobbiesReload]
     );
 
     const wsUrl = useMemo(
@@ -123,7 +125,11 @@ export default function AdminPage() {
                 )}
             </div>
 
-            <LobbiesList onViewDetails={handleViewDetails} refreshKey={allLobbiesRefreshKey} />
+            <LobbiesList
+                onViewDetails={handleViewDetails}
+                refreshKey={allLobbiesRefreshKey}
+                onDebouncedRefresh={setDebouncedLobbiesRefresh}
+            />
 
             {selectedLobbyId && (
                 <LobbyDetails
