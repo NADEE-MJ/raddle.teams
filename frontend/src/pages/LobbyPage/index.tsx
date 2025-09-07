@@ -38,7 +38,7 @@ export default function LobbyPage() {
 
     const scheduleReload = useCallback(() => {
         if (reloadDebounceRef.current) {
-            clearTimeout(reloadDebounceRef.current);
+            return;
         }
         reloadDebounceRef.current = setTimeout(() => {
             refreshLobbyInfo();
@@ -124,16 +124,6 @@ export default function LobbyPage() {
         }
     }, [isLoading, sessionId, player, navigate]);
 
-    const handleLeave = async () => {
-        if (!sessionId) return;
-        try {
-            setSessionId(null);
-            navigate('/');
-        } catch (err) {
-            console.error('Failed to leave lobby:', err);
-        }
-    };
-
     if (isLoading) {
         return (
             <main className="bg-slate-100 dark:bg-primary pt-4 md:p-4">
@@ -187,16 +177,6 @@ export default function LobbyPage() {
                     <p className='mt-1 text-gray-600 dark:text-tx-secondary'>
                         Lobby Code: <span className='font-mono text-lg font-bold' data-testid="lobby-code">{lobbyInfo.lobby.code}</span>
                     </p>
-                </div>
-                <div className='text-right'>
-                    <p className='mb-2 text-sm text-gray-600 dark:text-tx-secondary'>Welcome, {player.name}!</p>
-                    <button
-                        onClick={handleLeave}
-                        className='rounded-lg bg-red-600 hover:bg-red-700 dark:bg-red-700 dark:hover:bg-red-600 px-4 py-2 text-white transition duration-200'
-                        data-testid='leave-lobby-button'
-                    >
-                        Leave Lobby
-                    </button>
                 </div>
             </div>
 
