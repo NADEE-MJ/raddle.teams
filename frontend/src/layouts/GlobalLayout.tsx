@@ -2,6 +2,7 @@ import { Outlet, Link, useLocation } from 'react-router-dom';
 import { GlobalOutletContext } from '@/hooks/useGlobalOutletContext';
 
 import { useState, useMemo, useEffect } from 'react';
+import { api } from '@/services/api';
 
 const GlobalLayout: React.FC = () => {
     const location = useLocation();
@@ -10,6 +11,7 @@ const GlobalLayout: React.FC = () => {
     const [adminApiToken, setAdminApiToken] = useState<string | null>(null);
     const [adminSessionId, setAdminSessionId] = useState<string | null>(null);
     const [mainContentBordered, setMainContentBordered] = useState(true);
+    const [isLoggingOut, setIsLoggingOut] = useState(false);
 
     useEffect(() => {
         if (location.pathname.startsWith('/lobby') || (location.pathname.startsWith('/admin') && !location.pathname.includes('login'))) {
@@ -65,14 +67,22 @@ const GlobalLayout: React.FC = () => {
         return localStorage.getItem('raddle_session_id');
     }
 
-    const handleLogout = () => {
-        if (location.pathname.startsWith('/admin')) {
-            updateAdminApiToken(null);
-            updateAdminSessionId(null);
-            window.location.href = '/';
-        } else {
-            updateSessionId(null);
-            window.location.href = '/';
+    const handleLogout = async () => {
+        setIsLoggingOut(true);
+        try {
+            if (location.pathname.startsWith('/admin')) {
+                updateAdminApiToken(null);
+                updateAdminSessionId(null);
+                window.location.href = '/';
+            } else {
+                await api.player.lobby.leave(sessionId!);
+                updateSessionId(null);
+                window.location.href = '/';
+            }
+        } catch (error) {
+            console.error('Logout error:', error);
+        } finally {
+            setIsLoggingOut(false);
         }
     };
 
@@ -110,10 +120,11 @@ const GlobalLayout: React.FC = () => {
                                 {showLogout ? (
                                     <button
                                         onClick={handleLogout}
+                                        disabled={isLoggingOut}
                                         className="rounded-lg bg-red-700 hover:bg-red-600 px-4 py-2 text-white transition duration-200 disabled:bg-red-600"
                                         data-testid="logout-button"
                                     >
-                                        {location.pathname.startsWith('/admin') ? '🔒 Admin Logout' : '🚪 Leave Lobby'}
+                                        {isLoggingOut ? 'Logging out...' : (location.pathname.startsWith('/admin') ? '🔒 Admin Logout' : '🚪 Leave Lobby')}
                                     </button>
                                 ) : (
                                     <div className="flex gap-1">

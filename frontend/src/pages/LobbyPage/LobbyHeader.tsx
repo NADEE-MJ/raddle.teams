@@ -19,7 +19,7 @@ export default function LobbyHeader({ lobby, player, sessionId, setSessionId }: 
 
         try {
             setLoading(true);
-            await api.player.lobby.leave(sessionId);
+
         } catch (err) {
             console.error('Failed to leave lobby on server:', err);
         }
