@@ -127,7 +127,7 @@ const GlobalLayout: React.FC = () => {
                                     <button
                                         onClick={handleLogout}
                                         disabled={isLoggingOut}
-                                        className="rounded-lg bg-red-700 hover:bg-red-600 px-4 py-2 text-white transition duration-200 disabled:bg-red-600"
+                                        className="rounded-lg bg-red-700 hover:bg-red-800 px-4 py-2 text-white transition duration-200 disabled:bg-red-950"
                                         data-testid="logout-button"
                                     >
                                         {isLoggingOut ? 'Logging out...' : (location.pathname.startsWith('/admin') ? '🔒 Admin Logout' : '🚪 Leave Lobby')}
