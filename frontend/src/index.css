@@ -1,79 +1,77 @@
 :root {
-  --color-primary: #0c1019;
-  --color-secondary: #11111a;
-  --color-tertiary: #0f131a;
-  --color-elevated: #131721;
-  --color-border: #b7a794;
-  --color-border-light: #73767d;
-  --color-tx-primary: #ffffff;
-  --color-tx-secondary: #a7a8aa;
-  --color-tx-muted: #acb6bf8c;
-  --color-accent: #e6b450;
-  --color-accent-hover: #e1af4b;
-  --color-blue: #39bae6;
-  --color-blue-bright: #59c2ff;
-  --color-green: #aad94c;
-  --color-orange: #ff8f40;
-  --color-red: #f07178;
-  --color-red-bright: #d95757;
-  --color-purple: #d2a6ff;
-  --color-cyan: #95e6cb;
+    --color-primary: #0c1019;
+    --color-secondary: #11111a;
+    --color-tertiary: #0f131a;
+    --color-elevated: #131721;
+    --color-border: #b7a794;
+    --color-border-light: #73767d;
+    --color-tx-primary: #ffffff;
+    --color-tx-secondary: #a7a8aa;
+    --color-tx-muted: #acb6bf8c;
+    --color-accent: #e6b450;
+    --color-accent-hover: #e1af4b;
+    --color-blue: #39bae6;
+    --color-blue-bright: #59c2ff;
+    --color-green: #aad94c;
+    --color-orange: #ff8f40;
+    --color-red: #f07178;
+    --color-red-bright: #d95757;
+    --color-purple: #d2a6ff;
+    --color-cyan: #95e6cb;
 }
 
-
-@import "tailwindcss";
+@import 'tailwindcss';
 
 @theme {
-  --color-primary: #0b0e14;
-  --color-secondary: #0d1017;
-  --color-tertiary: #0f131a;
-  --color-elevated: #131721;
-  --color-border: #2d3748;
-  --color-border-light: #4a5568;
-  --color-tx-primary: #bfbdb6;
-  --color-tx-secondary: #565b66;
-  --color-tx-muted: #acb6bf8c;
-  --color-accent: #e6b450;
-  --color-accent-hover: #e1af4b;
-  --color-blue: #39bae6;
-  --color-blue-bright: #59c2ff;
-  --color-green: #aad94c;
-  --color-orange: #ff8f40;
-  --color-red: #f07178;
-  --color-red-bright: #d95757;
-  --color-purple: #d2a6ff;
-  --color-cyan: #95e6cb;
+    --color-primary: #0b0e14;
+    --color-secondary: #0d1017;
+    --color-tertiary: #0f131a;
+    --color-elevated: #131721;
+    --color-border: #2d3748;
+    --color-border-light: #4a5568;
+    --color-tx-primary: #bfbdb6;
+    --color-tx-secondary: #565b66;
+    --color-tx-muted: #acb6bf8c;
+    --color-accent: #e6b450;
+    --color-accent-hover: #e1af4b;
+    --color-blue: #39bae6;
+    --color-blue-bright: #59c2ff;
+    --color-green: #aad94c;
+    --color-orange: #ff8f40;
+    --color-red: #f07178;
+    --color-red-bright: #d95757;
+    --color-purple: #d2a6ff;
+    --color-cyan: #95e6cb;
 }
 
 /* Custom Scrollbar Styles */
 /* Webkit browsers (Chrome, Safari, Edge) */
 ::-webkit-scrollbar {
-  width: 8px;
-  height: 8px;
+    width: 8px;
+    height: 8px;
 }
 
 ::-webkit-scrollbar-track {
-  background: transparent;
-  border-radius: 4px;
+    background: transparent;
+    border-radius: 4px;
 }
 
 ::-webkit-scrollbar-thumb {
-  background: rgba(183, 167, 148, 0.3); /* Using border color with opacity */
-  border-radius: 4px;
-  transition: background 0.2s ease;
+    background: rgba(183, 167, 148, 0.3); /* Using border color with opacity */
+    border-radius: 4px;
+    transition: background 0.2s ease;
 }
 
 ::-webkit-scrollbar-thumb:hover {
-  background: rgba(183, 167, 148, 0.5); /* More opaque on hover */
+    background: rgba(183, 167, 148, 0.5); /* More opaque on hover */
 }
 
 ::-webkit-scrollbar-corner {
-  background: transparent;
+    background: transparent;
 }
 
 /* Firefox */
 * {
-  scrollbar-width: thin;
-  scrollbar-color: rgba(183, 167, 148, 0.3) transparent;
+    scrollbar-width: thin;
+    scrollbar-color: rgba(183, 167, 148, 0.3) transparent;
 }
-

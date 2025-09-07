@@ -53,14 +53,18 @@ class TestLandingPageFlows:
         join_button = player_page.locator('[data-testid="join-lobby-button"]')
         await join_button.click()
 
-        await expect(player_page.locator('[data-testid="join-form-error"]:has-text("Please enter your name")')).to_be_visible()
+        await expect(
+            player_page.locator('[data-testid="join-form-error"]:has-text("Please enter your name")')
+        ).to_be_visible()
         await expect(player_page.locator('[data-testid="landing-page-title"]')).to_be_visible()
 
         await player_page.fill('[data-testid="name-input"]', "Test Player")
         await player_page.fill('[data-testid="lobby-code-input"]', "")
         await join_button.click()
 
-        await expect(player_page.locator('[data-testid="join-form-error"]:has-text("Please enter a lobby code")')).to_be_visible()
+        await expect(
+            player_page.locator('[data-testid="join-form-error"]:has-text("Please enter a lobby code")')
+        ).to_be_visible()
         await expect(player_page.locator('[data-testid="landing-page-title"]')).to_be_visible()
 
         await player_session.screenshot()

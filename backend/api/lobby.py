@@ -1,8 +1,8 @@
 import uuid
 
 from fastapi import APIRouter, Depends, HTTPException
-from sqlmodel import Session, select
 from sqlalchemy.orm import selectinload
+from sqlmodel import Session, select
 
 from backend.custom_logging import api_logger
 from backend.database import Lobby, Player, get_session
@@ -24,6 +24,13 @@ async def join_lobby(
     if not lobby:
         api_logger.warning(f"Join failed: lobby not found for code={lobby_code}")
         raise HTTPException(status_code=404, detail="Lobby not found")
+
+    existing_player = db.exec(
+        select(Player).where(Player.lobby_id == lobby.id, Player.name == player_data.name)
+    ).first()
+    if existing_player:
+        api_logger.warning(f"Join failed: player name already taken in lobby code={lobby_code} name={player_data.name}")
+        raise HTTPException(status_code=400, detail="Player name already taken in this lobby")
 
     session_id = str(uuid.uuid4())
 

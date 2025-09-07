@@ -11,7 +11,9 @@ class AdminActions:
     async def goto_admin_page(self):
         await self.page.goto(f"{self.server_url}/admin", wait_until="networkidle")
 
-        await expect(self.page.locator('[data-testid="admin-login-title"], [data-testid="admin-dashboard-title"]')).to_be_visible()
+        await expect(
+            self.page.locator('[data-testid="admin-login-title"], [data-testid="admin-dashboard-title"]')
+        ).to_be_visible()
 
     async def login(self, admin_token: str = None):
         if admin_token is None:
@@ -56,7 +58,7 @@ class AdminActions:
         # Find the lobby in the list and get its View Details button
         # We'll look for any view details button since we can't easily get lobby ID from code
         await expect(self.page.locator(f"text=Code: {lobby_code}")).to_be_visible()
-        
+
         # Find the view details button associated with this lobby by finding the lobby card
         lobby_row = self.page.locator(f"text=Code: {lobby_code}").locator("..").locator("..")
         view_details_button = lobby_row.locator('button:has-text("View Details")')

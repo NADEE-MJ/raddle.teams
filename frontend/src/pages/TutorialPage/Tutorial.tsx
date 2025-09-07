@@ -22,63 +22,63 @@ interface WordChainGameProps {
 }
 
 const TUTORIAL_PUZZLE: Puzzle = {
-    "title": "From DOWN to EARTH",
-    "ladder": [
+    title: 'From DOWN to EARTH',
+    ladder: [
         {
-            "word": "DOWN",
-            "clue": "Cardinal direction that's <> on a map, most of the time",
-            "transform": "MEANS",
-            "solved": false
+            word: 'DOWN',
+            clue: "Cardinal direction that's <> on a map, most of the time",
+            transform: 'MEANS',
+            solved: false,
         },
         {
-            "word": "SOUTH",
-            "clue": "Change the first letter of <> to get a part of the body",
-            "transform": "S->M",
-            "solved": false
+            word: 'SOUTH',
+            clue: 'Change the first letter of <> to get a part of the body',
+            transform: 'S->M',
+            solved: false,
         },
         {
-            "word": "MOUTH",
-            "clue": "Organ that sits inside the <>",
-            "transform": "CONTAINS THE",
-            "solved": false
+            word: 'MOUTH',
+            clue: 'Organ that sits inside the <>',
+            transform: 'CONTAINS THE',
+            solved: false,
         },
         {
-            "word": "TONGUE",
-            "clue": "Piece of clothing that often has a <>",
-            "transform": "IS ON A",
-            "solved": false
+            word: 'TONGUE',
+            clue: 'Piece of clothing that often has a <>',
+            transform: 'IS ON A',
+            solved: false,
         },
         {
-            "word": "SHOE",
-            "clue": "Rubber layer on the bottom of a <>",
-            "transform": "CONTAINS A",
-            "solved": false
+            word: 'SHOE',
+            clue: 'Rubber layer on the bottom of a <>',
+            transform: 'CONTAINS A',
+            solved: false,
         },
         {
-            "word": "SOLE",
-            "clue": "Kind of food or music that sounds like <>",
-            "transform": "SOUNDS LIKE",
-            "solved": false
+            word: 'SOLE',
+            clue: 'Kind of food or music that sounds like <>',
+            transform: 'SOUNDS LIKE',
+            solved: false,
         },
         {
-            "word": "SOUL",
-            "clue": "Popular piano duet \"{} and <>\"",
-            "transform": "IS",
-            "solved": false
+            word: 'SOUL',
+            clue: 'Popular piano duet "{} and <>"',
+            transform: 'IS',
+            solved: false,
         },
         {
-            "word": "HEART",
-            "clue": "Move the first letter of <> to the end to get where we are",
-            "transform": "H -> END",
-            "solved": false
+            word: 'HEART',
+            clue: 'Move the first letter of <> to the end to get where we are',
+            transform: 'H -> END',
+            solved: false,
         },
         {
-            "word": "EARTH",
-            "clue": null,
-            "transform": null,
-            "solved": false
-        }
-    ]
+            word: 'EARTH',
+            clue: null,
+            transform: null,
+            solved: false,
+        },
+    ],
 };
 
 export default function Tutorial({ setCompleted, completed }: WordChainGameProps) {
@@ -98,7 +98,7 @@ export default function Tutorial({ setCompleted, completed }: WordChainGameProps
 
     useEffect(() => {
         const newClues: Clues = {};
-        puzzle.ladder.forEach((step) => {
+        puzzle.ladder.forEach(step => {
             if (step.clue && !step.solved) {
                 newClues[step.word] = step.clue;
             }
@@ -119,7 +119,7 @@ export default function Tutorial({ setCompleted, completed }: WordChainGameProps
     };
 
     const checkCompletion = (newPuzzle: Puzzle) => {
-        const allSolved = newPuzzle.ladder.every((step) => step.solved);
+        const allSolved = newPuzzle.ladder.every(step => step.solved);
         setCompleted(allSolved);
         return allSolved;
     };
@@ -176,13 +176,16 @@ export default function Tutorial({ setCompleted, completed }: WordChainGameProps
         updatePuzzleState(newSolvingIndex);
     };
 
-    const renderClueParts = (clue: string, hintWordRendered: JSX.Element | null, answerWordRendered: JSX.Element | null) => {
+    const renderClueParts = (
+        clue: string,
+        hintWordRendered: JSX.Element | null,
+        answerWordRendered: JSX.Element | null
+    ) => {
         const hintPlaceholder = '<>';
         const answerPlaceholder = '{}';
 
         const parts: (string | JSX.Element)[] = [];
         let remainingText = clue;
-
 
         while (remainingText.length > 0) {
             const hintIndex = remainingText.indexOf(hintPlaceholder);
@@ -228,21 +231,21 @@ export default function Tutorial({ setCompleted, completed }: WordChainGameProps
         const hintPlaceholder = '<>';
         const answerPlaceholder = '{}';
 
-        const hintWordRendered = <span className="bg-green/30 text-green font-mono px-1 pt-[6px] pb-[3px]">{hintWord}</span>;
-        const answerWordRendered = <span className="bg-accent/30 text-accent font-mono px-1 pt-[6px] pb-[3px]">{answerWord}</span>;
+        const hintWordRendered = (
+            <span className='bg-green/30 text-green px-1 pt-[6px] pb-[3px] font-mono'>{hintWord}</span>
+        );
+        const answerWordRendered = (
+            <span className='bg-accent/30 text-accent px-1 pt-[6px] pb-[3px] font-mono'>{answerWord}</span>
+        );
 
         const parts = renderClueParts(clue, hintWordRendered, answerWordRendered);
 
         if (clue.includes(hintPlaceholder) && clue.includes(answerPlaceholder)) {
-            return (
-                <div className=" mb-2 opacity-75 text-tx-muted my-3">
-                    {parts}
-                </div>
-            );
+            return <div className='text-tx-muted my-3 mb-2 opacity-75'>{parts}</div>;
         }
 
         return (
-            <div className=" mb-2 opacity-75 text-tx-muted my-3">
+            <div className='text-tx-muted my-3 mb-2 opacity-75'>
                 {parts} → {answerWordRendered}
             </div>
         );
@@ -257,7 +260,7 @@ export default function Tutorial({ setCompleted, completed }: WordChainGameProps
 
             setUsedClues(prev => ({
                 ...prev,
-                [hintWord]: renderSolvedClue(clueToRemove, hintWord, answer)
+                [hintWord]: renderSolvedClue(clueToRemove, hintWord, answer),
             }));
 
             setClues(prev => {
@@ -301,27 +304,23 @@ export default function Tutorial({ setCompleted, completed }: WordChainGameProps
     };
 
     const renderDownwardClue = (clue: string) => {
-        const hintWordRendered = <span className="bg-green/30 text-green font-mono px-1 pt-[6px] pb-[3px]">{hintWord}</span>;
+        const hintWordRendered = (
+            <span className='bg-green/30 text-green px-1 pt-[6px] pb-[3px] font-mono'>{hintWord}</span>
+        );
 
         const parts = renderClueParts(clue, hintWordRendered, null);
 
-        return (
-            <div className=" mb-2 opacity-75 text-tx-primary">
-                {parts}
-            </div>
-        );
+        return <div className='text-tx-primary mb-2 opacity-75'>{parts}</div>;
     };
 
     const renderUpwardClue = (clue: string) => {
-        const answerWordRendered = <span className="bg-accent/30 text-accent font-mono px-1 pt-[6px] pb-[3px]">{answer}</span>;
+        const answerWordRendered = (
+            <span className='bg-accent/30 text-accent px-1 pt-[6px] pb-[3px] font-mono'>{answer}</span>
+        );
 
         const parts = renderClueParts(clue, null, answerWordRendered);
 
-        return (
-            <div className=" mb-2 opacity-75 text-tx-muted my-3">
-                {parts}
-            </div>
-        );
+        return <div className='text-tx-muted my-3 mb-2 opacity-75'>{parts}</div>;
     };
 
     const renderLadderStep = (step: LadderStep, index: number) => {
@@ -365,66 +364,61 @@ export default function Tutorial({ setCompleted, completed }: WordChainGameProps
                 className={`${isHidden ? 'hidden md:block' : ''} relative font-mono text-sm md:text-lg ${bgColor}`}
             >
                 {shouldReveal && !isTarget ? (
-                    <div className="relative">
-                        <div className="py-3 tracking-wide text-center uppercase text-tx-primary">
-                            {step.word}
-                        </div>
-                        {
-                            index !== puzzle.ladder.length - 1 &&
-                                step.solved ? (
-                                <span className="px-2 py-1 absolute bottom-0 translate-y-1/2 left-1/2 -translate-x-1/2 font-mono text-xs uppercase bg-secondary rounded-sm border border-border text-tx-primary whitespace-nowrap z-50">
-                                    {step.transform}
+                    <div className='relative'>
+                        <div className='text-tx-primary py-3 text-center tracking-wide uppercase'>{step.word}</div>
+                        {index !== puzzle.ladder.length - 1 && step.solved ? (
+                            <span className='bg-secondary border-border text-tx-primary absolute bottom-0 left-1/2 z-50 -translate-x-1/2 translate-y-1/2 rounded-sm border px-2 py-1 font-mono text-xs whitespace-nowrap uppercase'>
+                                {step.transform}
+                            </span>
+                        ) : (
+                            index < puzzle.ladder.length - 1 && (
+                                <span className='bg-secondary border-border text-tx-primary absolute bottom-0 left-1/2 z-50 w-[max-content] min-w-25 -translate-x-1/2 translate-y-1/2 rounded-sm border p-1 pb-[6px] font-mono text-xs leading-1 uppercase'>
+                                    &nbsp;
                                 </span>
-                            ) : (
-                                index < puzzle.ladder.length - 1 && (
-                                    <span className="z-50 p-1 pb-[6px] absolute bottom-0 translate-y-1/2 left-1/2 -translate-x-1/2 w-[max-content] font-mono text-xs uppercase bg-secondary rounded-sm border border-border text-tx-primary leading-1 min-w-25">
-                                        &nbsp;
-                                    </span>
-                                )
                             )
-                        }
+                        )}
                     </div>
                 ) : isTarget ? (
-                    <div className="relative">
-                        <span className="rounded-r-lg bg-secondary border border-border border-l-0 py-1 pr-1 absolute top-1/2 -translate-y-1/2 left-0 text-sm md:text-base -translate-x-2/5 text-tx-primary">
+                    <div className='relative'>
+                        <span className='bg-secondary border-border text-tx-primary absolute top-1/2 left-0 -translate-x-2/5 -translate-y-1/2 rounded-r-lg border border-l-0 py-1 pr-1 text-sm md:text-base'>
                             ({step.word.length})
                         </span>
                         <input
                             ref={inputRef}
-                            type="text"
+                            type='text'
                             value={currentGuess}
                             onChange={handleGuessChange}
-                            placeholder=""
-                            className="w-full p-3 uppercase tracking-wide text-[16px] text-center md:text-lg focus:outline-none bg-transparent text-tx-primary"
+                            placeholder=''
+                            className='text-tx-primary w-full bg-transparent p-3 text-center text-[16px] tracking-wide uppercase focus:outline-none md:text-lg'
                             maxLength={step.word.length}
-                            autoComplete="off"
-                            autoCorrect="off"
-                            autoCapitalize="off"
-                            spellCheck="false"
+                            autoComplete='off'
+                            autoCorrect='off'
+                            autoCapitalize='off'
+                            spellCheck='false'
                         />
-                        <button className="absolute top-1/2 -translate-y-1/2 right-2 w-8 h-8 bg-blue/20 border border-blue rounded flex items-center justify-center hover:bg-blue/30">
+                        <button className='bg-blue/20 border-blue hover:bg-blue/30 absolute top-1/2 right-2 flex h-8 w-8 -translate-y-1/2 items-center justify-center rounded border'>
                             💡
                         </button>
                         {index < puzzle.ladder.length - 1 && (
-                            <span className="z-50 p-1 pb-[6px] absolute bottom-0 translate-y-1/2 left-1/2 -translate-x-1/2 w-[max-content] font-mono text-xs uppercase bg-secondary rounded-sm border border-border text-tx-primary leading-1 min-w-25">
+                            <span className='bg-secondary border-border text-tx-primary absolute bottom-0 left-1/2 z-50 w-[max-content] min-w-25 -translate-x-1/2 translate-y-1/2 rounded-sm border p-1 pb-[6px] font-mono text-xs leading-1 uppercase'>
                                 &nbsp;
                             </span>
                         )}
                     </div>
                 ) : (
-                    <div className="relative">
+                    <div className='relative'>
                         <input
-                            type="text"
+                            type='text'
                             placeholder={'◼️'.repeat(step.word.length) + ` (${step.word.length})`}
-                            className="w-full p-3 uppercase tracking-wide text-[16px] text-center md:text-lg focus:outline-none bg-transparent text-tx-muted"
+                            className='text-tx-muted w-full bg-transparent p-3 text-center text-[16px] tracking-wide uppercase focus:outline-none md:text-lg'
                             disabled
-                            autoComplete="off"
-                            autoCorrect="off"
-                            autoCapitalize="off"
-                            spellCheck="false"
+                            autoComplete='off'
+                            autoCorrect='off'
+                            autoCapitalize='off'
+                            spellCheck='false'
                         />
                         {index < puzzle.ladder.length - 1 && (
-                            <span className="z-50 p-1 pb-[6px] absolute bottom-0 translate-y-1/2 left-1/2 -translate-x-1/2 w-[max-content] font-mono text-xs uppercase bg-secondary rounded-sm border border-border text-tx-primary leading-1 min-w-25">
+                            <span className='bg-secondary border-border text-tx-primary absolute bottom-0 left-1/2 z-50 w-[max-content] min-w-25 -translate-x-1/2 translate-y-1/2 rounded-sm border p-1 pb-[6px] font-mono text-xs leading-1 uppercase'>
                                 &nbsp;
                             </span>
                         )}
@@ -432,18 +426,21 @@ export default function Tutorial({ setCompleted, completed }: WordChainGameProps
                 )}
             </div>
         );
-    }
+    };
 
     return (
         <>
-            <div className="max-w-6xl mx-auto">
-                <div id="game-area" className="md:grid md:grid-cols-[2fr_3fr] md:gap-8">
-                    <div className="py-4 md:py-0 bg-secondary sticky md:static z-10 top-0">
-                        <div className="mx-4 md:mx-0 text-center">
-                            <div className="divide-y-2 divide-border border-x-5 border-border bg-transparent">
+            <div className='mx-auto max-w-6xl'>
+                <div id='game-area' className='md:grid md:grid-cols-[2fr_3fr] md:gap-8'>
+                    <div className='bg-secondary sticky top-0 z-10 py-4 md:static md:py-0'>
+                        <div className='mx-4 text-center md:mx-0'>
+                            <div className='divide-border border-border divide-y-2 border-x-5 bg-transparent'>
                                 <div>
-                                    <div className="hidden md:block p-3"></div>
-                                    <button type="button" className="md:hidden p-2 w-full text-xs text-tx-muted italic hover:bg-tertiary">
+                                    <div className='hidden p-3 md:block'></div>
+                                    <button
+                                        type='button'
+                                        className='text-tx-muted hover:bg-tertiary w-full p-2 text-xs italic md:hidden'
+                                    >
                                         Show full ladder
                                     </button>
                                 </div>
@@ -453,54 +450,67 @@ export default function Tutorial({ setCompleted, completed }: WordChainGameProps
                                 })}
 
                                 <div>
-                                    <div className="p-3 hidden"></div>
-                                    {!completed && !(direction === 'downward' && (solvingIndex === puzzle.ladder.length - 2 || solvingIndex === puzzle.ladder.length - 1)) && !(direction === 'upward' && (solvingIndex === 0 || solvingIndex === 1)) && (
-                                        <button
-                                            type="button"
-                                            onClick={() => handleDirectionChange(direction === 'downward' ? 'upward' : 'downward')}
-                                            className="p-2 w-full text-xs text-tx-muted italic hover:bg-tertiary"
-                                        >
-                                            Switch to solving {direction === 'downward' ? '↑ upward' : '↓ downward'}
-                                        </button>)}
+                                    <div className='hidden p-3'></div>
+                                    {!completed &&
+                                        !(
+                                            direction === 'downward' &&
+                                            (solvingIndex === puzzle.ladder.length - 2 ||
+                                                solvingIndex === puzzle.ladder.length - 1)
+                                        ) &&
+                                        !(direction === 'upward' && (solvingIndex === 0 || solvingIndex === 1)) && (
+                                            <button
+                                                type='button'
+                                                onClick={() =>
+                                                    handleDirectionChange(
+                                                        direction === 'downward' ? 'upward' : 'downward'
+                                                    )
+                                                }
+                                                className='text-tx-muted hover:bg-tertiary w-full p-2 text-xs italic'
+                                            >
+                                                Switch to solving {direction === 'downward' ? '↑ upward' : '↓ downward'}
+                                            </button>
+                                        )}
                                 </div>
                             </div>
                         </div>
                     </div>
 
-                    <div className="mb-6 px-3 md:p-0 font-medium md:text-lg text-left">
-                        <div className="leading-[24px] text-sm md:text-base lg:text-lg md:p-0">
+                    <div className='mb-6 px-3 text-left font-medium md:p-0 md:text-lg'>
+                        <div className='text-sm leading-[24px] md:p-0 md:text-base lg:text-lg'>
                             {/* Current Clues Section */}
                             {Object.entries(clues).length > 0 && (
                                 <>
-                                    <h2 className="uppercase text-sm pt-4 mb-4 border-b-1 border-border text-tx-secondary font-bold">Clues, out of order</h2>
+                                    <h2 className='border-border text-tx-secondary mb-4 border-b-1 pt-4 text-sm font-bold uppercase'>
+                                        Clues, out of order
+                                    </h2>
                                     {Object.entries(clues).map(([word, clue]) => (
-                                        <div key={word} className=" mb-2 pt-1 pb-0 rounded-md border-1 border-border bg-secondary px-2 py-1">
-                                            {direction === 'upward' ?
-                                                renderUpwardClue(clue) :
-                                                renderDownwardClue(clue)
-                                            }
+                                        <div
+                                            key={word}
+                                            className='border-border bg-secondary mb-2 rounded-md border-1 px-2 py-1 pt-1 pb-0'
+                                        >
+                                            {direction === 'upward' ? renderUpwardClue(clue) : renderDownwardClue(clue)}
                                         </div>
                                     ))}
                                 </>
                             )}
 
-
                             {/* Used Clues Section */}
                             {Object.entries(usedClues).length > 0 && (
                                 <>
-                                    <h2 className="uppercase text-sm pt-4 mb-2 border-b-1 border-border text-tx-secondary font-bold">Used clues</h2>
+                                    <h2 className='border-border text-tx-secondary mb-2 border-b-1 pt-4 text-sm font-bold uppercase'>
+                                        Used clues
+                                    </h2>
                                     {Object.entries(usedClues).map(([word, renderedClue]) => (
-                                        <div key={word} className=" mb-2 opacity-75 text-tx-muted my-3">
+                                        <div key={word} className='text-tx-muted my-3 mb-2 opacity-75'>
                                             {renderedClue}
                                         </div>
                                     ))}
                                 </>
                             )}
-
                         </div>
                     </div>
                 </div>
             </div>
-        </>);
+        </>
+    );
 }
-

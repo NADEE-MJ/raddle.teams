@@ -1,10 +1,12 @@
-import { useState, useEffect, useCallback } from 'react';
+import { useState, useEffect, useCallback, useMemo, useRef } from 'react';
 import LobbiesList from './LobbiesList';
 import LobbyDetails from './LobbyDetails';
 import { useGlobalOutletContext } from '@/hooks/useGlobalOutletContext';
 import { useNavigate } from 'react-router-dom';
 import { useWebSocket } from '@/hooks/useWebSocket';
 import { WebSocketMessage, LobbyWebSocketEvents } from '@/types';
+import StatusIndicator from '@/components/StatusIndicator';
+import Alert from '@/components/Alert';
 
 export default function AdminPage() {
     const { adminApiToken, adminSessionId } = useGlobalOutletContext();
@@ -13,6 +15,18 @@ export default function AdminPage() {
     const [lobbyRefreshKey, setLobbyRefreshKey] = useState(0);
     const [allLobbiesRefreshKey, setAllLobbiesRefreshKey] = useState(0);
     const [wsError, setWsError] = useState<string | null>(null);
+
+    const reloadDebounceRef = useRef<NodeJS.Timeout | null>(null);
+
+    const scheduleReload = useCallback(() => {
+        if (reloadDebounceRef.current) {
+            return;
+        }
+        reloadDebounceRef.current = setTimeout(() => {
+            setLobbyRefreshKey(prev => prev + 1);
+            reloadDebounceRef.current = null;
+        }, 200);
+    }, []);
 
     const onConnect = useCallback(() => {
         console.log('Admin WebSocket connected');
@@ -28,29 +42,36 @@ export default function AdminPage() {
         setWsError('WebSocket connection failed');
     }, []);
 
-    const onMessage = useCallback((message: WebSocketMessage) => {
-        console.log('Admin WebSocket message received:', message);
+    const onMessage = useCallback(
+        (message: WebSocketMessage) => {
+            console.log('Admin WebSocket message received:', message);
 
-        switch (message.type) {
-            case LobbyWebSocketEvents.CONNECTION_CONFIRMED:
-            case LobbyWebSocketEvents.TEAM_ASSIGNED:
-            case LobbyWebSocketEvents.TEAM_CHANGED:
-            case LobbyWebSocketEvents.DISCONNECTED:
-            case LobbyWebSocketEvents.PLAYER_KICKED:
-                setLobbyRefreshKey(prev => prev + 1);
-                break;
-            default:
-                console.log('Unknown admin WebSocket message type:', message.type);
-        }
-    }, []);
+            switch (message.type) {
+                case LobbyWebSocketEvents.CONNECTION_CONFIRMED:
+                case LobbyWebSocketEvents.TEAM_ASSIGNED:
+                case LobbyWebSocketEvents.TEAM_CHANGED:
+                case LobbyWebSocketEvents.DISCONNECTED:
+                case LobbyWebSocketEvents.PLAYER_KICKED:
+                    scheduleReload();
+                    break;
+                default:
+                    console.log('Unknown admin WebSocket message type:', message.type);
+                    scheduleReload();
+            }
+        },
+        [scheduleReload]
+    );
 
-    const wsUrl = adminSessionId ? `ws://localhost:8000/ws/admin/${adminSessionId}?token=${adminApiToken}` : '';
+    const wsUrl = useMemo(
+        () => (adminSessionId ? `ws://localhost:8000/ws/admin/${adminSessionId}?token=${adminApiToken}` : ''),
+        [adminSessionId, adminApiToken]
+    );
     const { isConnected, sendMessage } = useWebSocket(wsUrl, {
         onConnect,
         onDisconnect,
         onError,
         onMessage,
-        autoReconnect: true,
+        autoReconnect: false,
     });
 
     useEffect(() => {
@@ -59,22 +80,25 @@ export default function AdminPage() {
         }
     }, []); // eslint-disable-line react-hooks/exhaustive-deps
 
-    const handleViewDetails = useCallback((lobbyId: number) => {
-        setSelectedLobbyId(lobbyId);
+    const handleViewDetails = useCallback(
+        (lobbyId: number) => {
+            setSelectedLobbyId(lobbyId);
 
-        if (sendMessage) {
-            sendMessage({
-                action: 'subscribe_lobby',
-                lobby_id: lobbyId
-            });
-        }
-    }, [setSelectedLobbyId, sendMessage]);
+            if (sendMessage) {
+                sendMessage({
+                    action: 'subscribe_lobby',
+                    lobby_id: lobbyId,
+                });
+            }
+        },
+        [setSelectedLobbyId, sendMessage]
+    );
 
     const handleCloseLobbyDetails = useCallback(() => {
         if (selectedLobbyId && sendMessage) {
             sendMessage({
                 action: 'unsubscribe_lobby',
-                lobby_id: selectedLobbyId
+                lobby_id: selectedLobbyId,
             });
         }
         setSelectedLobbyId(null);
@@ -85,24 +109,18 @@ export default function AdminPage() {
         setSelectedLobbyId(null); // Close the details modal
     }, [setAllLobbiesRefreshKey, setSelectedLobbyId]);
 
-
     return (
         <div>
-            <div className='text-left mb-6'>
-                <div className="flex items-center justify-between mb-2">
-                    <h1 className='text-2xl md:text-3xl font-semibold mb-1 text-tx-primary'>Admin Dashboard</h1>
-                    <div className="flex items-center space-x-2">
-                        <div className={`w-2 h-2 rounded-full ${isConnected ? 'bg-green-500' : 'bg-red-500'}`}></div>
-                        <span className={`text-sm ${isConnected ? 'text-green-600' : 'text-red-600'}`}>
-                            {isConnected ? 'Connected' : 'Disconnected'}
-                        </span>
-                    </div>
+            <div className='mb-6 text-left'>
+                <div className='mb-2 flex items-center justify-between'>
+                    <h1 className='text-tx-primary mb-1 text-2xl font-semibold md:text-3xl'>Admin Dashboard</h1>
+                    <StatusIndicator isConnected={isConnected} />
                 </div>
-                <p className="text-tx-secondary">Manage lobbies and monitor team games</p>
+                <p className='text-tx-secondary'>Manage lobbies and monitor team games</p>
                 {wsError && (
-                    <div className="mt-2 p-2 bg-red-50 border border-red-200 rounded text-red-700 text-sm">
+                    <Alert variant='error' className='mt-2'>
                         {wsError}
-                    </div>
+                    </Alert>
                 )}
             </div>
 

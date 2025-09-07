@@ -1,4 +1,7 @@
 import { useState } from 'react';
+import TextInput from '@/components/TextInput';
+import Button from '@/components/Button';
+import Card from '@/components/Card';
 
 interface CreateLobbyFormProps {
     onCreateLobby: (name: string) => Promise<void>;
@@ -20,29 +23,37 @@ export default function CreateLobbyForm({ onCreateLobby }: CreateLobbyFormProps)
 
     return (
         <div>
-            <div className="text-tx-secondary text-sm uppercase tracking-wide mb-3" data-testid="create-lobby-heading">Create New Lobby</div>
+            <div className='text-tx-secondary mb-3 text-sm tracking-wide uppercase' data-testid='create-lobby-heading'>
+                Create New Lobby
+            </div>
 
-            <div className="rounded-md border border-border bg-tertiary px-4 py-3">
-                <form onSubmit={handleSubmit} className='flex flex-col md:flex-row gap-3' data-testid='create-lobby-form'>
-                    <input
-                        type='text'
+            <Card>
+                <form
+                    onSubmit={handleSubmit}
+                    className='flex flex-col gap-3 md:flex-row'
+                    data-testid='create-lobby-form'
+                >
+                    <TextInput
                         value={newLobbyName}
-                        onChange={e => setNewLobbyName(e.target.value)}
+                        onChange={setNewLobbyName}
                         placeholder='Enter lobby name...'
-                        className='flex-1 px-3 py-2 border border-border-light bg-secondary text-tx-primary rounded-md text-sm focus:outline-none focus:border-accent focus:ring-1 focus:ring-accent'
+                        className='flex-1 text-sm'
                         disabled={loading}
                         data-testid='lobby-name-input'
                     />
-                    <button
+                    <Button
                         type='submit'
+                        variant='secondary'
+                        size='md'
                         disabled={loading || !newLobbyName.trim()}
-                        className='px-4 py-2 bg-secondary border border-border hover:bg-elevated text-accent rounded-md cursor-pointer font-medium transition duration-200 disabled:opacity-50 disabled:cursor-not-allowed text-sm'
+                        loading={loading}
+                        className='text-accent'
                         data-testid='create-lobby-submit'
                     >
-                        {loading ? 'Creating...' : 'Create Lobby'}
-                    </button>
+                        {loading ? 'Creating' : 'Create Lobby'}
+                    </Button>
                 </form>
-            </div>
+            </Card>
         </div>
     );
 }

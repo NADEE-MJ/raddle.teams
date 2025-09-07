@@ -1,12 +1,20 @@
 from datetime import datetime, timezone
 from typing import Optional
 
+from sqlalchemy import Index, UniqueConstraint
 from sqlmodel import Field, Relationship, SQLModel
 
 
 class Player(SQLModel, table=True):
+    __table_args__ = (
+        UniqueConstraint("name", "lobby_id", name="uq_player_name_lobby"),
+        Index("ix_player_session_id", "session_id"),
+        Index("ix_player_lobby_id", "lobby_id"),
+        Index("ix_player_team_id", "team_id"),
+    )
+
     id: Optional[int] = Field(default=None, primary_key=True)
-    name: str = Field(unique=True)
+    name: str
     session_id: str = Field(unique=True)
     lobby_id: int = Field(foreign_key="lobby.id", ondelete="CASCADE")
     team_id: Optional[int] = Field(default=None, foreign_key="team.id", ondelete="CASCADE")
@@ -18,6 +26,8 @@ class Player(SQLModel, table=True):
 
 
 class Team(SQLModel, table=True):
+    __table_args__ = (Index("ix_team_lobby_id", "lobby_id"),)
+
     id: Optional[int] = Field(default=None, primary_key=True)
     name: str
     lobby_id: int = Field(foreign_key="lobby.id", ondelete="CASCADE")

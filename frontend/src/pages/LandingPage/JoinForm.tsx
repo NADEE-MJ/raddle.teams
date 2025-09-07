@@ -2,6 +2,8 @@ import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { api } from '@/services/api';
 import { useGlobalOutletContext } from '@/hooks/useGlobalOutletContext';
+import TextInput from '@/components/TextInput';
+import Button from '@/components/Button';
 
 export default function JoinForm() {
     const { setSessionId } = useGlobalOutletContext();
@@ -25,7 +27,6 @@ export default function JoinForm() {
         setLoading(true);
         setError('');
 
-
         try {
             const player = await api.player.lobby.join(lobbyCode.trim().toUpperCase(), name.trim());
             setSessionId(player.session_id);
@@ -40,49 +41,45 @@ export default function JoinForm() {
 
     return (
         <form onSubmit={handleJoinLobby} className='space-y-6'>
-            <div className='text-left'>
-                <label htmlFor='name' className='mb-2 block text-sm font-medium text-tx-secondary'>
-                    Your Name
-                </label>
-                <input
-                    type='text'
-                    id='name'
-                    value={name}
-                    onChange={e => setName(e.target.value)}
-                    className='w-full rounded-lg border border-border px-3 py-2 shadow-sm bg-tertiary text-tx-primary focus:border-accent focus:ring-2 focus:ring-accent focus:outline-none'
-                    placeholder='Enter your name'
-                    disabled={loading}
-                    data-testid='name-input'
-                />
-            </div>
-
-            <div className='text-left'>
-                <label htmlFor='lobbyCode' className='mb-2 block text-sm font-medium text-tx-secondary'>
-                    Lobby Code
-                </label>
-                <input
-                    type='text'
-                    id='lobbyCode'
-                    value={lobbyCode}
-                    onChange={e => setLobbyCode(e.target.value.toUpperCase())}
-                    className='w-full rounded-lg border border-border px-3 py-2 uppercase shadow-sm bg-tertiary text-tx-primary focus:border-accent focus:ring-2 focus:ring-accent focus:outline-none'
-                    placeholder='ABCDEF'
-                    maxLength={6}
-                    disabled={loading}
-                    data-testid='lobby-code-input'
-                />
-            </div>
-
-            {error && <div className='text-center text-sm text-red' data-testid='join-form-error'>{error}</div>}
-
-            <button
-                type='submit'
+            <TextInput
+                id='name'
+                label='Your Name'
+                value={name}
+                onChange={setName}
+                placeholder='Enter your name'
                 disabled={loading}
-                className='w-full rounded-lg bg-accent px-4 py-2 font-medium text-primary transition duration-200 hover:bg-accent/80 disabled:bg-tx-muted'
+                data-testid='name-input'
+            />
+
+            <TextInput
+                id='lobbyCode'
+                label='Lobby Code'
+                value={lobbyCode}
+                onChange={value => setLobbyCode(value.toUpperCase())}
+                className='uppercase'
+                placeholder='ABCDEF'
+                maxLength={6}
+                disabled={loading}
+                data-testid='lobby-code-input'
+            />
+
+            {error && (
+                <div className='text-red text-center text-sm' data-testid='join-form-error'>
+                    {error}
+                </div>
+            )}
+
+            <Button
+                type='submit'
+                variant='primary'
+                size='lg'
+                disabled={loading}
+                loading={loading}
+                className='w-full'
                 data-testid='join-lobby-button'
             >
-                {loading ? 'Joining...' : 'Join Lobby'}
-            </button>
+                {loading ? 'Joining' : 'Join Lobby'}
+            </Button>
         </form>
     );
 }

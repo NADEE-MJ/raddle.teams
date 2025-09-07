@@ -2,7 +2,7 @@ import { Suspense, lazy } from 'react';
 import { createBrowserRouter, RouterProvider } from 'react-router-dom';
 
 import GlobalLayout from '@/layouts/GlobalLayout';
-import LoadingSpinner from "@/components/LoadingSpinner";
+import LoadingSpinner from '@/components/LoadingSpinner';
 
 const LandingPage = lazy(() => import('@/pages/LandingPage'));
 const TutorialPage = lazy(() => import('@/pages/TutorialPage'));
@@ -10,7 +10,6 @@ const LobbyPage = lazy(() => import('@/pages/LobbyPage'));
 const AdminPage = lazy(() => import('@/pages/AdminPage'));
 const AdminLoginPage = lazy(() => import('@/pages/AdminLoginPage'));
 const NotFoundPage = lazy(() => import('@/pages/NotFoundPage'));
-
 
 const withSuspense = (element: React.ReactElement) => <Suspense fallback={<LoadingSpinner />}>{element}</Suspense>;
 

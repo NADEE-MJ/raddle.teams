@@ -1,5 +1,6 @@
 import { Outlet, Link, useLocation } from 'react-router-dom';
 import { GlobalOutletContext } from '@/hooks/useGlobalOutletContext';
+import Button from '@/components/Button';
 
 import { useState, useMemo, useEffect, useCallback } from 'react';
 import { api } from '@/services/api';
@@ -14,7 +15,10 @@ const GlobalLayout: React.FC = () => {
     const [isLoggingOut, setIsLoggingOut] = useState(false);
 
     useEffect(() => {
-        if (location.pathname.startsWith('/lobby') || (location.pathname.startsWith('/admin') && !location.pathname.includes('login'))) {
+        if (
+            location.pathname.startsWith('/lobby') ||
+            (location.pathname.startsWith('/admin') && !location.pathname.includes('login'))
+        ) {
             setShowLogout(true);
         } else {
             setShowLogout(false);
@@ -25,7 +29,6 @@ const GlobalLayout: React.FC = () => {
         } else {
             setMainContentBordered(true);
         }
-
     }, [location]);
 
     const updateAdminApiToken = useCallback((token: string | null) => {
@@ -86,69 +89,92 @@ const GlobalLayout: React.FC = () => {
         }
     }, [location.pathname, sessionId, updateAdminApiToken, updateAdminSessionId, updateSessionId]);
 
-    const context: GlobalOutletContext = useMemo(() => ({
-        sessionId,
-        setSessionId: updateSessionId,
-        getSessionIdFromLocalStorage,
-        adminApiToken,
-        setAdminApiToken: updateAdminApiToken,
-        getAdminApiTokenFromLocalStorage,
-        adminSessionId,
-        setAdminSessionId: updateAdminSessionId,
-        getAdminSessionIdFromLocalStorage,
-    }), [
-        sessionId,
-        updateSessionId,
-        getSessionIdFromLocalStorage,
-        adminApiToken,
-        updateAdminApiToken,
-        getAdminApiTokenFromLocalStorage,
-        adminSessionId,
-        updateAdminSessionId,
-        getAdminSessionIdFromLocalStorage,
-    ]);
+    const context: GlobalOutletContext = useMemo(
+        () => ({
+            sessionId,
+            setSessionId: updateSessionId,
+            getSessionIdFromLocalStorage,
+            adminApiToken,
+            setAdminApiToken: updateAdminApiToken,
+            getAdminApiTokenFromLocalStorage,
+            adminSessionId,
+            setAdminSessionId: updateAdminSessionId,
+            getAdminSessionIdFromLocalStorage,
+        }),
+        [
+            sessionId,
+            updateSessionId,
+            getSessionIdFromLocalStorage,
+            adminApiToken,
+            updateAdminApiToken,
+            getAdminApiTokenFromLocalStorage,
+            adminSessionId,
+            updateAdminSessionId,
+            getAdminSessionIdFromLocalStorage,
+        ]
+    );
 
     return (
-        <div className="min-h-screen bg-primary grid grid-rows-[auto_auto_1fr]">
-            <nav className="bg-secondary border-b border-border">
-                <div className="max-w-6xl mx-auto px-8 ">
-                    <div className="flex justify-between h-16 items-center">
-                        <div className="flex items-center gap-4">
-                            <h1 className="text-2xl font-bold text-tx-primary">
-                                <Link to="/" className="flex items-center" data-testid="home-link">
-                                    R<img src="/img/ladder.svg" alt="A" className="w-6 h-6 inline-block brightness-75 " />DDLE
+        <div className='bg-primary grid min-h-screen grid-rows-[auto_auto_1fr]'>
+            <nav className='bg-secondary border-border border-b'>
+                <div className='mx-auto max-w-6xl px-8'>
+                    <div className='flex h-16 items-center justify-between'>
+                        <div className='flex items-center gap-4'>
+                            <h1 className='text-tx-primary text-2xl font-bold'>
+                                <Link to='/' className='flex items-center' data-testid='home-link'>
+                                    R
+                                    <img src='/img/ladder.svg' alt='A' className='inline-block h-6 w-6 brightness-75' />
+                                    DDLE
                                 </Link>
                             </h1>
-                            <span className="not-md:hidden text-tx-secondary">Word Transformation Game</span>
+                            <span className='text-tx-secondary not-md:hidden'>Word Transformation Game</span>
                         </div>
-                        <div className="flex items-center gap-4">
-                            <div className="text-tx-secondary">
+                        <div className='flex items-center gap-4'>
+                            <div className='text-tx-secondary'>
                                 {showLogout ? (
-                                    <button
+                                    <Button
                                         onClick={handleLogout}
                                         disabled={isLoggingOut}
-                                        className="rounded-lg bg-red-700 hover:bg-red-800 px-4 py-2 text-white transition duration-200 disabled:bg-red-950"
-                                        data-testid="logout-button"
+                                        loading={isLoggingOut}
+                                        variant='destructive'
+                                        className='bg-red-700 text-white hover:bg-red-800 disabled:bg-red-950'
+                                        data-testid='logout-button'
                                     >
-                                        {isLoggingOut ? 'Logging out...' : (location.pathname.startsWith('/admin') ? '🔒 Admin Logout' : '🚪 Leave Lobby')}
-                                    </button>
+                                        {isLoggingOut
+                                            ? 'Logging out'
+                                            : location.pathname.startsWith('/admin')
+                                              ? '🔒 Admin Logout'
+                                              : '🚪 Leave Lobby'}
+                                    </Button>
                                 ) : (
-                                    <div className="flex gap-1">
-                                        <Link to="/tutorial" className="text-tx-secondary hover:text-tx-primary transition duration-200" data-testid="tutorial-link">✌️ How to Play</Link>
+                                    <div className='flex gap-1'>
+                                        <Link
+                                            to='/tutorial'
+                                            className='text-tx-secondary hover:text-tx-primary transition duration-200'
+                                            data-testid='tutorial-link'
+                                        >
+                                            ✌️ How to Play
+                                        </Link>
                                         {'•'}
-                                        <Link to="/admin/login" className="text-tx-secondary hover:text-tx-primary transition duration-200" data-testid="admin-panel-link">🔧 Admin</Link>
+                                        <Link
+                                            to='/admin/login'
+                                            className='text-tx-secondary hover:text-tx-primary transition duration-200'
+                                            data-testid='admin-panel-link'
+                                        >
+                                            🔧 Admin
+                                        </Link>
                                     </div>
                                 )}
                             </div>
                         </div>
                     </div>
                 </div>
-            </nav >
+            </nav>
 
-            <main className="bg-primary p-4 md:p-8">
-                <div className="max-w-6xl mx-auto">
+            <main className='bg-primary p-4 md:p-8'>
+                <div className='mx-auto max-w-6xl'>
                     {mainContentBordered ? (
-                        <div className="bg-secondary border border-border rounded-lg shadow-sm p-4 md:p-8">
+                        <div className='bg-secondary border-border rounded-lg border p-4 shadow-sm md:p-8'>
                             <Outlet context={context} />
                         </div>
                     ) : (
@@ -157,25 +183,37 @@ const GlobalLayout: React.FC = () => {
                 </div>
             </main>
 
-            <footer className="bg-primary">
-                <div className="max-w-6xl mx-auto p-6 border-t border-border-light">
-                    <div className="flex flex-col md:flex-row justify-between items-center gap-4">
-                        <div className="flex items-center gap-1">
-                            <img src="/img/ladder.svg" alt="A" className="w-15 h-12 inline-block brightness-75 " />
-                            <div className="text-sm text-tx-secondary">
-                                <p className="mb-1">© 2025 Raddle Teams</p>
-                                <p className="mb-1">A team-based word game</p>
+            <footer className='bg-primary'>
+                <div className='border-border-light mx-auto max-w-6xl border-t p-6'>
+                    <div className='flex flex-col items-center justify-between gap-4 md:flex-row'>
+                        <div className='flex items-center gap-1'>
+                            <img src='/img/ladder.svg' alt='A' className='inline-block h-12 w-15 brightness-75' />
+                            <div className='text-tx-secondary text-sm'>
+                                <p className='mb-1'>© 2025 Raddle Teams</p>
+                                <p className='mb-1'>A team-based word game</p>
                                 <p>Built for collaborative fun</p>
                             </div>
                         </div>
-                        <div className="flex gap-4 text-sm text-tx-secondary">
-                            <Link to="/tutorial" className="hover:text-tx-primary transition duration-200" data-testid="footer-tutorial-link">✌️ How to Play</Link>
-                            <Link to="/admin/login" className="hover:text-tx-primary transition duration-200" data-testid="footer-admin-link">🔧 Admin</Link>
+                        <div className='text-tx-secondary flex gap-4 text-sm'>
+                            <Link
+                                to='/tutorial'
+                                className='hover:text-tx-primary transition duration-200'
+                                data-testid='footer-tutorial-link'
+                            >
+                                ✌️ How to Play
+                            </Link>
+                            <Link
+                                to='/admin/login'
+                                className='hover:text-tx-primary transition duration-200'
+                                data-testid='footer-admin-link'
+                            >
+                                🔧 Admin
+                            </Link>
                         </div>
                     </div>
                 </div>
             </footer>
-        </div >
+        </div>
     );
 };
 

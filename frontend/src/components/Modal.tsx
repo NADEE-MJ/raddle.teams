@@ -8,14 +8,16 @@ interface ModalProps {
 }
 
 export default function Modal({ isOpen, onClose, children, maxWidth = 'max-w-4xl' }: ModalProps) {
-    const handleEscape = useCallback((e: KeyboardEvent) => {
-        if (e.key === 'Escape') {
-            onClose();
-        }
-    }, [onClose]);
+    const handleEscape = useCallback(
+        (e: KeyboardEvent) => {
+            if (e.key === 'Escape') {
+                onClose();
+            }
+        },
+        [onClose]
+    );
 
     useEffect(() => {
-
         if (isOpen) {
             document.addEventListener('keydown', handleEscape);
             document.body.style.overflow = 'hidden';
@@ -30,9 +32,15 @@ export default function Modal({ isOpen, onClose, children, maxWidth = 'max-w-4xl
     if (!isOpen) return null;
 
     return (
-        <div className='fixed inset-0 z-50 flex items-start justify-center p-4 pt-24 pointer-events-auto' onClick={onClose}>
-            <div className='absolute inset-0 backdrop-blur-sm pointer-events-none' />
-            <div className={`relative w-full ${maxWidth} max-h-[90vh] overflow-auto rounded-lg bg-secondary border border-border shadow-xl pointer-events-auto`} onClick={(e) => e.stopPropagation()}>
+        <div
+            className='pointer-events-auto fixed inset-0 z-50 flex items-start justify-center p-4 pt-24'
+            onClick={onClose}
+        >
+            <div className='pointer-events-none absolute inset-0 backdrop-blur-sm' />
+            <div
+                className={`relative w-full ${maxWidth} bg-secondary border-border pointer-events-auto max-h-[90vh] overflow-auto rounded-lg border shadow-xl`}
+                onClick={e => e.stopPropagation()}
+            >
                 {children}
             </div>
         </div>

@@ -1,15 +1,20 @@
-import { useState, useEffect, useCallback, useRef } from 'react';
+import { useState, useEffect, useCallback, useRef, useMemo } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { api } from '@/services/api';
 import { useWebSocket } from '@/hooks/useWebSocket';
 import { useGlobalOutletContext } from '@/hooks/useGlobalOutletContext';
 import { WebSocketMessage, LobbyWebSocketEvents, Player, LobbyInfo } from '@/types';
+import LoadingSpinner from '@/components/LoadingSpinner';
+import CopyableCode from '@/components/CopyableCode';
+import Button from '@/components/Button';
+import ErrorMessage from '@/components/ErrorMessage';
+import StatusIndicator from '@/components/StatusIndicator';
+import Alert from '@/components/Alert';
 
 export default function LobbyPage() {
     const navigate = useNavigate();
-    const { getSessionIdFromLocalStorage, setSessionId } = useGlobalOutletContext();
+    const { sessionId, setSessionId } = useGlobalOutletContext();
 
-    const [sessionId, setSessionIdState] = useState<string | null>(null);
     const [player, setPlayer] = useState<Player | null>(null);
     const [lobbyInfo, setLobbyInfo] = useState<LobbyInfo | null>(null);
     const [isLoading, setIsLoading] = useState(true);
@@ -18,8 +23,21 @@ export default function LobbyPage() {
 
     const reloadDebounceRef = useRef<NodeJS.Timeout | null>(null);
 
+    useEffect(() => {
+        if (!sessionId) {
+            navigate('/');
+            return;
+        }
+        refreshLobbyInfo();
+    }, []); // eslint-disable-line react-hooks/exhaustive-deps
+
     const refreshLobbyInfo = useCallback(async () => {
-        if (!sessionId) return;
+        if (!sessionId) {
+            setError('No session ID found. Please log in again.');
+            console.error('No session ID found when trying to refresh lobby info');
+            setIsLoading(false);
+            return;
+        }
 
         try {
             setIsLoading(true);
@@ -60,39 +78,44 @@ export default function LobbyPage() {
         setWsError('WebSocket connection failed');
     }, []);
 
-    const onMessage = useCallback((message: WebSocketMessage) => {
-        console.log('Lobby WebSocket message received:', message);
+    const onMessage = useCallback(
+        (message: WebSocketMessage) => {
+            console.log('Lobby WebSocket message received:', message);
 
-        switch (message.type) {
-            case LobbyWebSocketEvents.CONNECTION_CONFIRMED:
-                console.log('Connection confirmed to lobby');
-                scheduleReload();
-                break;
-            case LobbyWebSocketEvents.TEAM_ASSIGNED:
-            case LobbyWebSocketEvents.TEAM_CHANGED:
-                console.log('Team assignment changed');
-                scheduleReload();
-                break;
-            case LobbyWebSocketEvents.DISCONNECTED:
-                console.log('Player disconnected');
-                scheduleReload();
-                break;
-            case LobbyWebSocketEvents.PLAYER_KICKED:
-                alert('You have been kicked from the lobby by an admin.');
-                setSessionId(null);
-                setPlayer(null);
-                setLobbyInfo(null);
-                navigate('/');
-                return;
-            default:
-                console.log('Unknown lobby WebSocket message type:', message.type);
-                scheduleReload();
-        }
-    }, [scheduleReload, setSessionId, navigate]);
+            switch (message.type) {
+                case LobbyWebSocketEvents.CONNECTION_CONFIRMED:
+                    console.log('Connection confirmed to lobby');
+                    scheduleReload();
+                    break;
+                case LobbyWebSocketEvents.TEAM_ASSIGNED:
+                case LobbyWebSocketEvents.TEAM_CHANGED:
+                    console.log('Team assignment changed');
+                    scheduleReload();
+                    break;
+                case LobbyWebSocketEvents.DISCONNECTED:
+                    console.log('Player disconnected');
+                    scheduleReload();
+                    break;
+                case LobbyWebSocketEvents.PLAYER_KICKED:
+                    alert('You have been kicked from the lobby by an admin.');
+                    setSessionId(null);
+                    setPlayer(null);
+                    setLobbyInfo(null);
+                    navigate('/');
+                    return;
+                default:
+                    console.log('Unknown lobby WebSocket message type:', message.type);
+                    scheduleReload();
+            }
+        },
+        [scheduleReload, setSessionId, navigate]
+    );
 
-    const wsUrl = player?.lobby_id && sessionId
-        ? `ws://localhost:8000/ws/lobby/${player.lobby_id}/player/${sessionId}`
-        : '';
+    const wsUrl = useMemo(
+        () =>
+            player?.lobby_id && sessionId ? `ws://localhost:8000/ws/lobby/${player.lobby_id}/player/${sessionId}` : '',
+        [player?.lobby_id, sessionId]
+    );
 
     const { isConnected, sendMessage } = useWebSocket(wsUrl, {
         onConnect,
@@ -102,121 +125,79 @@ export default function LobbyPage() {
         autoReconnect: true,
     });
 
-    useEffect(() => {
-        const storedSessionId = getSessionIdFromLocalStorage();
-        if (!storedSessionId) {
-            navigate('/');
-            return;
-        }
-        setSessionIdState(storedSessionId);
-    }, [getSessionIdFromLocalStorage, navigate]);
-
-    useEffect(() => {
-        if (sessionId) {
-            refreshLobbyInfo();
-        }
-    }, [sessionId, refreshLobbyInfo]);
-
-    useEffect(() => {
-        if (!isLoading && (!sessionId || !player)) {
-            navigate('/');
-            return;
-        }
-    }, [isLoading, sessionId, player, navigate]);
-
     if (isLoading) {
-        return (
-            <main className="bg-slate-100 dark:bg-primary pt-4 md:p-4">
-                <div className="max-w-6xl mx-auto">
-                    <div className="bg-white dark:bg-secondary dark:border dark:border-border rounded-lg shadow-sm p-4 md:p-8 text-center">
-                        <h1 className='text-3xl font-bold mb-6 text-gray-900 dark:text-tx-primary'>Loading</h1>
-                        <div className='mx-auto h-12 w-12 animate-spin rounded-full border-b-2 border-blue-600 mb-4'></div>
-                        <p className='text-gray-600 dark:text-tx-secondary'>Loading lobby...</p>
-                    </div>
-                </div>
-            </main>
-        );
+        return <LoadingSpinner />;
     }
 
     if (error || !lobbyInfo || !player) {
         return (
-            <main className="bg-slate-100 dark:bg-primary pt-4 md:p-4">
-                <div className="max-w-6xl mx-auto">
-                    <div className="bg-white dark:bg-secondary dark:border dark:border-border rounded-lg shadow-sm p-4 md:p-8 text-center">
-                        <h1 className='text-3xl font-bold mb-6 text-gray-900 dark:text-tx-primary'>Error</h1>
-                        <p className='mb-6 text-red-600 dark:text-red text-lg'>
-                            {error || 'Failed to load lobby information'}
-                        </p>
-                        <button
-                            onClick={() => navigate('/')}
-                            className='rounded-lg bg-blue-600 hover:bg-blue-700 dark:bg-accent dark:hover:bg-accent-hover dark:text-primary px-6 py-3 text-white font-medium transition duration-200'
-                            data-testid='lobby-error-back-to-home-button'
-                        >
-                            Back to Home
-                        </button>
-                    </div>
-                </div>
-            </main>
+            <div className='text-center'>
+                <h1 className='text-tx-primary mb-6 text-3xl font-bold'>Error</h1>
+                <p className='text-red mb-6 text-lg'>{error || 'Failed to load lobby information'}</p>
+                <Button
+                    onClick={() => navigate('/')}
+                    variant='primary'
+                    size='lg'
+                    className='px-6 py-3'
+                    data-testid='lobby-error-back-to-home-button'
+                >
+                    Back to Home
+                </Button>
+            </div>
         );
     }
 
     return (
         <div>
-            {/* Lobby Header */}
-            <div className='mb-6 flex items-center justify-between'>
-                <div>
-                    <div className="flex items-center justify-between mb-2">
-                        <h1 className='text-3xl font-bold text-gray-900 dark:text-tx-primary'>{lobbyInfo.lobby.name}</h1>
-                        <div className="flex items-center space-x-2 ml-4">
-                            <div className={`w-2 h-2 rounded-full ${isConnected ? 'bg-green-500' : 'bg-red-500'}`}></div>
-                            <span className={`text-sm ${isConnected ? 'text-green-600' : 'text-red-600'}`}>
-                                {isConnected ? 'Connected' : 'Disconnected'}
-                            </span>
-                        </div>
-                    </div>
-                    <p className='mt-1 text-gray-600 dark:text-tx-secondary'>
-                        Lobby Code: <span className='font-mono text-lg font-bold' data-testid="lobby-code">{lobbyInfo.lobby.code}</span>
-                    </p>
+            <div className='mb-6'>
+                <div className='mb-2 flex items-center justify-between'>
+                    <h1 className='text-tx-primary text-3xl font-bold'>{lobbyInfo.lobby.name}</h1>
+                    <StatusIndicator isConnected={isConnected} className='ml-4' />
                 </div>
+                <p className='text-tx-secondary mt-1'>
+                    Lobby Code:
+                    <CopyableCode code={lobbyInfo.lobby.code} className='ml-2 text-lg' data-testid='lobby-code' />
+                </p>
             </div>
 
-            {error && (
-                <div className='mb-6 rounded-lg border border-red bg-red/20 px-4 py-3 text-red' data-testid='lobby-error-message'>
-                    {error}
-                </div>
-            )}
-            {wsError && (
-                <div className="mb-6 p-2 bg-red-50 border border-red-200 rounded text-red-700 text-sm">
-                    {wsError}
-                </div>
-            )}
+            <ErrorMessage message={error} data-testid='lobby-error-message' />
+            {wsError && <Alert variant='error'>{wsError}</Alert>}
 
             <div className='grid gap-6 md:grid-cols-2'>
                 {/* Players List */}
-                <div className='rounded-lg bg-gray-50 dark:bg-tertiary dark:border dark:border-border-light p-4'>
-                    <h2 className='mb-4 text-xl font-semibold text-gray-900 dark:text-tx-primary'>Players ({lobbyInfo.players.length})</h2>
+                <div className='dark:bg-tertiary dark:border-border-light rounded-lg bg-gray-50 p-4 dark:border'>
+                    <h2 className='dark:text-tx-primary mb-4 text-xl font-semibold text-gray-900'>
+                        Players ({lobbyInfo.players.length})
+                    </h2>
                     {lobbyInfo.players.length === 0 ? (
-                        <p className='text-gray-500 dark:text-tx-muted'>No players in lobby yet</p>
+                        <p className='dark:text-tx-muted text-gray-500'>No players in lobby yet</p>
                     ) : (
                         <div className='max-h-64 space-y-2 overflow-y-auto'>
                             {lobbyInfo.players.map(playerItem => (
                                 <div
                                     key={playerItem.id}
                                     data-testid={`player-list-row-${playerItem.name}`}
-                                    className={`flex items-center justify-between rounded-lg p-3 ${playerItem.id === player.id
-                                        ? 'border-2 border-blue-300 dark:border-accent bg-blue-100 dark:bg-accent/20'
-                                        : 'border border-gray-200 dark:border-border-light bg-white dark:bg-secondary'
-                                        }`}
+                                    className={`flex items-center justify-between rounded-lg p-3 ${
+                                        playerItem.id === player.id
+                                            ? 'dark:border-accent dark:bg-accent/20 border-2 border-blue-300 bg-blue-100'
+                                            : 'dark:border-border-light dark:bg-secondary border border-gray-200 bg-white'
+                                    }`}
                                 >
                                     <div className='flex items-center gap-3'>
-                                        <span className='font-medium text-gray-900 dark:text-tx-primary' data-testid={`player-name-${playerItem.name}`}>
+                                        <span
+                                            className='dark:text-tx-primary font-medium text-gray-900'
+                                            data-testid={`player-name-${playerItem.name}`}
+                                        >
                                             {playerItem.name}
                                             {playerItem.id === player.id && ' (You)'}
                                         </span>
                                     </div>
-                                    <div className='team-status-container' data-testid={`team-status-container-${playerItem.name}`}>
+                                    <div
+                                        className='team-status-container'
+                                        data-testid={`team-status-container-${playerItem.name}`}
+                                    >
                                         <span
-                                            className='rounded bg-gray-100 dark:bg-elevated px-2 py-1 text-sm text-gray-500 dark:text-tx-secondary'
+                                            className='dark:bg-elevated dark:text-tx-secondary rounded bg-gray-100 px-2 py-1 text-sm text-gray-500'
                                             data-testid={`team-status-${playerItem.name}`}
                                         >
                                             {playerItem.team_id ? `Team ${playerItem.team_id}` : 'No team'}
@@ -229,29 +210,37 @@ export default function LobbyPage() {
                 </div>
 
                 {/* Teams List */}
-                <div className='rounded-lg bg-tertiary border border-border-light p-4'>
-                    <h2 className='mb-4 text-xl font-semibold text-tx-primary' data-testid='player-teams-heading'>
+                <div className='bg-tertiary border-border-light rounded-lg border p-4'>
+                    <h2 className='text-tx-primary mb-4 text-xl font-semibold' data-testid='player-teams-heading'>
                         Teams ({lobbyInfo.teams && lobbyInfo.teams.length > 0 ? lobbyInfo.teams.length : 0})
                     </h2>
                     {lobbyInfo.teams && lobbyInfo.teams.length > 0 ? (
                         <div className='space-y-3'>
                             {lobbyInfo.teams.map(team => (
-                                <div key={team.id} className='rounded-lg border border-border-light bg-secondary p-4' data-testid={`team-section-${team.name}`}>
-                                    <h3 className='mb-2 text-lg font-semibold text-tx-primary'>{team.name}</h3>
-                                    <div className='mb-2 text-sm text-tx-secondary'>
+                                <div
+                                    key={team.id}
+                                    className='border-border-light bg-secondary rounded-lg border p-4'
+                                    data-testid={`team-section-${team.name}`}
+                                >
+                                    <h3 className='text-tx-primary mb-2 text-lg font-semibold'>{team.name}</h3>
+                                    <div className='text-tx-secondary mb-2 text-sm'>
                                         Progress: Word {team.current_word_index + 1}
                                     </div>
                                     {lobbyInfo.players_by_team && lobbyInfo.players_by_team[team.id] && (
                                         <div>
-                                            <p className='mb-1 text-sm font-medium text-tx-secondary'>Members:</p>
-                                            <div className='flex flex-wrap gap-1' data-testid={`team-members-${team.name}`}>
+                                            <p className='text-tx-secondary mb-1 text-sm font-medium'>Members:</p>
+                                            <div
+                                                className='flex flex-wrap gap-1'
+                                                data-testid={`team-members-${team.name}`}
+                                            >
                                                 {lobbyInfo.players_by_team[team.id].map(teamPlayer => (
                                                     <span
                                                         key={teamPlayer.id}
-                                                        className={`inline-block rounded px-2 py-1 text-xs ${teamPlayer.id === player.id
-                                                            ? 'bg-accent/20 font-semibold text-accent'
-                                                            : 'bg-elevated text-tx-secondary'
-                                                            }`}
+                                                        className={`inline-block rounded px-2 py-1 text-xs ${
+                                                            teamPlayer.id === player.id
+                                                                ? 'bg-accent/20 text-accent font-semibold'
+                                                                : 'bg-elevated text-tx-secondary'
+                                                        }`}
                                                         data-testid={`team-member-${teamPlayer.name}`}
                                                     >
                                                         {teamPlayer.name}
@@ -270,7 +259,7 @@ export default function LobbyPage() {
             </div>
 
             {/* Game Status */}
-            <div className='mt-6 rounded-lg border border-blue-200 dark:border-blue-700 bg-blue-50 dark:bg-blue-900/20 p-4'>
+            <div className='mt-6 rounded-lg border border-blue-200 bg-blue-50 p-4 dark:border-blue-700 dark:bg-blue-900/20'>
                 <h3 className='mb-2 text-lg font-semibold text-blue-900 dark:text-blue-300'>Game Status</h3>
                 <p className='text-blue-700 dark:text-blue-300'>Waiting for admin to start the game...</p>
                 {player.team_id ? (

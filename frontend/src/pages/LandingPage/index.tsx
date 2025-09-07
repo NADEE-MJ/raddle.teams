@@ -2,7 +2,7 @@ import { useEffect, useState, useCallback } from 'react';
 import JoinForm from './JoinForm';
 import { useNavigate } from 'react-router-dom';
 import { api } from '@/services/api';
-import LoadingSpinner from "@/components/LoadingSpinner";
+import LoadingSpinner from '@/components/LoadingSpinner';
 import { useGlobalOutletContext } from '@/hooks/useGlobalOutletContext';
 
 export default function LandingPage() {
@@ -15,6 +15,7 @@ export default function LandingPage() {
         if (sessionId) {
             try {
                 const lobbyData = await api.player.lobby.getInfo(sessionId);
+                setSessionId(sessionId);
                 navigate(`/lobby/${lobbyData.code}`);
             } catch (error) {
                 console.error('Failed to get lobby info for session:', error);
@@ -28,12 +29,16 @@ export default function LandingPage() {
         setPageLoading(false);
     }, [redirectToLobby, setPageLoading]);
 
-    return pageLoading ? <LoadingSpinner /> : (
-        <div className="text-center">
-            <h1 className="text-3xl font-bold mb-6 text-tx-primary" data-testid="landing-page-title">Raddle Teams</h1>
-            <p className="text-lg text-tx-secondary mb-8">Team up and solve word transformation puzzles together!</p>
+    return pageLoading ? (
+        <LoadingSpinner />
+    ) : (
+        <div className='text-center'>
+            <h1 className='text-tx-primary mb-6 text-3xl font-bold' data-testid='landing-page-title'>
+                Raddle Teams
+            </h1>
+            <p className='text-tx-secondary mb-8 text-lg'>Team up and solve word transformation puzzles together!</p>
 
-            <div className="max-w-md mx-auto">
+            <div className='mx-auto max-w-md'>
                 <JoinForm />
             </div>
         </div>
