@@ -309,30 +309,24 @@ export default function ComponentShowcasePage() {
                     {/* Background Colors */}
                     <div>
                         <h3 className='text-tx-primary mb-4 text-lg font-medium'>Background Colors</h3>
-                        <div className='grid gap-4 md:grid-cols-2 lg:grid-cols-4'>
-                            <div className='rounded-lg bg-white p-2 shadow-sm'>
-                                <div className='bg-primary rounded-lg p-4 text-center text-white'>
+                        <div className='rounded-lg bg-white p-4 shadow-sm'>
+                            <div className='grid grid-cols-2'>
+                                <div className='bg-primary p-6 text-center text-white'>
                                     <div className='mb-2 text-sm font-medium'>Primary</div>
                                     <div className='text-xs opacity-75'>bg-primary</div>
                                     <div className='text-xs opacity-50'>#0c1019 / #0b0e14</div>
                                 </div>
-                            </div>
-                            <div className='rounded-lg bg-white p-2 shadow-sm'>
-                                <div className='bg-secondary rounded-lg p-4 text-center text-white'>
+                                <div className='bg-secondary p-6 text-center text-white'>
                                     <div className='mb-2 text-sm font-medium'>Secondary</div>
                                     <div className='text-xs opacity-75'>bg-secondary</div>
                                     <div className='text-xs opacity-50'>#11111a / #0d1017</div>
                                 </div>
-                            </div>
-                            <div className='rounded-lg bg-white p-2 shadow-sm'>
-                                <div className='bg-tertiary rounded-lg p-4 text-center text-white'>
+                                <div className='bg-tertiary p-6 text-center text-white'>
                                     <div className='mb-2 text-sm font-medium'>Tertiary</div>
                                     <div className='text-xs opacity-75'>bg-tertiary</div>
                                     <div className='text-xs opacity-50'>#0f131a / #0f131a</div>
                                 </div>
-                            </div>
-                            <div className='rounded-lg bg-white p-2 shadow-sm'>
-                                <div className='bg-elevated rounded-lg p-4 text-center text-white'>
+                                <div className='bg-elevated p-6 text-center text-white'>
                                     <div className='mb-2 text-sm font-medium'>Elevated</div>
                                     <div className='text-xs opacity-75'>bg-elevated</div>
                                     <div className='text-xs opacity-50'>#131721 / #131721</div>

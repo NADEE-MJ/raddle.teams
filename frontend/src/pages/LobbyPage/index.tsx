@@ -103,7 +103,7 @@ export default function LobbyPage() {
         [player?.lobby_id, sessionId]
     );
 
-    const { isConnected, sendMessage } = useWebSocket(wsUrl, {
+    const { isConnected } = useWebSocket(wsUrl, {
         onConnect,
         onDisconnect,
         onError,
@@ -163,11 +163,10 @@ export default function LobbyPage() {
                                 <div
                                     key={playerItem.id}
                                     data-testid={`player-list-row-${playerItem.name}`}
-                                    className={`flex items-center justify-between rounded-lg p-3 ${
-                                        playerItem.id === player.id
+                                    className={`flex items-center justify-between rounded-lg p-3 ${playerItem.id === player.id
                                             ? 'dark:border-accent dark:bg-accent/20 border-2 border-blue-300 bg-blue-100'
                                             : 'dark:border-border-light dark:bg-secondary border border-gray-200 bg-white'
-                                    }`}
+                                        }`}
                                 >
                                     <div className='flex items-center gap-3'>
                                         <span
@@ -222,11 +221,10 @@ export default function LobbyPage() {
                                                 {lobbyInfo.players_by_team[team.id].map(teamPlayer => (
                                                     <span
                                                         key={teamPlayer.id}
-                                                        className={`inline-block rounded px-2 py-1 text-xs ${
-                                                            teamPlayer.id === player.id
+                                                        className={`inline-block rounded px-2 py-1 text-xs ${teamPlayer.id === player.id
                                                                 ? 'bg-accent/20 text-accent font-semibold'
                                                                 : 'bg-elevated text-tx-secondary'
-                                                        }`}
+                                                            }`}
                                                         data-testid={`team-member-${teamPlayer.name}`}
                                                     >
                                                         {teamPlayer.name}

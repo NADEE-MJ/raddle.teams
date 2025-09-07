@@ -70,12 +70,8 @@ export default function Modal({ isOpen, onClose, children, maxWidth = 'max-w-4xl
                     </Button>
                 </div>
 
-                {isLoading ? (
-                    < LoadingSpinner />
-                ) : (
-                    children
-                )}
+                {isLoading ? <LoadingSpinner /> : children}
             </div>
-        </div >
+        </div>
     );
 }
