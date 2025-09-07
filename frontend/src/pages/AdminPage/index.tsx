@@ -1,4 +1,4 @@
-import { useState, useEffect, useCallback, use } from 'react';
+import { useState, useEffect, useCallback } from 'react';
 import LobbiesList from './LobbiesList';
 import LobbyDetails from './LobbyDetails';
 import { useGlobalOutletContext } from '@/hooks/useGlobalOutletContext';

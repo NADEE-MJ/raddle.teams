@@ -22,8 +22,6 @@ export function useWebSocket(wsUrl: string, options: UseWebSocketOptions = {}) {
     const connect = useCallback(() => {
         if (!wsUrl || !shouldConnectRef.current) return;
 
-        const ws = new WebSocket(wsUrl);
-
         try {
             const ws = new WebSocket(wsUrl);
             wsRef.current = ws;
@@ -61,7 +59,8 @@ export function useWebSocket(wsUrl: string, options: UseWebSocketOptions = {}) {
             setError('Failed to create WebSocket connection');
             console.error('WebSocket connection error:', err);
         }
-    }, []); // eslint-disable-line react-hooks/exhaustive-deps
+    }, [wsUrl, onMessage, onConnect, onDisconnect, onError, autoReconnect, reconnectInterval]);
+
     const sendMessage = useCallback((message: object) => {
         if (wsRef.current && wsRef.current.readyState === WebSocket.OPEN) {
             wsRef.current.send(JSON.stringify(message));
@@ -69,6 +68,7 @@ export function useWebSocket(wsUrl: string, options: UseWebSocketOptions = {}) {
             console.warn('Admin WebSocket is not connected, cannot send message:', message);
         }
     }, []);
+
     const disconnect = useCallback(() => {
         shouldConnectRef.current = false;
 
@@ -92,7 +92,7 @@ export function useWebSocket(wsUrl: string, options: UseWebSocketOptions = {}) {
         return () => {
             disconnect();
         };
-    }, []); // eslint-disable-line react-hooks/exhaustive-deps
+    }, [connect, disconnect]);
 
     return {
         isConnected,
