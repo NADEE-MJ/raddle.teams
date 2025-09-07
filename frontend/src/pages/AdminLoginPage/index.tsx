@@ -2,9 +2,7 @@ import { useState, useEffect, useCallback } from 'react';
 import { api } from '@/services/api';
 
 import { useGlobalOutletContext } from '@/hooks/useGlobalOutletContext';
-import LoadingSpinner from '@/components/LoadingSpinner';
-import TextInput from '@/components/TextInput';
-import Button from '@/components/Button';
+import { LoadingSpinner, TextInput, Button } from '@/components';
 import { useNavigate } from 'react-router-dom';
 
 export default function AdminLoginPage() {

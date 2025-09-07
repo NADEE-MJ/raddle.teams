@@ -1,6 +1,6 @@
 import { Outlet, Link, useLocation } from 'react-router-dom';
 import { GlobalOutletContext } from '@/hooks/useGlobalOutletContext';
-import Button from '@/components/Button';
+import { Button } from '@/components';
 
 import { useState, useMemo, useEffect, useCallback } from 'react';
 import { api } from '@/services/api';
@@ -143,8 +143,8 @@ const GlobalLayout: React.FC = () => {
                                         {isLoggingOut
                                             ? 'Logging out'
                                             : location.pathname.startsWith('/admin')
-                                              ? '🔒 Admin Logout'
-                                              : '🚪 Leave Lobby'}
+                                                ? '🔒 Admin Logout'
+                                                : '🚪 Leave Lobby'}
                                     </Button>
                                 ) : (
                                     <div className='flex gap-1'>

@@ -2,8 +2,7 @@ import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { api } from '@/services/api';
 import { useGlobalOutletContext } from '@/hooks/useGlobalOutletContext';
-import TextInput from '@/components/TextInput';
-import Button from '@/components/Button';
+import { TextInput, Button } from '@/components';
 
 export default function JoinForm() {
     const { setSessionId } = useGlobalOutletContext();

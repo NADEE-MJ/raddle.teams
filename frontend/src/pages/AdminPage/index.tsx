@@ -5,8 +5,7 @@ import { useGlobalOutletContext } from '@/hooks/useGlobalOutletContext';
 import { useNavigate } from 'react-router-dom';
 import { useWebSocket } from '@/hooks/useWebSocket';
 import { WebSocketMessage, LobbyWebSocketEvents } from '@/types';
-import StatusIndicator from '@/components/StatusIndicator';
-import Alert from '@/components/Alert';
+import { StatusIndicator, Alert } from '@/components';
 
 export default function AdminPage() {
     const { adminApiToken, adminSessionId } = useGlobalOutletContext();

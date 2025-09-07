@@ -1,15 +1,8 @@
 import { useState, useEffect, useCallback } from 'react';
 import { LobbyInfo } from '@/types';
-import Modal from '@/components/Modal';
-import CopyableCode from '@/components/CopyableCode';
-import Button from '@/components/Button';
-import TextInput from '@/components/TextInput';
-import Select from '@/components/Select';
-import ErrorMessage from '@/components/ErrorMessage';
-import Card from '@/components/Card';
+import { Modal, CopyableCode, Button, TextInput, Select, ErrorMessage, Card, LoadingSpinner } from '@/components';
 import { api } from '@/services/api';
 import { useGlobalOutletContext } from '@/hooks/useGlobalOutletContext';
-import LoadingSpinner from '@/components/LoadingSpinner';
 
 interface LobbyDetailsProps {
     lobbyId: number;
@@ -167,7 +160,7 @@ export default function LobbyDetails({ lobbyId, onClose, onLobbyDeleted, refresh
                         <Button
                             onClick={loadLobbyDetails}
                             disabled={loading}
-                            variant='accent'
+                            variant='primary'
                             size='sm'
                             loading={loading}
                             data-testid='refresh-lobby-button'

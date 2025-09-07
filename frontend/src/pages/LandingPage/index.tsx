@@ -2,7 +2,7 @@ import { useEffect, useState, useCallback } from 'react';
 import JoinForm from './JoinForm';
 import { useNavigate } from 'react-router-dom';
 import { api } from '@/services/api';
-import LoadingSpinner from '@/components/LoadingSpinner';
+import { LoadingSpinner } from '@/components';
 import { useGlobalOutletContext } from '@/hooks/useGlobalOutletContext';
 
 export default function LandingPage() {

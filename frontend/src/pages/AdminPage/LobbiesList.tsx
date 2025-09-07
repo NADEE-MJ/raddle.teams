@@ -2,11 +2,7 @@ import { Lobby } from '@/types';
 import { useState, useEffect, useCallback } from 'react';
 import { api } from '@/services/api';
 import { useGlobalOutletContext } from '@/hooks/useGlobalOutletContext';
-import LoadingSpinner from '@/components/LoadingSpinner';
-import CopyableCode from '@/components/CopyableCode';
-import Button from '@/components/Button';
-import ErrorMessage from '@/components/ErrorMessage';
-import Card from '@/components/Card';
+import { LoadingSpinner, CopyableCode, Button, ErrorMessage, Card } from '@/components';
 import CreateLobbyForm from './CreateLobbyForm';
 
 interface LobbiesListProps {

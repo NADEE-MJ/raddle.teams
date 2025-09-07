@@ -4,12 +4,7 @@ import { api } from '@/services/api';
 import { useWebSocket } from '@/hooks/useWebSocket';
 import { useGlobalOutletContext } from '@/hooks/useGlobalOutletContext';
 import { WebSocketMessage, LobbyWebSocketEvents, Player, LobbyInfo } from '@/types';
-import LoadingSpinner from '@/components/LoadingSpinner';
-import CopyableCode from '@/components/CopyableCode';
-import Button from '@/components/Button';
-import ErrorMessage from '@/components/ErrorMessage';
-import StatusIndicator from '@/components/StatusIndicator';
-import Alert from '@/components/Alert';
+import { LoadingSpinner, CopyableCode, Button, ErrorMessage, StatusIndicator, Alert } from '@/components';
 
 export default function LobbyPage() {
     const navigate = useNavigate();

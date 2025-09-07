@@ -1,6 +1,6 @@
 import { ReactNode } from 'react';
 
-export type ButtonVariant = 'primary' | 'secondary' | 'destructive' | 'accent' | 'link';
+export type ButtonVariant = 'primary' | 'secondary' | 'destructive' | 'link';
 export type ButtonSize = 'sm' | 'md' | 'lg';
 
 interface ButtonProps {
@@ -18,8 +18,7 @@ interface ButtonProps {
 const buttonVariants: Record<ButtonVariant, string> = {
     primary: 'bg-accent hover:bg-accent/80 text-primary',
     secondary: 'bg-secondary border border-border hover:bg-elevated hover:border-accent text-tx-primary',
-    destructive: 'bg-red/20 border border-red hover:bg-red/30 text-red',
-    accent: 'bg-accent/20 border border-accent hover:bg-accent/30 text-accent',
+    destructive: 'bg-red-700 border border-red-700 hover:bg-red-800 text-white',
     link: 'bg-transparent hover:bg-secondary text-tx-secondary hover:text-tx-primary',
 };
 
@@ -41,16 +40,14 @@ export default function Button({
     'data-testid': dataTestId,
 }: ButtonProps) {
     const baseClasses =
-        'rounded-md cursor-pointer font-medium transition duration-200 focus:outline-none focus:ring-2 focus:ring-accent';
-    const disabledClasses = 'disabled:opacity-50 disabled:cursor-not-allowed';
-    const loadingClasses = loading ? 'disabled:bg-tx-muted' : '';
+        'rounded-md cursor-pointer font-medium transition-all duration-200 active:scale-90';
+    const disabledClasses = 'disabled:opacity-50 disabled:cursor-not-allowed disabled:active:scale-100';
 
     const classes = [
         baseClasses,
         buttonVariants[variant],
         buttonSizes[size],
         disabledClasses,
-        loadingClasses,
         className,
     ]
         .filter(Boolean)
