@@ -110,16 +110,16 @@ const GlobalLayout: React.FC = () => {
                                 {showLogout ? (
                                     <button
                                         onClick={handleLogout}
-                                        className="text-red hover:text-red-bright"
+                                        className="rounded-lg bg-red-700 hover:bg-red-600 px-4 py-2 text-white transition duration-200 disabled:bg-red-600"
                                         data-testid="logout-button"
                                     >
                                         {location.pathname.startsWith('/admin') ? '🔒 Admin Logout' : '🚪 Leave Lobby'}
                                     </button>
                                 ) : (
                                     <div className="flex gap-1">
-                                        <Link to="/tutorial" className="text-tx-secondary hover:text-tx-primary" data-testid="tutorial-link">✌️ How to Play</Link>
+                                        <Link to="/tutorial" className="text-tx-secondary hover:text-tx-primary transition duration-200" data-testid="tutorial-link">✌️ How to Play</Link>
                                         {'•'}
-                                        <Link to="/admin/login" className="text-tx-secondary hover:text-tx-primary" data-testid="admin-panel-link">🔧 Admin</Link>
+                                        <Link to="/admin/login" className="text-tx-secondary hover:text-tx-primary transition duration-200" data-testid="admin-panel-link">🔧 Admin</Link>
                                     </div>
                                 )}
                             </div>
@@ -152,8 +152,8 @@ const GlobalLayout: React.FC = () => {
                             </div>
                         </div>
                         <div className="flex gap-4 text-sm text-tx-secondary">
-                            <Link to="/tutorial" className="hover:text-tx-primary" data-testid="footer-tutorial-link">✌️ How to Play</Link>
-                            <Link to="/admin/login" className="hover:text-tx-primary" data-testid="footer-admin-link">🔧 Admin</Link>
+                            <Link to="/tutorial" className="hover:text-tx-primary transition duration-200" data-testid="footer-tutorial-link">✌️ How to Play</Link>
+                            <Link to="/admin/login" className="hover:text-tx-primary transition duration-200" data-testid="footer-admin-link">🔧 Admin</Link>
                         </div>
                     </div>
                 </div>

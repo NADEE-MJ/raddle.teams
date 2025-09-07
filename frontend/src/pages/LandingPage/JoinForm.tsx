@@ -78,7 +78,7 @@ export default function JoinForm() {
             <button
                 type='submit'
                 disabled={loading}
-                className='w-full rounded-lg bg-accent px-4 py-2 font-medium text-primary transition duration-200 hover:bg-accent-hover disabled:bg-tx-muted'
+                className='w-full rounded-lg bg-accent px-4 py-2 font-medium text-primary transition duration-200 hover:bg-accent/80 disabled:bg-tx-muted'
                 data-testid='join-lobby-button'
             >
                 {loading ? 'Joining...' : 'Join Lobby'}
