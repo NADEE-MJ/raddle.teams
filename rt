@@ -132,6 +132,9 @@ def server(
         help="👀 Watch for frontend changes and rebuild (ignored with no-build flag)",
         is_flag=True,
     ),
+    frontend_server: bool = typer.Option(
+        False, "--frontend-server", "-fe", help="🌐 Start only the frontend dev server", is_flag=True
+    ),
 ):
     rerun_in_poetry()
 
@@ -142,6 +145,8 @@ def server(
                 process = run_command_in_background(
                     ["npx", "vite", "build", "--watch"], "Building frontend with watch mode"
                 )
+            elif frontend_server:
+                process = run_command_in_background(["npx", "vite", "dev"], "Starting frontend dev server")
             else:
                 if build(False) != 0:
                     raise typer.Exit(1)
@@ -159,6 +164,10 @@ def server(
         startup_info.append(f"http://{host}:{port}/docs", style="bold blue underline")
         startup_info.append("\n📚 ReDoc: ", style="bold bright_yellow")
         startup_info.append(f"http://{host}:{port}/redoc", style="bold blue underline")
+
+        if not no_build and frontend_server:
+            startup_info.append("\n🌐 Frontend Dev Server: ", style="bold bright_yellow")
+            startup_info.append("http://localhost:8001", style="bold blue underline")
 
         panel = Panel(
             startup_info,

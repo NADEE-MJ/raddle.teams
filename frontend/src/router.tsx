@@ -1,13 +1,14 @@
 import { Suspense, lazy } from 'react';
 import { createBrowserRouter, RouterProvider } from 'react-router-dom';
 
-import { AdminLayout, GameLayout, GlobalLayout, LandingLayout, LobbyLayout } from '@/layouts';
+import { GameLayout, GlobalLayout, LobbyLayout } from '@/layouts';
 import LoadingSpinner from "@/components/LoadingSpinner";
 
 const LandingPage = lazy(() => import('@/pages/LandingPage'));
 const TutorialPage = lazy(() => import('@/pages/TutorialPage'));
 const LobbyPage = lazy(() => import('@/pages/LobbyPage'));
 const AdminPage = lazy(() => import('@/pages/AdminPage'));
+const AdminLoginPage = lazy(() => import('@/pages/AdminLoginPage'));
 const GamePage = lazy(() => import('@/pages/GamePage'));
 const InvalidLobbyPage = lazy(() => import('@/pages/InvalidLobbyPage'));
 const InvalidGamePage = lazy(() => import('@/pages/InvalidGamePage'));
@@ -21,15 +22,8 @@ const router = createBrowserRouter([
         path: '/',
         element: <GlobalLayout />,
         children: [
-            {
-                path: '',
-                element: <LandingLayout />,
-                children: [
-                    { index: true, element: withSuspense(<LandingPage />) },
-                    { path: 'tutorial', element: withSuspense(<TutorialPage />) },
-                    { path: '*', element: <NotFoundPage /> },
-                ],
-            },
+            { index: true, element: withSuspense(<LandingPage />) },
+            { path: 'tutorial', element: withSuspense(<TutorialPage />) },
             {
                 path: 'lobby',
                 element: <LobbyLayout />,
@@ -41,11 +35,8 @@ const router = createBrowserRouter([
                     { path: ':lobbyCode', element: withSuspense(<LobbyPage />) },
                 ],
             },
-            {
-                path: 'admin',
-                element: <AdminLayout />,
-                children: [{ index: true, element: withSuspense(<AdminPage />) }],
-            },
+            { path: 'admin', element: withSuspense(<AdminPage />) },
+            { path: 'admin/login', element: withSuspense(<AdminLoginPage />) },
             {
                 path: 'game',
                 element: <GameLayout />,
@@ -57,6 +48,7 @@ const router = createBrowserRouter([
                     { path: ':gameId', element: withSuspense(<GamePage />) },
                 ],
             },
+            { path: '*', element: <NotFoundPage /> },
         ],
     },
 ]);

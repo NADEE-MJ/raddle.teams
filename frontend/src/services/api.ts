@@ -1,9 +1,10 @@
-import { Player, Lobby, LobbyInfo, ApiResponse } from '@/types';
+import { Player, Lobby, LobbyInfo, ApiResponse, AdminAuthAdminAuthenticatedResponse } from '@/types';
 
 const API_BASE = '/api';
 
 const request = async <T>(endpoint: string, options?: RequestInit, bearerToken?: string): Promise<T> => {
     const url = `${API_BASE}${endpoint}`;
+    console.log(`API Request: ${options?.method || 'GET'} ${url}`);
     const response = await fetch(url, {
         headers: {
             'Content-Type': 'application/json',
@@ -81,8 +82,8 @@ export const api = {
                 },
             },
         },
-        async checkCredentials(bearerToken: string): Promise<ApiResponse> {
-            return request<ApiResponse>('/admin/check', {}, bearerToken);
+        async checkCredentials(bearerToken: string): Promise<AdminAuthAdminAuthenticatedResponse> {
+            return request<AdminAuthAdminAuthenticatedResponse>('/admin/check', {}, bearerToken);
         },
     },
     player: {

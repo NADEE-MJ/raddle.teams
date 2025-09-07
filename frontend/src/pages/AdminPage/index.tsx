@@ -1,5 +1,4 @@
 import { useState, useEffect, useCallback, useRef } from 'react';
-import { useAdminOutletContext } from '@/hooks/useAdminOutletContext';
 import { api } from '@/services/api';
 import { LobbyInfo } from '@/types';
 
@@ -8,20 +7,11 @@ import DashboardHeader from './DashboardHeader';
 import CreateLobbyForm from './CreateLobbyForm';
 import LobbiesList from './LobbiesList';
 import LobbyDetails from './LobbyDetails';
+import { useGlobalOutletContext } from '@/hooks/useGlobalOutletContext';
 
 export default function AdminPage() {
     const {
-        isAdmin,
-        adminToken,
-        setAdminToken,
-        lobbies,
-        refreshLobbies,
-        isLoading: contextLoading,
-        error: contextError,
-        sendWebSocketMessage,
-        onLobbyUpdate,
-        offLobbyUpdate,
-    } = useAdminOutletContext();
+    } = useGlobalOutletContext();
 
     const [selectedLobby, setSelectedLobby] = useState<LobbyInfo | null>(null);
     const [loading, setLoading] = useState(false);
@@ -226,8 +216,6 @@ export default function AdminPage() {
         <main className="bg-primary pt-4 md:p-4">
             <div className="max-w-6xl mx-auto">
                 <div className="bg-secondary border border-border rounded-lg shadow-sm p-4 md:p-8 mb-6">
-                    <h1 className="text-3xl font-bold mb-6 text-tx-primary" data-testid="admin-dashboard-title">Admin Dashboard</h1>
-
                     <DashboardHeader />
 
                     {(error || contextError) && (

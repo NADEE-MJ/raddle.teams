@@ -37,3 +37,7 @@ class ApiRootResponse(BaseModel):
     message: str
     timestamp: str
     documentation_endpoints: dict[str, str]
+
+
+class AdminAuthenticatedResponse(BaseModel):
+    session_id: str

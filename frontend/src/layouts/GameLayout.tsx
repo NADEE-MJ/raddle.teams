@@ -12,10 +12,6 @@ const GameLayout: React.FC = () => {
     const [isLoading, setIsLoading] = useState(true);
 
     useEffect(() => {
-        const storedSessionId = localStorage.getItem('raddle_session_id');
-        if (storedSessionId) {
-            setSessionId(storedSessionId);
-        }
         setIsLoading(false);
     }, []);
 

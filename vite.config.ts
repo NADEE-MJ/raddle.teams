@@ -17,4 +17,15 @@ export default defineConfig({
             '@': path.resolve(__dirname, './frontend/src'),
         },
     },
+    server: {
+        port: 8001,
+        open: true,
+        proxy: {
+            '/api': 'http://localhost:8000',
+            '/ws': {
+                target: 'ws://localhost:8000',
+                ws: true,
+            },
+        },
+    },
 });

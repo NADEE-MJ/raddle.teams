@@ -17,11 +17,6 @@ const LobbyLayout: React.FC = () => {
     const [lobbyIdForWebSocket, setLobbyIdForWebSocket] = useState<number | null>(null);
 
     const setSessionId = useCallback((id: string | null) => {
-        if (id) {
-            localStorage.setItem('raddle_session_id', id);
-        } else {
-            localStorage.removeItem('raddle_session_id');
-        }
         setSessionIdState(id);
     }, []);
 
@@ -81,12 +76,6 @@ const LobbyLayout: React.FC = () => {
     );
 
     useEffect(() => {
-        const storedSessionId = localStorage.getItem('raddle_session_id');
-        if (storedSessionId) {
-            setSessionIdState(storedSessionId);
-        } else {
-            setIsLoading(false);
-        }
     }, []);
 
     useEffect(() => {

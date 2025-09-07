@@ -1,21 +1,42 @@
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import JoinForm from './JoinForm';
+import { useNavigate } from 'react-router-dom';
+import { api } from '@/services/api';
+import LoadingSpinner from "@/components/LoadingSpinner";
+import { useGlobalOutletContext } from '@/hooks/useGlobalOutletContext';
 
 export default function LandingPage() {
-    const [loading, setLoading] = useState(false);
+    const navigate = useNavigate();
+    const { setSessionId, getSessionIdFromLocalStorage, setMainContentBordered } = useGlobalOutletContext();
+    const [pageLoading, setPageLoading] = useState(true);
 
-    return (
-        <main className="bg-primary pt-4 md:p-4">
-            <div className="max-w-6xl mx-auto">
-                <div className="bg-secondary border border-border rounded-lg shadow-sm p-4 md:p-8 text-center">
-                    <h1 className="text-3xl font-bold mb-6 text-tx-primary" data-testid="landing-page-title">Raddle Teams</h1>
-                    <p className="text-lg text-tx-secondary mb-8">Team up and solve word transformation puzzles together!</p>
+    useEffect(() => {
+        setMainContentBordered(true);
+        const redirectToLobby = async () => {
+            const sessionId = getSessionIdFromLocalStorage();
+            if (sessionId) {
+                try {
+                    const lobbyData = await api.player.lobby.getInfo(sessionId);
+                    navigate(`/lobby/${lobbyData.code}`);
+                } catch (error) {
+                    console.error('Failed to get lobby info for session:', error);
+                    setSessionId(null);
+                }
+            }
+        };
 
-                    <div className="max-w-md mx-auto">
-                        <JoinForm loading={loading} setLoading={setLoading} />
-                    </div>
-                </div>
+        redirectToLobby();
+        setPageLoading(false);
+    }, []); // eslint-disable-line react-hooks/exhaustive-deps
+
+    return pageLoading ? <LoadingSpinner /> : (
+        <div className="text-center">
+            <h1 className="text-3xl font-bold mb-6 text-tx-primary" data-testid="landing-page-title">Raddle Teams</h1>
+            <p className="text-lg text-tx-secondary mb-8">Team up and solve word transformation puzzles together!</p>
+
+            <div className="max-w-md mx-auto">
+                <JoinForm />
             </div>
-        </main>
+        </div>
     );
 }

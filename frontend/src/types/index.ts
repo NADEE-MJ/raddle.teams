@@ -1,3 +1,7 @@
+// #########################################################################
+// ? API RESPONSES
+// #########################################################################
+
 export interface Player {
     id: number;
     name: string;
@@ -32,25 +36,18 @@ export interface LobbyInfo {
     game: null;
 }
 
-export interface Game {
-    id: number;
-    state: 'lobby' | 'team_setup' | 'active' | 'finished';
-    puzzle_name: string;
-    created_at: string;
-    started_at?: string;
-    finished_at?: string;
+export interface ApiResponse {
+    status: boolean;
+    message: string;
 }
 
-export interface Guess {
-    id: number;
-    team_id: number;
-    player_id: number;
-    word_index: number;
-    direction: 'forward' | 'backward';
-    guess: string;
-    is_correct: boolean;
-    submitted_at: string;
+export interface AdminAuthAdminAuthenticatedResponse {
+    session_id: string;
 }
+
+// #########################################################################
+// ? WEBSOCKET EVENTS
+// #########################################################################
 
 export enum LobbyWebSocketEvents {
     CONNECTION_CONFIRMED = 'connection_confirmed',
@@ -60,19 +57,14 @@ export enum LobbyWebSocketEvents {
     PLAYER_KICKED = 'player_kicked',
 }
 
-export interface WebSocketMessage {
-    type: LobbyWebSocketEvents | string;
-    data?: Record<string, unknown>;
-    player_session_id?: string;
-    message?: Record<string, unknown>;
-    team_id?: number;
-    lobby_id?: number;
-    state?: string;
-    old_team_id?: number;
-    new_team_id?: number;
-}
-
-export interface ApiResponse {
-    status: boolean;
-    message: string;
-}
+// export interface WebSocketMessage {
+//     type: LobbyWebSocketEvents | string;
+//     data?: Record<string, unknown>;
+//     player_session_id?: string;
+//     message?: Record<string, unknown>;
+//     team_id?: number;
+//     lobby_id?: number;
+//     state?: string;
+//     old_team_id?: number;
+//     new_team_id?: number;
+// }

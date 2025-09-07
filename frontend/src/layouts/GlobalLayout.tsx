@@ -1,78 +1,141 @@
 import { Outlet, Link, useLocation } from 'react-router-dom';
-import { useState, useEffect } from 'react';
+import { GlobalOutletContext } from '@/hooks/useGlobalOutletContext';
+
+import { useState, useMemo } from 'react';
 
 const GlobalLayout: React.FC = () => {
     const location = useLocation();
-    const [isLoggedInAdmin, setIsLoggedInAdmin] = useState(false);
-    const [isLoggedInLobby, setIsLoggedInLobby] = useState(false);
+    const [showLogout, setShowLogout] = useState(false);
+    const [sessionId, setSessionId] = useState<string | null>(null);
+    const [adminApiToken, setAdminApiToken] = useState<string | null>(null);
+    const [adminSessionId, setAdminSessionId] = useState<string | null>(null);
+    const [mainContentBordered, setMainContentBordered] = useState(false);
 
-    const isAdminPage = location.pathname.startsWith('/admin');
-    const isLobbyPage = location.pathname.startsWith('/lobby');
-
-    useEffect(() => {
-        const adminToken = localStorage.getItem('raddle_admin_token');
-        const sessionId = localStorage.getItem('raddle_session_id');
-        setIsLoggedInAdmin(!!adminToken);
-        setIsLoggedInLobby(!!sessionId);
-    }, [location]);
-
-    const showLogout = (isAdminPage && isLoggedInAdmin) || (isLobbyPage && isLoggedInLobby);
-
-    const handleAdminLogout = () => {
-        localStorage.removeItem('raddle_admin_token');
-        window.location.href = '/';
+    const updateAdminApiToken = (token: string | null) => {
+        setAdminApiToken(token);
+        if (token) {
+            localStorage.setItem('raddle_admin_api_token', token);
+        } else {
+            localStorage.removeItem('raddle_admin_api_token');
+        }
     };
 
-    const handleLobbyLogout = () => {
-        localStorage.removeItem('raddle_session_id');
-        window.location.href = '/';
+    const getAdminApiTokenFromLocalStorage = () => {
+        return localStorage.getItem('raddle_admin_api_token');
+    }
+
+    const updateAdminSessionId = (id: string | null) => {
+        setAdminSessionId(id);
+        if (id) {
+            localStorage.setItem('raddle_admin_session_id', id);
+        } else {
+            localStorage.removeItem('raddle_admin_session_id');
+        }
     };
+
+    const getAdminSessionIdFromLocalStorage = () => {
+        return localStorage.getItem('raddle_admin_session_id');
+    }
+
+    const updateSessionId = (id: string | null) => {
+        setSessionId(id);
+        if (id) {
+            localStorage.setItem('raddle_session_id', id);
+        } else {
+            localStorage.removeItem('raddle_session_id');
+        }
+    };
+
+    const getSessionIdFromLocalStorage = () => {
+        return localStorage.getItem('raddle_session_id');
+    }
+
+    const handleLogout = () => {
+        if (location.pathname.startsWith('/admin')) {
+            updateAdminApiToken(null);
+            updateAdminSessionId(null);
+            window.location.href = '/';
+        } else {
+            updateSessionId(null);
+            window.location.href = '/';
+        }
+    };
+
+    const context: GlobalOutletContext = useMemo(() => ({
+        sessionId,
+        setSessionId: updateSessionId,
+        getSessionIdFromLocalStorage,
+        adminApiToken,
+        setAdminApiToken: updateAdminApiToken,
+        getAdminApiTokenFromLocalStorage,
+        adminSessionId,
+        setAdminSessionId: updateAdminSessionId,
+        getAdminSessionIdFromLocalStorage,
+        mainContentBordered,
+        setMainContentBordered,
+        showLogout,
+        setShowLogout,
+    }), [
+        sessionId,
+        adminApiToken,
+        adminSessionId,
+        mainContentBordered,
+        showLogout
+    ]);
 
     return (
-        <div className="min-h-screen layout font-sans bg-primary">
-            <nav className="bg-secondary shadow-md border-b border-border">
-                <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
+        <div className="min-h-screen bg-primary grid grid-rows-[auto_auto_1fr]">
+            <nav className="bg-secondary border-b border-border">
+                <div className="max-w-6xl mx-auto px-8 ">
                     <div className="flex justify-between h-16 items-center">
                         <div className="flex items-center gap-4">
                             <h1 className="text-2xl font-bold text-tx-primary">
-                                <Link to="/" className="flex items-center">
-                                    R<span className="w-6 h-6 inline-block brightness-75 relative -top-[3px]">🪜</span>DDLE
+                                <Link to="/" className="flex items-center" data-testid="home-link">
+                                    R<img src="/ladder.svg" alt="A" className="w-6 h-6 inline-block brightness-75 " />DDLE
                                 </Link>
                             </h1>
-                            <span className="hidden md:inline text-tx-secondary">Word Transformation Game</span>
+                            <span className="not-md:hidden text-tx-secondary">Word Transformation Game</span>
                         </div>
                         <div className="flex items-center gap-4">
                             <div className="text-tx-secondary">
                                 {showLogout ? (
                                     <button
-                                        onClick={isAdminPage ? handleAdminLogout : handleLobbyLogout}
+                                        onClick={handleLogout}
                                         className="text-red hover:text-red-bright"
                                         data-testid="logout-button"
                                     >
-                                        Logout
+                                        {location.pathname.startsWith('/admin') ? '🔒 Admin Logout' : '🚪 Leave Lobby'}
                                     </button>
                                 ) : (
-                                    <>
-                                        <Link to="/tutorial" className="text-blue hover:text-blue-bright">✌️ How to Play</Link>
-                                        {' • '}
-                                        <Link to="/admin" className="text-blue hover:text-blue-bright" data-testid="admin-panel-link">🔧 Admin</Link>
-                                    </>
+                                    <div className="flex gap-1">
+                                        <Link to="/tutorial" className="text-tx-secondary hover:text-tx-primary" data-testid="tutorial-link">✌️ How to Play</Link>
+                                        {'•'}
+                                        <Link to="/admin/login" className="text-tx-secondary hover:text-tx-primary" data-testid="admin-panel-link">🔧 Admin</Link>
+                                    </div>
                                 )}
                             </div>
                         </div>
                     </div>
                 </div>
-            </nav>
+            </nav >
 
-            <main className="bg-primary pt-4 md:p-4">
-                <Outlet />
+            <main className="bg-primary p-4 md:p-8">
+                <div className="max-w-6xl mx-auto">
+                    {mainContentBordered ? (
+                        <div className="bg-secondary border border-border rounded-lg shadow-sm p-4 md:p-8">
+                            <Outlet context={context} />
+                        </div>
+                    ) : (
+                        <Outlet context={context} />
+                    )}
+                </div>
             </main>
 
-            <footer className="mt-4 border-t border-border">
-                <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 py-6">
+            <footer className="bg-primary">
+                <div className="max-w-6xl mx-auto p-6 border-t border-border-light">
                     <div className="flex flex-col md:flex-row justify-between items-center gap-4">
-                        <div className="flex items-center gap-4">
-                            <div className="w-12 h-12 rounded bg-secondary flex items-center justify-center text-2xl">🎲</div>
+                        <div className="flex items-center gap-1">
+                            <img src="/ladder.svg" alt="A" className="w-15 h-12 inline-block brightness-75 " />
                             <div className="text-sm text-tx-secondary">
                                 <p className="mb-1">© 2025 Raddle Teams</p>
                                 <p className="mb-1">A team-based word game</p>
@@ -80,13 +143,13 @@ const GlobalLayout: React.FC = () => {
                             </div>
                         </div>
                         <div className="flex gap-4 text-sm text-tx-secondary">
-                            <Link to="/tutorial" className="hover:text-tx-primary">✌️ How to Play</Link>
-                            <Link to="/admin" className="hover:text-tx-primary" data-testid="footer-admin-link">🔧 Admin</Link>
+                            <Link to="/tutorial" className="hover:text-tx-primary" data-testid="footer-tutorial-link">✌️ How to Play</Link>
+                            <Link to="/admin/login" className="hover:text-tx-primary" data-testid="footer-admin-link">🔧 Admin</Link>
                         </div>
                     </div>
                 </div>
             </footer>
-        </div>
+        </div >
     );
 };
 

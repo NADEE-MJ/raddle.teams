@@ -1,16 +1,14 @@
 import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { api } from '@/services/api';
+import { useGlobalOutletContext } from '@/hooks/useGlobalOutletContext';
 
-interface JoinFormProps {
-    loading: boolean;
-    setLoading: (loading: boolean) => void;
-}
-
-export default function JoinForm({ loading, setLoading }: JoinFormProps) {
+export default function JoinForm() {
+    const { setSessionId } = useGlobalOutletContext();
     const [name, setName] = useState('');
     const [lobbyCode, setLobbyCode] = useState('');
     const [error, setError] = useState('');
+    const [loading, setLoading] = useState(false);
     const navigate = useNavigate();
 
     const handleJoinLobby = async (e: React.FormEvent) => {
@@ -30,7 +28,7 @@ export default function JoinForm({ loading, setLoading }: JoinFormProps) {
 
         try {
             const player = await api.player.lobby.join(lobbyCode.trim().toUpperCase(), name.trim());
-            localStorage.setItem('raddle_session_id', player.session_id);
+            setSessionId(player.session_id);
             navigate(`/lobby/${lobbyCode.trim().toUpperCase()}`);
         } catch (err) {
             setError('Failed to join lobby. Please check the lobby code and try again.');
@@ -42,7 +40,7 @@ export default function JoinForm({ loading, setLoading }: JoinFormProps) {
 
     return (
         <form onSubmit={handleJoinLobby} className='space-y-6'>
-            <div>
+            <div className='text-left'>
                 <label htmlFor='name' className='mb-2 block text-sm font-medium text-tx-secondary'>
                     Your Name
                 </label>
@@ -58,7 +56,7 @@ export default function JoinForm({ loading, setLoading }: JoinFormProps) {
                 />
             </div>
 
-            <div>
+            <div className='text-left'>
                 <label htmlFor='lobbyCode' className='mb-2 block text-sm font-medium text-tx-secondary'>
                     Lobby Code
                 </label>
