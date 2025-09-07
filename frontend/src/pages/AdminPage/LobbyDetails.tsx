@@ -9,12 +9,14 @@ interface LobbyDetailsProps {
     lobbyId: number;
     onClose: () => void;
     onLobbyDeleted: () => void;
+    refreshKey: number;
 }
 
 export default function LobbyDetails({
     lobbyId,
     onClose,
     onLobbyDeleted,
+    refreshKey
 }: LobbyDetailsProps) {
     const { adminApiToken } = useGlobalOutletContext();
 
@@ -48,7 +50,7 @@ export default function LobbyDetails({
 
     useEffect(() => {
         loadLobbyDetails();
-    }, [loadLobbyDetails]);
+    }, [loadLobbyDetails, refreshKey]);
 
     const handleCreateTeams = useCallback(async () => {
         if (!adminApiToken || !selectedLobby) {
