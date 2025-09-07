@@ -68,24 +68,19 @@ static_path = current_dir.parent / "static"
 if static_path.exists():
     app.mount(
         "/assets",
-        StaticFiles(directory=str(static_path / "assets"), html=True),
+        StaticFiles(directory=str(static_path / "assets")),
         name="assets",
+    )
+    app.mount(
+        "/img",
+        StaticFiles(directory=str(static_path / "img")),
+        name="img",
     )
     server_logger.info("Static files mounted from: %s", static_path)
 else:
     server_logger.error("Static directory not found. Looked for: %s", static_path)
     server_logger.error("Frontend not built. Run 'npm run build' first.")
     exit(1)
-
-
-@app.get("/favicon.svg")
-async def serve_favicon():
-    favicon_path = static_path / "favicon.svg"
-    if favicon_path.exists():
-        api_logger.debug("Serving favicon: %s", favicon_path)
-        return FileResponse(str(favicon_path))
-    api_logger.debug("Favicon not found at: %s", favicon_path)
-    return {"error": "Favicon not found"}
 
 
 @app.get("/{full_path:path}")

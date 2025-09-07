@@ -6,7 +6,6 @@ interface LobbiesListProps {
     onViewDetails: (lobbyId: number) => void;
     onDeleteLobby: (lobbyId: number) => void;
     loading: boolean;
-    contextLoading: boolean;
 }
 
 export default function LobbiesList({
@@ -15,7 +14,6 @@ export default function LobbiesList({
     onViewDetails,
     onDeleteLobby,
     loading,
-    contextLoading,
 }: LobbiesListProps) {
     return (
         <div className='mb-6'>
@@ -23,7 +21,7 @@ export default function LobbiesList({
                 <div className="text-gray-500 dark:text-tx-secondary text-sm uppercase tracking-wide" data-testid="all-lobbies-heading">All Lobbies</div>
                 <button
                     onClick={onRefresh}
-                    disabled={loading || contextLoading}
+                    disabled={loading}
                     className='px-3 py-1 bg-gray-50 dark:bg-secondary border border-gray-300 dark:border-border hover:bg-gray-200 dark:hover:bg-elevated text-gray-800 dark:text-tx-primary rounded-md cursor-pointer font-medium transition duration-200 disabled:opacity-50 disabled:cursor-not-allowed text-sm'
                     data-testid='refresh-lobbies-button'
                 >
@@ -55,7 +53,7 @@ export default function LobbiesList({
                                     <div className='flex gap-2'>
                                         <button
                                             onClick={() => onViewDetails(lobby.id)}
-                                            disabled={loading || contextLoading}
+                                            disabled={loading}
                                             className='px-3 py-1 bg-blue-50 dark:bg-secondary border border-blue-300 dark:border-border hover:bg-blue-200 dark:hover:bg-elevated text-blue-800 dark:text-blue rounded-md cursor-pointer font-medium transition duration-200 disabled:opacity-50 disabled:cursor-not-allowed text-sm'
                                             data-testid={`view-lobby-${lobby.id}-button`}
                                         >
@@ -63,7 +61,7 @@ export default function LobbiesList({
                                         </button>
                                         <button
                                             onClick={() => onDeleteLobby(lobby.id)}
-                                            disabled={loading || contextLoading}
+                                            disabled={loading}
                                             className='px-3 py-1 bg-red-50 dark:bg-secondary border border-red-300 dark:border-red hover:bg-red-200 dark:hover:bg-elevated text-red-800 dark:text-red rounded-md cursor-pointer font-medium transition duration-200 disabled:opacity-50 disabled:cursor-not-allowed text-sm'
                                             data-testid={`delete-lobby-${lobby.id}-button`}
                                         >

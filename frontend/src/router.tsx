@@ -1,7 +1,9 @@
 import { Suspense, lazy } from 'react';
 import { createBrowserRouter, RouterProvider } from 'react-router-dom';
 
-import { GameLayout, GlobalLayout, LobbyLayout } from '@/layouts';
+import GlobalLayout from '@/layouts/GlobalLayout';
+import LobbyLayout from '@/layouts/LobbyLayout';
+import GameLayout from '@/layouts/GameLayout';
 import LoadingSpinner from "@/components/LoadingSpinner";
 
 const LandingPage = lazy(() => import('@/pages/LandingPage'));

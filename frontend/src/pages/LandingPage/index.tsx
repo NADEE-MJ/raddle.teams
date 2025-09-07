@@ -7,11 +7,10 @@ import { useGlobalOutletContext } from '@/hooks/useGlobalOutletContext';
 
 export default function LandingPage() {
     const navigate = useNavigate();
-    const { setSessionId, getSessionIdFromLocalStorage, setMainContentBordered } = useGlobalOutletContext();
+    const { setSessionId, getSessionIdFromLocalStorage } = useGlobalOutletContext();
     const [pageLoading, setPageLoading] = useState(true);
 
     useEffect(() => {
-        setMainContentBordered(true);
         const redirectToLobby = async () => {
             const sessionId = getSessionIdFromLocalStorage();
             if (sessionId) {

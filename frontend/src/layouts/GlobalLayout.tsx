@@ -1,7 +1,7 @@
 import { Outlet, Link, useLocation } from 'react-router-dom';
 import { GlobalOutletContext } from '@/hooks/useGlobalOutletContext';
 
-import { useState, useMemo } from 'react';
+import { useState, useMemo, useEffect } from 'react';
 
 const GlobalLayout: React.FC = () => {
     const location = useLocation();
@@ -9,7 +9,22 @@ const GlobalLayout: React.FC = () => {
     const [sessionId, setSessionId] = useState<string | null>(null);
     const [adminApiToken, setAdminApiToken] = useState<string | null>(null);
     const [adminSessionId, setAdminSessionId] = useState<string | null>(null);
-    const [mainContentBordered, setMainContentBordered] = useState(false);
+    const [mainContentBordered, setMainContentBordered] = useState(true);
+
+    useEffect(() => {
+        if (location.pathname.startsWith('/lobby') || (location.pathname.startsWith('/admin') && !location.pathname.includes('login'))) {
+            setShowLogout(true);
+        } else {
+            setShowLogout(false);
+        }
+
+        if (location.pathname === '/tutorial') {
+            setMainContentBordered(false);
+        } else {
+            setMainContentBordered(true);
+        }
+
+    }, [location]);
 
     const updateAdminApiToken = (token: string | null) => {
         setAdminApiToken(token);
@@ -71,16 +86,10 @@ const GlobalLayout: React.FC = () => {
         adminSessionId,
         setAdminSessionId: updateAdminSessionId,
         getAdminSessionIdFromLocalStorage,
-        mainContentBordered,
-        setMainContentBordered,
-        showLogout,
-        setShowLogout,
     }), [
         sessionId,
         adminApiToken,
         adminSessionId,
-        mainContentBordered,
-        showLogout
     ]);
 
     return (
@@ -91,7 +100,7 @@ const GlobalLayout: React.FC = () => {
                         <div className="flex items-center gap-4">
                             <h1 className="text-2xl font-bold text-tx-primary">
                                 <Link to="/" className="flex items-center" data-testid="home-link">
-                                    R<img src="/ladder.svg" alt="A" className="w-6 h-6 inline-block brightness-75 " />DDLE
+                                    R<img src="/img/ladder.svg" alt="A" className="w-6 h-6 inline-block brightness-75 " />DDLE
                                 </Link>
                             </h1>
                             <span className="not-md:hidden text-tx-secondary">Word Transformation Game</span>
@@ -135,7 +144,7 @@ const GlobalLayout: React.FC = () => {
                 <div className="max-w-6xl mx-auto p-6 border-t border-border-light">
                     <div className="flex flex-col md:flex-row justify-between items-center gap-4">
                         <div className="flex items-center gap-1">
-                            <img src="/ladder.svg" alt="A" className="w-15 h-12 inline-block brightness-75 " />
+                            <img src="/img/ladder.svg" alt="A" className="w-15 h-12 inline-block brightness-75 " />
                             <div className="text-sm text-tx-secondary">
                                 <p className="mb-1">© 2025 Raddle Teams</p>
                                 <p className="mb-1">A team-based word game</p>

@@ -1,4 +1,3 @@
-
 :root {
   --color-primary: #0c1019;
   --color-secondary: #11111a;
@@ -44,5 +43,37 @@
   --color-red-bright: #d95757;
   --color-purple: #d2a6ff;
   --color-cyan: #95e6cb;
+}
+
+/* Custom Scrollbar Styles */
+/* Webkit browsers (Chrome, Safari, Edge) */
+::-webkit-scrollbar {
+  width: 8px;
+  height: 8px;
+}
+
+::-webkit-scrollbar-track {
+  background: transparent;
+  border-radius: 4px;
+}
+
+::-webkit-scrollbar-thumb {
+  background: rgba(183, 167, 148, 0.3); /* Using border color with opacity */
+  border-radius: 4px;
+  transition: background 0.2s ease;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: rgba(183, 167, 148, 0.5); /* More opaque on hover */
+}
+
+::-webkit-scrollbar-corner {
+  background: transparent;
+}
+
+/* Firefox */
+* {
+  scrollbar-width: thin;
+  scrollbar-color: rgba(183, 167, 148, 0.3) transparent;
 }
 

@@ -10,10 +10,6 @@ export type GlobalOutletContext = {
     adminSessionId: string | null;
     setAdminSessionId: (id: string | null) => void;
     getAdminSessionIdFromLocalStorage: () => string | null;
-    mainContentBordered: boolean;
-    setMainContentBordered: (bordered: boolean) => void;
-    showLogout: boolean;
-    setShowLogout: (show: boolean) => void;
 };
 
 export function useGlobalOutletContext() {

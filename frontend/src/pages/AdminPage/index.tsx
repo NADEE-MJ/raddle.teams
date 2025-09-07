@@ -1,242 +1,246 @@
-import { useState, useEffect, useCallback, useRef } from 'react';
+import { useState, useEffect } from 'react';
 import { api } from '@/services/api';
-import { LobbyInfo } from '@/types';
+import { LobbyInfo, Lobby, Player, Team } from '@/types';
 
-import AdminLogin from './AdminLogin';
-import DashboardHeader from './DashboardHeader';
 import CreateLobbyForm from './CreateLobbyForm';
 import LobbiesList from './LobbiesList';
 import LobbyDetails from './LobbyDetails';
 import { useGlobalOutletContext } from '@/hooks/useGlobalOutletContext';
+import { useNavigate } from 'react-router-dom';
+import LoadingSpinner from '@/components/LoadingSpinner';
 
 export default function AdminPage() {
     const {
+        adminApiToken,
+        adminSessionId,
     } = useGlobalOutletContext();
 
-    const [selectedLobby, setSelectedLobby] = useState<LobbyInfo | null>(null);
-    const [loading, setLoading] = useState(false);
+    const navigate = useNavigate();
+
     const [error, setError] = useState('');
-    const selectedLobbyRef = useRef<LobbyInfo | null>(null);
+    const [lobbies, setLobbies] = useState<Lobby[]>([]);
+    const [selectedLobby, setSelectedLobby] = useState<LobbyInfo | null>(null);
+    const [refreshLobbiesLoading, setRefreshLobbiesLoading] = useState(false);
 
-    // Keep ref in sync with state
     useEffect(() => {
-        selectedLobbyRef.current = selectedLobby;
-    }, [selectedLobby]);
+        if (!adminApiToken || !adminSessionId) {
+            navigate('/admin/login');
+        }
 
-    const handleLogin = async (token: string) => {
-        setLoading(true);
-        setError('');
+        refreshLobbies();
+    }, []); // eslint-disable-line react-hooks/exhaustive-deps
+
+    const refreshLobbies = async () => {
+        if (!adminApiToken) throw new Error('No admin API token');
 
         try {
-            await api.admin.checkCredentials(token);
-            setAdminToken(token);
+            setRefreshLobbiesLoading(true);
+            const fetchedLobbies = await api.admin.lobby.getAll(adminApiToken);
+            setLobbies(fetchedLobbies);
         } catch (err) {
-            setError('Invalid admin token');
-            console.error('Auth error:', err);
+            setError('Failed to load lobbies');
+            console.error('Error loading lobbies:', err);
         } finally {
-            setLoading(false);
+            setRefreshLobbiesLoading(false);
         }
-    };
-
+    }
 
     const createLobby = async (name: string) => {
-        if (!adminToken) return;
+        if (!adminApiToken) throw new Error('No admin API token');
 
         try {
-            setLoading(true);
-            await api.admin.lobby.create(name, adminToken);
+            await api.admin.lobby.create(name, adminApiToken);
             await refreshLobbies();
         } catch (err) {
             setError('Failed to create lobby');
             console.error('Error creating lobby:', err);
-        } finally {
-            setLoading(false);
-        }
-    };
-
-    const handleLobbyUpdate = useCallback(
-        (lobbyId: number) => {
-            // Use current state instead of closure to avoid dependency issues
-            setSelectedLobby(current => {
-                if (current && current.lobby.id === lobbyId && adminToken) {
-                    // Refresh the selected lobby
-                    api.admin.lobby
-                        .getInfo(current.lobby.id, adminToken)
-                        .then(lobbyInfo => {
-                            setSelectedLobby(lobbyInfo);
-                        })
-                        .catch(err => {
-                            console.error('Error refreshing selected lobby:', err);
-                        });
-                }
-                return current;
-            });
-        },
-        [adminToken]
-    );
-
-    const viewLobbyDetails = async (lobbyId: number) => {
-        if (!adminToken) return;
-
-        try {
-            setLoading(true);
-            const lobbyInfo = await api.admin.lobby.getInfo(lobbyId, adminToken);
-            setSelectedLobby(lobbyInfo);
-
-            // Subscribe to lobby updates via WebSocket
-            if (sendWebSocketMessage) {
-                sendWebSocketMessage({
-                    action: 'subscribe_lobby',
-                    lobby_id: lobbyId,
-                });
-            }
-        } catch (err) {
-            setError('Failed to load lobby details');
-            console.error('Error loading lobby details:', err);
-        } finally {
-            setLoading(false);
-        }
-    };
-
-    const closeLobbyDetails = () => {
-        if (selectedLobby && sendWebSocketMessage) {
-            // Unsubscribe from lobby updates
-            sendWebSocketMessage({
-                action: 'unsubscribe_lobby',
-                lobby_id: selectedLobby.lobby.id,
-            });
-        }
-        setSelectedLobby(null);
-    };
-
-    const createTeams = async (lobbyId: number, numTeams: number) => {
-        if (!adminToken) return;
-
-        try {
-            setLoading(true);
-            await api.admin.lobby.team.create(lobbyId, numTeams, adminToken);
-            // Refresh the selected lobby to show new teams
-            const lobbyInfo = await api.admin.lobby.getInfo(lobbyId, adminToken);
-            setSelectedLobby(lobbyInfo);
-        } catch (err) {
-            setError('Failed to create teams');
-            console.error('Error creating teams:', err);
-        } finally {
-            setLoading(false);
-        }
-    };
-
-    const movePlayer = async (playerId: number, teamId: number) => {
-        if (!adminToken || !selectedLobby) return;
-
-        try {
-            setLoading(true);
-            await api.admin.lobby.team.move(playerId, teamId, adminToken);
-            // Refresh the selected lobby to show updated teams
-            const lobbyInfo = await api.admin.lobby.getInfo(selectedLobby.lobby.id, adminToken);
-            setSelectedLobby(lobbyInfo);
-        } catch (err) {
-            setError('Failed to move player');
-            console.error('Error moving player:', err);
-        } finally {
-            setLoading(false);
-        }
-    };
-
-    const kickPlayer = async (playerId: number) => {
-        if (!adminToken || !selectedLobby) return;
-
-        try {
-            setLoading(true);
-            await api.admin.lobby.player.kick(playerId, adminToken);
-            // Refresh the selected lobby to show updated players
-            const lobbyInfo = await api.admin.lobby.getInfo(selectedLobby.lobby.id, adminToken);
-            setSelectedLobby(lobbyInfo);
-        } catch (err) {
-            setError('Failed to kick player');
-            console.error('Error kicking player:', err);
-        } finally {
-            setLoading(false);
         }
     };
 
     const deleteLobby = async (lobbyId: number) => {
-        if (!adminToken) return;
+        if (!adminApiToken) throw new Error('No admin API token');
 
         try {
-            setLoading(true);
-            await api.admin.lobby.delete(lobbyId, adminToken);
+            await api.admin.lobby.delete(lobbyId, adminApiToken);
             await refreshLobbies();
-            if (selectedLobby?.lobby.id === lobbyId) {
-                // Unsubscribe before closing
-                if (sendWebSocketMessage) {
-                    sendWebSocketMessage({
-                        action: 'unsubscribe_lobby',
-                        lobby_id: lobbyId,
-                    });
-                }
-                setSelectedLobby(null);
-            }
+            // TODO connect with WebSocket to unsubscribe if viewing details
+            // if (selectedLobby?.lobby.id === lobbyId) {
+            //     // Unsubscribe before closing
+            //     if (sendWebSocketMessage) {
+            //         sendWebSocketMessage({
+            //             action: 'unsubscribe_lobby',
+            //             lobby_id: lobbyId,
+            //         });
+            //     }
+            //     setSelectedLobby(null);
+            // }
         } catch (err) {
             setError('Failed to delete lobby');
             console.error('Error deleting lobby:', err);
-        } finally {
-            setLoading(false);
         }
     };
 
-    // Register/unregister lobby update callback
-    useEffect(() => {
-        if (onLobbyUpdate && offLobbyUpdate) {
-            onLobbyUpdate(handleLobbyUpdate);
-            return () => {
-                offLobbyUpdate(handleLobbyUpdate);
-            };
-        }
-    }, [handleLobbyUpdate, onLobbyUpdate, offLobbyUpdate]);
+    // const handleLobbyUpdate = useCallback(
+    //     (lobbyId: number) => {
+    //         // Use current state instead of closure to avoid dependency issues
+    //         setSelectedLobby(current => {
+    //             if (current && current.lobby.id === lobbyId && adminToken) {
+    //                 // Refresh the selected lobby
+    //                 api.admin.lobby
+    //                     .getInfo(current.lobby.id, adminToken)
+    //                     .then(lobbyInfo => {
+    //                         setSelectedLobby(lobbyInfo);
+    //                     })
+    //                     .catch(err => {
+    //                         console.error('Error refreshing selected lobby:', err);
+    //                     });
+    //             }
+    //             return current;
+    //         });
+    //     },
+    //     [adminToken]
+    // );
 
-    // Cleanup subscription on component unmount
-    useEffect(() => {
-        return () => {
-            // Use ref to get current value at cleanup time
-            if (selectedLobbyRef.current && sendWebSocketMessage) {
-                sendWebSocketMessage({
-                    action: 'unsubscribe_lobby',
-                    lobby_id: selectedLobbyRef.current.lobby.id,
-                });
-            }
-        };
-    }, [sendWebSocketMessage]);
+    // const viewLobbyDetails = async (lobbyId: number) => {
+    //     if (!adminToken) return;
 
-    if (!isAdmin) {
-        return <AdminLogin onLogin={handleLogin} loading={loading} error={error} />;
-    }
+    //     try {
+    //         setLoading(true);
+    //         const lobbyInfo = await api.admin.lobby.getInfo(lobbyId, adminToken);
+    //         setSelectedLobby(lobbyInfo);
+
+    //         // Subscribe to lobby updates via WebSocket
+    //         if (sendWebSocketMessage) {
+    //             sendWebSocketMessage({
+    //                 action: 'subscribe_lobby',
+    //                 lobby_id: lobbyId,
+    //             });
+    //         }
+    //     } catch (err) {
+    //         setError('Failed to load lobby details');
+    //         console.error('Error loading lobby details:', err);
+    //     } finally {
+    //         setLoading(false);
+    //     }
+    // };
+
+    // const closeLobbyDetails = () => {
+    //     if (selectedLobby && sendWebSocketMessage) {
+    //         // Unsubscribe from lobby updates
+    //         sendWebSocketMessage({
+    //             action: 'unsubscribe_lobby',
+    //             lobby_id: selectedLobby.lobby.id,
+    //         });
+    //     }
+    //     setSelectedLobby(null);
+    // };
+
+    // const createTeams = async (lobbyId: number, numTeams: number) => {
+    //     if (!adminToken) return;
+
+    //     try {
+    //         setLoading(true);
+    //         await api.admin.lobby.team.create(lobbyId, numTeams, adminToken);
+    //         // Refresh the selected lobby to show new teams
+    //         const lobbyInfo = await api.admin.lobby.getInfo(lobbyId, adminToken);
+    //         setSelectedLobby(lobbyInfo);
+    //     } catch (err) {
+    //         setError('Failed to create teams');
+    //         console.error('Error creating teams:', err);
+    //     } finally {
+    //         setLoading(false);
+    //     }
+    // };
+
+    // const movePlayer = async (playerId: number, teamId: number) => {
+    //     if (!adminToken || !selectedLobby) return;
+
+    //     try {
+    //         setLoading(true);
+    //         await api.admin.lobby.team.move(playerId, teamId, adminToken);
+    //         // Refresh the selected lobby to show updated teams
+    //         const lobbyInfo = await api.admin.lobby.getInfo(selectedLobby.lobby.id, adminToken);
+    //         setSelectedLobby(lobbyInfo);
+    //     } catch (err) {
+    //         setError('Failed to move player');
+    //         console.error('Error moving player:', err);
+    //     } finally {
+    //         setLoading(false);
+    //     }
+    // };
+
+    // const kickPlayer = async (playerId: number) => {
+    //     if (!adminToken || !selectedLobby) return;
+
+    //     try {
+    //         setLoading(true);
+    //         await api.admin.lobby.player.kick(playerId, adminToken);
+    //         // Refresh the selected lobby to show updated players
+    //         const lobbyInfo = await api.admin.lobby.getInfo(selectedLobby.lobby.id, adminToken);
+    //         setSelectedLobby(lobbyInfo);
+    //     } catch (err) {
+    //         setError('Failed to kick player');
+    //         console.error('Error kicking player:', err);
+    //     } finally {
+    //         setLoading(false);
+    //     }
+    // };
+
+
+
+    // // Register/unregister lobby update callback
+    // useEffect(() => {
+    //     if (onLobbyUpdate && offLobbyUpdate) {
+    //         onLobbyUpdate(handleLobbyUpdate);
+    //         return () => {
+    //             offLobbyUpdate(handleLobbyUpdate);
+    //         };
+    //     }
+    // }, [handleLobbyUpdate, onLobbyUpdate, offLobbyUpdate]);
+
+    // // Cleanup subscription on component unmount
+    // useEffect(() => {
+    //     return () => {
+    //         // Use ref to get current value at cleanup time
+    //         if (selectedLobbyRef.current && sendWebSocketMessage) {
+    //             sendWebSocketMessage({
+    //                 action: 'unsubscribe_lobby',
+    //                 lobby_id: selectedLobbyRef.current.lobby.id,
+    //             });
+    //         }
+    //     };
+    // }, [sendWebSocketMessage]);
+
+    // if (!isAdmin) {
+    //     return <AdminLogin onLogin={handleLogin} loading={loading} error={error} />;
+    // }
 
     return (
-        <main className="bg-primary pt-4 md:p-4">
-            <div className="max-w-6xl mx-auto">
-                <div className="bg-secondary border border-border rounded-lg shadow-sm p-4 md:p-8 mb-6">
-                    <DashboardHeader />
+        <div>
+            <div className='text-left mb-6'>
+                <h1 className='text-2xl md:text-3xl font-semibold mb-1 text-tx-primary'>Admin Dashboard</h1>
+                <p className="text-tx-secondary">Manage lobbies and monitor team games</p>
+            </div>
 
-                    {(error || contextError) && (
-                        <div className='mb-6 rounded-lg border border-red bg-red/20 px-4 py-3 text-red' data-testid='admin-error-message'>
-                            {error || contextError}
-                        </div>
-                    )}
+            {error && <div className='mb-6 rounded-lg border border-red bg-red/20 px-4 py-3 text-red' data-testid='admin-error-message'>
+                {error}
+            </div>}
 
-                    <CreateLobbyForm onCreateLobby={createLobby} loading={loading} contextLoading={contextLoading} />
+            <div className='mb-4'>
+                <CreateLobbyForm onCreateLobby={createLobby} />
+            </div>
 
-                    <LobbiesList
-                        lobbies={lobbies}
-                        onRefresh={refreshLobbies}
-                        onViewDetails={viewLobbyDetails}
-                        onDeleteLobby={deleteLobby}
-                        loading={loading}
-                        contextLoading={contextLoading}
-                    />
-                </div>
+            {refreshLobbiesLoading ? <LoadingSpinner /> : (
+                <LobbiesList
+                    lobbies={lobbies}
+                    onRefresh={refreshLobbies}
+                    // onViewDetails={viewLobbyDetails}
+                    onDeleteLobby={deleteLobby}
+                    loading={refreshLobbiesLoading}
+                />
+            )}
 
-                {selectedLobby && (
+            {/* {selectedLobby && (
                     <LobbyDetails
                         selectedLobby={selectedLobby}
                         onClose={closeLobbyDetails}
@@ -245,8 +249,8 @@ export default function AdminPage() {
                         onKickPlayer={kickPlayer}
                         loading={loading}
                     />
-                )}
-            </div>
-        </main>
+                )} */}
+        </div>
+
     );
 }

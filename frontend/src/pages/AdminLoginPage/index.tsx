@@ -11,8 +11,6 @@ export default function AdminLoginPage() {
         getAdminApiTokenFromLocalStorage,
         setAdminSessionId,
         getAdminSessionIdFromLocalStorage,
-        setMainContentBordered,
-        setShowLogout,
     } = useGlobalOutletContext();
     const navigate = useNavigate();
 
@@ -22,11 +20,7 @@ export default function AdminLoginPage() {
     const [error, setError] = useState('');
 
     useEffect(() => {
-        setMainContentBordered(true);
-        setShowLogout(false);
-
         const checkAdminCredentials = async () => {
-            const response2 = await api.admin.checkCredentials('');
             const adminTokenFromStorage = getAdminApiTokenFromLocalStorage();
             const adminSessionIdFromStorage = getAdminSessionIdFromLocalStorage();
 
@@ -34,6 +28,7 @@ export default function AdminLoginPage() {
                 try {
                     const response = await api.admin.checkCredentials(adminTokenFromStorage);
                     setAdminSessionId(response.session_id);
+                    setAdminApiToken(adminTokenFromStorage);
                     navigate('/admin');
                 } catch (error) {
                     console.error('Error checking admin credentials:', error);
@@ -45,17 +40,19 @@ export default function AdminLoginPage() {
                 setAdminApiToken(null);
                 setAdminSessionId(null);
             }
+
+            setPageLoading(false);
         };
 
         checkAdminCredentials();
-        setPageLoading(false);
     }, []); // eslint-disable-line react-hooks/exhaustive-deps
 
     const handleLogin = async (e: React.FormEvent) => {
         e.preventDefault();
-        if (!localAdminApiToken.trim()) return;
-        setLoading(true);
 
+        if (!localAdminApiToken.trim()) return;
+
+        setLoading(true);
         setError('');
 
         try {
