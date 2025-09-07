@@ -57,14 +57,14 @@ export enum LobbyWebSocketEvents {
     PLAYER_KICKED = 'player_kicked',
 }
 
-// export interface WebSocketMessage {
-//     type: LobbyWebSocketEvents | string;
-//     data?: Record<string, unknown>;
-//     player_session_id?: string;
-//     message?: Record<string, unknown>;
-//     team_id?: number;
-//     lobby_id?: number;
-//     state?: string;
-//     old_team_id?: number;
-//     new_team_id?: number;
-// }
+export interface WebSocketMessage {
+    type: LobbyWebSocketEvents | string;
+    data?: Record<string, unknown>;
+    player_session_id?: string;
+    message?: Record<string, unknown>;
+    team_id?: number;
+    lobby_id?: number;
+    state?: string;
+    old_team_id?: number;
+    new_team_id?: number;
+}

@@ -36,7 +36,7 @@ async def move_player_to_team(
         if team.lobby_id != player.lobby_id:
             raise HTTPException(status_code=400, detail="Team is not in the same lobby as player")
 
-    old_team_id = player.team_id
+    old_team_id = player.team_id or 0
     player.team_id = team_id
     db.add(player)
     db.commit()
@@ -44,7 +44,10 @@ async def move_player_to_team(
     await lobby_websocket_manager.broadcast_to_lobby(
         lobby_id=player.lobby_id,
         event=TeamChangedEvent(
-            lobby_id=player.lobby_id, player_session_id=player.session_id, old_team_id=old_team_id, new_team_id=team_id
+            lobby_id=player.lobby_id,
+            player_session_id=player.session_id,
+            old_team_id=old_team_id,
+            new_team_id=team_id or 0,
         ),
     )
 
