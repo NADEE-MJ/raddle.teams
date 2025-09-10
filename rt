@@ -458,7 +458,7 @@ def install(
     install_info.append("🐍 Python: ", style="bold yellow")
     install_info.append("poetry install", style="blue")
     if sync:
-        install_info.append(" --sync", style="dim blue")
+        install_info.append(" sync", style="dim blue")
     install_info.append("\n🟢 Node.js: ", style="bold yellow")
     install_info.append("npm ci" if sync else "npm install", style="blue")
 
@@ -469,7 +469,7 @@ def install(
 
     poetry_command = ["poetry", "install"]
     if sync:
-        poetry_command.append("--sync")
+        poetry_command = ["poetry", "sync"]
     if run_command(poetry_command, "Installing Python dependencies") != 0:
         raise typer.Exit(1)
 

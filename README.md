@@ -88,6 +88,7 @@ The core lobby and team management system is implemented and functional. The bac
 
    ```bash
    poetry install
+   apt install python3-typer
    ```
 
 3. **Install JavaScript dependencies**
