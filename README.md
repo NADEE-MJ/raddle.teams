@@ -101,6 +101,9 @@ The core lobby and team management system is implemented and functional. The bac
    npm run build
    ```
 
+5. **Set up environment variables**
+create a .env file in the root directory following the convetions set in the .env.testing file
+
 ### Running the Application
 
 #### Option 1: Full Application (Recommended)
