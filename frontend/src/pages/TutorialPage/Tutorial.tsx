@@ -7,6 +7,21 @@ interface LadderStep {
     solved: boolean;
 }
 
+interface GameStateStep {
+    id: number;
+    active: boolean;
+    status: 'revealed' | 'unrevealed' | 'question' | 'answer';
+    isRevealed: boolean;
+    isClueShown: boolean;
+    reveals: number;
+}
+
+interface GameState {
+    ladder: GameStateStep[];
+    movingDown: boolean;
+    showFullLadder: boolean;
+}
+
 interface Puzzle {
     title: string;
     ladder: LadderStep[];
@@ -83,39 +98,76 @@ const TUTORIAL_PUZZLE: Puzzle = {
 
 export default function Tutorial({ setCompleted, completed }: WordChainGameProps) {
     const [currentGuess, setCurrentGuess] = useState('');
-    const [direction, setDirection] = useState<'downward' | 'upward'>('downward');
+    const [isDownward, setIsDownward] = useState(true);
     const inputRef = useRef<HTMLInputElement>(null);
     const [puzzle, setPuzzle] = useState<Puzzle>(TUTORIAL_PUZZLE);
-    const [solvingIndex, setSolvingIndex] = useState(-1);
+    const [gameState, setGameState] = useState<GameState | null>(null);
     const [clues, setClues] = useState<Clues>({});
     const [usedClues, setUsedClues] = useState<{ [key: string]: JSX.Element }>({});
-    const [answer, setAnswer] = useState('');
-    const [hintWord, setHintWord] = useState('');
+
+    const initializeGameState = (puzzle: Puzzle): GameState => {
+        const ladder: GameStateStep[] = puzzle.ladder.map((step, index) => ({
+            id: index,
+            active: index === 1, // Start solving at index 1
+            status: index === 0 ? 'revealed' : 
+                   index === puzzle.ladder.length - 1 ? 'revealed' : 
+                   index === 1 ? 'answer' : 
+                   index === 0 ? 'question' : 'unrevealed',
+            isRevealed: index === 0 || index === puzzle.ladder.length - 1 || (index === 0),
+            isClueShown: false,
+            reveals: 0
+        }));
+
+        // When moving down, previous word (index 0) should be the question
+        ladder[0].status = 'question';
+        ladder[0].isRevealed = true;
+
+        return {
+            ladder,
+            movingDown: true,
+            showFullLadder: false
+        };
+    };
 
     useEffect(() => {
+        const initialGameState = initializeGameState(puzzle);
+        setGameState(initialGameState);
         setTimeout(() => inputRef.current?.focus(), 100);
     }, []);
 
     useEffect(() => {
+        if (!gameState) return;
+        
         const newClues: Clues = {};
-        puzzle.ladder.forEach(step => {
-            if (step.clue && !step.solved) {
+        puzzle.ladder.forEach((step, index) => {
+            const gameStateStep = gameState.ladder[index];
+            if (step.clue && !step.solved && !gameStateStep.isClueShown) {
                 newClues[step.word] = step.clue;
             }
         });
         setClues(newClues);
-    }, [puzzle]);
+    }, [puzzle, gameState]);
 
-    const getHintWord = (newSolvingIndex: number) => {
-        if (direction === 'downward') {
-            return puzzle.ladder[newSolvingIndex - 1].word;
+    const getActiveStep = () => {
+        if (!gameState) return null;
+        return gameState.ladder.find(step => step.active);
+    };
+
+    const getHintWord = () => {
+        const activeStep = getActiveStep();
+        if (!activeStep) return '';
+        
+        if (gameState!.movingDown) {
+            return puzzle.ladder[activeStep.id - 1]?.word || '';
         } else {
-            return puzzle.ladder[newSolvingIndex + 1].word;
+            return puzzle.ladder[activeStep.id + 1]?.word || '';
         }
     };
 
-    const getAnswer = (newSolvingIndex: number) => {
-        return puzzle.ladder[newSolvingIndex].word;
+    const getAnswer = () => {
+        const activeStep = getActiveStep();
+        if (!activeStep) return '';
+        return puzzle.ladder[activeStep.id].word;
     };
 
     const checkCompletion = (newPuzzle: Puzzle) => {
@@ -124,56 +176,109 @@ export default function Tutorial({ setCompleted, completed }: WordChainGameProps
         return allSolved;
     };
 
-    const updatePuzzleState = (newSolvingIndex: number) => {
-        if (newSolvingIndex === -1) {
-            // does it make sense to throw an error here?
-            console.error('Invalid solving index');
-            return;
-        }
-        setSolvingIndex(newSolvingIndex);
-        setHintWord(getHintWord(newSolvingIndex));
-        setAnswer(getAnswer(newSolvingIndex));
+    const setActiveStep = (stepId: number) => {
+        if (!gameState) return;
+        
+        setGameState(prev => {
+            if (!prev) return prev;
+            
+            const newLadder = prev.ladder.map(step => {
+                const newStep = { ...step, active: step.id === stepId };
+                
+                // Update status based on direction and position
+                if (step.id === stepId) {
+                    newStep.status = 'answer';
+                } else if (prev.movingDown && step.id === stepId - 1) {
+                    newStep.status = 'question';
+                    newStep.isRevealed = true;
+                } else if (!prev.movingDown && step.id === stepId + 1) {
+                    newStep.status = 'question';  
+                    newStep.isRevealed = true;
+                } else if (step.id === 0 || step.id === prev.ladder.length - 1) {
+                    newStep.status = 'revealed';
+                    newStep.isRevealed = true;
+                } else {
+                    newStep.status = 'unrevealed';
+                }
+                
+                return newStep;
+            });
+            
+            return {
+                ...prev,
+                ladder: newLadder
+            };
+        });
+        
         setCurrentGuess('');
-
-        // Focus the input field after updating state
         setTimeout(() => inputRef.current?.focus(), 100);
     };
 
-    useEffect(() => {
-        // start the puzzle off at the second word in the puzzle
-        updatePuzzleState(1);
-    }, []); // eslint-disable-line
-
-    const handleDirectionChange = (newDirection: 'downward' | 'upward') => {
-        setDirection(newDirection);
+    const handleDirectionChange = () => {
+        if (!gameState) return;
+        
+        const newIsDownward = !isDownward;
+        setIsDownward(newIsDownward);
         setCurrentGuess('');
 
-        let newSolvingIndex = -1;
-        if (newDirection === 'downward') {
+        let newActiveStepId = -1;
+        if (newIsDownward) {
             if (!puzzle.ladder[0].solved) {
-                newSolvingIndex = 1;
+                newActiveStepId = 1;
             } else {
                 for (let i = 0; i < puzzle.ladder.length; i++) {
                     if (!puzzle.ladder[i].solved) {
-                        newSolvingIndex = i;
+                        newActiveStepId = i + 1;
                         break;
                     }
                 }
             }
         } else {
             if (!puzzle.ladder[puzzle.ladder.length - 1].solved) {
-                newSolvingIndex = puzzle.ladder.length - 2;
+                newActiveStepId = puzzle.ladder.length - 2;
             } else {
                 for (let i = puzzle.ladder.length - 1; i >= 0; i--) {
                     if (!puzzle.ladder[i].solved) {
-                        newSolvingIndex = i;
+                        newActiveStepId = i;
                         break;
                     }
                 }
             }
         }
 
-        updatePuzzleState(newSolvingIndex);
+        setGameState(prev => {
+            if (!prev) return prev;
+            
+            const newLadder = prev.ladder.map(step => {
+                const newStep = { ...step, active: step.id === newActiveStepId };
+                
+                // Update status based on new direction and position
+                if (step.id === newActiveStepId) {
+                    newStep.status = 'answer';
+                } else if (newIsDownward && step.id === newActiveStepId - 1) {
+                    newStep.status = 'question';
+                    newStep.isRevealed = true;
+                } else if (!newIsDownward && step.id === newActiveStepId + 1) {
+                    newStep.status = 'question';  
+                    newStep.isRevealed = true;
+                } else if (step.id === 0 || step.id === prev.ladder.length - 1) {
+                    newStep.status = 'revealed';
+                    newStep.isRevealed = true;
+                } else {
+                    newStep.status = 'unrevealed';
+                }
+                
+                return newStep;
+            });
+            
+            return {
+                ...prev,
+                ladder: newLadder,
+                movingDown: newIsDownward
+            };
+        });
+        
+        setTimeout(() => inputRef.current?.focus(), 100);
     };
 
     const renderClueParts = (
@@ -215,11 +320,13 @@ export default function Tutorial({ setCompleted, completed }: WordChainGameProps
             if (isHintPlaceholder && hintWordRendered) {
                 parts.push(hintWordRendered);
             } else if (isHintPlaceholder) {
-                parts.push('_'.repeat(hintWord.length));
+                const currentHintWord = getHintWord();
+                parts.push('_'.repeat(currentHintWord.length));
             } else if (answerWordRendered) {
                 parts.push(answerWordRendered);
             } else {
-                parts.push('_'.repeat(answer.length));
+                const currentAnswer = getAnswer();
+                parts.push('_'.repeat(currentAnswer.length));
             }
             remainingText = remainingText.substring(nextPlaceholderIndex + 2);
         }
@@ -254,6 +361,14 @@ export default function Tutorial({ setCompleted, completed }: WordChainGameProps
     const handleGuessChange = (e: React.ChangeEvent<HTMLInputElement>) => {
         const guess = e.target.value.toUpperCase().trim();
         setCurrentGuess(guess);
+        
+        if (!gameState) return;
+        
+        const activeStep = getActiveStep();
+        if (!activeStep) return;
+        
+        const answer = getAnswer();
+        const hintWord = getHintWord();
 
         if (guess === answer) {
             const clueToRemove = `${clues[hintWord]}`;
@@ -269,18 +384,19 @@ export default function Tutorial({ setCompleted, completed }: WordChainGameProps
                 return newClues;
             });
 
+            // Update puzzle state
             const newPuzzle = { ...puzzle };
             const newLadder = newPuzzle.ladder.map((step, index) => {
-                if (direction === 'downward') {
-                    if (index === solvingIndex - 1) {
+                if (gameState.movingDown) {
+                    if (index === activeStep.id - 1) {
                         return { ...step, solved: true };
-                    } else if (index === solvingIndex && solvingIndex === puzzle.ladder.length - 1) {
+                    } else if (index === activeStep.id && activeStep.id === puzzle.ladder.length - 1) {
                         return { ...step, solved: true };
                     }
                 } else {
-                    if (index === solvingIndex) {
+                    if (index === activeStep.id) {
                         return { ...step, solved: true };
-                    } else if (solvingIndex === puzzle.ladder.length - 2 && index === puzzle.ladder.length - 1) {
+                    } else if (activeStep.id === puzzle.ladder.length - 2 && index === puzzle.ladder.length - 1) {
                         return { ...step, solved: true };
                     }
                 }
@@ -288,24 +404,44 @@ export default function Tutorial({ setCompleted, completed }: WordChainGameProps
             });
             newPuzzle.ladder = newLadder;
             setPuzzle(newPuzzle);
+            
+            // Update gameState to mark clue as used
+            setGameState(prev => {
+                if (!prev) return prev;
+                
+                const hintIndex = gameState.movingDown ? activeStep.id - 1 : activeStep.id + 1;
+                const newLadder = prev.ladder.map(step => 
+                    step.id === hintIndex 
+                        ? { ...step, isClueShown: true }
+                        : step
+                );
+                
+                return {
+                    ...prev,
+                    ladder: newLadder
+                };
+            });
+            
             if (checkCompletion(newPuzzle)) {
                 return;
             }
 
-            let newSolvingIndex = -1;
-            if (direction === 'downward') {
-                newSolvingIndex = solvingIndex + 1;
+            // Move to next step
+            let newActiveStepId: number;
+            if (gameState.movingDown) {
+                newActiveStepId = activeStep.id + 1;
             } else {
-                newSolvingIndex = solvingIndex - 1;
+                newActiveStepId = activeStep.id - 1;
             }
 
-            updatePuzzleState(newSolvingIndex);
+            setActiveStep(newActiveStepId);
         }
     };
 
     const renderDownwardClue = (clue: string) => {
+        const hintWord = getHintWord();
         const hintWordRendered = (
-            <span className='bg-green/30 text-green px-1 pt-[6px] pb-[3px] font-mono'>{hintWord}</span>
+            <span className='bg-green/50 text-green px-1 pt-[6px] pb-[3px] font-mono'>{hintWord}</span>
         );
 
         const parts = renderClueParts(clue, hintWordRendered, null);
@@ -314,8 +450,9 @@ export default function Tutorial({ setCompleted, completed }: WordChainGameProps
     };
 
     const renderUpwardClue = (clue: string) => {
+        const answer = getAnswer();
         const answerWordRendered = (
-            <span className='bg-accent/30 text-accent px-1 pt-[6px] pb-[3px] font-mono'>{answer}</span>
+            <span className='bg-accent/50 text-accent px-1 pt-[6px] pb-[3px] font-mono'>{answer}</span>
         );
 
         const parts = renderClueParts(clue, null, answerWordRendered);
@@ -324,38 +461,22 @@ export default function Tutorial({ setCompleted, completed }: WordChainGameProps
     };
 
     const renderLadderStep = (step: LadderStep, index: number) => {
-        let isTarget = false;
-        let shouldReveal = false;
+        if (!gameState) return null;
+        
+        const gameStateStep = gameState.ladder[index];
+        const isTarget = gameStateStep.active;
+        const shouldReveal = gameStateStep.isRevealed || completed;
+        
         let bgColor = 'bg-secondary';
-
-        if (completed) {
-            shouldReveal = true;
-        } else {
-            isTarget = index === solvingIndex;
-            if (isTarget) {
-                bgColor = 'bg-accent/20';
-            } else if (direction === 'downward') {
-                if (index === solvingIndex - 1) {
-                    shouldReveal = true;
-                    bgColor = 'bg-green/30';
-                } else if (step.solved) {
-                    shouldReveal = true;
-                } else if (index === puzzle.ladder.length - 1 && solvingIndex !== puzzle.ladder.length - 2) {
-                    shouldReveal = true;
-                }
-            } else {
-                if (index === solvingIndex + 1) {
-                    shouldReveal = true;
-                    bgColor = 'bg-green/30';
-                } else if (step.solved) {
-                    shouldReveal = true;
-                } else if (index === 0 && solvingIndex !== 1) {
-                    shouldReveal = true;
-                }
-            }
+        if (isTarget) {
+            bgColor = 'bg-accent/50';
+        } else if (gameStateStep.status === 'question') {
+            bgColor = 'bg-green/40';
+        } else if (gameStateStep.status === 'answer') {
+            bgColor = 'bg-accent/50';
         }
 
-        const isHidden = !completed && index > 1 && index < puzzle.ladder.length - 1 && !shouldReveal && !isTarget;
+        const isHidden = !gameState.showFullLadder && !completed && index > 1 && index < puzzle.ladder.length - 1 && !shouldReveal && !isTarget;
 
         return (
             <div
@@ -380,7 +501,7 @@ export default function Tutorial({ setCompleted, completed }: WordChainGameProps
                     </div>
                 ) : isTarget ? (
                     <div className='relative'>
-                        <span className='bg-secondary border-border text-tx-primary absolute top-1/2 left-0 -translate-x-2/5 -translate-y-1/2 rounded-r-lg border border-l-0 py-1 pr-1 text-sm md:text-base'>
+                        <span className='bg-secondary border-border text-tx-primary absolute top-1/2 -translate-x-1/2 -translate-y-1/2 rounded-lg border p-0.5 text-sm md:text-base'>
                             ({step.word.length})
                         </span>
                         <input
@@ -390,13 +511,13 @@ export default function Tutorial({ setCompleted, completed }: WordChainGameProps
                             onChange={handleGuessChange}
                             placeholder=''
                             className='text-tx-primary w-full bg-transparent p-3 text-center text-[16px] tracking-wide uppercase focus:outline-none md:text-lg'
-                            maxLength={step.word.length}
+                            // maxLength={step.word.length} TODO - enforce max length?
                             autoComplete='off'
                             autoCorrect='off'
                             autoCapitalize='off'
                             spellCheck='false'
                         />
-                        <button className='bg-blue/20 border-blue hover:bg-blue/30 absolute top-1/2 right-2 flex h-8 w-8 -translate-y-1/2 items-center justify-center rounded border'>
+                        <button className='bg-blue-500 border-blue-500 hover:bg-blue-600 transition-all duration-100 absolute top-1/2 right-0 flex h-8 w-8 -translate-y-1/2 translate-x-1/2 items-center justify-center rounded border'>
                             💡
                         </button>
                         {index < puzzle.ladder.length - 1 && (
@@ -451,25 +572,15 @@ export default function Tutorial({ setCompleted, completed }: WordChainGameProps
 
                                 <div>
                                     <div className='hidden p-3'></div>
-                                    {!completed &&
-                                        !(
-                                            direction === 'downward' &&
-                                            (solvingIndex === puzzle.ladder.length - 2 ||
-                                                solvingIndex === puzzle.ladder.length - 1)
-                                        ) &&
-                                        !(direction === 'upward' && (solvingIndex === 0 || solvingIndex === 1)) && (
-                                            <button
-                                                type='button'
-                                                onClick={() =>
-                                                    handleDirectionChange(
-                                                        direction === 'downward' ? 'upward' : 'downward'
-                                                    )
-                                                }
-                                                className='text-tx-muted hover:bg-tertiary w-full p-2 text-xs italic'
-                                            >
-                                                Switch to solving {direction === 'downward' ? '↑ upward' : '↓ downward'}
-                                            </button>
-                                        )}
+                                    {!completed && gameState && (
+                                        <button
+                                            type='button'
+                                            onClick={handleDirectionChange}
+                                            className='text-tx-muted hover:bg-tertiary w-full p-2 text-xs italic'
+                                        >
+                                            Switch to solving {isDownward ? '↑ upward' : '↓ downward'}
+                                        </button>
+                                    )}
                                 </div>
                             </div>
                         </div>
@@ -488,7 +599,7 @@ export default function Tutorial({ setCompleted, completed }: WordChainGameProps
                                             key={word}
                                             className='border-border bg-secondary mb-2 rounded-md border-1 px-2 py-1 pt-1 pb-0'
                                         >
-                                            {direction === 'upward' ? renderUpwardClue(clue) : renderDownwardClue(clue)}
+                                            {!isDownward ? renderUpwardClue(clue) : renderDownwardClue(clue)}
                                         </div>
                                     ))}
                                 </>

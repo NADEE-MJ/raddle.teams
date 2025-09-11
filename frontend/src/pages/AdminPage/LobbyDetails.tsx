@@ -177,14 +177,6 @@ export default function LobbyDetails({ lobbyId, onClose, onLobbyDeleted, refresh
                             Delete Lobby
                         </Button>
                         <div className='md:hidden'></div>
-                        <Button
-                            onClick={onClose}
-                            variant='secondary'
-                            size='sm'
-                            data-testid='close-lobby-details-button'
-                        >
-                            Close
-                        </Button>
                     </div>
                 </div>
 
