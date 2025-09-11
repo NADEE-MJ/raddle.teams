@@ -36,7 +36,7 @@ export default function Modal({ isOpen, onClose, children, maxWidth = 'max-w-4xl
 
     return (
         <div
-            className='pointer-events-auto fixed inset-0 z-50 flex items-start justify-center p-4 pt-24'
+            className='pointer-events-auto fixed inset-0 z-999 flex items-start justify-center pt-24'
             onClick={onClose}
         >
             <div className='pointer-events-none absolute inset-0 backdrop-blur-sm' />
@@ -44,33 +44,35 @@ export default function Modal({ isOpen, onClose, children, maxWidth = 'max-w-4xl
                 className={`relative w-full ${maxWidth} bg-secondary border-border pointer-events-auto max-h-[90vh] overflow-auto rounded-lg border shadow-xl`}
                 onClick={e => e.stopPropagation()}
             >
-                {/* Close Button */}
-                <div className='absolute top-4 right-4 z-10'>
-                    <Button
-                        onClick={onClose}
-                        variant='secondary'
-                        size='sm'
-                        className='text-tx-muted hover:text-tx-primary hover:bg-elevated rounded-full p-2'
-                        data-testid='modal-close-button'
-                    >
-                        <svg
-                            className='h-4 w-4'
-                            fill='none'
-                            stroke='currentColor'
-                            viewBox='0 0 24 24'
-                            xmlns='http://www.w3.org/2000/svg'
+                <div className='relative flex flex-col'>
+                    {/* Close Button */}
+                    <div className='relative flex justify-end p-2'>
+                        <Button
+                            onClick={onClose}
+                            variant='secondary'
+                            size='sm'
+                            className='text-tx-muted hover:text-tx-primary hover:bg-elevated rounded-full p-2'
+                            data-testid='modal-close-button'
                         >
-                            <path
-                                strokeLinecap='round'
-                                strokeLinejoin='round'
-                                strokeWidth={2}
-                                d='M6 18L18 6M6 6l12 12'
-                            />
-                        </svg>
-                    </Button>
-                </div>
+                            <svg
+                                className='h-4 w-4'
+                                fill='none'
+                                stroke='currentColor'
+                                viewBox='0 0 24 24'
+                                xmlns='http://www.w3.org/2000/svg'
+                            >
+                                <path
+                                    strokeLinecap='round'
+                                    strokeLinejoin='round'
+                                    strokeWidth={2}
+                                    d='M6 18L18 6M6 6l12 12'
+                                />
+                            </svg>
+                        </Button>
+                    </div>
 
-                {isLoading ? <LoadingSpinner /> : children}
+                    {isLoading ? <LoadingSpinner /> : children}
+                </div>
             </div>
         </div>
     );

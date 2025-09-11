@@ -13,7 +13,7 @@ interface CardProps {
 const cardVariants: Record<CardVariant, string> = {
     default: 'rounded-md border border-border bg-tertiary px-4 py-3',
     warning: 'rounded-md border border-orange bg-orange/20 px-4 py-3',
-    info: 'rounded-md border border-border bg-tertiary px-4 py-3',
+    info: 'rounded-md border border-border bg-blue/20 px-4 py-3',
     clickable:
         'rounded-md border-2 border-border bg-tertiary px-4 py-3 cursor-pointer hover:bg-tertiary transition duration-50 hover:border-accent hover:shadow-md active:scale-95 active:shadow-sm',
 };

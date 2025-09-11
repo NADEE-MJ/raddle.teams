@@ -16,10 +16,10 @@ interface ButtonProps {
 }
 
 const buttonVariants: Record<ButtonVariant, string> = {
-    primary: 'bg-accent hover:bg-accent/80 text-primary',
+    primary: 'bg-accent hover:bg-accent/80 text-black',
     secondary: 'bg-secondary border border-border hover:bg-elevated hover:border-accent text-tx-primary',
-    destructive: 'bg-red-700 border border-red-700 hover:bg-red-800 text-white',
-    link: 'bg-transparent hover:bg-secondary text-tx-secondary hover:text-tx-primary',
+    destructive: 'bg-red-700 border border-red-700 hover:bg-red-800 text-tx-primary',
+    link: 'bg-transparent text-tx-secondary hover:text-tx-primary',
 };
 
 const buttonSizes: Record<ButtonSize, string> = {

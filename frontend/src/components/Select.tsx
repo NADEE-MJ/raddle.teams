@@ -29,8 +29,8 @@ export default function Select({
     'data-testid': dataTestId,
 }: SelectProps) {
     const baseSelectClasses =
-        'px-2 py-1 border border-border-light bg-secondary text-tx-primary rounded text-xs cursor-pointer transition duration-200 hover:bg-secondary-light hover:border-accent focus:outline-none focus:border-accent focus:ring-1 focus:ring-accent';
-    const disabledClasses = 'disabled:opacity-50 disabled:cursor-not-allowed';
+        'px-2 py-1 border border-border-light bg-secondary text-tx-primary rounded text-xs cursor-pointer transition-all duration-200 hover:border-accent focus:duration-1 focus:outline-none focus:border-accent focus:ring-1 focus:ring-accent';
+    const disabledClasses = 'disabled:opacity-50 disabled:cursor-not-allowed disabled:hover:border-border-light';
 
     const selectClasses = [baseSelectClasses, disabledClasses, className].filter(Boolean).join(' ');
 

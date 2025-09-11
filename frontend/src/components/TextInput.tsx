@@ -30,9 +30,9 @@ export default function TextInput({
     'data-testid': dataTestId,
 }: TextInputProps) {
     const baseInputClasses =
-        'w-full rounded-lg border border-border px-3 py-2 shadow-sm bg-tertiary text-tx-primary focus:border-accent focus:ring-2 focus:ring-accent focus:outline-none transition duration-200';
+        'w-full rounded-lg border border-border px-3 py-2 shadow-sm bg-tertiary text-tx-primary focus:border-accent focus:ring-2 focus:ring-accent focus:outline-none focus:duration-1 transition-all duration-100 hover:border-accent';
     const errorClasses = error ? 'border-red focus:border-red focus:ring-red' : '';
-    const disabledClasses = 'disabled:opacity-50 disabled:cursor-not-allowed';
+    const disabledClasses = 'disabled:opacity-50 disabled:cursor-not-allowed disabled:hover:border-border';
 
     const inputClasses = [baseInputClasses, errorClasses, disabledClasses, className].filter(Boolean).join(' ');
 
