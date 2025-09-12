@@ -12,25 +12,27 @@
     --color-accent-hover: #e1af4b;
     --color-blue: #39bae6;
     --color-blue-bright: #59c2ff;
-    --color-green: #aad94c;
+    --color-green: #a6e821;
     --color-orange: #ff8f40;
+    --color-yellow: #d6c019;
     --color-red: #f07178;
     --color-red-bright: #d95757;
     --color-purple: #d2a6ff;
     --color-cyan: #95e6cb;
+    --color-grey: #2b2b2b;
 }
 
 @import 'tailwindcss';
 
 @theme {
-    --color-primary: #0b0e14;
-    --color-secondary: #0d1017;
+    --color-primary: #0c1019;
+    --color-secondary: #11111a;
     --color-tertiary: #0f131a;
     --color-elevated: #131721;
-    --color-border: #2d3748;
-    --color-border-light: #4a5568;
-    --color-tx-primary: #bfbdb6;
-    --color-tx-secondary: #565b66;
+    --color-border: #b7a794;
+    --color-border-light: #73767d;
+    --color-tx-primary: #ffffff;
+    --color-tx-secondary: #a7a8aa;
     --color-tx-muted: #acb6bf8c;
     --color-accent: #e6b450;
     --color-accent-hover: #e1af4b;
@@ -38,10 +40,12 @@
     --color-blue-bright: #59c2ff;
     --color-green: #aad94c;
     --color-orange: #ff8f40;
+    --color-yellow: #96860e;
     --color-red: #f07178;
     --color-red-bright: #d95757;
     --color-purple: #d2a6ff;
     --color-cyan: #95e6cb;
+    --color-grey: #2b2b2b;
 }
 
 /* Custom Scrollbar Styles */
