@@ -7,10 +7,11 @@ interface LadderStepProps {
     inputRef: React.RefObject<HTMLInputElement | null>;
     gameStateStep: GameStateStep;
     ladderStep: LadderStepType;
+    ladderHeight: number;
 }
 
 
-export default function LadderStep({ onGuessChange, inputRef, gameStateStep, ladderStep }: LadderStepProps) {
+export default function LadderStep({ onGuessChange, inputRef, gameStateStep, ladderStep, ladderHeight }: LadderStepProps) {
     const [currentGuess, setCurrentGuess] = useState('');
 
     const color = useMemo(() => {
@@ -79,27 +80,28 @@ export default function LadderStep({ onGuessChange, inputRef, gameStateStep, lad
         return (
             <div className='relative'>
                 <div className='text-tx-primary py-3 text-center tracking-wide uppercase'>{word}</div>
-                {renderTransform ? (
-                    transform && (
+                {renderTransform && (
+                    transform !== null ? (
                         <span className='bg-secondary border-border text-tx-primary absolute bottom-0 left-1/2 z-50 -translate-x-1/2 translate-y-1/2 rounded-sm border px-2 py-1 font-mono text-xs whitespace-nowrap uppercase'>
                             {transform}
                         </span>
-                    )
-                ) : (
-                    <span className='bg-secondary border-border text-tx-primary absolute bottom-0 left-1/2 z-50 w-[max-content] min-w-25 -translate-x-1/2 translate-y-1/2 rounded-sm border p-1 pb-[6px] font-mono text-xs leading-1 uppercase'>
-                        &nbsp;
-                    </span>
-                )}
-            </div>);
+                    ) : (
+                        <span className='bg-secondary border-border text-tx-primary absolute bottom-0 left-1/2 z-50 w-[max-content] min-w-25 -translate-x-1/2 translate-y-1/2 rounded-sm border p-1 pb-[6px] font-mono text-xs leading-1 uppercase'>
+                            &nbsp;
+                        </span>
+                    ))}
+            </div>
+        );
     }
 
     const renderStep = (gameStateStep: GameStateStep, currentLadderStep: LadderStepType) => {
         if (gameStateStep.active) {
-            return renderActiveStep(currentLadderStep.word.length, false);
+            return renderActiveStep(currentLadderStep.word.length, gameStateStep.id !== ladderHeight - 1);
         }
 
-        if (gameStateStep.isRevealed) {
-            return renderRevealedStep(currentLadderStep.word, true, currentLadderStep.transform);
+        (currentLadderStep.transform);
+        if (gameStateStep.status === 'revealed' || gameStateStep.status === 'question' || gameStateStep.status === 'answer') {
+            return renderRevealedStep(currentLadderStep.word, gameStateStep.id !== ladderHeight - 1, gameStateStep.isRevealed ? currentLadderStep.transform : null);
         }
 
         return renderUnrevealedStep(currentLadderStep.word.length, true);

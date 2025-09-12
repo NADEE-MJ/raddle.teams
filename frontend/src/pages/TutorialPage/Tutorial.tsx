@@ -93,11 +93,9 @@ export default function Tutorial({ setCompleted, completed }: TutorialProps) {
 
         // Initial setup: first step is question, second is answer, last is revealed
         ladder[0].status = 'question';
-        ladder[0].isRevealed = true;
         ladder[1].status = 'answer';
         ladder[1].active = true;
         ladder[puzzle.ladder.length - 1].status = 'revealed';
-        ladder[puzzle.ladder.length - 1].isRevealed = true;
 
         return ladder;
     };
@@ -129,7 +127,7 @@ export default function Tutorial({ setCompleted, completed }: TutorialProps) {
             newGameState[activeStep.id - 1].status = "revealed";
 
             // find the next unrevealed step starting from the end of the list
-            const nextUnrevealedStep = newGameState.slice().reverse().find(step => !step.isRevealed);
+            const nextUnrevealedStep = newGameState.slice().reverse().find(step => step.status === 'unrevealed');
             if (nextUnrevealedStep) {
                 newGameState[nextUnrevealedStep.id].active = true;
                 newGameState[nextUnrevealedStep.id].status = "question";
@@ -147,7 +145,7 @@ export default function Tutorial({ setCompleted, completed }: TutorialProps) {
         newGameState[activeStep.id + 1].status = "revealed";
 
         // find the next unrevealed step starting from the beginning of the list
-        const nextUnrevealedStep = newGameState.find(step => !step.isRevealed);
+        const nextUnrevealedStep = newGameState.find(step => step.status === 'unrevealed');
         if (nextUnrevealedStep) {
             newGameState[nextUnrevealedStep.id].active = true;
             newGameState[nextUnrevealedStep.id].status = "answer";
@@ -166,7 +164,6 @@ export default function Tutorial({ setCompleted, completed }: TutorialProps) {
 
         if (guess === answer) {
             const newGameState = [...gameState];
-            newGameState[activeStep.id].isRevealed = true;
             newGameState[activeStep.id].active = false;
 
             const activeStepStatus = newGameState[activeStep.id].status;
@@ -184,9 +181,18 @@ export default function Tutorial({ setCompleted, completed }: TutorialProps) {
             if (hintStepId === undefined) throw new Error("Could not find hint step ID.");
             hintStep = newGameState[hintStepId];
 
+            // reset the states for the active and hint steps
             newGameState[hintStep.id].status = 'revealed';
             newGameState[activeStep.id].status = 'revealed';
 
+            // mark the right step as revealed for completion check
+            if (isDownward) {
+                newGameState[hintStep.id].isRevealed = true;
+            } else {
+                newGameState[activeStep.id].isRevealed = true;
+            }
+
+            // Handle edge cases for solving the ladder without switching directions once
             if (isDownward && activeStep.id === newGameState.length - 3) {
                 // If we're at the second to last step and moving downward, unset revealed on the last step
                 newGameState[newGameState.length - 1].status = 'unrevealed';
@@ -199,6 +205,7 @@ export default function Tutorial({ setCompleted, completed }: TutorialProps) {
                 setDisableDirectionToggle(true);
             }
 
+            console.log(newGameState);
             if (checkCompletion(newGameState)) {
                 setGameState(newGameState);
                 return;
@@ -241,10 +248,9 @@ export default function Tutorial({ setCompleted, completed }: TutorialProps) {
                                     inputRef={inputRef}
                                     gameStateStep={step}
                                     ladderStep={puzzle.ladder[step.id]}
+                                    ladderHeight={puzzle.ladder.length}
                                 />
                             ))}
-
-
 
                             <div>
                                 <div className='hidden p-3'></div>
@@ -258,7 +264,6 @@ export default function Tutorial({ setCompleted, completed }: TutorialProps) {
                                     </button>
                                 )}
                             </div>
-
                         </div>
                     </div>
                 </div>
