@@ -112,6 +112,7 @@ export default function Tutorial({ setCompleted, completed }: TutorialProps) {
 
     const checkCompletion = (gameState: GameState) => {
         const allSolved = gameState.every(step => step.isRevealed);
+        console.log(allSolved);
         setCompleted(allSolved);
         return allSolved;
     };
@@ -121,6 +122,7 @@ export default function Tutorial({ setCompleted, completed }: TutorialProps) {
         if (!activeStep) return;
 
         const newGameState = [...gameState];
+        console.log(newGameState)
         if (isDownward) {
             newGameState[activeStep.id].active = false;
             newGameState[activeStep.id].status = "unrevealed";
@@ -167,7 +169,6 @@ export default function Tutorial({ setCompleted, completed }: TutorialProps) {
             newGameState[activeStep.id].active = false;
 
             const activeStepStatus = newGameState[activeStep.id].status;
-            let hintStep: GameStateStep | null = null;
             let hintStepId: number | undefined;
 
             if (activeStepStatus === 'question') {
@@ -179,20 +180,54 @@ export default function Tutorial({ setCompleted, completed }: TutorialProps) {
             }
 
             if (hintStepId === undefined) throw new Error("Could not find hint step ID.");
-            hintStep = newGameState[hintStepId];
 
             // reset the states for the active and hint steps
-            newGameState[hintStep.id].status = 'revealed';
+            newGameState[hintStepId].status = 'revealed';
             newGameState[activeStep.id].status = 'revealed';
 
-            // mark the right step as revealed for completion check
+            // check for middle completion
             if (isDownward) {
-                newGameState[hintStep.id].isRevealed = true;
+                if (newGameState[activeStep.id + 1].status === "revealed") {
+                    newGameState[activeStep.id + 1].isRevealed = true;
+                }
             } else {
-                newGameState[activeStep.id].isRevealed = true;
+                if (newGameState[activeStep.id - 1].status === "revealed") {
+                    newGameState[activeStep.id - 1].isRevealed = true;
+                }
+            }
+            console.log('middleCompletion')
+            console.log(newGameState)
+            if (checkCompletion(newGameState)) {
+                setGameState(newGameState);
+                return;
             }
 
-            // Handle edge cases for solving the ladder without switching directions once
+            // mark the right step as revealed for completion check
+            // and check for completion when solving entirely in one direction or the other
+            if (isDownward) {
+                newGameState[hintStepId].isRevealed = true;
+                if (activeStep.id === newGameState.length - 1) {
+                    // if this is the last step and we are going downwards then mark it revealed
+                    newGameState[activeStep.id].isRevealed = true;
+                }
+            } else {
+                newGameState[activeStep.id].isRevealed = true;
+                if (activeStep.id === 0) {
+                    // if the is the first step and we are going upwards mark it revealed
+                    newGameState[activeStep.id].isRevealed = true;
+                } else if (activeStep.id === newGameState.length - 2) {
+                    // if this is the second to last step and we are going upwards mark the last step revealed
+                    newGameState[newGameState.length - 1].isRevealed = true;
+                }
+            }
+            console.log('edge completion')
+            console.log(newGameState)
+            if (checkCompletion(newGameState)) {
+                setGameState(newGameState);
+                return;
+            }
+
+            // Handle edge cases for solving the ladder without solving from the other direction once
             if (isDownward && activeStep.id === newGameState.length - 3) {
                 // If we're at the second to last step and moving downward, unset revealed on the last step
                 newGameState[newGameState.length - 1].status = 'unrevealed';
@@ -206,10 +241,6 @@ export default function Tutorial({ setCompleted, completed }: TutorialProps) {
             }
 
             console.log(newGameState);
-            if (checkCompletion(newGameState)) {
-                setGameState(newGameState);
-                return;
-            }
 
             if (isDownward) {
                 newGameState[activeStep.id + 1].active = true;
@@ -228,44 +259,39 @@ export default function Tutorial({ setCompleted, completed }: TutorialProps) {
     return (
         <div className='mx-auto max-w-6xl'>
             <div id='game-area' className='md:grid md:grid-cols-[2fr_3fr] md:gap-8'>
-                <div className='bg-secondary sticky top-0 z-10 py-4 md:static md:py-0'>
-                    <div className='mx-4 text-center md:mx-0'>
-                        <div className='divide-border border-border divide-y-2 border-x-5 bg-transparent'>
-                            <div>
-                                <div className='hidden p-3 md:block'></div>
-                                <button
-                                    type='button'
-                                    className='text-tx-muted hover:bg-tertiary w-full p-2 text-xs italic md:hidden'
-                                >
-                                    Show full ladder
-                                </button>
-                            </div>
-
-                            {gameState && gameState.map((step) => (
-                                <LadderStep
-                                    key={step.id}
-                                    onGuessChange={handleGuessChange}
-                                    inputRef={inputRef}
-                                    gameStateStep={step}
-                                    ladderStep={puzzle.ladder[step.id]}
-                                    ladderHeight={puzzle.ladder.length}
-                                />
-                            ))}
-
-                            <div>
-                                <div className='hidden p-3'></div>
-                                {!completed && !disableDirectionToggle && (
-                                    <button
-                                        type='button'
-                                        onClick={handleDirectionChange}
-                                        className='text-tx-muted hover:bg-tertiary w-full p-2 text-xs italic'
-                                    >
-                                        Switch to solving {isDownward ? '↑ upward' : '↓ downward'}
-                                    </button>
-                                )}
-                            </div>
-                        </div>
+                <div className='divide-border border-border divide-y-2 border-x-5 '>
+                    <div>
+                        <div className='hidden p-4 sm:hidden md:block'></div>
+                        <button
+                            type='button'
+                            className='text-tx-muted hover:bg-elevated w-full p-1 text-xs italic md:hidden'
+                        >
+                            Show full ladder
+                        </button>
                     </div>
+
+                    {gameState && gameState.map((step) => (
+                        <LadderStep
+                            key={step.id}
+                            onGuessChange={handleGuessChange}
+                            inputRef={inputRef}
+                            gameStateStep={step}
+                            ladderStep={puzzle.ladder[step.id]}
+                            ladderHeight={puzzle.ladder.length}
+                        />
+                    ))}
+
+                    {(!completed && !disableDirectionToggle) ? (
+                        <button
+                            type='button'
+                            onClick={handleDirectionChange}
+                            className='text-tx-muted hover:bg-elevated w-full p-1 text-xs italic'
+                        >
+                            Switch to solving {isDownward ? '↑ upward' : '↓ downward'}
+                        </button>
+                    ) : (
+                        <div className='p-4' />
+                    )}
                 </div>
 
                 {gameState && (
@@ -273,6 +299,7 @@ export default function Tutorial({ setCompleted, completed }: TutorialProps) {
                         gameState={gameState}
                         puzzle={puzzle}
                         isDownward={isDownward}
+                        completed={completed}
                     />
                 )}
             </div>

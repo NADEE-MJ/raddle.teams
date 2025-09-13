@@ -21,6 +21,24 @@ export default function LadderStep({ onGuessChange, inputRef, gameStateStep, lad
         return 'bg-secondary';
     }, [gameStateStep.status]);
 
+    const renderEmptyTransformFn = () => {
+        return (
+            <span className='bg-secondary border-border text-tx-primary absolute bottom-0 left-1/2 z-50 w-[max-content] min-w-25 -translate-x-1/2 translate-y-1/2 rounded-sm border p-1 pb-[6px] font-mono text-xs leading-1 uppercase'>
+                &nbsp;
+            </span>
+        )
+    };
+
+    const renderTransformFn = (transform: string) => {
+        return (
+            <span className='bg-secondary border-border text-tx-primary absolute bottom-0 left-1/2 z-50 -translate-x-1/2 translate-y-1/2 rounded-sm border px-2 py-1 font-mono text-xs whitespace-nowrap uppercase'>
+                {transform}
+            </span>
+        );
+    };
+
+    const inputClassNames = useMemo(() => 'text-tx-primary w-full bg-transparent p-3 text-center text-[16px] tracking-wide uppercase focus:outline-none md:text-lg', []);
+
     const renderActiveStep = (wordLength: number, renderEmptyTransform: boolean) => {
         return (
             <div className='relative'>
@@ -37,7 +55,7 @@ export default function LadderStep({ onGuessChange, inputRef, gameStateStep, lad
                         onGuessChange(guess);
                     }}
                     placeholder=''
-                    className='text-tx-primary w-full bg-transparent p-3 text-center text-[16px] tracking-wide uppercase focus:outline-none md:text-lg'
+                    className={inputClassNames}
                     // maxLength={step.word.length} TODO - enforce max length?
                     autoComplete='off'
                     autoCorrect='off'
@@ -47,11 +65,7 @@ export default function LadderStep({ onGuessChange, inputRef, gameStateStep, lad
                 <button className='bg-blue-500 border-blue-500 hover:bg-blue-600 transition-all duration-100 absolute top-1/2 right-0 flex h-8 w-8 -translate-y-1/2 translate-x-1/2 items-center justify-center rounded border'>
                     💡
                 </button>
-                {renderEmptyTransform && (
-                    <span className='bg-secondary border-border text-tx-primary absolute bottom-0 left-1/2 z-50 w-[max-content] min-w-25 -translate-x-1/2 translate-y-1/2 rounded-sm border p-1 pb-[6px] font-mono text-xs leading-1 uppercase'>
-                        &nbsp;
-                    </span>
-                )}
+                {renderEmptyTransform && renderEmptyTransformFn()}
             </div>);
     }
 
@@ -61,18 +75,14 @@ export default function LadderStep({ onGuessChange, inputRef, gameStateStep, lad
                 <input
                     type='text'
                     placeholder={'◼️'.repeat(wordLength) + ` (${wordLength})`}
-                    className='text-tx-muted w-full bg-transparent p-3 text-center text-[16px] tracking-wide uppercase focus:outline-none md:text-lg'
+                    className={inputClassNames}
                     disabled
                     autoComplete='off'
                     autoCorrect='off'
                     autoCapitalize='off'
                     spellCheck='false'
                 />
-                {renderEmptyTransform && (
-                    <span className='bg-secondary border-border text-tx-primary absolute bottom-0 left-1/2 z-50 w-[max-content] min-w-25 -translate-x-1/2 translate-y-1/2 rounded-sm border p-1 pb-[6px] font-mono text-xs leading-1 uppercase'>
-                        &nbsp;
-                    </span>
-                )}
+                {renderEmptyTransform && renderEmptyTransformFn()}
             </div>);
     }
 
@@ -80,31 +90,22 @@ export default function LadderStep({ onGuessChange, inputRef, gameStateStep, lad
         return (
             <div className='relative'>
                 <div className='text-tx-primary py-3 text-center tracking-wide uppercase'>{word}</div>
-                {renderTransform && (
-                    transform !== null ? (
-                        <span className='bg-secondary border-border text-tx-primary absolute bottom-0 left-1/2 z-50 -translate-x-1/2 translate-y-1/2 rounded-sm border px-2 py-1 font-mono text-xs whitespace-nowrap uppercase'>
-                            {transform}
-                        </span>
-                    ) : (
-                        <span className='bg-secondary border-border text-tx-primary absolute bottom-0 left-1/2 z-50 w-[max-content] min-w-25 -translate-x-1/2 translate-y-1/2 rounded-sm border p-1 pb-[6px] font-mono text-xs leading-1 uppercase'>
-                            &nbsp;
-                        </span>
-                    ))}
+                {renderTransform && (transform !== null ? renderTransformFn(transform) : renderEmptyTransformFn())}
             </div>
         );
     }
 
     const renderStep = (gameStateStep: GameStateStep, currentLadderStep: LadderStepType) => {
         if (gameStateStep.active) {
-            return renderActiveStep(currentLadderStep.word.length, gameStateStep.id !== ladderHeight - 1);
+            return renderActiveStep(currentLadderStep.word.length, currentLadderStep.transform !== null);
         }
 
         (currentLadderStep.transform);
         if (gameStateStep.status === 'revealed' || gameStateStep.status === 'question' || gameStateStep.status === 'answer') {
-            return renderRevealedStep(currentLadderStep.word, gameStateStep.id !== ladderHeight - 1, gameStateStep.isRevealed ? currentLadderStep.transform : null);
+            return renderRevealedStep(currentLadderStep.word, currentLadderStep.transform !== null, gameStateStep.isRevealed ? currentLadderStep.transform : null);
         }
 
-        return renderUnrevealedStep(currentLadderStep.word.length, true);
+        return renderUnrevealedStep(currentLadderStep.word.length, currentLadderStep.transform !== null);
     };
 
     return (
