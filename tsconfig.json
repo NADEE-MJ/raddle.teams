@@ -19,7 +19,8 @@
         "baseUrl": "frontend/src",
         "paths": {
             "@/*": ["*"]
-        }
+        },
+        "types": ["@testing-library/jest-dom"]
     },
-    "include": ["frontend/src", "vite.config.ts"]
+    "include": ["frontend/src", "vite.config.ts", "vitest.config.ts", "frontend/vitestSetup.ts"]
 }
