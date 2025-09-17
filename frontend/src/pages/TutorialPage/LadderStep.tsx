@@ -33,7 +33,7 @@ export default function LadderStep({ onGuessChange, inputRef, gameStateStep, lad
         return (
             <span className='bg-secondary border-border text-tx-primary absolute bottom-0 left-1/2 z-50 -translate-x-1/2 translate-y-1/2 rounded-sm border px-2 py-1 font-mono text-xs whitespace-nowrap uppercase'>
                 {transform}
-            </span>
+            </span >
         );
     };
 
@@ -42,7 +42,8 @@ export default function LadderStep({ onGuessChange, inputRef, gameStateStep, lad
     const renderActiveStep = (wordLength: number, renderEmptyTransform: boolean) => {
         return (
             <div className='relative'>
-                <span className='bg-secondary border-border text-tx-primary absolute top-1/2 -translate-x-1/2 -translate-y-1/2 rounded-lg border p-0.5 text-sm md:text-base'>
+                <span className='bg-secondary border-border text-tx-primary absolute top-1/2 -translate-x-1/2 -translate-y-1/2 rounded-lg border p-0.5 text-sm md:text-base'
+                    data-testid='word-length-indicator'>
                     ({wordLength})
                 </span>
                 <input
@@ -61,8 +62,10 @@ export default function LadderStep({ onGuessChange, inputRef, gameStateStep, lad
                     autoCorrect='off'
                     autoCapitalize='off'
                     spellCheck='false'
+                    data-testid="active-step-input"
                 />
-                <button className='bg-blue-500 border-blue-500 hover:bg-blue-600 transition-all duration-100 absolute top-1/2 right-0 flex h-8 w-8 -translate-y-1/2 translate-x-1/2 items-center justify-center rounded border'>
+                <button className='bg-blue-500 border-blue-500 hover:bg-blue-600 transition-all duration-100 absolute top-1/2 right-0 flex h-8 w-8 -translate-y-1/2 translate-x-1/2 items-center justify-center rounded border'
+                    data-testid='hint-button'>
                     💡
                 </button>
                 {renderEmptyTransform && renderEmptyTransformFn()}
@@ -81,6 +84,7 @@ export default function LadderStep({ onGuessChange, inputRef, gameStateStep, lad
                     autoCorrect='off'
                     autoCapitalize='off'
                     spellCheck='false'
+                    data-testid='unrevealed-step-input'
                 />
                 {renderEmptyTransform && renderEmptyTransformFn()}
             </div>);
@@ -89,7 +93,11 @@ export default function LadderStep({ onGuessChange, inputRef, gameStateStep, lad
     const renderRevealedStep = (word: string, renderTransform: boolean, transform: string | null = null) => {
         return (
             <div className='relative'>
-                <div className='text-tx-primary py-3 text-center tracking-wide uppercase'>{word}</div>
+                <div
+                    className='text-tx-primary py-3 text-center tracking-wide uppercase'
+                >
+                    {word}
+                </div>
                 {renderTransform && (transform !== null ? renderTransformFn(transform) : renderEmptyTransformFn())}
             </div>
         );
@@ -111,6 +119,7 @@ export default function LadderStep({ onGuessChange, inputRef, gameStateStep, lad
     return (
         <div
             className={`relative font-mono text-sm md:text-lg ${color}`}
+            data-testid={`ladder-word-${ladderStep.word.toLowerCase()}`}
         >
             {renderStep(gameStateStep, ladderStep)}
         </div>

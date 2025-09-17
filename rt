@@ -235,8 +235,6 @@ add_command_and_aliases(
 
 def vitest(
     v: bool = typer.Option(False, "--verbose", "-v", help="🔍 Enable verbose output"),
-    vv: bool = typer.Option(False, "--very-verbose", "-vv", help="🔍🔍 Enable very verbose output"),
-    vvv: bool = typer.Option(False, "--very-very-verbose", "-vvv", help="🔍🔍🔍 Enable very very verbose output"),
     filter: str = typer.Option(None, "--filter", "-f", help="🔍 Filter tests by name"),
 ):
     """⚡ Run vitest unit tests"""
@@ -244,13 +242,9 @@ def vitest(
 
     vitest_cmd = ["npx", "vitest", "run"]
 
-    # Add verbose flags
     if v:
         vitest_cmd.append("--reporter=verbose")
-    elif vv or vvv:
-        vitest_cmd.extend(["--reporter=verbose", "--verbose"])
 
-    # Add filter
     if filter:
         vitest_cmd.extend(["-t", filter])
 

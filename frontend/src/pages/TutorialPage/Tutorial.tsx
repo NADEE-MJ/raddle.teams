@@ -272,7 +272,7 @@ export default function Tutorial({ setCompleted, completed }: TutorialProps) {
 
                     {gameState && gameState.map((step) => (
                         <LadderStep
-                            key={step.id}
+                            key={`ladder-step-${step.id}`}
                             onGuessChange={handleGuessChange}
                             inputRef={inputRef}
                             gameStateStep={step}
@@ -286,6 +286,7 @@ export default function Tutorial({ setCompleted, completed }: TutorialProps) {
                             type='button'
                             onClick={handleDirectionChange}
                             className='text-tx-muted hover:bg-elevated w-full p-1 text-xs italic'
+                            data-testid="switch-direction-button"
                         >
                             Switch to solving {isDownward ? '↑ upward' : '↓ downward'}
                         </button>

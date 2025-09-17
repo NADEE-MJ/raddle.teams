@@ -39,13 +39,15 @@ export default function Clues({ gameState, puzzle, isDownward, completed }: Clue
 
     const renderQuestionWord = (word: string) => {
         return (
-            <span className='bg-green/30 text-green p-1 font-mono'>{word}</span>
+            <span className='bg-green/30 text-green p-1 font-mono'
+                data-testid={`question-word-${word.toLowerCase()}`}>{word}</span>
         )
     };
 
     const renderAnswerWord = (word: string) => {
         return (
-            <span className='bg-yellow/30 text-yellow p-1 font-mono'>{word}</span>
+            <span className='bg-yellow/30 text-yellow p-1 font-mono'
+                data-testid={`answer-word-${word.toLowerCase()}`}>{word}</span>
         )
     };
 
@@ -94,7 +96,8 @@ export default function Clues({ gameState, puzzle, isDownward, completed }: Clue
         }
 
         return (
-            <div className='text-tx-muted my-3 mb-2 opacity-75'>
+            <div className='text-tx-muted my-3 mb-2 opacity-75'
+                data-testid={`solved-clue-${gameStateStep.id}`}>
                 {parts}
             </div>
         );
@@ -110,7 +113,8 @@ export default function Clues({ gameState, puzzle, isDownward, completed }: Clue
 
         const parts = renderClueParts(clue, questionWordRendered, null);
 
-        return <div className='text-tx-primary opacity-75 border-border bg-secondary mb-2 rounded-md border-1 px-2 py-1 pt-1 pb-0'>{parts}</div>;
+        return <div className='text-tx-primary opacity-75 border-border bg-secondary mb-2 rounded-md border-1 px-2 py-1 pt-1 pb-0'
+            data-testid={`unsolved-clue-${gameStateStep.id}`}>{parts}</div>;
     };
 
     const renderUpwardClue = (gameStateStep: GameStateStep) => {
@@ -127,7 +131,8 @@ export default function Clues({ gameState, puzzle, isDownward, completed }: Clue
             parts.push(' → ')
             parts.push(answerWordRendered)
         }
-        return <div className='text-tx-primary opacity-75 border-border bg-secondary mb-2 rounded-md border-1 px-2 py-1 pt-1 pb-0'>
+        return <div className='text-tx-primary opacity-75 border-border bg-secondary mb-2 rounded-md border-1 px-2 py-1 pt-1 pb-0'
+            data-testid={`unsolved-clue-${gameStateStep.id}`}>
             {parts}
         </div>;
     };
@@ -137,11 +142,12 @@ export default function Clues({ gameState, puzzle, isDownward, completed }: Clue
             <div className='text-sm leading-[24px] md:text-lg'>
                 {unsolvedSteps.length > 0 && (
                     <div>
-                        <h2 className='border-border text-tx-secondary mb-4 border-b-1 pt-4 text-sm font-bold uppercase'>
+                        <h2 className='border-border text-tx-secondary mb-4 border-b-1 pt-4 text-sm font-bold uppercase'
+                            data-testid='clues-out-of-order-heading'>
                             Clues, out of order
                         </h2>
                         {unsolvedSteps.map((step) => (
-                            <div key={step.id} >
+                            <div key={`unsolved-clue-${step.id}`} >
                                 {!isDownward ? renderUpwardClue(step) : renderDownwardClue(step)}
                             </div>
                         ))}
@@ -149,11 +155,12 @@ export default function Clues({ gameState, puzzle, isDownward, completed }: Clue
                 )}
                 {solvedSteps.length > 0 && (
                     <div>
-                        <h2 className='border-border text-tx-secondary mb-2 border-b-1 pt-4 text-sm font-bold uppercase'>
+                        <h2 className='border-border text-tx-secondary mb-2 border-b-1 pt-4 text-sm font-bold uppercase'
+                            data-testid='used-clues-heading'>
                             Used clues
                         </h2>
                         {solvedSteps.map((step) => (
-                            <div key={step.id} >
+                            <div key={`solved-clue-${step.id}`} >
                                 {renderSolvedClue(step)}
                             </div>
                         ))}
