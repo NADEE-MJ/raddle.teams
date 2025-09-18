@@ -62,46 +62,59 @@ describe('Tutorial Component', () => {
       const input = screen.getByTestId('active-step-input')
 
       // Type lowercase
-      await user.type(input, 'south')
+      await user.type(input, 'test')
 
       // Should still work (component converts to uppercase)
-      expect((input as HTMLInputElement).value.toUpperCase()).toBe('SOUTH')
+      expect((input as HTMLInputElement).value.toUpperCase()).toBe('TEST')
     })
 
-    test.skip('solves multiple steps in sequence', async () => {
+    test('solves multiple steps in sequence', async () => {
       const user = userEvent.setup()
       render(<Tutorial setCompleted={mockSetCompleted} completed={false} />)
 
-      const input = screen.getByTestId('active-step-input')
-
       // First answer: SOUTH
+      let input = screen.getByTestId('active-step-input')
       fireEvent.change(input, { target: { value: '' } })
       await user.type(input, 'SOUTH')
 
       // Second answer: MOUTH
+      input = screen.getByTestId('active-step-input')
       fireEvent.change(input, { target: { value: '' } })
       await user.type(input, 'MOUTH')
 
       // Third answer: TONGUE
+      input = screen.getByTestId('active-step-input')
       fireEvent.change(input, { target: { value: '' } })
       await user.type(input, 'TONGUE')
 
       // Should still have input field for next step
+      input = screen.getByTestId('active-step-input')
       expect(input).toBeInTheDocument()
     })
 
-    test.skip('completes puzzle when solving downward fully', async () => {
+    test('completes puzzle when solving downward fully', async () => {
       const user = userEvent.setup()
       render(<Tutorial setCompleted={mockSetCompleted} completed={false} />)
 
-      const input = screen.getByTestId('active-step-input')
       const answers = ['SOUTH', 'MOUTH', 'TONGUE', 'SHOE', 'SOLE', 'SOUL', 'HEART']
 
       // Solve all steps
       for (const answer of answers) {
+        let input = screen.getByTestId('active-step-input')
         fireEvent.change(input, { target: { value: '' } })
         await user.type(input, answer)
       }
+
+      // all ladder steps should be grey
+      expect(screen.getByTestId('ladder-word-down')).toHaveClass('bg-grey')
+      expect(screen.getByTestId('ladder-word-south')).toHaveClass('bg-grey')
+      expect(screen.getByTestId('ladder-word-mouth')).toHaveClass('bg-grey')
+      expect(screen.getByTestId('ladder-word-tongue')).toHaveClass('bg-grey')
+      expect(screen.getByTestId('ladder-word-shoe')).toHaveClass('bg-grey')
+      expect(screen.getByTestId('ladder-word-sole')).toHaveClass('bg-grey')
+      expect(screen.getByTestId('ladder-word-soul')).toHaveClass('bg-grey')
+      expect(screen.getByTestId('ladder-word-heart')).toHaveClass('bg-grey')
+      expect(screen.getByTestId('ladder-word-earth')).toHaveClass('bg-grey')
 
       // Should call setCompleted with true
       expect(mockSetCompleted).toHaveBeenCalledWith(true)

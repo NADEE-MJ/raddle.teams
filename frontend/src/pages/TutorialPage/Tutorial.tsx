@@ -112,7 +112,7 @@ export default function Tutorial({ setCompleted, completed }: TutorialProps) {
 
     const checkCompletion = (gameState: GameState) => {
         const allSolved = gameState.every(step => step.isRevealed);
-        console.log(allSolved);
+        // console.log(allSolved);
         setCompleted(allSolved);
         return allSolved;
     };
@@ -122,7 +122,7 @@ export default function Tutorial({ setCompleted, completed }: TutorialProps) {
         if (!activeStep) return;
 
         const newGameState = [...gameState];
-        console.log(newGameState)
+        // console.log(newGameState)
         if (isDownward) {
             newGameState[activeStep.id].active = false;
             newGameState[activeStep.id].status = "unrevealed";
@@ -196,7 +196,7 @@ export default function Tutorial({ setCompleted, completed }: TutorialProps) {
                 }
             }
             console.log('middleCompletion')
-            console.log(newGameState)
+            // console.log(newGameState)
             if (checkCompletion(newGameState)) {
                 setGameState(newGameState);
                 return;
@@ -221,7 +221,7 @@ export default function Tutorial({ setCompleted, completed }: TutorialProps) {
                 }
             }
             console.log('edge completion')
-            console.log(newGameState)
+            // console.log(newGameState)
             if (checkCompletion(newGameState)) {
                 setGameState(newGameState);
                 return;
@@ -240,7 +240,7 @@ export default function Tutorial({ setCompleted, completed }: TutorialProps) {
                 setDisableDirectionToggle(true);
             }
 
-            console.log(newGameState);
+            // console.log(newGameState);
 
             if (isDownward) {
                 newGameState[activeStep.id + 1].active = true;
