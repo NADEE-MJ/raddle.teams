@@ -18,6 +18,7 @@ This file provides guidance to Claude Code (claude.ai/code) when working with co
 - `./rt server --watch` - 🚀👀 Start server with frontend watch mode (builds and serves)
 - `./rt server --no-build` - ⚡ Start server without building frontend first
 - `./rt test` or `./rt t` - 🧪 Run Python e2e test suite with Playwright (auto runs frontend build and testing server)
+- `./rt vitest` or `./rt vi` - 🧪 Run frontend unit tests with Vitest
 - `./rt install` or `./rt i` - 📦 Install Python and Node.js dependencies
 - `./rt format` or `./rt f` - 🎨 Format code using Prettier (frontend) and Ruff (backend)
 - `./rt format --check` - 🔍 Check formatting without changing files
@@ -32,6 +33,10 @@ This file provides guidance to Claude Code (claude.ai/code) when working with co
 - `./rt test --slow-mo` or `./rt t -sm` - 🐌 Run tests in slow motion mode
 - `./rt test --debug` or `./rt t -d` - 🐛 Run tests in Playwright debug mode
 - `./rt test tests/e2e/path/to/test.py` - Run specific test file
+
+**Advanced Vitest Testing Options:**
+- `./rt vitest --verbose` or `./rt vi -v` - 👀 Run Vitest with verbose output
+- `./rt vitest --filter <pattern>` or `./rt vi -f <pattern>` - 🎯 Run specific tests matching pattern
 
 **Server Options:**
 - `./rt server --port 9000` or `./rt s -p 9000` - 🔌 Run server on custom port

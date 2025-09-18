@@ -34,10 +34,11 @@ describe('Tutorial Component', () => {
       expect(screen.getByTestId('switch-direction-button')).toHaveTextContent(/Switch to solving.*upward/i)
     })
 
-    test('does not call setCompleted on initial render', () => {
+    test('initializes completion state correctly', () => {
       render(<Tutorial setCompleted={mockSetCompleted} completed={false} />)
 
-      expect(mockSetCompleted).not.toHaveBeenCalled()
+      // Should call setCompleted with false on initial render to sync state
+      expect(mockSetCompleted).toHaveBeenCalledWith(false)
     })
   })
 

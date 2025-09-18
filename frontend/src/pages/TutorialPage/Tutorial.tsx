@@ -1,5 +1,6 @@
-import { useState, useEffect, useRef, useMemo, useCallback } from 'react';
-import { Puzzle, GameState, GameStateStep } from '@/types/game';
+import { useRef, useMemo, useEffect } from 'react';
+import { Puzzle } from '@/types/game';
+import { useTutorialStateMachine } from '@/hooks/useTutorialStateMachine';
 import LadderStep from './LadderStep';
 import Clues from './Clues';
 
@@ -60,201 +61,57 @@ const TUTORIAL_PUZZLE: Puzzle = {
 };
 
 export default function Tutorial({ setCompleted, completed }: TutorialProps) {
-    const [isDownward, setIsDownward] = useState(true);
-    const [disableDirectionToggle, setDisableDirectionToggle] = useState(false);
     const inputRef = useRef<HTMLInputElement>(null);
-    const [gameState, setGameState] = useState<GameState | null>(null);
-
     const puzzle = useMemo<Puzzle>(() => TUTORIAL_PUZZLE, []);
 
-    const getActiveStep = useCallback((gameState: GameState) => {
-        return gameState.find(step => step.active);
-    }, []);
+    // Use our new state machine hook
+    const {
+        state,
+        handleCorrectGuess,
+        handleSwitchDirection,
+        canSwitchDirection,
+        getActiveStepId,
+        isStepRevealed,
+        isCurrentQuestion,
+        isCurrentAnswer,
+    } = useTutorialStateMachine(puzzle);
 
-    const activeStep = useMemo<GameStateStep | null>(() => {
-        if (!gameState) return null;
-        return getActiveStep(gameState) || null;
-    }, [gameState, getActiveStep]);
+    // Derived values
+    const activeStepId = getActiveStepId();
+    const isDownward = state.direction === 'down';
+    const disableDirectionToggle = !canSwitchDirection();
 
-    const answer = useMemo<string>(() => {
-        if (!activeStep) return '';
-        return puzzle.ladder[activeStep.id].word.toUpperCase();
-    }, [puzzle, activeStep]);
-
-    const initializeGameState = (puzzle: Puzzle): GameState => {
-        const ladder: GameStateStep[] = puzzle.ladder.map((_, index) => ({
-            id: index,
-            active: false,
-            status: 'unrevealed',
-            isRevealed: false,
-            isClueShown: false,
-            reveals: 0
-        }));
-
-        // Initial setup: first step is question, second is answer, last is revealed
-        ladder[0].status = 'question';
-        ladder[1].status = 'answer';
-        ladder[1].active = true;
-        ladder[puzzle.ladder.length - 1].status = 'revealed';
-
-        return ladder;
-    };
-
-    const updateGameState = useCallback((newGameState: GameState) => {
-        setGameState(newGameState);
-        setTimeout(() => inputRef.current?.focus(), 100);
-    }, []);
-
+    // Update completion status when state changes
     useEffect(() => {
-        setIsDownward(true);
-        updateGameState(initializeGameState(puzzle));
-    }, [puzzle, updateGameState]);
+        setCompleted(state.isCompleted);
+    }, [state.isCompleted, setCompleted]);
 
-    const checkCompletion = (gameState: GameState) => {
-        const allSolved = gameState.every(step => step.isRevealed);
-        // console.log(allSolved);
-        setCompleted(allSolved);
-        return allSolved;
-    };
+    // Focus input when state changes
+    useEffect(() => {
+        setTimeout(() => inputRef.current?.focus(), 100);
+    }, [state]);
 
     const handleDirectionChange = () => {
-        if (!gameState) return;
-        if (!activeStep) return;
-
-        const newGameState = [...gameState];
-        // console.log(newGameState)
-        if (isDownward) {
-            newGameState[activeStep.id].active = false;
-            newGameState[activeStep.id].status = "unrevealed";
-            newGameState[activeStep.id - 1].status = "revealed";
-
-            // find the next unrevealed step starting from the end of the list
-            const nextUnrevealedStep = newGameState.slice().reverse().find(step => step.status === 'unrevealed');
-            if (nextUnrevealedStep) {
-                newGameState[nextUnrevealedStep.id].active = true;
-                newGameState[nextUnrevealedStep.id].status = "question";
-                newGameState[nextUnrevealedStep.id + 1].status = "answer";
-            } else {
-                throw new Error("Could not find next unrevealed step when switching direction.");
-            }
-            setIsDownward(false);
-            updateGameState(newGameState);
-            return;
-        }
-
-        newGameState[activeStep.id].active = false;
-        newGameState[activeStep.id].status = "unrevealed";
-        newGameState[activeStep.id + 1].status = "revealed";
-
-        // find the next unrevealed step starting from the beginning of the list
-        const nextUnrevealedStep = newGameState.find(step => step.status === 'unrevealed');
-        if (nextUnrevealedStep) {
-            newGameState[nextUnrevealedStep.id].active = true;
-            newGameState[nextUnrevealedStep.id].status = "answer";
-            newGameState[nextUnrevealedStep.id - 1].status = "question";
-        } else {
-            throw new Error("Could not find next unrevealed step when switching direction.");
-        }
-        updateGameState(newGameState);
-        setIsDownward(true);
+        handleSwitchDirection();
     };
 
     const handleGuessChange = (guess: string) => {
-        if (!gameState) return;
-
-        if (!activeStep) return;
-
-        if (guess === answer) {
-            const newGameState = [...gameState];
-            newGameState[activeStep.id].active = false;
-
-            const activeStepStatus = newGameState[activeStep.id].status;
-            let hintStepId: number | undefined;
-
-            if (activeStepStatus === 'question') {
-                hintStepId = newGameState.find(step => step.status === 'answer')?.id;
-            } else if (activeStepStatus === 'answer') {
-                hintStepId = newGameState.find(step => step.status === 'question')?.id;
-            } else {
-                throw new Error("Active step is neither question nor answer when trying to find hint step.");
-            }
-
-            if (hintStepId === undefined) throw new Error("Could not find hint step ID.");
-
-            // reset the states for the active and hint steps
-            newGameState[hintStepId].status = 'revealed';
-            newGameState[activeStep.id].status = 'revealed';
-
-            // check for middle completion
-            if (isDownward) {
-                if (newGameState[activeStep.id + 1].status === "revealed") {
-                    newGameState[activeStep.id + 1].isRevealed = true;
-                }
-            } else {
-                if (newGameState[activeStep.id - 1].status === "revealed") {
-                    newGameState[activeStep.id - 1].isRevealed = true;
-                }
-            }
-            console.log('middleCompletion')
-            // console.log(newGameState)
-            if (checkCompletion(newGameState)) {
-                setGameState(newGameState);
-                return;
-            }
-
-            // mark the right step as revealed for completion check
-            // and check for completion when solving entirely in one direction or the other
-            if (isDownward) {
-                newGameState[hintStepId].isRevealed = true;
-                if (activeStep.id === newGameState.length - 1) {
-                    // if this is the last step and we are going downwards then mark it revealed
-                    newGameState[activeStep.id].isRevealed = true;
-                }
-            } else {
-                newGameState[activeStep.id].isRevealed = true;
-                if (activeStep.id === 0) {
-                    // if the is the first step and we are going upwards mark it revealed
-                    newGameState[activeStep.id].isRevealed = true;
-                } else if (activeStep.id === newGameState.length - 2) {
-                    // if this is the second to last step and we are going upwards mark the last step revealed
-                    newGameState[newGameState.length - 1].isRevealed = true;
-                }
-            }
-            console.log('edge completion')
-            // console.log(newGameState)
-            if (checkCompletion(newGameState)) {
-                setGameState(newGameState);
-                return;
-            }
-
-            // Handle edge cases for solving the ladder without solving from the other direction once
-            if (isDownward && activeStep.id === newGameState.length - 3) {
-                // If we're at the second to last step and moving downward, unset revealed on the last step
-                newGameState[newGameState.length - 1].status = 'unrevealed';
-                newGameState[newGameState.length - 1].isRevealed = false;
-                setDisableDirectionToggle(true);
-            } else if (!isDownward && activeStep.id === 2) {
-                // If we're at the second step and moving upward, unset revealed on the first step
-                newGameState[0].status = 'unrevealed';
-                newGameState[0].isRevealed = false;
-                setDisableDirectionToggle(true);
-            }
-
-            // console.log(newGameState);
-
-            if (isDownward) {
-                newGameState[activeStep.id + 1].active = true;
-                newGameState[activeStep.id + 1].status = 'answer';
-                newGameState[activeStep.id].status = 'question';
-            } else {
-                newGameState[activeStep.id - 1].active = true;
-                newGameState[activeStep.id - 1].status = 'question';
-                newGameState[activeStep.id].status = 'answer';
-            }
-
-            updateGameState(newGameState);
-        }
+        handleCorrectGuess(guess);
     };
+
+    // Convert state machine state to format expected by LadderStep component
+    const gameStateSteps = useMemo(() => {
+        return puzzle.ladder.map((_, stepId) => ({
+            id: stepId,
+            active: stepId === activeStepId,
+            status: isCurrentQuestion(stepId) ? 'question' as const :
+                   isCurrentAnswer(stepId) ? 'answer' as const :
+                   isStepRevealed(stepId) ? 'revealed' as const : 'unrevealed' as const,
+            isRevealed: isStepRevealed(stepId),
+            isClueShown: false, // Not used in tutorial
+            reveals: 0, // Not used in tutorial
+        }));
+    }, [puzzle.ladder, activeStepId, isCurrentQuestion, isCurrentAnswer, isStepRevealed]);
 
     return (
         <div className='mx-auto max-w-6xl'>
@@ -270,7 +127,7 @@ export default function Tutorial({ setCompleted, completed }: TutorialProps) {
                         </button>
                     </div>
 
-                    {gameState && gameState.map((step) => (
+                    {gameStateSteps.map((step) => (
                         <LadderStep
                             key={`ladder-step-${step.id}`}
                             onGuessChange={handleGuessChange}
@@ -295,14 +152,12 @@ export default function Tutorial({ setCompleted, completed }: TutorialProps) {
                     )}
                 </div>
 
-                {gameState && (
-                    <Clues
-                        gameState={gameState}
-                        puzzle={puzzle}
-                        isDownward={isDownward}
-                        completed={completed}
-                    />
-                )}
+                <Clues
+                    gameState={gameStateSteps}
+                    puzzle={puzzle}
+                    isDownward={isDownward}
+                    completed={completed}
+                />
             </div>
         </div>
     );
