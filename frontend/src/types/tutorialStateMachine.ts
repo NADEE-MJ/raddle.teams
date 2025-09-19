@@ -1,45 +1,36 @@
 import { Puzzle } from './game';
 
 export type TutorialPhase =
-  | 'DOWNWARD'     // Solving from top to bottom
-  | 'UPWARD'       // Solving from bottom to top
-  | 'DIRECTION_LOCKED'  // Can only solve in one direction
-  | 'COMPLETED';   // All words revealed
+    | 'DOWNWARD' // Solving from top to bottom
+    | 'UPWARD' // Solving from bottom to top
+    | 'DIRECTION_LOCKED' // Can only solve in one direction
+    | 'COMPLETED';
 
 export type Direction = 'down' | 'up';
 
 export interface TutorialState {
-  // Current phase of the tutorial
-  phase: TutorialPhase;
+    phase: TutorialPhase;
 
-  // Which direction we're solving
-  direction: Direction;
+    direction: Direction;
 
-  // Which steps have been revealed/completed
-  revealedSteps: Set<number>;
+    revealedSteps: Set<number>;
 
-  // Current active pair (question step + answer step)
-  currentQuestion: number;
-  currentAnswer: number;
+    currentQuestion: number;
+    currentAnswer: number;
 
-  // Completion status
-  isCompleted: boolean;
+    isCompleted: boolean;
 
-  // Reference to the puzzle being solved
-  puzzle: Puzzle;
+    puzzle: Puzzle;
 }
 
-export type TutorialEvent =
-  | { type: 'CORRECT_GUESS'; guess: string; }
-  | { type: 'SWITCH_DIRECTION'; }
-  | { type: 'RESET'; };
+export type TutorialEvent = { type: 'CORRECT_GUESS'; guess: string } | { type: 'SWITCH_DIRECTION' } | { type: 'RESET' };
 
 export interface TutorialStateMachine {
-  getCurrentState(): TutorialState;
-  dispatch(event: TutorialEvent): TutorialState;
-  canSwitchDirection(): boolean;
-  getActiveStepId(): number;
-  isStepRevealed(stepId: number): boolean;
-  isCurrentQuestion(stepId: number): boolean;
-  isCurrentAnswer(stepId: number): boolean;
+    getCurrentState(): TutorialState;
+    dispatch(event: TutorialEvent): TutorialState;
+    canSwitchDirection(): boolean;
+    getActiveStepId(): number;
+    isStepRevealed(stepId: number): boolean;
+    isCurrentQuestion(stepId: number): boolean;
+    isCurrentAnswer(stepId: number): boolean;
 }

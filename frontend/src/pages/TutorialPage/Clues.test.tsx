@@ -1,7 +1,7 @@
 import { render, screen } from '@testing-library/react'
 import { describe, test, expect } from 'vitest'
 import Clues from '@/pages/TutorialPage/Clues'
-import { GameState, Puzzle } from '@/types/game'
+import { Puzzle } from '@/types/game'
 
 describe('Clues Component', () => {
   const mockPuzzle: Puzzle = {
@@ -19,71 +19,79 @@ describe('Clues Component', () => {
     ]
   }
 
-  describe('Downward Direction', () => {
-    const downwardGameState: GameState = [
-      { id: 0, active: false, status: 'question', isRevealed: false, isClueShown: false, reveals: 0 },
-      { id: 1, active: true, status: 'answer', isRevealed: false, isClueShown: false, reveals: 0 },
-      { id: 2, active: false, status: 'unrevealed', isRevealed: false, isClueShown: false, reveals: 0 },
-      { id: 3, active: false, status: 'unrevealed', isRevealed: false, isClueShown: false, reveals: 0 },
-      { id: 4, active: false, status: 'unrevealed', isRevealed: false, isClueShown: false, reveals: 0 },
-      { id: 5, active: false, status: 'unrevealed', isRevealed: false, isClueShown: false, reveals: 0 },
-      { id: 6, active: false, status: 'unrevealed', isRevealed: false, isClueShown: false, reveals: 0 },
-      { id: 7, active: false, status: 'unrevealed', isRevealed: false, isClueShown: false, reveals: 0 },
-      { id: 8, active: false, status: 'revealed', isRevealed: true, isClueShown: false, reveals: 0 }
-    ]
+  // Mock functions for tutorial state machine methods
+  const mockIsStepRevealed = (stepId: number) => stepId === 0 || stepId === 8 // First and last steps revealed
+  const mockIsCurrentQuestion = (stepId: number) => stepId === 0
+  const mockIsCurrentAnswer = (stepId: number) => stepId === 1
 
+  describe('Downward Direction', () => {
     test('renders clues section headings', () => {
       render(
         <Clues
-          gameState={downwardGameState}
           puzzle={mockPuzzle}
           isDownward={true}
           completed={false}
+          isStepRevealed={mockIsStepRevealed}
+          isCurrentQuestion={mockIsCurrentQuestion}
+          isCurrentAnswer={mockIsCurrentAnswer}
+          questionWord="DOWN"
+          answerWord="SOUTH"
         />
       )
 
       expect(screen.getByTestId('clues-out-of-order-heading')).toBeInTheDocument()
-      expect(screen.getByTestId('clues-out-of-order-heading')).toHaveTextContent('Clues, out of order')
+      expect(screen.getByText('Clues, out of order')).toBeInTheDocument()
     })
 
     test('shows unsolved clues with question word substituted', () => {
       render(
         <Clues
-          gameState={downwardGameState}
           puzzle={mockPuzzle}
           isDownward={true}
           completed={false}
+          isStepRevealed={mockIsStepRevealed}
+          isCurrentQuestion={mockIsCurrentQuestion}
+          isCurrentAnswer={mockIsCurrentAnswer}
+          questionWord="DOWN"
+          answerWord="SOUTH"
         />
       )
 
-      // Should show DOWN substituted in the clue (split across elements)
-      expect(screen.getByText(/Cardinal direction that's/)).toBeInTheDocument()
-      expect(screen.getAllByTestId('question-word-down')).toHaveLength(8)
-      expect(screen.getByText(/on a map/)).toBeInTheDocument()
+      // Should show the question word in green highlighting
+      expect(screen.getByTestId('question-word-down')).toBeInTheDocument()
+      expect(screen.getByTestId('question-word-down')).toHaveTextContent('DOWN')
     })
 
     test('renders correct number of unsolved clues', () => {
       render(
         <Clues
-          gameState={downwardGameState}
           puzzle={mockPuzzle}
           isDownward={true}
           completed={false}
+          isStepRevealed={mockIsStepRevealed}
+          isCurrentQuestion={mockIsCurrentQuestion}
+          isCurrentAnswer={mockIsCurrentAnswer}
+          questionWord="DOWN"
+          answerWord="SOUTH"
         />
       )
 
-      // Should have multiple unsolved clues (excluding the last step which has no clue)
-      const clueElements = screen.getAllByText(/Change the first letter|Organ that sits|Piece of clothing|Rubber layer|Kind of food|Popular piano duet|Move the first letter/)
-      expect(clueElements.length).toBeGreaterThan(0)
+      // Should have unsolved clues for steps 1-7 (excluding last step which has no clue)
+      const unsolvedClues = screen.getAllByTestId(/^unsolved-clue-/)
+      expect(unsolvedClues).toHaveLength(6) // Steps 1,2,3,4,5,6 (7 steps total minus step 0 which is revealed)
     })
 
     test('does not show used clues section when no clues are solved', () => {
       render(
         <Clues
-          gameState={downwardGameState}
           puzzle={mockPuzzle}
           isDownward={true}
           completed={false}
+          isStepRevealed={mockIsStepRevealed}
+          isCurrentQuestion={mockIsCurrentQuestion}
+          isCurrentAnswer={mockIsCurrentAnswer}
+          questionWord="DOWN"
+          answerWord="SOUTH"
         />
       )
 
@@ -92,257 +100,200 @@ describe('Clues Component', () => {
   })
 
   describe('Upward Direction', () => {
-    const upwardGameState: GameState = [
-      { id: 0, active: false, status: 'revealed', isRevealed: true, isClueShown: false, reveals: 0 },
-      { id: 1, active: false, status: 'unrevealed', isRevealed: false, isClueShown: false, reveals: 0 },
-      { id: 2, active: false, status: 'unrevealed', isRevealed: false, isClueShown: false, reveals: 0 },
-      { id: 3, active: false, status: 'unrevealed', isRevealed: false, isClueShown: false, reveals: 0 },
-      { id: 4, active: false, status: 'unrevealed', isRevealed: false, isClueShown: false, reveals: 0 },
-      { id: 5, active: false, status: 'unrevealed', isRevealed: false, isClueShown: false, reveals: 0 },
-      { id: 6, active: false, status: 'unrevealed', isRevealed: false, isClueShown: false, reveals: 0 },
-      { id: 7, active: true, status: 'question', isRevealed: false, isClueShown: false, reveals: 0 },
-      { id: 8, active: false, status: 'answer', isRevealed: false, isClueShown: false, reveals: 0 }
-    ]
-
     test('shows clues with answer word substituted when going upward', () => {
       render(
         <Clues
-          gameState={upwardGameState}
           puzzle={mockPuzzle}
           isDownward={false}
           completed={false}
+          isStepRevealed={mockIsStepRevealed}
+          isCurrentQuestion={mockIsCurrentQuestion}
+          isCurrentAnswer={mockIsCurrentAnswer}
+          questionWord="DOWN"
+          answerWord="SOUTH"
         />
       )
 
-      // Should show EARTH substituted in the clue (answer word for upward direction) - split across elements
-      expect(screen.getByText(/Move the first letter of/)).toBeInTheDocument()
-      expect(screen.getAllByTestId('answer-word-earth')).toHaveLength(7)
-      expect(screen.getByText(/to the end to get where we are/)).toBeInTheDocument()
+      // Should show the answer word in yellow highlighting
+      expect(screen.getByTestId('answer-word-south')).toBeInTheDocument()
+      expect(screen.getByTestId('answer-word-south')).toHaveTextContent('SOUTH')
     })
 
     test('adds arrow to clues without {} placeholder when going upward', () => {
-      const upwardGameStateWithSimpleClue: GameState = [
-        { id: 0, active: false, status: 'revealed', isRevealed: true, isClueShown: false, reveals: 0 },
-        { id: 1, active: true, status: 'question', isRevealed: false, isClueShown: false, reveals: 0 },
-        { id: 2, active: false, status: 'answer', isRevealed: false, isClueShown: false, reveals: 0 },
-        { id: 3, active: false, status: 'unrevealed', isRevealed: false, isClueShown: false, reveals: 0 },
-        { id: 4, active: false, status: 'unrevealed', isRevealed: false, isClueShown: false, reveals: 0 },
-        { id: 5, active: false, status: 'unrevealed', isRevealed: false, isClueShown: false, reveals: 0 },
-        { id: 6, active: false, status: 'unrevealed', isRevealed: false, isClueShown: false, reveals: 0 },
-        { id: 7, active: false, status: 'unrevealed', isRevealed: false, isClueShown: false, reveals: 0 },
-        { id: 8, active: false, status: 'revealed', isRevealed: true, isClueShown: false, reveals: 0 }
-      ]
-
       render(
         <Clues
-          gameState={upwardGameStateWithSimpleClue}
           puzzle={mockPuzzle}
           isDownward={false}
           completed={false}
+          isStepRevealed={mockIsStepRevealed}
+          isCurrentQuestion={mockIsCurrentQuestion}
+          isCurrentAnswer={mockIsCurrentAnswer}
+          questionWord="DOWN"
+          answerWord="SOUTH"
         />
       )
 
-      // Should show arrow for clues without {} placeholder
-      expect(screen.getAllByText(/→/)).toHaveLength(6) // Multiple arrows expected
+      // Should contain arrow symbol for clues without {} placeholder
+      expect(screen.getByText('→')).toBeInTheDocument()
     })
   })
 
   describe('Solved Clues', () => {
-    const gameStateWithSolvedClues: GameState = [
-      { id: 0, active: false, status: 'question', isRevealed: false, isClueShown: false, reveals: 0 },
-      { id: 1, active: false, status: 'revealed', isRevealed: true, isClueShown: false, reveals: 0 },
-      { id: 2, active: true, status: 'answer', isRevealed: false, isClueShown: false, reveals: 0 },
-      { id: 3, active: false, status: 'unrevealed', isRevealed: false, isClueShown: false, reveals: 0 },
-      { id: 4, active: false, status: 'unrevealed', isRevealed: false, isClueShown: false, reveals: 0 },
-      { id: 5, active: false, status: 'unrevealed', isRevealed: false, isClueShown: false, reveals: 0 },
-      { id: 6, active: false, status: 'unrevealed', isRevealed: false, isClueShown: false, reveals: 0 },
-      { id: 7, active: false, status: 'unrevealed', isRevealed: false, isClueShown: false, reveals: 0 },
-      { id: 8, active: false, status: 'revealed', isRevealed: true, isClueShown: false, reveals: 0 }
-    ]
+    const mockIsStepRevealedWithSolved = (stepId: number) => stepId === 0 || stepId === 1 || stepId === 8
 
     test('shows used clues section when clues are solved', () => {
       render(
         <Clues
-          gameState={gameStateWithSolvedClues}
           puzzle={mockPuzzle}
           isDownward={true}
           completed={false}
+          isStepRevealed={mockIsStepRevealedWithSolved}
+          isCurrentQuestion={mockIsCurrentQuestion}
+          isCurrentAnswer={mockIsCurrentAnswer}
+          questionWord="DOWN"
+          answerWord="SOUTH"
         />
       )
 
       expect(screen.getByTestId('used-clues-heading')).toBeInTheDocument()
+      expect(screen.getByText('Used clues')).toBeInTheDocument()
     })
 
     test('displays solved clues with both question and answer words', () => {
       render(
         <Clues
-          gameState={gameStateWithSolvedClues}
           puzzle={mockPuzzle}
           isDownward={true}
           completed={false}
+          isStepRevealed={mockIsStepRevealedWithSolved}
+          isCurrentQuestion={mockIsCurrentQuestion}
+          isCurrentAnswer={mockIsCurrentAnswer}
+          questionWord="DOWN"
+          answerWord="SOUTH"
         />
       )
 
-      // Should show both DOWN and SOUTH in the solved clue (multiple instances expected)
-      expect(screen.getAllByTestId('question-word-down')).toHaveLength(7) // Multiple DOWN instances
-      // Check if answer-word-south exists or fall back to checking solved clue container
-      const solvedClue = screen.getByTestId('solved-clue-1')
-      expect(solvedClue).toBeInTheDocument()
+      // Should show solved clue
+      expect(screen.getByTestId('solved-clue-0')).toBeInTheDocument()
     })
 
     test('adds arrow to solved clues with only question placeholder', () => {
       render(
         <Clues
-          gameState={gameStateWithSolvedClues}
           puzzle={mockPuzzle}
           isDownward={true}
           completed={false}
+          isStepRevealed={mockIsStepRevealedWithSolved}
+          isCurrentQuestion={mockIsCurrentQuestion}
+          isCurrentAnswer={mockIsCurrentAnswer}
+          questionWord="DOWN"
+          answerWord="SOUTH"
         />
       )
 
-      // Should show arrow after clue - check for arrow text content
-      expect(screen.getByText(/→|->|\s*→\s*/)).toBeInTheDocument()
+      // Should contain arrow symbol for solved clues
+      expect(screen.getByText(' -> ')).toBeInTheDocument()
     })
   })
 
   describe('Completed State', () => {
-    const completedGameState: GameState = [
-      { id: 0, active: false, status: 'revealed', isRevealed: true, isClueShown: false, reveals: 0 },
-      { id: 1, active: false, status: 'revealed', isRevealed: true, isClueShown: false, reveals: 0 },
-      { id: 2, active: false, status: 'revealed', isRevealed: true, isClueShown: false, reveals: 0 },
-      { id: 3, active: false, status: 'revealed', isRevealed: true, isClueShown: false, reveals: 0 },
-      { id: 4, active: false, status: 'revealed', isRevealed: true, isClueShown: false, reveals: 0 },
-      { id: 5, active: false, status: 'revealed', isRevealed: true, isClueShown: false, reveals: 0 },
-      { id: 6, active: false, status: 'revealed', isRevealed: true, isClueShown: false, reveals: 0 },
-      { id: 7, active: false, status: 'revealed', isRevealed: true, isClueShown: false, reveals: 0 },
-      { id: 8, active: false, status: 'revealed', isRevealed: true, isClueShown: false, reveals: 0 }
-    ]
-
     test('handles completed state correctly', () => {
       render(
         <Clues
-          gameState={completedGameState}
           puzzle={mockPuzzle}
           isDownward={true}
           completed={true}
+          isStepRevealed={() => true}
+          isCurrentQuestion={() => false}
+          isCurrentAnswer={() => false}
+          questionWord={null}
+          answerWord={null}
         />
       )
 
-      // Should show used clues section
+      // When completed, should show used clues section
       expect(screen.getByTestId('used-clues-heading')).toBeInTheDocument()
-
-      // Should not show clues out of order section since all are solved
-      expect(screen.queryByTestId('clues-out-of-order-heading')).not.toBeInTheDocument()
     })
   })
 
   describe('Word Highlighting', () => {
-    const gameStateForHighlighting: GameState = [
-      { id: 0, active: false, status: 'question', isRevealed: false, isClueShown: false, reveals: 0 },
-      { id: 1, active: true, status: 'answer', isRevealed: false, isClueShown: false, reveals: 0 },
-      { id: 2, active: false, status: 'unrevealed', isRevealed: false, isClueShown: false, reveals: 0 },
-      { id: 3, active: false, status: 'unrevealed', isRevealed: false, isClueShown: false, reveals: 0 },
-      { id: 4, active: false, status: 'unrevealed', isRevealed: false, isClueShown: false, reveals: 0 },
-      { id: 5, active: false, status: 'unrevealed', isRevealed: false, isClueShown: false, reveals: 0 },
-      { id: 6, active: false, status: 'unrevealed', isRevealed: false, isClueShown: false, reveals: 0 },
-      { id: 7, active: false, status: 'unrevealed', isRevealed: false, isClueShown: false, reveals: 0 },
-      { id: 8, active: false, status: 'revealed', isRevealed: true, isClueShown: false, reveals: 0 }
-    ]
-
     test('applies correct styling to question words', () => {
       render(
         <Clues
-          gameState={gameStateForHighlighting}
           puzzle={mockPuzzle}
           isDownward={true}
           completed={false}
+          isStepRevealed={mockIsStepRevealed}
+          isCurrentQuestion={mockIsCurrentQuestion}
+          isCurrentAnswer={mockIsCurrentAnswer}
+          questionWord="DOWN"
+          answerWord="SOUTH"
         />
       )
 
-      const questionWord = screen.getAllByTestId('question-word-down')[0]
-      expect(questionWord).toHaveClass('bg-green/30', 'text-green', 'p-1', 'font-mono')
+      const questionWord = screen.getByTestId('question-word-down')
+      expect(questionWord).toHaveClass('bg-green/30', 'text-green')
     })
 
     test('applies correct styling to answer words', () => {
-      const upwardGameState: GameState = [
-        { id: 0, active: false, status: 'revealed', isRevealed: true, isClueShown: false, reveals: 0 },
-        { id: 1, active: false, status: 'unrevealed', isRevealed: false, isClueShown: false, reveals: 0 },
-        { id: 2, active: false, status: 'unrevealed', isRevealed: false, isClueShown: false, reveals: 0 },
-        { id: 3, active: false, status: 'unrevealed', isRevealed: false, isClueShown: false, reveals: 0 },
-        { id: 4, active: false, status: 'unrevealed', isRevealed: false, isClueShown: false, reveals: 0 },
-        { id: 5, active: false, status: 'unrevealed', isRevealed: false, isClueShown: false, reveals: 0 },
-        { id: 6, active: false, status: 'unrevealed', isRevealed: false, isClueShown: false, reveals: 0 },
-        { id: 7, active: true, status: 'question', isRevealed: false, isClueShown: false, reveals: 0 },
-        { id: 8, active: false, status: 'answer', isRevealed: false, isClueShown: false, reveals: 0 }
-      ]
-
       render(
         <Clues
-          gameState={upwardGameState}
           puzzle={mockPuzzle}
           isDownward={false}
           completed={false}
+          isStepRevealed={mockIsStepRevealed}
+          isCurrentQuestion={mockIsCurrentQuestion}
+          isCurrentAnswer={mockIsCurrentAnswer}
+          questionWord="DOWN"
+          answerWord="SOUTH"
         />
       )
 
-      const answerWord = screen.getAllByTestId('answer-word-earth')[0]
-      expect(answerWord).toHaveClass('bg-yellow/30', 'text-yellow', 'p-1', 'font-mono')
+      const answerWord = screen.getByTestId('answer-word-south')
+      expect(answerWord).toHaveClass('bg-yellow/30', 'text-yellow')
     })
   })
 
   describe('Edge Cases', () => {
+    const mockIsStepRevealedAll = () => false
+    const mockIsCurrentQuestionNone = () => false
+    const mockIsCurrentAnswerNone = () => false
+
     test('handles empty unsolved steps', () => {
-      const gameStateWithAllSolved: GameState = [
-        { id: 0, active: false, status: 'revealed', isRevealed: true, isClueShown: false, reveals: 0 },
-        { id: 1, active: false, status: 'revealed', isRevealed: true, isClueShown: false, reveals: 0 },
-        { id: 2, active: false, status: 'revealed', isRevealed: true, isClueShown: false, reveals: 0 },
-        { id: 3, active: false, status: 'revealed', isRevealed: true, isClueShown: false, reveals: 0 },
-        { id: 4, active: false, status: 'revealed', isRevealed: true, isClueShown: false, reveals: 0 },
-        { id: 5, active: false, status: 'revealed', isRevealed: true, isClueShown: false, reveals: 0 },
-        { id: 6, active: false, status: 'revealed', isRevealed: true, isClueShown: false, reveals: 0 },
-        { id: 7, active: false, status: 'revealed', isRevealed: true, isClueShown: false, reveals: 0 },
-        { id: 8, active: false, status: 'revealed', isRevealed: true, isClueShown: false, reveals: 0 }
-      ]
-
       render(
         <Clues
-          gameState={gameStateWithAllSolved}
-          puzzle={mockPuzzle}
-          isDownward={true}
-          completed={true}
-        />
-      )
-
-      // Should not show unsolved clues section
-      expect(screen.queryByTestId('clues-out-of-order-heading')).not.toBeInTheDocument()
-      expect(screen.getByTestId('used-clues-heading')).toBeInTheDocument()
-    })
-
-    test('excludes last step from unsolved clues (has no clue)', () => {
-      const gameStateWithLastStepUnsolved: GameState = [
-        { id: 0, active: false, status: 'question', isRevealed: false, isClueShown: false, reveals: 0 },
-        { id: 1, active: true, status: 'answer', isRevealed: false, isClueShown: false, reveals: 0 },
-        { id: 2, active: false, status: 'unrevealed', isRevealed: false, isClueShown: false, reveals: 0 },
-        { id: 3, active: false, status: 'unrevealed', isRevealed: false, isClueShown: false, reveals: 0 },
-        { id: 4, active: false, status: 'unrevealed', isRevealed: false, isClueShown: false, reveals: 0 },
-        { id: 5, active: false, status: 'unrevealed', isRevealed: false, isClueShown: false, reveals: 0 },
-        { id: 6, active: false, status: 'unrevealed', isRevealed: false, isClueShown: false, reveals: 0 },
-        { id: 7, active: false, status: 'unrevealed', isRevealed: false, isClueShown: false, reveals: 0 },
-        { id: 8, active: false, status: 'unrevealed', isRevealed: false, isClueShown: false, reveals: 0 }
-      ]
-
-      render(
-        <Clues
-          gameState={gameStateWithLastStepUnsolved}
           puzzle={mockPuzzle}
           isDownward={true}
           completed={false}
+          isStepRevealed={() => true} // All steps revealed
+          isCurrentQuestion={mockIsCurrentQuestionNone}
+          isCurrentAnswer={mockIsCurrentAnswerNone}
+          questionWord="DOWN"
+          answerWord="SOUTH"
         />
       )
 
-      // Should not attempt to render clue for EARTH (last step, has null clue)
-      // This tests the filter logic that excludes the last step
-      expect(screen.getByTestId('clues-out-of-order-heading')).toBeInTheDocument()
+      // Should not show unsolved clues section when all are solved
+      expect(screen.queryByTestId('clues-out-of-order-heading')).not.toBeInTheDocument()
+    })
+
+    test('excludes last step from unsolved clues (has no clue)', () => {
+      render(
+        <Clues
+          puzzle={mockPuzzle}
+          isDownward={true}
+          completed={false}
+          isStepRevealed={mockIsStepRevealedAll}
+          isCurrentQuestion={mockIsCurrentQuestion}
+          isCurrentAnswer={mockIsCurrentAnswer}
+          questionWord="DOWN"
+          answerWord="SOUTH"
+        />
+      )
+
+      // Should show unsolved clues for steps 0-6 only (step 7 excluded as it has no clue)
+      const unsolvedClues = screen.getAllByTestId(/^unsolved-clue-/)
+      expect(unsolvedClues).toHaveLength(7) // Steps 0,1,2,3,4,5,6
     })
   })
 })

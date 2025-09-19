@@ -1,25 +1,27 @@
 import { useState, useMemo } from 'react';
-import { LadderStep as LadderStepType, GameStateStep } from '@/types/game';
+import { LadderStep as LadderStepType } from '@/types/game';
 
 
 interface LadderStepProps {
     onGuessChange: (guess: string) => void;
     inputRef: React.RefObject<HTMLInputElement | null>;
-    gameStateStep: GameStateStep;
     ladderStep: LadderStepType;
-    ladderHeight: number;
+    isCurrentQuestion: boolean;
+    isCurrentAnswer: boolean;
+    isStepRevealed: boolean;
+    isActive: boolean;
 }
 
 
-export default function LadderStep({ onGuessChange, inputRef, gameStateStep, ladderStep, ladderHeight }: LadderStepProps) {
+export default function LadderStep({ onGuessChange, inputRef, ladderStep, isCurrentQuestion, isCurrentAnswer, isStepRevealed, isActive }: LadderStepProps) {
     const [currentGuess, setCurrentGuess] = useState('');
 
     const color = useMemo(() => {
-        if (gameStateStep.status === 'question') return 'bg-green/50';
-        if (gameStateStep.status === 'answer') return 'bg-yellow/80';
-        if (gameStateStep.status === 'revealed') return 'bg-grey';
+        if (isCurrentQuestion) return 'bg-green/50';
+        if (isCurrentAnswer) return 'bg-yellow/80';
+        if (isStepRevealed) return 'bg-grey';
         return 'bg-secondary';
-    }, [gameStateStep.status]);
+    }, [isCurrentQuestion, isCurrentAnswer, isStepRevealed]);
 
     const renderEmptyTransformFn = () => {
         return (
@@ -103,14 +105,13 @@ export default function LadderStep({ onGuessChange, inputRef, gameStateStep, lad
         );
     }
 
-    const renderStep = (gameStateStep: GameStateStep, currentLadderStep: LadderStepType) => {
-        if (gameStateStep.active) {
+    const renderStep = (currentLadderStep: LadderStepType) => {
+        if (isActive) {
             return renderActiveStep(currentLadderStep.word.length, currentLadderStep.transform !== null);
         }
 
-        (currentLadderStep.transform);
-        if (gameStateStep.status === 'revealed' || gameStateStep.status === 'question' || gameStateStep.status === 'answer') {
-            return renderRevealedStep(currentLadderStep.word, currentLadderStep.transform !== null, gameStateStep.isRevealed ? currentLadderStep.transform : null);
+        if (isStepRevealed || isCurrentQuestion || isCurrentAnswer) {
+            return renderRevealedStep(currentLadderStep.word, currentLadderStep.transform !== null, isStepRevealed ? currentLadderStep.transform : null);
         }
 
         return renderUnrevealedStep(currentLadderStep.word.length, currentLadderStep.transform !== null);
@@ -121,7 +122,7 @@ export default function LadderStep({ onGuessChange, inputRef, gameStateStep, lad
             className={`relative font-mono text-sm md:text-lg ${color}`}
             data-testid={`ladder-word-${ladderStep.word.toLowerCase()}`}
         >
-            {renderStep(gameStateStep, ladderStep)}
+            {renderStep(ladderStep)}
         </div>
     );
 

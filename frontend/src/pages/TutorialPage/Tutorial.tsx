@@ -99,19 +99,16 @@ export default function Tutorial({ setCompleted, completed }: TutorialProps) {
         handleCorrectGuess(guess);
     };
 
-    // Convert state machine state to format expected by LadderStep component
-    const gameStateSteps = useMemo(() => {
-        return puzzle.ladder.map((_, stepId) => ({
-            id: stepId,
-            active: stepId === activeStepId,
-            status: isCurrentQuestion(stepId) ? 'question' as const :
-                   isCurrentAnswer(stepId) ? 'answer' as const :
-                   isStepRevealed(stepId) ? 'revealed' as const : 'unrevealed' as const,
-            isRevealed: isStepRevealed(stepId),
-            isClueShown: false, // Not used in tutorial
-            reveals: 0, // Not used in tutorial
-        }));
-    }, [puzzle.ladder, activeStepId, isCurrentQuestion, isCurrentAnswer, isStepRevealed]);
+    // Get current question and answer words for Clues component
+    const currentQuestionWord = useMemo(() => {
+        if (state.isCompleted) return null;
+        return puzzle.ladder[state.currentQuestion]?.word || null;
+    }, [state.isCompleted, state.currentQuestion, puzzle.ladder]);
+
+    const currentAnswerWord = useMemo(() => {
+        if (state.isCompleted) return null;
+        return puzzle.ladder[state.currentAnswer]?.word || null;
+    }, [state.isCompleted, state.currentAnswer, puzzle.ladder]);
 
     return (
         <div className='mx-auto max-w-6xl'>
@@ -127,14 +124,16 @@ export default function Tutorial({ setCompleted, completed }: TutorialProps) {
                         </button>
                     </div>
 
-                    {gameStateSteps.map((step) => (
+                    {puzzle.ladder.map((ladderStep, stepId) => (
                         <LadderStep
-                            key={`ladder-step-${step.id}`}
+                            key={`ladder-step-${stepId}`}
                             onGuessChange={handleGuessChange}
                             inputRef={inputRef}
-                            gameStateStep={step}
-                            ladderStep={puzzle.ladder[step.id]}
-                            ladderHeight={puzzle.ladder.length}
+                            ladderStep={ladderStep}
+                            isCurrentQuestion={isCurrentQuestion(stepId)}
+                            isCurrentAnswer={isCurrentAnswer(stepId)}
+                            isStepRevealed={isStepRevealed(stepId)}
+                            isActive={stepId === activeStepId}
                         />
                     ))}
 
@@ -153,10 +152,14 @@ export default function Tutorial({ setCompleted, completed }: TutorialProps) {
                 </div>
 
                 <Clues
-                    gameState={gameStateSteps}
                     puzzle={puzzle}
                     isDownward={isDownward}
                     completed={completed}
+                    isStepRevealed={isStepRevealed}
+                    isCurrentQuestion={isCurrentQuestion}
+                    isCurrentAnswer={isCurrentAnswer}
+                    questionWord={currentQuestionWord}
+                    answerWord={currentAnswerWord}
                 />
             </div>
         </div>
