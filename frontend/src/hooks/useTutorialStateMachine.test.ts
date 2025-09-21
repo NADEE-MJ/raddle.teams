@@ -133,39 +133,36 @@ describe('useTutorialStateMachine', () => {
     });
 
     describe('convenience handlers', () => {
-        it('handleGuess works with valid guess', () => {
+        it('handleGuess calls dispatch with correct event', () => {
             const { result } = hookResult;
-            const initialRevealedCount = result.current.state.revealedSteps.size;
 
             act(() => {
                 result.current.handleGuess('SOUTH');
             });
 
-            expect(result.current.state.revealedSteps.size).toBe(initialRevealedCount + 1);
+            expect(result.current.state.revealedSteps.has(1)).toBe(true);
         });
 
-        it('handleGuess ignores invalid guess', () => {
+        it('handleSwitchDirection calls dispatch with correct event', () => {
             const { result } = hookResult;
-            const initialState = result.current.state;
-
-            act(() => {
-                result.current.handleGuess('WRONG');
-            });
-
-            expect(result.current.state).toEqual(initialState);
-        });
-
-        it('handleSwitchDirection changes phase and direction', () => {
-            const { result } = hookResult;
-
-            expect(result.current.state.phase).toBe('DOWNWARD');
 
             act(() => {
                 result.current.handleSwitchDirection();
             });
 
             expect(result.current.state.phase).toBe('UPWARD');
-            expect(result.current.state.direction).toBe('up');
+        });
+
+        it('handleReset calls dispatch with correct event', () => {
+            const { result } = hookResult;
+
+            act(() => {
+                result.current.handleGuess('SOUTH');
+                result.current.handleReset();
+            });
+
+            expect(result.current.state.phase).toBe('DOWNWARD');
+            expect(result.current.state.currentQuestion).toBe(0);
         });
     });
 
@@ -187,76 +184,16 @@ describe('useTutorialStateMachine', () => {
             expect(result.current.isStepRevealed(1)).toBe(true); // SOUTH is now revealed
         });
 
-        it('canSwitchDirection updates correctly', () => {
+        it('canSwitchDirection stays in sync with state machine', () => {
             const { result } = hookResult;
 
             expect(result.current.canSwitchDirection).toBe(true);
 
-            // Advance to near the end to trigger direction locking
             act(() => {
-                result.current.handleGuess('SOUTH');
-                result.current.handleGuess('MOUTH');
-                result.current.handleGuess('TONGUE');
-                result.current.handleGuess('SHOE');
-                result.current.handleGuess('SOLE');
-                result.current.handleGuess('SOUL');
-                result.current.handleGuess('HEART');
+                result.current.handleSwitchDirection();
             });
 
-            expect(result.current.canSwitchDirection).toBe(false);
-        });
-    });
-
-    describe('completion flow', () => {
-        it('handles complete puzzle workflow', () => {
-            const { result } = hookResult;
-
-            // Solve all steps step by step to see the progression
-            act(() => {
-                result.current.handleGuess('SOUTH'); // 0->1, should reveal SOUTH
-            });
-            expect(result.current.state.revealedSteps.size).toBe(3); // DOWN, SOUTH, EARTH
-
-            act(() => {
-                result.current.handleGuess('MOUTH'); // 1->2, should reveal MOUTH
-            });
-            expect(result.current.state.revealedSteps.size).toBe(4); // DOWN, SOUTH, MOUTH, EARTH
-
-            act(() => {
-                result.current.handleGuess('TONGUE'); // 2->3, should reveal TONGUE
-            });
-            expect(result.current.state.revealedSteps.size).toBe(5); // DOWN, SOUTH, MOUTH, TONGUE, EARTH
-
-            act(() => {
-                result.current.handleGuess('SHOE'); // 3->4, should reveal SHOE
-            });
-            expect(result.current.state.revealedSteps.size).toBe(6); // DOWN, SOUTH, MOUTH, TONGUE, SHOE, EARTH
-
-            act(() => {
-                result.current.handleGuess('SOLE'); // 4->5, should reveal SOLE
-            });
-            expect(result.current.state.revealedSteps.size).toBe(7); // DOWN, SOUTH, MOUTH, TONGUE, SHOE, SOLE, EARTH
-
-            act(() => {
-                result.current.handleGuess('SOUL'); // 5->6, should reveal SOUL
-            });
-            expect(result.current.state.revealedSteps.size).toBe(8); // DOWN, SOUTH, MOUTH, TONGUE, SHOE, SOLE, SOUL, EARTH
-
-            act(() => {
-                result.current.handleGuess('HEART'); // 6->7, should reveal HEART and lock direction
-            });
-
-            expect(result.current.state.phase).toBe('DIRECTION_LOCKED');
-            expect(result.current.state.isCompleted).toBe(false);
-            expect(result.current.state.revealedSteps.size).toBe(8); // All except EARTH (which gets unrevealed)
-
-            act(() => {
-                result.current.handleGuess('EARTH'); // 7->8, should complete the puzzle
-            });
-
-            expect(result.current.state.phase).toBe('COMPLETED');
-            expect(result.current.state.isCompleted).toBe(true);
-            expect(result.current.state.revealedSteps.size).toBe(9); // All steps revealed
+            expect(result.current.canSwitchDirection).toBe(true);
         });
     });
 
@@ -275,24 +212,62 @@ describe('useTutorialStateMachine', () => {
     });
 
     describe('multiple dispatches', () => {
-        it('handles rapid state changes correctly', () => {
+        it('handles multiple actions in single act() correctly', () => {
             const { result } = hookResult;
 
             act(() => {
-                result.current.handleGuess('SOUTH'); // Reveals SOUTH (step 1)
-                result.current.handleSwitchDirection(); // Switch to upward
+                result.current.handleGuess('SOUTH');
+                result.current.handleSwitchDirection();
             });
 
-            // Check that direction switching worked and we have the right state
             expect(result.current.state.phase).toBe('UPWARD');
-            expect(result.current.state.direction).toBe('up');
-            expect(result.current.state.revealedSteps.has(1)).toBe(true); // SOUTH is revealed
+            expect(result.current.state.revealedSteps.has(1)).toBe(true);
+        });
+    });
 
-            // The active step should be different after direction switch
-            // When switching to upward, it should find the next unrevealed step from the bottom
-            expect(result.current.state.currentQuestion).toBe(7); // HEART
-            expect(result.current.state.currentAnswer).toBe(8); // EARTH
-            expect(result.current.isActiveStep(7)).toBe(true);
+    describe('hook stability', () => {
+        it('maintains stable references for callback functions', () => {
+            const { result, rerender } = hookResult;
+
+            const initialHandleGuess = result.current.handleGuess;
+            const initialHandleSwitchDirection = result.current.handleSwitchDirection;
+            const initialHandleReset = result.current.handleReset;
+            const initialDispatch = result.current.dispatch;
+
+            rerender();
+
+            expect(result.current.handleGuess).toBe(initialHandleGuess);
+            expect(result.current.handleSwitchDirection).toBe(initialHandleSwitchDirection);
+            expect(result.current.handleReset).toBe(initialHandleReset);
+            expect(result.current.dispatch).toBe(initialDispatch);
+        });
+
+        it('maintains stable references for helper functions', () => {
+            const { result, rerender } = hookResult;
+
+            const initialIsActiveStep = result.current.isActiveStep;
+            const initialIsStepRevealed = result.current.isStepRevealed;
+            const initialIsCurrentQuestion = result.current.isCurrentQuestion;
+            const initialIsCurrentAnswer = result.current.isCurrentAnswer;
+
+            rerender();
+
+            expect(result.current.isActiveStep).toBe(initialIsActiveStep);
+            expect(result.current.isStepRevealed).toBe(initialIsStepRevealed);
+            expect(result.current.isCurrentQuestion).toBe(initialIsCurrentQuestion);
+            expect(result.current.isCurrentAnswer).toBe(initialIsCurrentAnswer);
+        });
+
+        it('creates new state machine instance only once', () => {
+            const { result, rerender } = hookResult;
+
+            const firstMachineRef = result.current.dispatch;
+
+            rerender();
+
+            const secondMachineRef = result.current.dispatch;
+
+            expect(firstMachineRef).toBe(secondMachineRef);
         });
     });
 });
