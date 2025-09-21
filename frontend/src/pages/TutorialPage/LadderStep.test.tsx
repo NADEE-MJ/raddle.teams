@@ -25,12 +25,14 @@ describe('LadderStep Component', () => {
         <LadderStep
           onGuessChange={mockOnGuessChange}
           inputRef={inputRef}
-          ladderStep={mockLadderStep}
+          word={mockLadderStep.word}
+          transform={mockLadderStep.transform}
           isCurrentQuestion={false}
           isCurrentAnswer={true}
           isStepRevealed={false}
           isActive={true}
           shouldShowTransform={false}
+          shouldRenderTransform={true}
         />
       )
 
@@ -46,12 +48,14 @@ describe('LadderStep Component', () => {
         <LadderStep
           onGuessChange={mockOnGuessChange}
           inputRef={inputRef}
-          ladderStep={mockLadderStep}
+          word={mockLadderStep.word}
+          transform={mockLadderStep.transform}
           isCurrentQuestion={false}
           isCurrentAnswer={true}
           isStepRevealed={false}
           isActive={true}
           shouldShowTransform={false}
+          shouldRenderTransform={true}
           onHintClick={mockOnHintClick}
         />
       )
@@ -65,12 +69,14 @@ describe('LadderStep Component', () => {
         <LadderStep
           onGuessChange={mockOnGuessChange}
           inputRef={inputRef}
-          ladderStep={mockLadderStep}
+          word={mockLadderStep.word}
+          transform={mockLadderStep.transform}
           isCurrentQuestion={false}
           isCurrentAnswer={true}
           isStepRevealed={false}
           isActive={true}
           shouldShowTransform={false}
+          shouldRenderTransform={true}
         />
       )
 
@@ -85,12 +91,14 @@ describe('LadderStep Component', () => {
         <LadderStep
           onGuessChange={mockOnGuessChange}
           inputRef={inputRef}
-          ladderStep={mockLadderStep}
+          word={mockLadderStep.word}
+          transform={mockLadderStep.transform}
           isCurrentQuestion={false}
           isCurrentAnswer={true}
           isStepRevealed={false}
           isActive={true}
           shouldShowTransform={false}
+          shouldRenderTransform={true}
           onHintClick={mockOnHintClick}
         />
       )
@@ -108,12 +116,14 @@ describe('LadderStep Component', () => {
         <LadderStep
           onGuessChange={mockOnGuessChange}
           inputRef={inputRef}
-          ladderStep={mockLadderStep}
+          word={mockLadderStep.word}
+          transform={mockLadderStep.transform}
           isCurrentQuestion={false}
           isCurrentAnswer={true}
           isStepRevealed={false}
           isActive={true}
           shouldShowTransform={false}
+          shouldRenderTransform={true}
           onHintClick={mockOnHintClick}
           secondHint={true}
         />
@@ -129,12 +139,14 @@ describe('LadderStep Component', () => {
         <LadderStep
           onGuessChange={mockOnGuessChange}
           inputRef={inputRef}
-          ladderStep={mockLadderStep}
+          word={mockLadderStep.word}
+          transform={mockLadderStep.transform}
           isCurrentQuestion={false}
           isCurrentAnswer={true}
           isStepRevealed={false}
           isActive={true}
           shouldShowTransform={false}
+          shouldRenderTransform={true}
           onHintClick={mockOnHintClick}
           secondHint={false}
         />
@@ -150,12 +162,14 @@ describe('LadderStep Component', () => {
         <LadderStep
           onGuessChange={mockOnGuessChange}
           inputRef={inputRef}
-          ladderStep={mockLadderStep}
+          word={mockLadderStep.word}
+          transform={mockLadderStep.transform}
           isCurrentQuestion={false}
           isCurrentAnswer={true}
           isStepRevealed={false}
           isActive={true}
           shouldShowTransform={false}
+          shouldRenderTransform={true}
           onHintClick={mockOnHintClick}
         />
       )
@@ -171,12 +185,14 @@ describe('LadderStep Component', () => {
         <LadderStep
           onGuessChange={mockOnGuessChange}
           inputRef={inputRef}
-          ladderStep={mockLadderStep}
+          word={mockLadderStep.word}
+          transform={mockLadderStep.transform}
           isCurrentQuestion={false}
           isCurrentAnswer={true}
           isStepRevealed={false}
           isActive={true}
           shouldShowTransform={false}
+          shouldRenderTransform={true}
         />
       )
 
@@ -197,12 +213,14 @@ describe('LadderStep Component', () => {
         <LadderStep
           onGuessChange={mockOnGuessChange}
           inputRef={inputRef}
-          ladderStep={mockLadderStep}
+          word={mockLadderStep.word}
+          transform={mockLadderStep.transform}
           isCurrentQuestion={false}
           isCurrentAnswer={true}
           isStepRevealed={false}
           isActive={true}
           shouldShowTransform={false}
+          shouldRenderTransform={true}
         />
       )
 
@@ -220,12 +238,14 @@ describe('LadderStep Component', () => {
         <LadderStep
           onGuessChange={mockOnGuessChange}
           inputRef={inputRef}
-          ladderStep={mockLadderStep}
+          word={mockLadderStep.word}
+          transform={mockLadderStep.transform}
           isCurrentQuestion={false}
           isCurrentAnswer={true}
           isStepRevealed={false}
           isActive={true}
           shouldShowTransform={false}
+          shouldRenderTransform={true}
         />
       )
 
@@ -240,12 +260,14 @@ describe('LadderStep Component', () => {
         <LadderStep
           onGuessChange={mockOnGuessChange}
           inputRef={inputRef}
-          ladderStep={mockLadderStep}
+          word={mockLadderStep.word}
+          transform={mockLadderStep.transform}
           isCurrentQuestion={false}
           isCurrentAnswer={true}
           isStepRevealed={false}
           isActive={true}
           shouldShowTransform={false}
+          shouldRenderTransform={true}
         />
       )
 
@@ -260,12 +282,14 @@ describe('LadderStep Component', () => {
         <LadderStep
           onGuessChange={mockOnGuessChange}
           inputRef={inputRef}
-          ladderStep={stepWithoutTransform}
+          word={stepWithoutTransform.word}
+          transform={stepWithoutTransform.transform}
           isCurrentQuestion={false}
           isCurrentAnswer={true}
           isStepRevealed={false}
           isActive={true}
           shouldShowTransform={false}
+          shouldRenderTransform={true}
         />
       )
 
@@ -280,12 +304,14 @@ describe('LadderStep Component', () => {
         <LadderStep
           onGuessChange={mockOnGuessChange}
           inputRef={inputRef}
-          ladderStep={mockLadderStep}
+          word={mockLadderStep.word}
+          transform={mockLadderStep.transform}
           isCurrentQuestion={false}
           isCurrentAnswer={false}
           isStepRevealed={true}
           isActive={false}
           shouldShowTransform={false}
+          shouldRenderTransform={true}
         />
       )
 
@@ -299,12 +325,14 @@ describe('LadderStep Component', () => {
         <LadderStep
           onGuessChange={mockOnGuessChange}
           inputRef={inputRef}
-          ladderStep={mockLadderStep}
+          word={mockLadderStep.word}
+          transform={mockLadderStep.transform}
           isCurrentQuestion={false}
           isCurrentAnswer={false}
           isStepRevealed={true}
           isActive={false}
           shouldShowTransform={true}
+          shouldRenderTransform={true}
         />
       )
 
@@ -316,12 +344,14 @@ describe('LadderStep Component', () => {
         <LadderStep
           onGuessChange={mockOnGuessChange}
           inputRef={inputRef}
-          ladderStep={mockLadderStep}
+          word={mockLadderStep.word}
+          transform={mockLadderStep.transform}
           isCurrentQuestion={true}
           isCurrentAnswer={false}
           isStepRevealed={false}
           isActive={false}
           shouldShowTransform={false}
+          shouldRenderTransform={true}
         />
       )
 
@@ -335,12 +365,14 @@ describe('LadderStep Component', () => {
         <LadderStep
           onGuessChange={mockOnGuessChange}
           inputRef={inputRef}
-          ladderStep={mockLadderStep}
+          word={mockLadderStep.word}
+          transform={mockLadderStep.transform}
           isCurrentQuestion={false}
           isCurrentAnswer={false}
           isStepRevealed={false}
           isActive={false}
           shouldShowTransform={false}
+          shouldRenderTransform={true}
         />
       )
 
@@ -353,12 +385,14 @@ describe('LadderStep Component', () => {
         <LadderStep
           onGuessChange={mockOnGuessChange}
           inputRef={inputRef}
-          ladderStep={mockLadderStep}
+          word={mockLadderStep.word}
+          transform={mockLadderStep.transform}
           isCurrentQuestion={false}
           isCurrentAnswer={false}
           isStepRevealed={false}
           isActive={false}
           shouldShowTransform={false}
+          shouldRenderTransform={true}
         />
       )
 
@@ -373,12 +407,14 @@ describe('LadderStep Component', () => {
         <LadderStep
           onGuessChange={mockOnGuessChange}
           inputRef={inputRef}
-          ladderStep={mockLadderStep}
+          word={mockLadderStep.word}
+          transform={mockLadderStep.transform}
           isCurrentQuestion={true}
           isCurrentAnswer={false}
           isStepRevealed={false}
           isActive={false}
           shouldShowTransform={false}
+          shouldRenderTransform={true}
         />
       )
 
@@ -393,12 +429,14 @@ describe('LadderStep Component', () => {
         <LadderStep
           onGuessChange={mockOnGuessChange}
           inputRef={inputRef}
-          ladderStep={mockLadderStep}
+          word={mockLadderStep.word}
+          transform={mockLadderStep.transform}
           isCurrentQuestion={false}
           isCurrentAnswer={true}
           isStepRevealed={false}
           isActive={false}
           shouldShowTransform={false}
+          shouldRenderTransform={true}
         />
       )
 
@@ -413,12 +451,14 @@ describe('LadderStep Component', () => {
         <LadderStep
           onGuessChange={mockOnGuessChange}
           inputRef={inputRef}
-          ladderStep={mockLadderStep}
+          word={mockLadderStep.word}
+          transform={mockLadderStep.transform}
           isCurrentQuestion={true}
           isCurrentAnswer={false}
           isStepRevealed={false}
           isActive={false}
           shouldShowTransform={false}
+          shouldRenderTransform={true}
         />
       )
 
@@ -430,12 +470,14 @@ describe('LadderStep Component', () => {
         <LadderStep
           onGuessChange={mockOnGuessChange}
           inputRef={inputRef}
-          ladderStep={mockLadderStep}
+          word={mockLadderStep.word}
+          transform={mockLadderStep.transform}
           isCurrentQuestion={false}
           isCurrentAnswer={true}
           isStepRevealed={false}
           isActive={false}
           shouldShowTransform={false}
+          shouldRenderTransform={true}
         />
       )
 
@@ -447,12 +489,14 @@ describe('LadderStep Component', () => {
         <LadderStep
           onGuessChange={mockOnGuessChange}
           inputRef={inputRef}
-          ladderStep={mockLadderStep}
+          word={mockLadderStep.word}
+          transform={mockLadderStep.transform}
           isCurrentQuestion={false}
           isCurrentAnswer={false}
           isStepRevealed={true}
           isActive={false}
           shouldShowTransform={false}
+          shouldRenderTransform={true}
         />
       )
 
@@ -464,12 +508,14 @@ describe('LadderStep Component', () => {
         <LadderStep
           onGuessChange={mockOnGuessChange}
           inputRef={inputRef}
-          ladderStep={mockLadderStep}
+          word={mockLadderStep.word}
+          transform={mockLadderStep.transform}
           isCurrentQuestion={false}
           isCurrentAnswer={false}
           isStepRevealed={false}
           isActive={false}
           shouldShowTransform={false}
+          shouldRenderTransform={true}
         />
       )
 
@@ -485,17 +531,18 @@ describe('LadderStep Component', () => {
         <LadderStep
           onGuessChange={mockOnGuessChange}
           inputRef={inputRef}
-          ladderStep={stepWithNullTransform}
+          word={stepWithNullTransform.word}
+          transform={stepWithNullTransform.transform}
           isCurrentQuestion={false}
           isCurrentAnswer={false}
           isStepRevealed={true}
           isActive={false}
           shouldShowTransform={true}
+          shouldRenderTransform={false}
         />
       )
 
-      // Should NOT show transform span when step has null transform
-      // because renderTransform is only true when currentLadderStep.transform !== null
+      // Should NOT show transform span when shouldRenderTransform is false
       const transformSpan = document.querySelector('span')
       expect(transformSpan).not.toBeInTheDocument()
     })
@@ -505,12 +552,14 @@ describe('LadderStep Component', () => {
         <LadderStep
           onGuessChange={mockOnGuessChange}
           inputRef={inputRef}
-          ladderStep={mockLadderStep}
+          word={mockLadderStep.word}
+          transform={mockLadderStep.transform}
           isCurrentQuestion={false}
           isCurrentAnswer={false}
           isStepRevealed={true}
           isActive={false}
           shouldShowTransform={true}
+          shouldRenderTransform={true}
         />
       )
 
@@ -522,12 +571,14 @@ describe('LadderStep Component', () => {
         <LadderStep
           onGuessChange={mockOnGuessChange}
           inputRef={inputRef}
-          ladderStep={mockLadderStep}
+          word={mockLadderStep.word}
+          transform={mockLadderStep.transform}
           isCurrentQuestion={false}
           isCurrentAnswer={false}
           isStepRevealed={false}
           isActive={false}
           shouldShowTransform={false}
+          shouldRenderTransform={true}
         />
       )
 
@@ -543,16 +594,18 @@ describe('LadderStep Component', () => {
         <LadderStep
           onGuessChange={mockOnGuessChange}
           inputRef={inputRef}
-          ladderStep={stepWithNullTransform}
+          word={stepWithNullTransform.word}
+          transform={stepWithNullTransform.transform}
           isCurrentQuestion={false}
           isCurrentAnswer={false}
           isStepRevealed={false}
           isActive={false}
           shouldShowTransform={false}
+          shouldRenderTransform={false}
         />
       )
 
-      // Should not have transform span when step has null transform
+      // Should not have transform span when shouldRenderTransform is false
       const transformSpan = document.querySelector('span')
       expect(transformSpan).not.toBeInTheDocument()
     })
@@ -566,12 +619,14 @@ describe('LadderStep Component', () => {
         <LadderStep
           onGuessChange={mockOnGuessChange}
           inputRef={inputRef}
-          ladderStep={shortWordStep}
+          word={shortWordStep.word}
+          transform={shortWordStep.transform}
           isCurrentQuestion={false}
           isCurrentAnswer={false}
           isStepRevealed={false}
           isActive={false}
           shouldShowTransform={false}
+          shouldRenderTransform={true}
         />
       )
 
@@ -586,12 +641,14 @@ describe('LadderStep Component', () => {
         <LadderStep
           onGuessChange={mockOnGuessChange}
           inputRef={inputRef}
-          ladderStep={longWordStep}
+          word={longWordStep.word}
+          transform={longWordStep.transform}
           isCurrentQuestion={false}
           isCurrentAnswer={true}
           isStepRevealed={false}
           isActive={true}
           shouldShowTransform={false}
+          shouldRenderTransform={true}
         />
       )
 
@@ -605,12 +662,14 @@ describe('LadderStep Component', () => {
         <LadderStep
           onGuessChange={mockOnGuessChange}
           inputRef={inputRef}
-          ladderStep={mockLadderStep}
+          word={mockLadderStep.word}
+          transform={mockLadderStep.transform}
           isCurrentQuestion={false}
           isCurrentAnswer={true}
           isStepRevealed={false}
           isActive={true}
           shouldShowTransform={false}
+          shouldRenderTransform={true}
         />
       )
 
@@ -627,12 +686,14 @@ describe('LadderStep Component', () => {
         <LadderStep
           onGuessChange={mockOnGuessChange}
           inputRef={inputRef}
-          ladderStep={mockLadderStep}
+          word={mockLadderStep.word}
+          transform={mockLadderStep.transform}
           isCurrentQuestion={false}
           isCurrentAnswer={false}
           isStepRevealed={false}
           isActive={false}
           shouldShowTransform={false}
+          shouldRenderTransform={true}
         />
       )
 

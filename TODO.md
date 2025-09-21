@@ -10,9 +10,11 @@
 
 ### e2e tests to create (some could probably be unit tests instead)
 
-***should rewrite e2e tests to cover main flows***
-***should write python unit tests to cover all backend flows***
-***should write vite unit tests to cover all frontend flows***
+1. ***should rewrite e2e tests to cover main flows***
+2. ***should write python unit tests to cover all backend flows***
+3. ***should write vite unit tests to cover all frontend flows***
+
+#### some edge cases that should probably be tested
 
 1. test admin sees a player leaving and joining via websocket updates (i think this already exists)
 2. Test invalid team assignments: Try to move player to non-existent team ID
@@ -49,19 +51,19 @@
 4. add setup instructions to the readme / create a separate setup.md file / clean up the readme
    1. npm ci && poetry install --sync
    2. create .env file with new envs
-5. implement show full ladder functionality
-6. enforce max length on ladder step input?
-7. create a broadcast to other players in lobby and broadcast to self
+5. enforce max length on ladder step input?
+6. create a broadcast to other players in lobby and broadcast to self
    1. broadcast to others can be used for events like players being kicked
    2. broadcast to self can be used for events like "you have been kicked"
-8. implement message handling for broadcasts
+7. implement message handling for broadcasts
    1. specifically in the continuous listening loop for websockets, maybe not worth it in the lobby?
    2. could be used for chat messages, game updates, etc
-9. What should happen in web sockets it it fails to broadcast to a player?
+8. What should happen in web sockets it it fails to broadcast to a player?
    1. currently it just ignores it, but should it remove the player from the lobby?
    2. should it log the error somewhere more permanent than just the console?
    3. should it notify the admin that a player has been disconnected?
    4. should it attempt to reconnect to the player
    5. should it resend the message later?
+9. flesh out the puzzles_from_raddle functions to load and convert puzzles from raddle format to our format
 
 ## BUGS

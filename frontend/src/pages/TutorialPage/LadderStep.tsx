@@ -1,23 +1,24 @@
 import { useState, useMemo } from 'react';
-import { LadderStep as LadderStepType } from '@/types/game';
 import Button from '@/components/Button';
 
 
 interface LadderStepProps {
     onGuessChange: (guess: string) => void;
     inputRef: React.RefObject<HTMLInputElement | null>;
-    ladderStep: LadderStepType;
+    word: string;
+    transform: string | null;
     isCurrentQuestion: boolean;
     isCurrentAnswer: boolean;
     isStepRevealed: boolean;
     isActive: boolean;
     shouldShowTransform: boolean;
+    shouldRenderTransform: boolean;
     onHintClick?: () => void;
     secondHint?: boolean;
 }
 
 
-export default function LadderStep({ onGuessChange, inputRef, ladderStep, isCurrentQuestion, isCurrentAnswer, isStepRevealed, isActive, shouldShowTransform, onHintClick, secondHint = false }: LadderStepProps) {
+export default function LadderStep({ onGuessChange, inputRef, word, transform, isCurrentQuestion, isCurrentAnswer, isStepRevealed, isActive, shouldShowTransform, shouldRenderTransform, onHintClick, secondHint = false }: LadderStepProps) {
     const [currentGuess, setCurrentGuess] = useState('');
 
     const color = useMemo(() => {
@@ -114,24 +115,24 @@ export default function LadderStep({ onGuessChange, inputRef, ladderStep, isCurr
         );
     }
 
-    const renderStep = (currentLadderStep: LadderStepType) => {
+    const renderStep = (word: string, transform: string | null) => {
         if (isActive) {
-            return renderActiveStep(currentLadderStep.word.length, currentLadderStep.transform !== null);
+            return renderActiveStep(word.length, transform !== null && shouldRenderTransform);
         }
 
         if (isStepRevealed || isCurrentQuestion || isCurrentAnswer) {
-            return renderRevealedStep(currentLadderStep.word, currentLadderStep.transform !== null, shouldShowTransform ? currentLadderStep.transform : null);
+            return renderRevealedStep(word, transform !== null && shouldRenderTransform, shouldShowTransform ? transform : null);
         }
 
-        return renderUnrevealedStep(currentLadderStep.word.length, currentLadderStep.transform !== null);
+        return renderUnrevealedStep(word.length, transform !== null && shouldRenderTransform);
     };
 
     return (
         <div
             className={`relative font-mono text-sm md:text-lg ${color}`}
-            data-testid={`ladder-word-${ladderStep.word.toLowerCase()}`}
+            data-testid={`ladder-word-${word.toLowerCase()}`}
         >
-            {renderStep(ladderStep)}
+            {renderStep(word, transform)}
         </div>
     );
 

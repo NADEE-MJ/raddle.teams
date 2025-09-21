@@ -36,7 +36,7 @@ export default function Modal({ isOpen, onClose, children, maxWidth = 'max-w-4xl
 
     return (
         <div
-            className='pointer-events-auto fixed inset-0 z-999 flex items-start justify-center pt-24'
+            className='pointer-events-auto fixed inset-0 z-999 flex items-center justify-center md:items-start md:pt-24'
             onClick={onClose}
         >
             <div className='pointer-events-none absolute inset-0 backdrop-blur-sm' />
