@@ -81,6 +81,9 @@ describe('TutorialStateMachine', () => {
             expect(newState.revealedSteps.has(1)).toBe(true); // SOUTH now revealed
             expect(newState.currentQuestion).toBe(1); // SOUTH becomes question
             expect(newState.currentAnswer).toBe(2); // MOUTH becomes answer
+            expect(newState.revealedSteps.size).toBe(3); // 0, 1, 8
+            expect(newState.revealedSteps.has(0)).toBe(true); // DOWN
+            expect(newState.revealedSteps.has(8)).toBe(true); // EARTH
         });
 
         it('ignores incorrect guesses', () => {
@@ -88,11 +91,54 @@ describe('TutorialStateMachine', () => {
             const newState = machine.dispatch({ type: 'GUESS', guess: 'WRONG' });
 
             expect(newState).toEqual(initialState);
+            expect(newState.revealedSteps.size).toBe(2);
+            expect(newState.revealedSteps.has(0)).toBe(true);
+            expect(newState.revealedSteps.has(8)).toBe(true);
         });
 
         it('is case insensitive', () => {
             const newState = machine.dispatch({ type: 'GUESS', guess: 'south' });
             expect(newState.revealedSteps.has(1)).toBe(true);
+            expect(newState.revealedSteps.size).toBe(3);
+        });
+
+        it('unreveals the last step when reaching second-to-last step going downward', () => {
+            // Progress to second-to-last step (index 7)
+            machine.dispatch({ type: 'GUESS', guess: 'SOUTH' });
+            machine.dispatch({ type: 'GUESS', guess: 'MOUTH' });
+            machine.dispatch({ type: 'GUESS', guess: 'TONGUE' });
+            machine.dispatch({ type: 'GUESS', guess: 'SHOE' });
+            machine.dispatch({ type: 'GUESS', guess: 'SOLE' });
+            machine.dispatch({ type: 'GUESS', guess: 'SOUL' });
+
+            const beforeLastGuess = machine.getCurrentState();
+            expect(beforeLastGuess.revealedSteps.has(8)).toBe(true); // EARTH still revealed
+            expect(beforeLastGuess.currentAnswer).toBe(7); // About to guess HEART (index 7)
+
+            const afterLastGuess = machine.dispatch({ type: 'GUESS', guess: 'HEART' });
+            expect(afterLastGuess.revealedSteps.has(8)).toBe(false); // EARTH now unrevealed
+            expect(afterLastGuess.currentAnswer).toBe(8); // Now targeting EARTH
+            expect(afterLastGuess.phase).toBe('DIRECTION_LOCKED');
+        });
+
+        it('unreveals the first step when reaching second step going upward', () => {
+            machine.dispatch({ type: 'SWITCH_DIRECTION' });
+            // Progress to second step (currentQuestion = 1)
+            machine.dispatch({ type: 'GUESS', guess: 'HEART' });
+            machine.dispatch({ type: 'GUESS', guess: 'SOUL' });
+            machine.dispatch({ type: 'GUESS', guess: 'SOLE' });
+            machine.dispatch({ type: 'GUESS', guess: 'SHOE' });
+            machine.dispatch({ type: 'GUESS', guess: 'TONGUE' });
+            machine.dispatch({ type: 'GUESS', guess: 'MOUTH' });
+
+            const beforeLastGuess = machine.getCurrentState();
+            expect(beforeLastGuess.revealedSteps.has(0)).toBe(true); // DOWN still revealed
+            expect(beforeLastGuess.currentQuestion).toBe(1); // About to guess SOUTH (currentQuestion = 1)
+
+            const afterLastGuess = machine.dispatch({ type: 'GUESS', guess: 'SOUTH' });
+            expect(afterLastGuess.revealedSteps.has(0)).toBe(false); // DOWN now unrevealed
+            expect(afterLastGuess.currentQuestion).toBe(0); // Now targeting DOWN
+            expect(afterLastGuess.phase).toBe('DIRECTION_LOCKED'); // Now locked
         });
     });
 
@@ -101,11 +147,13 @@ describe('TutorialStateMachine', () => {
             const initialState = machine.getCurrentState();
             expect(initialState.phase).toBe('DOWNWARD');
             expect(initialState.direction).toBe('down');
+            expect(initialState.revealedSteps).toEqual(new Set([0, 8]));
 
             const newState = machine.dispatch({ type: 'SWITCH_DIRECTION' });
 
             expect(newState.phase).toBe('UPWARD');
             expect(newState.direction).toBe('up');
+            expect(newState.revealedSteps).toEqual(new Set([0, 8])); // Revealed steps unchanged
         });
 
         it('switches back to downward from upward', () => {
@@ -113,10 +161,12 @@ describe('TutorialStateMachine', () => {
             const intermediateState = machine.getCurrentState();
             expect(intermediateState.phase).toBe('UPWARD');
             expect(intermediateState.direction).toBe('up');
+            expect(intermediateState.revealedSteps).toEqual(new Set([0, 8]));
 
             const newState = machine.dispatch({ type: 'SWITCH_DIRECTION' }); // Go back downward
             expect(newState.phase).toBe('DOWNWARD');
             expect(newState.direction).toBe('down');
+            expect(newState.revealedSteps).toEqual(new Set([0, 8])); // Revealed steps unchanged
         });
 
         it('finds correct question/answer pair when switching to upward', () => {
@@ -125,6 +175,7 @@ describe('TutorialStateMachine', () => {
             // Should find the last unrevealed step and work backwards
             expect(newState.currentAnswer).toBe(8);
             expect(newState.currentQuestion).toBe(7);
+            expect(newState.revealedSteps).toEqual(new Set([0, 8]));
         });
 
         it('finds correct question/answer pair when switching back to downward', () => {
@@ -133,6 +184,25 @@ describe('TutorialStateMachine', () => {
 
             expect(newState.currentQuestion).toBe(0);
             expect(newState.currentAnswer).toBe(1);
+            expect(newState.revealedSteps).toEqual(new Set([0, 8]));
+        });
+
+        it('switches direction correctly with some steps already revealed', () => {
+            // Solve a few steps downward
+            machine.dispatch({ type: 'GUESS', guess: 'SOUTH' });
+            machine.dispatch({ type: 'GUESS', guess: 'MOUTH' });
+            const midState = machine.getCurrentState();
+            expect(midState.revealedSteps).toEqual(new Set([0, 1, 2, 8]));
+            expect(midState.currentQuestion).toBe(2);
+            expect(midState.currentAnswer).toBe(3);
+
+            // Switch to upward
+            const switchedState = machine.dispatch({ type: 'SWITCH_DIRECTION' });
+            expect(switchedState.phase).toBe('UPWARD');
+            expect(switchedState.direction).toBe('up');
+            expect(switchedState.revealedSteps).toEqual(new Set([0, 1, 2, 8])); // Unchanged
+            expect(switchedState.currentQuestion).toBe(7); // First unrevealed from top
+            expect(switchedState.currentAnswer).toBe(8);
         });
     });
 
@@ -428,6 +498,98 @@ describe('TutorialStateMachine', () => {
             });
         });
 
+        describe('revealed steps comprehensive validation', () => {
+            it('maintains correct revealed steps when solving puzzle downward completely', () => {
+                let state = machine.dispatch({ type: 'GUESS', guess: 'SOUTH' });
+                expect(state.revealedSteps).toEqual(new Set([0, 1, 8]));
+
+                state = machine.dispatch({ type: 'GUESS', guess: 'MOUTH' });
+                expect(state.revealedSteps).toEqual(new Set([0, 1, 2, 8]));
+
+                state = machine.dispatch({ type: 'GUESS', guess: 'TONGUE' });
+                expect(state.revealedSteps).toEqual(new Set([0, 1, 2, 3, 8]));
+
+                state = machine.dispatch({ type: 'GUESS', guess: 'SHOE' });
+                expect(state.revealedSteps).toEqual(new Set([0, 1, 2, 3, 4, 8]));
+
+                state = machine.dispatch({ type: 'GUESS', guess: 'SOLE' });
+                expect(state.revealedSteps).toEqual(new Set([0, 1, 2, 3, 4, 5, 8]));
+
+                state = machine.dispatch({ type: 'GUESS', guess: 'SOUL' });
+                expect(state.revealedSteps).toEqual(new Set([0, 1, 2, 3, 4, 5, 6, 8]));
+
+                // This is where the last step gets unrevealed
+                state = machine.dispatch({ type: 'GUESS', guess: 'HEART' });
+                expect(state.revealedSteps).toEqual(new Set([0, 1, 2, 3, 4, 5, 6, 7])); // 8 removed
+                expect(state.phase).toBe('DIRECTION_LOCKED');
+
+                state = machine.dispatch({ type: 'GUESS', guess: 'EARTH' });
+                expect(state.revealedSteps).toEqual(new Set([0, 1, 2, 3, 4, 5, 6, 7, 8]));
+                expect(state.phase).toBe('COMPLETED');
+            });
+
+            it('maintains correct revealed steps when solving puzzle upward completely', () => {
+                machine.dispatch({ type: 'SWITCH_DIRECTION' });
+
+                let state = machine.dispatch({ type: 'GUESS', guess: 'HEART' });
+                expect(state.revealedSteps).toEqual(new Set([0, 7, 8]));
+
+                state = machine.dispatch({ type: 'GUESS', guess: 'SOUL' });
+                expect(state.revealedSteps).toEqual(new Set([0, 6, 7, 8]));
+
+                state = machine.dispatch({ type: 'GUESS', guess: 'SOLE' });
+                expect(state.revealedSteps).toEqual(new Set([0, 5, 6, 7, 8]));
+
+                state = machine.dispatch({ type: 'GUESS', guess: 'SHOE' });
+                expect(state.revealedSteps).toEqual(new Set([0, 4, 5, 6, 7, 8]));
+
+                state = machine.dispatch({ type: 'GUESS', guess: 'TONGUE' });
+                expect(state.revealedSteps).toEqual(new Set([0, 3, 4, 5, 6, 7, 8]));
+
+                state = machine.dispatch({ type: 'GUESS', guess: 'MOUTH' });
+                expect(state.revealedSteps).toEqual(new Set([0, 2, 3, 4, 5, 6, 7, 8])); // 0 still there
+                expect(state.phase).toBe('UPWARD'); // Still upward, not locked yet
+
+                // This is where the first step gets unrevealed (currentQuestion = 1)
+                state = machine.dispatch({ type: 'GUESS', guess: 'SOUTH' });
+                expect(state.revealedSteps).toEqual(new Set([1, 2, 3, 4, 5, 6, 7, 8])); // 0 removed
+                expect(state.phase).toBe('DIRECTION_LOCKED'); // Now locked
+
+                state = machine.dispatch({ type: 'GUESS', guess: 'DOWN' });
+                expect(state.revealedSteps).toEqual(new Set([0, 1, 2, 3, 4, 5, 6, 7, 8]));
+                expect(state.phase).toBe('COMPLETED');
+            });
+
+            it('maintains correct revealed steps with mixed direction solving', () => {
+                // Solve a few downward
+                machine.dispatch({ type: 'GUESS', guess: 'SOUTH' });
+                machine.dispatch({ type: 'GUESS', guess: 'MOUTH' });
+                let state = machine.getCurrentState();
+                expect(state.revealedSteps).toEqual(new Set([0, 1, 2, 8]));
+
+                // Switch to upward
+                machine.dispatch({ type: 'SWITCH_DIRECTION' });
+                state = machine.dispatch({ type: 'GUESS', guess: 'HEART' });
+                expect(state.revealedSteps).toEqual(new Set([0, 1, 2, 7, 8]));
+
+                state = machine.dispatch({ type: 'GUESS', guess: 'SOUL' });
+                expect(state.revealedSteps).toEqual(new Set([0, 1, 2, 6, 7, 8]));
+
+                // Switch back to downward
+                machine.dispatch({ type: 'SWITCH_DIRECTION' });
+                state = machine.dispatch({ type: 'GUESS', guess: 'TONGUE' });
+                expect(state.revealedSteps).toEqual(new Set([0, 1, 2, 3, 6, 7, 8]));
+
+                // Continue solving to completion
+                state = machine.dispatch({ type: 'GUESS', guess: 'SHOE' });
+                expect(state.revealedSteps).toEqual(new Set([0, 1, 2, 3, 4, 6, 7, 8]));
+
+                state = machine.dispatch({ type: 'GUESS', guess: 'SOLE' });
+                expect(state.revealedSteps).toEqual(new Set([0, 1, 2, 3, 4, 5, 6, 7, 8]));
+                expect(state.phase).toBe('COMPLETED');
+            });
+        });
+
         describe('completing the puzzle', () => {
             it('completes the puzzle when solving downwards without switching', () => {
                 machine.dispatch({ type: 'GUESS', guess: 'SOUTH' });
@@ -532,6 +694,7 @@ describe('TutorialStateMachine', () => {
 
                 const switchDirection = machine.dispatch({ type: 'SWITCH_DIRECTION' });
                 expect(switchDirection.phase).toBe('UPWARD');
+                expect(switchDirection.revealedSteps).toEqual(new Set([0, 1, 2, 3, 4, 5, 6, 8]));
                 // NOW SOLVE UPWARDS
                 const completeState = machine.dispatch({ type: 'GUESS', guess: 'HEART' });
                 expect(completeState.phase).toBe('COMPLETED');
@@ -553,10 +716,28 @@ describe('TutorialStateMachine', () => {
 
                 const switchDirection = machine.dispatch({ type: 'SWITCH_DIRECTION' });
                 expect(switchDirection.phase).toBe('DOWNWARD');
+                expect(switchDirection.revealedSteps).toEqual(new Set([0, 2, 3, 4, 5, 6, 7, 8]));
                 // NOW SOLVE DOWNWARDS
                 const completeState = machine.dispatch({ type: 'GUESS', guess: 'SOUTH' });
                 expect(completeState.phase).toBe('COMPLETED');
                 expect(completeState.isCompleted).toBe(true);
+            });
+        });
+
+        describe('revealed steps', () => {
+            it('does not un-reveal end step when not at second-to-last position', () => {
+                machine.dispatch({ type: 'GUESS', guess: 'SOUTH' });
+                const state = machine.getCurrentState();
+                expect(state.revealedSteps.has(8)).toBe(true); // EARTH still revealed
+                expect(state.currentAnswer).toBe(2); // Not second-to-last yet
+            });
+
+            it('does not un-reveal first step when not at second position upward', () => {
+                machine.dispatch({ type: 'SWITCH_DIRECTION' });
+                machine.dispatch({ type: 'GUESS', guess: 'HEART' });
+                const state = machine.getCurrentState();
+                expect(state.revealedSteps.has(0)).toBe(true); // DOWN still revealed
+                expect(state.currentQuestion).toBe(6); // Not second step yet
             });
         });
     });
