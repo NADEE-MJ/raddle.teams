@@ -1,4 +1,4 @@
-import { Outlet, Link, useLocation } from 'react-router-dom';
+import { Outlet, Link, useLocation, useNavigate } from 'react-router-dom';
 import { GlobalOutletContext } from '@/hooks/useGlobalOutletContext';
 import { Button } from '@/components';
 
@@ -7,6 +7,7 @@ import { api } from '@/services/api';
 
 const GlobalLayout: React.FC = () => {
     const location = useLocation();
+    const navigate = useNavigate();
     const [showLogout, setShowLogout] = useState(false);
     const [sessionId, setSessionId] = useState<string | null>(null);
     const [adminApiToken, setAdminApiToken] = useState<string | null>(null);
@@ -121,7 +122,7 @@ const GlobalLayout: React.FC = () => {
                     <div className='flex h-16 items-center justify-between'>
                         <div className='flex items-center gap-4'>
                             <h1 className='text-tx-primary text-2xl font-bold'>
-                                <Link to='/' className='flex items-center' data-testid='home-link'>
+                                <Link to='/' className='flex items-center transition-all duration-50 active:scale-90 hover:scale-105' data-testid='home-link'>
                                     R
                                     <img src='/img/ladder.svg' alt='A' className='inline-block h-6 w-6 brightness-75' />
                                     DDLE
@@ -143,26 +144,28 @@ const GlobalLayout: React.FC = () => {
                                         {isLoggingOut
                                             ? 'Logging out'
                                             : location.pathname.startsWith('/admin')
-                                              ? '🔒 Admin Logout'
-                                              : '🚪 Leave Lobby'}
+                                                ? '🔒 Admin Logout'
+                                                : '🚪 Leave Lobby'}
                                     </Button>
                                 ) : (
                                     <div className='flex gap-1'>
-                                        <Link
-                                            to='/tutorial'
-                                            className='text-tx-secondary hover:text-tx-primary transition duration-200'
+                                        <Button
+                                            onClick={() => navigate('/tutorial')}
+                                            variant='link'
+                                            size='md'
                                             data-testid='tutorial-link'
                                         >
                                             ✌️ How to Play
-                                        </Link>
+                                        </Button>
                                         {'•'}
-                                        <Link
-                                            to='/admin/login'
-                                            className='text-tx-secondary hover:text-tx-primary transition duration-200'
+                                        <Button
+                                            onClick={() => navigate('/admin/login')}
+                                            variant='link'
+                                            size='md'
                                             data-testid='admin-panel-link'
                                         >
                                             🔧 Admin
-                                        </Link>
+                                        </Button>
                                     </div>
                                 )}
                             </div>
@@ -195,20 +198,22 @@ const GlobalLayout: React.FC = () => {
                             </div>
                         </div>
                         <div className='text-tx-secondary flex gap-4 text-sm'>
-                            <Link
-                                to='/tutorial'
-                                className='hover:text-tx-primary transition duration-200'
+                            <Button
+                                onClick={() => navigate('/tutorial')}
+                                variant='link'
+                                size='lg'
                                 data-testid='footer-tutorial-link'
                             >
                                 ✌️ How to Play
-                            </Link>
-                            <Link
-                                to='/admin/login'
-                                className='hover:text-tx-primary transition duration-200'
+                            </Button>
+                            <Button
+                                onClick={() => navigate('/admin/login')}
+                                variant='link'
+                                size='lg'
                                 data-testid='footer-admin-link'
                             >
                                 🔧 Admin
-                            </Link>
+                            </Button>
                         </div>
                     </div>
                 </div>

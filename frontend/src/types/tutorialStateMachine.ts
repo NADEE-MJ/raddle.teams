@@ -21,16 +21,24 @@ export interface TutorialState {
     isCompleted: boolean;
 
     puzzle: Puzzle;
+
+    hintsUsed: Map<number, number>; // stepId -> number of hints used (max 2)
 }
 
-export type TutorialEvent = { type: 'GUESS'; guess: string } | { type: 'SWITCH_DIRECTION' } | { type: 'RESET' };
+export type TutorialEvent =
+    | { type: 'GUESS'; guess: string }
+    | { type: 'SWITCH_DIRECTION' }
+    | { type: 'RESET' }
+    | { type: 'HINT' };
 
-export interface TutorialStateMachine {
+export interface ITutorialStateMachine {
     getCurrentState(): TutorialState;
     dispatch(event: TutorialEvent): TutorialState;
     canSwitchDirection(): boolean;
     getActiveStepId(): number;
+    isActiveStep(stepId: number): boolean;
     isStepRevealed(stepId: number): boolean;
     isCurrentQuestion(stepId: number): boolean;
     isCurrentAnswer(stepId: number): boolean;
+    getHintsUsedForStep(stepId: number): number;
 }

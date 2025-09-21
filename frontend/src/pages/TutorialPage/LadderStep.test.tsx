@@ -39,7 +39,28 @@ describe('LadderStep Component', () => {
       expect(screen.getByTestId('word-length-indicator')).toHaveTextContent('(5)')
     })
 
-    test('shows hint button when active', () => {
+    test('shows hint button when active and onHintClick is provided', () => {
+      const mockOnHintClick = vi.fn()
+
+      render(
+        <LadderStep
+          onGuessChange={mockOnGuessChange}
+          inputRef={inputRef}
+          ladderStep={mockLadderStep}
+          isCurrentQuestion={false}
+          isCurrentAnswer={true}
+          isStepRevealed={false}
+          isActive={true}
+          shouldShowTransform={false}
+          onHintClick={mockOnHintClick}
+        />
+      )
+
+      expect(screen.getByTestId('hint-button')).toBeInTheDocument()
+      expect(screen.getByTestId('hint-button')).toHaveTextContent('💡')
+    })
+
+    test('does not show hint button when onHintClick is not provided', () => {
       render(
         <LadderStep
           onGuessChange={mockOnGuessChange}
@@ -53,8 +74,94 @@ describe('LadderStep Component', () => {
         />
       )
 
-      expect(screen.getByTestId('hint-button')).toBeInTheDocument()
+      expect(screen.queryByTestId('hint-button')).not.toBeInTheDocument()
+    })
+
+    test('calls onHintClick when hint button is clicked', async () => {
+      const user = userEvent.setup()
+      const mockOnHintClick = vi.fn()
+
+      render(
+        <LadderStep
+          onGuessChange={mockOnGuessChange}
+          inputRef={inputRef}
+          ladderStep={mockLadderStep}
+          isCurrentQuestion={false}
+          isCurrentAnswer={true}
+          isStepRevealed={false}
+          isActive={true}
+          shouldShowTransform={false}
+          onHintClick={mockOnHintClick}
+        />
+      )
+
+      const hintButton = screen.getByTestId('hint-button')
+      await user.click(hintButton)
+
+      expect(mockOnHintClick).toHaveBeenCalledTimes(1)
+    })
+
+    test('shows eye icon for second hint', () => {
+      const mockOnHintClick = vi.fn()
+
+      render(
+        <LadderStep
+          onGuessChange={mockOnGuessChange}
+          inputRef={inputRef}
+          ladderStep={mockLadderStep}
+          isCurrentQuestion={false}
+          isCurrentAnswer={true}
+          isStepRevealed={false}
+          isActive={true}
+          shouldShowTransform={false}
+          onHintClick={mockOnHintClick}
+          secondHint={true}
+        />
+      )
+
+      expect(screen.getByTestId('hint-button')).toHaveTextContent('👁️')
+    })
+
+    test('shows light bulb icon for first hint', () => {
+      const mockOnHintClick = vi.fn()
+
+      render(
+        <LadderStep
+          onGuessChange={mockOnGuessChange}
+          inputRef={inputRef}
+          ladderStep={mockLadderStep}
+          isCurrentQuestion={false}
+          isCurrentAnswer={true}
+          isStepRevealed={false}
+          isActive={true}
+          shouldShowTransform={false}
+          onHintClick={mockOnHintClick}
+          secondHint={false}
+        />
+      )
+
       expect(screen.getByTestId('hint-button')).toHaveTextContent('💡')
+    })
+
+    test('hint button has correct styling and position', () => {
+      const mockOnHintClick = vi.fn()
+
+      render(
+        <LadderStep
+          onGuessChange={mockOnGuessChange}
+          inputRef={inputRef}
+          ladderStep={mockLadderStep}
+          isCurrentQuestion={false}
+          isCurrentAnswer={true}
+          isStepRevealed={false}
+          isActive={true}
+          shouldShowTransform={false}
+          onHintClick={mockOnHintClick}
+        />
+      )
+
+      const hintButton = screen.getByTestId('hint-button')
+      expect(hintButton).toHaveClass('absolute', 'top-1/2', 'right-0', 'flex', 'h-8', 'w-8')
     })
 
     test('calls onGuessChange when typing', async () => {

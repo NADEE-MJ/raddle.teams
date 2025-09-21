@@ -3,9 +3,10 @@ import { TutorialState } from '@/types/tutorialStateMachine';
 
 interface CluesProps {
     gameState: TutorialState;
+    shuffleWithSeed: <T>(array: T[], seedStr: string) => T[];
 }
 
-export default function Clues({ gameState }: CluesProps) {
+export default function Clues({ gameState, shuffleWithSeed }: CluesProps) {
     const ladder = useMemo(() => gameState.puzzle.ladder, [gameState.puzzle.ladder]);
     const isDownward = useMemo(() => gameState.direction === 'down', [gameState.direction]);
     const questionWord = useMemo(() => {
@@ -26,14 +27,10 @@ export default function Clues({ gameState }: CluesProps) {
     );
 
     const unsolvedStepIds = useMemo(() => {
-        const stepIds = [];
-        for (let i = 0; i < ladder.length - 1; i++) {
-            if (!isStepRevealed(i) || (isStepRevealed(i) && !isStepRevealed(i + 1))) {
-                stepIds.push(i);
-            }
-        }
-        return stepIds;
-    }, [ladder.length, isStepRevealed]);
+        const allStepIds = Array.from({ length: ladder.length - 1 }, (_, i) => i);
+        const shuffledStepIds = shuffleWithSeed(allStepIds, gameState.puzzle.title);
+        return shuffledStepIds.filter((id) => !isStepRevealed(id) || (isStepRevealed(id) && !isStepRevealed(id + 1)));
+    }, [ladder.length, isStepRevealed, gameState.puzzle.title, shuffleWithSeed]);
 
     const solvedStepIds = useMemo(() => {
         const stepIds = [];
@@ -47,14 +44,14 @@ export default function Clues({ gameState }: CluesProps) {
 
     const renderQuestionWord = useCallback((word: string) => {
         return (
-            <span className='bg-green/30 text-green p-1 font-mono'
+            <span className='bg-green/30 text-green p-1 pb-0.5 font-mono'
                 data-testid={`question-word-${word?.toLowerCase()}`}>{word}</span>
         )
     }, []);
 
     const renderAnswerWord = useCallback((word: string) => {
         return (
-            <span className='bg-yellow/30 text-yellow p-1 font-mono'
+            <span className='bg-yellow/30 text-yellow p-1 pb-0.5 font-mono'
                 data-testid={`answer-word-${word?.toLowerCase()}`}>{word}</span>
         )
     }, []);
@@ -117,13 +114,26 @@ export default function Clues({ gameState }: CluesProps) {
         const clue = ladderStep.clue;
         if (!clue) throw new Error('Clue is null for revealed step');
 
-        const questionWordRendered = renderQuestionWord(questionWord!)
+        const isActiveClue = stepId === gameState.currentQuestion;
+        const hintUsed = gameState.hintsUsed.get(gameState.currentAnswer) ? gameState.hintsUsed.get(gameState.currentAnswer)! > 0 : false;
+
+        const shouldGreyOut = hintUsed && !isActiveClue;
+
+        const questionWordRendered = shouldGreyOut
+            ? <span className='text-tx-muted p-1 font-mono'>_____</span>
+            : renderQuestionWord(questionWord!)
 
         const parts = renderClueParts(clue, questionWordRendered, null);
 
-        return <div className='text-tx-primary opacity-75 border-border bg-secondary mb-2 rounded-md border-1 px-2 py-1 pt-1 pb-0'
+        const configurableClassNames = shouldGreyOut
+            ? 'text-tx-muted opacity-50'
+            : hintUsed
+                ? 'text-tx-primary opacity-75 border-blue-500'
+                : 'text-tx-primary opacity-75 ';
+
+        return <div className={`bg-secondary rounded-md mb-2 border-1 px-2 py-1 pt-1 pb-0 ${configurableClassNames}`}
             data-testid={`unsolved-clue-${stepId}`}>{parts}</div>;
-    }, [renderClueParts, renderQuestionWord, ladder, questionWord]);
+    }, [renderClueParts, renderQuestionWord, ladder, questionWord, gameState.hintsUsed, gameState.currentQuestion, gameState.currentAnswer]);
 
     const renderUpwardClue = useCallback((stepId: number) => {
         const ladderStep = ladder[stepId];
@@ -131,7 +141,14 @@ export default function Clues({ gameState }: CluesProps) {
         const clue = ladderStep.clue;
         if (!clue) throw new Error('Clue is null for revealed step');
 
-        const answerWordRendered = renderAnswerWord(answerWord!)
+        const isActiveClue = stepId === gameState.currentQuestion;
+        const hintUsed = gameState.hintsUsed.get(gameState.currentQuestion) ? gameState.hintsUsed.get(gameState.currentQuestion)! > 0 : false;
+
+        const shouldGreyOut = !isActiveClue && hintUsed;
+
+        const answerWordRendered = shouldGreyOut
+            ? <span className='text-tx-muted p-1 font-mono'>_____</span>
+            : renderAnswerWord(answerWord!)
 
         const parts = renderClueParts(clue, null, answerWordRendered);
 
@@ -139,11 +156,18 @@ export default function Clues({ gameState }: CluesProps) {
             parts.push(' → ')
             parts.push(answerWordRendered)
         }
-        return <div className='text-tx-primary opacity-75 border-border bg-secondary mb-2 rounded-md border-1 px-2 py-1 pt-1 pb-0'
+
+        const configurableClassNames = shouldGreyOut
+            ? 'text-tx-muted opacity-50'
+            : hintUsed
+                ? 'text-tx-primary opacity-75 border-blue-500'
+                : 'text-tx-primary opacity-75';
+
+        return <div className={`bg-secondary rounded-md mb-2 border-1 px-2 py-1 pt-1 pb-0 ${configurableClassNames}`}
             data-testid={`unsolved-clue-${stepId}`}>
             {parts}
         </div>;
-    }, [renderClueParts, renderAnswerWord, ladder, answerWord]);
+    }, [renderClueParts, renderAnswerWord, ladder, answerWord, gameState.hintsUsed, gameState.currentQuestion]);
 
     return (
         <div className='mb-6 px-3 font-medium md:p-0'>

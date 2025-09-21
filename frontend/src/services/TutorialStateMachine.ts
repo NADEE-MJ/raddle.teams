@@ -2,7 +2,7 @@ import { Puzzle } from '@/types/game';
 import {
     TutorialState,
     TutorialEvent,
-    TutorialStateMachine as ITutorialStateMachine,
+    ITutorialStateMachine,
     TutorialPhase,
     Direction,
 } from '@/types/tutorialStateMachine';
@@ -16,7 +16,11 @@ export class TutorialStateMachine implements ITutorialStateMachine {
 
     getCurrentState(): TutorialState {
         // Return a copy to prevent external mutation
-        return { ...this.state, revealedSteps: new Set(this.state.revealedSteps) };
+        return {
+            ...this.state,
+            revealedSteps: new Set(this.state.revealedSteps),
+            hintsUsed: new Map(this.state.hintsUsed),
+        };
     }
 
     dispatch(event: TutorialEvent): TutorialState {
@@ -66,6 +70,7 @@ export class TutorialStateMachine implements ITutorialStateMachine {
             currentAnswer: 1,
             isCompleted: false,
             puzzle,
+            hintsUsed: new Map<number, number>(),
         };
     }
 
@@ -77,9 +82,17 @@ export class TutorialStateMachine implements ITutorialStateMachine {
                 }
                 return this.handleGuess(state, event.guess);
             case 'SWITCH_DIRECTION':
+                if (state.phase === 'COMPLETED') {
+                    return state; // No changes if already completed
+                }
                 return this.handleSwitchDirection(state);
             case 'RESET':
                 return this.getInitialState(state.puzzle);
+            case 'HINT':
+                if (state.phase === 'COMPLETED') {
+                    return state; // No changes if already completed
+                }
+                return this.handleHint(state);
             default:
                 return state;
         }
@@ -231,5 +244,43 @@ export class TutorialStateMachine implements ITutorialStateMachine {
         }
 
         throw new Error(`No unrevealed steps found in ${direction} direction`);
+    }
+
+    getHintsUsedForStep(stepId: number): number {
+        return this.state.hintsUsed.get(stepId) || 0;
+    }
+
+    private canUseHint(): boolean {
+        if (this.state.phase === 'COMPLETED') {
+            return false;
+        }
+        const activeStepId = this.getActiveStepId();
+        const hintsUsed = this.getHintsUsedForStep(activeStepId);
+        return hintsUsed < 2;
+    }
+
+    private handleHint(state: TutorialState): TutorialState {
+        if (!this.canUseHint()) {
+            return state; // Cannot use hint
+        }
+
+        const activeStepId = this.getActiveStepId();
+        const hintsUsed = this.getHintsUsedForStep(activeStepId);
+
+        const newHintsUsed = new Map(state.hintsUsed);
+        newHintsUsed.set(activeStepId, hintsUsed + 1);
+
+        const newState = {
+            ...state,
+            hintsUsed: newHintsUsed,
+        };
+
+        // If this is the second hint, reveal the word (treat as correct guess)
+        if (hintsUsed === 1) {
+            const expectedAnswer = state.puzzle.ladder[activeStepId].word;
+            return this.handleGuess(newState, expectedAnswer);
+        }
+
+        return newState;
     }
 }

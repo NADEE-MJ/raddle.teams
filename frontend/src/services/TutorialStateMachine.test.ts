@@ -758,4 +758,109 @@ describe('TutorialStateMachine', () => {
             });
         });
     });
+
+    describe('hint functionality', () => {
+        it('initially has no hints used', () => {
+            const state = machine.getCurrentState();
+            expect(state.hintsUsed.size).toBe(0);
+        });
+
+        it('tracks first hint for active step', () => {
+            const activeStepId = machine.getActiveStepId();
+
+            const newState = machine.dispatch({ type: 'HINT' });
+            expect(newState.hintsUsed.get(activeStepId)).toBe(1);
+        });
+
+        it('reveals word on second hint', () => {
+            const activeStepId = machine.getActiveStepId();
+
+            // First hint
+            machine.dispatch({ type: 'HINT' });
+            expect(machine.getHintsUsedForStep(activeStepId)).toBe(1);
+
+            // Second hint should reveal the word and advance
+            const stateBefore = machine.getCurrentState();
+            const newState = machine.dispatch({ type: 'HINT' });
+
+            expect(newState.hintsUsed.get(activeStepId)).toBe(2);
+            expect(newState.currentQuestion).not.toBe(stateBefore.currentQuestion);
+        });
+
+        it('cannot use more than 2 hints per step', () => {
+            const activeStepId = machine.getActiveStepId();
+
+            // Use two hints
+            machine.dispatch({ type: 'HINT' });
+            machine.dispatch({ type: 'HINT' });
+            machine.dispatch({ type: 'HINT' }); // this will get used on the next step
+
+            // Try to use a third hint on the same step (should advance, so need to track original step)
+            expect(machine.getHintsUsedForStep(activeStepId)).toBe(2);
+            expect(machine.getHintsUsedForStep(activeStepId + 1)).toBe(1);
+        });
+
+        it('persists hints when switching directions', () => {
+            const initialActiveStepId = machine.getActiveStepId();
+
+            // Use hint
+            machine.dispatch({ type: 'HINT' });
+            expect(machine.getHintsUsedForStep(initialActiveStepId)).toBe(1);
+
+            // Switch direction
+            machine.dispatch({ type: 'SWITCH_DIRECTION' });
+
+            // Hint should still be recorded
+            expect(machine.getHintsUsedForStep(initialActiveStepId)).toBe(1);
+        });
+
+        it('resets hints on game reset', () => {
+            // Use some hints
+            machine.dispatch({ type: 'HINT' });
+            machine.dispatch({ type: 'HINT' });
+
+            // Reset
+            const newState = machine.dispatch({ type: 'RESET' });
+
+            expect(newState.hintsUsed.size).toBe(0);
+        });
+
+        it('cannot use hints when puzzle is completed', () => {
+            // Complete the puzzle first
+            machine.dispatch({ type: 'GUESS', guess: 'SOUTH' });
+            machine.dispatch({ type: 'GUESS', guess: 'MOUTH' });
+            machine.dispatch({ type: 'GUESS', guess: 'TONGUE' });
+            machine.dispatch({ type: 'GUESS', guess: 'SHOE' });
+            machine.dispatch({ type: 'GUESS', guess: 'SOLE' });
+            machine.dispatch({ type: 'GUESS', guess: 'SOUL' });
+            machine.dispatch({ type: 'GUESS', guess: 'HEART' });
+            machine.dispatch({ type: 'GUESS', guess: 'EARTH' });
+
+            const completedState = machine.getCurrentState();
+            expect(completedState.isCompleted).toBe(true);
+
+            // Try to use hint when completed
+            const attemptHintState = machine.dispatch({ type: 'HINT' });
+
+            // State should remain unchanged
+            expect(attemptHintState).toEqual(completedState);
+        });
+
+        it('cannot use hint when already used 2 hints on current step', () => {
+            const activeStepId = machine.getActiveStepId();
+
+            // Use first hint
+            machine.dispatch({ type: 'HINT' });
+            expect(machine.getHintsUsedForStep(activeStepId)).toBe(1);
+
+            // Use second hint (should reveal word and advance)
+            const beforeSecondHint = machine.getCurrentState();
+            machine.dispatch({ type: 'HINT' });
+            expect(machine.getHintsUsedForStep(activeStepId)).toBe(2);
+
+            // Verify we advanced to next step
+            const afterSecondHint = machine.getCurrentState();
+            expect(afterSecondHint.currentQuestion).not.toBe(beforeSecondHint.currentQuestion);
+        });
+    });
 });

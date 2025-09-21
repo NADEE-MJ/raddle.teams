@@ -82,6 +82,7 @@ describe('useTutorialStateMachine', () => {
             expect(result.current.isStepRevealed(1)).toBe(false); // SOUTH (not revealed yet)
             expect(result.current.isCurrentQuestion(0)).toBe(true);
             expect(result.current.isCurrentAnswer(1)).toBe(true);
+            expect(result.current.getHintsUsedForStep(1)).toBe(0); // No hints used initially
         });
     });
 
@@ -163,6 +164,17 @@ describe('useTutorialStateMachine', () => {
 
             expect(result.current.state.phase).toBe('DOWNWARD');
             expect(result.current.state.currentQuestion).toBe(0);
+        });
+
+        it('handleHint calls dispatch with correct event', () => {
+            const { result } = hookResult;
+            const activeStepId = result.current.getActiveStepId();
+
+            act(() => {
+                result.current.handleHint();
+            });
+
+            expect(result.current.getHintsUsedForStep(activeStepId)).toBe(1);
         });
     });
 
@@ -268,6 +280,118 @@ describe('useTutorialStateMachine', () => {
             const secondMachineRef = result.current.dispatch;
 
             expect(firstMachineRef).toBe(secondMachineRef);
+        });
+    });
+
+    describe('shuffleWithSeed', () => {
+        it('returns a shuffled array', () => {
+            const { result } = hookResult;
+            const originalArray = [1, 2, 3, 4, 5];
+            const shuffled = result.current.shuffleWithSeed(originalArray, 'test-seed');
+
+            expect(shuffled).toHaveLength(originalArray.length);
+            expect(shuffled).not.toBe(originalArray); // Different reference
+            expect(shuffled.sort()).toEqual(originalArray.sort()); // Same elements
+        });
+
+        it('produces deterministic results with same seed', () => {
+            const { result } = hookResult;
+            const originalArray = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10];
+            const seed = 'consistent-seed';
+
+            const shuffle1 = result.current.shuffleWithSeed(originalArray, seed);
+            const shuffle2 = result.current.shuffleWithSeed(originalArray, seed);
+
+            expect(shuffle1).toEqual(shuffle2);
+        });
+
+        it('produces different results with different seeds', () => {
+            const { result } = hookResult;
+            const originalArray = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10];
+
+            const shuffle1 = result.current.shuffleWithSeed(originalArray, 'seed-1');
+            const shuffle2 = result.current.shuffleWithSeed(originalArray, 'seed-2');
+
+            expect(shuffle1).not.toEqual(shuffle2);
+        });
+
+        it('does not mutate the original array', () => {
+            const { result } = hookResult;
+            const originalArray = [1, 2, 3, 4, 5];
+            const originalCopy = [...originalArray];
+
+            result.current.shuffleWithSeed(originalArray, 'test-seed');
+
+            expect(originalArray).toEqual(originalCopy);
+        });
+
+        it('handles empty arrays', () => {
+            const { result } = hookResult;
+            const emptyArray: number[] = [];
+            const shuffled = result.current.shuffleWithSeed(emptyArray, 'test-seed');
+
+            expect(shuffled).toEqual([]);
+        });
+
+        it('handles single-element arrays', () => {
+            const { result } = hookResult;
+            const singleArray = [42];
+            const shuffled = result.current.shuffleWithSeed(singleArray, 'test-seed');
+
+            expect(shuffled).toEqual([42]);
+        });
+
+        it('properly converts string to numeric seed', () => {
+            const { result } = hookResult;
+            const array = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10];
+
+            // Test with different seeds that should produce different results
+            const shuffle1 = result.current.shuffleWithSeed(array, 'a');
+            const shuffle2 = result.current.shuffleWithSeed(array, 'b');
+            const shuffle3 = result.current.shuffleWithSeed(array, 'aa');
+
+            // All should be different due to different seed conversion
+            expect(shuffle1).not.toEqual(shuffle2);
+            expect(shuffle1).not.toEqual(shuffle3);
+            expect(shuffle2).not.toEqual(shuffle3);
+        });
+    });
+
+    describe('hint functionality', () => {
+        it('tracks hints used for specific steps', () => {
+            const { result } = hookResult;
+            const activeStepId = result.current.getActiveStepId();
+
+            act(() => {
+                result.current.handleHint();
+            });
+
+            expect(result.current.getHintsUsedForStep(activeStepId)).toBe(1);
+            expect(result.current.getHintsUsedForStep(activeStepId + 1)).toBe(0);
+        });
+
+        it('persists hint count when switching directions', () => {
+            const { result } = hookResult;
+            const initialActiveStepId = result.current.getActiveStepId();
+
+            act(() => {
+                result.current.handleHint();
+                result.current.handleSwitchDirection();
+            });
+
+            expect(result.current.getHintsUsedForStep(initialActiveStepId)).toBe(1);
+        });
+
+        it('resets hints when resetting game', () => {
+            const { result } = hookResult;
+            const activeStepId = result.current.getActiveStepId();
+
+            act(() => {
+                result.current.handleHint();
+                result.current.handleReset();
+            });
+
+            expect(result.current.getHintsUsedForStep(activeStepId)).toBe(0);
         });
     });
 });

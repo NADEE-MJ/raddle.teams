@@ -5,6 +5,7 @@ import {
     Card,
     CopyableCode,
     ErrorMessage,
+    HintConfirmationModal,
     LoadingSpinner,
     Modal,
     Select,
@@ -17,6 +18,8 @@ export default function ComponentShowcasePage() {
     const [selectValue, setSelectValue] = useState('');
     const [showModal, setShowModal] = useState(false);
     const [showLoadingModal, setShowLoadingModal] = useState(false);
+    const [showHintModal, setShowHintModal] = useState(false);
+    const [showSecondHintModal, setShowSecondHintModal] = useState(false);
     const [buttonLoading, setButtonLoading] = useState(false);
 
     const handleButtonLoadingTest = () => {
@@ -53,6 +56,7 @@ export default function ComponentShowcasePage() {
                             <Button variant='secondary'>Secondary</Button>
                             <Button variant='destructive'>Destructive</Button>
                             <Button variant='link'>Link</Button>
+                            <Button variant='hint'>Hint</Button>
                         </div>
                     </div>
 
@@ -301,6 +305,39 @@ export default function ComponentShowcasePage() {
                 </div>
             </section>
 
+            {/* HintConfirmationModal Component */}
+            <section className='space-y-4'>
+                <h2 className='text-tx-primary border-border border-b pb-2 text-2xl font-semibold'>HintConfirmationModal</h2>
+                <div className='flex gap-2'>
+                    <Button onClick={() => setShowHintModal(true)} variant='hint'>
+                        Open First Hint Modal
+                    </Button>
+                    <Button onClick={() => setShowSecondHintModal(true)} variant='hint'>
+                        Open Second Hint Modal
+                    </Button>
+
+                    <HintConfirmationModal
+                        isOpen={showHintModal}
+                        onConfirm={() => {
+                            console.log('First hint confirmed');
+                            setShowHintModal(false);
+                        }}
+                        onCancel={() => setShowHintModal(false)}
+                        secondHint={false}
+                    />
+
+                    <HintConfirmationModal
+                        isOpen={showSecondHintModal}
+                        onConfirm={() => {
+                            console.log('Second hint confirmed');
+                            setShowSecondHintModal(false);
+                        }}
+                        onCancel={() => setShowSecondHintModal(false)}
+                        secondHint={true}
+                    />
+                </div>
+            </section>
+
             {/* Color Palette */}
             <section className='space-y-4'>
                 <h2 className='text-tx-primary border-border border-b pb-2 text-2xl font-semibold'>Color Palette</h2>
@@ -412,13 +449,25 @@ export default function ComponentShowcasePage() {
                             <div className='bg-blue rounded-lg p-4 text-center text-black shadow-sm'>
                                 <div className='mb-2 text-sm font-medium'>Blue</div>
                                 <div className='text-xs opacity-75'>bg-blue / text-blue</div>
-                                <div className='text-xs opacity-50'>#39bae6</div>
+                                <div className='text-xs opacity-50'>#3953e6</div>
                             </div>
                             <div className='bg-blue-bright rounded-lg p-4 text-center text-black shadow-sm'>
                                 <div className='mb-2 text-sm font-medium'>Blue Bright</div>
                                 <div className='text-xs opacity-75'>bg-blue-bright</div>
                                 <div className='text-xs opacity-50'>#59c2ff</div>
                             </div>
+                            <div className='bg-yellow rounded-lg p-4 text-center text-black shadow-sm'>
+                                <div className='mb-2 text-sm font-medium'>Yellow</div>
+                                <div className='text-xs opacity-75'>bg-yellow / text-yellow</div>
+                                <div className='text-xs opacity-50'>#96860e</div>
+                            </div>
+                            <div className='bg-red-bright rounded-lg p-4 text-center text-white shadow-sm'>
+                                <div className='mb-2 text-sm font-medium'>Red Bright</div>
+                                <div className='text-xs opacity-75'>bg-red-bright / text-red-bright</div>
+                                <div className='text-xs opacity-50'>#d95757</div>
+                            </div>
+                        </div>
+                        <div className='grid gap-4 md:grid-cols-2 lg:grid-cols-4 mt-4'>
                             <div className='bg-purple rounded-lg p-4 text-center text-black shadow-sm'>
                                 <div className='mb-2 text-sm font-medium'>Purple</div>
                                 <div className='text-xs opacity-75'>bg-purple / text-purple</div>
@@ -428,6 +477,11 @@ export default function ComponentShowcasePage() {
                                 <div className='mb-2 text-sm font-medium'>Cyan</div>
                                 <div className='text-xs opacity-75'>bg-cyan / text-cyan</div>
                                 <div className='text-xs opacity-50'>#95e6cb</div>
+                            </div>
+                            <div className='bg-grey rounded-lg p-4 text-center text-white shadow-sm'>
+                                <div className='mb-2 text-sm font-medium'>Grey</div>
+                                <div className='text-xs opacity-75'>bg-grey / text-grey</div>
+                                <div className='text-xs opacity-50'>#2b2b2b</div>
                             </div>
                         </div>
                     </div>

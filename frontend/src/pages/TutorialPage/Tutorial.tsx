@@ -1,77 +1,32 @@
-import { useRef, useMemo, useEffect } from 'react';
+import { useRef, useEffect, useState } from 'react';
 import { Puzzle } from '@/types/game';
 import { useTutorialStateMachine } from '@/hooks/useTutorialStateMachine';
+import { HintConfirmationModal } from '@/components';
 import LadderStep from './LadderStep';
 import Clues from './Clues';
 
 interface TutorialProps {
     setCompleted: (completed: boolean) => void;
+    puzzle: Puzzle;
 }
 
-const TUTORIAL_PUZZLE: Puzzle = {
-    title: 'From DOWN to EARTH',
-    ladder: [
-        {
-            word: 'DOWN',
-            clue: "Cardinal direction that's <> on a map, most of the time",
-            transform: 'MEANS',
-        },
-        {
-            word: 'SOUTH',
-            clue: 'Change the first letter of <> to get a part of the body',
-            transform: 'S->M',
-        },
-        {
-            word: 'MOUTH',
-            clue: 'Organ that sits inside the <>',
-            transform: 'CONTAINS THE',
-        },
-        {
-            word: 'TONGUE',
-            clue: 'Piece of clothing that often has a <>',
-            transform: 'IS ON A',
-        },
-        {
-            word: 'SHOE',
-            clue: 'Rubber layer on the bottom of a <>',
-            transform: 'CONTAINS A',
-        },
-        {
-            word: 'SOLE',
-            clue: 'Kind of food or music that sounds like <>',
-            transform: 'SOUNDS LIKE',
-        },
-        {
-            word: 'SOUL',
-            clue: 'Popular piano duet "{} and <>"',
-            transform: 'IS',
-        },
-        {
-            word: 'HEART',
-            clue: 'Move the first letter of <> to the end to get where we are',
-            transform: 'H -> END',
-        },
-        {
-            word: 'EARTH',
-            clue: null,
-            transform: null,
-        },
-    ],
-};
-
-export default function Tutorial({ setCompleted }: TutorialProps) {
+export default function Tutorial({ setCompleted, puzzle }: TutorialProps) {
     const inputRef = useRef<HTMLInputElement>(null);
-    const puzzle = useMemo<Puzzle>(() => TUTORIAL_PUZZLE, []);
+    const [showHintConfirmation, setShowHintConfirmation] = useState(false);
 
     const {
         state,
         handleGuess,
         handleSwitchDirection,
+        handleHint,
         canSwitchDirection,
+        getActiveStepId,
         isActiveStep,
         isStepRevealed,
         isCurrentQuestion,
         isCurrentAnswer,
+        getHintsUsedForStep,
+        shuffleWithSeed,
     } = useTutorialStateMachine(puzzle);
 
     // Update completion status when state changes
@@ -90,6 +45,28 @@ export default function Tutorial({ setCompleted }: TutorialProps) {
 
     const handleGuessChange = (guess: string) => {
         handleGuess(guess);
+    };
+
+    const handleHintClick = () => {
+        const activeStepId = state.direction === 'down' ? state.currentAnswer : state.currentQuestion;
+        const hintsUsed = getHintsUsedForStep(activeStepId);
+
+        // If this is the first hint, use it immediately
+        if (hintsUsed === 0) {
+            setShowHintConfirmation(true);
+        } else if (hintsUsed === 1) {
+            // If this is the second hint, show confirmation modal
+            setShowHintConfirmation(true);
+        }
+    };
+
+    const handleHintConfirm = () => {
+        handleHint();
+        setShowHintConfirmation(false);
+    };
+
+    const handleHintCancel = () => {
+        setShowHintConfirmation(false);
     };
 
     return (
@@ -117,6 +94,8 @@ export default function Tutorial({ setCompleted }: TutorialProps) {
                             isStepRevealed={isStepRevealed(stepId)}
                             isActive={isActiveStep(stepId)}
                             shouldShowTransform={isStepRevealed(stepId) && isStepRevealed(stepId + 1)}
+                            onHintClick={isActiveStep(stepId) ? handleHintClick : undefined}
+                            secondHint={getHintsUsedForStep(stepId) === 1}
                         />
                     ))}
 
@@ -136,8 +115,16 @@ export default function Tutorial({ setCompleted }: TutorialProps) {
 
                 <Clues
                     gameState={state}
+                    shuffleWithSeed={shuffleWithSeed}
                 />
             </div>
+
+            <HintConfirmationModal
+                isOpen={showHintConfirmation}
+                onConfirm={handleHintConfirm}
+                onCancel={handleHintCancel}
+                secondHint={getHintsUsedForStep(getActiveStepId()) === 1}
+            />
         </div>
     );
 }

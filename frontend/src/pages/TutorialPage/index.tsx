@@ -1,10 +1,65 @@
 import { Link, useNavigate } from 'react-router-dom';
 import Tutorial from './Tutorial';
-import { useState } from 'react';
+import { useMemo, useState } from 'react';
 import { Button } from '@/components';
+import { Puzzle } from '@/types/game';
+
+
 
 export default function TutorialPage() {
     const [completed, setCompleted] = useState(false);
+    const puzzle = useMemo<Puzzle>(() => {
+        return {
+            title: 'From DOWN to EARTH',
+            ladder: [
+                {
+                    word: 'DOWN',
+                    clue: "Cardinal direction that's <> on a map, most of the time",
+                    transform: 'MEANS',
+                },
+                {
+                    word: 'SOUTH',
+                    clue: 'Change the first letter of <> to get a part of the body',
+                    transform: 'S->M',
+                },
+                {
+                    word: 'MOUTH',
+                    clue: 'Organ that sits inside the <>',
+                    transform: 'CONTAINS THE',
+                },
+                {
+                    word: 'TONGUE',
+                    clue: 'Piece of clothing that often has a <>',
+                    transform: 'IS ON A',
+                },
+                {
+                    word: 'SHOE',
+                    clue: 'Rubber layer on the bottom of a <>',
+                    transform: 'CONTAINS A',
+                },
+                {
+                    word: 'SOLE',
+                    clue: 'Kind of food or music that sounds like <>',
+                    transform: 'SOUNDS LIKE',
+                },
+                {
+                    word: 'SOUL',
+                    clue: 'Popular piano duet "{} and <>"',
+                    transform: 'IS',
+                },
+                {
+                    word: 'HEART',
+                    clue: 'Move the first letter of <> to the end to get where we are',
+                    transform: 'H -> END',
+                },
+                {
+                    word: 'EARTH',
+                    clue: null,
+                    transform: null,
+                },
+            ],
+        };
+    }, []);
 
     const navigate = useNavigate();
 
@@ -19,6 +74,7 @@ export default function TutorialPage() {
 
             <Tutorial
                 setCompleted={setCompleted}
+                puzzle={puzzle}
             />
 
             {completed && (

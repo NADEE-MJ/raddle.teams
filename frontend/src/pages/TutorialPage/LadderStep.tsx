@@ -1,5 +1,6 @@
 import { useState, useMemo } from 'react';
 import { LadderStep as LadderStepType } from '@/types/game';
+import Button from '@/components/Button';
 
 
 interface LadderStepProps {
@@ -11,10 +12,12 @@ interface LadderStepProps {
     isStepRevealed: boolean;
     isActive: boolean;
     shouldShowTransform: boolean;
+    onHintClick?: () => void;
+    secondHint?: boolean;
 }
 
 
-export default function LadderStep({ onGuessChange, inputRef, ladderStep, isCurrentQuestion, isCurrentAnswer, isStepRevealed, isActive, shouldShowTransform }: LadderStepProps) {
+export default function LadderStep({ onGuessChange, inputRef, ladderStep, isCurrentQuestion, isCurrentAnswer, isStepRevealed, isActive, shouldShowTransform, onHintClick, secondHint = false }: LadderStepProps) {
     const [currentGuess, setCurrentGuess] = useState('');
 
     const color = useMemo(() => {
@@ -67,10 +70,16 @@ export default function LadderStep({ onGuessChange, inputRef, ladderStep, isCurr
                     spellCheck='false'
                     data-testid="active-step-input"
                 />
-                <button className='bg-blue-500 border-blue-500 hover:bg-blue-600 transition-all duration-100 absolute top-1/2 right-0 flex h-8 w-8 -translate-y-1/2 translate-x-1/2 items-center justify-center rounded border'
-                    data-testid='hint-button'>
-                    💡
-                </button>
+                {onHintClick && (
+                    <Button
+                        onClick={onHintClick}
+                        variant='hint'
+                        className={`absolute top-1/2 right-0 flex h-8 w-8 -translate-y-1/2 translate-x-1/2 items-center justify-center`}
+                        data-testid='hint-button'
+                    >
+                        {secondHint ? '👁️' : '💡'}
+                    </Button>
+                )}
                 {renderEmptyTransform && renderEmptyTransformFn()}
             </div>);
     }
