@@ -517,8 +517,47 @@ describe('TutorialStateMachine', () => {
                 expect(completeState.phase).toBe('COMPLETED');
                 expect(completeState.isCompleted).toBe(true);
             });
+
+            it('solves the puzzle upwards when everything is solved except the second to last step', () => {
+                machine.dispatch({ type: 'GUESS', guess: 'SOUTH' });
+                machine.dispatch({ type: 'GUESS', guess: 'MOUTH' });
+                machine.dispatch({ type: 'GUESS', guess: 'TONGUE' });
+                machine.dispatch({ type: 'GUESS', guess: 'SHOE' });
+                machine.dispatch({ type: 'GUESS', guess: 'SOLE' });
+                const midState = machine.dispatch({ type: 'GUESS', guess: 'SOUL' });
+                expect(midState.currentQuestion).toBe(6);
+                expect(midState.currentAnswer).toBe(7);
+                expect(midState.phase).toBe('DOWNWARD');
+                expect(machine.canSwitchDirection()).toBe(true);
+
+                const switchDirection = machine.dispatch({ type: 'SWITCH_DIRECTION' });
+                expect(switchDirection.phase).toBe('UPWARD');
+                // NOW SOLVE UPWARDS
+                const completeState = machine.dispatch({ type: 'GUESS', guess: 'HEART' });
+                expect(completeState.phase).toBe('COMPLETED');
+                expect(completeState.isCompleted).toBe(true);
+            });
+
+            it('solves the puzzle downwards when everything is solved except the second step', () => {
+                machine.dispatch({ type: 'SWITCH_DIRECTION' });
+                machine.dispatch({ type: 'GUESS', guess: 'HEART' });
+                machine.dispatch({ type: 'GUESS', guess: 'SOUL' });
+                machine.dispatch({ type: 'GUESS', guess: 'SOLE' });
+                machine.dispatch({ type: 'GUESS', guess: 'SHOE' });
+                machine.dispatch({ type: 'GUESS', guess: 'TONGUE' });
+                const midState = machine.dispatch({ type: 'GUESS', guess: 'MOUTH' });
+                expect(midState.currentQuestion).toBe(1);
+                expect(midState.currentAnswer).toBe(2);
+                expect(midState.phase).toBe('UPWARD');
+                expect(machine.canSwitchDirection()).toBe(true);
+
+                const switchDirection = machine.dispatch({ type: 'SWITCH_DIRECTION' });
+                expect(switchDirection.phase).toBe('DOWNWARD');
+                // NOW SOLVE DOWNWARDS
+                const completeState = machine.dispatch({ type: 'GUESS', guess: 'SOUTH' });
+                expect(completeState.phase).toBe('COMPLETED');
+                expect(completeState.isCompleted).toBe(true);
+            });
         });
     });
-    // solve the puzzle upwards when everything is solved except the second to last step
-    // solve the puzzle downwards when everything is solved except the second step
 });
