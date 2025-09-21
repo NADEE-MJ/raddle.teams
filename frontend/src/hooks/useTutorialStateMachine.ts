@@ -1,4 +1,4 @@
-import { useState, useCallback, useMemo } from 'react';
+import { useState, useCallback } from 'react';
 import { Puzzle } from '@/types/game';
 import { TutorialStateMachine } from '@/services/TutorialStateMachine';
 import { TutorialState, TutorialEvent } from '@/types/tutorialStateMachine';

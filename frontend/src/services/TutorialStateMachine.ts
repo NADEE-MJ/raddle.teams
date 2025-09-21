@@ -50,6 +50,10 @@ export class TutorialStateMachine implements ITutorialStateMachine {
     }
 
     private getInitialState(puzzle: Puzzle): TutorialState {
+        if (puzzle.ladder.length < 5) {
+            throw new Error('Puzzle must have at least five steps in the ladder');
+        }
+
         const revealedSteps = new Set<number>();
         revealedSteps.add(0);
         revealedSteps.add(puzzle.ladder.length - 1);

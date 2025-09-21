@@ -326,6 +326,23 @@ describe('TutorialStateMachine', () => {
     });
 
     describe('edge cases', () => {
+        describe('initial state', () => {
+            it('throws error if puzzle has fewer than five steps', () => {
+                const smallPuzzle: Puzzle = {
+                    title: 'Small Puzzle',
+                    ladder: [
+                        { word: 'ONE', clue: 'clue1', transform: 'T1' },
+                        { word: 'TWO', clue: 'clue2', transform: 'T2' },
+                        { word: 'THREE', clue: null, transform: null },
+                    ],
+                };
+
+                expect(() => new TutorialStateMachine(smallPuzzle)).toThrow(
+                    'Puzzle must have at least five steps in the ladder'
+                );
+            });
+        });
+
         describe('resetting', () => {
             // resetting when already at initial state (should be no-op)
             // resetting from various states (mid-puzzle, completed, locked)
