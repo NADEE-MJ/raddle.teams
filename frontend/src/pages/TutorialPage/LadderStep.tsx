@@ -63,7 +63,6 @@ export default function LadderStep({ onGuessChange, inputRef, ladderStep, isCurr
                     }}
                     placeholder=''
                     className={inputClassNames}
-                    // maxLength={step.word.length} TODO - enforce max length?
                     autoComplete='off'
                     autoCorrect='off'
                     autoCapitalize='off'

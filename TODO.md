@@ -1,56 +1,67 @@
-Things to fix:
+# TODO
 
-1. admin loading icon is not centered on the page, same with lobby, same with game i believe
+## Testing
 
-tests to look into in the future:
+### tests to look into in the future
 
 1. reconnect flow test
 2. lobby no session access
 3. duplicate player names
 
-tests to create:
+### e2e tests to create (some could probably be unit tests instead)
+
+***should rewrite e2e tests to cover main flows***
+***should write python unit tests to cover all backend flows***
+***should write vite unit tests to cover all frontend flows***
 
 1. test admin sees a player leaving and joining via websocket updates (i think this already exists)
-│ │ - Test invalid team assignments: Try to move player to non-existent team ID                                                                                                                                                                                        │ │
-│ │ - Test team creation limits: Create teams with 0, 1, 11+ teams (should fail)                                                                                                                                                                                       │ │
-│ │ - Test team operations on empty lobbies: Try to create teams with no players                                                                                                                                                                                       │ │
-│ │ - Test unassigned player kicks: Kick unassigned players vs assigned players                                                                                                                                                                                        │ │
-│ │ - Test team operations during game: Try to modify teams while game is active (should fail)                                                                                                                                                                         │ │
-│ │ - Test game start requirements: Verify game can't start with unassigned players                                                                                                                                                                                    │ │
+2. Test invalid team assignments: Try to move player to non-existent team ID
+3. Test team creation limits: Create teams with 0, 1, 11+ teams (should fail)
+4. Test team operations on empty lobbies: Try to create teams with no players
+5. Test unassigned player kicks: Kick unassigned players vs assigned players
+6. Test team operations during game: Try to modify teams while game is active (should fail)
+7. Test game start requirements: Verify game can't start with unassigned players
 
-this is entirely for admins and is prob not worth but Team Display & Progress (based on current_word_index field)                                                                                                                                                                                                     │ │
-│ │                                                                                                                                                                                                                                                                    │ │
-│ │ - Test team progress display: Verify teams show correct progress/word index                                                                                                                                                                                        │ │
-│ │ - Test progress updates: If game functionality exists, test progress synchronization                                                                                                                                                                               │ │
-│ │ - Test completed team display: Test teams that have finished vs active teams
+#### this is entirely for admins and is prob not worth but Team Display & Progress (based on current_word_index field) could maybe be unit tested
 
-these seem like they will never happen but maybe should add ways to handle this stuff for real world scenarios????
-│ │ - Test player UI during rapid team changes: Admin rapidly switching player between teams                                                                                                                                                                           │ │
-│ │ - Test WebSocket connection drops during team assignment: Player loses connection mid-assignment                                                                                                                                                                   │ │
-│ │ - Test player refresh during team operations: Player reloads page while being moved                                                                                                                                                                                │ │
-│ │ - Test simultaneous team operations: Multiple admins trying to create teams simultaneously                                                                                                                                                                         │ │
-│ │ - Test race conditions: Player leaving while admin is moving them to a team                                                                                                                                                                                        │ │
-│ │ - Test WebSocket message ordering: Ensure events arrive in correct sequence during rapid operations                                                                                                                                                                │ │
-│ │ - Test admin permission conflicts: Two admins trying to modify same player simultaneously                                                                                                                                                                          │ │
-│ │ - Test admin session isolation: One admin's actions don't affect other admin's WebSocket connections                                                                                                                                                               │ │
+1. Test team progress display: Verify teams show correct progress/word index
+2. Test progress updates: If game functionality exists, test progress synchronization
+3. Test completed team display: Test teams that have finished vs active teams
 
+#### these seem like they will never happen but maybe should add ways to handle this stuff for real world scenarios????
 
-other things ot fix:
-fix the vite error config
-💿 Hey developer 👋
+1. Test player UI during rapid team changes: Admin rapidly switching player between teams
+2. Test WebSocket connection drops during team assignment: Player loses connection mid-assignment
+3. Test player refresh during team operations: Player reloads page while being moved
+4. Test simultaneous team operations: Multiple admins trying to create teams simultaneously
+5. Test race conditions: Player leaving while admin is moving them to a team
+6. Test WebSocket message ordering: Ensure events arrive in correct sequence during rapid operations
+7. Test admin permission conflicts: Two admins trying to modify same player simultaneously
+8. Test admin session isolation: One admin's actions don't affect other admin's WebSocket connections
 
-You can provide a way better UX than this when your app throws errors by providing your own ErrorBoundary or errorElement prop on your route.
+## TASKS
 
+1. send individual team assignments to players via websockets instead of just a teams assigned update and forcing a reload
+2. admin loading icon is not centered on the page, same with lobby, same with game i believe
+3. provide a better error screen than the vite error page:
+   1. 💿 Hey developer 👋
+   2. You can provide a way better UX than this when your app throws errors by providing your own ErrorBoundary or errorElement prop on your route.
+4. add setup instructions to the readme / create a separate setup.md file / clean up the readme
+   1. npm ci && poetry install --sync
+   2. create .env file with new envs
+5. implement show full ladder functionality
+6. enforce max length on ladder step input?
+7. create a broadcast to other players in lobby and broadcast to self
+   1. broadcast to others can be used for events like players being kicked
+   2. broadcast to self can be used for events like "you have been kicked"
+8. implement message handling for broadcasts
+   1. specifically in the continuous listening loop for websockets, maybe not worth it in the lobby?
+   2. could be used for chat messages, game updates, etc
+9. What should happen in web sockets it it fails to broadcast to a player?
+   1. currently it just ignores it, but should it remove the player from the lobby?
+   2. should it log the error somewhere more permanent than just the console?
+   3. should it notify the admin that a player has been disconnected?
+   4. should it attempt to reconnect to the player
+   5. should it resend the message later?
 
-pages to fix:
-Tutorial page
-1. on initial load of the tutorial the first hint should be instantly selected
-2. fix the issues with the clues, especially when going backwards
-lobby, lobby context, layout
-admin, admin context, layout
-Game, game context, layout
-
-add setup instructions
-
-npm ci && poetry install --sync
-create .env file with new envs
+## BUGS

@@ -99,7 +99,6 @@ async def create_teams(
 
     db.commit()
 
-    # TODO probably not worth it, but send team assignment to each player via websocket
     await lobby_websocket_manager.broadcast_to_lobby(
         lobby_id=lobby_id,
         event=TeamAssignedEvent(lobby_id=lobby_id, player_session_id=player.session_id),

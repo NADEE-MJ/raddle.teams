@@ -201,7 +201,6 @@ class LobbyWebSocketManager:
                 websocket_logger.exception(
                     f"Failed to send event to player_session_id={ws_id} in lobby={lobby_id}; removing or ignoring."
                 )
-                # TODO look at this
                 # Ignore failed sends, cleanup will happen elsewhere
                 pass
         await self.admin_web_socket_manager.broadcast_to_lobby(lobby_id, event)
@@ -223,7 +222,6 @@ class LobbyWebSocketManager:
                     websocket_logger.info(f"Player {player_session_id} removed from lobby {lobby_id} after kick")
 
         kick_notification_event = PlayerKickedEvent(lobby_id=lobby_id, player_session_id=player_session_id)
-        # TODO create a broadcast to other players in lobby and broadcast to self
         await self.broadcast_to_lobby(lobby_id, kick_notification_event)
 
         await self.admin_web_socket_manager.broadcast_to_lobby(lobby_id, kick_notification_event)
@@ -234,7 +232,6 @@ class LobbyWebSocketManager:
                 data = await websocket.receive_text()
                 message = json.loads(data)
                 websocket_logger.debug(f"Player WS received message: {message}")
-                # TODO Message handling would be implemented here for future features
             except Exception:
                 websocket_logger.exception("Error while reading from player websocket. Stopping continuous listening.")
                 break

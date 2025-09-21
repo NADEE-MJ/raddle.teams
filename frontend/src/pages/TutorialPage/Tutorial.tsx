@@ -75,7 +75,6 @@ export default function Tutorial({ setCompleted, puzzle }: TutorialProps) {
                 <div className='divide-border border-border divide-y-2 border-x-5 '>
                     <div>
                         <div className='hidden p-4 sm:hidden md:block'></div>
-                        {/* TODO implement show full ladder functionality */}
                         <button
                             type='button'
                             className='text-tx-muted hover:bg-elevated w-full p-1 text-xs italic md:hidden'
