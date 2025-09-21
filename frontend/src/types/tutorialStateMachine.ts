@@ -23,7 +23,7 @@ export interface TutorialState {
     puzzle: Puzzle;
 }
 
-export type TutorialEvent = { type: 'CORRECT_GUESS'; guess: string } | { type: 'SWITCH_DIRECTION' } | { type: 'RESET' };
+export type TutorialEvent = { type: 'GUESS'; guess: string } | { type: 'SWITCH_DIRECTION' } | { type: 'RESET' };
 
 export interface TutorialStateMachine {
     getCurrentState(): TutorialState;

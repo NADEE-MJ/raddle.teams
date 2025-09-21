@@ -234,19 +234,23 @@ add_command_and_aliases(
 
 
 def vitest(
+    ctx: typer.Context,
     v: bool = typer.Option(False, "--verbose", "-v", help="🔍 Enable verbose output"),
     filter: str = typer.Option(None, "--filter", "-f", help="🔍 Filter tests by name"),
 ):
     """⚡ Run vitest unit tests"""
     console.print("[bold magenta]⚡ Running vitest unit tests...[/bold magenta]")
 
-    vitest_cmd = ["npx", "vitest", "run"]
+    vitest_cmd = ["npx", "vitest"]
 
     if v:
         vitest_cmd.append("--reporter=verbose")
 
     if filter:
         vitest_cmd.extend(["-t", filter])
+
+    if ctx.params:
+        vitest_cmd.extend(ctx.args)
 
     return run_command(vitest_cmd, "Running vitest unit tests")
 
@@ -256,6 +260,7 @@ add_command_and_aliases(
     "vitest",
     ["vi"],
     help="⚡ Run vitest unit tests",
+    context_settings={"allow_extra_args": True, "ignore_unknown_options": True},
 )
 
 

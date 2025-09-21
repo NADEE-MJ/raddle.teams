@@ -67,7 +67,7 @@ export default function Tutorial({ setCompleted, completed }: TutorialProps) {
     // Use our new state machine hook
     const {
         state,
-        handleCorrectGuess,
+        handleGuess,
         handleSwitchDirection,
         canSwitchDirection,
         getActiveStepId,
@@ -96,7 +96,7 @@ export default function Tutorial({ setCompleted, completed }: TutorialProps) {
     };
 
     const handleGuessChange = (guess: string) => {
-        handleCorrectGuess(guess);
+        handleGuess(guess);
     };
 
     // Get current question and answer words for Clues component
