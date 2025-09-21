@@ -1,53 +1,65 @@
-import { JSX, useMemo } from 'react';
-import { Puzzle } from '@/types/game';
+import { JSX, useCallback, useMemo } from 'react';
+import { TutorialState } from '@/types/tutorialStateMachine';
 
 interface CluesProps {
-    puzzle: Puzzle;
-    isDownward: boolean;
-    completed: boolean;
-    isStepRevealed: (stepId: number) => boolean;
-    isCurrentQuestion: (stepId: number) => boolean;
-    isCurrentAnswer: (stepId: number) => boolean;
-    questionWord: string | null;
-    answerWord: string | null;
+    gameState: TutorialState;
 }
 
-export default function Clues({ puzzle, isDownward, completed, isStepRevealed, isCurrentQuestion, isCurrentAnswer, questionWord, answerWord }: CluesProps) {
+export default function Clues({ gameState }: CluesProps) {
+    const ladder = useMemo(() => gameState.puzzle.ladder, [gameState.puzzle.ladder]);
+    const isDownward = useMemo(() => gameState.direction === 'down', [gameState.direction]);
+    const questionWord = useMemo(() => {
+        if (gameState.currentQuestion === -1) return null;
+        return ladder[gameState.currentQuestion]?.word || null;
+    }, [gameState.currentQuestion, ladder]);
+
+    const answerWord = useMemo(() => {
+        if (gameState.currentAnswer === -1) return null;
+        return ladder[gameState.currentAnswer]?.word || null;
+    }, [gameState.currentAnswer, ladder]);
+
+    const isStepRevealed = useCallback(
+        (stepId: number) => {
+            return gameState.revealedSteps.has(stepId);
+        },
+        [gameState.revealedSteps]
+    );
+
     const unsolvedStepIds = useMemo(() => {
         const stepIds = [];
-        for (let i = 0; i < puzzle.ladder.length - 1; i++) {
-            if (!isStepRevealed(i)) {
+        for (let i = 0; i < ladder.length - 1; i++) {
+            if (!isStepRevealed(i) || (isStepRevealed(i) && !isStepRevealed(i + 1))) {
                 stepIds.push(i);
             }
         }
         return stepIds;
-    }, [puzzle.ladder.length, isStepRevealed]);
+    }, [ladder.length, isStepRevealed]);
 
     const solvedStepIds = useMemo(() => {
         const stepIds = [];
-        for (let i = 0; i < puzzle.ladder.length - 1; i++) {
-            if (isStepRevealed(i)) {
+        for (let i = 0; i < ladder.length - 1; i++) {
+            if (isStepRevealed(i) && isStepRevealed(i + 1)) {
                 stepIds.push(i);
             }
         }
         return stepIds;
-    }, [puzzle.ladder.length, isStepRevealed]);
+    }, [ladder.length, isStepRevealed]);
 
-    const renderQuestionWord = (word: string) => {
+    const renderQuestionWord = useCallback((word: string) => {
         return (
             <span className='bg-green/30 text-green p-1 font-mono'
                 data-testid={`question-word-${word?.toLowerCase()}`}>{word}</span>
         )
-    };
+    }, []);
 
-    const renderAnswerWord = (word: string) => {
+    const renderAnswerWord = useCallback((word: string) => {
         return (
             <span className='bg-yellow/30 text-yellow p-1 font-mono'
                 data-testid={`answer-word-${word?.toLowerCase()}`}>{word}</span>
         )
-    };
+    }, []);
 
-    const renderClueParts = (
+    const renderClueParts = useCallback((
         clue: string,
         questionWordRendered: JSX.Element | null,
         answerWordRendered: JSX.Element | null
@@ -65,12 +77,12 @@ export default function Clues({ puzzle, isDownward, completed, isStepRevealed, i
         });
 
         return parts;
-    };
+    }, []);
 
-    const renderSolvedClue = (stepId: number) => {
-        const ladderStep = puzzle.ladder[stepId];
+    const renderSolvedClue = useCallback((stepId: number) => {
+        const ladderStep = ladder[stepId];
         if (!ladderStep) throw new Error('Ladder step not found for revealed step');
-        const answerLadderStep = puzzle.ladder[stepId + 1];
+        const answerLadderStep = ladder[stepId + 1];
         if (!answerLadderStep) throw new Error('Answer ladder step not found for revealed step');
         const clue = ladderStep.clue;
         if (!clue) throw new Error('Clue is null for revealed step');
@@ -97,10 +109,10 @@ export default function Clues({ puzzle, isDownward, completed, isStepRevealed, i
                 {parts}
             </div>
         );
-    };
+    }, [renderClueParts, renderQuestionWord, renderAnswerWord, ladder]);
 
-    const renderDownwardClue = (stepId: number) => {
-        const ladderStep = puzzle.ladder[stepId];
+    const renderDownwardClue = useCallback((stepId: number) => {
+        const ladderStep = ladder[stepId];
         if (!ladderStep) throw new Error('Ladder step not found for revealed step');
         const clue = ladderStep.clue;
         if (!clue) throw new Error('Clue is null for revealed step');
@@ -111,10 +123,10 @@ export default function Clues({ puzzle, isDownward, completed, isStepRevealed, i
 
         return <div className='text-tx-primary opacity-75 border-border bg-secondary mb-2 rounded-md border-1 px-2 py-1 pt-1 pb-0'
             data-testid={`unsolved-clue-${stepId}`}>{parts}</div>;
-    };
+    }, [renderClueParts, renderQuestionWord, ladder, questionWord]);
 
-    const renderUpwardClue = (stepId: number) => {
-        const ladderStep = puzzle.ladder[stepId];
+    const renderUpwardClue = useCallback((stepId: number) => {
+        const ladderStep = ladder[stepId];
         if (!ladderStep) throw new Error('Ladder step not found for revealed step');
         const clue = ladderStep.clue;
         if (!clue) throw new Error('Clue is null for revealed step');
@@ -131,7 +143,7 @@ export default function Clues({ puzzle, isDownward, completed, isStepRevealed, i
             data-testid={`unsolved-clue-${stepId}`}>
             {parts}
         </div>;
-    };
+    }, [renderClueParts, renderAnswerWord, ladder, answerWord]);
 
     return (
         <div className='mb-6 px-3 font-medium md:p-0'>

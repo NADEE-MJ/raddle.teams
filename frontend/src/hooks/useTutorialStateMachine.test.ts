@@ -35,7 +35,7 @@ describe('useTutorialStateMachine', () => {
         it('provides helper methods with correct initial values', () => {
             const { result } = hookResult;
 
-            expect(result.current.getActiveStepId()).toBe(1); // SOUTH
+            expect(result.current.isActiveStepId(1)).toBe(true); // SOUTH
             expect(result.current.canSwitchDirection()).toBe(true);
             expect(result.current.isStepRevealed(0)).toBe(true); // DOWN (initially revealed)
             expect(result.current.isStepRevealed(1)).toBe(false); // SOUTH (not revealed yet)
@@ -55,7 +55,7 @@ describe('useTutorialStateMachine', () => {
             expect(result.current.state.revealedSteps.has(1)).toBe(true);
             expect(result.current.state.currentQuestion).toBe(1); // SOUTH becomes question
             expect(result.current.state.currentAnswer).toBe(2); // MOUTH becomes answer
-            expect(result.current.getActiveStepId()).toBe(2);
+            expect(result.current.isActiveStepId(2)).toBe(true);
         });
 
         it('updates state when switching direction', () => {
@@ -133,14 +133,16 @@ describe('useTutorialStateMachine', () => {
             const { result } = hookResult;
 
             // Test initial state
-            expect(result.current.isCurrentAnswer(result.current.getActiveStepId())).toBe(true);
+            expect(result.current.isActiveStepId(1)).toBe(true);
+            expect(result.current.isCurrentAnswer(1)).toBe(true);
 
             // Make a change and test consistency
             act(() => {
                 result.current.handleGuess('SOUTH');
             });
 
-            expect(result.current.isCurrentAnswer(result.current.getActiveStepId())).toBe(true);
+            expect(result.current.isCurrentAnswer(1)).toBe(true);
+            expect(result.current.isActiveStepId(1)).toBe(true);
             expect(result.current.isStepRevealed(1)).toBe(true); // Previous answer now revealed
         });
 

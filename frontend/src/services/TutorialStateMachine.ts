@@ -33,6 +33,10 @@ export class TutorialStateMachine implements ITutorialStateMachine {
         return this.state.direction === 'down' ? this.state.currentAnswer : this.state.currentQuestion;
     }
 
+    isActiveStep(stepId: number): boolean {
+        return stepId === this.getActiveStepId();
+    }
+
     isStepRevealed(stepId: number): boolean {
         return this.state.revealedSteps.has(stepId);
     }

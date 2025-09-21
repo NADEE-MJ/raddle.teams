@@ -1,11 +1,12 @@
-import { useState, useCallback } from 'react';
+import { useState, useCallback, useMemo } from 'react';
 import { Puzzle } from '@/types/game';
 import { TutorialStateMachine } from '@/services/TutorialStateMachine';
 import { TutorialState, TutorialEvent } from '@/types/tutorialStateMachine';
 
-export interface UseTutorialStateMachineReturn {
+export interface IUseTutorialStateMachine {
     state: TutorialState;
     dispatch: (event: TutorialEvent) => void;
+    canSwitchDirection: boolean;
 
     // Convenience methods for common operations
     handleGuess: (guess: string) => void;
@@ -13,33 +14,29 @@ export interface UseTutorialStateMachineReturn {
     handleReset: () => void;
 
     // Helper methods
-    canSwitchDirection: () => boolean;
-    getActiveStepId: () => number;
+    isActiveStep: (stepId: number) => boolean;
     isStepRevealed: (stepId: number) => boolean;
     isCurrentQuestion: (stepId: number) => boolean;
     isCurrentAnswer: (stepId: number) => boolean;
 }
 
-export function useTutorialStateMachine(puzzle: Puzzle): UseTutorialStateMachineReturn {
-    // Initialize the state machine once
+export function useTutorialStateMachine(puzzle: Puzzle): IUseTutorialStateMachine {
     const [machine] = useState(() => new TutorialStateMachine(puzzle));
-
-    // Track the current state for React re-renders
     const [state, setState] = useState<TutorialState>(() => machine.getCurrentState());
+    const [canSwitchDirection, setCanSwitchDirection] = useState(() => machine.canSwitchDirection());
 
-    // Main dispatch function that updates React state
     const dispatch = useCallback(
         (event: TutorialEvent) => {
             const newState = machine.dispatch(event);
             setState(newState);
+            setCanSwitchDirection(machine.canSwitchDirection());
         },
         [machine]
     );
 
-    // Convenience handlers for common operations
     const handleGuess = useCallback(
         (guess: string) => {
-            dispatch({ type: 'CORRECT_GUESS', guess });
+            dispatch({ type: 'GUESS', guess });
         },
         [dispatch]
     );
@@ -52,14 +49,12 @@ export function useTutorialStateMachine(puzzle: Puzzle): UseTutorialStateMachine
         dispatch({ type: 'RESET' });
     }, [dispatch]);
 
-    // Helper methods that delegate to the state machine
-    const canSwitchDirection = useCallback(() => {
-        return machine.canSwitchDirection();
-    }, [machine]);
-
-    const getActiveStepId = useCallback(() => {
-        return machine.getActiveStepId();
-    }, [machine]);
+    const isActiveStep = useCallback(
+        (stepId: number) => {
+            return machine.isActiveStep(stepId);
+        },
+        [machine]
+    );
 
     const isStepRevealed = useCallback(
         (stepId: number) => {
@@ -89,7 +84,7 @@ export function useTutorialStateMachine(puzzle: Puzzle): UseTutorialStateMachine
         handleSwitchDirection,
         handleReset,
         canSwitchDirection,
-        getActiveStepId,
+        isActiveStep,
         isStepRevealed,
         isCurrentQuestion,
         isCurrentAnswer,

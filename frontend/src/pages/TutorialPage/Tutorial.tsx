@@ -6,7 +6,6 @@ import Clues from './Clues';
 
 interface TutorialProps {
     setCompleted: (completed: boolean) => void;
-    completed: boolean;
 }
 
 const TUTORIAL_PUZZLE: Puzzle = {
@@ -60,26 +59,20 @@ const TUTORIAL_PUZZLE: Puzzle = {
     ],
 };
 
-export default function Tutorial({ setCompleted, completed }: TutorialProps) {
+export default function Tutorial({ setCompleted }: TutorialProps) {
     const inputRef = useRef<HTMLInputElement>(null);
     const puzzle = useMemo<Puzzle>(() => TUTORIAL_PUZZLE, []);
 
-    // Use our new state machine hook
     const {
         state,
         handleGuess,
         handleSwitchDirection,
         canSwitchDirection,
-        getActiveStepId,
+        isActiveStep,
         isStepRevealed,
         isCurrentQuestion,
         isCurrentAnswer,
     } = useTutorialStateMachine(puzzle);
-
-    // Derived values
-    const activeStepId = getActiveStepId();
-    const isDownward = state.direction === 'down';
-    const disableDirectionToggle = !canSwitchDirection();
 
     // Update completion status when state changes
     useEffect(() => {
@@ -98,17 +91,6 @@ export default function Tutorial({ setCompleted, completed }: TutorialProps) {
     const handleGuessChange = (guess: string) => {
         handleGuess(guess);
     };
-
-    // Get current question and answer words for Clues component
-    const currentQuestionWord = useMemo(() => {
-        if (state.isCompleted) return null;
-        return puzzle.ladder[state.currentQuestion]?.word || null;
-    }, [state.isCompleted, state.currentQuestion, puzzle.ladder]);
-
-    const currentAnswerWord = useMemo(() => {
-        if (state.isCompleted) return null;
-        return puzzle.ladder[state.currentAnswer]?.word || null;
-    }, [state.isCompleted, state.currentAnswer, puzzle.ladder]);
 
     return (
         <div className='mx-auto max-w-6xl'>
@@ -133,18 +115,19 @@ export default function Tutorial({ setCompleted, completed }: TutorialProps) {
                             isCurrentQuestion={isCurrentQuestion(stepId)}
                             isCurrentAnswer={isCurrentAnswer(stepId)}
                             isStepRevealed={isStepRevealed(stepId)}
-                            isActive={stepId === activeStepId}
+                            isActive={isActiveStep(stepId)}
+                            shouldShowTransform={isStepRevealed(stepId) && isStepRevealed(stepId + 1)}
                         />
                     ))}
 
-                    {(!completed && !disableDirectionToggle) ? (
+                    {(!state.isCompleted && canSwitchDirection) ? (
                         <button
                             type='button'
                             onClick={handleDirectionChange}
                             className='text-tx-muted hover:bg-elevated w-full p-1 text-xs italic'
                             data-testid="switch-direction-button"
                         >
-                            Switch to solving {isDownward ? '↑ upward' : '↓ downward'}
+                            Switch to solving {state.direction === 'down' ? '↑ upward' : '↓ downward'}
                         </button>
                     ) : (
                         <div className='p-4' />
@@ -152,14 +135,7 @@ export default function Tutorial({ setCompleted, completed }: TutorialProps) {
                 </div>
 
                 <Clues
-                    puzzle={puzzle}
-                    isDownward={isDownward}
-                    completed={completed}
-                    isStepRevealed={isStepRevealed}
-                    isCurrentQuestion={isCurrentQuestion}
-                    isCurrentAnswer={isCurrentAnswer}
-                    questionWord={currentQuestionWord}
-                    answerWord={currentAnswerWord}
+                    gameState={state}
                 />
             </div>
         </div>

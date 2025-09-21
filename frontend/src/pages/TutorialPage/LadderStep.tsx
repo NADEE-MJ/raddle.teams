@@ -10,10 +10,11 @@ interface LadderStepProps {
     isCurrentAnswer: boolean;
     isStepRevealed: boolean;
     isActive: boolean;
+    shouldShowTransform: boolean;
 }
 
 
-export default function LadderStep({ onGuessChange, inputRef, ladderStep, isCurrentQuestion, isCurrentAnswer, isStepRevealed, isActive }: LadderStepProps) {
+export default function LadderStep({ onGuessChange, inputRef, ladderStep, isCurrentQuestion, isCurrentAnswer, isStepRevealed, isActive, shouldShowTransform }: LadderStepProps) {
     const [currentGuess, setCurrentGuess] = useState('');
 
     const color = useMemo(() => {
@@ -111,7 +112,7 @@ export default function LadderStep({ onGuessChange, inputRef, ladderStep, isCurr
         }
 
         if (isStepRevealed || isCurrentQuestion || isCurrentAnswer) {
-            return renderRevealedStep(currentLadderStep.word, currentLadderStep.transform !== null, isStepRevealed ? currentLadderStep.transform : null);
+            return renderRevealedStep(currentLadderStep.word, currentLadderStep.transform !== null, shouldShowTransform ? currentLadderStep.transform : null);
         }
 
         return renderUnrevealedStep(currentLadderStep.word.length, currentLadderStep.transform !== null);
