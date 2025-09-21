@@ -1,6 +1,7 @@
 import { render, screen } from '@testing-library/react'
 import { describe, test, expect } from 'vitest'
 import Clues from '@/pages/TutorialPage/Clues'
+import { TutorialState } from '@/types/tutorialStateMachine'
 import { Puzzle } from '@/types/game'
 
 describe('Clues Component', () => {
@@ -11,289 +12,253 @@ describe('Clues Component', () => {
       { word: 'SOUTH', clue: 'Change the first letter of <> to get a part of the body', transform: 'S->M' },
       { word: 'MOUTH', clue: 'Organ that sits inside the <>', transform: 'CONTAINS THE' },
       { word: 'TONGUE', clue: 'Piece of clothing that often has a <>', transform: 'IS ON A' },
-      { word: 'SHOE', clue: 'Rubber layer on the bottom of a <>', transform: 'CONTAINS A' },
-      { word: 'SOLE', clue: 'Kind of food or music that sounds like <>', transform: 'SOUNDS LIKE' },
-      { word: 'SOUL', clue: 'Popular piano duet "{} and <>"', transform: 'IS' },
-      { word: 'HEART', clue: 'Move the first letter of <> to the end to get where we are', transform: 'H -> END' },
-      { word: 'EARTH', clue: null, transform: null }
+      { word: 'SHOE', clue: null, transform: null }
     ]
   }
 
-  // Mock functions for tutorial state machine methods
-  const mockIsStepRevealed = (stepId: number) => stepId === 0 || stepId === 8 // First and last steps revealed
-  const mockIsCurrentQuestion = (stepId: number) => stepId === 0
-  const mockIsCurrentAnswer = (stepId: number) => stepId === 1
+  const createMockGameState = (overrides: Partial<TutorialState> = {}): TutorialState => ({
+    phase: 'DOWNWARD',
+    direction: 'down',
+    revealedSteps: new Set([0, 4]), // First and last steps revealed
+    currentQuestion: 0,
+    currentAnswer: 1,
+    isCompleted: false,
+    puzzle: mockPuzzle,
+    ...overrides
+  })
 
-  describe('Downward Direction', () => {
-    test('renders clues section headings', () => {
-      render(
-        <Clues
-          puzzle={mockPuzzle}
-          isDownward={true}
-          completed={false}
-          isStepRevealed={mockIsStepRevealed}
-          isCurrentQuestion={mockIsCurrentQuestion}
-          isCurrentAnswer={mockIsCurrentAnswer}
-          questionWord="DOWN"
-          answerWord="SOUTH"
-        />
-      )
+  describe('Rendering', () => {
+    test('renders clues section headings when there are unsolved clues', () => {
+      const gameState = createMockGameState()
+      render(<Clues gameState={gameState} />)
 
       expect(screen.getByTestId('clues-out-of-order-heading')).toBeInTheDocument()
       expect(screen.getByText('Clues, out of order')).toBeInTheDocument()
     })
 
-    test('shows unsolved clues with question word substituted', () => {
-      render(
-        <Clues
-          puzzle={mockPuzzle}
-          isDownward={true}
-          completed={false}
-          isStepRevealed={mockIsStepRevealed}
-          isCurrentQuestion={mockIsCurrentQuestion}
-          isCurrentAnswer={mockIsCurrentAnswer}
-          questionWord="DOWN"
-          answerWord="SOUTH"
-        />
-      )
-
-      // Should show the question word in green highlighting
-      expect(screen.getByTestId('question-word-down')).toBeInTheDocument()
-      expect(screen.getByTestId('question-word-down')).toHaveTextContent('DOWN')
-    })
-
-    test('renders correct number of unsolved clues', () => {
-      render(
-        <Clues
-          puzzle={mockPuzzle}
-          isDownward={true}
-          completed={false}
-          isStepRevealed={mockIsStepRevealed}
-          isCurrentQuestion={mockIsCurrentQuestion}
-          isCurrentAnswer={mockIsCurrentAnswer}
-          questionWord="DOWN"
-          answerWord="SOUTH"
-        />
-      )
-
-      // Should have unsolved clues for steps 1-7 (excluding last step which has no clue)
-      const unsolvedClues = screen.getAllByTestId(/^unsolved-clue-/)
-      expect(unsolvedClues).toHaveLength(6) // Steps 1,2,3,4,5,6 (7 steps total minus step 0 which is revealed)
-    })
-
     test('does not show used clues section when no clues are solved', () => {
-      render(
-        <Clues
-          puzzle={mockPuzzle}
-          isDownward={true}
-          completed={false}
-          isStepRevealed={mockIsStepRevealed}
-          isCurrentQuestion={mockIsCurrentQuestion}
-          isCurrentAnswer={mockIsCurrentAnswer}
-          questionWord="DOWN"
-          answerWord="SOUTH"
-        />
-      )
+      const gameState = createMockGameState()
+      render(<Clues gameState={gameState} />)
 
       expect(screen.queryByTestId('used-clues-heading')).not.toBeInTheDocument()
     })
-  })
 
-  describe('Upward Direction', () => {
-    test('shows clues with answer word substituted when going upward', () => {
-      render(
-        <Clues
-          puzzle={mockPuzzle}
-          isDownward={false}
-          completed={false}
-          isStepRevealed={mockIsStepRevealed}
-          isCurrentQuestion={mockIsCurrentQuestion}
-          isCurrentAnswer={mockIsCurrentAnswer}
-          questionWord="DOWN"
-          answerWord="SOUTH"
-        />
-      )
-
-      // Should show the answer word in yellow highlighting
-      expect(screen.getByTestId('answer-word-south')).toBeInTheDocument()
-      expect(screen.getByTestId('answer-word-south')).toHaveTextContent('SOUTH')
-    })
-
-    test('adds arrow to clues without {} placeholder when going upward', () => {
-      render(
-        <Clues
-          puzzle={mockPuzzle}
-          isDownward={false}
-          completed={false}
-          isStepRevealed={mockIsStepRevealed}
-          isCurrentQuestion={mockIsCurrentQuestion}
-          isCurrentAnswer={mockIsCurrentAnswer}
-          questionWord="DOWN"
-          answerWord="SOUTH"
-        />
-      )
-
-      // Should contain arrow symbol for clues without {} placeholder
-      expect(screen.getByText('→')).toBeInTheDocument()
-    })
-  })
-
-  describe('Solved Clues', () => {
-    const mockIsStepRevealedWithSolved = (stepId: number) => stepId === 0 || stepId === 1 || stepId === 8
-
-    test('shows used clues section when clues are solved', () => {
-      render(
-        <Clues
-          puzzle={mockPuzzle}
-          isDownward={true}
-          completed={false}
-          isStepRevealed={mockIsStepRevealedWithSolved}
-          isCurrentQuestion={mockIsCurrentQuestion}
-          isCurrentAnswer={mockIsCurrentAnswer}
-          questionWord="DOWN"
-          answerWord="SOUTH"
-        />
-      )
+    test('shows used clues section when some clues are solved', () => {
+      const gameState = createMockGameState({
+        revealedSteps: new Set([0, 1, 4]) // Two consecutive steps revealed
+      })
+      render(<Clues gameState={gameState} />)
 
       expect(screen.getByTestId('used-clues-heading')).toBeInTheDocument()
       expect(screen.getByText('Used clues')).toBeInTheDocument()
     })
+  })
 
-    test('displays solved clues with both question and answer words', () => {
-      render(
-        <Clues
-          puzzle={mockPuzzle}
-          isDownward={true}
-          completed={false}
-          isStepRevealed={mockIsStepRevealedWithSolved}
-          isCurrentQuestion={mockIsCurrentQuestion}
-          isCurrentAnswer={mockIsCurrentAnswer}
-          questionWord="DOWN"
-          answerWord="SOUTH"
-        />
-      )
+  describe('Direction-based rendering', () => {
+    test('shows question word when going downward', () => {
+      const gameState = createMockGameState()
+      render(<Clues gameState={gameState} />)
 
-      // Should show solved clue
-      expect(screen.getByTestId('solved-clue-0')).toBeInTheDocument()
+      // Should show the question word in green highlighting
+      const questionWords = screen.getAllByTestId('question-word-down')
+      expect(questionWords.length).toBeGreaterThan(0)
+      expect(questionWords[0]).toHaveTextContent('DOWN')
     })
 
-    test('adds arrow to solved clues with only question placeholder', () => {
-      render(
-        <Clues
-          puzzle={mockPuzzle}
-          isDownward={true}
-          completed={false}
-          isStepRevealed={mockIsStepRevealedWithSolved}
-          isCurrentQuestion={mockIsCurrentQuestion}
-          isCurrentAnswer={mockIsCurrentAnswer}
-          questionWord="DOWN"
-          answerWord="SOUTH"
-        />
-      )
+    test('shows answer word when going upward', () => {
+      const gameState = createMockGameState({ direction: 'up' })
+      render(<Clues gameState={gameState} />)
 
-      // Should contain arrow symbol for solved clues
-      expect(screen.getByText(' -> ')).toBeInTheDocument()
+      // Should show the answer word in yellow highlighting
+      const answerWords = screen.getAllByTestId('answer-word-south')
+      expect(answerWords.length).toBeGreaterThan(0)
+      expect(answerWords[0]).toHaveTextContent('SOUTH')
     })
   })
 
-  describe('Completed State', () => {
+  describe('Word highlighting', () => {
+    test('applies correct styling to question words', () => {
+      const gameState = createMockGameState()
+      render(<Clues gameState={gameState} />)
+
+      const questionWords = screen.getAllByTestId('question-word-down')
+      expect(questionWords[0]).toHaveClass('bg-green/30', 'text-green')
+    })
+
+    test('applies correct styling to answer words', () => {
+      const gameState = createMockGameState({ direction: 'up' })
+      render(<Clues gameState={gameState} />)
+
+      const answerWords = screen.getAllByTestId('answer-word-south')
+      expect(answerWords[0]).toHaveClass('bg-yellow/30', 'text-yellow')
+    })
+  })
+
+  describe('Completed state', () => {
     test('handles completed state correctly', () => {
-      render(
-        <Clues
-          puzzle={mockPuzzle}
-          isDownward={true}
-          completed={true}
-          isStepRevealed={() => true}
-          isCurrentQuestion={() => false}
-          isCurrentAnswer={() => false}
-          questionWord={null}
-          answerWord={null}
-        />
-      )
+      const gameState = createMockGameState({
+        isCompleted: true,
+        revealedSteps: new Set([0, 1, 2, 3, 4]),
+        currentQuestion: -1,
+        currentAnswer: -1
+      })
+      render(<Clues gameState={gameState} />)
 
       // When completed, should show used clues section
       expect(screen.getByTestId('used-clues-heading')).toBeInTheDocument()
     })
-  })
 
-  describe('Word Highlighting', () => {
-    test('applies correct styling to question words', () => {
-      render(
-        <Clues
-          puzzle={mockPuzzle}
-          isDownward={true}
-          completed={false}
-          isStepRevealed={mockIsStepRevealed}
-          isCurrentQuestion={mockIsCurrentQuestion}
-          isCurrentAnswer={mockIsCurrentAnswer}
-          questionWord="DOWN"
-          answerWord="SOUTH"
-        />
-      )
-
-      const questionWord = screen.getByTestId('question-word-down')
-      expect(questionWord).toHaveClass('bg-green/30', 'text-green')
-    })
-
-    test('applies correct styling to answer words', () => {
-      render(
-        <Clues
-          puzzle={mockPuzzle}
-          isDownward={false}
-          completed={false}
-          isStepRevealed={mockIsStepRevealed}
-          isCurrentQuestion={mockIsCurrentQuestion}
-          isCurrentAnswer={mockIsCurrentAnswer}
-          questionWord="DOWN"
-          answerWord="SOUTH"
-        />
-      )
-
-      const answerWord = screen.getByTestId('answer-word-south')
-      expect(answerWord).toHaveClass('bg-yellow/30', 'text-yellow')
-    })
-  })
-
-  describe('Edge Cases', () => {
-    const mockIsStepRevealedAll = () => false
-    const mockIsCurrentQuestionNone = () => false
-    const mockIsCurrentAnswerNone = () => false
-
-    test('handles empty unsolved steps', () => {
-      render(
-        <Clues
-          puzzle={mockPuzzle}
-          isDownward={true}
-          completed={false}
-          isStepRevealed={() => true} // All steps revealed
-          isCurrentQuestion={mockIsCurrentQuestionNone}
-          isCurrentAnswer={mockIsCurrentAnswerNone}
-          questionWord="DOWN"
-          answerWord="SOUTH"
-        />
-      )
+    test('does not show unsolved clues when completed', () => {
+      const gameState = createMockGameState({
+        isCompleted: true,
+        revealedSteps: new Set([0, 1, 2, 3, 4]),
+        currentQuestion: -1,
+        currentAnswer: -1
+      })
+      render(<Clues gameState={gameState} />)
 
       // Should not show unsolved clues section when all are solved
       expect(screen.queryByTestId('clues-out-of-order-heading')).not.toBeInTheDocument()
     })
+  })
 
-    test('excludes last step from unsolved clues (has no clue)', () => {
-      render(
-        <Clues
-          puzzle={mockPuzzle}
-          isDownward={true}
-          completed={false}
-          isStepRevealed={mockIsStepRevealedAll}
-          isCurrentQuestion={mockIsCurrentQuestion}
-          isCurrentAnswer={mockIsCurrentAnswer}
-          questionWord="DOWN"
-          answerWord="SOUTH"
-        />
-      )
+  describe('Clue rendering logic', () => {
+    test('renders clue with <> placeholder correctly in downward mode', () => {
+      const gameState = createMockGameState()
+      render(<Clues gameState={gameState} />)
 
-      // Should show unsolved clues for steps 0-6 only (step 7 excluded as it has no clue)
+      // Check that the clue text is present
+      expect(screen.getByText(/Cardinal direction that's/)).toBeInTheDocument()
+      expect(screen.getByText(/on a map/)).toBeInTheDocument()
+    })
+
+    test('renders clue with {} placeholder correctly in upward mode', () => {
+      const puzzleWithBracePlaceholder: Puzzle = {
+        title: 'Test Puzzle',
+        ladder: [
+          { word: 'DOWN', clue: 'Popular piano duet "Heart and {}"', transform: 'MEANS' },
+          { word: 'SOUL', clue: 'Test clue', transform: 'S->M' },
+          { word: 'LAST', clue: null, transform: null }
+        ]
+      }
+
+      const gameState = createMockGameState({
+        direction: 'up',
+        currentQuestion: 1,
+        currentAnswer: 0,
+        revealedSteps: new Set([2]),
+        puzzle: puzzleWithBracePlaceholder
+      })
+      render(<Clues gameState={gameState} />)
+
+      expect(screen.getByText(/Popular piano duet "Heart and/)).toBeInTheDocument()
+    })
+
+    test('adds arrow to upward clue when no {} placeholder is present', () => {
+      const puzzleWithoutBrace: Puzzle = {
+        title: 'Test Puzzle',
+        ladder: [
+          { word: 'DOWN', clue: 'Cardinal direction that\'s <> on a map', transform: 'MEANS' },
+          { word: 'SOUTH', clue: 'Test clue without braces', transform: 'S->M' },
+          { word: 'LAST', clue: null, transform: null }
+        ]
+      }
+
+      const gameState = createMockGameState({
+        direction: 'up',
+        currentQuestion: 1,
+        currentAnswer: 0,
+        revealedSteps: new Set([2]),
+        puzzle: puzzleWithoutBrace
+      })
+      render(<Clues gameState={gameState} />)
+
+      // Should contain both the clue text and the arrow with answer word
+      const clueElement = screen.getByTestId('unsolved-clue-0')
+      expect(clueElement).toHaveTextContent('→')
+      expect(clueElement).toHaveTextContent('DOWN')
+    })
+
+    test('adds arrow to solved clue when only <> placeholder is present', () => {
+      const gameState = createMockGameState({
+        revealedSteps: new Set([0, 1, 4]) // DOWN and SOUTH both revealed
+      })
+      render(<Clues gameState={gameState} />)
+
+      const solvedClue = screen.getByTestId('solved-clue-0')
+      expect(solvedClue).toHaveTextContent('->')
+      expect(solvedClue).toHaveTextContent('SOUTH')
+    })
+
+    test('does not add arrow to solved clue when {} placeholder is present', () => {
+      const puzzleWithBothPlaceholders: Puzzle = {
+        title: 'Test Puzzle',
+        ladder: [
+          { word: 'DOWN', clue: 'Popular piano duet "{} and <>"', transform: 'MEANS' },
+          { word: 'SOUTH', clue: 'Test clue', transform: 'S->M' },
+          { word: 'LAST', clue: null, transform: null }
+        ]
+      }
+
+      const gameState = createMockGameState({
+        revealedSteps: new Set([0, 1, 2]),
+        puzzle: puzzleWithBothPlaceholders
+      })
+      render(<Clues gameState={gameState} />)
+
+      const solvedClue = screen.getByTestId('solved-clue-0')
+      expect(solvedClue).toHaveTextContent('SOUTH')
+      expect(solvedClue).toHaveTextContent('DOWN')
+      // Should not have extra arrow since {} placeholder is present
+      expect(solvedClue.textContent).not.toMatch(/.*SOUTH.*→.*SOUTH/)
+    })
+  })
+
+  describe('Edge cases', () => {
+    test('handles state with no current question/answer', () => {
+      const gameState = createMockGameState({
+        currentQuestion: -1,
+        currentAnswer: -1,
+        revealedSteps: new Set([0, 4])
+      })
+      render(<Clues gameState={gameState} />)
+
+      // Should render without crashing
+      expect(screen.getByTestId('clues-out-of-order-heading')).toBeInTheDocument()
+    })
+
+    test('excludes steps with null clues from rendering', () => {
+      const gameState = createMockGameState({
+        revealedSteps: new Set([0]) // Only first step revealed
+      })
+      render(<Clues gameState={gameState} />)
+
+      // Should render clues but exclude the last step (index 4) which has null clue
       const unsolvedClues = screen.getAllByTestId(/^unsolved-clue-/)
-      expect(unsolvedClues).toHaveLength(7) // Steps 0,1,2,3,4,5,6
+      expect(unsolvedClues.length).toBeGreaterThan(0)
+
+      // Should not include a clue for step 4 (index 4 which has null clue)
+      expect(screen.queryByTestId('unsolved-clue-4')).not.toBeInTheDocument()
+    })
+
+    test('handles empty clue parts gracefully', () => {
+      const puzzleWithEmptyParts: Puzzle = {
+        title: 'Test Puzzle',
+        ladder: [
+          { word: 'DOWN', clue: '<><>', transform: 'MEANS' },
+          { word: 'SOUTH', clue: 'Test', transform: 'S->M' },
+          { word: 'LAST', clue: null, transform: null }
+        ]
+      }
+
+      const gameState = createMockGameState({
+        revealedSteps: new Set([2]),
+        puzzle: puzzleWithEmptyParts
+      })
+      render(<Clues gameState={gameState} />)
+
+      // Should render without crashing
+      expect(screen.getByTestId('unsolved-clue-0')).toBeInTheDocument()
     })
   })
 })
