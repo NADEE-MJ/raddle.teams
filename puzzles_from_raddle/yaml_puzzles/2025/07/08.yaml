@@ -1,0 +1,48 @@
+meta:
+  title: From BASKET to CASE
+  author: Sandy Weisz and Mao Reynolds
+  difficulty: medium
+  theme: Tour de France
+  message: 
+    The Tour de France starts this week in Lille, France. We're celebrating with Raddles that are vaguely bicycle-themed.
+    According to the OED (not that one, [this one](https://www.etymonline.com/word/basket%20case)), the phrase âbasket caseâ was coined to refer to World War I soldiers with amputated arms and legs, thus having to be carried in a basket. This etymology was disputed by an army surgeon general that same year, but the phrase grew popular nonetheless. Of course you may know it best as the title of [this banger](https://www.youtube.com/watch?v=NUTGr5t3MoY).
+ladder:
+- word: BASKET
+  clue: Change the first letter of ^ to get something that might be blown
+  transform: B->G
+- word: GASKET
+  clue: Remove half of ^ to get something passed
+  transform: -KET
+- word: GAS
+  clue: ^ used in some signs
+  transform: used in signs
+- word: NEON
+  clue: First syllable of ^ sounds like this body part
+  transform: partially sounds like
+- word: KNEE
+  clue: Upper counterpart of the ^
+  transform: counterpart
+- word: ELBOW
+  clue: Preposition that's an anagram of ^
+  transform: anagrammed
+- word: BELOW
+  clue: Opposite of ^
+  transform: Opposite
+- word: ABOVE
+  clue: Going ^ and ___, a commendable approach
+  transform: and
+- word: BEYOND
+  clue: Change the last letter in ^ to the two letters on either side of it alphabetically, and the result is this musician
+  transform: D->CE
+- word: BEYONCE
+  clue: Recent ^ hit that's also a game
+  transform: sings
+- word: TEXAS HOLD EM
+  clue: Best pair in ^
+  transform: best pair
+- word: ACES
+  clue: Anagram ^ to get something that can be brief?
+  transform: anagrammed
+- word: CASE
+  clue:
+  transform:

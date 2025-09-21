@@ -1,0 +1,50 @@
+meta:
+  title: From DUST to PAN
+  author: Sandy Weisz and Mao Reynolds
+  difficulty: medium
+  theme: Juneteenth
+  message:
+    In celebration of Juneteeth, we're building Raddles honoring Black inventors. 
+    [Lloyd Ray](https://www.thoughtco.com/lloyd-ray-dust-pans-4071178) received a patent for the improved dustpan in 1897. 
+    His invention made sweeping cleaner, easier and faster. 
+    The design even served as the foundation for modern pet waste scoopers. 
+ladder:
+- word: DUST
+  clue: ^ ___, something you might find under your bed
+  transform: collects into a
+- word: BUNNY
+  clue: More formal name for a ^
+  transform: is a cute
+- word: RABBIT
+  clue: Drop a letter in ^ to get someone who might walk into a bar?
+  transform: -T
+- word: RABBI
+  clue: Where a ^ works
+  transform: works in a
+- word: TEMPLE
+  clue: First name of classic actress ^
+  transform: as in
+- word: SHIRLEY
+  clue: 1980 movie where one character is emphatically not named ^
+  transform: you can't be serious(ly quoting)
+- word: AIRPLANE
+  clue: Person in charge of controlling an ^
+  transform: flown by a
+- word: PILOT
+  clue: Drop a letter in ^ to get a story
+  transform: -I
+- word: PLOT
+  clue: What the ^ does when it gets interesting
+  transform: gets intereting and 
+- word: THICKENS
+  clue: Change the first letter in ^, and drop the last letter, to get a bird
+  transform: T->C, -S
+- word: CHICKEN
+  clue: ^ ___ pie, a hearty dish
+  transform: pie in a 
+- word: POT
+  clue: Counterpart to a ^
+  transform: and
+- word: PAN
+  clue:
+  transform:

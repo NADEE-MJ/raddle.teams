@@ -1,0 +1,51 @@
+meta:
+  title: From COTTON to GIN
+  author: Mao Reynolds and Sandy Weisz
+  difficulty: medium
+  theme: 250-year-old creations
+  message:
+    This week, in observation of Independence Day, we're celebrating inventions from around 250 years ago.
+    Eli Whitney invented the cotton gin in 1794, a landmark for American manufacturing (and a blessing to crossword constructors, who love to include ELI). 
+    The âginâ of a cotton gin is a shortening of âengine.â 
+    Hand-cranked cotton gins worked by straining fibers through mesh, speeding up the rate of cotton production. 
+    Unfortunately, because the machine allowed for more efficient processing of cotton, it strengthened the demand for slave labor across the American South.
+ladder:
+- word: COTTON
+  clue: ^ ___, carnival treat
+  transform: â¦
+- word: CANDY
+  clue: Holiday featuring lots of ^
+  transform: is given out on
+- word: HALLOWEEN
+  clue: Signature fruit of ^
+  transform: fruit
+- word: PUMPKIN
+  clue: ^ is a type of ___
+  transform: is a
+- word: GOURD
+  clue: Add an N to ^ and anagram to get something beneath you
+  transform: +R
+- word: GROUND
+  clue: ^ ___, grocery story purchase
+  transform: â¦
+- word: BEEF
+  clue: Add a word before ^ to get a deli offering
+  transform: +ROAST
+- word: ROAST BEEF
+  clue: Small, circular, green slices you might put atop ^
+  transform: topped with
+- word: PICKLES
+  clue: Term for wedges of ^
+  transform: come in
+- word: SPEARS
+  clue: 2003 hit by ^, not Poison
+  transform: hit
+- word: TOXIC
+  clue: Change one letter in ^ to get a mixer
+  transform: X->N
+- word: TONIC
+  clue: ___ & ^
+  transform: "&"
+- word: GIN
+  clue:
+  transform:

@@ -1,0 +1,47 @@
+meta:
+  title: From CANDY to MAN
+  author: Sandy Weisz and Mao Reynolds
+  difficulty: medium
+  theme: Horror movie villains
+  message:
+    This week on Raddle we're featuring horror movie villains. 
+    Candyman, the alias of Daniel Robitaille, was created by writer Clive Barker and first appeared in his 1985 short story "The Forbidden."
+    Candyman has a hook hand and will appear if you say his name five times in front of a mirror. 
+    Meanwhile, "The Candy Man" is a song from *Willy Wonka & The Chocolate Factory*, an entirely different (but also somewhat creepy) movie.
+ladder:
+- word: CANDY
+  clue: Change one letter in ^ to get a stylish fellow
+  transform: C->D
+- word: DANDY
+  clue: Yankee ___ ^
+  transform: is a Yankee
+- word: DOODLE
+  clue: Change one letter in ^ to get a foodstuff
+  transform: D->N
+- word: NOODLE
+  clue: Type of ^ from Japan
+  transform: type from Janpan
+- word: UDON
+  clue: Drop one letter in ^ to get a name that's also a verb
+  transform: -U
+- word: DON
+  clue: Add a letter inside ^ to get a direction
+  transform: +W
+- word: DOWN
+  clue: ^ for the ___
+  transform: for the
+- word: COUNT
+  clue: "\"The ^ of ___\", nineteenth century classic"
+  transform: of
+- word: MONTE CRISTO
+  clue: In a restaurant, a ^ is a ___
+  transform: is a
+- word: SANDWICH
+  clue: What is on either side of a ^, conventionally
+  transform: is surrounded by
+- word: BREAD
+  clue: Ginger^ ___
+  transform: of ginger in the shape of a
+- word: MAN
+  clue:
+  transform:

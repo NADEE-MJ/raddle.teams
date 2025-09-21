@@ -1,0 +1,66 @@
+{
+  "meta": {
+    "title": "From PEDAL to PUSHER",
+    "author": "Sandy Weisz and Mao Reynolds",
+    "difficulty": "medium",
+    "theme": "Tour de France",
+    "message": "The Tour de France starts this week in Lille, France. We're celebrating with Raddles that are vaguely bicycle-themed. Pedal pushers are a kind of pants, similar to knickerbockers, capris, and clam diggers, where the ends are cuffed and worn close to the skin, to avoid catching in the gears of a bicycle."
+  },
+  "ladder": [
+    {
+      "word": "PEDAL",
+      "clue": "Change one letter in ^ to get a plant part",
+      "transform": "D->T"
+    },
+    {
+      "word": "PETAL",
+      "clue": "Anagram ^ to get a flat, round thing",
+      "transform": "Anagrammed"
+    },
+    {
+      "word": "PLATE",
+      "clue": "Kind of ^ necessary for driving",
+      "transform": "on your car"
+    },
+    {
+      "word": "LICENSE",
+      "clue": "Anagram ^ to something golden?",
+      "transform": "anagrammed"
+    },
+    {
+      "word": "SILENCE",
+      "clue": "\"The ^ of the ___\"",
+      "transform": "of the"
+    },
+    {
+      "word": "LAMBS",
+      "clue": "^ are baby ___",
+      "transform": "are baby"
+    },
+    {
+      "word": "SHEEP",
+      "clue": "Change one letter in ^ to something that's slept on",
+      "transform": "P->T"
+    },
+    {
+      "word": "SHEET",
+      "clue": "Drop the second letter from ^ and the result sounds like something that might be hot?",
+      "transform": "-H, sounds like"
+    },
+    {
+      "word": "SEAT",
+      "clue": "One who helps you find your ^",
+      "transform": "shower"
+    },
+    {
+      "word": "USHER",
+      "clue": "Prepend a letter to ^ to get a kind of dealer",
+      "transform": "+P"
+    },
+    {
+      "word": "PUSHER",
+      "clue": null,
+      "transform": null
+    }
+  ]
+}

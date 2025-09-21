@@ -1,0 +1,43 @@
+meta:
+  title: From BIG to APPLE
+  author: Sandy Weisz
+  difficulty: medium
+  theme: Summer produce
+  message: We're celebrating summer with Raddles based on fresh summer produce.
+ladder:
+- word: BIG
+  clue: Something important is a ^ ___
+  transform: â¦
+- word: DEAL
+  clue: Casino employees ^ these
+  transform: out
+- word: CARDS
+  clue: The ^ play home games in this city
+  transform: play in
+- word: ST LOUIS
+  clue: Famous ^ monument
+  transform: sculpture
+- word: ARCH
+  clue: Add a letter to ^ to join a protest, perhaps
+  transform: +M
+- word: MARCH
+  clue: Two after ^
+  transform: is two before
+- word: MAY
+  clue: Person celebrated in ^
+  transform: features a day for your
+- word: MOTHER
+  clue: Counterpart to ^, often
+  transform: and
+- word: FATHER
+  clue: The ^ of Jacob
+  transform: of Jacob
+- word: ISAAC
+  clue: Famous polymath ^ ___
+  transform: "The Apple Man"
+- word: NEWTON
+  clue: Company who once produced the ^
+  transform: was made by
+- word: APPLE
+  clue:
+  transform:

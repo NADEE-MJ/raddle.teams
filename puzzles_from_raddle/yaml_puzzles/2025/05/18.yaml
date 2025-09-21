@@ -1,0 +1,44 @@
+meta:
+  title: From DORIAN to GRAY
+  author: Sandy Weisz
+  difficulty: medium
+  theme: Tony nominations
+  message: We're honoring the Tony nominations this week.
+    "The Picture of Dorian Gray" is an adaptation of Oscar Wilde's novel about a man who (spoiler) sells his soul for eternal youth. It stars Sarah Snook (from *Succession*) in a role that requires her to take on 26 different roles. Which is more roles than there are letters in "The Picture of Dorian Gray."
+ladder:
+- word: DORIAN
+  clue: Anagram ^ then add a D to get something that runs on some phones
+  transform: Anagrammed, +D
+- word: ANDROID
+  clue: Term that includes ^s, and others
+  transform: is a kind of
+- word: ROBOT
+  clue: Beloved ^ that looks like a trashcan
+  transform: who rolls
+- word: R2D2
+  clue: Franchise that features ^
+  transform: is from
+- word: STAR WARS
+  clue: Change second word in ^ to get a franchise in the same genre
+  transform: -Wars +Trek
+- word: STAR TREK
+  clue: Remove the last three letters of ^ to begin
+  transform: -REK
+- word: START
+  clue: Opposite of ^
+  transform: opposite
+- word: END
+  clue: Kind of ^ that goes nowhere
+  transform: can be
+- word: DEAD
+  clue: Band sometimes known as The ^
+  transform: aka
+- word: GRATEFUL DEAD
+  clue: '"Touch of ___" by ^'
+  transform: "'s Touch of"
+- word: GREY
+  clue: How Americans normally spell "^"
+  transform: E->A
+- word: GRAY
+  clue:
+  transform:

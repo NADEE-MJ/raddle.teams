@@ -1,0 +1,44 @@
+meta:
+  title: From STAFF to PSYCHIC
+  author: Sandy Weisz
+  difficulty: medium
+  theme: Enigmarch 2025
+  fromEmoji: ð¼
+  toEmoji: ð®
+ladder:
+- word: STAFF
+  clue: Change one letter of ^ to U to get a word for [some things]
+  transform: "A -> U"
+- word: STUFF
+  clue: Remove first letter from ^ and it sounds like what word that means [strong]?
+  transform: "rhymes with"
+- word: TOUGH
+  clue: Change middle letter of ^ to S and anagram to get [something spooky]
+  transform: "U->S then anagram"
+- word: GHOST
+  clue: 'A ^ makes [this sound]'
+  transform: "says"
+- word: BOO
+  clue: Insert an L into ^ and it sounds like [this color]
+  transform: "Insert L"
+- word: BLUE
+  clue: Pepsi's logo is ^ and [this color]
+  transform: "Partner in Pepsi logo"
+- word: RED
+  clue: Add the name of an alien to the front of ^ to get [a male first name]
+  transform: "+ALF"
+- word: ALFRED
+  clue: "Last name of director ^"
+  transform: "'s last name"
+- word: HITCHCOCK
+  clue: ^ directed [this horror film]
+  transform: "directed"
+- word: PSYCHO
+  clue: Append three letters to ^ to get [the unabbreviated version]
+  transform: "+ TIC"
+- word: PSYCHOTIC
+  clue: Remove 'OT' from ^ to get [this adjective]
+  transform: "- OT"
+- word: PSYCHIC
+  clue: ""
+  transform: ""

@@ -1,0 +1,45 @@
+meta:
+  title: From FRIEND to SHIP
+  author: Sandy Weisz
+  difficulty: medium
+  theme: Paul Ruddle
+  message: "Welcome to **RUDDLE**! This week we're rebranding as the only Paul Rudd-themed daily word game.
+    Today's puzzle is about his new movie Friendship, which is about to come out. It co-stars comedian Tim Robinson, of \"I Think You Should Leave\" fame.
+    Raddle has received no compensation for this promotion, but as a fan of Rudd, Robinson, and the concept of friendship, I'm happy to do it."
+ladder:
+- word: FRIEND
+  clue: Pluralize ^ to get a TV show
+  transform: +S
+- word: FRIENDS
+  clue: Blonde character on ^
+  transform: features
+- word: PHOEBE
+  clue: Tool found within ^
+  transform: contains a
+- word: HOE
+  clue: Add a letter to ^ to get something you might make with a ^
+  transform: +L
+- word: HOLE
+  clue: Kind of ^ found in space
+  transform: can be
+- word: BLACK
+  clue: Opposite of ^
+  transform: opposite
+- word: WHITE
+  clue: Beloved TV actress ^
+  transform: as in
+- word: BETTY
+  clue: Change the last letter of ^ to get something you might find in an aquarium
+  transform: Y->A
+- word: BETTA
+  clue: A ^ is this kind of animal
+  transform: is a
+- word: FISH
+  clue: Band that sounds like ^
+  transform: sounds like
+- word: PHISH
+  clue: Remove the last letter of ^ and anagram to get a vessel
+  transform: -H, anagram
+- word: SHIP
+  clue:
+  transform:

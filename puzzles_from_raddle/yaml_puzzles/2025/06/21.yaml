@@ -1,0 +1,47 @@
+meta:
+  title: From BLOOD to BANK
+  author: Sandy Weisz and Mao Reynolds
+  difficulty: medium
+  theme: Juneteenth
+  message:
+    In celebration of Juneteeth, we're building Raddles honoring Black inventors. 
+    [Dr. Charles R. Drew](https://www.acs.org/education/whatischemistry/african-americans-in-sciences/charles-richard-drew.html) 
+    is called the âfather of the blood bankâ for his contributions to chemistry and surgery. He invented bloodmobiles, 
+    which were trucks with refrigerators able to preserve blood donations, and developed ways to collect and store large amounts of plasma, techniques the American Red Cross would later adapt.
+ladder:
+- word: BLOOD
+  clue: What is thinner than ^?
+  transform: is thicker than
+- word: WATER
+  clue: Kind of ^ found in a church
+  transform: in a church is
+- word: HOLY
+  clue: Double a letter in ^ to get a name
+  transform: +L
+- word: HOLLY
+  clue: Holiday associated with ^
+  transform: is seen on
+- word: CHRISTMAS
+  clue: Legendary figure of ^
+  transform: jolly man
+- word: SANTA CLAUS
+  clue: Creature who helps ^
+  transform: helped by
+- word: ELF
+  clue: The ^ on the ___ is watching you
+  transform: +SH
+- word: SHELF
+  clue: Anagram of ^ that's part of your body
+  transform: anagram
+- word: FLESH
+  clue: '"___ of ^", a phrase coined in "The Merchant of Venice"'
+  transform: amount
+- word: POUND
+  clue: In the UK, a ^ is a bit of ___
+  transform: in the UK is
+- word: MONEY
+  clue: Where ^ is stored
+  transform: is stored in a
+- word: BANK
+  clue:
+  transform:

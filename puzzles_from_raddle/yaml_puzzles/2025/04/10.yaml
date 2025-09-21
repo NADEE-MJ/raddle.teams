@@ -1,0 +1,52 @@
+meta:
+  title: From BIG to THIEF
+  author: Sandy Weisz
+  difficulty: medium
+  theme: Some of my favorite bands
+  message: "This week I'm featuring some favorite bands. Today's inspiration is Big Thief, a indie folk trio from Brooklyn whose lyrics and melodies always feel deeply personal. Also their song [Spud Infinity](https://open.spotify.com/track/3Q6VfeIZ1bTjWiNe2Or4LQ?si=7c6dff6bccb743ff) rhymes 'finish' with 'potato knish', which never doesn't make me smile."
+ladder:
+- word: BIG
+  clue: Opposite of ^
+  transform: opposite
+- word: SMALL
+  clue: Change one letter in ^ to get a sense
+  transform: A->E
+- word: SMELL
+  clue: Organ used to ^
+  transform: with your
+- word: NOSE
+  clue: Verb that's a homophone of ^
+  transform: sounds like
+- word: KNOWS
+  clue: Mononymic musician whose last name is ^ with a bigram (two letters) inserted
+  transform: +LE is last name of
+- word: BEYONCE
+  clue: Band featuring ^
+  transform: was in
+- word: DESTINYS CHILD
+  clue: Name that gets paired with the initials of ^, in American geography
+  transform: abbrevitaed, appears after
+- word: WASHINGTON
+  clue: "He went to ^, in the movies, in the '30s"
+  transform: was visited by
+- word: MR SMITH
+  clue: Append three letters to ^ to get a long-time cartoon TV character
+  transform: +ERS
+- word: MR SMITHERS
+  clue: ^ is on this show
+  transform: is a character on
+- word: THE SIMPSONS
+  clue: Popular singer with the same initials as ^
+  transform: same initials as
+- word: TAYLOR SWIFT
+  clue: Number that's the title of a 2012 ^ hit
+  transform: sings about being
+- word: '22'
+  clue: ___-^
+  transform: follows
+- word: CATCH
+  clue: To ^ a ___ (1955)
+  transform: a
+- word: THIEF
+  clue:
+  transform:

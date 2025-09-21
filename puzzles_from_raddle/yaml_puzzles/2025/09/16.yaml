@@ -1,0 +1,47 @@
+meta:
+  title: From SIXTEEN to INCH
+  author: Sandy Weisz and Mao Reynolds
+  difficulty: medium
+  theme: Chicago
+  message:
+    This week, weâre celebrating some of the great things that have come out of Chicago, our home town. 
+    Sixteen-inch softball is a variation of softball played, quite dangerously, with bare hands and slow pitches. It results, unsurprisingly, in lots of broken or dislocated fingers. 
+    But it's a lot of fun, as evidenced by the 1,000+ teams in the Chicago area, across hundreds of leagues. 
+    I used to pitch in one myself. (Go Snails!)
+ladder:
+- word: SIXTEEN
+  clue: ___ ^, a certain party
+  transform: can be
+- word: SWEET
+  clue: Counterpart of ^
+  transform: counterpart
+- word: SOUR
+  clue: "First name of the teen artist behind 2021's \"^\""
+  transform: is an album by
+- word: OLIVIA
+  clue: Change the last letter in ^ to an N and anagram to get an instrument
+  transform: A->N, then anagram
+- word: VIOLIN
+  clue: What you need to play ^
+  transform: is played with a
+- word: BOW
+  clue: Rapper ^ ___
+  transform: B->W
+- word: WOW
+  clue: Rotate ^ 180Â° to get a relation
+  transform: rotated 180Â°
+- word: MOM
+  clue: ___ ^, an athletic supporter
+  transform: might drive kids around to play
+- word: SOCCER
+  clue: Another term for ^, in some parts of the world
+  transform: aka
+- word: FOOTBALL
+  clue: Unit of distance in ^
+  transform: unit
+- word: YARD
+  clue: Subdivision of a subdivision of a ^
+  transform: "/36"
+- word: INCH
+  clue:
+  transform:

@@ -1,0 +1,71 @@
+{
+  "meta": {
+    "title": "From CIRCULAR to SAW",
+    "author": "Mao Reynolds and Sandy Weisz",
+    "difficulty": "medium",
+    "theme": "250-year-old creations",
+    "message": "This week, in observation of Independence Day, we're celebrating inventions from around 250 years ago. The circular saw has a fittingly circuitous origin. Samuel Miller received a British patent for the circular saw in 1777; and a German man named Gervinus built a similar machine in 1780; and a Shaker woman in Massachusetts named Tabitha Babbitt created her own contraption in 1810 but didn't patent it due to her religious beliefs."
+  },
+  "ladder": [
+    {
+      "word": "CIRCULAR",
+      "clue": "Delete an R in ^ and anagram to become essential",
+      "transform": "-R, then anagram"
+    },
+    {
+      "word": "CRUCIAL",
+      "clue": "A secretive organization hidden in ^",
+      "transform": "includes"
+    },
+    {
+      "word": "CIA",
+      "clue": "President who previously headed the ^",
+      "transform": "was headed by"
+    },
+    {
+      "word": "BUSH",
+      "clue": "Insert an R into ^ to get a tool",
+      "transform": "+R"
+    },
+    {
+      "word": "BRUSH",
+      "clue": "Artist who uses a ^",
+      "transform": "is used by a"
+    },
+    {
+      "word": "PAINTER",
+      "clue": "^ with a signature mustache",
+      "transform": "with a mustache"
+    },
+    {
+      "word": "DALI",
+      "clue": "Home country of ^",
+      "transform": "is from"
+    },
+    {
+      "word": "SPAIN",
+      "clue": "Affirmative answer in ^",
+      "transform": "'s \"yes\""
+    },
+    {
+      "word": "SI",
+      "clue": "Verb that's ^ backwards",
+      "transform": "backwards"
+    },
+    {
+      "word": "IS",
+      "clue": "Past tense of ^",
+      "transform": "in the past"
+    },
+    {
+      "word": "WAS",
+      "clue": "Tool that's ^ written backwards",
+      "transform": "backwards"
+    },
+    {
+      "word": "SAW",
+      "clue": null,
+      "transform": null
+    }
+  ]
+}

@@ -1,0 +1,50 @@
+meta:
+  title: From PAUSE to MACHINE
+  author: Sandy Weisz
+  difficulty: medium
+  theme: Enigmarch 2025
+  fromEmoji: â¸ï¸
+  toEmoji: âï¸
+ladder:
+- word: PAUSE
+  clue: ^ sounds like these things found on some animals
+  transform: "sounds like"
+- word: PAWS
+  clue: Dirty ^ can make these
+  transform: "make"
+- word: FOOTPRINTS
+  clue: Title that sounds like the second half of ^
+  transform: "-FOOT, sounds like"
+- word: PRINCE
+  clue: Father of a ^
+  transform: "is son of the"
+- word: KING
+  clue: Tennis player ^
+  transform: "as in"
+- word: BILLIE JEAN
+  clue: Singer of â^â
+  transform: "was sung by"
+- word: MICHAEL JACKSON
+  clue: '#1 album and song by ^'
+  transform: "sang"
+- word: BAD
+  clue: Popular musician ^ ___
+  transform: "â¦"
+- word: BUNNY
+  clue: Sweet thing that rhymes with ^
+  transform: "rhymes with"
+- word: HONEY
+  clue: ___ & ^
+  transform: "&"
+- word: MILK
+  clue: Actor who won an Oscar for playing ^
+  transform: "portrayed by"
+- word: PENN
+  clue: Performers ^ & ___
+  transform: "&"
+- word: TELLER
+  clue: Word that follows ^ in a common three-letter acronym
+  transform: "precedes"
+- word: MACHINE
+  clue: ""
+  transform: ""

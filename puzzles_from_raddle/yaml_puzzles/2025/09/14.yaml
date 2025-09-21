@@ -1,0 +1,46 @@
+meta:
+  title: From ELEVATED to TRAIN
+  author: Sandy Weisz and Mao Reynolds
+  difficulty: medium
+  theme: Chicago
+  message:
+    This week, weâre celebrating some of the great things that are strongly associated with Chicago, our home town. 
+    The train is something many Chicagoans either ride or hear every day. 
+    The first elevated railway was built in 1830s London, but the Chicago âLâ is recognizable in its own right, being one of three train systems in the world with 24-hour service (the others being in New York and Copenhagen).
+ladder:
+- word: ELEVATED
+  clue: Remove a bigram (two letters) from ^ to get happy
+  transform: -EV
+- word: ELATED
+  clue: Add a letter to the front of ^ to become connected
+  transform: +R
+- word: RELATED
+  clue: People who are ^ to you
+  transform: people are your
+- word: FAMILY
+  clue: "Long-running TV show \"^ ___\""
+  transform: â¦
+- word: GUY
+  clue: Kind of ^ that ends up last?
+  transform: who finishes last
+- word: NICE
+  clue: Someone from ^ is ___
+  transform: people are
+- word: FRENCH
+  clue: Fictional ^ inspector
+  transform: inspector
+- word: CLOUSEAU
+  clue: Drop the last sound from ^ to get the kinds of things ^ is looking for
+  transform: -"O"
+- word: CLUES
+  clue: "Long-running TV show \"___ ^\""
+  transform: C->B
+- word: BLUES
+  clue: Vehicle found when you remove every other letter in ^
+  transform: -L, -E`
+- word: BUS
+  clue: Common alternative to the ^
+  transform: alternative
+- word: TRAIN
+  clue:
+  transform:

@@ -1,0 +1,44 @@
+meta:
+  title: From ROLLER to DERBY
+  author: Sandy Weisz and Mao Reynolds
+  difficulty: medium
+  theme: Chicago
+  message:
+    This week, weâre celebrating some of the great things that have come out of Chicago, our home town. 
+    A roller derby is a roller skating competition with roots in Chicago. 
+    Leo Seltzer trademarked the term âRoller Derbyâ in 1935 and hosted the first one in Chicago, inviting both men and women. 
+    The roller track became a symbol of feminist freedom, and many all-women leagues still exist in Chicago.
+ladder:
+- word: ROLLER
+  clue: Change a double letter in ^ to a different double letter to get a thief
+  transform: LL->BB
+- word: ROBBER
+  clue: ^ ___, an unscrupulous businessman
+  transform: â¦
+- word: BARON
+  clue: Change one letter in ^ to get a breakfast food
+  transform: R->C
+- word: BACON
+  clue: ___ ^, famous game subject, to a certain degree?
+  transform: first name
+- word: KEVIN
+  clue: "'90s movie about a kid named ^"
+  transform: was left
+- word: HOME ALONE
+  clue: "Painting that inspired a shot in \"^\""
+  transform: was inspired by
+- word: THE SCREAM
+  clue: "Who created \"^\""
+  transform: artist
+- word: MUNCH
+  clue: ^ (to ___ loudly)
+  transform: loudly when you
+- word: EAT
+  clue: What you might offer to ^, confidently
+  transform: one's
+- word: HAT
+  clue: ^ with a rounded top
+  transform: with a rounded top
+- word: DERBY
+  clue:
+  transform:

@@ -1,0 +1,43 @@
+meta:
+  title: From MINT to CONDITION
+  author: Sandy Weisz and Mao Reynolds
+  difficulty: medium
+  theme: Summer produce
+  message: We're celebrating summer with Raddles based on fresh summer produce.
+ladder:
+- word: MINT
+  clue: Metal thing made in a ^
+  transform: makes a
+- word: COIN
+  clue: A ^ ___ starts many games
+  transform: gets a
+- word: TOSS
+  clue: Dish that a chef might ^
+  transform: a
+- word: SALAD
+  clue: Emperor with his own ^?
+  transform: with romaine and parmesan
+- word: CAESAR
+  clue: City where ^ died
+  transform: died in
+- word: ROME
+  clue: Change one letter in ^ to get a garment
+  transform: M->B
+- word: ROBE
+  clue: ___^, something you might wear after exiting a ___
+  transform: is worn after a
+- word: BATH
+  clue: Alternative to a ^
+  transform: or a
+- word: SHOWER
+  clue: Contents of a bottle in a ^
+  transform: with
+- word: SHAMPOO
+  clue: Counterpart to ^
+  transform: or
+- word: CONDITIONER
+  clue: Drop two letters in ^ to get a state
+  transform: -ER
+- word: CONDITION
+  clue:
+  transform:

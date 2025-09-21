@@ -1,0 +1,47 @@
+meta:
+  title: From HOLLOW to HOUSE
+  author: Sandy Weisz
+  difficulty: medium
+  theme: Enigmarch 2025
+  fromEmoji: ð³ï¸
+  toEmoji: ð 
+ladder:
+- word: HOLLOW
+  clue: Adjective that describes a ^ in literature
+  transform: "be"
+- word: SLEEPY
+  clue: Bespectacled friend of ^
+  transform: "is friends with"
+- word: DOC
+  clue: Who often asks a question that ends with ^
+  transform: "knows what's up, according to"
+- word: BUGS BUNNY
+  clue: Favorite food of ^
+  transform: "chomps on a"
+- word: CARROT
+  clue: Homophone of ^ that appears on a keyboard
+  transform: "sounds like"
+- word: CARET
+  clue: What appears beneath the ^, in the US
+  transform: "appears above the"
+- word: SIX
+  clue: An upside-down ^
+  transform: "upside-down is"
+- word: NINE
+  clue: 'â___ ^-^â'
+  transform: "twice follows"
+- word: BROOKLYN
+  clue: ^ is part of this island
+  transform: "is on an island that's"
+- word: LONG
+  clue: Opposite of ^
+  transform: "opposite"
+- word: SHORT
+  clue: Replace last two letters of ^ with E to get something that comes in a pair
+  transform: "RT -> E"
+- word: SHOE
+  clue: Add a U to ^ and anagram to get a dwelling
+  transform: "+ U, then anagram"
+- word: HOUSE
+  clue: ""
+  transform: ""

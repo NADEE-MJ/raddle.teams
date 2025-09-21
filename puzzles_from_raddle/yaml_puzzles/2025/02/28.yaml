@@ -1,0 +1,44 @@
+meta:
+  title: From PINKY to THUMB
+  author: Sandy Weisz
+  difficulty: medium
+  fromEmoji: ð¤
+  toEmoji: ð
+
+ladder:
+- word: PINKY
+  clue: "^'s cartoon [partner]"
+  transform: "and"
+- word: the brain
+  clue: "^ is missing from this [film character]"
+  transform: "is missing from"
+- word: scarecrow
+  clue: "^ is befriended by this [young girl]"
+  transform: "is befriended by"
+- word: dorothy
+  clue: "[Nickname] for ^"
+  transform: "aka"
+- word: dot
+  clue: "^ can be preceded by this [dance]"
+  transform: "comes after"
+- word: polka
+  clue: "^ commonly features this [instrument]"
+  transform: "often features an"
+- word: accordion
+  clue: "Remove final 3 letters from ^ to get an [agreement]"
+  transform: "-ION"
+- word: accord
+  clue: "^ is made by this [Japanese company]"
+  transform: "is made by"
+- word: honda
+  clue: "^ makes this kind of [product]"
+  transform: "is a make of"
+- word: car
+  clue: "Word for a [strange passenger] in a ^"
+  transform: "picks up a"
+- word: hitchhiker
+  clue: "Prominent [digit] of a ^"
+  transform: "sticks out their"
+- word: THUMB
+  clue: ""
+  transform: ""

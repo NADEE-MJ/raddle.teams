@@ -1,0 +1,48 @@
+meta:
+  title: From ESPRESSO to MACCHIATO
+  author: Sandy Weisz
+  difficulty: medium
+  theme: Eurovision
+  message: 
+    It's Eurovision week! Today's entry honors the third place finisher, "Espresso Macchiato", by Estonia's Tommy Cash.
+    [Here is the official video of the song](https://www.youtube.com/watch?v=5MS_Fczs_98). (It's incredible.)
+ladder:
+- word: ESPRESSO
+  clue: She sings "^"
+  transform: is sung by
+- word: SABRINA CARPENTER
+  clue: The teenager on '90s TV who shares a first name with ^ was a ___
+  transform: shares her name with a
+- word: WITCH
+  clue: Conventional mode of transportation for a ^
+  transform: rides a
+- word: BROOM
+  clue: Change one letter in ^ to get something that happens in spring
+  transform: R->L
+- word: BLOOM
+  clue: Popular '80s comic strip ^ ___
+  transform: â¦
+- word: COUNTY
+  clue: Remove a letter from ^ to get something you might do with your fingers
+  transform: -Y
+- word: COUNT
+  clue: It's generally frowned upon to ^ these, in Vegas
+  transform: in a casino
+- word: CARDS
+  clue: Game where your ^ might be straight
+  transform: are used in
+- word: POKER
+  clue: Change one letter in ^ to get something used in some ^ variants
+  transform: P->J
+- word: JOKER
+  clue: Co-star of the second ^ movie
+  transform: co-star
+- word: LADY GAGA
+  clue: 2020 album by ^
+  transform: album in 2020
+- word: CHROMATICA
+  clue: Remove a letter from ^ and anagram to get a drink
+  transform: -R, then anagram
+- word: MACCHIATO
+  clue:
+  transform:

@@ -1,0 +1,54 @@
+meta:
+  title: From IRONING to BOARD
+  author: Mao Reynolds and Sandy Weisz
+  difficulty: medium
+  theme: Juneteenth
+  message:
+    In celebration of Juneteeth, we're building Raddles honoring Black inventors. 
+    "[Sarah Boone](https://nbindustrial.org/blog/black-history-sarah-boone) was awarded a patent for the modern ironing board in 1892, 
+    becoming one of the first Black American woman to do so.
+    She was born in 1832 in North Carolina to enslaved parents and married a free man named James Boone in 1847.
+    In her patent application, she stated the ironing board would be \"a cheap, simple, and highly effective device.\""
+ladder:
+- word: IRONING
+  clue: Remove the outside letters of ^ to get a kind of fighter
+  transform: -I -G
+- word: RONIN
+  clue: Change one letter in ^ to get a bird
+  transform: N->B
+- word: ROBIN
+  clue: '"^" sounds like what this kind of criminal would be doin'''
+  transform: sounds like the work of a
+- word: THIEF
+  clue: Change one letter in ^ to get a nickname for a boss
+  transform: T->C
+- word: CHIEF
+  clue: ^ of ___, role in an administration
+  transform: of
+- word: STAFF
+  clue: Name of the lower ^, on certain sheets
+  transform: below treble
+- word: BASS
+  clue: Range just above ^
+  transform: is just below
+- word: TENOR
+  clue: 700-year-old monument whose first word is an anagram of ^
+  transform: anagrammmed is the start of
+- word: NOTRE DAME
+  clue: Name for the athletes at ^
+  transform: athletes are the
+- word: FIGHTING IRISH
+  clue: The first two and last two letters of ^ make this animal
+  transform: without the middle is
+- word: FISH
+  clue: ^ live in this
+  transform: live in
+- word: WATER
+  clue: Bubbles from ^ breaking
+  transform: breaks to become
+- word: SURF
+  clue: When you ^, you're on a ___
+  transform: on a
+- word: BOARD
+  clue:
+  transform:

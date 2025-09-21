@@ -1,0 +1,46 @@
+meta:
+  title: From BULLET to PROOF
+  author: Sandy Weisz and Mao Reynolds
+  difficulty: medium
+  theme: Superman
+  message:
+    Itâs Superman week! 
+    Among other abilities, Superman is immune to bullets. 
+    Reasoning for his invincibility has varied over time â it's his alien DNA, it's his suit â but whatever the logic is, it helped earn him his nickname as the Man of Steel.
+ladder:
+- word: BULLET
+  clue: ___ ^, a simple solution, or a monster killer
+  transform: might be made from
+- word: SILVER
+  clue: The ^ State, which is appropriate since the initials of its biggest city can be found in the middle of ^
+  transform: state, aka
+- word: NEVADA
+  clue: Surprisingly lush city in ^
+  transform: small/big city
+- word: RENO
+  clue: Anagram ^ to get an emperor
+  transform: anagrammed
+- word: NERO
+  clue: City burned by ^ (allegedly)
+  transform: burned
+- word: ROME
+  clue: Change one letter in ^ to get something often braided
+  transform: M->P
+- word: ROPE
+  clue: Change one letter in ^ to get something with feathers?
+  transform: R->H
+- word: HOPE
+  clue: ^ ___, treasure once owned by Louis XIV
+  transform: â¦
+- word: DIAMOND
+  clue: "\"A ^ in the ___\""
+  transform: in the
+- word: ROUGH
+  clue: Change one letter in ^ to get slang for money
+  transform: R->D
+- word: DOUGH
+  clue: To let ^ rise
+  transform: is something you 
+- word: PROOF
+  clue:
+  transform:

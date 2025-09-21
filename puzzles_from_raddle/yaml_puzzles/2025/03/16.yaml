@@ -1,0 +1,56 @@
+meta:
+  title: From STAR to BOW
+  author: Sandy Weisz
+  difficulty: medium
+  theme: Enigmarch 2025
+  fromEmoji: â­ï¸
+  toEmoji: ð
+ladder:
+- word: STAR
+  clue: The closest ^
+  transform: "nearest to us is the"
+- word: SUN
+  clue: The ^ might cause your skin to do this
+  transform: "gives you a"
+- word: TAN
+  clue: Last name of television personality ^
+  transform: "as in"
+- word: FRANCE
+  clue: Two words that precede ^, annually
+  transform: "follows"
+- word: TOUR DE
+  clue: Put the last part of ^ first
+  transform: "anagrams to"
+- word: DETOUR
+  clue: A ^ sign features this shape
+  transform: "sign features an"
+- word: ARROW
+  clue: One who makes an ^
+  transform: "made by"
+- word: FLETCHER
+  clue: "â80s TV show featuring someone named ^"
+  transform: "solved crimes on"
+- word: MURDER SHE WROTE
+  clue: The first word in ^
+  transform: "- 'SHE WROTE'"
+- word: MURDER
+  clue: One in a ^
+  transform: "contains many a"
+- word: CROW
+  clue: Close relative of a ^
+  transform: "related to a"
+- word: RAVEN
+  clue: He wrote about a ^
+  transform: "written about by"
+- word: POE
+  clue: Append a part of the body to ^ and it sounds like this kind of animal
+  transform: "+ 'KNEE'"
+- word: PONY
+  clue: Add 4 letters to ^ to get this hairstyle
+  transform: "+ TAIL"
+- word: PONYTAIL
+  clue: A ribbon in a ^ might take this shape
+  transform: "might feature a"
+- word: BOW
+  clue: ""
+  transform: ""

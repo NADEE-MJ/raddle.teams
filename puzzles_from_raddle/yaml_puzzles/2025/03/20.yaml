@@ -1,0 +1,44 @@
+meta:
+  title: From MACHINE to CASE
+  author: Sandy Weisz
+  difficulty: medium
+  theme: Enigmarch 2025
+  fromEmoji: âï¸
+  toEmoji: ð¼
+ladder:
+- word: MACHINE
+  clue: Type of ^ in a casino
+  transform: "as in"
+- word: SLOT
+  clue: Change one letter in ^ to a double letter to get a weather phenomenon
+  transform: "O -> EE"
+- word: SLEET
+  clue: Swap two letters in ^ to get a material
+  transform: "Swap T & L"
+- word: STEEL
+  clue: ^ is mostly made of this
+  transform: "is mostly made of"
+- word: IRON
+  clue: ^ is one kind of tool in this sport
+  transform: "used in"
+- word: GOLF
+  clue: Most famous tournament in ^
+  transform: "tournament"
+- word: MASTERS
+  clue: A ^ is a kind of ___
+  transform: "is a kind of"
+- word: DEGREE
+  clue: An ___ is measured in ^s
+  transform: "measures an"
+- word: ANGLE
+  clue: Swap the final two letters of ^ to get a darling
+  transform: "Swap final two letters"
+- word: ANGEL
+  clue: ^ food ___
+  transform: "â¦ food â¦"
+- word: CAKE
+  clue: Change one letter in ^ to get a legal term
+  transform: "K -> S"
+- word: CASE
+  clue: ""
+  transform: ""

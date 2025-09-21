@@ -1,0 +1,52 @@
+meta:
+  title: From IMPROV to COMEDY
+  author: Sandy Weisz and Mao Reynolds
+  difficulty: medium
+  theme: Chicago
+  message:
+    This week, weâre celebrating some of the great things that are strongly associated with Chicago, our home town. 
+    Improv comedy has been around for millennia, but the modern "rules" of improv were formalized by Chicagoâs Second City troupe in the â50s and â60s. 
+    Notable alumni of Second City â and there are many, and the number keeps growing â include Stephen Colbert, Joan Rivers, Eugene Levy, Tina Fey, Tim Robinson, and Dan Aykroyd.
+ladder:
+- word: IMPROV
+  clue: Drop half of the letters in ^ to get someone mischievous
+  transform: -ROV
+- word: IMP
+  clue: Change one letter in ^ to get a certain mask-wearer
+  transform: I->U
+- word: UMP
+  clue: Where an ^ stands, familiarly
+  transform: stands at
+- word: HOME
+  clue: "\"___ ^\", what a 1982 movie character wants to do"
+  transform: is where ET wants to
+- word: PHONE
+  clue: ^ ___, one-time common street sight
+  transform: calls used to happen in a
+- word: BOOTH
+  clue: ^'s target
+  transform: shot
+- word: LINCOLN
+  clue: "Add a \"d\" sound inside \"^\" to get a popular website"
+  transform: +"D"
+- word: LINKEDIN
+  clue: Drop half of the letters in ^ to get a video game character
+  transform: -EDIN
+- word: LINK
+  clue: Who ^ is trying to save
+  transform: is trying to save
+- word: ZELDA
+  clue: Title for ^
+  transform: is a
+- word: PRINCESS
+  clue: Mother of a ^
+  transform: is daughter of a
+- word: QUEEN
+  clue: ___ ^, someone who wants a lot of attention
+  transform: of complaining relishes
+- word: DRAMA
+  clue: Categorical alternative to ^
+  transform: vs.
+- word: COMEDY
+  clue:
+  transform:

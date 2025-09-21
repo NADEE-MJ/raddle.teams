@@ -1,0 +1,66 @@
+{
+  "meta": {
+    "title": "From PREVOST to LEO",
+    "author": "Sandy Weisz",
+    "difficulty": "medium",
+    "theme": "Habemus Papam",
+    "message": "There's a new pope! Robert Prevost is Pope Leo XIV. And he's from my city of Chicago, which could give new meaning to the term Papal Bull. This also means there's a non-zero chance that I've crossed paths with the Pope sometime in my life, like maybe when were both waiting in line at [Hot Doug's](https://en.wikipedia.org/wiki/Hot_Doug%27s)?"
+  },
+  "ladder": [
+    {
+      "word": "PREVOST",
+      "clue": "Remove the first two letters of ^ then anagram to get a kitchen appliance",
+      "transform": "-PR, then anagram"
+    },
+    {
+      "word": "STOVE",
+      "clue": "Appliance usually attached to a ^",
+      "transform": "is attached to an"
+    },
+    {
+      "word": "OVEN",
+      "clue": "An ^ ___ helps you pull things out of the ^",
+      "transform": "requires a"
+    },
+    {
+      "word": "MITT",
+      "clue": "Sport where players use a ^",
+      "transform": "is used in"
+    },
+    {
+      "word": "BASEBALL",
+      "clue": "A ^er in the Bronx",
+      "transform": "player in the Bronx"
+    },
+    {
+      "word": "YANKEE",
+      "clue": "Arguably the most famous ^ of all time",
+      "transform": "#3"
+    },
+    {
+      "word": "BABE RUTH",
+      "clue": "Actual first name of ^",
+      "transform": "aka"
+    },
+    {
+      "word": "GEORGE",
+      "clue": "\"^ of the ___\", cartoon and movie",
+      "transform": "of the"
+    },
+    {
+      "word": "JUNGLE",
+      "clue": "King of the ^, it's said",
+      "transform": "'s king"
+    },
+    {
+      "word": "LION",
+      "clue": "Sign symbolized by a ^",
+      "transform": "astrologically"
+    },
+    {
+      "word": "LEO",
+      "clue": null,
+      "transform": null
+    }
+  ]
+}

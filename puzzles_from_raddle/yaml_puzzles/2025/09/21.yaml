@@ -1,0 +1,50 @@
+meta:
+  title: From ITALIAN to BEEF
+  author: Sandy Weisz and Mao Reynolds
+  difficulty: medium
+  theme: Chicago
+  message:
+    This week, weâre celebrating some of the great things that have come out of Chicago, our home town. 
+    Italian beef is a dish even outsiders might know due to its appearance on âThe Bear.â 
+    Developed by Italian Americans in Chicago as early as the 1930s, the sandwich consists of roast beef and gravy on French bread, featuring either giardiniera or bell peppers.
+ladder:
+- word: ITALIAN
+  clue: ^ ___, rhyming nickname of an enduring film character
+  transform: â¦
+- word: STALLION
+  clue: Drop the second letter from ^ and move another to get a female name
+  transform: -T, anagrammed
+- word: ALLISON
+  clue: Swap the double letter in ^ with another double letter to get a popular name for a baby girl
+    (and major Chicago street)
+  transform: LL->DD
+- word: ADDISON
+  clue: ^ ___, Gen Z superstar
+  transform: â¦
+- word: RAE
+  clue: Reverse ^ to get something you might bend?
+  transform: reversed
+- word: EAR
+  clue: Change one letter in ^ to get a setting for a lot of jokes
+  transform: E->B
+- word: BAR
+  clue: ^___, an antiquated term for a certain server
+  transform: worker
+- word: MAID
+  clue: Insert a bigram (two letters) into ^ to get a world capital
+  transform: +DR
+- word: MADRID
+  clue: ___ ^, earner of many trophies
+  transform: football club
+- word: REAL
+  clue: Opposite of ^
+  transform: opposite
+- word: FAKE
+  clue: Change the first letter in ^ to get a sweet food
+  transform: F->C
+- word: CAKE
+  clue: ___^, a hunk (but neither ___ nor ^)
+  transform: not made of
+- word: BEEF
+  clue:
+  transform:

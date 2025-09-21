@@ -1,0 +1,51 @@
+meta:
+  title: From ANT to MAN
+  author: Sandy Weisz
+  difficulty: medium
+  theme: Paul Ruddle
+  message: "Welcome to **RUDDLE**! This week we're rebranding as the only Paul Rudd-themed daily word game.
+    Today's game is about Ant-Man, aka Scott Lang, aka Paul Rudd. Rudd has played Ant-Man in 5 Marvel movies so far.
+    If you squint, you might be able to see him hiding out in the punctuation in one of the clues."
+ladder:
+- word: ANT
+  clue: Insert a letter into ^ get a homophone of ^ (depending on your dialect)
+  transform: +U
+- word: AUNT
+  clue: Male counterpart of ^
+  transform: is married to an
+- word: UNCLE
+  clue: American symbol ^ ___
+  transform: â¦
+- word: SAM
+  clue: Insert a letter into ^ to get some kind of mail
+  transform: +P
+- word: SPAM
+  clue: Reverse ^ to get some things that help you get around
+  transform: backwards
+- word: MAPS
+  clue: Book that holds lots of ^
+  transform: are found in a
+- word: ATLAS
+  clue: Add a letter to the end of ^ (and insert a space) to get a famous R&B song
+  transform: +T
+- word: AT LAST
+  clue: Performer who was known for singing "^"
+  transform: sung by
+- word: ETTA JAMES
+  clue: "Take the first part of ^, attach an L, then reverse it for a drink"
+  transform: +L and backwards
+- word: LATTE
+  clue: Popular chain where you can get a ^
+  transform: is a drink at
+- word: STARBUCKS
+  clue: Figure on the logo for ^
+  transform: logo features a
+- word: MERMAID
+  clue: Male counterpart of ^
+  transform: male verison is
+- word: MERMAN
+  clue: Second half of ^
+  transform: -MER
+- word: MAN
+  clue:
+  transform:

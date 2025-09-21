@@ -1,0 +1,47 @@
+meta:
+  title: From BOARD to RING
+  author: Sandy Weisz
+  difficulty: medium
+  theme: Enigmarch 2025
+  fromEmoji: ðââï¸
+  toEmoji: ð
+ladder:
+- word: BOARD
+  clue: Add a shape to ^ to get a nautical term
+  transform: +STAR
+- word: STARBOARD
+  clue: Opposite of ^
+  transform: OPPOSITE
+- word: PORT
+  clue: Add a bigram (two letters) to the start of ^, and the same bigram backwards to the end, to get a profession
+  transform: +RE +ER
+- word: REPORTER
+  clue: A ^'s work might appear in this kind of product
+  transform: WORKS ON A
+- word: NEWSPAPER
+  clue: Famous fictional ^
+  transform: E.G.
+- word: DAILY PLANET
+  clue: Remove a letter from the second half of ^ and anagram rest to get a country
+  transform: -DAILY -T
+- word: NEPAL
+  clue: Highest place in ^
+  transform: IS HOME OF
+- word: EVEREST
+  clue: One of two who first conquered ^
+  transform: CONQUERED BY
+- word: HILLARY
+  clue: Last name of actor/musician ^ (minus an L)
+  transform: AS IN
+- word: DUFF
+  clue: Most notable consumer of ^
+  transform: IS DRUNK BY
+- word: HOMER SIMPSON
+  clue: Home of ^
+  transform: LIVES IN
+- word: SPRINGFIELD
+  clue: Shape found in the middle of ^
+  transform: CONTIANS A
+- word: RING
+  clue:
+  transform:

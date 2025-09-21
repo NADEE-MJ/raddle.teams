@@ -1,0 +1,40 @@
+meta:
+  title: From SNAP to DRAGON
+  author: Sandy Weisz
+  difficulty: medium
+  theme: flowers
+  message: It's spring! Let's stop to smell the flowers. 
+ladder:
+- word: SNAP
+  clue: Reverse ^ to get some cookware
+  transform: reversed
+- word: PANS
+  clue: ___ and ^
+  transform: and
+- word: POTS
+  clue: Reverse ^ to put an end to something
+  transform: reversed
+- word: STOP
+  clue: Opposite of ^
+  transform: opposite
+- word: GO
+  clue: Add a letter to ^ to get something divine
+  transform: +D
+- word: GOD
+  clue: Mars is the ^ of ___
+  transform: of
+- word: WAR
+  clue: â^ and ___â
+  transform: and
+- word: PEACE
+  clue: Game element that sounds like ^
+  transform: sounds like
+- word: PIECE
+  clue: Kind of ^ that is exceedingly complimentary
+  transform: can be
+- word: PUFF
+  clue: ^ is the name of this creature, in song
+  transform: is a
+- word: DRAGON
+  clue:
+  transform:

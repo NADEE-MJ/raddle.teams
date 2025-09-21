@@ -1,0 +1,47 @@
+meta:
+  title: From TO to MARE
+  author: Sandy Weisz and Mao Reynolds
+  difficulty: medium
+  theme: 'Mystery Theme #1'
+  message:
+    "It's time for a Mystery Theme! Every Raddle this week (Monday thru Friday) is part of a secret theme that you can figure out. The answer is one word. When you've solved it, [submit your name here](/mystery) to be included in the list of solvers."
+ladder:
+- word: TO
+  clue: "Number that sounds like \"^\""
+  transform: +W
+- word: TWO
+  clue: What it takes ^ to do
+  transform: are needed to
+- word: TANGO
+  clue: Two before ^ in a certain alphabet
+  transform: is two after
+- word: ROMEO
+  clue: Partner to ^
+  transform: loves
+- word: JULIET
+  clue: Two before ^ in a certain alphabet
+  transform: is two after
+- word: HOTEL
+  clue: Counterpart to ^, in a certain board game
+  transform: earns more rent than a
+- word: HOUSE
+  clue: Thing that might get passed in the ^
+  transform: passes a
+- word: BILL
+  clue: Businessman and philanthropist ^ ___
+  transform: â¦
+- word: GATES
+  clue: Anagram of ^ to get something the world is?
+  transform: anagram
+- word: STAGE
+  clue: ___^, a privileged kind of pass
+  transform: in front, costume changes in
+- word: BACK
+  clue: ___^, one way to ride
+  transform: of a
+- word: HORSE
+  clue: A female ^
+  transform: female
+- word: MARE
+  clue:
+  transform:

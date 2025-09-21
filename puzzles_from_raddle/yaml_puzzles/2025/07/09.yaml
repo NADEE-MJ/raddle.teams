@@ -1,0 +1,43 @@
+meta:
+  title: From FOOD to CHAIN
+  author: Sandy Weisz and Mao Reynolds
+  difficulty: medium
+  theme: Tour de France
+  message: 
+      The Tour de France is this week and weâre honoring it with bike-themed Raddles. 
+      Like a well-oiled bicycle chain, a food chain keeps things in an ecosystem chugging along. 
+      The concept of food chains was developed first by al-Jahiz, an 8th-century scholar in modern-day Iraq, and was later independently developed by an English ecologist named Charles Elton.
+ladder:
+- word: FOOD
+  clue: Abstain from ^
+  transform: is uneaten during a
+- word: FAST
+  clue: Opposite of ^
+  transform: opposite
+- word: SLOW
+  clue: Stereotypically ^ animal
+  transform: animal
+- word: TURTLE
+  clue: Armor for a ^
+  transform: armor
+- word: SHELL
+  clue: Change a letter in ^ to get something continental
+  transform: L->F
+- word: SHELF
+  clue: Word that precedes and describes what sits on a ^
+  transform: features many a
+- word: BOOK
+  clue: Best-selling ^ in history
+  transform: most sold
+- word: BIBLE
+  clue: Second son in the ^
+  transform: second son
+- word: ABEL
+  clue: Slayer of ^
+  transform: slayer
+- word: CAIN
+  clue: Add a letter to ^ to get a kind of restaurant
+  transform: +H
+- word: CHAIN
+  clue:
+  transform:

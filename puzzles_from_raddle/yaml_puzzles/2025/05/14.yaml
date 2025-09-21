@@ -1,0 +1,46 @@
+meta:
+  title: From SUNSET to BOULEVARD
+  author: Sandy Weisz
+  difficulty: medium
+  theme: Tony nominations
+  message: We're honoring the Tony nominations this week. 
+    Andrew Lloyd Webber's "Sunset Boulevard" was nominated for seven Tonys, 
+    including Best Revival of a Musical, and 
+    Best Performance by an Actress in a Musical for Nicole Scherzingerâ. 
+ladder:
+- word: SUNSET
+  clue: The time of day immediately following ^
+  transform: comes before
+- word: DUSK
+  clue: Opposite of ^
+  transform: opposite
+- word: DAWN
+  clue: What comes before the ^, it's said
+  transform: comes after
+- word: THE DARKEST HOUR
+  clue: Take the last part of ^, and change a letter to get a number
+  transform: H->F
+- word: FOUR
+  clue: Superhero set The ___ ^
+  transform: who are
+- word: FANTASTIC
+  clue: Animal who is ^, in a book and movie
+  transform: Mr.
+- word: FOX
+  clue: Adjective used to describe a ^
+  transform: is
+- word: SLY
+  clue: Anagram ^ to get a luxury monogram
+  transform: anagrammed
+- word: YSL
+  clue: What the middle letter of ^ stands for
+  transform: partially stands for
+- word: SAINT
+  clue: The abbreviation for ^ also stands for this, on signs
+  transform: "= ST ="
+- word: STREET
+  clue: Term for a wide ^
+  transform: can be a
+- word: BOULEVARD
+  clue:
+  transform:

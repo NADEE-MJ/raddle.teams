@@ -1,0 +1,76 @@
+{
+  "meta": {
+    "title": "From CHICK to ROOSTER",
+    "author": "Sandy Weisz and Mao Reynolds",
+    "difficulty": "medium",
+    "theme": "Daddle",
+    "message": "It's Daddle Week! Father's Day is Sunday. Let's visit a few of our favorite dads in the animal kingdom."
+  },
+  "ladder": [
+    {
+      "word": "CHICK",
+      "clue": "Append an ingredient to ^ to get another ingredient that is neither a ^ nor the ingredient you added",
+      "transform": "+PEA"
+    },
+    {
+      "word": "CHICKPEA",
+      "clue": "Alternate name for a ^",
+      "transform": "aka"
+    },
+    {
+      "word": "GARBANZO BEAN",
+      "clue": "Island with the same initials as ^",
+      "transform": "share initials with"
+    },
+    {
+      "word": "GREAT BRITAIN",
+      "clue": "Smallest country in ^",
+      "transform": "contains England, Scotland, and"
+    },
+    {
+      "word": "WALES",
+      "clue": "Animals that sound like ^",
+      "transform": "+H"
+    },
+    {
+      "word": "WHALES",
+      "clue": "\"___ the ^\", environmental campaign since the 1970s",
+      "transform": "are beasts we should"
+    },
+    {
+      "word": "SAVE",
+      "clue": "Insert a letter in ^ to get a barbershop offering",
+      "transform": "+H"
+    },
+    {
+      "word": "SHAVE",
+      "clue": "A ___ ^, when you barely make it",
+      "transform": "can be"
+    },
+    {
+      "word": "CLOSE",
+      "clue": "What you might ^ by hitting an X",
+      "transform": "the"
+    },
+    {
+      "word": "WINDOW",
+      "clue": "^ ___, one option when flying",
+      "transform": "is next to an airplane"
+    },
+    {
+      "word": "SEAT",
+      "clue": "___ ^, for kids who aren't quite big enough",
+      "transform": "that raises"
+    },
+    {
+      "word": "BOOSTER",
+      "clue": "Change one letter in ^ to get a bird",
+      "transform": "B->R"
+    },
+    {
+      "word": "ROOSTER",
+      "clue": null,
+      "transform": null
+    }
+  ]
+}

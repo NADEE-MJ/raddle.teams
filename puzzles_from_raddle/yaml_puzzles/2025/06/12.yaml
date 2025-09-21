@@ -1,0 +1,46 @@
+meta:
+  title: From KITTEN to TOM
+  author: Sandy Weisz and Mao Reynolds
+  difficulty: medium
+  theme: Daddle
+  message: It's Daddle Week! Father's Day is Sunday. Let's visit a few of our favorite dads in the animal kingdom.
+ladder:
+- word: KITTEN
+  clue: Change one letter in ^ to get a piece of winter clothing
+  transform: K->M
+- word: MITTEN
+  clue: A ^ that is more digital?
+  transform: with wells for fingers
+- word: GLOVE
+  clue: Sport that requires a pair of thick, heavy ^s
+  transform: hits your face in
+- word: BOXING
+  clue: The greatest of all time, in ^
+  transform: G.O.A.T.
+- word: ALI
+  clue: Birth name of ^
+  transform: nÃ©e
+- word: CLAY
+  clue: Hot device that makes ^ hard
+  transform: firms up in a
+- word: KILN
+  clue: Video game hero that's an anagram of ^
+  transform: anagrammed
+- word: LINK
+  clue: ___ ^, a term for something that goes in-between
+  transform: in evolution might be
+- word: MISSING
+  clue: Word used to describe a dog or cat that's ^
+  transform: aka
+- word: LOST
+  clue: The ^ ___, a certain group in arrested development
+  transform: friends of Peter
+- word: BOYS
+  clue: '"The ___ ^," a series of mysteries'
+  transform: who solve mysteries
+- word: HARDY
+  clue: First name of actor ^
+  transform: comma
+- word: TOM
+  clue:
+  transform:

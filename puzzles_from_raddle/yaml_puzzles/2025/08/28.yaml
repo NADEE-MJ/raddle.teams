@@ -1,0 +1,44 @@
+meta:
+  title: From PAINT to BLACK
+  author: Sandy Weisz and Mao Reynolds
+  difficulty: medium
+  theme: Rolling Stones
+  message:
+    "This weekâs Raddles are inspired by songs by the Rolling Stones. Todayâs is âPaint It Blackâ â sometimes stylized as âPaint It, Blackâ â which came out in 1966. Its use of sitar immediately sparked comparisons to the Beatles, who had also begun experimenting with elements of Indian music. Guitarist Brian Jonesâ response to the comparison: âWhat utter rubbish.â"
+ladder:
+- word: PAINT
+  clue: Body parts that kids use to ^
+  transform: with
+- word: FINGERS
+  clue: "\"___ ^\", â70s album that's appropriate for this theme"
+  transform: are
+- word: STICKY
+  clue: ^ ___, something found on an cubicle wall
+  transform: piece of paper
+- word: NOTE
+  clue: Where ^s appear, in music
+  transform: appears on a
+- word: STAFF
+  clue: Change the vowel in ^ to an E and it sounds like this nickname
+  transform: A->"E"
+- word: STEPH
+  clue: ^ ___, basketball star
+  transform: on the Warriors
+- word: CURRY
+  clue: Drop the even letters from ^ to get a wail
+  transform: -U, -R
+- word: CRY
+  clue: Foodstuff that makes you ^
+  transform: when you cut an
+- word: ONION
+  clue: Change one letter in ^ to get a partnership
+  transform: O->U
+- word: UNION
+  clue: ^ ___, name for a famous flag
+  transform: â¦
+- word: JACK
+  clue: Movie star ^ ___
+  transform: â¦
+- word: BLACK
+  clue:
+  transform:

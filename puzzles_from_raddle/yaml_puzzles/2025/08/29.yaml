@@ -1,0 +1,51 @@
+meta:
+  title: From SYMPATHY to THE DEVIL
+  author: Sandy Weisz and Mao Reynolds
+  difficulty: medium
+  theme: Rolling Stones
+  message:
+    This weekâs Raddles are inspired by songs by the Rolling Stones. Todayâs is âSympathy for the Devilâ from the bandâs 1968 album âBeggars Banquet.â 
+    One particularly striking line â âI shouted out, âWho killed the Kennedys?â / When after all, it was you and meâ â has been omitted from live performances since 2006. Jagger, answering a question about the missing line, said, âDid I leave that out? That song is so long, I always cut a verse.â
+ladder:
+- word: SYMPATHY
+  clue: ^ ___, something you might send to a grieving friend
+  transform: in written form
+- word: CARD
+  clue: What's in your wallet? A ___ ^, I bet
+  transform: gets you
+- word: CREDIT
+  clue: Anagram ^ to be frank
+  transform: anagrammed
+- word: DIRECT
+  clue: ^ ___, a way to get paid
+  transform: way to get paid
+- word: DEPOSIT
+  clue: ___ ^ box
+  transform: box for
+- word: SAFETY
+  clue: ^ is a position in this sport
+  transform: plays
+- word: FOOTBALL
+  clue: Leader of a ^ team
+  transform: team leader
+- word: QUARTERBACK
+  clue: Bird found on a ^?
+  transform: features an
+- word: EAGLE
+  clue: A ___ ^ is not ___, but it is majestic
+  transform: isn't
+- word: BALD
+  clue: Drop a letter from ^ to be impressive, in slang
+  transform: -L
+- word: BAD
+  clue: Change one letter in ^ to be impressive, in slang
+  transform: B->R
+- word: RAD
+  clue: Add a letter to both ends of ^ to get a fashion house
+  transform: +P +A
+- word: PRADA
+  clue: Who wears ^?
+  transform: worn by
+- word: THE DEVIL
+  clue:
+  transform:

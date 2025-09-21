@@ -1,0 +1,43 @@
+meta:
+  title: From KAL to EL
+  author: Sandy Weisz and Mao Reynolds
+  difficulty: medium
+  theme: Superman
+  message:
+      It's Superman week! Superman was born Kal-El on the planet Krypto.
+      His parents were Jor-El and Lara. "Kal-El" apparently translates to "Star Child" in Kryptonian.
+      Which, assuming he was given that name before he left the planet, is some solid bit of nominative determinism.
+ladder:
+- word: KAL
+  clue: ^ ___, actor and member of the Obama administration
+  transform: â¦
+- word: PENN
+  clue: Partner of ^
+  transform: partner
+- word: TELLER
+  clue: Where a ^ works
+  transform: works at a
+- word: BANK
+  clue: What's stored at a ^
+  transform: stores
+- word: MONEY
+  clue: Change one letter in ^ to get a painter
+  transform: Y->T
+- word: MONET
+  clue: First name of ^
+  transform: first name
+- word: CLAUDE
+  clue: Word that sounds like ^ that describes crabs and bears
+  transform: sounds like
+- word: CLAWED
+  clue: Discipline found inside ^
+  transform: features the word
+- word: LAW
+  clue: Drop a letter from ^ to get a place where ^ was practiced, on TV
+  transform: -W
+- word: LA
+  clue: Masculine version of ^, in Spanish
+  transform: counterpart
+- word: EL
+  clue:
+  transform:

@@ -1,0 +1,46 @@
+meta:
+  title: From WAFFLE to PARTY
+  author: Sandy Weisz
+  difficulty: medium
+  theme: Severance
+  message:
+    âIf we hit our numbers by quarterâs end, one of us gets named Refiner of the Quarter, and that shit gets you a waffle party,â 
+    Dylan says in S1E2 of âSeverance.â 
+    Does he make it? Are the waffles as mysterious and important as everything else in the office?
+ladder:
+- word: WAFFLE
+  clue: "Popular device at the Hampton Inn breakfast room: ^ ___"
+  transform: equipment
+- word: IRON
+  clue: "What some people use to rule: ^ ___"
+  transform: body part used to rule
+- word: FIST
+  clue: "Modern day greeting: ^ ___"
+  transform: meet fist in a
+- word: BUMP
+  clue: "Common subject of tabloid gossip: ___ ^"
+  transform: might indicate an up and coming
+- word: BABY
+  clue: Something not found on a ^ unicorn, presumably
+  transform: unicorn has no
+- word: HORN
+  clue: ^ of ___, a hotbed of piracy
+  transform: of
+- word: AFRICA
+  clue: They famously sang about ^
+  transform: rains are blessed by
+- word: TOTO
+  clue: Change each vowel in ^ to the same letter get a famous activist
+  transform:  O->U
+- word: TUTU
+  clue: Dance that might feature a ^
+  transform: is worn in a
+- word: BALLET
+  clue: Change one letter in ^ to get a particular slip of paper
+  transform: E -> O
+- word: BALLOT
+  clue: On a ^, this info is found in parentheses
+  transform: features info about a candidate's
+- word: PARTY
+  clue:
+  transform:

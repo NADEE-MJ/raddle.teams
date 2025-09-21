@@ -1,0 +1,71 @@
+{
+  "meta": {
+    "title": "From SEX to PANTHER",
+    "author": "Sandy Weisz",
+    "difficulty": "medium",
+    "theme": "Paul Ruddle",
+    "message": "Welcome to **RUDDLE**! This week we're rebranding as the only Paul Rudd-themed daily word game. Today we feature Sex Panther, the name of the cologne that Rudd, as Brian Fantana, is obsessed with in Anchorman. It's \"made with bits of real panther\" and \"60% of the time, it works every time\"."
+  },
+  "ladder": [
+    {
+      "word": "SEX",
+      "clue": "Change one letter in ^ to get a number",
+      "transform": "E->I"
+    },
+    {
+      "word": "SIX",
+      "clue": "Shape with ^ faces",
+      "transform": "sides to a"
+    },
+    {
+      "word": "CUBE",
+      "clue": "Musician/actor ___ ^",
+      "transform": "as in"
+    },
+    {
+      "word": "ICE",
+      "clue": "When left out, ^ turns into this",
+      "transform": "melted is"
+    },
+    {
+      "word": "WATER",
+      "clue": "Insert an I into ^ to get a professional",
+      "transform": "+I"
+    },
+    {
+      "word": "WAITER",
+      "clue": "Where a ^ works",
+      "transform": "works in a"
+    },
+    {
+      "word": "RESTAURANT",
+      "clue": "Container you may take away from a ^",
+      "transform": "gives you a"
+    },
+    {
+      "word": "DOGGY BAG",
+      "clue": "Animal at the start of ^",
+      "transform": "features a"
+    },
+    {
+      "word": "DOG",
+      "clue": "ClichÃ© name for a ^",
+      "transform": "of Dick & Jane is"
+    },
+    {
+      "word": "SPOT",
+      "clue": "Predator with lots of ^s",
+      "transform": "one of many on a"
+    },
+    {
+      "word": "LEOPARD",
+      "clue": "Alternate name for a black ^",
+      "transform": "aka"
+    },
+    {
+      "word": "PANTHER",
+      "clue": null,
+      "transform": null
+    }
+  ]
+}

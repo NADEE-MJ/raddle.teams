@@ -1,0 +1,57 @@
+meta:
+  title: From CATERPILLAR to BUTTERFLY
+  author: Sandy Weisz
+  difficulty: medium
+  fromEmoji: ð
+  toEmoji: ð¦
+
+ladder:
+  - word: CATERPILLAR
+    clue: "What [adjective] describes ^ in a classic book title?"
+    transform: "is very"
+
+  - word: HUNGRY
+    clue: "Add a letter to ^ to get what [country]?"
+    transform: "+ 'A'"
+
+  - word: HUNGARY
+    clue: "^ is directly to the east of [what]?"
+    transform: "is east of"
+
+  - word: AUSTRIA
+    clue: "Add two letters to ^ to get what [country]?"
+    transform: "+ 'AL'"
+
+  - word: AUSTRALIA
+    clue: "What's the largest [city] in ^?"
+    transform: "'s largest city is"
+
+  - word: SYDNEY
+    clue: "Change one letter of ^ to get what [alternate spelling]?"
+    transform: "'Y' -> 'I'"
+
+  - word: SIDNEY
+    clue: "When the first syllable is reversed, ^ spells what [company]?"
+    transform: "reverse first syllable"
+
+  - word: DISNEY
+    clue: "What's the [first name] of ^'s mascot?"
+    transform: "'s mascot's name is"
+
+  - word: MICKEY
+    clue: "^ is what [kind of animal]?"
+    transform: "is a kind of"
+
+  - word: MOUSE
+    clue: "Change last 2 consecutive letters of ^ to get what [part of the body]?"
+    transform: "'SE' -> 'TH'"
+
+  - word: MOUTH
+    clue: "Remove a letter from ^ to get what [creature]?"
+    transform: "remove the U"
+
+  - word: MOTH
+    clue: "What [animal] is a close relative to a ^?"
+    transform: "is a close relative to a"
+
+  - word: BUTTERFLY

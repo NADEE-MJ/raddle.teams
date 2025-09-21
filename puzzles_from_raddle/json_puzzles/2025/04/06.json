@@ -1,0 +1,76 @@
+{
+  "meta": {
+    "title": "From MERCE to LEMON",
+    "author": "Sandy Weisz",
+    "difficulty": "medium",
+    "theme": "Big Ears 2025",
+    "message": "[This week](/2025/04/01), I'm building Raddles around acts we saw at Big Ears. Indie rocker Merce Lemon showcased her lovely songs at an absolutely packed show in a tiny venue. [Listen on Spotify](https://open.spotify.com/artist/4u2LxHDBsFDH3J9NumXSCH?si=kYShQMBHSxOkB79YHwzjKw)"
+  },
+  "ladder": [
+    {
+      "word": "MERCE",
+      "clue": "Change one letter of ^ into an A and anagram to get a dairy product",
+      "transform": "E->A then anagram"
+    },
+    {
+      "word": "CREAM",
+      "clue": "Add a letter to ^ to get a horror film",
+      "transform": "+S"
+    },
+    {
+      "word": "SCREAM",
+      "clue": "Movie with an iconic shot that mimics The ^",
+      "transform": "is mimicked in"
+    },
+    {
+      "word": "HOME ALONE",
+      "clue": "Last name of the star of ^",
+      "transform": "stars"
+    },
+    {
+      "word": "CULKIN",
+      "clue": "Prestige TV show co-starring a ^",
+      "transform": "stars in"
+    },
+    {
+      "word": "SUCCESSION",
+      "clue": "Family at the center of ^",
+      "transform": "features the family"
+    },
+    {
+      "word": "ROY",
+      "clue": "Add another word to ^ to get a classic cocktail",
+      "transform": "+ ROB"
+    },
+    {
+      "word": "ROB ROY",
+      "clue": "Change the Scotch part of a ^ to its American equivalent, and you'll have this",
+      "transform": "is close to a"
+    },
+    {
+      "word": "MANHATTAN",
+      "clue": "Bright, busy part of ^",
+      "transform": "is the home of"
+    },
+    {
+      "word": "TIMES SQUARE",
+      "clue": "^ is named after The ___",
+      "transform": "is named after The"
+    },
+    {
+      "word": "NEW YORK TIMES",
+      "clue": "The ^ of France, you might say",
+      "transform": "of France"
+    },
+    {
+      "word": "LE MONDE",
+      "clue": "Drop the last two letters of ^ to get a fruit",
+      "transform": "-DE"
+    },
+    {
+      "word": "LEMON",
+      "clue": null,
+      "transform": null
+    }
+  ]
+}

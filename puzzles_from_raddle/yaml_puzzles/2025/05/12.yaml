@@ -1,0 +1,56 @@
+meta:
+  title: From MINCE to MEAT
+  author: Sandy Weisz
+  difficulty: medium
+  theme: Tony nominations
+  message: We're honoring the Tony nominations this week. And we're starting with a show that I got to see
+    and absolutely adored, *Operation Mincemeat*. It began in London, where it saw huge success, winning the Olivier Award for Best New Musical, and now 
+    it's nominated for a Tony Award for Best Musical. The plot seems like an odd choice for a musical â it's the true story of a
+    British intelligence operation during World War II that involved planting a corpse with fake documents â but the music is so catchy
+    and the production, which only uses five actors taking on multiple roles each, is such a joy to behold. I can't recommend it enough.
+ladder:
+- word: MINCE
+  clue: Remove a letter from ^ to get some small creatures
+  transform: -N
+- word: MICE
+  clue: Change first letter of ^ to get a cooking term
+  transform: M->D
+- word: DICE
+  clue: ___ the ^, to risk it
+  transform: are things you
+- word: ROLL
+  clue: Add a letter to ^ to get a mythical creature
+  transform: +T
+- word: TROLL
+  clue: What you might find a ^ living under
+  transform: lives under a
+- word: BRIDGE
+  clue: What a ^ goes over, often
+  transform: spans a
+- word: RIVER
+  clue: The longest ^
+  transform: named
+- word: NILE
+  clue: Northernmost country of The ^
+  transform: is partially in
+- word: EGYPT
+  clue: Capital of ^
+  transform: capital
+- word: CAIRO
+  clue: Spreadsheet term that sounds like the last syllable of ^
+  transform: partially sound slike
+- word: ROW
+  clue: ^ ^ ^ your ___
+  transform: your
+- word: BOAT
+  clue: ___^, a conveyance from the 1800s
+  transform: can be powered by
+- word: STEAM
+  clue: Remove the first letter of ^ to get a group
+  transform: -S
+- word: TEAM
+  clue: Swap the first and last letters of ^ to get a kind of food, to some
+  transform: anagram
+- word: MEAT
+  clue:
+  transform:

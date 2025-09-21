@@ -1,0 +1,47 @@
+meta:
+  title: From HEART to TRAP
+  author: Sandy Weisz
+  difficulty: medium
+  theme: Enigmarch 2025
+  fromEmoji: â¤ï¸
+  toEmoji: ðª¤
+ladder:
+- word: HEART
+  clue: Move first letter of ^ to the end to find where you are
+  transform: "Move 'H' to the end"
+- word: EARTH
+  clue: What precedes ^ in an 8-item sequence
+  transform: "is one past"
+- word: VENUS
+  clue: Sport played by ^
+  transform: "plays"
+- word: TENNIS
+  clue: Change first letter of ^ to get name of a cartoon boy
+  transform: "T -> D"
+- word: DENNIS
+  clue: ^ the ___
+  transform: "the"
+- word: MENACE
+  clue: Last half of ^ is this card
+  transform: "- MEN"
+- word: ACE
+  clue: ^ in the ___
+  transform: "in the"
+- word: HOLE
+  clue: Double one letter of ^, then swap vowels to get this greeting
+  transform: "+L, then swap vowels"
+- word: HELLO
+  clue: Animal that follows ^ in a brand name
+  transform: ""
+- word: KITTY
+  clue: Word for an adult ^
+  transform: "grows up to be a"
+- word: CAT
+  clue: Creature often chased by a ^
+  transform: "&"
+- word: MOUSE
+  clue: Word that follows ^ to get a play or game or device
+  transform: "gets caught in a"
+- word: TRAP
+  clue: ""
+  transform: ""

@@ -1,0 +1,41 @@
+meta:
+  title: From I LOVE YOU to MAN
+  author: Sandy Weisz
+  difficulty: medium
+  theme: Paul Ruddle
+  message: "Welcome to **RUDDLE**! This week we're rebranding as the only Paul Rudd-themed daily word game.
+    Today's game is about I Love You, Man, the movie that gave us the term 'jobin', 'totes magoats', and 'slappin da bass' â an outsized cultural impact for such a small budget comedy."
+ladder:
+- word: I LOVE YOU
+  clue: Symbol that represents the middle part of ^
+  transform: symbolized by
+- word: HEART
+  clue: Remove outside letters of ^ to get an organ
+  transform: contains
+- word: EAR
+  clue: Creature known for its large ^s
+  transform: is big on a
+- word: ELEPHANT
+  clue: Famous flying ^
+  transform: who flies
+- word: DUMBO
+  clue: Remove a letter from ^ to get a quality you aren't
+  transform: "-O"
+- word: DUMB
+  clue: Opposite of ^
+  transform: opposite 
+- word: SMART
+  clue: Change one letter in ^ to get a sudden movement
+  transform: M->T
+- word: START
+  clue: ^ ___, to begin again
+  transform: â¦
+- word: OVER
+  clue: ^ the ___
+  transform: the
+- word: MOON
+  clue: Replace the double letter in ^ with a single letter to get a kind of person
+  transform: OO->A
+- word: MAN
+  clue:
+  transform:

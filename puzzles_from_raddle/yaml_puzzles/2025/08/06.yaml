@@ -1,0 +1,46 @@
+meta:
+  title: From BOXER to BRIEFS
+  author: Sandy Weisz and Mao Reynolds
+  difficulty: medium
+  theme: Dog Days of Summer
+  message:
+    August is the "dog days" of summer, so we're featuring Raddles built around phrases that have a dog breed in them. 
+    Today we recognize the Boxer, a muscular German breed known for its square jaw, energetic personality, and playful nature.
+    What a great doggy.
+ladder:
+- word: BOXER
+  clue: Famous ^ of film
+  transform: of Hollywood
+- word: ROCKY
+  clue: ^ ___, found in the freezer aisle
+  transform: ice cream
+- word: ROAD
+  clue: ^ ___, possible side effect of heavy traffic
+  transform: anger
+- word: RAGE
+  clue: Anagram ^ to get part of a machine
+  transform: anagrammed
+- word: GEAR
+  clue: Change the first letter of ^ to slash
+  transform: G->T
+- word: TEAR
+  clue: You might produce ^s if you ___ too hard
+  transform: when you
+- word: LAUGH
+  clue: Drop the 4th letter of ^ and anagram to get a dance
+  transform: -G, and anagram
+- word: HULA
+  clue: ^ ___, a simple toy
+  transform: â¦
+- word: HOOP
+  clue: Sport played with a ^
+  transform: is used in
+- word: BASKETBALL
+  clue: ^ is played on a ___
+  transform: is played on a
+- word: COURT
+  clue: Documents submitted to a ^
+  transform: asks for
+- word: BRIEFS
+  clue: 
+  transform:

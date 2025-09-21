@@ -1,0 +1,46 @@
+meta:
+  title: From HANDLEBAR to MUSTACHE
+  author: Sandy Weisz and Mao Reynolds
+  difficulty: medium
+  theme: Tour de France
+  message: 
+    Itâs the Tour de France this week, and weâre honoring it with bike-themed Raddles. 
+    Named after the grips on a bike, the handlebar mustache is synonymous with the Wild West, Mr. Monopoly, and hipsters. 
+    It grew in popularity in the late 19th and early 20th centuries, even garnering its own society, the Handlebar Club, which was established in 1947.
+ladder:
+- word: HANDLEBAR
+  clue: Hangout found at the end of ^
+  transform: final syllable
+- word: BAR
+  clue: "Professional who\u2019s passed the ^"
+  transform: is an exam for a
+- word: LAWYER
+  clue: Case for a ^ â or what a ^ might wear
+  transform: files or wears a
+- word: SUIT
+  clue: ^ & ___, a sartorial pair
+  transform: "&"
+- word: TIE
+  clue: Replace a letter in ^ with a double letter to get what a farmer might do
+  transform: E->LL
+- word: TILL
+  clue: Change a letter in ^ to get something found in a ^
+  transform: T->B
+- word: BILL
+  clue: "Line item at the bottom of a ^ \u2014 or the subject of many a ^"
+  transform: includes
+- word: TAX
+  clue: Change a letter in ^ to get something the moon might do
+  transform: T->W
+- word: WAX
+  clue: Cylindrical items made out of ^
+  transform: makes up
+- word: CANDLES
+  clue: Things used to light ^
+  transform: is lit with
+- word: MATCHES
+  clue: Add a vowel to ^ and anagram to get something that might be on your face
+  transform: +U and anagram
+- word: MUSTACHE
+  clue:
+  transform:

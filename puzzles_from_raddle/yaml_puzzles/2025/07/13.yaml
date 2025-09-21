@@ -1,0 +1,47 @@
+meta:
+  title: From HOT to SEAT
+  author: Sandy Weisz and Mao Reynolds
+  difficulty: medium
+  theme: Tour de France
+  message:
+    The Tour de France is heating up, and we're celebrating with vaguely bike-themed Raddles.
+    If you're in the âhot seatâ, it can mean you're the cause of some controversy.
+    Formerly, it was a euphemism for the electric chair. 
+    Nowadays, it could mean you've earned a spot on *Who Wants to Be a Millionaire*.
+ladder:
+- word: HOT
+  clue: Popular online interview show ^ ___
+  transform: â¦
+- word: ONES
+  clue: Prepend a letter to ^ to get a common last name
+  transform: +J
+- word: JONES
+  clue: Cinematic hero ^
+  transform: dog was named
+- word: INDIANA
+  clue: Massive sporting event held annually in ^
+  transform: race
+- word: INDIANAPOLIS 500
+  clue: ^ is a ___ race
+  transform: features many a fast
+- word: CAR
+  clue: A ^ with defects
+  transform: that doesn't work
+- word: LEMON
+  clue: Change one letter in ^ to get something evil
+  transform: L->D
+- word: DEMON
+  clue: Spiritually remove a ^
+  transform: is the target of an
+- word: EXORCISE
+  clue: Change a letter in ^ to get a daily activity for some
+  transform: O->E
+- word: EXERCISE
+  clue: Salty byproduct of ^
+  transform: produces
+- word: SWEAT
+  clue: Delete a letter in ^ for one of many found at a table
+  transform: -W
+- word: SEAT
+  clue:
+  transform:

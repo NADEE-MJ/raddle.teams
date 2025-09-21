@@ -1,0 +1,40 @@
+meta:
+  title: From DAY to NIGHT
+  author: Sandy Weisz
+  difficulty: medium
+  fromEmoji: ð
+  toEmoji: ð
+ladder:
+- word: DAY
+  clue: '^ rhymes with what bird'
+  transform: 'rhymes with'
+- word: JAY
+  clue: 'Literary last name of ^'
+  transform: "has the last name"
+- word: GATSBY
+  clue: '^ is known by this adjective'
+  transform: 'is, literarily speaking,'
+- word: GREAT
+  clue: 'Anagram ^ and add an "N" to get this gemstone'
+  transform: "+'N' and anagram"
+- word: GARNET
+  clue: '^ is the gemstone for this month'
+  transform: 'is the stone for'
+- word: JANUARY
+  clue: '^ is two before what'
+  transform: 'is two months before'
+- word: MARCH
+  clue: 'Remove first letter of ^ to get a [shape]'
+  transform: "- first letter"
+- word: ARCH
+  clue: '^ can precede this [religious title]'
+  transform: 'can precede'
+- word: BISHOP
+  clue: '^ sits adjacent to this [piece]'
+  transform: 'sits adjacent to'
+- word: KNIGHT
+  clue: '[Word] that is a homophone of ^'
+  transform: 'sounds like'
+- word: NIGHT
+  clue: ''
+  transform: ''

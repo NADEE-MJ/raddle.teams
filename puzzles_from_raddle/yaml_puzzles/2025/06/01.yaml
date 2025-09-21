@@ -1,0 +1,49 @@
+meta:
+  title: From BIRD to PRAY
+  author: Sandy Weisz
+  difficulty: medium
+  theme: Eurovision
+  message:
+    It's Eurovision week! 
+    Ukraine's entry was "Bird of Pray", by Ziferblat.
+    [Here is Ziferblat's live performance](https://www.youtube.com/watch?v=OJ1x2aiL7ks&t=4s) from the finals.
+ladder:
+- word: BIRD
+  clue: Type of ^ that sounds like a letter
+  transform: named
+- word: JAY
+  clue: Host ^
+  transform: as in
+- word: LENO
+  clue: He preceded ^
+  transform: followed
+- word: CARSON
+  clue: Nuts that are an anagram of ^
+  transform: anagrammed
+- word: ACORNS
+  clue: ^ come from an ___ tree
+  transform: come from an
+- word: OAK
+  clue: Word that follows ^ in American geography
+  transform: â¦
+- word: LAND
+  clue: '"^, ___!"'
+  transform: ","
+- word: HO
+  clue: Add a number inside ^ to get this liquid
+  transform: +H
+- word: WATER
+  clue: Vessel that travels on ^
+  transform: supports a
+- word: BOAT
+  clue: A race between ^s
+  transform: race is a
+- word: REGATTA
+  clue: Read the even letters of ^ to get something you do several times a day
+  transform: evenly,
+- word: EAT
+  clue: '"^ ___ Love"'
+  transform: ", love, and"
+- word: PRAY
+  clue:
+  transform:

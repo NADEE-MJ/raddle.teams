@@ -1,0 +1,66 @@
+{
+  "meta": {
+    "title": "From FORGET ME to NOT",
+    "author": "Sandy Weisz",
+    "difficulty": "medium",
+    "theme": "flowers",
+    "message": "It's spring! Let's stop to smell the flowers."
+  },
+  "ladder": [
+    {
+      "word": "FORGET ME",
+      "clue": "Don't ^! In other words, ___",
+      "transform": "not, aka"
+    },
+    {
+      "word": "REMEMBER",
+      "clue": "Remove something hot from ^ to get a 90s band",
+      "transform": "-EMBER"
+    },
+    {
+      "word": "REM",
+      "clue": "What the middle letter of ^ stands for",
+      "transform": "partially stands for"
+    },
+    {
+      "word": "EYE",
+      "clue": "Hole in the center of an ^",
+      "transform": "has a"
+    },
+    {
+      "word": "PUPIL",
+      "clue": "A less fancy word for ^",
+      "transform": "is a"
+    },
+    {
+      "word": "STUDENT",
+      "clue": "Building where ^s gather",
+      "transform": "works in a"
+    },
+    {
+      "word": "SCHOOL",
+      "clue": "One of many in a ^",
+      "transform": "contains many"
+    },
+    {
+      "word": "FISH",
+      "clue": "Vessel you might use to ^",
+      "transform": "on a"
+    },
+    {
+      "word": "BOAT",
+      "clue": "Unit used for ^s in motion",
+      "transform": "speed measurement"
+    },
+    {
+      "word": "KNOT",
+      "clue": "Drop a letter in ^ to get a word that sounds like ^",
+      "transform": "-K"
+    },
+    {
+      "word": "NOT",
+      "clue": null,
+      "transform": null
+    }
+  ]
+}

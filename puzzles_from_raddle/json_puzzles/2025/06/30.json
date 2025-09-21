@@ -1,0 +1,76 @@
+{
+  "meta": {
+    "title": "From SPINNING to JENNY",
+    "author": "Sandy Weisz and Mao Reynolds",
+    "difficulty": "medium",
+    "theme": "250-year-old creations",
+    "message": "America's birthday is this week. To celebrate, we're featuring inventions that were born around the same time as the USA. The Spinning Jenny was invented in 1764 by James Hargreaves. It allowed one worker to spin multiple spools of thread at once, greatly increasing productivity in textile manufacturing."
+  },
+  "ladder": [
+    {
+      "word": "SPINNING",
+      "clue": "Drop two letters from ^ for a baseball term",
+      "transform": "-SP"
+    },
+    {
+      "word": "INNING",
+      "clue": "___ ^, the final stretch in a normal game",
+      "transform": "the last"
+    },
+    {
+      "word": "NINTH",
+      "clue": "The ^ planet, once",
+      "transform": "planet"
+    },
+    {
+      "word": "PLUTO",
+      "clue": "Greek counterpart of ^",
+      "transform": "aka"
+    },
+    {
+      "word": "HADES",
+      "clue": "Move the last letter of ^ to the front to get something thrown?",
+      "transform": "anagrammed"
+    },
+    {
+      "word": "SHADE",
+      "clue": "^ protects you from this",
+      "transform": "protects yuou from the"
+    },
+    {
+      "word": "SUN",
+      "clue": "Sport played by the ^s",
+      "transform": "is a player of"
+    },
+    {
+      "word": "BASKETBALL",
+      "clue": "^ team named after a piece of ^ equipment",
+      "transform": "team in Brooklyn"
+    },
+    {
+      "word": "NETS",
+      "clue": "Anagram ^ to get an email mailbox",
+      "transform": "anagrammed"
+    },
+    {
+      "word": "SENT",
+      "clue": "Change first letter in ^ to get a homophone of ^ that's worth almost nothing",
+      "transform": "sounds like"
+    },
+    {
+      "word": "CENT",
+      "clue": "It's worth one ^",
+      "transform": "in coin form"
+    },
+    {
+      "word": "PENNY",
+      "clue": "Change one letter in ^ to get a name",
+      "transform": "P->J"
+    },
+    {
+      "word": "JENNY",
+      "clue": null,
+      "transform": null
+    }
+  ]
+}

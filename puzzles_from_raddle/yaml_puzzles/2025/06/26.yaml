@@ -1,0 +1,40 @@
+meta:
+  title: From CORN to HOLE
+  author: Sandy Weisz and Mao Reynolds
+  difficulty: medium  
+  theme: Summer produce
+  message: We're celebrating summer with Raddles based on fresh summer produce. And summer lawn games.
+ladder:
+- word: CORN
+  clue: Prepend a letter to ^ to get a nut
+  transform: +A
+- word: ACORN
+  clue: Creature that loves to collect ^s
+  transform: collected by
+- word: SQUIRREL
+  clue: Something one might ^ away
+  transform: away
+- word: MONEY
+  clue: Change a letter in ^ to get something sweet
+  transform: M->H
+- word: HONEY
+  clue: ^___ pattern
+  transform: â¦
+- word: COMB
+  clue: What you usually use a ^ on
+  transform: straightens
+- word: HAIR
+  clue: Lacking ^
+  transform: -less aka
+- word: BALD
+  clue: Bird that might be "^"
+  transform: â¦
+- word: EAGLE
+  clue: Sport where ^ is a great achievement
+  transform: is a heck of a score in
+- word: GOLF
+  clue: One of many on a ^ course
+  transform: has many a
+- word: HOLE
+  clue:
+  transform:

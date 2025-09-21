@@ -1,0 +1,46 @@
+meta:
+  title: From LARK to SPUR
+  author: Sandy Weisz
+  difficulty: medium
+  theme: flowers
+  message: It's spring! Let's stop to smell the flowers. 
+ladder:
+- word: LARK
+  clue: Add a letter to ^ to get an explorer
+  transform: +C
+- word: CLARK
+  clue: Comic hero who goes by ^
+  transform: Kent aka
+- word: SUPERMAN
+  clue: Substance that ^ doesn't care for
+  transform: hates
+- word: KRYPTONITE
+  clue: Weight found inside ^
+  transform: holds
+- word: TON
+  clue: Add a letter to the front and another to the back of ^ to get a rock
+  transform: +S +E
+- word: STONE
+  clue: ___ ^, a famous artifact
+  transform: known as
+- word: ROSETTA
+  clue: Appliance that's an anagram of ^
+  transform: anagrammed
+- word: TOASTER
+  clue: What goes in a ^
+  transform: is fed
+- word: BREAD
+  clue: Remove first letter from ^ to get something you might do to someone's lips
+  transform: "-B"
+- word: READ
+  clue: Bound thing you ^
+  transform: a
+- word: BOOK
+  clue: Change one letter of ^ to get something that goes on your foot
+  transform: K->T
+- word: BOOT
+  clue: Sharp thing sometimes featured on the back of a ^
+  transform: might feature a
+- word: SPUR
+  clue:
+  transform:

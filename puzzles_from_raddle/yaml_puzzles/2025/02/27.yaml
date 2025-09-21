@@ -1,0 +1,47 @@
+meta:
+  title: From WEST to EAST
+  author: Sandy Weisz
+  difficulty: medium
+  fromEmoji: â¬ï¸
+  toEmoji: â¡ï¸
+
+ladder:
+- word: WEST
+  clue: 'Anagram ^ to get a [food]'
+  transform: 'anagrams to'
+- word: STEW
+  clue: 'Append a male name to ^ to get another [male name]'
+  transform: "+ART"
+- word: STEWART
+  clue: "Remove first 3 letters of ^ to get a [blemish]"
+  transform: "-STE"
+- word: WART
+  clue: "Append a letter then reverse ^ to get a [utensil]"
+  transform: "+S then reverse"
+- word: STRAW
+  clue: "Word for a [bundle] of ^"
+  transform: "in a bundle is a"
+- word: BALE
+  clue: "^ famously played this [superhero]"
+  transform: "played"
+- word: BATMAN
+  clue: "[Archnemesis] of ^"
+  transform: "is enemy of"
+- word: JOKER
+  clue: "In card games, a ^ is often this [quality]"
+  transform: "can be"
+- word: WILD
+  clue: "Change the first letter of ^ to two new letters to get this rhyming word"
+  transform: "-W' +CH'"
+- word: CHILD
+  clue: "A male ^ is called [this]"
+  transform: "specifically is a"
+- word: SON
+  clue: "Change the middle letter of ^ to form this homophone"
+  transform: "sounds like"
+- word: SUN
+  clue: "^ can be first seen in which direction"
+  transform: "rises in the"
+- word: EAST
+  clue: ""
+  transform: ""

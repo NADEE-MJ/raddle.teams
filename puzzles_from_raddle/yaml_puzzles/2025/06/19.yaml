@@ -1,0 +1,46 @@
+meta:
+  title: From ICE CREAM to SCOOP
+  author: Sandy Weisz and Mao Reynolds
+  difficulty: medium
+  theme: Juneteenth
+  message:
+    In celebration of Juneteeth, we're building Raddles honoring Black inventors. 
+    [Alfred L. Calle](https://www.history.com/this-day-in-history/february-2/alfred-cralle-invents-ice-cream-scoop) worked as a porter at a drugstore in Pittsburgh, where he noticed his coworkers struggled to scoop ice cream for customers. 
+    This observation led to Calle creating the ice cream scoop, which he patented in 1897, becoming the first Black man in Pittsburgh to earn a patent. 
+ladder:
+- word: ICE CREAM
+  clue: Italian-style ^
+  transform: in Italy
+- word: GELATO
+  clue: Body part that is the first half of ^ reversed
+  transform: -ATO, and reversed
+- word: LEG
+  clue: '"___ a ^!", which you only ever say ironically (I hope!)'
+  transform: should (ironically)
+- word: BREAK
+  clue: Tennis term ^ ___; or cult favorite "___ ^"
+  transform: a serve with one more
+- word: POINT
+  clue: ___ ^, an academy in the U.S.
+  transform: for the military
+- word: WEST
+  clue: "90Â° clockwise from ^"
+  transform: is 90Â° CCW from
+- word: NORTH
+  clue: Anagram ^ to get a pointy thing
+  transform: anagrammed
+- word: THORN
+  clue: Flower known for having ^s
+  transform: is on the stem of a
+- word: ROSE
+  clue: Opposite of ^
+  transform: Opposite
+- word: FELL
+  clue: '"One ^ ___", a phrase originally from "Macbeth"'
+  transform: â¦
+- word: SWOOP
+  clue: Change one letter in ^ to get a news story
+  transform: W->C
+- word: SCOOP
+  clue:
+  transform:

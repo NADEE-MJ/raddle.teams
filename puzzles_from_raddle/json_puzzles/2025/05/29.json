@@ -1,0 +1,76 @@
+{
+  "meta": {
+    "title": "From ZOE to ME",
+    "author": "Sandy Weisz",
+    "difficulty": "medium",
+    "theme": "Eurovision",
+    "message": "It's Eurovision week! Today's puzzle is in honor of ZoÃ« MÃ«, who represented Switzerland with her song \"Voyage\". Unfortunately I had to drop the umlauts in ZoÃ«'s name for the Raddle to work. Apologies to her for that. [Here is ZoÃ«'s live performance](https://www.youtube.com/watch?v=WiGu3dIt64k) of \"Voyage\" for the contest."
+  },
+  "ladder": [
+    {
+      "word": "ZOE",
+      "clue": "Add a letter to ^ to get an area",
+      "transform": "+N"
+    },
+    {
+      "word": "ZONE",
+      "clue": "TV's \"The ___ ^\"",
+      "transform": "of"
+    },
+    {
+      "word": "TWILIGHT",
+      "clue": "Mythical creature that's the focus of the \"^\" series",
+      "transform": "featured"
+    },
+    {
+      "word": "VAMPIRE",
+      "clue": "Most famous ^",
+      "transform": "G.O.A.T."
+    },
+    {
+      "word": "DRACULA",
+      "clue": "Author of \"^\"",
+      "transform": "author"
+    },
+    {
+      "word": "STOKER",
+      "clue": "Change one letter in ^ to get someone concerned with grass",
+      "transform": "K->N"
+    },
+    {
+      "word": "STONER",
+      "clue": "Add two letters to the front of ^ to get a New Englander",
+      "transform": "+BO"
+    },
+    {
+      "word": "BOSTONER",
+      "clue": "'80s sitcom featuring ^s",
+      "transform": "drinks at"
+    },
+    {
+      "word": "CHEERS",
+      "clue": "Drinks that appropriately rhyme with ^",
+      "transform": "rhymes with"
+    },
+    {
+      "word": "BEERS",
+      "clue": "Change a letter in ^ to get some animals",
+      "transform": "E->A"
+    },
+    {
+      "word": "BEARS",
+      "clue": "Kind of multicolored ^ you eat",
+      "transform": "can be"
+    },
+    {
+      "word": "GUMMY",
+      "clue": "The final syllable of ^ sounds like this pronoun",
+      "transform": "partially sounds like"
+    },
+    {
+      "word": "ME",
+      "clue": null,
+      "transform": null
+    }
+  ]
+}

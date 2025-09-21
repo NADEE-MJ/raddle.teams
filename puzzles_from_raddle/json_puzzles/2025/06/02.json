@@ -1,0 +1,76 @@
+{
+  "meta": {
+    "title": "From STROBE to LIGHTS",
+    "author": "Sandy Weisz",
+    "difficulty": "medium",
+    "theme": "Eurovision",
+    "message": "It's Eurovision week! \"Strobe Lights\" is a song by Belgium's Red Sebastian. It finished 35th. [Here is their final live performance](https://www.youtube.com/watch?v=oVrsnGFmuss)."
+  },
+  "ladder": [
+    {
+      "word": "STROBE",
+      "clue": "Change a letter in ^ to get a pen mark",
+      "transform": "B->K"
+    },
+    {
+      "word": "STROKE",
+      "clue": "Olympic sport that features four ^s",
+      "transform": "found in"
+    },
+    {
+      "word": "SWIMMING",
+      "clue": "Most decorated athlete in ^",
+      "transform": "all-timer"
+    },
+    {
+      "word": "PHELPS",
+      "clue": "Drop the first and last letter in ^ to get an exclamation",
+      "transform": "drop outside"
+    },
+    {
+      "word": "HELP",
+      "clue": "\"^ me, ___\", song from 1965",
+      "transform": "me,"
+    },
+    {
+      "word": "RHONDA",
+      "clue": "Drop one letter in ^ to get a car make",
+      "transform": "-R"
+    },
+    {
+      "word": "HONDA",
+      "clue": "Competitor of ^ that shares the same consonants in the same order as ^",
+      "transform": "competitor"
+    },
+    {
+      "word": "HYUNDAI",
+      "clue": "Home of ^",
+      "transform": "is from"
+    },
+    {
+      "word": "SOUTH KOREA",
+      "clue": "Capital of ^",
+      "transform": "capital"
+    },
+    {
+      "word": "SEOUL",
+      "clue": "Drop a letter in ^ to get a homophone of ^",
+      "transform": "-E"
+    },
+    {
+      "word": "SOUL",
+      "clue": "^-___, part of many a mea culpa",
+      "transform": "-"
+    },
+    {
+      "word": "SEARCH",
+      "clue": "^___, tools for those on the hunt",
+      "transform": "using"
+    },
+    {
+      "word": "LIGHTS",
+      "clue": null,
+      "transform": null
+    }
+  ]
+}

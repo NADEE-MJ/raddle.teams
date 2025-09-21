@@ -1,0 +1,86 @@
+{
+  "meta": {
+    "title": "From OK to GO",
+    "author": "Sandy Weisz",
+    "difficulty": "medium",
+    "theme": "Some of my favorite bands",
+    "message": "Continuing with the music theme of the last week, this week I'm making Raddles inspired by some favorite bands. Today's puzzle honors the creative minds of [OK Go](https://okgo.net/shows/), who I've been following since I saw them on the local access dance show [Chic-a-Go-Go](https://www.youtube.com/watch?v=n0nTc_CIPy4). They're about to launch [their tour](https://okgo.net/shows/), and we're stoked to see them in Chicago."
+  },
+  "ladder": [
+    {
+      "word": "OK",
+      "clue": "Shift a letter in ^ one back in the alphabet to get a drink",
+      "transform": "K->J"
+    },
+    {
+      "word": "OJ",
+      "clue": "What the first letter of ^ stands for",
+      "transform": "partially stands for"
+    },
+    {
+      "word": "ORANGE",
+      "clue": "A ___ ^ (1971)",
+      "transform": "follows"
+    },
+    {
+      "word": "CLOCKWORK",
+      "clue": "Natural material found by removing 5 consecutive letters in ^",
+      "transform": "outside letters"
+    },
+    {
+      "word": "CORK",
+      "clue": "Word that follows ^ in a tool name",
+      "transform": "+"
+    },
+    {
+      "word": "SCREW",
+      "clue": "Word that follows ^ in a tool name",
+      "transform": "+"
+    },
+    {
+      "word": "DRIVER",
+      "clue": "Actress ^",
+      "transform": "as in"
+    },
+    {
+      "word": "MINNIE",
+      "clue": "Partner to ^",
+      "transform": "partner"
+    },
+    {
+      "word": "MICKEY",
+      "clue": "^ ___ (2025)",
+      "transform": "+"
+    },
+    {
+      "word": "17",
+      "clue": "Musical with song about turning ^",
+      "transform": "sung about in"
+    },
+    {
+      "word": "THE SOUND OF MUSIC",
+      "clue": "The initials of ^, backwards",
+      "transform": "initials, backwards"
+    },
+    {
+      "word": "MOST",
+      "clue": "Change a letter in ^ to get a newspaper",
+      "transform": "M->P"
+    },
+    {
+      "word": "POST",
+      "clue": "Anagram ^ to get a sign",
+      "transform": "anagrammed"
+    },
+    {
+      "word": "STOP",
+      "clue": "Opposite of ^",
+      "transform": "opposite"
+    },
+    {
+      "word": "GO",
+      "clue": null,
+      "transform": null
+    }
+  ]
+}

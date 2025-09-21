@@ -1,0 +1,66 @@
+{
+  "meta": {
+    "title": "From PIN to HEAD",
+    "author": "Sandy Weisz and Mao Reynolds",
+    "difficulty": "medium",
+    "theme": "Horror movie villains",
+    "message": "This week on Raddle we're featuring horror movie villains. Pinhead, aka Lead Cenobite, aka The Hell Priest, aka The Pope of Hell, is the main antagonist in the *Hellraiser* series of films, which were adapted from Clive Barker's novella *The Hellbound Heart*. Barker has said to hate the nickname, which comes from his distinctive appearance: a grid of pins driven into his head."
+  },
+  "ladder": [
+    {
+      "word": "PIN",
+      "clue": "___ ^, something to knock down",
+      "transform": "that you knock down"
+    },
+    {
+      "word": "BOWLING",
+      "clue": "Animal found inside ^",
+      "transform": "includes an"
+    },
+    {
+      "word": "OWL",
+      "clue": "Greek goddess represented by an ^",
+      "transform": "represents"
+    },
+    {
+      "word": "ATHENA",
+      "clue": "City named for ^",
+      "transform": "A->S"
+    },
+    {
+      "word": "ATHENS",
+      "clue": "Its capital is ^",
+      "transform": "is the capital of"
+    },
+    {
+      "word": "GREECE",
+      "clue": "Musical that sounds like \"^\"",
+      "transform": "sounds like"
+    },
+    {
+      "word": "GREASE",
+      "clue": "___ ^ (hard work)",
+      "transform": "of an"
+    },
+    {
+      "word": "ELBOW",
+      "clue": "What has an ^ in the middle",
+      "transform": "is in the middle of an"
+    },
+    {
+      "word": "ARM",
+      "clue": "^ & ___",
+      "transform": "&"
+    },
+    {
+      "word": "HAMMER",
+      "clue": "^___ (word for a certain wide-eyed creature)",
+      "transform": "-shaped"
+    },
+    {
+      "word": "HEAD",
+      "clue": null,
+      "transform": null
+    }
+  ]
+}

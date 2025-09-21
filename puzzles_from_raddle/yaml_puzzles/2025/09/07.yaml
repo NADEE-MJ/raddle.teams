@@ -1,0 +1,50 @@
+meta:
+  title: From THE to THING
+  author: Sandy Weisz and Mao Reynolds
+  difficulty: medium
+  theme: Horror movie villains
+  message:
+    "This week on Raddle we're featuring horror movie villains. 
+    The Thing is the the thing in *The Thing* (1982), directed by John Carpenter. 
+    It is an extraterrestrial lifeform that assimilates and imitates other organisms.
+    I was too scared to watch this movie as a kid, but I'm eager to now, except I can't get my kids to let me put it on. I wonder why not."
+ladder:
+- word: THE
+  clue: Change one letter in ^ to draw?
+  transform: H->I
+- word: TIE
+  clue: "Nationality that sounds like \"^\""
+  transform: sounds like
+- word: THAI
+  clue: ___ ^, most popular ^ dish
+  transform: dish
+- word: PAD
+  clue: ___ ^, a part of jackets and uniforms
+  transform: goes on your
+- word: SHOULDER
+  clue: What you might have on your ^ if you're upset
+  transform: might hold a
+- word: CHIP
+  clue: Change one letter in ^ to get a boat
+  transform: C->S
+- word: SHIP
+  clue: Add 3 letters to the start of ^ to get an act of devotion
+  transform: +WOR
+- word: WORSHIP
+  clue: A place for ^
+  transform: is a place for
+- word: CHURCH
+  clue: ^ and ___, ideally separated things
+  transform: "&"
+- word: STATE
+  clue: ___^, a Fortune 500 company
+  transform: "+"
+- word: ALL
+  clue: ^-or-___, an extreme proposition?
+  transform: "-or-"
+- word: NOTHING
+  clue: Drop two letters in ^ to get an object
+  transform: +NO
+- word: THING
+  clue:
+  transform:

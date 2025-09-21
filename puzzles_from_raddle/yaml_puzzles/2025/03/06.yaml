@@ -1,0 +1,44 @@
+meta:
+  title: From TRAP to TURN
+  author: Sandy Weisz
+  difficulty: medium
+  theme: Enigmarch 2025
+  fromEmoji: ðª¤
+  toEmoji: â©ï¸
+ladder:
+- word: TRAP
+  clue: Reverse ^ to get a piece of something
+  transform: "Reversed"
+- word: PART
+  clue: ^ & ___
+  transform: "&"
+- word: PARCEL
+  clue: Business name whose middle letter stands for ^
+  transform: "is the P in"
+- word: UPS
+  clue: Opposite of ^
+  transform: "opposite"
+- word: DOWNS
+  clue: Swap last letter of ^ to get a soft brand name
+  transform: "S -> Y"
+- word: DOWNY
+  clue: Insert an E into ^ to get the last name of an Oscar-winning actor
+  transform: "+ E"
+- word: DOWNEY
+  clue: ^'s most famous role
+  transform: "played"
+- word: IRON MAN
+  clue: Symbol for the first part of ^
+  transform: "-MAN & abbreviated"
+- word: FE
+  clue: Append a letter to ^ to get a comedian's last name
+  transform: "+ Y"
+- word: FEY
+  clue: Last name of a rock star who shares a first name with ^
+  transform: "shares name with"
+- word: TURNER
+  clue: Remove the last two letters of ^ to get a twist
+  transform: "-ER"
+- word: TURN
+  clue: ""
+  transform: ""

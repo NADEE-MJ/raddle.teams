@@ -1,0 +1,71 @@
+{
+  "meta": {
+    "title": "From BLACK EYED to SUSAN",
+    "author": "Sandy Weisz",
+    "difficulty": "medium",
+    "theme": "flowers",
+    "message": "It's spring! Let's stop to smell the flowers."
+  },
+  "ladder": [
+    {
+      "word": "BLACK EYED",
+      "clue": "Small metal thing found inside ^",
+      "transform": "holds"
+    },
+    {
+      "word": "KEY",
+      "clue": "A ^ goes in this",
+      "transform": "opposite"
+    },
+    {
+      "word": "LOCK",
+      "clue": "A ^ is a piece of ___",
+      "transform": "is a piece of"
+    },
+    {
+      "word": "HAIR",
+      "clue": "Animal that sounds like ^",
+      "transform": "sounds like"
+    },
+    {
+      "word": "HARE",
+      "clue": "Cousin to a ^",
+      "transform": "is cousin to"
+    },
+    {
+      "word": "RABBIT",
+      "clue": "Famous cartoon ^",
+      "transform": "known as"
+    },
+    {
+      "word": "BUGS BUNNY",
+      "clue": "1996 movie featuring ^ and friends",
+      "transform": "is in"
+    },
+    {
+      "word": "SPACE JAM",
+      "clue": "What they play in ^",
+      "transform": "is about"
+    },
+    {
+      "word": "BASKETBALL",
+      "clue": "Setting for a game of ^",
+      "transform": "is played on a"
+    },
+    {
+      "word": "COURT",
+      "clue": "Take someone to ^",
+      "transform": "is where you"
+    },
+    {
+      "word": "SUE",
+      "clue": "What ^ can be short for",
+      "transform": "is a nickname for"
+    },
+    {
+      "word": "SUSAN",
+      "clue": null,
+      "transform": null
+    }
+  ]
+}

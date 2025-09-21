@@ -1,0 +1,50 @@
+meta:
+  title: From WILD to HORSES
+  author: Sandy Weisz and Mao Reynolds
+  difficulty: medium
+  theme: Rolling Stones
+  message:
+    This weekâs Raddles are inspired by songs by the Rolling Stones. Todayâs is âWild Horses,â from the bandâs 1971 album âSticky Fingers.â It was written by Keith Richards for his newborn son and later rewritten by Jagger, possibly inspired by his crumbling relationship with Marianne Faithfull. In 2009, Scottish singer Susan Boyle (of âBritainâs Got Talentâ fame) covered the song; Jagger called it â[much better than](https://www.irishcentral.com/culture/entertainment/mick-jagger-thinks-susan-boyles-version-of-wild-horses-is-better-than-his-62325012-237661821)â anything heâd ever done.
+ladder:
+- word: WILD
+  clue: Change a letter in ^ to get a male nickname
+  transform: D->L
+- word: WILL
+  clue: Last ^ and ___
+  transform: and
+- word: TESTAMENT
+  clue: The first two letters + last two letters of ^ make this camping equipment
+  transform: -STAME
+- word: TENT
+  clue: One of many for holding a ^ in place
+  transform: anchor
+- word: STAKE
+  clue: Homophone of ^ that isnât vegan
+  transform: sounds like
+- word: STEAK
+  clue: Insert a letter to ^ to get a stripe
+  transform: +R
+- word: STREAK
+  clue: ___ ^ (many successes)
+  transform: of successes
+- word: WINNING
+  clue: Drop the first letter of ^ to get a sports term
+  transform: -W
+- word: INNING
+  clue: An ^ is part of a ___ game
+  transform: is in
+- word: BASEBALL
+  clue: Nickname for the St. Louis ^ team
+  transform: players in St. Louis
+- word: CARDS
+  clue: Bad ^ will compel a poker player to ___
+  transform: are bad, so you
+- word: FOLD
+  clue: Change a letter in ^ to get a grip?
+  transform: F->H
+- word: HOLD
+  clue: "^ your ___"
+  transform: your
+- word: HORSES
+  clue:
+  transform:

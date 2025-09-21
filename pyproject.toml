@@ -28,6 +28,7 @@ pytest-playwright = "^0.7.0"
 httpx = "^0.28.1"
 pytest-asyncio = "^1.1.0"
 typer = "^0.16.1"
+pyyaml = "^6.0.2"
 
 [tool.ruff]
 line-length = 120

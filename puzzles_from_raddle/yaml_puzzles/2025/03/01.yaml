@@ -1,0 +1,41 @@
+meta:
+  title: From SEQUEL to FLOW
+  author: Sandy Weisz
+  difficulty: medium
+  theme: Enigmarch 2025
+  fromEmoji: 2ï¸â£
+  toEmoji: ð°
+ladder:
+- word: SEQUEL
+  clue: "[Number] associated with a ^"
+  transform: "is number"
+- word: TWO
+  clue: "It takes ^ to do [this]"
+  transform: "to"
+- word: TANGO
+  clue: "Change first letter of ^ to get a [fruit]"
+  transform: "T -> M"
+- word: MANGO
+  clue: "Anagram ^ to get a preposition"
+  transform: "anagrams to"
+- word: AMONG
+  clue: "[Pronoun] that follows ^ in video game title"
+  transform: "is followed by"
+- word: US
+  clue: "The first letter of ^ stands for [this adjective], in a country name"
+  transform: "partially stands for"
+- word: UNITED
+  clue: "^ is this kind of [business]"
+  transform: "is an"
+- word: AIRLINE
+  clue: "The first syllable of ^ is this [substance]"
+  transform: "-LINE"
+- word: AIR
+  clue: "^ can pair with what [animal] to get an 80s TV show"
+  transform: "is followed by"
+- word: WOLF
+  clue: "Reverse ^ to get this [verb]"
+  transform: "reversed is"
+- word: FLOW
+  clue: ""
+  transform: ""

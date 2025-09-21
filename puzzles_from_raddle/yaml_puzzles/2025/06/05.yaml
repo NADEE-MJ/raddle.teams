@@ -1,0 +1,52 @@
+meta:
+  title: From BORN to WAY
+  author: Sandy Weisz and Mao Reynolds
+  difficulty: medium
+  theme: Pride Month
+  message: We're celebrating Pride Month with Raddles inspired by LGBTQ+ anthems. One of the most iconic is "[Born This Way](https://www.youtube.com/watch?v=wV1FrqwZyKw)" by Lady Gaga, celebrating self-acceptance and pride in one's identity.
+ladder:
+- word: BORN
+  clue: '"^ to be ___"'
+  transform: to be
+- word: WILD
+  clue: '"^ ^ ___", title of a TV show, movie, and song'
+  transform: wild
+- word: WEST
+  clue: Classical Hollywood actress and screenwriter ^
+  transform: as in
+- word: MAE
+  clue: Add a letter to ^ to get something hard to get out of
+  transform: +Z
+- word: MAZE
+  clue: Crop that sounds like ^
+  transform: +I
+- word: MAIZE
+  clue: Another name for ^
+  transform: aka
+- word: CORN
+  clue: Food product that can be ^ed
+  transform: -ed
+- word: BEEF
+  clue: '"___ the ^?", some wondered in the ''80s'
+  transform: is missing, so we ask
+- word: WHERES
+  clue: 'Popular series "^ ___?" (as it was called in N. America)'
+  transform: â¦
+- word: WALDO
+  clue: Pattern on ^'s shirt
+  transform: wears
+- word: STRIPES
+  clue: Rock band The ___ ^
+  transform: are
+- word: WHITE
+  clue: Add a letter to ^ and anagram to get something found in a gym
+  transform: +G, then anagram
+- word: WEIGHT
+  clue: Exclamation that's a homophone of ^
+  transform: sounds like
+- word: WAIT
+  clue: Drop the last letter of ^ and the remainder will sound like a kind of street
+  transform: partially sounds like
+- word: WAY
+  clue:
+  transform:

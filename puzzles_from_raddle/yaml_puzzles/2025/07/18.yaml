@@ -1,0 +1,45 @@
+meta:
+  title: From LOIS to LANE
+  author: Sandy Weisz and Mao Reynolds
+  difficulty: medium
+  theme: Superman
+  message:
+    Itâs Superman week! 
+    Lois Lane is a journalist for the Daily Planet as well as the love interest for Superman. 
+    Sheâs played by Rachel Brosnahan (of âThe Marvelous Mrs. Maiselâ fame) in the current film. 
+    Brosnahan said she consulted with journalists to âget inside the head of a modern reporter."
+    Not sure who she consulted about being in love with a superhero.
+ladder:
+- word: LOIS
+  clue: Anagram ^ to get a kind of building
+  transform: anagrammed
+- word: SILO
+  clue: Change one letter in ^ to go at it alone
+  transform: I->O
+- word: SOLO
+  clue: Change one letter in ^ to get a sport
+  transform: S->P
+- word: POLO
+  clue: Explorer ^
+  transform: first name
+- word: MARCO
+  clue: Swap two letters in ^ to get a kind of shortcut
+  transform: R <-> C
+- word: MACRO
+  clue: Change one letter in ^ to get the opposite of ^
+  transform: A->I
+- word: MICRO
+  clue: Add a word to ^ get something you talk into
+  transform: +PHONE
+- word: MICROPHONE
+  clue: Numeral at the end of ^
+  transform: at the end
+- word: ONE
+  clue: ^ cent
+  transform: cent is a
+- word: PENNY
+  clue: Beatles song ^ ___
+  transform: â¦
+- word: LANE
+  clue:
+  transform:

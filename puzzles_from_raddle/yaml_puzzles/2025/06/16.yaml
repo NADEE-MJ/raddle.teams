@@ -1,0 +1,49 @@
+meta:
+  title: From TRAFFIC to LIGHT
+  author: Mao Reynolds and Sandy Weisz
+  difficulty: medium
+  theme: Juneteenth
+  message:
+    "In celebration of Juneteeth, we're building Raddles featuring technology by Black inventors.
+    Today we honor [Garrett Morgan](https://highways.dot.gov/highway-history/general-highway-history/safer-stop-and-go-garrett-morgans-traffic-signal-legacy), the son of formerly enslaved people, who invented the three-signal traffic light in 1923. 
+    Previously, traffic lights were manually operated and had only two positions: STOP and GO. 
+    Adding a third option allowed for smoother, safer traffic; 
+    his design was later improved upon and replaced by the green, yellow and red lights we use today. 
+    Morgan also invented the gas mask, just in time to protect countless soldiers in World War I."
+ladder:
+- word: TRAFFIC
+  clue: Word for ^ that won't move
+  transform: mess is called a
+- word: JAM
+  clue: ^ goes great on ___
+  transform: goes on
+- word: TOAST
+  clue: Change one letter in ^ to get something found on either side of the U.S.
+  transform: T->C
+- word: COAST
+  clue: Piece of formal wear that is an anagram of ^
+  transform: anagrammed
+- word: ASCOT
+  clue: An ^ is a kind of ___
+  transform: is a
+- word: TIE
+  clue: Language that sounds like ^
+  transform: sounds like
+- word: THAI
+  clue: Word that precedes ^ in the name of a dish
+  transform: follows
+- word: PAD
+  clue: 'Part of a uniform or jacket: ___ ^'
+  transform: might protect your
+- word: SHOULDER
+  clue: Remove every other letter in ^ to get a part of the body
+  transform: oddly spells
+- word: SOLE
+  clue: Remove the last letter of ^ to get the scientific name for this
+  transform: -E is the
+- word: SUN
+  clue: ^___, natural source of a particular vitamin
+  transform: makes
+- word: LIGHT
+  clue:
+  transform:

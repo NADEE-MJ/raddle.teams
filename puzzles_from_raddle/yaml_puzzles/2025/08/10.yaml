@@ -1,0 +1,47 @@
+meta:
+  title: From POM to POM
+  author: Sandy Weisz and Mao Reynolds
+  difficulty: medium
+  theme: Dog Days of Summer
+  message:
+    August is the "dog days" of summer, so we're featuring Raddles built around dog breeds. Pomeranians, or Poms, are small, fluffy dogs â but they weren't always that way.
+    They used to weigh around 30 pounds and were used for pulling sleds. 
+    But then Queen Victoria popularized a smaller version of the breed, and then everyone wanted them that small.
+    Poms were selectively bred, until they reached their current toy size of 3-7 pounds.
+ladder:
+- word: POM
+  clue: Reverse ^ to get a cleaning tool
+  transform: reversed
+- word: MOP
+  clue: Change one letter in ^ to get a toy
+  transform: M->T
+- word: TOP
+  clue: Opposite of ^
+  transform: Opposite
+- word: BOTTOM
+  clue: "Term for your ^ that\u2019s also an animal"
+  transform: aka
+- word: ASS
+  clue: Another word for an ^
+  transform: aka
+- word: DONKEY
+  clue: Change one letter in ^ to get an animal
+  transform: D->M
+- word: MONKEY
+  clue: ^ ___, playground staple
+  transform: â¦
+- word: BARS
+  clue: Change one letter in ^ to get a structure
+  transform: S->N
+- word: BARN
+  clue: ^ ___, old-timey gathering with music
+  transform: â¦
+- word: DANCE
+  clue: Popular ^ event in high school
+  transform: in high school
+- word: PROM
+  clue: Remove a letter from ^ to get a drink brand
+  transform: -R
+- word: POM
+  clue:
+  transform:

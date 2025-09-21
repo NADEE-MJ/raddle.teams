@@ -1,0 +1,43 @@
+meta:
+  title: From NEKO to CASE
+  author: Sandy Weisz
+  difficulty: medium
+  theme: Some of my favorite bands
+  message: Neko Case is particularly special to my wife and I because the album [Mass Romantic](https://open.spotify.com/album/7GG0z7TgUMeCr35TvMMhNR?si=Ix5cqGPuQsy0jG5u6JpIZw) (from her band The New Pornographers), was the soundtrack of the beginning of our courtship. I could listen to her song [Magpie to the Morning](https://open.spotify.com/album/3gMzehYCxYMrW6pYlcThWJ?si=AsvRF9A2QXuma6hVjk3qpQ) forever on repeat.
+ladder:
+- word: NEKO
+  clue: Reverse the first three letters of ^ to get this doll
+  transform: "-O, reversed"
+- word: KEN
+  clue: Insert a trigram (three letters) into ^ to get an animal
+  transform: +ITT
+- word: KITTEN
+  clue: Clothing article that rhymes with ^
+  transform: rhymes with
+- word: MITTEN
+  clue: A ^ covers this
+  transform: covers your
+- word: HAND
+  clue: Insert a trigram (three letters) into ^ to get a country (as it's informally known)
+  transform: +OLL
+- word: HOLLAND
+  clue: Actor ^
+  transform: ","
+- word: TOM
+  clue: "\"^'s ___\", song inspired by a restaurant in New York"
+  transform: "'s"
+- word: DINER
+  clue: Double a letter in ^ to get something you can get in a ^
+  transform: +N
+- word: DINNER
+  clue: Alternate word for ^
+  transform: fancier
+- word: SUPPER
+  clue: Remove letter from ^ to get a kind of drug
+  transform: -S
+- word: UPPER
+  clue: Word that follows ^, in typography
+  transform: â¦
+- word: CASE
+  clue:
+  transform:

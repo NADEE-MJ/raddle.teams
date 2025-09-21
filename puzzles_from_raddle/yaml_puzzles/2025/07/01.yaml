@@ -1,0 +1,50 @@
+meta:
+  title: From FLUSH to TOILET
+  author: Sandy Weisz and Mao Reynolds
+  difficulty: medium
+  theme: 250-year-old creations
+  message:
+    This week, in observation of Independence Day, weâre celebrating inventions from around 250 years ago.
+    In 1775, a Scottish watchmaker named Alexander Cummings received a patent for the flushable toilet. 
+    The toilet had been invented and improved for thousands of years, but Cummings' invention included an S-shaped pipe below the toilet bowl, which prevented the spread of foul odors. 
+    Contrary to the popular myth, Thomas Crapper didnât have much to do with the modern toilet, besides developing a tank-filling mechanism called the ballcock.
+ladder:
+- word: FLUSH
+  clue: Best kind of ^, in a casino
+  transform: that's also an ace-high straight
+- word: ROYAL
+  clue: Change a letter in ^ to describe someone faithful
+  transform: R->L
+- word: LOYAL
+  clue: Anagram ^ to get a mixture
+  transform: anagrammed
+- word: ALLOY
+  clue: ^ associated with Superman
+  transform: of iron
+- word: STEEL
+  clue: Criminal act that sounds like ^
+  transform: sounds like
+- word: STEAL
+  clue: Something a co-star might ^
+  transform: the
+- word: SPOTLIGHT
+  clue: Swap two letters in ^ to get one of many in a city
+  transform: Pâ->T
+- word: STOPLIGHT
+  clue: Bottom color of a ^
+  transform: features red, yellow and
+- word: GREEN
+  clue: Small, round, ^ legume
+  transform: legume
+- word: PEA
+  clue: Split ^ ___
+  transform: can be split and emulsified into
+- word: SOUP
+  clue: Vessel for ^
+  transform: is served in a
+- word: BOWL
+  clue: ___ ^, a fixture in a bathroom
+  transform: is part of a 
+- word: TOILET
+  clue:
+  transform:

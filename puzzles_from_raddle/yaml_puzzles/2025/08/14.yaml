@@ -1,0 +1,45 @@
+meta:
+  title: From MORTAL to COIL
+  author: Sandy Weisz and Mao Reynolds
+  difficulty: medium
+  theme: Shakespearean phrases
+  message:
+    "Todayâs theme comes from Act III, Scene I of \"Hamlet,\" when our boy Hammie delivers his big \"To be or not to be\" soliloquy: 
+    \"When we have shuffled off this mortal coilâ¦\" The phrase takes a pretty pessimistic view of life, though you would probably be pessimistic, too, if your uncle murdered your father to seize the throne and also married your mother."
+ladder:
+- word: MORTAL
+  clue: Change one letter in ^ to get a passageway
+  transform: M->P
+- word: PORTAL
+  clue: Reverse the middle four letters of ^ to get a guard
+  transform: O<->A
+- word: PATROL
+  clue: Change the second letter in ^ to get something that goes in a car
+  transform: A->E
+- word: PETROL
+  clue: What ^ is called in the U.S.
+  transform: in the U.S. is
+- word: GAS
+  clue: High school class that covers the study of ^, among many other things
+  transform: is studied in
+- word: PHYSICS
+  clue: 20th century genius in the field of ^
+  transform: was advanced by
+- word: EINSTEIN
+  clue: First name of ^
+  transform: "'s friends called him"
+- word: ALBERT
+  clue: Nickname for ^
+  transform: nickname
+- word: AL
+  clue: Full name of ^, on a table?
+  transform: aka
+- word: ALUMINUM
+  clue: Kitchen product ^ ___
+  transform: kitchen product
+- word: FOIL
+  clue: Change one letter in ^ to get something wound
+  transform: F->C
+- word: COIL
+  clue:
+  transform:

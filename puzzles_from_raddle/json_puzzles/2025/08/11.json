@@ -1,0 +1,81 @@
+{
+  "meta": {
+    "title": "From YANKEE to DOODLE",
+    "author": "Sandy Weisz and Mao Reynolds",
+    "difficulty": "medium",
+    "theme": "Dog Days of Summer",
+    "message": "One last dog breed-themed for the dog days of August. Except that doodle isn't a dog breed; rather it's a cross between a poodle and some other breed. You got your labradoodles, golden doodles, bernedoodles, schnoodles, and even corgipoos. Everyone wants to poodle. I guess this means poodles are the greatest breed. (And the greatest of them all is our 7-year-old standard, Cleo.)"
+  },
+  "ladder": [
+    {
+      "word": "YANKEE",
+      "clue": "Crosstown rival of a ^",
+      "transform": "rival"
+    },
+    {
+      "word": "MET",
+      "clue": "Add a letter to ^ to get a tech company",
+      "transform": "+A"
+    },
+    {
+      "word": "META",
+      "clue": "Anagram ^ to get a group of people",
+      "transform": "anagram"
+    },
+    {
+      "word": "TEAM",
+      "clue": "What isn’t in ^?",
+      "transform": "doesn't have an"
+    },
+    {
+      "word": "I",
+      "clue": "“The ___ and ^”",
+      "transform": "and the"
+    },
+    {
+      "word": "KING",
+      "clue": "Drop a letter from ^ to get some relatives",
+      "transform": "-G"
+    },
+    {
+      "word": "KIN",
+      "clue": "^ is a broader term for your ___",
+      "transform": "is"
+    },
+    {
+      "word": "FAMILY",
+      "clue": "Structure that might use to display your ^ in detail",
+      "transform": "diagram"
+    },
+    {
+      "word": "TREE",
+      "clue": "A large group of ^s",
+      "transform": "x1000"
+    },
+    {
+      "word": "FOREST",
+      "clue": "___^, a dense ecosystem",
+      "transform": "has lots of"
+    },
+    {
+      "word": "RAIN",
+      "clue": "Add a letter to ^ to get an organ in your body",
+      "transform": "+B"
+    },
+    {
+      "word": "BRAIN",
+      "clue": "Food-based nickname for your ^",
+      "transform": "aka your"
+    },
+    {
+      "word": "NOODLE",
+      "clue": "Change one letter in ^ to get a sketch",
+      "transform": "N->D"
+    },
+    {
+      "word": "DOODLE",
+      "clue": null,
+      "transform": null
+    }
+  ]
+}

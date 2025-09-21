@@ -1,0 +1,49 @@
+meta:
+  title: From WAX to HATCH
+  author: Sandy Weisz
+  difficulty: medium
+  theme: Big Ears 2025
+  message: "[This week](/2025/04/01), I'm building Raddles around acts we saw at Big Ears. [Waxahatchee](https://www.waxahatchee.com) delivered a gorgeous indie-folk acoustic set with just one backing musician that was intimate despite being on the festivalâs biggest stage. [Listen on Spotify](https://open.spotify.com/album/5O9TGAJ6Opoya7KCBKKQUA?si=ZryG0PPhT2eo4WpK0CsqMQ)"
+ladder:
+- word: WAX
+  clue: Tall cylinder of ^
+  transform: makes a
+- word: CANDLE
+  clue: Type of footwear that rhymes with ^
+  transform: rhymes with
+- word: SANDAL
+  clue: Body parts seen when wearing ^s, often
+  transform: exposes your
+- word: TOES
+  clue: Food that sounds like ^ + T
+  transform: + "T"
+- word: TOAST
+  clue: Uncooked ^
+  transform: used to be
+- word: BREAD
+  clue: ^ is slang for this
+  transform: is slang for
+- word: MONEY
+  clue: Name of ^ in India
+  transform: in India is
+- word: RUPEE
+  clue: Swap the consonants in ^ to get this type of food
+  transform: P ââ R
+- word: PUREE
+  clue: Equipment used to make a ^
+  transform: is made in a
+- word: BLENDER
+  clue: Room a ^ is often found in
+  transform: is found in a
+- word: KITCHEN
+  clue: Word that comes before ^ in New York (and on TV)
+  transform: comes after
+- word: HELLS
+  clue: Move the last letter of ^ to the front to get one of the largest companies in the world
+  transform: S -> front
+- word: SHELL
+  clue: To emerge from a ^
+  transform: leads to a
+- word: HATCH
+  clue:
+  transform:

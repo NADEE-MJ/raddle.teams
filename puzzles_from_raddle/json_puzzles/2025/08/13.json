@@ -1,0 +1,71 @@
+{
+  "meta": {
+    "title": "From JAWS to DEATH",
+    "author": "Sandy Weisz and Mao Reynolds",
+    "difficulty": "medium",
+    "theme": "Shakespearean phrases",
+    "message": "\"Jaws of death\" comes from Act III, Scene IV of \"Twelfth Night,\" when Antonio says he snatched Viola, who he thinks is Sebastian, \"out of the jaws of death.\" He continues: \"Relieved him with such sanctity of love / And to his image, which methought did promise / Most venerable worth, did I devotion\"."
+  },
+  "ladder": [
+    {
+      "word": "JAWS",
+      "clue": "Animal with big ^ in \"^\"",
+      "transform": "features a"
+    },
+    {
+      "word": "SHARK",
+      "clue": "___ ^, a predatory businessperson",
+      "transform": "might give you a"
+    },
+    {
+      "word": "LOAN",
+      "clue": "Homophone of \"^\" that sounds solitary",
+      "transform": "sounds like"
+    },
+    {
+      "word": "LONE",
+      "clue": "Change one letter in ^ to get an area",
+      "transform": "L->Z"
+    },
+    {
+      "word": "ZONE",
+      "clue": "There are two ___ ^s on a (certain) field",
+      "transform": "is at the"
+    },
+    {
+      "word": "END",
+      "clue": "___ ^, part of a pool",
+      "transform": "where you shouldn't go off"
+    },
+    {
+      "word": "DEEP",
+      "clue": "___ ^, not so hurtful",
+      "transform": "as one's"
+    },
+    {
+      "word": "SKIN",
+      "clue": "One of many small holes in the ^",
+      "transform": "features many a"
+    },
+    {
+      "word": "PORE",
+      "clue": "Change a letter in ^ to get a certain European",
+      "transform": "R->L"
+    },
+    {
+      "word": "POLE",
+      "clue": "^ ___, something to guide you",
+      "transform": "light"
+    },
+    {
+      "word": "STAR",
+      "clue": "The ___ ^, where many work in \"Star Wars\"",
+      "transform": "where Vader works"
+    },
+    {
+      "word": "DEATH",
+      "clue": null,
+      "transform": null
+    }
+  ]
+}

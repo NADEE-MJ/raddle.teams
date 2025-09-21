@@ -1,0 +1,48 @@
+meta:
+  title: From DOGS to WAR
+  author: Sandy Weisz and Mao Reynolds
+  difficulty: medium
+  theme: Shakespearean phrases
+  message:
+    We just finished our âdog days of summerâ theme, and what better transition to our new theme â phrases coined by William Shakespeare â than âlet slip the dogs of warâ? 
+    This phrase is spoken by Mark Antony in Act III, Scene I of Shakespeareâs âJulius Caesar.â Caesarâs death (spoiler alert!) is seen as a bad omen for the future of Rome.
+ladder:
+- word: DOGS
+  clue: Counterpart to ^, in an idiom (or your home)
+  transform: Counterpart
+- word: CATS
+  clue: Award won many times by "^"
+  transform: won many a
+- word: TONY
+  clue: Longer version of ^, often
+  transform: aka
+- word: ANTHONY
+  clue: Chef ^ ___
+  transform: â¦
+- word: BOURDAIN
+  clue: Pronoun found inside ^
+  transform: includes
+- word: OUR
+  clue: Singular form of "^"
+  transform: singularly
+- word: MY
+  clue: '"^ Little ___"'
+  transform: Little
+- word: PONY
+  clue: Larger cousin of a ^
+  transform: is smaller than a
+- word: HORSE
+  clue: Change one letter in ^ to become less good
+  transform: H->W
+- word: WORSE
+  clue: Opposite of ^
+  transform: Opposite
+- word: BETTER
+  clue: A ^ ___, something there has to be, it's said
+  transform: â¦
+- word: WAY
+  clue: Change one letter in ^ to get a conflict
+  transform: Y->R
+- word: WAR
+  clue:
+  transform:

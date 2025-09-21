@@ -1,0 +1,46 @@
+meta:
+  title: From GOOD LUCK to BABE
+  author: Sandy Weisz and Mao Reynolds
+  difficulty: medium
+  theme: Pride Month
+  message: We're celebrating Pride Month with Raddles inspired by LGBTQ+ anthems. 
+    "Good Luck, Babe!" is Chappell Roan's breakout single, a catchy pop anthem about
+    the cost of not facing your true identity.
+    _"You'd have to stop the world just to stop the feeling,"_ she sings.
+ladder:
+- word: GOOD LUCK
+  clue: "Some find protection in wearing ^ ___"
+  transform: might come from a
+- word: CHARMS
+  clue: Piece of jewelry that might hold many ^
+  transform: found on a
+- word: BRACELET
+  clue: Alien found at the end of ^
+  transform: -BRACEL
+- word: ET
+  clue: Transport seen on the ^ poster
+  transform: powers a flying
+- word: BICYCLE
+  clue: Round thing found twice on a ^
+  transform: has two
+- word: WHEEL
+  clue: Drop two letters in ^ to get a fish
+  transform: -WH
+- word: EEL
+  clue: Stimulating word used to describe some ^s
+  transform: can be
+- word: ELECTRIC
+  clue: ^ ___, a line dance
+  transform: dance
+- word: SLIDE
+  clue: Word paired with ^ to make a cocktail named after a natural phenomenon
+  transform: of vodka, coffee liqueur, and cream
+- word: MUD
+  clue: Animal that enjoys laying in ^
+  transform: is home for a
+- word: PIG
+  clue: Beloved cinematic ^
+  transform: on screen
+- word: BABE
+  clue:
+  transform:

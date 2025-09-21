@@ -1,0 +1,50 @@
+meta:
+  title: From MALTESE to FALCON
+  author: Sandy Weisz and Mao Reynolds
+  difficulty: medium
+  theme: Dog Days of Summer
+  message:
+    August is the "dog days" of summer, so we're featuring Raddles built around dog breeds. 
+    The Maltese, despite its name, might not actually have originated in the island country of Malta. 
+    Itâs a tiny, white dog with a glossy coat â and itâs hypoallergenic, which is good news to those with dog allergies. 
+    And who wouldnât want to cuddle with a dog that looks like a teddy bear?
+ladder:
+- word: MALTESE
+  clue: Drop a trigram (three letters) in ^ to get a confection
+  transform: -ESE
+- word: MALT
+  clue: Change one letter in ^ to get something found on many restaurant tables
+  transform: M->S
+- word: SALT
+  clue: ___ ^, non-edible ^ used for maintenance
+  transform: can be a
+- word: ROCK
+  clue: It beats ^
+  transform: loses to
+- word: PAPER
+  clue: ^ ___, something sometimes found flying in a classroom
+  transform: can be folded into a
+- word: PLANE
+  clue: Homophone of ^â¦ clearly
+  transform: sounds like
+- word: PLAIN
+  clue: ^ ___, what you might hide in?
+  transform: â¦
+- word: SIGHT
+  clue: Add TRA to ^ to become arrow-like?
+  transform: +TRA
+- word: STRAIGHT
+  clue: ^___, like some punk rockers
+  transform: â¦
+- word: EDGE
+  clue: "The first two letters of ^, out loud, sound like this female nickname"
+  transform: partially sounds like
+- word: EDIE
+  clue: Last name of actress ^
+  transform: on "The Sopranos"
+- word: FALCO
+  clue: Add a letter to ^ to get a bird
+  transform: +N
+- word: FALCON
+  clue:
+  transform:

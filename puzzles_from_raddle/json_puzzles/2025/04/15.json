@@ -1,0 +1,76 @@
+{
+  "meta": {
+    "title": "From BLOOD to FROG",
+    "author": "Sandy Weisz",
+    "difficulty": "medium",
+    "theme": "Passover",
+    "message": "One of the central traditions of Passover is recounting the ten plagues that God inflicted on the Egyptians. We recite them one by one. The first plague is Blood, which refers to the Nile River turning to blood. The second plague, Frogs, refers to an infenstation of frogs that swarmed the land. Though I recently saw a meme going around that suggests it might have just been [one big frog](https://www.reddit.com/r/tumblr/comments/ivish9/the_plague_of_frog/)."
+  },
+  "ladder": [
+    {
+      "word": "BLOOD",
+      "clue": "^ is thicker than this, it's said",
+      "transform": "is thicker than"
+    },
+    {
+      "word": "WATER",
+      "clue": "Add a word to ^ to get a scandal",
+      "transform": "+GATE"
+    },
+    {
+      "word": "WATERGATE",
+      "clue": "Politician taken down by ^",
+      "transform": "took down"
+    },
+    {
+      "word": "NIXON",
+      "clue": "What ^ famously said he is not",
+      "transform": "said he was not a"
+    },
+    {
+      "word": "CROOK",
+      "clue": "Wordy thing that rhymes with ^",
+      "transform": "CR->B"
+    },
+    {
+      "word": "BOOK",
+      "clue": "Location that rhymes with ^ and also describes where you might enjoy a ^",
+      "transform": "in a"
+    },
+    {
+      "word": "NOOK",
+      "clue": "Every ^ and ___",
+      "transform": "and"
+    },
+    {
+      "word": "CRANNY",
+      "clue": "The end of ^ sounds like this female name",
+      "transform": "partially sounds like"
+    },
+    {
+      "word": "ANNIE",
+      "clue": "Famous song from ^",
+      "transform": "sings about"
+    },
+    {
+      "word": "TOMORROW",
+      "clue": "It comes before ^",
+      "transform": "comes before"
+    },
+    {
+      "word": "TODAY",
+      "clue": "Remove the last letter and anagram ^ to get an animal",
+      "transform": "-Y, then anagram"
+    },
+    {
+      "word": "TOAD",
+      "clue": "Friend to ^ in children's lit",
+      "transform": "best friend"
+    },
+    {
+      "word": "FROG",
+      "clue": null,
+      "transform": null
+    }
+  ]
+}

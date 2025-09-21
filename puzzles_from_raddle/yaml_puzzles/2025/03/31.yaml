@@ -1,0 +1,44 @@
+meta:
+  title: From ROUTE to PUZZLE
+  author: Sandy Weisz
+  difficulty: medium
+  theme: Enigmarch 2025
+  fromEmoji: â©ï¸
+  toEmoji: ð§©
+ladder:
+- word: ROUTE
+  clue: Anagram ^ to get a kind of space
+  transform: anagram
+- word: OUTER
+  clue: Opposite of ^
+  transform: opposite of
+- word: INNER
+  clue: Add a letter to ^ to get a champ
+  transform: +W
+- word: WINNER
+  clue: ^ ^ ___
+  transform: x2, then
+- word: CHICKEN DINNER
+  clue: Chain restaurant known for their ^s
+  transform: eaten at
+- word: KFC
+  clue: "Last name of ^\u2019s founder"
+  transform: founded by
+- word: SANDERS
+  clue: ^ are used on this material
+  transform: smooth
+- word: WOOD
+  clue: Profession that works with ^
+  transform: used by a
+- word: CARPENTER
+  clue: Common tool of a ^
+  transform: uses a
+- word: SAW
+  clue: Antagonist of the ^ movies
+  transform: features
+- word: JIGSAW
+  clue: ^ is a type of what
+  transform: is a type of
+- word: PUZZLE
+  clue:
+  transform:

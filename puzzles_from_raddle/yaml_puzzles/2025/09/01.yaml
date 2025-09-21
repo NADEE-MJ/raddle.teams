@@ -1,0 +1,48 @@
+meta:
+  title: From PENNY to WISE
+  author: Sandy Weisz and Mao Reynolds
+  difficulty: medium
+  theme: Horror movie villains
+  message:
+    This week on Raddle we're featuring horror movie villains. What better way to start than with It, aka Pennywise, aka Pennywise the Dancing Clown. I'm a horror movie weenie, so I haven't seen or read *It*, and only when researching this did I learn that the clown isn't actually a human, but a 
+    "trans-dimensional malevolent entity". I guess that would have been less pithy of a name. Sorry, I mean less p-it-hy.
+ladder:
+- word: PENNY
+  clue: Song by The Beatles, "^ ___"
+  transform: â¦
+- word: LANE
+  clue: Add a C to ^ and anagram to describe a whistle?
+  transform: +C, then anagram
+- word: CLEAN
+  clue: Opposite of ^
+  transform: opposite
+- word: DIRTY
+  clue: "1987 movie, \"^ ___\""
+  transform: â¦
+- word: DANCING
+  clue: "\"^ with the ___\""
+  transform: with the
+- word: STARS
+  clue: Drop the first and last letters of ^ to get a sticky substance
+  transform: -S, -S
+- word: TAR
+  clue: Change a letter in ^ to get a pub
+  transform: T->B
+- word: BAR
+  clue: ___ ^, something under your thumb?
+  transform: at the bottom of a keyboard
+- word: SPACE
+  clue: Remove the last letter of ^ and reverse to get some hats
+  transform: -E, then reverse
+- word: CAPS
+  clue: ^ ___, something under your pinkie?
+  transform: â¦
+- word: LOCK
+  clue: Add a letter to ^ to get something found in most homes
+  transform: +C
+- word: CLOCK
+  clue: ^___, a direction
+  transform: â¦
+- word: WISE
+  clue:
+  transform:

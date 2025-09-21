@@ -1,0 +1,38 @@
+meta:
+  title: From FLOW to STAFF
+  author: Sandy Weisz
+  difficulty: medium
+  theme: Enigmarch 2025
+  fromEmoji: ð°
+  toEmoji: ð¼
+ladder:
+- word: FLOW
+  clue: ^'s opposite, tide-wise []
+  transform: "'s opposite"
+- word: EBB
+  clue: add a D & Y to ^ to get [this woman's name]
+  transform: "+ D & Y"
+- word: DEBBY
+  clue: The final syllable of ^ sounds like [this insect]
+  transform: "-'deb'"
+- word: BEE
+  clue: Result of a ^ attack []
+  transform: "will"
+- word: STING
+  clue: '"The ^" features [this Oscar-winning actor]'
+  transform: "starred"
+- word: PAUL NEWMAN
+  clue: "[An Oscar-winning actor] whose last name sounds like the opposite of ^'s last name"
+  transform: "surname nemesis"
+- word: GARY OLDMAN
+  clue: Second word of ^, with a space in the middle? []
+  transform: "- Gary"
+- word: OLD MAN
+  clue: An ^ often can be found walking with [this assistive device]
+  transform: "uses a"
+- word: CANE
+  clue: Another word for a ^ []
+  transform: "synonym of"
+- word: STAFF
+  clue: ''
+  transform: ""

@@ -1,0 +1,71 @@
+{
+  "meta": {
+    "title": "From LASER to POINTER",
+    "author": "Sandy Weisz and Mao Reynolds",
+    "difficulty": "medium",
+    "theme": "Dog Days of Summer",
+    "message": "August is the \"dog days\" of summer, so we're featuring Raddles built around phrases that have a dog breed in them. Today we recognize the majestic pointers, who are so-named because of their instinct to stop and point at prey. Good doggy."
+  },
+  "ladder": [
+    {
+      "word": "LASER",
+      "clue": "^ ___, popular mall game I played as a teenager",
+      "transform": "game in a mall"
+    },
+    {
+      "word": "TAG",
+      "clue": "Dance that's ^ with one letter changed",
+      "transform": "G->P"
+    },
+    {
+      "word": "TAP",
+      "clue": "What comes out of the ^, hopefully",
+      "transform": "produces"
+    },
+    {
+      "word": "WATER",
+      "clue": "It might make your eyes ^",
+      "transform": "-y eyes from an"
+    },
+    {
+      "word": "ONION",
+      "clue": "Green ^",
+      "transform": "variety"
+    },
+    {
+      "word": "SCALLION",
+      "clue": "Cut a ^ in half to get this animal",
+      "transform": "cut in half"
+    },
+    {
+      "word": "LION",
+      "clue": "“The ^ ___”",
+      "transform": "named Mufasa was"
+    },
+    {
+      "word": "KING",
+      "clue": "Replace the middle of ^ with a single letter to get a college party staple",
+      "transform": "IN->E"
+    },
+    {
+      "word": "KEG",
+      "clue": "___^, a volatile situation",
+      "transform": "givin' off sparks"
+    },
+    {
+      "word": "POWDER",
+      "clue": "Kind of ^ often put in a shake",
+      "transform": "in a shake"
+    },
+    {
+      "word": "PROTEIN",
+      "clue": "Anagram ^ to get a tip",
+      "transform": "anagrammed"
+    },
+    {
+      "word": "POINTER",
+      "clue": null,
+      "transform": null
+    }
+  ]
+}

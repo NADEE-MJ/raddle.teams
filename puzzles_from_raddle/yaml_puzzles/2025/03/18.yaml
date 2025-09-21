@@ -1,0 +1,47 @@
+meta:
+  title: From LUCKY to PAUSE
+  author: Sandy Weisz
+  difficulty: medium
+  theme: Enigmarch 2025
+  fromEmoji: ð
+  toEmoji: â¸ï¸
+ladder:
+- word: LUCKY
+  clue: Film character who asked if you're feeling ^
+  transform: "in a question by"
+- word: DIRTY HARRY
+  clue: Actor who played ^
+  transform: "played by"
+- word: EASTWOOD
+  clue: Retailer that kinda sorta sounds like the antithesis of ^
+  transform: "sounds like the opposite of"
+- word: WEST ELM
+  clue: ^ is known mostly for this category of product
+  transform: "makes"
+- word: FURNITURE
+  clue: Remove 3 consecutive letters from ^ to get something unknowable
+  transform: "- RNI"
+- word: FUTURE
+  clue: Opposite of ^
+  transform: "Opposite"
+- word: PAST
+  clue: Add an A to the end of ^ to get a food
+  transform: "+ A"
+- word: PASTA
+  clue: A kid's favorite ^
+  transform: "type"
+- word: MACARONI
+  clue: ^ & ___
+  transform: "and"
+- word: CHEESE
+  clue: Byproduct of ^ production, as mentioned in a nursery rhyme
+  transform: "production creates"
+- word: WHEY
+  clue: Rhyme of ^ that's a kind of performance
+  transform: "rhymes with"
+- word: PLAY
+  clue: ^/___ button
+  transform: "/"
+- word: PAUSE
+  clue: ""
+  transform: ""

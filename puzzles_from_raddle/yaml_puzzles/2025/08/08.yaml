@@ -1,0 +1,46 @@
+meta:
+  title: From SHEPHERD to PIE
+  author: Sandy Weisz and Mao Reynolds
+  difficulty: medium
+  theme: Dog Days of Summer
+  message:
+    August is the "dog days" of summer, so we're featuring Raddles built around phrases that have a dog breed in them. 
+    The German Shepherd is a large, smart breed, known for its loyalty and skills at scaring off intruders, from humans to rabbits. 
+    What a smart doggie.
+ladder:
+- word: SHEPHERD
+  clue: "\"The ___ is my ^\""
+  transform: aka, for some
+- word: LORD
+  clue: Change a letter in ^ to get a kind of car
+  transform: L->F
+- word: FORD
+  clue: Actor ^
+  transform: on screen
+- word: HARRISON
+  clue: 20th century musician ___ ^
+  transform: in The Beatles
+- word: GEORGE
+  clue: President ^
+  transform: on the dollar bill
+- word: WASHINGTON
+  clue: Newspaper in ^
+  transform: newspaper
+- word: POST
+  clue: Anagram ^ to get a sign
+  transform: anagrammed
+- word: STOP
+  clue: ^ & ___, a place to ^, then ___ (in some parts of the US)
+  transform: T->H
+- word: SHOP
+  clue: Four-wheeled device that's useful when you ^
+  transform: with a
+- word: CART
+  clue: Add a letter to ^ to get a graph
+  transform: +H
+- word: CHART
+  clue: Circular kind of ^
+  transform: that's circular
+- word: PIE
+  clue:
+  transform:

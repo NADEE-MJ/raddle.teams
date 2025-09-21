@@ -1,0 +1,47 @@
+meta:
+  title: From PEACH to FUZZ
+  author: Sandy Weisz and Mao Reynolds
+  difficulty: medium
+  theme: Summer produce
+  message: We're celebrating summer with Raddles based on fresh summer produce.
+ladder:
+- word: PEACH
+  clue: '"The ^ State"'
+  transform: state is
+- word: GEORGIA
+  clue: Coastal city in ^ that's "plain"?
+  transform: city that's "plain"
+- word: SAVANNAH
+  clue: A vehicle hidden in ^
+  transform: hides a
+- word: VAN
+  clue: Painter ^ ___
+  transform: â¦
+- word: GOGH
+  clue: Change a letter in ^ to get a style of fashion and music
+  transform: G->T
+- word: GOTH
+  clue: ^ is a letter bank for this recent pop hit (i.e. the title uses all the letters
+    in ^, one or more times)
+  transform: is letter bank for
+- word: HOT TO GO
+  clue: '"^" singer'
+  transform: is by
+- word: CHAPPELL ROAN
+  clue: The second word in ^ can describe this animal
+  transform: is partially a kind of
+- word: HORSE
+  clue: Kind of person who is typically pictured atop a ^
+  transform: conveys a
+- word: COWBOY
+  clue: Fictional toy ^
+  transform: from Toy Story
+- word: WOODY
+  clue: Best friend of ^
+  transform: <3s
+- word: BUZZ
+  clue: Change one letter in ^ to get a guitar sound
+  transform: B->F
+- word: FUZZ
+  clue:
+  transform:

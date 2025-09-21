@@ -1,0 +1,71 @@
+{
+  "meta": {
+    "title": "From MAN to STEEL",
+    "author": "Sandy Weisz and Mao Reynolds",
+    "difficulty": "medium",
+    "theme": "Superman",
+    "message": "We end Superman week with his most well-known nickname, the Man of Steel. Did Superman ever have to fight a villain nicknamed the Man of Steal? Seems like a missed opportunity."
+  },
+  "ladder": [
+    {
+      "word": "MAN",
+      "clue": "Add two letters to ^ to get a fruit",
+      "transform": "+GO"
+    },
+    {
+      "word": "MANGO",
+      "clue": "^ ___, traditional Indian beverage",
+      "transform": "drink"
+    },
+    {
+      "word": "LASSI",
+      "clue": "Add a letter to ^ to get a classic TV show",
+      "transform": "+E"
+    },
+    {
+      "word": "LASSIE",
+      "clue": "^ is this breed",
+      "transform": "is a"
+    },
+    {
+      "word": "COLLIE",
+      "clue": "Remove a letter from ^ to get a nickname",
+      "transform": "-C"
+    },
+    {
+      "word": "OLLIE",
+      "clue": "Perform an ^ on a ___",
+      "transform": "is a trick on a"
+    },
+    {
+      "word": "SKATEBOARD",
+      "clue": "Animal found inside ^",
+      "transform": "features a"
+    },
+    {
+      "word": "BOAR",
+      "clue": "A ^ is a type of ___",
+      "transform": "is a"
+    },
+    {
+      "word": "PIG",
+      "clue": "Muppet who is a ^",
+      "transform": "muppet"
+    },
+    {
+      "word": "MISS PIGGY",
+      "clue": "Body part called the second part of ^ in a nursery rhyme",
+      "transform": "is partially a nickname for your"
+    },
+    {
+      "word": "TOE",
+      "clue": "Boots sometimes have a ___ ^",
+      "transform": "can be made of"
+    },
+    {
+      "word": "STEEL",
+      "clue": null,
+      "transform": null
+    }
+  ]
+}

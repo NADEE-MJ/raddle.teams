@@ -1,0 +1,46 @@
+meta:
+  title: From TINDER to STICKS
+  author: Sandy Weisz
+  difficulty: medium
+  theme: Big Ears 2025
+  message: "One last band for [Big Ears Week](/2025/04/01). The show from English indie band Tindersticks, who I've been listening to since my 20s, was moody and melancholy in the best way thanks to the deep rumble of frontman Stuart Staplesâs goregous voice. [Listen on Spotify](https://open.spotify.com/artist/3dmSPhg0tdao8ePj4pySJ5?si=Y2_hd0vkQICxf3uFR9PrFg)"
+ladder:
+- word: TINDER
+  clue: To create this, start with ^
+  transform: makes
+- word: FIRE
+  clue: Add three letters to ^ to get an insect
+  transform: + FLY
+- word: FIREFLY
+  clue: Another name for a ^
+  transform: aka
+- word: LIGHTNING BUG
+  clue: Car model also known as the second part of ^
+  transform: partially a nickname for
+- word: BEETLE
+  clue: Last name of old-time comic strip character ^
+  transform: â¦
+- word: BAILEY
+  clue: Add an "F" sound to the end of ^ to get this ingredient
+  transform: +"F"
+- word: BAY LEAF
+  clue: Anagram the second part of ^ to get an insect
+  transform: -BAY, anagram
+- word: FLEA
+  clue: ^ is a member of this band
+  transform: is in 
+- word: RED HOT CHILI PEPPERS
+  clue: Canonical adjective used to describe ^
+  transform: are
+- word: SPICY
+  clue: Viral show featuring ^ food
+  transform: food on
+- word: HOT ONES
+  clue: Replace the first two letters in ^ with a single letter to get a band (as they're familiarly known)
+  transform: HO -> S
+- word: STONES
+  clue: Counterpart to ^ in a playground chant
+  transform: and
+- word: STICKS
+  clue:
+  transform:

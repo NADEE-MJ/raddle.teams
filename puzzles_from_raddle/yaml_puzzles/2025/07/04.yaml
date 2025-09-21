@@ -1,0 +1,47 @@
+meta:
+  title: From UNITED to STATES
+  author: Mao Reynolds and Sandy Weisz
+  difficulty: medium
+  theme: 250-year-old creations
+  message:
+    Happy 249th birthday, USA. Hope you make it to 250.
+ladder:
+- word: UNITED
+  clue: Swap two letters in ^ to get a rough opposite of ^
+  transform: Iâ->T
+- word: UNTIED
+  clue: ^ shoes might make you do this
+  transform: shoes make you
+- word: TRIP
+  clue: Drug that'll make you ^
+  transform: on
+- word: LSD
+  clue: Swap two letters in ^ to get an acronym for a religious denomination
+  transform: Sâ->D
+- word: LDS
+  clue: Word to describe a member of ^
+  transform: member
+- word: MORMON
+  clue: Replace the vowels in ^ with different vowels get a mythical creature
+  transform: Swap Os out for E & A
+- word: MERMAN
+  clue: Feminine version of a ^
+  transform: counterpart
+- word: MERMAID
+  clue: Disney ^
+  transform: in a Disney movie
+- word: ARIEL
+  clue: ^ sings about living under this
+  transform: lives under
+- word: THE SEA
+  clue: Land surrounded by ^
+  transform: surrounds an
+- word: ISLAND
+  clue: ___ ^, part of New York City
+  transform: of
+- word: STATEN
+  clue: Change the last letter of ^ to get some conditions
+  transform: N->S
+- word: STATES
+  clue:
+  transform:

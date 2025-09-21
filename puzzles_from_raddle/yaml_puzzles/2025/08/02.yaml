@@ -1,0 +1,44 @@
+meta:
+  title: From SLOW to HORSES
+  author: Sandy Weisz and Mao Reynolds
+  difficulty: medium
+  theme: Emmy nominations 2005
+  message:
+    This week we're honoring some of this year's Emmy nominees, including the spy thriller "Slow Horses", which, honestly, is about some pretty fast humans.
+ladder:
+- word: SLOW
+  clue: Opposite of ^
+  transform: opposite
+- word: FAST
+  clue: When you ^, you don't ___
+  transform: means you don't
+- word: EAT
+  clue: ___-^-___ (with ruthless self-interest)
+  transform: or be eaten by a
+- word: DOG
+  clue: Reverse ^ to get a biblical figure
+  transform: reversed
+- word: GOD
+  clue: Add a letter to ^ to get a metal
+  transform: +L
+- word: GOLD
+  clue: One worse than ^
+  transform: is one better than
+- word: SILVER
+  clue: ___^, a clothing brand / superhero
+  transform: follows
+- word: QUICK
+  clue: Stringy thing that rhymes with ^
+  transform: rhymes with
+- word: WICK
+  clue: What has a ^ at its center
+  transform: is featured in a
+- word: CANDLE
+  clue: "Can't ___ a ^ to"
+  transform: is something a lesser person can't
+- word: HOLD
+  clue: '"^ your ___"'
+  transform: your
+- word: HORSES
+  clue:
+  transform:

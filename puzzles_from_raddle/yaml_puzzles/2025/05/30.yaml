@@ -1,0 +1,48 @@
+meta:
+  title: From ESA to DIVA
+  author: Sandy Weisz
+  difficulty: medium
+  theme: Eurovision
+  message: 
+    It's Eurovision week! Spain's entry is "Esa Diva", by artist Melody. Esa Diva translates to "That Diva" in English.
+    [Here is Melody's live performance](https://www.youtube.com/watch?v=H46FB-rLh04) from the finals.
+ladder:
+- word: ESA
+  clue: Advance a letter in ^ one spot in the alphabet to something you might find on a train ticket
+  transform: S->T
+- word: ETA
+  clue: Add a letter to the front of ^ to get a (different) letter
+  transform: +B
+- word: BETA
+  clue: One after ^
+  transform: precedes
+- word: GAMMA
+  clue: ^ ___, a very real phenomenon that does not give you superpowers
+  transform: â¦
+- word: RAY
+  clue: Soul musician ^ ___
+  transform: â¦
+- word: CHARLES
+  clue: Mascot whose first name is officially ^
+  transform: Entertainment Cheese aka
+- word: CHUCK E CHEESE
+  clue: Species of ^, canonically
+  transform: is a 
+- word: MOUSE
+  clue: Word that follows ^ in your kitchen, or on your board game table
+  transform: caught in a
+- word: TRAP
+  clue: Add a letter to ^ to get a way to walk
+  transform: +M
+- word: TRAMP
+  clue: The ^'s counterpart, in a 1955 movie
+  transform: and
+- word: LADY
+  clue: ^ ___, figure in a 13th century legend
+  transform: â¦
+- word: GODIVA
+  clue: Drop two letters in ^ to get a kind of singer
+  transform: -GO
+- word: DIVA
+  clue:
+  transform:

@@ -1,0 +1,50 @@
+meta:
+  title: From DEEP to DISH
+  author: Sandy Weisz and Mao Reynolds
+  difficulty: medium
+  theme: Chicago
+  message:
+    This week, weâre celebrating some of the great things that have come out of Chicago, our home town. 
+    Deep dish pizza is a food synonymous with the city; it was invented here in 1943. 
+    Visitors will often make a pilgrimage to one of the cityâs many famous deep dish pizzerias, such as Lou Malnatiâs or Giordanoâs.
+    Most Chicagoans donât eat it often â itâs more of a special treat â instead preferring Chicagoâs other signature pizza style, the thin-crusted tavern-style.
+ladder:
+- word: DEEP
+  clue: "\"^ ___ Nine\""
+  transform: â¦
+- word: SPACE
+  clue: Change one letter in ^ to get a gardening tool
+  transform: C->D
+- word: SPADE
+  clue: Deckmate of a ^
+  transform: alternative
+- word: DIAMOND
+  clue: What you might catch on a ^
+  transform: is where one catches a
+- word: BASEBALL
+  clue: What ^ doesn't have, according to a movie quote
+  transform: has no
+- word: CRYING
+  clue: ^ ___, raising a false alarm
+  transform: when you don't actually see a
+- word: WOLF
+  clue: Whose clothing might a ^ wear?
+  transform: wears a
+- word: SHEEP
+  clue: Change one letter in ^ to get a chore
+  transform: H->W
+- word: SWEEP
+  clue: Tool you use to ^
+  transform: with a
+- word: BROOM
+  clue: Change one letter in ^ get an element of some weddings
+  transform: B->G
+- word: GROOM
+  clue: Animal that a professional ^ manages
+  transform: a
+- word: HORSE
+  clue: ^ra___, a vegetable
+  transform: ra
+- word: DISH
+  clue:
+  transform:
