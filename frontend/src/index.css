@@ -24,6 +24,27 @@
 
 @import 'tailwindcss';
 
+/* iOS Safari viewport fixes */
+html, body {
+    height: 100%;
+    height: 100vh;
+    height: 100dvh; /* Dynamic viewport height for modern browsers */
+    overflow: hidden;
+    margin: 0;
+    padding: 0;
+    position: fixed;
+    width: 100%;
+}
+
+#root {
+    height: 100%;
+    height: 100vh;
+    height: 100dvh; /* Dynamic viewport height for modern browsers */
+    width: 100%;
+    overflow: auto;
+    position: relative;
+}
+
 @theme {
     --color-primary: #0c1019;
     --color-secondary: #11111a;
