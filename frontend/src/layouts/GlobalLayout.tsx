@@ -116,7 +116,7 @@ const GlobalLayout: React.FC = () => {
     );
 
     return (
-        <div className='bg-primary grid h-full min-h-screen grid-rows-[auto_auto_1fr]' style={{ minHeight: '-webkit-fill-available' }}>
+        <div className='bg-primary grid min-h-screen grid-rows-[auto_auto_1fr]'>
             <nav className='bg-secondary border-border border-b'>
                 <div className='mx-auto max-w-6xl px-8'>
                     <div className='flex h-16 items-center justify-between'>

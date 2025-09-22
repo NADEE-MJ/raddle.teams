@@ -25,36 +25,24 @@
 @import 'tailwindcss';
 
 /* iOS Safari viewport fixes */
-html {
+html, body {
     height: 100%;
-    height: -webkit-fill-available;
-}
-
-body {
-    min-height: 100vh;
-    min-height: -webkit-fill-available;
-    min-height: 100dvh;
+    height: 100vh;
+    height: 100dvh; /* Dynamic viewport height for modern browsers */
+    overflow: hidden;
     margin: 0;
     padding: 0;
-    overflow-x: hidden;
+    position: fixed;
+    width: 100%;
 }
 
 #root {
-    min-height: 100vh;
-    min-height: -webkit-fill-available;
-    min-height: 100dvh;
-    display: flex;
-    flex-direction: column;
-}
-
-/* Utility class for full viewport height on iOS Safari */
-.full-viewport-height {
+    height: 100%;
     height: 100vh;
-    height: -webkit-fill-available;
-    height: 100dvh;
-    min-height: 100vh;
-    min-height: -webkit-fill-available;
-    min-height: 100dvh;
+    height: 100dvh; /* Dynamic viewport height for modern browsers */
+    width: 100%;
+    overflow: auto;
+    position: relative;
 }
 
 @theme {
