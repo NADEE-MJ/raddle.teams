@@ -48,7 +48,11 @@
     --color-grey: #2b2b2b;
 }
 
-/* Custom Scrollbar Styles */
+html,
+body {
+    background: var(--color-primary);
+}
+
 /* Webkit browsers (Chrome, Safari, Edge) */
 ::-webkit-scrollbar {
     width: 8px;
