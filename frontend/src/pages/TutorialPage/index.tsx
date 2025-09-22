@@ -1,13 +1,13 @@
-import { useNavigate } from 'react-router-dom';
 import Tutorial from './Tutorial';
+import TutorialGuide from './TutorialGuide';
 import { useMemo, useState } from 'react';
 import { Puzzle } from '@/types/game';
-import { Button } from '@/components';
+import { TutorialState } from '@/types/tutorialStateMachine';
 
 
 
 export default function TutorialPage() {
-    const [completed, setCompleted] = useState(false);
+    const [tutorialState, setTutorialState] = useState<TutorialState | null>(null);
     const puzzle = useMemo<Puzzle>(() => {
         return {
             title: 'From DOWN to EARTH',
@@ -61,31 +61,22 @@ export default function TutorialPage() {
         };
     }, []);
 
-    const navigate = useNavigate();
-
     return (
         <div>
             <div className="w-full text-center mb-4 md:mb-0">
                 <h2 className="text-2xl md:text-3xl font-semibold mb-5 text-tx-primary">Learn how to Raddle</h2>
             </div>
 
-            <Tutorial
-                setCompleted={setCompleted}
-                puzzle={puzzle}
-            />
-
-            {completed && (
-                <div className="mt-8 text-center">
-                    <Button
-                        onClick={() => navigate('/')}
-                        variant="hint"
-                        size="lg"
-                        className='inline-block px-6 py-3 bg-blue-600 hover:bg-blue-700 dark:bg-blue-700 dark:hover:bg-blue-600 text-white rounded-lg font-medium transition duration-200'
-                    >
-                        Ready to Play with Teams!
-                    </Button>
-                </div>
+            {tutorialState && (
+                <TutorialGuide
+                    tutorialState={tutorialState}
+                />
             )}
+
+            <Tutorial
+                puzzle={puzzle}
+                onStateChange={setTutorialState}
+            />
         </div>
     );
 }

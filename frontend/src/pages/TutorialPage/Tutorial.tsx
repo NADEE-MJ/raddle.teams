@@ -1,16 +1,17 @@
 import { useRef, useEffect, useState, useCallback, useMemo } from 'react';
 import { Puzzle } from '@/types/game';
+import { TutorialState } from '@/types/tutorialStateMachine';
 import { useTutorialStateMachine } from '@/hooks/useTutorialStateMachine';
 import { HintConfirmationModal } from '@/components';
 import LadderStep from './LadderStep';
 import Clues from './Clues';
 
 interface TutorialProps {
-    setCompleted: (completed: boolean) => void;
     puzzle: Puzzle;
+    onStateChange: (state: TutorialState) => void;
 }
 
-export default function Tutorial({ setCompleted, puzzle }: TutorialProps) {
+export default function Tutorial({ puzzle, onStateChange }: TutorialProps) {
     const inputRef = useRef<HTMLInputElement>(null);
     const [showHintConfirmation, setShowHintConfirmation] = useState(false);
     const [showFullLadder, setShowFullLadder] = useState(false);
@@ -32,11 +33,11 @@ export default function Tutorial({ setCompleted, puzzle }: TutorialProps) {
 
     // Update completion status when state changes
     useEffect(() => {
-        setCompleted(state.isCompleted);
         if (state.isCompleted) {
             setShowFullLadder(true);
         }
-    }, [state.isCompleted, setCompleted]);
+        onStateChange(state);
+    }, [state, onStateChange]);
 
 
     const focusInput = useCallback(() => {
