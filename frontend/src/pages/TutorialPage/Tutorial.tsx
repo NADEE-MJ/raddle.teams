@@ -1,4 +1,4 @@
-import { useRef, useEffect, useState, useCallback, useMemo } from 'react';
+import { useRef, useEffect, useState, useCallback, useMemo, use } from 'react';
 import { Puzzle } from '@/types/game';
 import { TutorialState } from '@/types/tutorialStateMachine';
 import { useTutorialStateMachine } from '@/hooks/useTutorialStateMachine';
@@ -30,6 +30,11 @@ export default function Tutorial({ puzzle, onStateChange }: TutorialProps) {
         getHintsUsedForStep,
         shuffleWithSeed,
     } = useTutorialStateMachine(puzzle);
+
+    useEffect(() => {
+        // Run once on mount to show the first hint
+        handleHint();
+    }, []);  // eslint-disable-line react-hooks/exhaustive-deps
 
     // Update completion status when state changes
     useEffect(() => {

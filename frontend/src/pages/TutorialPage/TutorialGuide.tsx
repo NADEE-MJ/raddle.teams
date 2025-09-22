@@ -19,7 +19,7 @@ const tutorialSteps: TutorialStep[] = [
     {
         id: 1,
         title: "Welcome to Raddle!",
-        content: "Welcome to Raddle! Let's learn how to play. Begin by solving the first clue below, then type your answer in the yellow box. Note the (5) next to the yellow box indicates that the answer is 5 letters long.",
+        content: "Welcome to Raddle! Let's learn how to play. Begin by solving the blue highlighted clue below, then type your answer in the yellow box. Note the (5) next to the yellow box indicates that the answer is 5 letters long.",
         autoAdvanceCondition: (state, prev) => {
             // Advance when first step is revealed (first answer correct)
             return state.revealedSteps.has(1) && (!prev || !prev.revealedSteps.has(1));
@@ -57,7 +57,7 @@ const tutorialSteps: TutorialStep[] = [
     {
         id: 5,
         title: "Direction Switching",
-        content: "Nice. One final tip: if you're stuck moving down the ladder, you can switch direction and move up instead. Click the arrow (↑) button or the box next to it.",
+        content: "Nice. One final tip: if you're stuck moving down the ladder, you can switch direction and move up instead. Click the arrow (↑) button or the box that says 'Switch to solving upwards' at the bottom of the screen.",
         autoAdvanceCondition: (state, prev) => {
             // Advance when direction is switched to up
             return state.direction === 'up' && (!prev || prev.direction !== 'up');
@@ -66,7 +66,7 @@ const tutorialSteps: TutorialStep[] = [
     {
         id: 6,
         title: "Solving Upwards",
-        content: "When solving upwards, the clues flip around — now they show you the answer, and you need to figure out what word belongs in the green box. This direction can be more challenging. If you're stuck, tap the lightbulb. Type your answer when you've figured it out.",
+        content: "When solving upwards, the clues flip around — now they show you the answer, and you need to figure out what word belongs in the green box (the question). This direction can be more challenging. If you're stuck, tap the lightbulb. Type your answer when you've figured it out.",
         autoAdvanceCondition: (state, prev) => {
             // Advance when solving upwards and a step is revealed
             const prevRevealedCount = prev?.revealedSteps.size || 0;
