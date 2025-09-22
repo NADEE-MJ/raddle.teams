@@ -155,7 +155,7 @@ const GlobalLayout: React.FC = () => {
                                             size='md'
                                             data-testid='tutorial-link'
                                         >
-                                            ✌️ How to Play
+                                            ✌️ Tutorial
                                         </Button>
                                         {'•'}
                                         <Button
@@ -204,7 +204,7 @@ const GlobalLayout: React.FC = () => {
                                 size='lg'
                                 data-testid='footer-tutorial-link'
                             >
-                                ✌️ How to Play
+                                ✌️ Tutorial
                             </Button>
                             <Button
                                 onClick={() => navigate('/admin/login')}

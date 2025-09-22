@@ -145,57 +145,59 @@ export default function Tutorial({ puzzle, onStateChange }: TutorialProps) {
     return (
         <div className='mx-auto max-w-6xl'>
             <div id='game-area' className='md:grid md:grid-cols-[2fr_3fr] md:gap-8'>
-                <div className='divide-border border-border divide-y-2 border-x-5 '>
-                    <div>
-                        <div className='hidden p-4 sm:hidden md:block'></div>
-                        {!state.isCompleted ? (
+                <div className={`${!showFullLadder ? 'sticky z-50 top-0 ' : ''} py-3 bg-primary`}>
+                    <div className={'divide-border border-border divide-y-2 border-x-5'}>
+                        <div>
+                            <div className='hidden p-4 sm:hidden md:block'></div>
+                            {!state.isCompleted ? (
+                                <button
+                                    type='button'
+                                    onClick={toggleFullLadder}
+                                    className='text-tx-muted hover:bg-elevated w-full p-1 mb-1 text-xs italic md:hidden'
+                                >
+                                    {showFullLadder ? 'Collapse full ladder' : 'Show full ladder'}
+                                </button>
+                            ) : <div className='p-4 sm:block md:hidden'></div>}
+                        </div>
+
+                        {puzzle.ladder.map((ladderStep, stepId) => {
+                            const shouldRenderStepOnMobile = mobileVisibleSteps.includes(stepId);
+
+                            if (!showFullLadder && !shouldRenderStepOnMobile) {
+                                return null;
+                            }
+                            return (
+                                <LadderStep
+                                    key={`ladder-step-${stepId}`}
+                                    onGuessChange={handleGuessChange}
+                                    inputRef={inputRef}
+                                    word={ladderStep.word}
+                                    transform={ladderStep.transform}
+                                    isCurrentQuestion={isCurrentQuestion(stepId)}
+                                    isCurrentAnswer={isCurrentAnswer(stepId)}
+                                    isStepRevealed={isStepRevealed(stepId)}
+                                    isActive={isActiveStep(stepId)}
+                                    shouldShowTransform={isStepRevealed(stepId) && isStepRevealed(stepId + 1)}
+                                    shouldRenderTransform={(stepId !== mobileVisibleSteps[mobileVisibleSteps.length - 1] && !showFullLadder) || showFullLadder} // don't show transform for the last visible step
+                                    onHintClick={isActiveStep(stepId) ? handleHintClick : undefined}
+                                    secondHint={getHintsUsedForStep(stepId) === 1}
+                                />
+                            );
+                        })}
+
+                        {(!state.isCompleted && canSwitchDirection) ? (
                             <button
                                 type='button'
-                                onClick={toggleFullLadder}
-                                className='text-tx-muted hover:bg-elevated w-full p-1 mb-1 text-xs italic md:hidden'
+                                onClick={handleDirectionChange}
+                                className='text-tx-muted hover:bg-elevated w-full p-1 text-xs italic'
+                                data-testid="switch-direction-button"
                             >
-                                {showFullLadder ? 'Collapse full ladder' : 'Show full ladder'}
+                                Switch to solving {state.direction === 'down' ? '↑ upward' : '↓ downward'}
                             </button>
-                        ) : <div className='p-4 sm:block md:hidden'></div>}
+                        ) : (
+                            <div className='p-4' />
+                        )}
                     </div>
-
-                    {puzzle.ladder.map((ladderStep, stepId) => {
-                        const shouldRenderStepOnMobile = mobileVisibleSteps.includes(stepId);
-
-                        if (!showFullLadder && !shouldRenderStepOnMobile) {
-                            return null;
-                        }
-                        return (
-                            <LadderStep
-                                key={`ladder-step-${stepId}`}
-                                onGuessChange={handleGuessChange}
-                                inputRef={inputRef}
-                                word={ladderStep.word}
-                                transform={ladderStep.transform}
-                                isCurrentQuestion={isCurrentQuestion(stepId)}
-                                isCurrentAnswer={isCurrentAnswer(stepId)}
-                                isStepRevealed={isStepRevealed(stepId)}
-                                isActive={isActiveStep(stepId)}
-                                shouldShowTransform={isStepRevealed(stepId) && isStepRevealed(stepId + 1)}
-                                shouldRenderTransform={(stepId !== mobileVisibleSteps[mobileVisibleSteps.length - 1] && !showFullLadder) || showFullLadder} // don't show transform for the last visible step
-                                onHintClick={isActiveStep(stepId) ? handleHintClick : undefined}
-                                secondHint={getHintsUsedForStep(stepId) === 1}
-                            />
-                        );
-                    })}
-
-                    {(!state.isCompleted && canSwitchDirection) ? (
-                        <button
-                            type='button'
-                            onClick={handleDirectionChange}
-                            className='text-tx-muted hover:bg-elevated w-full p-1 text-xs italic'
-                            data-testid="switch-direction-button"
-                        >
-                            Switch to solving {state.direction === 'down' ? '↑ upward' : '↓ downward'}
-                        </button>
-                    ) : (
-                        <div className='p-4' />
-                    )}
                 </div>
 
                 <Clues
