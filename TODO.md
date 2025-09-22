@@ -65,5 +65,6 @@
    4. should it attempt to reconnect to the player
    5. should it resend the message later?
 9. flesh out the puzzles_from_raddle functions to load and convert puzzles from raddle format to our format
+10. create tests for tutorial guide component
 
 ## BUGS
