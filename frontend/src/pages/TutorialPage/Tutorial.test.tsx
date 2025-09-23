@@ -12,7 +12,7 @@ Object.defineProperty(window, 'matchMedia', {
 })
 
 describe('Tutorial Component', () => {
-  const mockSetCompleted = vi.fn()
+  const mockOnStateChange = vi.fn()
 
   const TUTORIAL_PUZZLE: Puzzle = {
     title: 'From DOWN to EARTH',
@@ -66,7 +66,7 @@ describe('Tutorial Component', () => {
   }
 
   beforeEach(() => {
-    mockSetCompleted.mockClear()
+    mockOnStateChange.mockClear()
     mockMatchMedia.mockImplementation(query => ({
       matches: false, // Default to mobile view
       media: query,
@@ -81,7 +81,7 @@ describe('Tutorial Component', () => {
 
   describe('Initial rendering', () => {
     test('renders with correct initial state', () => {
-      render(<Tutorial setCompleted={mockSetCompleted} puzzle={TUTORIAL_PUZZLE} />)
+      render(<Tutorial onStateChange={mockOnStateChange} puzzle={TUTORIAL_PUZZLE} />)
 
       expect(screen.getByTestId('ladder-word-down')).toBeInTheDocument()
       expect(screen.getByTestId('ladder-word-down')).toHaveTextContent('DOWN')
@@ -98,25 +98,27 @@ describe('Tutorial Component', () => {
     })
 
     test('initializes with downward direction', () => {
-      render(<Tutorial setCompleted={mockSetCompleted} puzzle={TUTORIAL_PUZZLE} />)
+      render(<Tutorial onStateChange={mockOnStateChange} puzzle={TUTORIAL_PUZZLE} />)
 
       // Should show "Switch to solving upward" indicating we're currently going downward
       expect(screen.getByTestId('switch-direction-button')).toBeInTheDocument()
       expect(screen.getByTestId('switch-direction-button')).toHaveTextContent(/Switch to solving.*upward/i)
     })
 
-    test('calls setCompleted with false on initial render', () => {
-      render(<Tutorial setCompleted={mockSetCompleted} puzzle={TUTORIAL_PUZZLE} />)
+    test('calls onStateChange with initial state on render', () => {
+      render(<Tutorial onStateChange={mockOnStateChange} puzzle={TUTORIAL_PUZZLE} />)
 
-      // Should call setCompleted with false on initial render to sync state
-      expect(mockSetCompleted).toHaveBeenCalledWith(false)
+      // Should call onStateChange with initial state on render
+      expect(mockOnStateChange).toHaveBeenCalledWith(expect.objectContaining({
+        isCompleted: false
+      }))
     })
   })
 
   describe('User input handling', () => {
     test('accepts user input in the active input field', async () => {
       const user = userEvent.setup()
-      render(<Tutorial setCompleted={mockSetCompleted} puzzle={TUTORIAL_PUZZLE} />)
+      render(<Tutorial onStateChange={mockOnStateChange} puzzle={TUTORIAL_PUZZLE} />)
 
       const input = screen.getByTestId('active-step-input')
 
@@ -129,7 +131,7 @@ describe('Tutorial Component', () => {
 
     test('clears input and changes focus when correct answer is entered', async () => {
       const user = userEvent.setup()
-      render(<Tutorial setCompleted={mockSetCompleted} puzzle={TUTORIAL_PUZZLE} />)
+      render(<Tutorial onStateChange={mockOnStateChange} puzzle={TUTORIAL_PUZZLE} />)
 
       const input = screen.getByTestId('active-step-input')
 
@@ -141,7 +143,7 @@ describe('Tutorial Component', () => {
     })
 
     test('handles empty input without crashing', async () => {
-      render(<Tutorial setCompleted={mockSetCompleted} puzzle={TUTORIAL_PUZZLE} />)
+      render(<Tutorial onStateChange={mockOnStateChange} puzzle={TUTORIAL_PUZZLE} />)
 
       const input = screen.getByTestId('active-step-input')
 
@@ -156,7 +158,7 @@ describe('Tutorial Component', () => {
   describe('Direction switching', () => {
     test('can switch to upward direction', async () => {
       const user = userEvent.setup()
-      render(<Tutorial setCompleted={mockSetCompleted} puzzle={TUTORIAL_PUZZLE} />)
+      render(<Tutorial onStateChange={mockOnStateChange} puzzle={TUTORIAL_PUZZLE} />)
 
       // First solve one step to enable direction switching
       const input = screen.getByTestId('active-step-input')
@@ -172,7 +174,7 @@ describe('Tutorial Component', () => {
 
     test('maintains switch button functionality', async () => {
       const user = userEvent.setup()
-      render(<Tutorial setCompleted={mockSetCompleted} puzzle={TUTORIAL_PUZZLE} />)
+      render(<Tutorial onStateChange={mockOnStateChange} puzzle={TUTORIAL_PUZZLE} />)
 
       const switchButton = screen.getByTestId('switch-direction-button')
 
@@ -188,7 +190,7 @@ describe('Tutorial Component', () => {
   describe('Puzzle progression', () => {
     test('progresses through multiple steps', async () => {
       const user = userEvent.setup()
-      render(<Tutorial setCompleted={mockSetCompleted} puzzle={TUTORIAL_PUZZLE} />)
+      render(<Tutorial onStateChange={mockOnStateChange} puzzle={TUTORIAL_PUZZLE} />)
 
       // Should always have an active input for progression
       expect(screen.getByTestId('active-step-input')).toBeInTheDocument()
@@ -203,7 +205,7 @@ describe('Tutorial Component', () => {
 
     test('progresses through puzzle solving', async () => {
       const user = userEvent.setup()
-      render(<Tutorial setCompleted={mockSetCompleted} puzzle={TUTORIAL_PUZZLE} />)
+      render(<Tutorial onStateChange={mockOnStateChange} puzzle={TUTORIAL_PUZZLE} />)
 
       const answers = ['SOUTH', 'MOUTH', 'TONGUE', 'SHOE', 'SOLE', 'SOUL', 'HEART']
 
@@ -221,7 +223,7 @@ describe('Tutorial Component', () => {
 
   describe('Component integration', () => {
     test('renders all expected child components', () => {
-      render(<Tutorial setCompleted={mockSetCompleted} puzzle={TUTORIAL_PUZZLE} />)
+      render(<Tutorial onStateChange={mockOnStateChange} puzzle={TUTORIAL_PUZZLE} />)
 
       // Should render ladder steps (only visible ones in mobile view)
       expect(screen.getByTestId('ladder-word-down')).toBeInTheDocument()
@@ -238,7 +240,7 @@ describe('Tutorial Component', () => {
     })
 
     test('maintains consistent UI structure', () => {
-      render(<Tutorial setCompleted={mockSetCompleted} puzzle={TUTORIAL_PUZZLE} />)
+      render(<Tutorial onStateChange={mockOnStateChange} puzzle={TUTORIAL_PUZZLE} />)
 
       // Check that game area exists using ID
       const gameArea = document.getElementById('game-area')
@@ -252,20 +254,23 @@ describe('Tutorial Component', () => {
   })
 
   describe('Completion state handling', () => {
-    test('calls setCompleted based on state machine completion status', () => {
-      render(<Tutorial setCompleted={mockSetCompleted} puzzle={TUTORIAL_PUZZLE} />)
+    test('calls onStateChange based on state machine completion status', () => {
+      render(<Tutorial onStateChange={mockOnStateChange} puzzle={TUTORIAL_PUZZLE} />)
 
-      // Initially calls with false because puzzle starts incomplete
-      expect(mockSetCompleted).toHaveBeenCalledWith(false)
+      // Initially calls with state object because puzzle starts incomplete
+      expect(mockOnStateChange).toHaveBeenCalledWith(expect.objectContaining({
+        isCompleted: false
+      }))
 
       // The completion state is managed by the state machine
-      // This test verifies that setCompleted is called with the current state
-      expect(mockSetCompleted).toHaveBeenCalledTimes(1)
+      // This test verifies that onStateChange is called with the current state
+      // Since tutorial now starts with a hint revealed, it may call onStateChange twice
+      expect(mockOnStateChange).toHaveBeenCalledTimes(2)
     })
 
     test('hides switch direction button when completed', async () => {
       const user = userEvent.setup()
-      render(<Tutorial setCompleted={mockSetCompleted} puzzle={TUTORIAL_PUZZLE} />)
+      render(<Tutorial onStateChange={mockOnStateChange} puzzle={TUTORIAL_PUZZLE} />)
 
       // Initially should show switch button
       expect(screen.getByTestId('switch-direction-button')).toBeInTheDocument()
@@ -288,7 +293,7 @@ describe('Tutorial Component', () => {
 
   describe('LadderStep integration', () => {
     test('renders ladder steps with correct props', () => {
-      render(<Tutorial setCompleted={mockSetCompleted} puzzle={TUTORIAL_PUZZLE} />)
+      render(<Tutorial onStateChange={mockOnStateChange} puzzle={TUTORIAL_PUZZLE} />)
 
       // Check that visible steps are rendered (in mobile view, only 3 steps visible)
       expect(screen.getByTestId('ladder-word-down')).toBeInTheDocument()
@@ -301,7 +306,7 @@ describe('Tutorial Component', () => {
 
     test('passes shouldShowTransform and shouldRenderTransform correctly to LadderStep components', async () => {
       const user = userEvent.setup()
-      render(<Tutorial setCompleted={mockSetCompleted} puzzle={TUTORIAL_PUZZLE} />)
+      render(<Tutorial onStateChange={mockOnStateChange} puzzle={TUTORIAL_PUZZLE} />)
 
       // Initially, DOWN is the question and SOUTH is the active answer
       expect(screen.getByTestId('ladder-word-down')).toBeInTheDocument()
@@ -332,7 +337,7 @@ describe('Tutorial Component', () => {
         dispatchEvent: vi.fn(),
       }))
 
-      render(<Tutorial setCompleted={mockSetCompleted} puzzle={TUTORIAL_PUZZLE} />)
+      render(<Tutorial onStateChange={mockOnStateChange} puzzle={TUTORIAL_PUZZLE} />)
 
       // Should show only 3 steps around active step (step 1)
       expect(screen.getByTestId('ladder-word-down')).toBeInTheDocument() // step 0
@@ -358,7 +363,7 @@ describe('Tutorial Component', () => {
         dispatchEvent: vi.fn(),
       }))
 
-      render(<Tutorial setCompleted={mockSetCompleted} puzzle={TUTORIAL_PUZZLE} />)
+      render(<Tutorial onStateChange={mockOnStateChange} puzzle={TUTORIAL_PUZZLE} />)
 
       // Should show all steps
       expect(screen.getByTestId('ladder-word-down')).toBeInTheDocument()
@@ -374,7 +379,7 @@ describe('Tutorial Component', () => {
 
     test('mobile view updates 3-step window as game progresses', async () => {
       const user = userEvent.setup()
-      render(<Tutorial setCompleted={mockSetCompleted} puzzle={TUTORIAL_PUZZLE} />)
+      render(<Tutorial onStateChange={mockOnStateChange} puzzle={TUTORIAL_PUZZLE} />)
 
       // Initially showing steps 0, 1, 2 (DOWN, SOUTH, MOUTH)
       expect(screen.getByTestId('ladder-word-down')).toBeInTheDocument()
@@ -412,7 +417,7 @@ describe('Tutorial Component', () => {
         dispatchEvent: vi.fn(),
       }))
 
-      render(<Tutorial setCompleted={mockSetCompleted} puzzle={TUTORIAL_PUZZLE} />)
+      render(<Tutorial onStateChange={mockOnStateChange} puzzle={TUTORIAL_PUZZLE} />)
 
       // Initially mobile - limited steps visible
       expect(screen.getByTestId('ladder-word-down')).toBeInTheDocument()
@@ -435,7 +440,7 @@ describe('Tutorial Component', () => {
     })
 
     test('renders responsive grid layout', () => {
-      render(<Tutorial setCompleted={mockSetCompleted} puzzle={TUTORIAL_PUZZLE} />)
+      render(<Tutorial onStateChange={mockOnStateChange} puzzle={TUTORIAL_PUZZLE} />)
 
       const gameArea = document.getElementById('game-area')
       expect(gameArea).toHaveClass('md:grid', 'md:grid-cols-[2fr_3fr]', 'md:gap-8')
@@ -444,7 +449,7 @@ describe('Tutorial Component', () => {
 
   describe('Show Full Ladder Button', () => {
     test('renders show full ladder button in mobile view', () => {
-      render(<Tutorial setCompleted={mockSetCompleted} puzzle={TUTORIAL_PUZZLE} />)
+      render(<Tutorial onStateChange={mockOnStateChange} puzzle={TUTORIAL_PUZZLE} />)
 
       const showLadderButton = screen.getByText('Show full ladder')
       expect(showLadderButton).toBeInTheDocument()
@@ -453,7 +458,7 @@ describe('Tutorial Component', () => {
 
     test('toggles full ladder visibility when clicked', async () => {
       const user = userEvent.setup()
-      render(<Tutorial setCompleted={mockSetCompleted} puzzle={TUTORIAL_PUZZLE} />)
+      render(<Tutorial onStateChange={mockOnStateChange} puzzle={TUTORIAL_PUZZLE} />)
 
       // Initially only 3 steps visible
       expect(screen.queryByTestId('ladder-word-earth')).not.toBeInTheDocument()
@@ -474,7 +479,7 @@ describe('Tutorial Component', () => {
 
     test('can collapse full ladder after expanding', async () => {
       const user = userEvent.setup()
-      render(<Tutorial setCompleted={mockSetCompleted} puzzle={TUTORIAL_PUZZLE} />)
+      render(<Tutorial onStateChange={mockOnStateChange} puzzle={TUTORIAL_PUZZLE} />)
 
       // Expand full ladder
       const showButton = screen.getByText('Show full ladder')
@@ -492,7 +497,7 @@ describe('Tutorial Component', () => {
 
     test('hides show full ladder button when game is completed', async () => {
       const user = userEvent.setup()
-      render(<Tutorial setCompleted={mockSetCompleted} puzzle={TUTORIAL_PUZZLE} />)
+      render(<Tutorial onStateChange={mockOnStateChange} puzzle={TUTORIAL_PUZZLE} />)
 
       // Initially button is visible
       expect(screen.getByText('Show full ladder')).toBeInTheDocument()
@@ -516,7 +521,7 @@ describe('Tutorial Component', () => {
   describe('Mobile shouldRenderTransform Logic', () => {
     test('shouldRenderTransform is false for last visible step in mobile window', async () => {
       const user = userEvent.setup()
-      render(<Tutorial setCompleted={mockSetCompleted} puzzle={TUTORIAL_PUZZLE} />)
+      render(<Tutorial onStateChange={mockOnStateChange} puzzle={TUTORIAL_PUZZLE} />)
 
       // In mobile view with 3-step window, MOUTH is the last visible step
       // So MOUTH should not render transform, but DOWN and SOUTH should
@@ -534,7 +539,7 @@ describe('Tutorial Component', () => {
 
     test('shouldRenderTransform respects mobile window boundaries', async () => {
       const user = userEvent.setup()
-      render(<Tutorial setCompleted={mockSetCompleted} puzzle={TUTORIAL_PUZZLE} />)
+      render(<Tutorial onStateChange={mockOnStateChange} puzzle={TUTORIAL_PUZZLE} />)
 
       // Solve first step to progress
       const input = screen.getByTestId('active-step-input')
@@ -553,7 +558,7 @@ describe('Tutorial Component', () => {
   describe('Direction switch behavior', () => {
     test('updates button text correctly when switching directions', async () => {
       const user = userEvent.setup()
-      render(<Tutorial setCompleted={mockSetCompleted} puzzle={TUTORIAL_PUZZLE} />)
+      render(<Tutorial onStateChange={mockOnStateChange} puzzle={TUTORIAL_PUZZLE} />)
 
       const switchButton = screen.getByTestId('switch-direction-button')
 
@@ -576,7 +581,7 @@ describe('Tutorial Component', () => {
 
   describe('Focus management', () => {
     test('focuses input field on render', () => {
-      render(<Tutorial setCompleted={mockSetCompleted} puzzle={TUTORIAL_PUZZLE} />)
+      render(<Tutorial onStateChange={mockOnStateChange} puzzle={TUTORIAL_PUZZLE} />)
 
       const input = screen.getByTestId('active-step-input')
 
@@ -589,7 +594,7 @@ describe('Tutorial Component', () => {
   describe('Hint functionality', () => {
     test('shows hint confirmation modal when hint button is clicked', async () => {
       const user = userEvent.setup()
-      render(<Tutorial setCompleted={mockSetCompleted} puzzle={TUTORIAL_PUZZLE} />)
+      render(<Tutorial onStateChange={mockOnStateChange} puzzle={TUTORIAL_PUZZLE} />)
 
       // Find and click the hint button
       const hintButton = screen.getByTestId('hint-button')
@@ -598,13 +603,13 @@ describe('Tutorial Component', () => {
       // Should show the hint confirmation modal
       expect(screen.getByText('Reveal clue?')).toBeInTheDocument()
       expect(screen.getAllByText((_content, element) => {
-        return element?.textContent?.includes('This will reveal which clue is related to this step of the ladder') ?? false;
+        return element?.textContent?.includes('This will reveal the answer for this step of the ladder') ?? false;
       })[0]).toBeInTheDocument()
     })
 
     test('closes hint confirmation modal when cancelled', async () => {
       const user = userEvent.setup()
-      render(<Tutorial setCompleted={mockSetCompleted} puzzle={TUTORIAL_PUZZLE} />)
+      render(<Tutorial onStateChange={mockOnStateChange} puzzle={TUTORIAL_PUZZLE} />)
 
       // Open hint modal
       const hintButton = screen.getByTestId('hint-button')
@@ -621,7 +626,7 @@ describe('Tutorial Component', () => {
 
     test('confirms hint and closes modal when confirmed', async () => {
       const user = userEvent.setup()
-      render(<Tutorial setCompleted={mockSetCompleted} puzzle={TUTORIAL_PUZZLE} />)
+      render(<Tutorial onStateChange={mockOnStateChange} puzzle={TUTORIAL_PUZZLE} />)
 
       // Open hint modal
       const hintButton = screen.getByTestId('hint-button')
@@ -638,40 +643,38 @@ describe('Tutorial Component', () => {
 
     test('shows second hint modal text when one hint has been used', async () => {
       const user = userEvent.setup()
-      render(<Tutorial setCompleted={mockSetCompleted} puzzle={TUTORIAL_PUZZLE} />)
+      render(<Tutorial onStateChange={mockOnStateChange} puzzle={TUTORIAL_PUZZLE} />)
 
-      // Use first hint
+      // Since tutorial starts with first hint revealed, directly use the available hint (second one)
       const hintButton = screen.getByTestId('hint-button')
       await user.click(hintButton)
-      const confirmButton = screen.getByTestId('hint-confirmation-yes')
-      await user.click(confirmButton)
 
-      // Use second hint
-      const hintButtonAfter = screen.getByTestId('hint-button')
-      await user.click(hintButtonAfter)
-
-      // Should show second hint modal text
-      expect(screen.getAllByText((_content, element) => {
-        return element?.textContent?.includes('This will reveal the answer for this step of the ladder') ?? false;
-      })[0]).toBeInTheDocument()
+      // Should show hint modal with the text for answer reveal
+      expect(screen.getByText('Reveal clue?')).toBeInTheDocument()
+      // Look for the specific paragraph element in the modal
+      const modalText = screen.getByText((content, element) => {
+        return element?.tagName === 'P' &&
+               (element?.textContent?.includes('This will reveal the answer for this step of the ladder') ?? false);
+      })
+      expect(modalText).toBeInTheDocument()
     })
 
     test('hint button shows different icon for second hint', async () => {
       const user = userEvent.setup()
-      render(<Tutorial setCompleted={mockSetCompleted} puzzle={TUTORIAL_PUZZLE} />)
+      render(<Tutorial onStateChange={mockOnStateChange} puzzle={TUTORIAL_PUZZLE} />)
 
-      // Initially should show light bulb
+      // Since tutorial starts with first hint revealed, should show eye icon initially
       const hintButton = screen.getByTestId('hint-button')
-      expect(hintButton).toHaveTextContent('💡')
+      expect(hintButton).toHaveTextContent('👁️')
 
-      // Use first hint
+      // Use second hint (since first is already revealed)
       await user.click(hintButton)
       const confirmButton = screen.getByTestId('hint-confirmation-yes')
       await user.click(confirmButton)
 
-      // Should now show eye icon for second hint
+      // After using second hint, should show lightbulb for third hint or same icon
       const hintButtonAfter = screen.getByTestId('hint-button')
-      expect(hintButtonAfter).toHaveTextContent('👁️')
+      expect(hintButtonAfter).toHaveTextContent('💡')
     })
   })
 })
