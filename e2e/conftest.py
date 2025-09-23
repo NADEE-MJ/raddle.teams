@@ -5,10 +5,10 @@ import pytest
 from playwright.async_api import async_playwright
 
 from backend.settings import settings as app_settings
-from tests.e2e.fixtures.browsers import BrowserSession
-from tests.e2e.fixtures.server import ServerManager
-from tests.e2e.utilities.admin_actions import AdminActions
-from tests.e2e.utilities.player_actions import PlayerActions
+from e2e.fixtures.browsers import BrowserSession
+from e2e.fixtures.server import ServerManager
+from e2e.utilities.admin_actions import AdminActions
+from e2e.utilities.player_actions import PlayerActions
 
 
 @pytest.fixture(scope="session")

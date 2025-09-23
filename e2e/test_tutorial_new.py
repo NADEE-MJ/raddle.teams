@@ -4,8 +4,8 @@ from typing import Awaitable, Callable
 
 from playwright.async_api import Page, expect
 
-from tests.e2e.fixtures.browsers import BrowserSession
-from tests.e2e.utilities.player_actions import PlayerActions
+from e2e.fixtures.browsers import BrowserSession
+from e2e.utilities.player_actions import PlayerActions
 
 type PlayerFixture = Callable[[str], Awaitable[tuple[PlayerActions, Page, BrowserSession]]]
 

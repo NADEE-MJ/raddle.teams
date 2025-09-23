@@ -299,15 +299,15 @@ def test(
     sys.path.insert(0, cwd)
 
     # add the test directory to the sys.path from the current working directory
-    sys.path.insert(0, f"{cwd}/tests")
-    sys.path.insert(0, f"{cwd}/tests/e2e")
-    sys.path.insert(0, f"{cwd}/tests/e2e/fixtures")
-    sys.path.insert(0, f"{cwd}/tests/e2e/utilities")
+    sys.path.insert(0, f"{cwd}/")
+    sys.path.insert(0, f"{cwd}/e2e")
+    sys.path.insert(0, f"{cwd}/e2e/fixtures")
+    sys.path.insert(0, f"{cwd}/e2e/utilities")
 
     records_dirs = [
-        f"{cwd}/tests/e2e/recordings/screenshots",
-        f"{cwd}/tests/e2e/recordings/videos",
-        f"{cwd}/tests/e2e/recordings/traces",
+        f"{cwd}/e2e/recordings/screenshots",
+        f"{cwd}/e2e/recordings/videos",
+        f"{cwd}/e2e/recordings/traces",
     ]
 
     with Progress(
