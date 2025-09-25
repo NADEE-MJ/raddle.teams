@@ -10,7 +10,7 @@ from e2e.utilities.player_actions import PlayerActions
 type PlayerFixture = Callable[[str], Awaitable[tuple[PlayerActions, Page, BrowserSession]]]
 
 
-class TestNewTutorial:
+class TestTutorial:
     async def test_tutorial_loads_correctly(self, player_actions_fixture: PlayerFixture):
         actions, page, browser = await player_actions_fixture("test_player")
         browser.set_name("new_tutorial_loads")
