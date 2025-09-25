@@ -64,7 +64,7 @@ export default function AdminPage() {
     );
 
     const wsUrl = useMemo(
-        () => (adminSessionId ? `ws://localhost:8000/ws/admin/${adminSessionId}?token=${adminApiToken}` : ''),
+        () => (adminSessionId ? `/ws/admin/${adminSessionId}?token=${adminApiToken}` : ''),
         [adminSessionId, adminApiToken]
     );
     const { isConnected, sendMessage } = useWebSocket(wsUrl, {

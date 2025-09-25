@@ -98,8 +98,7 @@ export default function LobbyPage() {
     );
 
     const wsUrl = useMemo(
-        () =>
-            player?.lobby_id && sessionId ? `ws://localhost:8000/ws/lobby/${player.lobby_id}/player/${sessionId}` : '',
+        () => player?.lobby_id && sessionId ? `/ws/lobby/${player.lobby_id}/player/${sessionId}` : '',
         [player?.lobby_id, sessionId]
     );
 
@@ -164,8 +163,8 @@ export default function LobbyPage() {
                                     key={playerItem.id}
                                     data-testid={`player-list-row-${playerItem.name}`}
                                     className={`flex items-center justify-between rounded-lg p-3 ${playerItem.id === player.id
-                                            ? 'dark:border-accent dark:bg-accent/20 border-2 border-blue-300 bg-blue-100'
-                                            : 'dark:border-border-light dark:bg-secondary border border-gray-200 bg-white'
+                                        ? 'dark:border-accent dark:bg-accent/20 border-2 border-blue-300 bg-blue-100'
+                                        : 'dark:border-border-light dark:bg-secondary border border-gray-200 bg-white'
                                         }`}
                                 >
                                     <div className='flex items-center gap-3'>
@@ -222,8 +221,8 @@ export default function LobbyPage() {
                                                     <span
                                                         key={teamPlayer.id}
                                                         className={`inline-block rounded px-2 py-1 text-xs ${teamPlayer.id === player.id
-                                                                ? 'bg-accent/20 text-accent font-semibold'
-                                                                : 'bg-elevated text-tx-secondary'
+                                                            ? 'bg-accent/20 text-accent font-semibold'
+                                                            : 'bg-elevated text-tx-secondary'
                                                             }`}
                                                         data-testid={`team-member-${teamPlayer.name}`}
                                                     >

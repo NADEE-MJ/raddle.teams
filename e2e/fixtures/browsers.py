@@ -8,7 +8,7 @@ class BrowserSession:
         self.browser: Browser = browser
         self.context: BrowserContext = None
         self.page: Page = None
-        self.recording_dir: str = "tests/e2e/recordings"
+        self.recording_dir: str = "e2e/recordings"
         self.name = "session"
         self.request = request
         self.recording_enabled = os.getenv("PYTEST_RECORD") == "1"

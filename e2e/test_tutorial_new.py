@@ -11,10 +11,7 @@ type PlayerFixture = Callable[[str], Awaitable[tuple[PlayerActions, Page, Browse
 
 
 class TestNewTutorial:
-    """Test the new single-page tutorial."""
-
     async def test_tutorial_loads_correctly(self, player_actions_fixture: PlayerFixture):
-        """Test that the new tutorial page loads with correct elements."""
         actions, page, browser = await player_actions_fixture("test_player")
         browser.set_name("new_tutorial_loads")
 
@@ -35,7 +32,6 @@ class TestNewTutorial:
         await expect(page.locator("text=Tutorial Puzzle")).to_be_visible()
 
     async def test_game_interface_elements(self, player_actions_fixture: PlayerFixture):
-        """Test that game interface elements are present."""
         actions, page, browser = await player_actions_fixture("test_player")
         browser.set_name("game_interface")
 
@@ -60,7 +56,6 @@ class TestNewTutorial:
         await expect(page.locator('button:has-text("Submit")')).to_be_visible()
 
     async def test_hints_show_correctly(self, player_actions_fixture: PlayerFixture):
-        """Test that hints show with DOWN substituted."""
         actions, page, browser = await player_actions_fixture("test_player")
         browser.set_name("hints_display")
 
@@ -71,7 +66,6 @@ class TestNewTutorial:
         await expect(page.locator("text=Change the first letter of DOWN to get")).to_be_visible()
 
     async def test_basic_guess_functionality(self, player_actions_fixture: PlayerFixture):
-        """Test making a basic guess."""
         actions, page, browser = await player_actions_fixture("test_player")
         browser.set_name("basic_guess")
 
@@ -89,7 +83,6 @@ class TestNewTutorial:
         await expect(page.locator("text=SOUTH solved!")).to_be_visible()
 
     async def test_direction_switching(self, player_actions_fixture: PlayerFixture):
-        """Test switching between forward and backward directions."""
         actions, page, browser = await player_actions_fixture("test_player")
         browser.set_name("direction_switching")
 
@@ -110,7 +103,6 @@ class TestNewTutorial:
         await expect(page.locator("text=Cardinal direction that's DOWN on a map")).to_be_visible()
 
     async def test_back_to_home_button(self, player_actions_fixture: PlayerFixture):
-        """Test navigation back to home."""
         actions, page, browser = await player_actions_fixture("test_player")
         browser.set_name("back_to_home")
 
@@ -124,7 +116,6 @@ class TestNewTutorial:
         await expect(page.locator("h1")).to_contain_text("Raddle Teams")
 
     async def test_ready_to_play_button(self, player_actions_fixture: PlayerFixture):
-        """Test the ready to play button."""
         actions, page, browser = await player_actions_fixture("test_player")
         browser.set_name("ready_to_play")
 
