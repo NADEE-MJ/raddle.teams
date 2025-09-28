@@ -17,18 +17,16 @@ dependencies = [
     "pydantic-settings>=2.10.1",
 ]
 
-[tool.poetry]
-package-mode = false
-requires-poetry = ">=2.0"
-
-[tool.poetry.group.dev.dependencies]
-ruff = "^0.12.10"
-pytest = "^8.4.1"
-pytest-playwright = "^0.7.0"
-httpx = "^0.28.1"
-pytest-asyncio = "^1.1.0"
-typer = "^0.16.1"
-pyyaml = "^6.0.2"
+[dependency-groups]
+dev = [
+    "ruff>=0.12.10",
+    "pytest>=8.4.1",
+    "pytest-playwright>=0.7.0",
+    "httpx>=0.28.1",
+    "pytest-asyncio>=1.1.0",
+    "typer>=0.16.1",
+    "pyyaml>=6.0.2",
+]
 
 [tool.ruff]
 line-length = 120

@@ -104,7 +104,7 @@ This is a full-stack team-based multiplayer word puzzle game with real-time WebS
 - TypeScript path aliases (`@/*` maps to `frontend/src/*`)
 - Tailwind CSS for styling
 - ESLint + Prettier for code quality
-- Poetry for Python dependency management
+- UV for Python dependency management
 
 ## Game Flow Architecture
 

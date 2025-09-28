@@ -49,7 +49,7 @@
    1. 💿 Hey developer 👋
    2. You can provide a way better UX than this when your app throws errors by providing your own ErrorBoundary or errorElement prop on your route.
 4. add setup instructions to the readme / create a separate setup.md file / clean up the readme
-   1. npm ci && poetry install --sync
+   1. npm ci && uv sync
    2. create .env file with new envs
 5. enforce max length on ladder step input?
 6. create a broadcast to other players in lobby and broadcast to self

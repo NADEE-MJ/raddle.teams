@@ -26,17 +26,17 @@ PROJECT_ROOT = Path(__file__).parent.absolute()
 console = Console()
 
 
-def rerun_in_poetry():
-    if "VIRTUAL_ENV" not in os.environ and "POETRY_ACTIVE" not in os.environ:
-        console.print("[bright_yellow]🔄 Switching to Poetry environment...[/bright_yellow]")
+def rerun_in_uv():
+    if "VIRTUAL_ENV" not in os.environ:
+        console.print("[bright_yellow]🔄 Switching to UV environment...[/bright_yellow]")
         try:
             # cd to the project root
             os.chdir(PROJECT_ROOT)
-            # Re-execute this script with poetry run
-            os.execvp("poetry", ["poetry", "run", "python"] + sys.argv)
+            # Re-execute this script with uv run
+            os.execvp("uv", ["uv", "run", "python"] + sys.argv)
         except (subprocess.CalledProcessError, FileNotFoundError):
-            # Poetry not available or not a poetry project, exit gracefully
-            console.print("[bold red]❌ Poetry is not installed or this is not a Poetry project.[/bold red]")
+            # UV not available, exit gracefully
+            console.print("[bold red]❌ UV is not installed.[/bold red]")
             raise typer.Exit(1)
 
 
@@ -136,7 +136,7 @@ def server(
         False, "--frontend-server", "-fe", help="🌐 Start only the frontend dev server", is_flag=True
     ),
 ):
-    rerun_in_poetry()
+    rerun_in_uv()
 
     try:
         process = None
@@ -285,7 +285,7 @@ def test(
     ),
     debug: bool = typer.Option(False, "--debug", "-d", help="🐛 Enable playwrights debug mode", is_flag=True),
 ):
-    rerun_in_poetry()
+    rerun_in_uv()
 
     if build(False) != 0:
         raise typer.Exit(1)
@@ -446,10 +446,10 @@ def format(
 
     if not frontend_only:
         if check:
-            if run_command(["poetry", "run", "ruff", "check", "."], "Checking backend formatting (Ruff)") != 0:
+            if run_command(["uv", "run", "ruff", "check", "."], "Checking backend formatting (Ruff)") != 0:
                 success = False
         else:
-            if run_command(["poetry", "run", "ruff", "format", "."], "Formatting backend (Ruff)") != 0:
+            if run_command(["uv", "run", "ruff", "format", "."], "Formatting backend (Ruff)") != 0:
                 success = False
 
     if success:
@@ -487,9 +487,7 @@ def install(
 ):
     install_info = Text()
     install_info.append("🐍 Python: ", style="bold yellow")
-    install_info.append("poetry install", style="blue")
-    if sync:
-        install_info.append(" sync", style="dim blue")
+    install_info.append("uv sync", style="blue")
     install_info.append("\n🟢 Node.js: ", style="bold yellow")
     install_info.append("npm ci" if sync else "npm install", style="blue")
 
@@ -498,10 +496,8 @@ def install(
     )
     console.print(panel)
 
-    poetry_command = ["poetry", "install"]
-    if sync:
-        poetry_command = ["poetry", "sync"]
-    if run_command(poetry_command, "Installing Python dependencies") != 0:
+    uv_command = ["uv", "sync"]
+    if run_command(uv_command, "Installing Python dependencies") != 0:
         raise typer.Exit(1)
 
     if sync:
