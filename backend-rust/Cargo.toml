@@ -1,0 +1,74 @@
+[package]
+name = "raddle-teams-rust"
+version = "1.0.0"
+edition = "2021"
+
+[lib]
+name = "raddle_teams_rust"
+path = "src/lib.rs"
+
+[[bin]]
+name = "raddle-server"
+path = "src/main.rs"
+
+[[bin]]
+name = "raddle-cli"
+path = "cli/src/main.rs"
+
+[dependencies]
+# Web framework
+axum = { version = "0.7", features = ["ws", "macros"] }
+tokio = { version = "1.42", features = ["full"] }
+tower = { version = "0.5", features = ["util"] }
+tower-http = { version = "0.6", features = ["fs", "cors", "trace", "compression-full"] }
+
+# Database
+sea-orm = { version = "1.1", features = ["sqlx-postgres", "sqlx-sqlite", "runtime-tokio-rustls", "macros", "with-chrono", "with-uuid"] }
+sea-orm-migration = "1.1"
+
+# Serialization
+serde = { version = "1.0", features = ["derive"] }
+serde_json = "1.0"
+
+# Utilities
+uuid = { version = "1.11", features = ["v4", "serde"] }
+chrono = { version = "0.4", features = ["serde"] }
+dotenvy = "0.15"
+
+# Logging
+tracing = "0.1"
+tracing-subscriber = { version = "0.3", features = ["env-filter", "json"] }
+
+# Error handling
+anyhow = "1.0"
+thiserror = "1.0"
+
+# CLI
+clap = { version = "4.5", features = ["derive", "cargo", "env"] }
+colored = "2.1"
+indicatif = "0.17"
+console = "0.15"
+
+# Async utilities
+futures = "0.3"
+tokio-stream = "0.1"
+
+# Random number generation
+rand = "0.8"
+
+# Additional HTTP utilities
+axum-extra = { version = "0.9", features = ["typed-header"] }
+http-body-util = "0.1"
+log = "0.4"
+
+# Testing
+[dev-dependencies]
+rstest = "0.23"
+tower = { version = "0.5", features = ["util"] }
+http-body-util = "0.1"
+mime = "0.3"
+
+[profile.release]
+opt-level = 3
+lto = true
+codegen-units = 1
