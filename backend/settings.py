@@ -15,4 +15,4 @@ class Settings(BaseSettings):
     TESTING: bool = testing
 
 
-settings = Settings()
+settings = Settings()  # ty: ignore[missing-argument]

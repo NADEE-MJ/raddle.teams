@@ -32,8 +32,10 @@ class TestLobbyRouteFlows:
         await player_actions.join_lobby()
 
         await expect(player_page.locator("p:has-text('Lobby Code:')")).to_be_visible()
-        await expect(player_page.locator(f"span.font-mono.text-lg.font-bold:has-text('{lobby_code}')")).to_be_visible()
-        await expect(player_page.locator("p:has-text('Welcome, Test Player!')")).to_be_visible()
+        await expect(player_page.locator(f'[data-testid="lobby-code"]:has-text("{lobby_code}")')).to_be_visible()
+        await expect(
+            player_page.locator("[data-testid='player-name-Test Player']:has-text('Test Player (You)')")
+        ).to_be_visible()
 
         await player_session.screenshot()
 
@@ -70,9 +72,11 @@ class TestLobbyRouteFlows:
         await player_actions.join_lobby()
 
         await expect(player_page.locator("p:has-text('Lobby Code:')")).to_be_visible()
-        await expect(player_page.locator(f"span.font-mono.text-lg.font-bold:has-text('{lobby_code}')")).to_be_visible()
+        await expect(player_page.locator(f'[data-testid="lobby-code"]:has-text("{lobby_code}")')).to_be_visible()
         await expect(player_page.locator("text=Lobby Info Test")).to_be_visible()
-        await expect(player_page.locator("p:has-text('Welcome, Info Test Player!')")).to_be_visible()
+        await expect(
+            player_page.locator("[data-testid='player-name-Info Test Player']:has-text('Info Test Player (You)')")
+        ).to_be_visible()
         await expect(player_page.locator("text=Players (1)")).to_be_visible()
 
         await player_session.screenshot()
@@ -129,7 +133,7 @@ class TestLobbyRouteFlows:
         await player_page.reload(wait_until="networkidle")
 
         await expect(player_page.locator("p:has-text('Lobby Code:')")).to_be_visible(timeout=10000)
-        await expect(player_page.locator(f"span.font-mono.text-lg.font-bold:has-text('{lobby_code}')")).to_be_visible()
+        await expect(player_page.locator(f'[data-testid="lobby-code"]:has-text("{lobby_code}")')).to_be_visible()
 
         await player_session.screenshot()
 
@@ -195,7 +199,9 @@ class TestLobbyRouteFlows:
         await player1_actions.fill_name_and_code("Player One", lobby_code)
         await player1_actions.join_lobby()
 
-        await expect(player1_page.locator("p:has-text('Welcome, Player One!')")).to_be_visible()
+        await expect(
+            player1_page.locator("[data-testid='player-name-Player One']:has-text('Player One (You)')")
+        ).to_be_visible()
         await player1_actions.wait_for_player_count(1)
 
         player2_actions, player2_page, player2_session = await player_actions_fixture("Player Two")
@@ -204,7 +210,9 @@ class TestLobbyRouteFlows:
         await player2_actions.fill_name_and_code("Player Two", lobby_code)
         await player2_actions.join_lobby()
 
-        await expect(player2_page.locator("p:has-text('Welcome, Player Two!')")).to_be_visible()
+        await expect(
+            player2_page.locator("[data-testid='player-name-Player Two']:has-text('Player Two (You)')")
+        ).to_be_visible()
 
         await player1_actions.wait_for_player_count(2, timeout=8000)
         await player2_actions.wait_for_player_count(2, timeout=3000)
@@ -243,7 +251,9 @@ class TestLobbyRouteFlows:
         await player_actions.join_lobby()
 
         await expect(player_page.locator("p:has-text('Lobby Code:')")).to_be_visible()
-        await expect(player_page.locator("p:has-text('Welcome, Case Test Player!')")).to_be_visible()
+        await expect(
+            player_page.locator("[data-testid='player-name-Case Test Player']:has-text('Case Test Player (You)')")
+        ).to_be_visible()
 
         await player_session.screenshot()
 
@@ -271,7 +281,7 @@ class TestLobbyRouteFlows:
         await player_page.go_back()
 
         await expect(player_page.locator("p:has-text('Lobby Code:')")).to_be_visible()
-        await expect(player_page.locator(f"span.font-mono.text-lg.font-bold:has-text('{lobby_code}')")).to_be_visible()
+        await expect(player_page.locator(f'[data-testid="lobby-code"]:has-text("{lobby_code}")')).to_be_visible()
 
         await player_session.screenshot()
 
@@ -359,8 +369,10 @@ class TestLobbyRouteWebSocketFlows:
             print(f"Rejoin failed. Page content: {error_text[:500]}")
             raise e
         await expect(player_page.locator("p:has-text('Lobby Code:')")).to_be_visible()
-        await expect(player_page.locator(f"span.font-mono.text-lg.font-bold:has-text('{lobby_code}')")).to_be_visible()
-        await expect(player_page.locator("p:has-text('Welcome, Rejoin Player!')")).to_be_visible()
+        await expect(player_page.locator(f'[data-testid="lobby-code"]:has-text("{lobby_code}")')).to_be_visible()
+        await expect(
+            player_page.locator("[data-testid='player-name-Rejoin Player']:has-text('Rejoin Player (You)')")
+        ).to_be_visible()
 
         await player_session.screenshot()
 
@@ -387,8 +399,10 @@ class TestLobbyRouteWebSocketFlows:
         await player_page.reload(wait_until="networkidle")
 
         await expect(player_page.locator("p:has-text('Lobby Code:')")).to_be_visible(timeout=5000)
-        await expect(player_page.locator(f"span.font-mono.text-lg.font-bold:has-text('{lobby_code}')")).to_be_visible()
-        await expect(player_page.locator("p:has-text('Welcome, Reconnect Player!')")).to_be_visible()
+        await expect(player_page.locator(f'[data-testid="lobby-code"]:has-text("{lobby_code}")')).to_be_visible()
+        await expect(
+            player_page.locator("[data-testid='player-name-Reconnect Player']:has-text('Reconnect Player (You)')")
+        ).to_be_visible()
 
         await player_session.screenshot()
 

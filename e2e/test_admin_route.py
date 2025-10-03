@@ -44,7 +44,9 @@ class TestAdminRouteFlows:
         login_button = page.locator('[data-testid="admin-login-submit"]')
         await login_button.click()
 
-        await expect(page.locator('[data-testid="admin-login-error"]:has-text("Invalid admin token")')).to_be_visible()
+        await expect(
+            page.locator('[data-testid="admin-token-input-error"]:has-text("Invalid admin token")')
+        ).to_be_visible()
         await expect(page.locator('[data-testid="admin-login-title"]')).to_be_visible()
 
         await browser.screenshot()
@@ -58,7 +60,8 @@ class TestAdminRouteFlows:
 
         lobby_code = await actions.create_lobby("E2E Test Lobby")
 
-        await expect(page.locator(f"text=Code: {lobby_code}")).to_be_visible()
+        await expect(page.locator("text=Code:")).to_be_visible()
+        await expect(page.locator(f"button:has-text('{lobby_code}')")).to_be_visible()
         await expect(page.locator('h3:has-text("E2E Test Lobby")')).to_be_visible()
 
         await browser.screenshot("admin_lobby_created")
@@ -107,7 +110,8 @@ class TestAdminRouteFlows:
         await actions.login(settings.ADMIN_PASSWORD)
 
         lobby_code = await actions.create_lobby("Delete Test Lobby")
-        await expect(page.locator(f"text=Code: {lobby_code}")).to_be_visible()
+        await expect(page.locator("text=Code:")).to_be_visible()
+        await expect(page.locator(f"button:has-text('{lobby_code}')")).to_be_visible()
 
         delete_button = page.locator(f"text=Code: {lobby_code}").locator("..").locator("button:has-text('Delete')")
         if await delete_button.is_visible():

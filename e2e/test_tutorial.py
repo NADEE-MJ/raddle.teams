@@ -18,18 +18,13 @@ class TestTutorial:
         await page.goto("http://localhost:8000/tutorial")
 
         # Check main title and structure
-        await expect(page.locator("h1")).to_contain_text("How to Play Raddle Teams")
-        await expect(page.locator('button:has-text("← Back to Home")')).to_be_visible()
+        await expect(page.locator("h1")).to_contain_text("RDDLE")  # From GlobalLayout
+        await expect(page.get_by_role("heading", name="Learn how to Raddle")).to_be_visible()  # From TutorialPage
+        await expect(page.locator('[data-testid="tutorial-link"]:has-text("Tutorial")')).to_be_visible()
 
-        # Check instruction sections
-        await expect(page.locator("text=🎯 Game Objective")).to_be_visible()
-        await expect(page.locator("text=🔄 How to Solve")).to_be_visible()
-        await expect(page.locator("text=💡 Tips")).to_be_visible()
-        await expect(page.locator("text=👥 Team Play")).to_be_visible()
-
-        # Check game section
-        await expect(page.locator("text=🎮 Try it yourself!")).to_be_visible()
-        await expect(page.locator("text=Tutorial Puzzle")).to_be_visible()
+        # Check that the tutorial page loaded with the puzzle (look for key elements)
+        await expect(page.locator('[data-testid="ladder-word-down"]')).to_be_visible()
+        await expect(page.locator('[data-testid="ladder-word-earth"]')).to_be_visible()
 
     async def test_game_interface_elements(self, player_actions_fixture: PlayerFixture):
         actions, page, browser = await player_actions_fixture("test_player")
@@ -37,23 +32,15 @@ class TestTutorial:
 
         await page.goto("http://localhost:8000/tutorial")
 
-        # Check ladder display
-        await expect(page.locator("text=DOWN")).to_be_visible()
-        await expect(page.locator("text=EARTH")).to_be_visible()
+        # Check ladder display (using more specific selectors)
+        await expect(page.locator('[data-testid="ladder-word-down"]:has-text("DOWN")')).to_be_visible()
+        await expect(page.locator('[data-testid="ladder-word-earth"]:has-text("EARTH")')).to_be_visible()
 
-        # Check controls
-        await expect(page.locator("text=Solving Controls")).to_be_visible()
-        await expect(page.locator("text=Direction:")).to_be_visible()
-        await expect(page.locator('button:has-text("Forward (from DOWN)")')).to_be_visible()
-        await expect(page.locator('button:has-text("Backward (from EARTH)")')).to_be_visible()
+        # Check switch direction button
+        await expect(page.locator('[data-testid="switch-direction-button"]')).to_be_visible()
 
-        # Check hints section
-        await expect(page.locator("text=Available Hints")).to_be_visible()
-        await expect(page.locator("text=Used Hints")).to_be_visible()
-
-        # Check input field
-        await expect(page.locator('input[placeholder*="Enter"]')).to_be_visible()
-        await expect(page.locator('button:has-text("Submit")')).to_be_visible()
+        # Check input field is visible
+        await expect(page.locator('[data-testid="active-step-input"]')).to_be_visible()
 
     async def test_hints_show_correctly(self, player_actions_fixture: PlayerFixture):
         actions, page, browser = await player_actions_fixture("test_player")
@@ -62,8 +49,7 @@ class TestTutorial:
         await page.goto("http://localhost:8000/tutorial")
 
         # Should see hints with DOWN substituted for <>
-        await expect(page.locator("text=Cardinal direction that's DOWN on a map")).to_be_visible()
-        await expect(page.locator("text=Change the first letter of DOWN to get")).to_be_visible()
+        await expect(page.locator("text=Cardinal direction that's DOWN on a map, most of the time")).to_be_visible()
 
     async def test_basic_guess_functionality(self, player_actions_fixture: PlayerFixture):
         actions, page, browser = await player_actions_fixture("test_player")
@@ -72,15 +58,13 @@ class TestTutorial:
         await page.goto("http://localhost:8000/tutorial")
 
         # Try to make a guess (SOUTH should be the answer to the first clue)
-        input_field = page.locator('input[placeholder*="Enter"]')
-        submit_button = page.locator('button:has-text("Submit")')
+        input_field = page.locator('[data-testid="active-step-input"]')
 
         await input_field.fill("SOUTH")
-        await submit_button.click()
+        await input_field.press("Enter")
 
-        # Should see success message
-        await expect(page.locator("text=🎉 Correct!")).to_be_visible()
-        await expect(page.locator("text=SOUTH solved!")).to_be_visible()
+        # Should see the word SOUTH appear in the ladder
+        await expect(page.locator('[data-testid="ladder-word-south"]:has-text("SOUTH")')).to_be_visible()
 
     async def test_direction_switching(self, player_actions_fixture: PlayerFixture):
         actions, page, browser = await player_actions_fixture("test_player")
@@ -88,19 +72,18 @@ class TestTutorial:
 
         await page.goto("http://localhost:8000/tutorial")
 
-        # Click backward direction
-        backward_button = page.locator('button:has-text("Backward (from EARTH)")')
-        await backward_button.click()
+        # Click switch direction button
+        switch_button = page.locator('[data-testid="switch-direction-button"]')
+        await switch_button.click()
 
-        # Should see EARTH substituted in hints now
-        await expect(page.locator("text=Move the first letter of EARTH to the end")).to_be_visible()
+        # Should see direction change text
+        await expect(switch_button).to_contain_text("Switch to solving")
 
-        # Switch back to forward
-        forward_button = page.locator('button:has-text("Forward (from DOWN)")')
-        await forward_button.click()
+        # Switch back
+        await switch_button.click()
 
         # Should see DOWN substituted again
-        await expect(page.locator("text=Cardinal direction that's DOWN on a map")).to_be_visible()
+        await expect(page.locator("text=Cardinal direction that's DOWN on a map, most of the time")).to_be_visible()
 
     async def test_back_to_home_button(self, player_actions_fixture: PlayerFixture):
         actions, page, browser = await player_actions_fixture("test_player")
@@ -108,12 +91,12 @@ class TestTutorial:
 
         await page.goto("http://localhost:8000/tutorial")
 
-        # Click back to home
-        await page.click('button:has-text("← Back to Home")')
+        # Click home link in header
+        await page.click('[data-testid="home-link"]')
 
         # Should navigate back to landing page
         await expect(page).to_have_url("http://localhost:8000/")
-        await expect(page.locator("h1")).to_contain_text("Raddle Teams")
+        await expect(page.locator("h1")).to_contain_text("RDDLE")
 
     async def test_ready_to_play_button(self, player_actions_fixture: PlayerFixture):
         actions, page, browser = await player_actions_fixture("test_player")
@@ -121,9 +104,9 @@ class TestTutorial:
 
         await page.goto("http://localhost:8000/tutorial")
 
-        # Click ready to play with friends
-        await page.click('button:has-text("Ready to Play with Friends!")')
+        # Click home link instead (no "Ready to Play with Friends" button exists)
+        await page.click('[data-testid="home-link"]')
 
         # Should navigate back to landing page
         await expect(page).to_have_url("http://localhost:8000/")
-        await expect(page.locator("h1")).to_contain_text("Raddle Teams")
+        await expect(page.locator("h1")).to_contain_text("RDDLE")

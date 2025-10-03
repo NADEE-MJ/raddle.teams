@@ -36,7 +36,7 @@ class PlayerActions:
         await expect(self.page.locator('[data-testid="landing-page-title"]')).to_be_visible()
 
     async def leave_lobby(self):
-        leave_button = self.page.locator('[data-testid="leave-lobby-button"]')
+        leave_button = self.page.locator('[data-testid="logout-button"]')
         await leave_button.click()
 
         await expect(self.page.locator('[data-testid="landing-page-title"]')).to_be_visible()

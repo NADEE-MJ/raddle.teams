@@ -114,7 +114,12 @@ export default function AdminPage() {
         <div>
             <div className='mb-6 text-left'>
                 <div className='mb-2 flex items-center justify-between'>
-                    <h1 className='text-tx-primary mb-1 text-2xl font-semibold md:text-3xl'>Admin Dashboard</h1>
+                    <h1
+                        className='text-tx-primary mb-1 text-2xl font-semibold md:text-3xl'
+                        data-testid='admin-dashboard-title'
+                    >
+                        Admin Dashboard
+                    </h1>
                     <StatusIndicator isConnected={isConnected} />
                 </div>
                 <p className='text-tx-secondary'>Manage lobbies and monitor team games</p>

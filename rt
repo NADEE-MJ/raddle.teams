@@ -525,6 +525,77 @@ add_command_and_aliases(
 )
 
 
+def precommit_install():
+    """🪝 Install pre-commit hooks"""
+    rerun_in_uv()
+
+    console.print("[bold magenta]🪝 Installing pre-commit hooks...[/bold magenta]")
+
+    if run_command(["uv", "run", "pre-commit", "install"], "Installing pre-commit hooks") != 0:
+        raise typer.Exit(1)
+
+    console.print("[bold green]✅ Pre-commit hooks installed successfully![/bold green]")
+    console.print("[dim yellow]💡 Hooks will now run automatically before each commit[/dim yellow]")
+    return 0
+
+
+add_command_and_aliases(
+    precommit_install,
+    "precommit-install",
+    ["pc-install", "hooks-install"],
+    help="🪝 Install pre-commit hooks into git repository",
+)
+
+
+def precommit_run(
+    all_files: bool = typer.Option(
+        False, "--all-files", "-a", help="🔄 Run on all files instead of just changed files"
+    ),
+    hook: str = typer.Option(None, "--hook", "-h", help="🎯 Run specific hook by name"),
+):
+    """🪝 Run pre-commit hooks manually"""
+    rerun_in_uv()
+
+    cmd = ["uv", "run", "pre-commit", "run"]
+
+    if all_files:
+        cmd.append("--all-files")
+
+    if hook:
+        cmd.append(hook)
+
+    description = "Running pre-commit hooks"
+    if all_files:
+        description += " on all files"
+    if hook:
+        description += f" for hook: {hook}"
+
+    return run_command(cmd, description)
+
+
+add_command_and_aliases(
+    precommit_run,
+    "precommit",
+    ["pc", "hooks"],
+    help="🪝 Run pre-commit hooks manually",
+)
+
+
+def precommit_update():
+    """🔄 Update pre-commit hook versions"""
+    rerun_in_uv()
+
+    return run_command(["uv", "run", "pre-commit", "autoupdate"], "Updating pre-commit hook versions")
+
+
+add_command_and_aliases(
+    precommit_update,
+    "precommit-update",
+    ["pc-update", "hooks-update"],
+    help="🔄 Update pre-commit hook versions to latest",
+)
+
+
 def version_callback(value: bool):
     if value:
         banner = Text()

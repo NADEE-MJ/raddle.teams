@@ -26,6 +26,8 @@ This file provides guidance to Claude Code (claude.ai/code) when working with co
 - `./rt --version` or `./rt -V` - 📖 Show version information
 
 **Advanced Testing Options:**
+
+- `uvx ty check` - type checking for Python code
 - `./rt test --filter <pattern>` or `./rt t -f <pattern>` - 🎯 Run specific tests matching pattern
 - `./rt test --verbose` or `./rt t -v` - 🔍 Run tests with verbose output
 - `./rt test --very-verbose` or `./rt t -vv` - 🔍🔍 Run tests with very verbose output
@@ -35,6 +37,7 @@ This file provides guidance to Claude Code (claude.ai/code) when working with co
 - `./rt test tests/e2e/path/to/test.py` - Run specific test file
 
 **Advanced Vitest Testing Options:**
+
 - `./rt vitest --verbose` or `./rt vi -v` - 👀 Run Vitest with verbose output
 - `./rt vitest --filter <pattern>` or `./rt vi -f <pattern>` - 🎯 Run specific tests matching pattern
 

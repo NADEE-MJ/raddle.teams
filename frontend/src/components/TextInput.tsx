@@ -61,7 +61,11 @@ export default function TextInput({
                 className={inputClasses}
                 data-testid={dataTestId}
             />
-            {error && <div className='text-red mt-1 text-sm'>{error}</div>}
+            {error && (
+                <div className='text-red mt-1 text-sm' data-testid={`${dataTestId}-error`}>
+                    {error}
+                </div>
+            )}
         </div>
     );
 }

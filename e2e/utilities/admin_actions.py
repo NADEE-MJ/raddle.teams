@@ -34,7 +34,7 @@ class AdminActions:
         create_button = self.page.locator('[data-testid="create-lobby-submit"]')
         await create_button.click()
 
-        lobby_code_element = self.page.locator("span.font-mono.font-bold").first
+        lobby_code_element = self.page.locator("button.font-bold").first
         await expect(lobby_code_element).to_be_visible()
         lobby_code = await lobby_code_element.text_content()
 
@@ -49,7 +49,7 @@ class AdminActions:
     async def get_first_lobby(self):
         await self.view_all_lobbies()
 
-        lobby_code_element = self.page.locator("span.font-mono.font-bold").first
+        lobby_code_element = self.page.locator("button.font-bold").first
         await expect(lobby_code_element).to_be_visible()
         code = await lobby_code_element.text_content()
         return code.strip() if code else ""
@@ -57,10 +57,11 @@ class AdminActions:
     async def peek_into_lobby(self, lobby_code: str):
         # Find the lobby in the list and get its View Details button
         # We'll look for any view details button since we can't easily get lobby ID from code
-        await expect(self.page.locator(f"text=Code: {lobby_code}")).to_be_visible()
+        await expect(self.page.locator("text=Code:")).to_be_visible()
+        await expect(self.page.locator(f"button:has-text('{lobby_code}')")).to_be_visible()
 
         # Find the view details button associated with this lobby by finding the lobby card
-        lobby_row = self.page.locator(f"text=Code: {lobby_code}").locator("..").locator("..")
+        lobby_row = self.page.locator(f"button:has-text('{lobby_code}')").locator("..").locator("..")
         view_details_button = lobby_row.locator('button:has-text("View Details")')
         await view_details_button.click()
 
@@ -87,8 +88,8 @@ class AdminActions:
         await expect(self.page.locator(f"text=/Players \\({expected_count}\\)/")).to_be_visible(timeout=timeout)
 
     async def delete_lobby(self, lobby_code: str):
-        lobby_card = self.page.locator(f"text=Code: {lobby_code}").locator("..")
+        lobby_card = self.page.locator(f"button:has-text('{lobby_code}')").locator("..").locator("..")
         delete_button = lobby_card.locator('button:has-text("Delete")')
         await delete_button.click()
 
-        await expect(self.page.locator(f"text=Code: {lobby_code}")).not_to_be_visible(timeout=5000)
+        await expect(self.page.locator(f"button:has-text('{lobby_code}')")).not_to_be_visible(timeout=5000)
