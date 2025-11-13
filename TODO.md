@@ -67,5 +67,6 @@
 9. flesh out the puzzles_from_raddle functions to load and convert puzzles from raddle format to our format
 10. create tests for tutorial guide component
 11. implement scroll similar to raddle.quest scrolling to  pin the ladder to the top of the screen when scrolling down
+12. add websocket reconnection logic everywhere on the frontend
 
 ## BUGS
