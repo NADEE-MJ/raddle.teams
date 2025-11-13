@@ -26,7 +26,7 @@ const GlobalLayout: React.FC = () => {
             setShowLogout(false);
         }
 
-        if (location.pathname === '/tutorial') {
+        if (location.pathname === '/tutorial' || location.pathname === '/game') {
             setMainContentBordered(false);
         } else {
             setMainContentBordered(true);
@@ -117,8 +117,8 @@ const GlobalLayout: React.FC = () => {
     );
 
     return (
-        <div className='bg-primary grid min-h-screen grid-rows-[auto_auto_1fr]'>
-            <nav className='bg-secondary border-border border-b'>
+        <div className='bg-main-bg grid min-h-screen grid-rows-[auto_auto_1fr]'>
+            <nav className='bg-header-bg border-border border-b'>
                 <div className='mx-auto max-w-6xl px-8'>
                     <div className='flex h-16 items-center justify-between'>
                         <div className='flex items-center gap-4'>
@@ -179,7 +179,7 @@ const GlobalLayout: React.FC = () => {
                 </div>
             </nav>
 
-            <main className='bg-primary p-4 md:p-8'>
+            <main className='bg-main-bg p-4 md:p-8'>
                 <div className='mx-auto max-w-6xl'>
                     {mainContentBordered ? (
                         <div className='bg-secondary border-border rounded-lg border p-4 shadow-sm md:p-8'>
@@ -191,7 +191,7 @@ const GlobalLayout: React.FC = () => {
                 </div>
             </main>
 
-            <footer className='bg-primary'>
+            <footer className='bg-main-bg'>
                 <div className='border-border-light mx-auto max-w-6xl border-t p-6'>
                     <div className='flex flex-col items-center justify-between gap-4 md:flex-row'>
                         <div className='flex items-center gap-1'>

@@ -198,7 +198,8 @@ export interface TeamGameProgress {
         title: string;
         ladder: Array<{
             word: string;
-            transform: string;
+            clue?: string;
+            transform?: string;
         }>;
     };
     revealed_steps: number[];

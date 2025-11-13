@@ -20,7 +20,7 @@ const buttonVariants: Record<ButtonVariant, string> = {
     secondary: 'bg-secondary border border-border hover:bg-elevated hover:border-accent text-tx-primary',
     destructive: 'bg-red-700 border border-red-700 hover:bg-red-800 text-tx-primary',
     link: 'bg-transparent text-tx-secondary hover:text-tx-primary',
-    hint: 'bg-blue-500 border border-blue-600 hover:bg-blue-600 text-white',
+    hint: 'bg-transform-bg border-[0.5px] border-ladder-rungs hover:bg-blue-600 text-white',
 };
 
 const buttonSizes: Record<ButtonSize, string> = {

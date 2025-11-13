@@ -1,56 +1,107 @@
 :root {
-    --color-primary: #0c1019;
-    --color-secondary: #11111a;
-    --color-tertiary: #0f131a;
-    --color-elevated: #131721;
-    --color-border: #b7a794;
-    --color-border-light: #73767d;
-    --color-tx-primary: #ffffff;
-    --color-tx-secondary: #a7a8aa;
-    --color-tx-muted: #acb6bf8c;
-    --color-accent: #e6b450;
-    --color-accent-hover: #e1af4b;
-    --color-blue: #3953e6;
-    --color-blue-bright: #59c2ff;
-    --color-green: #a6e821;
-    --color-orange: #ff8f40;
-    --color-yellow: #d6c019;
-    --color-red: #f07178;
-    --color-red-bright: #d95757;
-    --color-purple: #d2a6ff;
-    --color-cyan: #95e6cb;
-    --color-grey: #2b2b2b;
+    --color-primary: #101828;
+    --color-secondary: #182440;
+    --color-tertiary: #1f2f4c;
+    --color-elevated: #243453;
+    --color-border: #304267;
+    --color-border-light: #3c4f77;
+    --color-tx-primary: #f3f5ff;
+    --color-tx-secondary: #c3cee7;
+    --color-tx-muted: rgba(142, 159, 196, 0.65);
+    --color-accent: #e3db4d;
+    --color-accent-hover: #f2e86b;
+    --color-blue: #03598f;
+    --color-blue-bright: #4f5ed1;
+    --color-green: #7ed8c7;
+    --color-orange: #ff9b5e;
+    --color-yellow: #e8b134;
+    --color-red: #ff6f91;
+    --color-red-bright: #ff8ba8;
+    --color-purple: #272377;
+    --color-cyan: #39a5d8;
+    --color-grey: #101828;
+
+    --color-step-question: #272377;
+    --color-step-answer: #03598f;
+    --color-step-revealed: #1b2539;
+
+    --color-sky: #03598f;
+
+    --font-sans: chivo, 'Roboto', 'Helvetica', 'sans-serif';
 }
 
 @import 'tailwindcss';
 
 @theme {
-    --color-primary: #0c1019;
-    --color-secondary: #11111a;
-    --color-tertiary: #0f131a;
-    --color-elevated: #131721;
-    --color-border: #b7a794;
-    --color-border-light: #73767d;
-    --color-tx-primary: #ffffff;
-    --color-tx-secondary: #a7a8aa;
-    --color-tx-muted: #acb6bf8c;
-    --color-accent: #e6b450;
-    --color-accent-hover: #e1af4b;
-    --color-blue: #3953e6;
-    --color-blue-bright: #59c2ff;
-    --color-green: #aad94c;
-    --color-orange: #ff8f40;
-    --color-yellow: #96860e;
-    --color-red: #f07178;
-    --color-red-bright: #d95757;
-    --color-purple: #d2a6ff;
-    --color-cyan: #95e6cb;
-    --color-grey: #2b2b2b;
+    --color-primary: #101828;
+    --color-secondary: #182440;
+    --color-tertiary: #1f2f4c;
+    --color-elevated: #243453;
+    --color-border: #304267;
+    --color-border-light: #3c4f77;
+    --color-tx-primary: #f3f5ff;
+    --color-tx-secondary: #c3cee7;
+    --color-tx-muted: rgba(142, 159, 196, 0.65);
+    --color-accent: #e3db4d;
+    --color-accent-hover: #f2e86b;
+    --color-blue: #03598f;
+    --color-blue-bright: #4f5ed1;
+    --color-green: #7ed8c7;
+    --color-orange: #ff9b5e;
+    --color-yellow: #e8b134;
+    --color-red: #ff6f91;
+    --color-red-bright: #ff8ba8;
+    --color-purple: #272377;
+    --color-cyan: #39a5d8;
+
+    /* page colors */
+    --color-header-bg: #1e2939;
+    --color-main-bg: #101828;
+
+    /* tutorial guide colors */
+    --color-tutorial-guide-bg: #1c398e;
+    --color-tutorial-guide-border: #8dc3ff;
+    --color-tutorial-guide-text: #bedbff;
+    --color-tutorial-guide-progress: #155dfc;
+
+    /* ladder colors */
+    --color-question-step: #272377;
+    --color-answer-step: #03598f;
+    --color-revealed-step: #101828;
+    --color-hidden-step: #1e2939;
+    --color-ladder-rungs: #62748e;
+    --color-transform-bg: #364153;
+
+    /* clue colors */
+    --color-clue-border: #4a5565;
+    --color-clue-bg: #1e2939;
+    --color-clue-answer-word: #065c92;
+    --color-clue-question-word: #2d297e;
+    --color-clue-answer-word-solved: #064975;
+    --color-clue-question-word-solved: #222063;
+    --color-clue-text: #e5e7eb;
+    --color-clue-text-word: #f3f4f6;
+    --color-clue-text-muted: #777f8d;
+    --color-clue-text-muted-word: #babdc2;
+    --color-clue-header: #45556c;
+}
+
+.bg-step-question {
+    background-color: var(--color-step-question);
+}
+
+.bg-step-answer {
+    background-color: var(--color-step-answer);
+}
+
+.bg-step-revealed {
+    background-color: var(--color-step-revealed);
 }
 
 html,
 body {
     background: var(--color-primary);
+    font-family: var(--font-sans);
 }
 
 /* Webkit browsers (Chrome, Safari, Edge) */
@@ -65,13 +116,13 @@ body {
 }
 
 ::-webkit-scrollbar-thumb {
-    background: rgba(183, 167, 148, 0.3); /* Using border color with opacity */
+    background: rgba(48, 66, 103, 0.4);
     border-radius: 4px;
     transition: background 0.2s ease;
 }
 
 ::-webkit-scrollbar-thumb:hover {
-    background: rgba(183, 167, 148, 0.5); /* More opaque on hover */
+    background: rgba(48, 66, 103, 0.6);
 }
 
 ::-webkit-scrollbar-corner {
@@ -81,5 +132,5 @@ body {
 /* Firefox */
 * {
     scrollbar-width: thin;
-    scrollbar-color: rgba(183, 167, 148, 0.3) transparent;
+    scrollbar-color: rgba(48, 66, 103, 0.55) transparent;
 }

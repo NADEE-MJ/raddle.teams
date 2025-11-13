@@ -1,17 +1,16 @@
-import { useRef, useEffect, useState, useCallback, useMemo, use } from 'react';
+import { useRef, useEffect, useState, useCallback, useMemo } from 'react';
 import { Puzzle } from '@/types/game';
-import { TutorialState } from '@/types/tutorialStateMachine';
 import { useTutorialStateMachine } from '@/hooks/useTutorialStateMachine';
 import { HintConfirmationModal } from '@/components';
 import LadderStep from './LadderStep';
 import Clues from './Clues';
+import TutorialGuide from './TutorialGuide';
 
 interface TutorialProps {
     puzzle: Puzzle;
-    onStateChange: (state: TutorialState) => void;
 }
 
-export default function Tutorial({ puzzle, onStateChange }: TutorialProps) {
+export default function Tutorial({ puzzle }: TutorialProps) {
     const inputRef = useRef<HTMLInputElement>(null);
     const [showHintConfirmation, setShowHintConfirmation] = useState(false);
     const [showFullLadder, setShowFullLadder] = useState(false);
@@ -34,16 +33,14 @@ export default function Tutorial({ puzzle, onStateChange }: TutorialProps) {
     useEffect(() => {
         // Run once on mount to show the first hint
         handleHint();
-    }, []);  // eslint-disable-line react-hooks/exhaustive-deps
+    }, []); // eslint-disable-line react-hooks/exhaustive-deps
 
     // Update completion status when state changes
     useEffect(() => {
         if (state.isCompleted) {
             setShowFullLadder(true);
         }
-        onStateChange(state);
-    }, [state, onStateChange]);
-
+    }, [state]);
 
     const focusInput = useCallback(() => {
         setTimeout(() => inputRef.current?.focus(), 100);
@@ -85,9 +82,12 @@ export default function Tutorial({ puzzle, onStateChange }: TutorialProps) {
         handleSwitchDirection();
     }, [handleSwitchDirection]);
 
-    const handleGuessChange = useCallback((guess: string) => {
-        handleGuess(guess);
-    }, [handleGuess]);
+    const handleGuessChange = useCallback(
+        (guess: string) => {
+            handleGuess(guess);
+        },
+        [handleGuess]
+    );
 
     const handleHintClick = useCallback(() => {
         const activeStepId = state.direction === 'down' ? state.currentAnswer : state.currentQuestion;
@@ -150,19 +150,21 @@ export default function Tutorial({ puzzle, onStateChange }: TutorialProps) {
     return (
         <div className='mx-auto max-w-6xl'>
             <div id='game-area' className='md:grid md:grid-cols-[2fr_3fr] md:gap-8'>
-                <div className={`${!showFullLadder ? 'sticky z-50 top-0 ' : ''} py-3 bg-primary`}>
-                    <div className={'divide-border border-border divide-y-2 border-x-5'}>
-                        <div>
-                            <div className='hidden p-4 sm:hidden md:block'></div>
+                <div className={`${!showFullLadder ? 'sticky top-0 z-50' : ''} bg-primary py-3`}>
+                    <div className={'border-ladder-rungs border-x-5'}>
+                        <div className='border-ladder-rungs border-b'>
+                            <div className='hidden p-3 sm:hidden md:block'></div>
                             {!state.isCompleted ? (
                                 <button
                                     type='button'
                                     onClick={toggleFullLadder}
-                                    className='text-tx-muted hover:bg-elevated w-full p-1 mb-1 text-xs italic md:hidden'
+                                    className='text-tx-muted hover:bg-elevated w-full p-1 text-sm italic md:hidden'
                                 >
                                     {showFullLadder ? 'Collapse full ladder' : 'Show full ladder'}
                                 </button>
-                            ) : <div className='p-4 sm:block md:hidden'></div>}
+                            ) : (
+                                <div className='p-3 sm:block md:hidden'></div>
+                            )}
                         </div>
 
                         {puzzle.ladder.map((ladderStep, stepId) => {
@@ -172,43 +174,51 @@ export default function Tutorial({ puzzle, onStateChange }: TutorialProps) {
                                 return null;
                             }
                             return (
-                                <LadderStep
-                                    key={`ladder-step-${stepId}`}
-                                    onGuessChange={handleGuessChange}
-                                    inputRef={inputRef}
-                                    word={ladderStep.word}
-                                    transform={ladderStep.transform}
-                                    isCurrentQuestion={isCurrentQuestion(stepId)}
-                                    isCurrentAnswer={isCurrentAnswer(stepId)}
-                                    isStepRevealed={isStepRevealed(stepId)}
-                                    isActive={isActiveStep(stepId)}
-                                    shouldShowTransform={isStepRevealed(stepId) && isStepRevealed(stepId + 1)}
-                                    shouldRenderTransform={(stepId !== mobileVisibleSteps[mobileVisibleSteps.length - 1] && !showFullLadder) || showFullLadder} // don't show transform for the last visible step
-                                    onHintClick={isActiveStep(stepId) ? handleHintClick : undefined}
-                                    secondHint={getHintsUsedForStep(stepId) === 1}
-                                />
+                                <div key={`ladder-step-wrapper-${stepId}`} className={'border-ladder-rungs border-y'}>
+                                    <LadderStep
+                                        key={`ladder-step-${stepId}`}
+                                        onGuessChange={handleGuessChange}
+                                        inputRef={inputRef}
+                                        word={ladderStep.word}
+                                        transform={ladderStep.transform}
+                                        isCurrentQuestion={isCurrentQuestion(stepId)}
+                                        isCurrentAnswer={isCurrentAnswer(stepId)}
+                                        isStepRevealed={isStepRevealed(stepId)}
+                                        isActive={isActiveStep(stepId)}
+                                        shouldShowTransform={isStepRevealed(stepId) && isStepRevealed(stepId + 1)}
+                                        shouldRenderTransform={
+                                            (stepId !== mobileVisibleSteps[mobileVisibleSteps.length - 1] &&
+                                                !showFullLadder) ||
+                                            showFullLadder
+                                        } // don't show transform for the last visible step
+                                        onHintClick={isActiveStep(stepId) ? handleHintClick : undefined}
+                                        secondHint={getHintsUsedForStep(stepId) === 1}
+                                    />
+                                </div>
                             );
                         })}
 
-                        {(!state.isCompleted && canSwitchDirection) ? (
-                            <button
-                                type='button'
-                                onClick={handleDirectionChange}
-                                className='text-tx-muted hover:bg-elevated w-full p-1 text-xs italic'
-                                data-testid="switch-direction-button"
-                            >
-                                Switch to solving {state.direction === 'down' ? '↑ upward' : '↓ downward'}
-                            </button>
+                        {!state.isCompleted && canSwitchDirection ? (
+                            <div className='border-ladder-rungs border-t'>
+                                <button
+                                    type='button'
+                                    onClick={handleDirectionChange}
+                                    className='text-tx-muted hover:bg-elevated w-full p-1 text-sm italic'
+                                    data-testid='switch-direction-button'
+                                >
+                                    Switch to solving {state.direction === 'down' ? '↑ upwards' : '↓ downwards'}
+                                </button>
+                            </div>
                         ) : (
-                            <div className='p-4' />
+                            <div className='border-ladder-rungs border-t p-4' />
                         )}
                     </div>
                 </div>
 
-                <Clues
-                    gameState={state}
-                    shuffleWithSeed={shuffleWithSeed}
-                />
+                <div>
+                    <TutorialGuide tutorialState={state} />
+                    <Clues gameState={state} shuffleWithSeed={shuffleWithSeed} />
+                </div>
             </div>
 
             <HintConfirmationModal
@@ -217,6 +227,6 @@ export default function Tutorial({ puzzle, onStateChange }: TutorialProps) {
                 onCancel={handleHintCancel}
                 secondHint={getHintsUsedForStep(getActiveStepId()) === 1}
             />
-        </div >
+        </div>
     );
 }

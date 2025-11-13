@@ -66,7 +66,7 @@ export default function LadderStep({
         const pattern = wordSegments
             .map(segment => {
                 if (segment.type === 'letters') {
-                    return '◼️'.repeat(Math.max(segment.length, 1));
+                    return '◻️'.repeat(Math.max(segment.length, 1));
                 }
                 return ' '.repeat(segment.length);
             })
@@ -76,15 +76,15 @@ export default function LadderStep({
     }, [wordSegments, letterCountLabel]);
 
     const color = useMemo(() => {
-        if (isCurrentQuestion) return 'bg-green/50';
-        if (isCurrentAnswer) return 'bg-yellow/80';
-        if (isStepRevealed) return 'bg-grey';
-        return 'bg-secondary';
+        if (isCurrentQuestion) return 'bg-question-step';
+        if (isCurrentAnswer) return 'bg-answer-step';
+        if (isStepRevealed) return 'bg-revealed-step';
+        return 'bg-hidden-step';
     }, [isCurrentQuestion, isCurrentAnswer, isStepRevealed]);
 
     const renderEmptyTransformFn = () => {
         return (
-            <span className='bg-secondary border-border text-tx-primary absolute bottom-0 left-1/2 z-50 w-[max-content] min-w-25 -translate-x-1/2 translate-y-1/2 rounded-sm border p-1 pb-[6px] font-mono text-xs leading-1 uppercase'>
+            <span className='bg-transform-bg border-ladder-rungs text-tx-primary absolute bottom-0 left-1/2 z-50 w-[max-content] min-w-25 -translate-x-1/2 translate-y-1/2 rounded-sm border p-1 pb-[6px] font-mono text-xs leading-1 uppercase'>
                 &nbsp;
             </span>
         );
@@ -92,7 +92,7 @@ export default function LadderStep({
 
     const renderTransformFn = (transform: string) => {
         return (
-            <span className='bg-secondary border-border text-tx-primary absolute bottom-0 left-1/2 z-50 -translate-x-1/2 translate-y-1/2 rounded-sm border px-2 py-1 font-mono text-xs whitespace-nowrap uppercase'>
+            <span className='bg-transform-bg border-ladder-rungs text-tx-primary absolute bottom-0 left-1/2 z-50 -translate-x-1/2 translate-y-1/2 rounded-sm border px-2 py-1 font-mono text-xs whitespace-nowrap uppercase'>
                 {transform}
             </span>
         );
@@ -108,7 +108,7 @@ export default function LadderStep({
         return (
             <div className='relative'>
                 <span
-                    className='bg-secondary border-border text-tx-primary absolute top-1/2 -translate-x-1/2 -translate-y-1/2 rounded-lg border p-0.5 text-sm md:text-base'
+                    className='bg-transform-bg border-ladder-rungs text-tx-primary absolute top-1/2 -translate-x-1/2 -translate-y-1/2 rounded-lg border-[0.5px] p-0.5 text-sm md:text-base'
                     data-testid='word-length-indicator'
                 >
                     {lengthLabel}
@@ -188,9 +188,11 @@ export default function LadderStep({
         return renderUnrevealedStep(unrevealedPlaceholder, transform !== null && shouldRenderTransform);
     };
 
+    const transitionClasses = 'transition-colors duration-200 ease-in-out';
+
     return (
         <div
-            className={`relative font-mono text-sm md:text-lg ${color}`}
+            className={`relative font-mono text-sm md:text-lg ${color} text-tx-primary ${transitionClasses}`}
             data-testid={`ladder-word-${word.toLowerCase()}`}
         >
             {renderStep(word, transform)}

@@ -1,6 +1,6 @@
 import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
-import { api } from '@/services/api';
+import { ApiError, api } from '@/services/api';
 import { useGlobalOutletContext } from '@/hooks/useGlobalOutletContext';
 import { TextInput, Button } from '@/components';
 
@@ -31,7 +31,17 @@ export default function JoinForm() {
             setSessionId(player.session_id);
             navigate(`/lobby/${lobbyCode.trim().toUpperCase()}`);
         } catch (err) {
-            setError('Failed to join lobby. Please check the lobby code and try again.');
+            if (err instanceof ApiError) {
+                if (err.status === 400) {
+                    setError('Someone is already using that name in this lobby. Please choose another one.');
+                } else if (err.status === 404) {
+                    setError('Lobby not found. Please double-check the code and try again.');
+                } else {
+                    setError(err.message || 'Failed to join lobby. Please try again.');
+                }
+            } else {
+                setError('Failed to join lobby. Please check the lobby code and try again.');
+            }
             console.error('Error joining lobby:', err);
         } finally {
             setLoading(false);

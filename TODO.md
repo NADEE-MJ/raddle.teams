@@ -68,5 +68,9 @@
 10. create tests for tutorial guide component
 11. implement scroll similar to raddle.quest scrolling to  pin the ladder to the top of the screen when scrolling down
 12. add websocket reconnection logic everywhere on the frontend
+13. fix color scheme
+14. - in a answer should probably show as something else or maybe just dont include those
+15. easy and hard mode dont work when starting a game
+16. need to display a better error message when trying to login as someone who is already logged in with that name at that lobby
 
 ## BUGS

@@ -10,6 +10,17 @@ import {
 } from '@/types';
 import type { Puzzle } from '@/types/game';
 
+export class ApiError extends Error {
+    status: number;
+    data: unknown;
+
+    constructor(status: number, message: string, data?: unknown) {
+        super(message);
+        this.status = status;
+        this.data = data;
+    }
+}
+
 const API_BASE = '/api';
 
 const request = async <T>(endpoint: string, options?: RequestInit, bearerToken?: string): Promise<T> => {
@@ -25,7 +36,33 @@ const request = async <T>(endpoint: string, options?: RequestInit, bearerToken?:
     });
 
     if (!response.ok) {
-        throw new Error(`API error: ${response.status} ${response.statusText}`);
+        let errorData: unknown = null;
+        let errorMessage = `API error: ${response.status} ${response.statusText}`;
+
+        try {
+            const contentType = response.headers.get('content-type') || '';
+            if (contentType.includes('application/json')) {
+                errorData = await response.json();
+                if (
+                    typeof errorData === 'object' &&
+                    errorData !== null &&
+                    'detail' in errorData &&
+                    typeof (errorData as { detail?: unknown }).detail === 'string'
+                ) {
+                    errorMessage = (errorData as { detail: string }).detail;
+                }
+            } else {
+                const text = await response.text();
+                if (text) {
+                    errorMessage = text;
+                    errorData = text;
+                }
+            }
+        } catch (parseError) {
+            console.warn('Failed to parse error response', parseError);
+        }
+
+        throw new ApiError(response.status, errorMessage, errorData);
     }
 
     return response.json();

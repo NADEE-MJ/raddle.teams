@@ -71,7 +71,18 @@ export default function Clues({ puzzle, direction, currentQuestion, currentAnswe
     const renderQuestionWord = useCallback((word: string) => {
         return (
             <span
-                className='bg-green/30 text-green p-1 pb-0.5 font-mono'
+                className='bg-clue-question-word text-clue-text-word p-1 pb-0.5 font-mono'
+                data-testid={`question-word-${word?.toLowerCase()}`}
+            >
+                {word}
+            </span>
+        );
+    }, []);
+
+    const renderQuestionWordSolved = useCallback((word: string) => {
+        return (
+            <span
+                className='bg-clue-question-word-solved text-clue-text-muted-word p-1 pb-0.5 font-mono'
                 data-testid={`question-word-${word?.toLowerCase()}`}
             >
                 {word}
@@ -82,7 +93,18 @@ export default function Clues({ puzzle, direction, currentQuestion, currentAnswe
     const renderAnswerWord = useCallback((word: string) => {
         return (
             <span
-                className='bg-yellow/30 text-yellow p-1 pb-0.5 font-mono'
+                className='bg-clue-answer-word text-clue-text-word p-1 pb-0.5 font-mono'
+                data-testid={`answer-word-${word?.toLowerCase()}`}
+            >
+                {word}
+            </span>
+        );
+    }, []);
+
+    const renderAnswerWordSolved = useCallback((word: string) => {
+        return (
+            <span
+                className='bg-clue-answer-word-solved text-clue-text-muted-word p-1 pb-0.5 font-mono'
                 data-testid={`answer-word-${word?.toLowerCase()}`}
             >
                 {word}
@@ -124,8 +146,8 @@ export default function Clues({ puzzle, direction, currentQuestion, currentAnswe
             const questionPlaceholder = '<>';
             const answerPlaceholder = '{}';
 
-            const questionWordRendered = renderQuestionWord(questionWord);
-            const answerWordRendered = renderAnswerWord(answerWord);
+            const questionWordRendered = renderQuestionWordSolved(questionWord);
+            const answerWordRendered = renderAnswerWordSolved(answerWord);
 
             const parts = renderClueParts(clue, questionWordRendered, answerWordRendered);
 
@@ -135,12 +157,12 @@ export default function Clues({ puzzle, direction, currentQuestion, currentAnswe
             }
 
             return (
-                <div className='text-tx-muted my-3 mb-2 opacity-75' data-testid={`solved-clue-${stepId}`}>
+                <div className='text-clue-text-muted my-3 mb-2' data-testid={`solved-clue-${stepId}`}>
                     {parts}
                 </div>
             );
         },
-        [renderClueParts, renderQuestionWord, renderAnswerWord, ladder]
+        [renderClueParts, renderQuestionWordSolved, renderAnswerWordSolved, ladder]
     );
 
     const renderDownwardClue = useCallback(
@@ -150,24 +172,22 @@ export default function Clues({ puzzle, direction, currentQuestion, currentAnswe
             const clue = ladderStep.clue;
             if (!clue) throw new Error('Clue is null for revealed step');
 
-            const isActiveClue = stepId === currentQuestion;
-
             const questionWordRendered = renderQuestionWord(questionWord!);
 
             const parts = renderClueParts(clue, questionWordRendered, null);
 
-            const configurableClassNames = 'text-tx-primary opacity-75';
+            const configurableClassNames = 'text-clue-text';
 
             return (
                 <div
-                    className={`bg-secondary mb-2 rounded-md border-1 px-2 py-1 pt-1 pb-0 ${configurableClassNames}`}
+                    className={`bg-clue-bg border-clue-border mb-2 rounded-md border px-2 pt-1.5 pb-1 ${configurableClassNames}`}
                     data-testid={`unsolved-clue-${stepId}`}
                 >
                     {parts}
                 </div>
             );
         },
-        [renderClueParts, renderQuestionWord, ladder, questionWord, currentQuestion]
+        [renderClueParts, renderQuestionWord, ladder, questionWord]
     );
 
     const renderUpwardClue = useCallback(
@@ -176,8 +196,6 @@ export default function Clues({ puzzle, direction, currentQuestion, currentAnswe
             if (!ladderStep) throw new Error('Ladder step not found for revealed step');
             const clue = ladderStep.clue;
             if (!clue) throw new Error('Clue is null for revealed step');
-
-            const isActiveClue = stepId === currentQuestion;
 
             if (!answerWord) throw new Error('Answer word not found for upward clue');
             const answerWordRendered = renderAnswerWord(answerWord);
@@ -189,27 +207,27 @@ export default function Clues({ puzzle, direction, currentQuestion, currentAnswe
                 parts.push(answerWordRendered);
             }
 
-            const configurableClassNames = 'text-tx-primary opacity-75';
+            const configurableClassNames = 'text-clue-text';
 
             return (
                 <div
-                    className={`bg-secondary mb-2 rounded-md border-1 px-2 py-1 pt-1 pb-0 ${configurableClassNames}`}
+                    className={`bg-clue-bg border-clue-border mb-2 rounded-md border px-2 pt-1.5 pb-1 ${configurableClassNames}`}
                     data-testid={`unsolved-clue-${stepId}`}
                 >
                     {parts}
                 </div>
             );
         },
-        [renderClueParts, renderAnswerWord, ladder, answerWord, currentQuestion]
+        [renderClueParts, renderAnswerWord, ladder, answerWord]
     );
 
     return (
-        <div className='mb-6 px-3 font-medium md:p-0'>
+        <div className='mb-6 px-3 md:p-0'>
             <div className='text-sm leading-[24px] md:text-lg'>
                 {unsolvedStepIds.length > 0 && (
                     <div>
                         <h2
-                            className='border-border text-tx-secondary mb-4 border-b-1 pt-4 text-sm font-bold uppercase'
+                            className='border-clue-header text-clue-header mb-4 border-b-1 pt-4 text-sm font-extrabold uppercase'
                             data-testid='clues-out-of-order-heading'
                         >
                             Clues, out of order
@@ -224,7 +242,7 @@ export default function Clues({ puzzle, direction, currentQuestion, currentAnswe
                 {solvedStepIds.length > 0 && (
                     <div>
                         <h2
-                            className='border-border text-tx-secondary mb-2 border-b-1 pt-4 text-sm font-bold uppercase'
+                            className='border-clue-header text-clue-header mb-2 border-b-1 pt-4 text-sm font-extrabold uppercase'
                             data-testid='used-clues-heading'
                         >
                             Used clues

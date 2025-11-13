@@ -134,6 +134,7 @@ class PuzzleManager:
     def get_puzzles_for_teams(self, num_teams: int, difficulty: str) -> List[Puzzle]:
         """
         Get different puzzles for each team, all of the same difficulty.
+        Ensures all teams get puzzles with similar word counts (within ±1 words).
 
         Args:
             num_teams: Number of teams that need puzzles
@@ -147,10 +148,40 @@ class PuzzleManager:
         """
         puzzles = self.load_puzzles_by_difficulty(difficulty)
 
-        if len(puzzles) < num_teams:
-            raise ValueError(f"Not enough {difficulty} puzzles available. " f"Need {num_teams}, found {len(puzzles)}")
+        if not puzzles:
+            raise ValueError(
+                f"No {difficulty} puzzles are available yet. "
+                "Add some puzzles for this difficulty or choose another one."
+            )
 
-        # Randomly select num_teams different puzzles
+        if len(puzzles) < num_teams:
+            raise ValueError(f"Not enough {difficulty} puzzles available. Need {num_teams}, found {len(puzzles)}")
+
+        # Group puzzles by word count (ladder length)
+        puzzles_by_length: Dict[int, List[Puzzle]] = {}
+        for puzzle in puzzles:
+            length = len(puzzle.ladder)
+            if length not in puzzles_by_length:
+                puzzles_by_length[length] = []
+            puzzles_by_length[length].append(puzzle)
+
+        # Try to find a word count that has enough puzzles for all teams (±1 word)
+        # Sort by length to prefer balanced puzzles
+        sorted_lengths = sorted(puzzles_by_length.keys())
+
+        for target_length in sorted_lengths:
+            # Collect puzzles within ±1 words of target length
+            candidate_puzzles = []
+            for length in range(target_length - 1, target_length + 2):
+                if length in puzzles_by_length:
+                    candidate_puzzles.extend(puzzles_by_length[length])
+
+            # If we have enough puzzles in this range, use them
+            if len(candidate_puzzles) >= num_teams:
+                return random.sample(candidate_puzzles, num_teams)
+
+        # Fallback: if we can't find enough puzzles with similar word counts,
+        # just select randomly (should rarely happen given the above logic)
         return random.sample(puzzles, num_teams)
 
     def puzzle_to_dict(self, puzzle: Puzzle) -> Dict[str, Any]:
@@ -163,7 +194,7 @@ class PuzzleManager:
         Returns:
             Dictionary representation suitable for JSON storage
         """
-        return puzzle.dict()
+        return puzzle.model_dump()
 
     def validate_puzzle(self, puzzle_data: Dict[str, Any]) -> bool:
         """

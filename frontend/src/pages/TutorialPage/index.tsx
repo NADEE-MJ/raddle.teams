@@ -1,13 +1,8 @@
 import Tutorial from './Tutorial';
-import TutorialGuide from './TutorialGuide';
-import { useMemo, useState } from 'react';
+import { useMemo } from 'react';
 import { Puzzle } from '@/types/game';
-import { TutorialState } from '@/types/tutorialStateMachine';
-
-
 
 export default function TutorialPage() {
-    const [tutorialState, setTutorialState] = useState<TutorialState | null>(null);
     const puzzle = useMemo<Puzzle>(() => {
         return {
             title: 'From DOWN to EARTH',
@@ -62,21 +57,12 @@ export default function TutorialPage() {
     }, []);
 
     return (
-        <div>
-            <div className="w-full text-center mb-4 md:mb-0">
-                <h2 className="text-2xl md:text-3xl font-semibold mb-5 text-tx-primary">Learn how to Raddle</h2>
+        <div className='transition-colors duration-150 ease-in-out [&_button]:transition-colors [&_button]:duration-150 [&_button]:ease-in-out'>
+            <div className='mb-4 w-full text-center md:mb-0'>
+                <h2 className='text-tx-primary mb-5 text-2xl font-semibold md:text-3xl'>Learn how to Raddle</h2>
             </div>
 
-            {tutorialState && (
-                <TutorialGuide
-                    tutorialState={tutorialState}
-                />
-            )}
-
-            <Tutorial
-                puzzle={puzzle}
-                onStateChange={setTutorialState}
-            />
+            <Tutorial puzzle={puzzle} />
         </div>
     );
 }

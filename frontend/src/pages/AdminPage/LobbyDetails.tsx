@@ -1,7 +1,7 @@
 import { useState, useEffect, useCallback, useRef } from 'react';
 import { LobbyInfo, GameStateResponse, GameWebSocketEvents } from '@/types';
 import { Modal, CopyableCode, Button, TextInput, Select, ErrorMessage, Card } from '@/components';
-import { api } from '@/services/api';
+import { api, ApiError } from '@/services/api';
 import { useGlobalOutletContext } from '@/hooks/useGlobalOutletContext';
 import { useDebounce } from '@/hooks/useDebounce';
 import GameProgressView from './GameProgressView';
@@ -258,7 +258,9 @@ export default function LobbyDetails({ lobbyId, onClose, onLobbyDeleted, refresh
                 // Load game state to show progress
                 await loadGameState();
             } catch (err) {
-                setError('Failed to start game');
+                const message =
+                    err instanceof ApiError ? err.message : err instanceof Error ? err.message : 'Failed to start game';
+                setError(message);
                 console.error('Error starting game:', err);
             } finally {
                 setIsStartingGame(false);

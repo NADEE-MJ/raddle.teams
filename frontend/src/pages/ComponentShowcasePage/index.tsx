@@ -307,7 +307,9 @@ export default function ComponentShowcasePage() {
 
             {/* HintConfirmationModal Component */}
             <section className='space-y-4'>
-                <h2 className='text-tx-primary border-border border-b pb-2 text-2xl font-semibold'>HintConfirmationModal</h2>
+                <h2 className='text-tx-primary border-border border-b pb-2 text-2xl font-semibold'>
+                    HintConfirmationModal
+                </h2>
                 <div className='flex gap-2'>
                     <Button onClick={() => setShowHintModal(true)} variant='hint'>
                         Open First Hint Modal
@@ -351,22 +353,22 @@ export default function ComponentShowcasePage() {
                                 <div className='bg-primary p-6 text-center text-white'>
                                     <div className='mb-2 text-sm font-medium'>Primary</div>
                                     <div className='text-xs opacity-75'>bg-primary</div>
-                                    <div className='text-xs opacity-50'>#0c1019 / #0b0e14</div>
+                                    <div className='text-xs opacity-50'>#101828 / #0d1524</div>
                                 </div>
                                 <div className='bg-secondary p-6 text-center text-white'>
                                     <div className='mb-2 text-sm font-medium'>Secondary</div>
                                     <div className='text-xs opacity-75'>bg-secondary</div>
-                                    <div className='text-xs opacity-50'>#11111a / #0d1017</div>
+                                    <div className='text-xs opacity-50'>#182440 / #1a2844</div>
                                 </div>
                                 <div className='bg-tertiary p-6 text-center text-white'>
                                     <div className='mb-2 text-sm font-medium'>Tertiary</div>
                                     <div className='text-xs opacity-75'>bg-tertiary</div>
-                                    <div className='text-xs opacity-50'>#0f131a / #0f131a</div>
+                                    <div className='text-xs opacity-50'>#1f2f4c / #223559</div>
                                 </div>
                                 <div className='bg-elevated p-6 text-center text-white'>
                                     <div className='mb-2 text-sm font-medium'>Elevated</div>
                                     <div className='text-xs opacity-75'>bg-elevated</div>
-                                    <div className='text-xs opacity-50'>#131721 / #131721</div>
+                                    <div className='text-xs opacity-50'>#243453 / #2a3d61</div>
                                 </div>
                             </div>
                         </div>
@@ -379,17 +381,17 @@ export default function ComponentShowcasePage() {
                             <div className='rounded-lg bg-black p-6 text-center'>
                                 <div className='text-tx-primary mb-2 text-lg font-semibold'>Primary Text</div>
                                 <div className='text-sm text-gray-300'>text-tx-primary</div>
-                                <div className='text-xs text-gray-400'>#ffffff / #bfbdb6</div>
+                                <div className='text-xs text-gray-400'>#f3f5ff / #e3e9ff</div>
                             </div>
                             <div className='rounded-lg bg-black p-6 text-center'>
                                 <div className='text-tx-secondary mb-2 text-lg font-semibold'>Secondary Text</div>
                                 <div className='text-sm text-gray-300'>text-tx-secondary</div>
-                                <div className='text-xs text-gray-400'>#a7a8aa / #565b66</div>
+                                <div className='text-xs text-gray-400'>#c3cee7 / #93a2c7</div>
                             </div>
                             <div className='rounded-lg bg-black p-6 text-center'>
                                 <div className='text-tx-muted mb-2 text-lg font-semibold'>Muted Text</div>
                                 <div className='text-sm text-gray-300'>text-tx-muted</div>
-                                <div className='text-xs text-gray-400'>#acb6bf8c</div>
+                                <div className='text-xs text-gray-400'>rgba(142, 159, 196, 0.65)</div>
                             </div>
                         </div>
                     </div>
@@ -402,14 +404,14 @@ export default function ComponentShowcasePage() {
                                 <div className='border-border mb-3 rounded border-2 p-3 text-center'>
                                     <div className='text-tx-primary text-sm font-medium'>Border</div>
                                     <div className='text-tx-secondary text-xs'>border-border</div>
-                                    <div className='text-tx-muted text-xs'>#b7a794 / #2d3748</div>
+                                    <div className='text-tx-muted text-xs'>#304267 / #3a4d73</div>
                                 </div>
                             </div>
                             <div className='bg-secondary rounded-lg p-4'>
                                 <div className='border-border-light mb-3 rounded border-2 p-3 text-center'>
                                     <div className='text-tx-primary text-sm font-medium'>Border Light</div>
                                     <div className='text-tx-secondary text-xs'>border-border-light</div>
-                                    <div className='text-tx-muted text-xs'>#73767d / #4a5568</div>
+                                    <div className='text-tx-muted text-xs'>#3c4f77 / #4a5f8f</div>
                                 </div>
                             </div>
                         </div>
@@ -422,22 +424,22 @@ export default function ComponentShowcasePage() {
                             <div className='bg-accent rounded-lg p-4 text-center text-black shadow-sm'>
                                 <div className='mb-2 text-sm font-medium'>Accent</div>
                                 <div className='text-xs opacity-75'>bg-accent / text-accent</div>
-                                <div className='text-xs opacity-50'>#e6b450</div>
+                                <div className='text-xs opacity-50'>#e3db4d</div>
                             </div>
                             <div className='bg-green rounded-lg p-4 text-center text-black shadow-sm'>
                                 <div className='mb-2 text-sm font-medium'>Green</div>
                                 <div className='text-xs opacity-75'>bg-green / text-green</div>
-                                <div className='text-xs opacity-50'>#aad94c</div>
+                                <div className='text-xs opacity-50'>#7ed8c7</div>
                             </div>
                             <div className='bg-orange rounded-lg p-4 text-center text-black shadow-sm'>
                                 <div className='mb-2 text-sm font-medium'>Orange</div>
                                 <div className='text-xs opacity-75'>bg-orange / text-orange</div>
-                                <div className='text-xs opacity-50'>#ff8f40</div>
+                                <div className='text-xs opacity-50'>#ff9b5e</div>
                             </div>
                             <div className='bg-red rounded-lg p-4 text-center text-white shadow-sm'>
                                 <div className='mb-2 text-sm font-medium'>Red</div>
                                 <div className='text-xs opacity-75'>bg-red / text-red</div>
-                                <div className='text-xs opacity-50'>#f07178</div>
+                                <div className='text-xs opacity-50'>#ff6f91</div>
                             </div>
                         </div>
                     </div>
@@ -449,39 +451,39 @@ export default function ComponentShowcasePage() {
                             <div className='bg-blue rounded-lg p-4 text-center text-black shadow-sm'>
                                 <div className='mb-2 text-sm font-medium'>Blue</div>
                                 <div className='text-xs opacity-75'>bg-blue / text-blue</div>
-                                <div className='text-xs opacity-50'>#3953e6</div>
+                                <div className='text-xs opacity-50'>#03598f</div>
                             </div>
                             <div className='bg-blue-bright rounded-lg p-4 text-center text-black shadow-sm'>
                                 <div className='mb-2 text-sm font-medium'>Blue Bright</div>
                                 <div className='text-xs opacity-75'>bg-blue-bright</div>
-                                <div className='text-xs opacity-50'>#59c2ff</div>
+                                <div className='text-xs opacity-50'>#4f5ed1</div>
                             </div>
                             <div className='bg-yellow rounded-lg p-4 text-center text-black shadow-sm'>
                                 <div className='mb-2 text-sm font-medium'>Yellow</div>
                                 <div className='text-xs opacity-75'>bg-yellow / text-yellow</div>
-                                <div className='text-xs opacity-50'>#96860e</div>
+                                <div className='text-xs opacity-50'>#e8b134</div>
                             </div>
                             <div className='bg-red-bright rounded-lg p-4 text-center text-white shadow-sm'>
                                 <div className='mb-2 text-sm font-medium'>Red Bright</div>
                                 <div className='text-xs opacity-75'>bg-red-bright / text-red-bright</div>
-                                <div className='text-xs opacity-50'>#d95757</div>
+                                <div className='text-xs opacity-50'>#ff8ba8</div>
                             </div>
                         </div>
-                        <div className='grid gap-4 md:grid-cols-2 lg:grid-cols-4 mt-4'>
+                        <div className='mt-4 grid gap-4 md:grid-cols-2 lg:grid-cols-4'>
                             <div className='bg-purple rounded-lg p-4 text-center text-black shadow-sm'>
                                 <div className='mb-2 text-sm font-medium'>Purple</div>
                                 <div className='text-xs opacity-75'>bg-purple / text-purple</div>
-                                <div className='text-xs opacity-50'>#d2a6ff</div>
+                                <div className='text-xs opacity-50'>#272377</div>
                             </div>
                             <div className='bg-cyan rounded-lg p-4 text-center text-black shadow-sm'>
                                 <div className='mb-2 text-sm font-medium'>Cyan</div>
                                 <div className='text-xs opacity-75'>bg-cyan / text-cyan</div>
-                                <div className='text-xs opacity-50'>#95e6cb</div>
+                                <div className='text-xs opacity-50'>#39a5d8</div>
                             </div>
                             <div className='bg-grey rounded-lg p-4 text-center text-white shadow-sm'>
                                 <div className='mb-2 text-sm font-medium'>Grey</div>
                                 <div className='text-xs opacity-75'>bg-grey / text-grey</div>
-                                <div className='text-xs opacity-50'>#2b2b2b</div>
+                                <div className='text-xs opacity-50'>#101828</div>
                             </div>
                         </div>
                     </div>

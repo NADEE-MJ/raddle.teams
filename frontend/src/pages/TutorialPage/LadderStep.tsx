@@ -1,7 +1,6 @@
 import { useState, useMemo } from 'react';
 import Button from '@/components/Button';
 
-
 interface LadderStepProps {
     onGuessChange: (guess: string) => void;
     inputRef: React.RefObject<HTMLInputElement | null>;
@@ -17,47 +16,65 @@ interface LadderStepProps {
     secondHint?: boolean;
 }
 
-
-export default function LadderStep({ onGuessChange, inputRef, word, transform, isCurrentQuestion, isCurrentAnswer, isStepRevealed, isActive, shouldShowTransform, shouldRenderTransform, onHintClick, secondHint = false }: LadderStepProps) {
+export default function LadderStep({
+    onGuessChange,
+    inputRef,
+    word,
+    transform,
+    isCurrentQuestion,
+    isCurrentAnswer,
+    isStepRevealed,
+    isActive,
+    shouldShowTransform,
+    shouldRenderTransform,
+    onHintClick,
+    secondHint = false,
+}: LadderStepProps) {
     const [currentGuess, setCurrentGuess] = useState('');
 
     const color = useMemo(() => {
-        if (isCurrentQuestion) return 'bg-green/50';
-        if (isCurrentAnswer) return 'bg-yellow/80';
-        if (isStepRevealed) return 'bg-grey';
-        return 'bg-secondary';
+        if (isCurrentQuestion) return 'bg-question-step';
+        if (isCurrentAnswer) return 'bg-answer-step';
+        if (isStepRevealed) return 'bg-revealed-step';
+        return 'bg-hidden-step';
     }, [isCurrentQuestion, isCurrentAnswer, isStepRevealed]);
 
     const renderEmptyTransformFn = () => {
         return (
-            <span className='bg-secondary border-border text-tx-primary absolute bottom-0 left-1/2 z-50 w-[max-content] min-w-25 -translate-x-1/2 translate-y-1/2 rounded-sm border p-1 pb-[6px] font-mono text-xs leading-1 uppercase'>
+            <span className='bg-transform-bg border-ladder-rungs text-tx-primary absolute bottom-0 left-1/2 z-50 w-[max-content] min-w-25 -translate-x-1/2 translate-y-1/2 rounded-sm border p-1 pb-[6px] font-mono text-xs leading-1 uppercase'>
                 &nbsp;
             </span>
-        )
+        );
     };
 
     const renderTransformFn = (transform: string) => {
         return (
-            <span className='bg-secondary border-border text-tx-primary absolute bottom-0 left-1/2 z-50 -translate-x-1/2 translate-y-1/2 rounded-sm border px-2 py-1 font-mono text-xs whitespace-nowrap uppercase'>
+            <span className='bg-transform-bg border-ladder-rungs text-tx-primary absolute bottom-0 left-1/2 z-50 -translate-x-1/2 translate-y-1/2 rounded-sm border px-2 py-1 font-mono text-xs whitespace-nowrap uppercase'>
                 {transform}
-            </span >
+            </span>
         );
     };
 
-    const inputClassNames = useMemo(() => 'text-tx-primary w-full bg-transparent p-3 text-center text-[16px] tracking-wide uppercase focus:outline-none md:text-lg', []);
+    const inputClassNames = useMemo(
+        () =>
+            'text-tx-primary w-full bg-transparent p-3 text-center text-[16px] tracking-wide uppercase focus:outline-none md:text-lg',
+        []
+    );
 
     const renderActiveStep = (wordLength: number, renderEmptyTransform: boolean) => {
         return (
             <div className='relative'>
-                <span className='bg-secondary border-border text-tx-primary absolute top-1/2 -translate-x-1/2 -translate-y-1/2 rounded-lg border p-0.5 text-sm md:text-base'
-                    data-testid='word-length-indicator'>
+                <span
+                    className='bg-transform-bg border-ladder-rungs text-tx-primary absolute top-1/2 -translate-x-1/2 -translate-y-1/2 rounded-lg border-[0.5px] p-0.5 text-sm md:text-base'
+                    data-testid='word-length-indicator'
+                >
                     ({wordLength})
                 </span>
                 <input
                     ref={inputRef}
                     type='text'
                     value={currentGuess}
-                    onChange={(e) => {
+                    onChange={e => {
                         const guess = e.target.value.toUpperCase().trim();
                         setCurrentGuess(guess);
                         onGuessChange(guess);
@@ -68,28 +85,29 @@ export default function LadderStep({ onGuessChange, inputRef, word, transform, i
                     autoCorrect='off'
                     autoCapitalize='off'
                     spellCheck='false'
-                    data-testid="active-step-input"
+                    data-testid='active-step-input'
                 />
                 {onHintClick && (
                     <Button
                         onClick={onHintClick}
                         variant='hint'
-                        className={`absolute top-1/2 right-0 flex h-8 w-8 -translate-y-1/2 translate-x-1/2 items-center justify-center`}
+                        className={`absolute top-1/2 right-0 flex h-8 w-8 translate-x-1/2 -translate-y-1/2 items-center justify-center transition-colors duration-150 ease-in-out`}
                         data-testid='hint-button'
                     >
                         {secondHint ? '👁️' : '💡'}
                     </Button>
                 )}
                 {renderEmptyTransform && renderEmptyTransformFn()}
-            </div>);
-    }
+            </div>
+        );
+    };
 
     const renderUnrevealedStep = (wordLength: number, renderEmptyTransform: boolean) => {
         return (
             <div className='relative'>
                 <input
                     type='text'
-                    placeholder={'◼️'.repeat(wordLength) + ` (${wordLength})`}
+                    placeholder={'◻️'.repeat(wordLength) + ` (${wordLength})`}
                     className={inputClassNames}
                     disabled
                     autoComplete='off'
@@ -99,21 +117,18 @@ export default function LadderStep({ onGuessChange, inputRef, word, transform, i
                     data-testid='unrevealed-step-input'
                 />
                 {renderEmptyTransform && renderEmptyTransformFn()}
-            </div>);
-    }
+            </div>
+        );
+    };
 
     const renderRevealedStep = (word: string, renderTransform: boolean, transform: string | null = null) => {
         return (
             <div className='relative'>
-                <div
-                    className='text-tx-primary py-3 text-center tracking-wide uppercase'
-                >
-                    {word}
-                </div>
+                <div className='text-tx-primary py-3 text-center tracking-wide uppercase'>{word}</div>
                 {renderTransform && (transform !== null ? renderTransformFn(transform) : renderEmptyTransformFn())}
             </div>
         );
-    }
+    };
 
     const renderStep = (word: string, transform: string | null) => {
         if (isActive) {
@@ -121,19 +136,24 @@ export default function LadderStep({ onGuessChange, inputRef, word, transform, i
         }
 
         if (isStepRevealed || isCurrentQuestion || isCurrentAnswer) {
-            return renderRevealedStep(word, transform !== null && shouldRenderTransform, shouldShowTransform ? transform : null);
+            return renderRevealedStep(
+                word,
+                transform !== null && shouldRenderTransform,
+                shouldShowTransform ? transform : null
+            );
         }
 
         return renderUnrevealedStep(word.length, transform !== null && shouldRenderTransform);
     };
 
+    const transitionClasses = 'transition-colors duration-200 ease-in-out';
+
     return (
         <div
-            className={`relative font-mono text-sm md:text-lg ${color}`}
+            className={`relative font-mono text-sm md:text-lg ${color} text-tx-primary ${transitionClasses}`}
             data-testid={`ladder-word-${word.toLowerCase()}`}
         >
             {renderStep(word, transform)}
         </div>
     );
-
 }

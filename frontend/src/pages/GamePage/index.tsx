@@ -271,21 +271,15 @@ function Game({ puzzle, player, teamName, lobbyId, sessionId, initialState }: Ga
     return (
         <div>
             {/* Header with team info and connection status */}
-            <div className='mb-4 flex items-center justify-between'>
-                <div>
-                    <h1 className='text-tx-primary text-2xl font-semibold md:text-3xl'>{puzzle.title}</h1>
-                    <p className='text-tx-secondary text-sm'>Team: {teamName}</p>
-                </div>
-                <div className='text-right'>
+            <div className='mb-4 flex flex-col items-center text-center'>
+                <h1 className='text-tx-primary text-2xl font-semibold md:text-3xl'>{puzzle.title}</h1>
+                <div className='mt-2 flex w-full justify-center'>
                     <div
-                        className={`inline-flex items-center rounded-full px-3 py-1 text-xs font-medium ${
+                        className={`inline-flex w-28 items-center justify-center rounded-full px-3 py-1 text-xs font-medium ${
                             isConnected ? 'bg-green-100 text-green-800' : 'bg-red-100 text-red-800'
                         }`}
                     >
                         {isConnected ? '● Connected' : '● Disconnected'}
-                    </div>
-                    <div className='text-tx-secondary mt-1 text-xs'>
-                        Progress: {revealedSteps.length} / {puzzle.ladder.length}
                     </div>
                 </div>
             </div>
@@ -294,63 +288,65 @@ function Game({ puzzle, player, teamName, lobbyId, sessionId, initialState }: Ga
             <div className='mx-auto max-w-6xl'>
                 <div id='game-area' className='md:grid md:grid-cols-[2fr_3fr] md:gap-8'>
                     <div className={`${!showFullLadder ? 'sticky top-0 z-50' : ''} bg-primary py-3`}>
-                        <div className='divide-border border-border divide-y-2 border-x-5'>
-                            <div>
-                                <div className='hidden p-4 sm:hidden md:block'></div>
+                        <div className='border-ladder-rungs border-x-5'>
+                            <div className='border-ladder-rungs border-b'>
+                                <div className='hidden p-3 sm:hidden md:block'></div>
                                 {!isCompleted ? (
                                     <button
                                         type='button'
                                         onClick={toggleFullLadder}
-                                        className='text-tx-muted hover:bg-elevated mb-1 w-full p-1 text-xs italic md:hidden'
+                                        className='text-tx-muted hover:bg-elevated w-full p-1 text-sm italic md:hidden'
                                     >
                                         {showFullLadder ? 'Collapse full ladder' : 'Show full ladder'}
                                     </button>
                                 ) : (
-                                    <div className='p-4 sm:block md:hidden'></div>
+                                    <div className='p-3 sm:block md:hidden'></div>
                                 )}
                             </div>
 
                             {puzzle.ladder.map((ladderStep, stepId) => {
                                 const shouldRenderStepOnMobile = mobileVisibleSteps.includes(stepId);
 
-                                // Always show all steps when completed, otherwise use showFullLadder/mobile logic
                                 if (!isCompleted && !showFullLadder && !shouldRenderStepOnMobile) {
                                     return null;
                                 }
                                 return (
-                                    <LadderStep
-                                        key={`ladder-step-${stepId}`}
-                                        onGuessChange={handleGuessChange}
-                                        inputRef={inputRef}
-                                        word={ladderStep.word}
-                                        transform={ladderStep.transform}
-                                        isCurrentQuestion={isCurrentQuestion(stepId)}
-                                        isCurrentAnswer={isCurrentAnswer(stepId)}
-                                        isStepRevealed={isStepRevealed(stepId)}
-                                        isActive={isActiveStep(stepId)}
-                                        isDisabled={isCompleted}
-                                        shouldShowTransform={isStepRevealed(stepId) && isStepRevealed(stepId + 1)}
-                                        shouldRenderTransform={
-                                            isCompleted ||
-                                            (stepId !== mobileVisibleSteps[mobileVisibleSteps.length - 1] &&
-                                                !showFullLadder) ||
-                                            showFullLadder
-                                        }
-                                    />
+                                    <div key={`ladder-step-wrapper-${stepId}`} className='border-ladder-rungs border-y'>
+                                        <LadderStep
+                                            onGuessChange={handleGuessChange}
+                                            inputRef={inputRef}
+                                            word={ladderStep.word}
+                                            transform={ladderStep.transform}
+                                            isCurrentQuestion={isCurrentQuestion(stepId)}
+                                            isCurrentAnswer={isCurrentAnswer(stepId)}
+                                            isStepRevealed={isStepRevealed(stepId)}
+                                            isActive={isActiveStep(stepId)}
+                                            isDisabled={isCompleted}
+                                            shouldShowTransform={isStepRevealed(stepId) && isStepRevealed(stepId + 1)}
+                                            shouldRenderTransform={
+                                                isCompleted ||
+                                                (stepId !== mobileVisibleSteps[mobileVisibleSteps.length - 1] &&
+                                                    !showFullLadder) ||
+                                                showFullLadder
+                                            }
+                                        />
+                                    </div>
                                 );
                             })}
 
                             {!isCompleted && canSwitchDirection ? (
-                                <button
-                                    type='button'
-                                    onClick={handleDirectionChange}
-                                    className='text-tx-muted hover:bg-elevated w-full p-1 text-xs italic'
-                                    data-testid='switch-direction-button'
-                                >
-                                    Switch to solving {direction === 'down' ? '↑ upward' : '↓ downward'}
-                                </button>
+                                <div className='border-ladder-rungs border-t'>
+                                    <button
+                                        type='button'
+                                        onClick={handleDirectionChange}
+                                        className='text-tx-muted hover:bg-elevated w-full p-1 text-sm italic'
+                                        data-testid='switch-direction-button'
+                                    >
+                                        Switch to solving {direction === 'down' ? '↑ upwards' : '↓ downwards'}
+                                    </button>
+                                </div>
                             ) : (
-                                <div className='p-4' />
+                                <div className='border-ladder-rungs border-t p-4' />
                             )}
                         </div>
                     </div>
