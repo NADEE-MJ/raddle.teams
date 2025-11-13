@@ -73,7 +73,7 @@ export default function LobbyDetails({ lobbyId, onClose, onLobbyDeleted, refresh
         if (!adminApiToken) return;
 
         // Connect to admin WebSocket
-        const ws = new WebSocket(`ws://${window.location.host}/ws/admin/${adminApiToken}`);
+        const ws = new WebSocket(`/ws/admin/${adminApiToken}`);
         wsRef.current = ws;
 
         ws.onopen = () => {
