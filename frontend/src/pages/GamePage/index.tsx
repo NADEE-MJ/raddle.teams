@@ -9,8 +9,9 @@
  */
 
 import { useCallback, useEffect, useMemo, useRef, useState } from 'react';
-import { useNavigate, useOutletContext, useLocation } from 'react-router-dom';
+import { useNavigate, useLocation } from 'react-router-dom';
 import { useGameState } from '@/hooks/useGameState';
+import { useGlobalOutletContext } from '@/hooks/useGlobalOutletContext';
 import type { Puzzle } from '@/types/game';
 import type { Player, LobbyInfo, GameStartedEvent, GameWonEvent } from '@/types';
 import { api } from '@/services/api';
@@ -22,6 +23,7 @@ interface GamePageProps {
     player: Player;
     teamName: string;
     lobbyId: number;
+    sessionId: string;
     initialState: {
         revealed_steps: number[];
         is_completed: boolean;
@@ -32,7 +34,7 @@ interface GamePageProps {
 export default function GamePage() {
     const navigate = useNavigate();
     const location = useLocation();
-    const { sessionId } = useOutletContext<{ sessionId: string }>();
+    const { sessionId, setSessionId, getSessionIdFromLocalStorage } = useGlobalOutletContext();
 
     const [gameData, setGameData] = useState<GamePageProps | null>(null);
     const [loading, setLoading] = useState(true);
@@ -41,6 +43,15 @@ export default function GamePage() {
     useEffect(() => {
         async function loadGameData() {
             try {
+                // Try to restore session ID from localStorage if not in context
+                let currentSessionId = sessionId;
+                if (!currentSessionId) {
+                    currentSessionId = getSessionIdFromLocalStorage();
+                    if (currentSessionId) {
+                        setSessionId(currentSessionId);
+                    }
+                }
+
                 // Get data from navigation state
                 const state = location.state as {
                     player?: Player;
@@ -48,22 +59,23 @@ export default function GamePage() {
                     gameStartedEvent?: GameStartedEvent;
                 } | null;
 
-                if (!sessionId) {
-                    throw new Error('No session ID');
+                if (!currentSessionId) {
+                    throw new Error('No session ID found. Please log in again.');
                 }
 
                 // Fetch puzzle data from API
                 console.log('[GamePage] Fetching puzzle data from API...');
-                const puzzleResponse = await api.player.game.getPuzzle(sessionId);
+                const puzzleResponse = await api.player.game.getPuzzle(currentSessionId);
 
                 // Fetch player info
-                const player = await api.player.lobby.activeUser(sessionId);
+                const player = await api.player.lobby.activeUser(currentSessionId);
 
                 setGameData({
                     puzzle: puzzleResponse.puzzle,
                     player,
                     teamName: puzzleResponse.team_name,
                     lobbyId: puzzleResponse.lobby_id,
+                    sessionId: currentSessionId,
                     initialState: puzzleResponse.state,
                 });
                 setLoading(false);
@@ -75,7 +87,7 @@ export default function GamePage() {
         }
 
         loadGameData();
-    }, [location.state, navigate, sessionId]);
+    }, [location.state, navigate, sessionId, getSessionIdFromLocalStorage, setSessionId]);
 
     if (loading) {
         return (
@@ -95,22 +107,22 @@ export default function GamePage() {
                     <h1 className='mb-4 text-2xl font-bold text-red-600'>Error</h1>
                     <p className='mb-4 text-gray-600'>{error || 'Failed to load game'}</p>
                     <button
-                        onClick={() => navigate('/lobby')}
+                        onClick={() => navigate('/')}
                         className='rounded-lg bg-blue-600 px-6 py-2 text-white hover:bg-blue-700'
                     >
-                        Return to Lobby
+                        Return to Home
                     </button>
                 </div>
             </div>
         );
     }
 
-    return <Game {...gameData} sessionId={sessionId} />;
+    return <Game {...gameData} />;
 }
 
-interface GameProps extends GamePageProps {
-    sessionId: string;
-}
+interface GameProps extends GamePageProps {}
+
+// GameProps now includes sessionId from GamePageProps
 
 function Game({ puzzle, player, teamName, lobbyId, sessionId, initialState }: GameProps) {
     const navigate = useNavigate();

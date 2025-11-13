@@ -31,20 +31,22 @@ export default function Clues({ puzzle, direction, currentQuestion, currentAnswe
 
     // Shuffle with a consistent seed based on puzzle title
     const shuffleWithSeed = useCallback(<T,>(array: T[], seedStr: string): T[] => {
-        const arr = [...array];
+        // Convert string to numeric seed
         let seed = 0;
         for (let i = 0; i < seedStr.length; i++) {
-            seed = (seed << 5) - seed + seedStr.charCodeAt(i);
-            seed = seed & seed;
+            seed = (seed * 31 + seedStr.charCodeAt(i)) >>> 0;
         }
 
-        const random = (max: number) => {
-            seed = (seed * 9301 + 49297) % 233280;
-            return (seed / 233280) * max;
-        };
+        // Simple LCG (linear congruential generator)
+        function random(): number {
+            seed = (seed * 1664525 + 1013904223) >>> 0;
+            return seed / 0x100000000;
+        }
 
+        // Fisher–Yates shuffle
+        const arr = array.slice();
         for (let i = arr.length - 1; i > 0; i--) {
-            const j = Math.floor(random(i + 1));
+            const j = Math.floor(random() * (i + 1));
             [arr[i], arr[j]] = [arr[j], arr[i]];
         }
         return arr;
