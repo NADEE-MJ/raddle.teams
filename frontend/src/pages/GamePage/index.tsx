@@ -10,7 +10,7 @@
 
 import { useCallback, useEffect, useMemo, useRef, useState } from 'react';
 import { useNavigate, useOutletContext, useLocation } from 'react-router-dom';
-import { UseGameState } from '@/hooks/UseGameState';
+import { useGameState } from '@/hooks/useGameState';
 import type { Puzzle } from '@/types/game';
 import type { Player, LobbyInfo, GameStartedEvent, GameWonEvent } from '@/types';
 import { api } from '@/services/api';
@@ -135,7 +135,7 @@ function Game({ puzzle, player, teamName, lobbyId, sessionId, initialState }: Ga
         error,
         submitGuess,
         switchDirection,
-    } = UseGameState({
+    } = useGameState({
         puzzle,
         initialState,
         websocketUrl: wsUrl,
