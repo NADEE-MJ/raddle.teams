@@ -9,57 +9,57 @@
   "ladder": [
     {
       "word": "MINT",
-      "clue": "Metal thing made in a ^",
+      "clue": "Metal thing made in a <>",
       "transform": "makes a"
     },
     {
       "word": "COIN",
-      "clue": "A ^ ___ starts many games",
+      "clue": "A <> {} starts many games",
       "transform": "gets a"
     },
     {
       "word": "TOSS",
-      "clue": "Dish that a chef might ^",
+      "clue": "Dish that a chef might <>",
       "transform": "a"
     },
     {
       "word": "SALAD",
-      "clue": "Emperor with his own ^?",
+      "clue": "Emperor with his own <>?",
       "transform": "with romaine and parmesan"
     },
     {
       "word": "CAESAR",
-      "clue": "City where ^ died",
+      "clue": "City where <> died",
       "transform": "died in"
     },
     {
       "word": "ROME",
-      "clue": "Change one letter in ^ to get a garment",
+      "clue": "Change one letter in <> to get a garment",
       "transform": "M->B"
     },
     {
       "word": "ROBE",
-      "clue": "___^, something you might wear after exiting a ___",
+      "clue": "{}<>, something you might wear after exiting a {}",
       "transform": "is worn after a"
     },
     {
       "word": "BATH",
-      "clue": "Alternative to a ^",
+      "clue": "Alternative to a <>",
       "transform": "or a"
     },
     {
       "word": "SHOWER",
-      "clue": "Contents of a bottle in a ^",
+      "clue": "Contents of a bottle in a <>",
       "transform": "with"
     },
     {
       "word": "SHAMPOO",
-      "clue": "Counterpart to ^",
+      "clue": "Counterpart to <>",
       "transform": "or"
     },
     {
       "word": "CONDITIONER",
-      "clue": "Drop two letters in ^ to get a state",
+      "clue": "Drop two letters in <> to get a state",
       "transform": "-ER"
     },
     {

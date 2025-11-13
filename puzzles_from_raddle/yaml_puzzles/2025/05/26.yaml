@@ -8,37 +8,37 @@ meta:
     The name was changed to Memorial Day in 1971.
 ladder:
 - word: DECORATION
-  clue: The first three letters of ^ stand for this month
+  clue: The first three letters of <> stand for this month
   transform: partially stands for
 - word: DECEMBER
-  clue: Last day of ^
+  clue: Last day of <>
   transform: ends with
 - word: NEW YEARS EVE
-  clue: New York City spot popular on ^
+  clue: New York City spot popular on <>
   transform: is big in
 - word: TIMES SQUARE
-  clue: Three ^ of two
+  clue: Three <> of two
   transform: "3 * 2 * 2"
 - word: TWELVE
-  clue: '"^ ___ Men"'
+  clue: '"<> ^ Men"'
   transform: men are
 - word: ANGRY
-  clue: Video game "^ ___"
-  transform: â¦
+  clue: Video game "<> ^"
+  transform: …
 - word: BIRDS
-  clue: 'Director of "The ^"'
+  clue: 'Director of "The <>"'
   transform: directed by
 - word: HITCHCOCK
-  clue: Directional movie directed by ^
+  clue: Directional movie directed by <>
   transform: directed
 - word: NORTH BY NORTHWEST
-  clue: Monument featured in the climactic scene of ^
+  clue: Monument featured in the climactic scene of <>
   transform: features
 - word: MOUNT RUSHMORE
-  clue: Man on the right side of ^
+  clue: Man on the right side of <>
   transform: features
 - word: LINCOLN
-  clue: ^ ___, popular D.C. site
+  clue: <> ^, popular D.C. site
   transform: looms large in his
 - word: MEMORIAL
   clue:

@@ -2,48 +2,48 @@ meta:
   title: From MIRACLE to MOJAVE
   author: Sandy Weisz and Mao Reynolds
   difficulty: medium
-  theme: Emmy nominations 2005
+  theme: Emmy nominations 2025
   message:
     This week we're honoring some of this year's Emmy nominees, including "The Rehearsal", which featured Nathan Fielder learning to fly a commercial jet and performing the self-proclaimed "Miracle over the Mojave".
 ladder:
 - word: MIRACLE
-  clue: Sandwich spread ^ ___
-  transform: â¦
+  clue: Sandwich spread <> ^
+  transform: …
 - word: WHIP
-  clue: Change a letter in ^ to get something in a computer
+  clue: Change a letter in <> to get something in a computer
   transform: W->C
 - word: CHIP
-  clue: 'U.K. : ^ :: U.S.A. : ___'
+  clue: 'U.K. : <> :: U.S.A. : ^'
   transform: aka
 - word: FRY
-  clue: Change one letter in ^ to get a small bug
+  clue: Change one letter in <> to get a small bug
   transform: R->L
 - word: FLY
-  clue: Appendage that helps one ^
+  clue: Appendage that helps one <>
   transform: with the help of a
 - word: WING
-  clue: '"The ___ ^", popular TV show'
+  clue: '"The ^ <>", popular TV show'
   transform: with the President and staff
 - word: WEST
-  clue: '"___ ___ ^," title of a movie, TV show, and song'
+  clue: '"^ ^ <>," title of a movie, TV show, and song'
   transform: is 
 - word: WILD
-  clue: No longer ^
+  clue: No longer <>
   transform: opposite
 - word: TAME
-  clue: Kind of food that's an anagram of ^
+  clue: Kind of food that's an anagram of <>
   transform: anagrammed
 - word: MEAT
-  clue: ^ ___, a favorite of Sweeney Todd
+  clue: <> ^, a favorite of Sweeney Todd
   transform: gets baked in a
 - word: PIE
-  clue: Menu heading that might include a ^
+  clue: Menu heading that might include a <>
   transform: is a kind of
 - word: DESSERT
-  clue: Drop a letter from ^ to get something dry
+  clue: Drop a letter from <> to get something dry
   transform: -S
 - word: DESERT
-  clue: ^ in southern California
+  clue: <> in southern California
   transform: in California
 - word: MOJAVE
   clue:

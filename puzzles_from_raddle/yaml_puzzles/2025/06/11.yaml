@@ -6,41 +6,41 @@ meta:
   message: It's Daddle Week! Father's Day is Sunday. Let's visit a few of our favorite dads in the animal kingdom.
 ladder:
 - word: PUPPY
-  clue: 'Staple of Southern cuisine: ___^'
+  clue: 'Staple of Southern cuisine: ^<>'
   transform: that's deep-fried
 - word: HUSH
-  clue: You say "^" when you want someone to be ___
+  clue: You say "<>" when you want someone to be ^
   transform: to get
 - word: QUIET
-  clue: Building where it's important to be ^
+  clue: Building where it's important to be <>
   transform: vibes in a
 - word: LIBRARY
-  clue: ^ of ___, the biggest ^ in the world
+  clue: <> of ^, the biggest <> in the world
   transform: of
 - word: CONGRESS
-  clue: Change the first three letters of ^ to its opposite (to yield the opposite of
-    ^, it's sometimes said)
+  clue: Change the first three letters of <> to its opposite (to yield the opposite of
+    <>, it's sometimes said)
   transform: "\"opposite\""
 - word: PROGRESS
-  clue: Mythical creature found in the middle of ^
+  clue: Mythical creature found in the middle of <>
   transform: hides an
 - word: OGRE
-  clue: Titular ^ in four feature films
+  clue: Titular <> in four feature films
   transform: from film
 - word: SHREK
-  clue: Best friend of ^
+  clue: Best friend of <>
   transform: best friend
 - word: DONKEY
-  clue: Another term for a ^
+  clue: Another term for a <>
   transform: aka
 - word: ASS
-  clue: Add a letter to the start of ^ to get a girl
+  clue: Add a letter to the start of <> to get a girl
   transform: +L
 - word: LASS
-  clue: Add two letters to ^ to get a titular '50s TV star
+  clue: Add two letters to <> to get a titular '50s TV star
   transform: +IE
 - word: LASSIE
-  clue: Species of ^
+  clue: Species of <>
   transform: is a
 - word: DOG
   clue:

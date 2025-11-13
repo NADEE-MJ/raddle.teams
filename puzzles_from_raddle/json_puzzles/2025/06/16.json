@@ -9,57 +9,57 @@
   "ladder": [
     {
       "word": "TRAFFIC",
-      "clue": "Word for ^ that won't move",
+      "clue": "Word for <> that won't move",
       "transform": "mess is called a"
     },
     {
       "word": "JAM",
-      "clue": "^ goes great on ___",
+      "clue": "<> goes great on {}",
       "transform": "goes on"
     },
     {
       "word": "TOAST",
-      "clue": "Change one letter in ^ to get something found on either side of the U.S.",
+      "clue": "Change one letter in <> to get something found on either side of the U.S.",
       "transform": "T->C"
     },
     {
       "word": "COAST",
-      "clue": "Piece of formal wear that is an anagram of ^",
+      "clue": "Piece of formal wear that is an anagram of <>",
       "transform": "anagrammed"
     },
     {
       "word": "ASCOT",
-      "clue": "An ^ is a kind of ___",
+      "clue": "An <> is a kind of {}",
       "transform": "is a"
     },
     {
       "word": "TIE",
-      "clue": "Language that sounds like ^",
+      "clue": "Language that sounds like <>",
       "transform": "sounds like"
     },
     {
       "word": "THAI",
-      "clue": "Word that precedes ^ in the name of a dish",
+      "clue": "Word that precedes <> in the name of a dish",
       "transform": "follows"
     },
     {
       "word": "PAD",
-      "clue": "Part of a uniform or jacket: ___ ^",
+      "clue": "Part of a uniform or jacket: {} <>",
       "transform": "might protect your"
     },
     {
       "word": "SHOULDER",
-      "clue": "Remove every other letter in ^ to get a part of the body",
+      "clue": "Remove every other letter in <> to get a part of the body",
       "transform": "oddly spells"
     },
     {
       "word": "SOLE",
-      "clue": "Remove the last letter of ^ to get the scientific name for this",
+      "clue": "Remove the last letter of <> to get the scientific name for this",
       "transform": "-E is the"
     },
     {
       "word": "SUN",
-      "clue": "^___, natural source of a particular vitamin",
+      "clue": "<>{}, natural source of a particular vitamin",
       "transform": "makes"
     },
     {

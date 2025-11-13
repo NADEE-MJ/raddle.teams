@@ -1,0 +1,45 @@
+meta:
+  title: From CAPTURE to FLAG
+  author: Sandy Weisz and Mao Reynolds
+  difficulty: medium
+  theme: Block Party
+  message: 
+    Capture the Flag was recorded as early as 1860 in a German gymnastics manual.
+    The “flag” doesn’t have to be an actual banner; it can be a lantern, flashlight, glow stick or anything else on hand. A similar game, Zarnitsa, was invented in the Soviet Union and was even honored with a postage stamp.
+ladder:
+- word: CAPTURE
+  clue: Change one letter in <> to get an intense joy
+  transform: C->R
+- word: RAPTURE
+  clue: Drop the three middle letters of <> to become scarce
+  transform: -PTU
+- word: RARE
+  clue: Type of entree that can be ordered <>
+  transform: kind of fodo
+- word: STEAK
+  clue: A piece of camping equipment that sounds like "<>"
+  transform: anagrammed
+- word: STAKE
+  clue: Move a letter of <> to the end to get some hot things?
+  transform: S to the end
+- word: TAKES
+  clue: "\"That really <> the ^\""
+  transform: the
+- word: CAKE
+  clue: ^<>, a breakfast item
+  transform: shaped like a
+- word: PAN
+  clue: Change one letter in <> to get a secret code
+  transform: A->I
+- word: PIN
+  clue: ^<>, fastener named after a hairstyle (not a person)
+  transform: not named after a person named
+- word: BOBBY
+  clue: Celebrity chef <> ^
+  transform: …
+- word: FLAY
+  clue: Change one letter in <> to get tired
+  transform: Y->G
+- word: FLAG
+  clue:
+  transform:

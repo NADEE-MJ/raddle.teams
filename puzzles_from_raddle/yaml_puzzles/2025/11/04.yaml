@@ -1,0 +1,46 @@
+meta:
+  title: From CORN to HOLE
+  author: Sandy Weisz and Mao Reynolds
+  difficulty: medium
+  theme: Block Party
+  message: 
+    Corn hole, also called Sack Toss or simply Bags, is a block party staple.
+    Players throw bean bags (historically filled with dried corn kernels, hence the name) at boards, earning one point for landing on the board and three points for getting it in the hole. 
+    A similar game called Parlor Quoits received a patent in 1883, but used a square hole rather than a circular one.
+ladder:
+- word: CORN
+  clue: Add a letter to the start of <> to get a forest sight
+  transform: +A
+- word: ACORN
+  clue: An <> turns into an ^
+  transform: turns into an
+- word: OAK
+  clue: Remove a letter in <> to get an agreement
+  transform: -A
+- word: OK
+  clue: <> stands for this place
+  transform: stands for
+- word: OKLAHOMA
+  clue: Directly south of <>
+  transform: is directly north of
+- word: TEXAS
+  clue: <> ^, a card game
+  transform: card game
+- word: HOLD EM
+  clue: Drop the first letter of <> and anagram to get an ideal
+  transform: -H, then anagram
+- word: MODEL
+  clue: Where a <> walks
+  transform: walks on a
+- word: RUNWAY
+  clue: Insert a letter into <> to describe a kind of train?
+  transform: +A
+- word: RUNAWAY
+  clue: A <> leaves this place
+  transform: leaves
+- word: HOME
+  clue: Change one letter in <> to get an opening
+  transform: M->L
+- word: HOLE
+  clue:
+  transform:

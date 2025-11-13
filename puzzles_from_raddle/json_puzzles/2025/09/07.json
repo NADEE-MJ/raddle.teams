@@ -9,62 +9,62 @@
   "ladder": [
     {
       "word": "THE",
-      "clue": "Change one letter in ^ to draw?",
+      "clue": "Change one letter in <> to draw?",
       "transform": "H->I"
     },
     {
       "word": "TIE",
-      "clue": "Nationality that sounds like \"^\"",
+      "clue": "Nationality that sounds like \"<>\"",
       "transform": "sounds like"
     },
     {
       "word": "THAI",
-      "clue": "___ ^, most popular ^ dish",
+      "clue": "{} <>, most popular <> dish",
       "transform": "dish"
     },
     {
       "word": "PAD",
-      "clue": "___ ^, a part of jackets and uniforms",
+      "clue": "{} <>, a part of jackets and uniforms",
       "transform": "goes on your"
     },
     {
       "word": "SHOULDER",
-      "clue": "What you might have on your ^ if you're upset",
+      "clue": "What you might have on your <> if you're upset",
       "transform": "might hold a"
     },
     {
       "word": "CHIP",
-      "clue": "Change one letter in ^ to get a boat",
+      "clue": "Change one letter in <> to get a boat",
       "transform": "C->S"
     },
     {
       "word": "SHIP",
-      "clue": "Add 3 letters to the start of ^ to get an act of devotion",
+      "clue": "Add 3 letters to the start of <> to get an act of devotion",
       "transform": "+WOR"
     },
     {
       "word": "WORSHIP",
-      "clue": "A place for ^",
+      "clue": "A place for <>",
       "transform": "is a place for"
     },
     {
       "word": "CHURCH",
-      "clue": "^ and ___, ideally separated things",
+      "clue": "<> and {}, ideally separated things",
       "transform": "&"
     },
     {
       "word": "STATE",
-      "clue": "___^, a Fortune 500 company",
+      "clue": "{}<>, a Fortune 500 company",
       "transform": "+"
     },
     {
       "word": "ALL",
-      "clue": "^-or-___, an extreme proposition?",
+      "clue": "<>-or-{}, an extreme proposition?",
       "transform": "-or-"
     },
     {
       "word": "NOTHING",
-      "clue": "Drop two letters in ^ to get an object",
+      "clue": "Drop two letters in <> to get an object",
       "transform": "+NO"
     },
     {

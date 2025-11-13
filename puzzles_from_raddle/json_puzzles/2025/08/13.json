@@ -9,57 +9,57 @@
   "ladder": [
     {
       "word": "JAWS",
-      "clue": "Animal with big ^ in \"^\"",
+      "clue": "Animal with big <> in \"<>\"",
       "transform": "features a"
     },
     {
       "word": "SHARK",
-      "clue": "___ ^, a predatory businessperson",
+      "clue": "{} <>, a predatory businessperson",
       "transform": "might give you a"
     },
     {
       "word": "LOAN",
-      "clue": "Homophone of \"^\" that sounds solitary",
+      "clue": "Homophone of \"<>\" that sounds solitary",
       "transform": "sounds like"
     },
     {
       "word": "LONE",
-      "clue": "Change one letter in ^ to get an area",
+      "clue": "Change one letter in <> to get an area",
       "transform": "L->Z"
     },
     {
       "word": "ZONE",
-      "clue": "There are two ___ ^s on a (certain) field",
+      "clue": "There are two {} <>s on a (certain) field",
       "transform": "is at the"
     },
     {
       "word": "END",
-      "clue": "___ ^, part of a pool",
+      "clue": "{} <>, part of a pool",
       "transform": "where you shouldn't go off"
     },
     {
       "word": "DEEP",
-      "clue": "___ ^, not so hurtful",
+      "clue": "{} <>, not so hurtful",
       "transform": "as one's"
     },
     {
       "word": "SKIN",
-      "clue": "One of many small holes in the ^",
+      "clue": "One of many small holes in the <>",
       "transform": "features many a"
     },
     {
       "word": "PORE",
-      "clue": "Change a letter in ^ to get a certain European",
+      "clue": "Change a letter in <> to get a certain European",
       "transform": "R->L"
     },
     {
       "word": "POLE",
-      "clue": "^ ___, something to guide you",
+      "clue": "<> {}, something to guide you",
       "transform": "light"
     },
     {
       "word": "STAR",
-      "clue": "The ___ ^, where many work in \"Star Wars\"",
+      "clue": "The {} <>, where many work in \"Star Wars\"",
       "transform": "where Vader works"
     },
     {

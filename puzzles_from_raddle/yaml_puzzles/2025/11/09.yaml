@@ -1,0 +1,51 @@
+meta:
+  title: From SUNDAY to SATURDAY
+  author: Sandy Weisz and Mao Reynolds
+  difficulty: medium
+  theme: 7x7
+  message: "I’m turning 49 this week. 49 is 7x7, so I’m celebrating with seven sets of seven:
+    seven Raddles that go from the first to the seventh. 
+    We’re starting off with a set everyone knows, except for The Beatles, who must’ve forgotten this when they wrote “Eight Days a Week.”"
+ladder:
+- word: SUNDAY
+  clue: Someone might wear their <> ^ to church
+  transform: is when one wears their
+- word: BEST
+  clue: <> ^, a hotel chain
+  transform: …
+- word: WESTERN
+  clue: ^ is 90° away from <>
+  transform: rotated 90° counterclockwise
+- word: SOUTHERN
+  clue: <> ^, a whiskey brand
+  transform: …
+- word: COMFORT
+  clue: Drop a trigram (three letters) from <> to get something a sofa might turn into
+  transform: -COM
+- word: FORT
+  clue: Append a letter to <> to get a number
+  transform: +Y
+- word: FORTY
+  clue: <> ^, informal term for some sleep
+  transform: on a sofa, midafternoon
+- word: WINKS
+  clue: Change the first letter in <> to a bigram (two letters) and drop the last letter to get two <> at once
+  transform: W->BL
+- word: BLINK
+  clue: Change the vowel in <> to get a ^
+  transform: I->A
+- word: BLANK
+  clue: Append a bigram (two letters) to <> to get a kind of cover
+  transform: +ET
+- word: BLANKET
+  clue: Peanuts character with a <>
+  transform: is beloved by
+- word: LINUS
+  clue: Remove every other letter and reverse <> to get a long-running TV show
+  transform: -I, -U; reverse
+- word: SNL
+  clue: What the first letter of <> stands for
+  transform: partially stands for
+- word: SATURDAY
+  clue:
+  transform:

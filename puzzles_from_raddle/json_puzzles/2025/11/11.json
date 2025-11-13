@@ -1,0 +1,76 @@
+{
+  "meta": {
+    "title": "From BEANS to OLIVES",
+    "author": "Sandy Weisz and Mao Reynolds",
+    "difficulty": "medium",
+    "theme": "7x7",
+    "message": "I’m turning 49 this week. 49 is 7x7, so I’m celebrating with seven sets of seven: seven Raddles that go from the first to the seventh. Seven-layer dip is an appetizer that uses elements of Tex-Mex cuisine. The typical layers are refried beans, guacamole, sour cream, salsa, grated cheese, scallions and black olives, though there are many variations."
+  },
+  "ladder": [
+    {
+      "word": "BEANS",
+      "clue": "{} <>, something obtained by having a cow?",
+      "transform": "might be"
+    },
+    {
+      "word": "MAGIC",
+      "clue": "<> {}, popular theme park",
+      "transform": "place in Orlando"
+    },
+    {
+      "word": "KINGDOM",
+      "clue": "\"My <> for a {}!\"",
+      "transform": "for a"
+    },
+    {
+      "word": "HORSE",
+      "clue": "Mythical creature that’s half-<>",
+      "transform": "+ man ="
+    },
+    {
+      "word": "CENTAUR",
+      "clue": "Drop the first letter from <> and anagram to get the name of a science journal",
+      "transform": "-C, then an"
+    },
+    {
+      "word": "NATURE",
+      "clue": "{} <>, embodiment of the world around us",
+      "transform": "takes the form of a"
+    },
+    {
+      "word": "MOTHER",
+      "clue": "<>'s counterpart",
+      "transform": "counterpart"
+    },
+    {
+      "word": "FATHER",
+      "clue": "\"<> of the {}\", movie made in 1950, 1991, and 2022",
+      "transform": "of the"
+    },
+    {
+      "word": "BRIDE",
+      "clue": "Insert a letter in <> to get a span",
+      "transform": "+G"
+    },
+    {
+      "word": "BRIDGE",
+      "clue": "What often goes under a <>",
+      "transform": "spans a"
+    },
+    {
+      "word": "RIVER",
+      "clue": "Swap the first letter in <> with a bigram (two letters) to get a musical and movie",
+      "transform": "R->OL"
+    },
+    {
+      "word": "OLIVER",
+      "clue": "Change the last letter of <> to get some fruit",
+      "transform": "R->S"
+    },
+    {
+      "word": "OLIVES",
+      "clue": null,
+      "transform": null
+    }
+  ]
+}

@@ -1,0 +1,51 @@
+meta:
+  title: From MOUNTAIN to DEW
+  author: Sandy Weisz and Mao Reynolds
+  difficulty: medium
+  theme: Settlers of Catan
+  message: 
+    "
+    \"Mountain dew\" was Appalachian slang for moonshine, which Barney and Ally Hartman used as inspiration for their soft drink brand, first bottled in 1932.
+    It was originally intended to be used as a mixer with whiskey, if you can imagine.
+    (This week's Raddles each use one of the 6 terrains from Settlers of Catan: hill, forest, field, mountain, pasture, or desert.)
+    "
+ladder:
+- word: MOUNTAIN
+  clue: <> in Alaska
+  transform: in Alaska
+- word: DENALI
+  clue: Move the last letter of <> to the middle to get a refusal
+  transform: anagrammed
+- word: DENIAL
+  clue: <> sounds like a river in this country
+  transform: ain't just a river
+- word: EGYPT
+  clue: Capital of <>
+  transform: capital
+- word: CAIRO
+  clue: Drop the first and last letters of <> to get something around us
+  transform: -C, -O
+- word: AIR
+  clue: ^ <>, not a great thing to be full of
+  transform: that's boastful is
+- word: HOT
+  clue: <> ^, a children's game
+  transform: kind of tuber
+- word: POTATO
+  clue: ^ <> (it's orange)
+  transform: that's orange
+- word: SWEET
+  clue: ^ <> ^
+  transform: comes between a couple
+- word: HOME
+  clue: Change one letter in <> to sharpen
+  transform: M->N
+- word: HONE
+  clue: Append a letter to <> to get a term of endearment
+  transform: +Y
+- word: HONEY
+  clue: <>^ (it's green)
+  transform: …
+- word: DEW
+  clue:
+  transform:

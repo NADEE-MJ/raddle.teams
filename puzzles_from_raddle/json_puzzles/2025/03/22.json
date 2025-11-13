@@ -1,0 +1,87 @@
+{
+  "meta": {
+    "title": "From COMBINE to BOARD",
+    "author": "Sandy Weisz",
+    "difficulty": "medium",
+    "theme": "Enigmarch 2025",
+    "fromEmoji": "🥣",
+    "toEmoji": "🏄‍♂️"
+  },
+  "ladder": [
+    {
+      "word": "COMBINE",
+      "clue": "American company found backwards inside <>",
+      "transform": "contains, backwards"
+    },
+    {
+      "word": "IBM",
+      "clue": "Shift each letter of <> one step backwards in the alphabet to get this male name",
+      "transform": "shifted back one"
+    },
+    {
+      "word": "HAL",
+      "clue": "Add a letter to the front and another to the back of <> to get a big animal",
+      "transform": "+W +E"
+    },
+    {
+      "word": "WHALE",
+      "clue": "Most famous fictional <>",
+      "transform": "known as"
+    },
+    {
+      "word": "MOBY DICK",
+      "clue": "Initials of <> are an abbreviation for this US state",
+      "transform": "=> MD =>"
+    },
+    {
+      "word": "MARYLAND",
+      "clue": "Biggest city in <>",
+      "transform": "contains"
+    },
+    {
+      "word": "BALTIMORE",
+      "clue": "American university found backwards inside <>",
+      "transform": "contains, backwards"
+    },
+    {
+      "word": "MIT",
+      "clue": "<> is across the river from this city",
+      "transform": "is across the river from"
+    },
+    {
+      "word": "BOSTON",
+      "clue": "Baseball team in <>",
+      "transform": "home of the"
+    },
+    {
+      "word": "RED SOX",
+      "clue": "What the first part of <> means, to traffic",
+      "transform": "-SOX, means"
+    },
+    {
+      "word": "STOP",
+      "clue": "Opposite of <>",
+      "transform": "opposite"
+    },
+    {
+      "word": "GO",
+      "clue": "Game that has a space labeled <>",
+      "transform": "is a spot in"
+    },
+    {
+      "word": "MONOPOLY",
+      "clue": "Most valuable space in <>",
+      "transform": "has"
+    },
+    {
+      "word": "BOARDWALK",
+      "clue": "The first syllable in <>",
+      "transform": "-WALK"
+    },
+    {
+      "word": "BOARD",
+      "clue": "",
+      "transform": ""
+    }
+  ]
+}

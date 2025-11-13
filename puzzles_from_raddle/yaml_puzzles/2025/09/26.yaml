@@ -1,0 +1,49 @@
+meta:
+  title: From KITCHEN to SINK
+  author: Sandy Weisz and Mao Reynolds
+  difficulty: medium
+  theme: Fall
+  message:
+    It’s finally fall. The Raddles this week are all related to "fall".
+    Kitchen sink cookies, so-named because they contain "everything but the kitchen sink", often contain things like potato chips, toffee and pretzels.
+    The appliance has also lent its name to a British cultural movement — kitchen sink realism — of the late 1950s and early 1960s, which focused on the domestic lives of the working class.
+ladder:
+- word: KITCHEN
+  clue: Garment worn while working in a <>
+  transform: garment
+- word: APRON
+  clue: Change one letter in <> to get a biblical name
+  transform: P->A
+- word: AARON
+  clue: Broadway antagonist <> ^
+  transform: …
+- word: BURR
+  clue: "Add a \"d\" sound to the end of <> to get something in the air"
+  transform: +"D"
+- word: BIRD
+  clue: "\"^ <>\", one of the best films of 2017"
+  transform: of 2017
+- word: LADY
+  clue: Male counterpart to a <>
+  transform: and
+- word: LORD
+  clue: Add an E to <> to get a singer
+  transform: +E
+- word: LORDE
+  clue: Anagram <> to get something you've just become
+  transform: anagrammed
+- word: OLDER
+  clue: Body part that rhymes with <>
+  transform: rhymes with
+- word: SHOULDER
+  clue: Kind of <> you might give someone you don't like
+  transform: might be
+- word: COLD
+  clue: When you have a <>, you're ^
+  transform: means you're
+- word: SICK
+  clue: Change one letter in <> to get something a boat shouldn't do
+  transform: C->N
+- word: SINK
+  clue:
+  transform:

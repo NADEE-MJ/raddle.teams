@@ -6,37 +6,37 @@ meta:
   message: Summer's not over yet! Let's enjoy some ice cream.
 ladder:
 - word: BANANA
-  clue: Slippery part of a ^
+  clue: Slippery part of a <>
   transform: outer layer
 - word: PEEL
-  clue: Change one letter in ^ to gaze into
+  clue: Change one letter in <> to gaze into
   transform: L->R
 - word: PEER
-  clue: ^ ___, something pervasive in school
-  transform: â¦
+  clue: <> ^, something pervasive in school
+  transform: …
 - word: PRESSURE
-  clue: "\"___ ^\", 1981 hit"
+  clue: "\"^ <>\", 1981 hit"
   transform: is something you're
 - word: UNDER
-  clue: Brand of bread that rhymes with ^
+  clue: Brand of bread that rhymes with <>
   transform: rhyme
 - word: WONDER
-  clue: Superhero ^ ___
-  transform: â¦
+  clue: Superhero <> ^
+  transform: …
 - word: WOMAN
-  clue: "I am ^, hear me ___"
+  clue: "I am <>, hear me ^"
   transform: she is, hear her
 - word: ROAR
-  clue: Animal with a ^
+  clue: Animal with a <>
   transform: comes from a
 - word: LION
-  clue: The ^'s ___, a dangerous place
+  clue: The <>'s ^, a dangerous place
   transform: lives in a
 - word: DEN
-  clue: Move the first letter of ^ to the ___
+  clue: Move the first letter of <> to the ^
   transform: rotated
 - word: END
-  clue: ___ ^ (hairstylistâs worry)
+  clue: ^ <> (hairstylist’s worry)
   transform: of your hair might be
 - word: SPLIT
   clue:

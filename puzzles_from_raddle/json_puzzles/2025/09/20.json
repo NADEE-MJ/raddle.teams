@@ -1,0 +1,66 @@
+{
+  "meta": {
+    "title": "From HOUSE to MUSIC",
+    "author": "Sandy Weisz and Mao Reynolds",
+    "difficulty": "medium",
+    "theme": "Chicago",
+    "message": "This week, we’re celebrating some of the great things that have come out of Chicago, our home town. House music developed in the 1980s within Black, Latino and gay communities in Chicago. The genre is characterized by repetitive dance beats, a fast tempo and off-beat drums. It would later influence major artists like Whitney Houston, Janet Jackson and Lady Gaga."
+  },
+  "ladder": [
+    {
+      "word": "HOUSE",
+      "clue": "Type of <> you visit in October",
+      "transform": "with screams is"
+    },
+    {
+      "word": "HAUNTED",
+      "clue": "Relative found inside <>",
+      "transform": "features"
+    },
+    {
+      "word": "AUNT",
+      "clue": "Husband to an <>",
+      "transform": "is sometimes married to an"
+    },
+    {
+      "word": "UNCLE",
+      "clue": "Insert a trigram (three letters) into <> to get a vehicle",
+      "transform": "+ICY"
+    },
+    {
+      "word": "UNICYCLE",
+      "clue": "Event that might feature a <>",
+      "transform": "is found at a"
+    },
+    {
+      "word": "CIRCUS",
+      "clue": "<> <> is a {}",
+      "transform": "twice is a"
+    },
+    {
+      "word": "CASINO",
+      "clue": "They're rolled in a <>",
+      "transform": "have"
+    },
+    {
+      "word": "DICE",
+      "clue": "One of many spots found on <>",
+      "transform": "contain many a"
+    },
+    {
+      "word": "PIP",
+      "clue": "Change a letter in <> to get something you drink",
+      "transform": "I->O"
+    },
+    {
+      "word": "POP",
+      "clue": "<> is a genre of {}",
+      "transform": "is a genre of"
+    },
+    {
+      "word": "MUSIC",
+      "clue": null,
+      "transform": null
+    }
+  ]
+}

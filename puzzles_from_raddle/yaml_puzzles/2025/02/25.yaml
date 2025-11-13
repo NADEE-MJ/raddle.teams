@@ -2,56 +2,56 @@ meta:
   title: From CATERPILLAR to BUTTERFLY
   author: Sandy Weisz
   difficulty: medium
-  fromEmoji: ð
-  toEmoji: ð¦
+  fromEmoji: 🐛
+  toEmoji: 🦋
 
 ladder:
   - word: CATERPILLAR
-    clue: "What [adjective] describes ^ in a classic book title?"
+    clue: "What ^ describes <> in a classic book title?"
     transform: "is very"
 
   - word: HUNGRY
-    clue: "Add a letter to ^ to get what [country]?"
+    clue: "Add a letter to <> to get what ^?"
     transform: "+ 'A'"
 
   - word: HUNGARY
-    clue: "^ is directly to the east of [what]?"
+    clue: "<> is directly to the east of ^?"
     transform: "is east of"
 
   - word: AUSTRIA
-    clue: "Add two letters to ^ to get what [country]?"
+    clue: "Add two letters to <> to get what ^?"
     transform: "+ 'AL'"
 
   - word: AUSTRALIA
-    clue: "What's the largest [city] in ^?"
+    clue: "What's the largest ^ in <>?"
     transform: "'s largest city is"
 
   - word: SYDNEY
-    clue: "Change one letter of ^ to get what [alternate spelling]?"
+    clue: "Change one letter of <> to get what ^?"
     transform: "'Y' -> 'I'"
 
   - word: SIDNEY
-    clue: "When the first syllable is reversed, ^ spells what [company]?"
+    clue: "When the first syllable is reversed, <> spells what ^?"
     transform: "reverse first syllable"
 
   - word: DISNEY
-    clue: "What's the [first name] of ^'s mascot?"
+    clue: "What's the ^ of <>'s mascot?"
     transform: "'s mascot's name is"
 
   - word: MICKEY
-    clue: "^ is what [kind of animal]?"
+    clue: "<> is what ^?"
     transform: "is a kind of"
 
   - word: MOUSE
-    clue: "Change last 2 consecutive letters of ^ to get what [part of the body]?"
+    clue: "Change last 2 consecutive letters of <> to get what ^?"
     transform: "'SE' -> 'TH'"
 
   - word: MOUTH
-    clue: "Remove a letter from ^ to get what [creature]?"
+    clue: "Remove a letter from <> to get what ^?"
     transform: "remove the U"
 
   - word: MOTH
-    clue: "What [animal] is a close relative to a ^?"
+    clue: "What ^ is a close relative to a <>?"
     transform: "is a close relative to a"
 
   - word: BUTTERFLY

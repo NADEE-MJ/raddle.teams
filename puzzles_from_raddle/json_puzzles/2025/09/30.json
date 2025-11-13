@@ -1,0 +1,71 @@
+{
+  "meta": {
+    "title": "From STREET to CRED",
+    "author": "Sandy Weisz and Mao Reynolds",
+    "difficulty": "medium",
+    "theme": "Mystery Theme #2",
+    "message": "Time for another mystery theme! Every Raddle this week (Sunday thru Friday) is part of a secret theme that you can figure out. The answer is a name. When you've solved it, [submit your name here](/mystery/2) to be included in the list of solvers. One correct entry will win a prize."
+  },
+  "ladder": [
+    {
+      "word": "STREET",
+      "clue": "{} <>, famous throughway in New York",
+      "transform": "in NYC"
+    },
+    {
+      "word": "WALL",
+      "clue": "The {} <>, 20th century landmark",
+      "transform": "used to surround part of"
+    },
+    {
+      "word": "BERLIN",
+      "clue": "Add a letter to the start of <> to get an American college",
+      "transform": "+O"
+    },
+    {
+      "word": "OBERLIN",
+      "clue": "Remove a letter in <> and anagram to get a basketball star",
+      "transform": "-I, then anagram"
+    },
+    {
+      "word": "LEBRON",
+      "clue": "<>'s last name",
+      "transform": "…"
+    },
+    {
+      "word": "JAMES",
+      "clue": "Titular fruit that <> finds",
+      "transform": "and the Giant"
+    },
+    {
+      "word": "PEACH",
+      "clue": "The <> emoji represents this body part",
+      "transform": "means"
+    },
+    {
+      "word": "BUTT",
+      "clue": "To show one's <>",
+      "transform": "gets exposed when you"
+    },
+    {
+      "word": "MOON",
+      "clue": "Most well-known program that went to the <>",
+      "transform": "program"
+    },
+    {
+      "word": "APOLLO",
+      "clue": "<> {}, antogonist-turned-protagonist in film",
+      "transform": "…"
+    },
+    {
+      "word": "CREED",
+      "clue": "Drop a letter in <> to get something good to have",
+      "transform": "-E"
+    },
+    {
+      "word": "CRED",
+      "clue": null,
+      "transform": null
+    }
+  ]
+}

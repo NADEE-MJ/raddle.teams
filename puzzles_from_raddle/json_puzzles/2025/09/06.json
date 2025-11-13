@@ -9,52 +9,52 @@
   "ladder": [
     {
       "word": "PIN",
-      "clue": "___ ^, something to knock down",
+      "clue": "{} <>, something to knock down",
       "transform": "that you knock down"
     },
     {
       "word": "BOWLING",
-      "clue": "Animal found inside ^",
+      "clue": "Animal found inside <>",
       "transform": "includes an"
     },
     {
       "word": "OWL",
-      "clue": "Greek goddess represented by an ^",
+      "clue": "Greek goddess represented by an <>",
       "transform": "represents"
     },
     {
       "word": "ATHENA",
-      "clue": "City named for ^",
+      "clue": "City named for <>",
       "transform": "A->S"
     },
     {
       "word": "ATHENS",
-      "clue": "Its capital is ^",
+      "clue": "Its capital is <>",
       "transform": "is the capital of"
     },
     {
       "word": "GREECE",
-      "clue": "Musical that sounds like \"^\"",
+      "clue": "Musical that sounds like \"<>\"",
       "transform": "sounds like"
     },
     {
       "word": "GREASE",
-      "clue": "___ ^ (hard work)",
+      "clue": "{} <> (hard work)",
       "transform": "of an"
     },
     {
       "word": "ELBOW",
-      "clue": "What has an ^ in the middle",
+      "clue": "What has an <> in the middle",
       "transform": "is in the middle of an"
     },
     {
       "word": "ARM",
-      "clue": "^ & ___",
+      "clue": "<> & {}",
       "transform": "&"
     },
     {
       "word": "HAMMER",
-      "clue": "^___ (word for a certain wide-eyed creature)",
+      "clue": "<>{} (word for a certain wide-eyed creature)",
       "transform": "-shaped"
     },
     {

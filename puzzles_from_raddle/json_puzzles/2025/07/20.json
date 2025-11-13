@@ -9,57 +9,57 @@
   "ladder": [
     {
       "word": "MAN",
-      "clue": "Add two letters to ^ to get a fruit",
+      "clue": "Add two letters to <> to get a fruit",
       "transform": "+GO"
     },
     {
       "word": "MANGO",
-      "clue": "^ ___, traditional Indian beverage",
+      "clue": "<> {}, traditional Indian beverage",
       "transform": "drink"
     },
     {
       "word": "LASSI",
-      "clue": "Add a letter to ^ to get a classic TV show",
+      "clue": "Add a letter to <> to get a classic TV show",
       "transform": "+E"
     },
     {
       "word": "LASSIE",
-      "clue": "^ is this breed",
+      "clue": "<> is this breed",
       "transform": "is a"
     },
     {
       "word": "COLLIE",
-      "clue": "Remove a letter from ^ to get a nickname",
+      "clue": "Remove a letter from <> to get a nickname",
       "transform": "-C"
     },
     {
       "word": "OLLIE",
-      "clue": "Perform an ^ on a ___",
+      "clue": "Perform an <> on a {}",
       "transform": "is a trick on a"
     },
     {
       "word": "SKATEBOARD",
-      "clue": "Animal found inside ^",
+      "clue": "Animal found inside <>",
       "transform": "features a"
     },
     {
       "word": "BOAR",
-      "clue": "A ^ is a type of ___",
+      "clue": "A <> is a type of {}",
       "transform": "is a"
     },
     {
       "word": "PIG",
-      "clue": "Muppet who is a ^",
+      "clue": "Muppet who is a <>",
       "transform": "muppet"
     },
     {
       "word": "MISS PIGGY",
-      "clue": "Body part called the second part of ^ in a nursery rhyme",
+      "clue": "Body part called the second part of <> in a nursery rhyme",
       "transform": "is partially a nickname for your"
     },
     {
       "word": "TOE",
-      "clue": "Boots sometimes have a ___ ^",
+      "clue": "Boots sometimes have a {} <>",
       "transform": "can be made of"
     },
     {

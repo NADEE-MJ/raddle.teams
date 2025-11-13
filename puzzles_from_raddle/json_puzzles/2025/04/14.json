@@ -9,67 +9,67 @@
   "ladder": [
     {
       "word": "PASS",
-      "clue": "Opposite of ^, in school",
+      "clue": "Opposite of <>, in school",
       "transform": "opposite"
     },
     {
       "word": "FAIL",
-      "clue": "Replace the first letter of ^ with a bigram (two letters) to get a small creature",
+      "clue": "Replace the first letter of <> with a bigram (two letters) to get a small creature",
       "transform": "F->SN"
     },
     {
       "word": "SNAIL",
-      "clue": "What to call ^s when they're food",
+      "clue": "What to call <>s when they're food",
       "transform": "as food is"
     },
     {
       "word": "ESCARGOT",
-      "clue": "The final three letters of ^ stand for this modern TV series",
+      "clue": "The final three letters of <> stand for this modern TV series",
       "transform": "partially can stand for"
     },
     {
       "word": "GAME OF THRONES",
-      "clue": "Mythical creatures featured in ^",
+      "clue": "Mythical creatures featured in <>",
       "transform": "features"
     },
     {
       "word": "DRAGONS",
-      "clue": "___ & ^",
+      "clue": "{} & <>",
       "transform": "&"
     },
     {
       "word": "DUNGEONS",
-      "clue": "The first four letters of ^ are a kind of this insect",
+      "clue": "The first four letters of <> are a kind of this insect",
       "transform": "-EONS is a kind of"
     },
     {
       "word": "BEETLE",
-      "clue": "Band that sounds like a collection of ^s",
+      "clue": "Band that sounds like a collection of <>s",
       "transform": "sounds like"
     },
     {
       "word": "THE BEATLES",
-      "clue": "Drummer for ^",
+      "clue": "Drummer for <>",
       "transform": "drummer"
     },
     {
       "word": "RINGO STARR",
-      "clue": "Shape that sounds like the second part of ^",
+      "clue": "Shape that sounds like the second part of <>",
       "transform": "sounds like"
     },
     {
       "word": "STAR",
-      "clue": "The closest ^",
+      "clue": "The closest <>",
       "transform": "closest to us"
     },
     {
       "word": "SUN",
-      "clue": "Counterpart to the ^",
+      "clue": "Counterpart to the <>",
       "transform": "&"
     },
     {
       "word": "MOON",
-      "clue": "In good times, you're ___ the ^",
+      "clue": "In good times, you're {} the <>",
       "transform": "is a thing to be"
     },
     {

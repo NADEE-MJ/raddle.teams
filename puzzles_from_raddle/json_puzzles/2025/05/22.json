@@ -1,0 +1,66 @@
+{
+  "meta": {
+    "title": "From GAMBLER to MARIONETTE",
+    "author": "Sandy Weisz",
+    "difficulty": "medium",
+    "theme": "Blood on the Clocktower",
+    "message": "It's Blood on the Clocktower Week. ([See Day 1's note](https://raddle.quest/2025/05/19).) And it's time to delve into evil. The [Marionette](https://wiki.bloodontheclocktower.com/Marionette) is a Minion — which means they work for the evil team. However, they start the game *thinking* they are a good character — in this case, the [Gambler](https://wiki.bloodontheclocktower.com/Gambler). Then they spend the game getting false info but thinking it's true, which is a big boon for the side of evil. It's up to the Demon to tell the Marionette who they are. In this case, the Marionette-as-Gambler is spending the game guessing people's roles and thinking they were getting them all correctly. Nothing as dangerous as a gambler on an artificial hot streak."
+  },
+  "ladder": [
+    {
+      "word": "GAMBLER",
+      "clue": "Establishment frequented by a <>",
+      "transform": "visits a"
+    },
+    {
+      "word": "CASINO",
+      "clue": "Remove a letter from <> and anagram to get a chain restaurant",
+      "transform": "-A, then anagram"
+    },
+    {
+      "word": "SONIC",
+      "clue": "Word that follows <> in aviation",
+      "transform": "…"
+    },
+    {
+      "word": "BOOM",
+      "clue": "Opposite of <>, financially",
+      "transform": "Opposite"
+    },
+    {
+      "word": "BUST",
+      "clue": "Anagram <> to get something that was smoked?",
+      "transform": "anagrammed"
+    },
+    {
+      "word": "STUB",
+      "clue": "You might have a {} <> from a concert",
+      "transform": "is a part of a"
+    },
+    {
+      "word": "TICKET",
+      "clue": "Change one letter in <> to get something related to stocks",
+      "transform": "T->R"
+    },
+    {
+      "word": "TICKER",
+      "clue": "Your {} is slangily known as your <>",
+      "transform": "aka"
+    },
+    {
+      "word": "HEART",
+      "clue": "Parts of your <> that might get tugged on?",
+      "transform": "has"
+    },
+    {
+      "word": "STRINGS",
+      "clue": "A puppet manipulated by <>",
+      "transform": "control a"
+    },
+    {
+      "word": "MARIONETTE",
+      "clue": null,
+      "transform": null
+    }
+  ]
+}

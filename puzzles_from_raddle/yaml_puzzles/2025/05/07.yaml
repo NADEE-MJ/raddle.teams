@@ -8,37 +8,37 @@ meta:
     It's \"made with bits of real panther\" and \"60% of the time, it works every time\"."
 ladder:
 - word: SEX
-  clue: Change one letter in ^ to get a number
+  clue: Change one letter in <> to get a number
   transform: E->I
 - word: SIX
-  clue: Shape with ^ faces
+  clue: Shape with <> faces
   transform: sides to a
 - word: CUBE
-  clue: Musician/actor ___ ^
+  clue: Musician/actor ^ <>
   transform: as in
 - word: ICE
-  clue: When left out, ^ turns into this
+  clue: When left out, <> turns into this
   transform: melted is
 - word: WATER
-  clue: Insert an I into ^ to get a professional
+  clue: Insert an I into <> to get a professional
   transform: +I
 - word: WAITER
-  clue: Where a ^ works
+  clue: Where a <> works
   transform: works in a
 - word: RESTAURANT
-  clue: Container you may take away from a ^
+  clue: Container you may take away from a <>
   transform: gives you a
 - word: DOGGY BAG
-  clue: Animal at the start of ^
+  clue: Animal at the start of <>
   transform: features a
 - word: DOG
-  clue: "ClichÃ© name for a ^"
+  clue: "Cliché name for a <>"
   transform: of Dick & Jane is
 - word: SPOT
-  clue: Predator with lots of ^s
+  clue: Predator with lots of <>s
   transform: one of many on a
 - word: LEOPARD
-  clue: Alternate name for a black ^
+  clue: Alternate name for a black <>
   transform: aka
 - word: PANTHER
   clue:

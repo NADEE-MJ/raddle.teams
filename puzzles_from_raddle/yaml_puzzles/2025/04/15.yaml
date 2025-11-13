@@ -6,40 +6,40 @@ meta:
   message: One of the central traditions of Passover is recounting the ten plagues that God inflicted on the Egyptians. We recite them one by one. The first plague is Blood, which refers to the Nile River turning to blood. The second plague, Frogs, refers to an infenstation of frogs that swarmed the land. Though I recently saw a meme going around that suggests it might have just been [one big frog](https://www.reddit.com/r/tumblr/comments/ivish9/the_plague_of_frog/).
 ladder:
 - word: BLOOD
-  clue: ^ is thicker than this, it's said
+  clue: <> is thicker than this, it's said
   transform: is thicker than
 - word: WATER
-  clue: Add a word to ^ to get a scandal
+  clue: Add a word to <> to get a scandal
   transform: +GATE
 - word: WATERGATE
-  clue: Politician taken down by ^
+  clue: Politician taken down by <>
   transform: took down
 - word: NIXON
-  clue: What ^ famously said he is not
+  clue: What <> famously said he is not
   transform: said he was not a
 - word: CROOK
-  clue: Wordy thing that rhymes with ^
+  clue: Wordy thing that rhymes with <>
   transform: CR->B
 - word: BOOK
-  clue: Location that rhymes with ^ and also describes where you might enjoy a ^
+  clue: Location that rhymes with <> and also describes where you might enjoy a <>
   transform: in a
 - word: NOOK
-  clue: Every ^ and ___
+  clue: Every <> and ^
   transform: and
 - word: CRANNY
-  clue: The end of ^ sounds like this female name
+  clue: The end of <> sounds like this female name
   transform: partially sounds like
 - word: ANNIE
-  clue: Famous song from ^
+  clue: Famous song from <>
   transform: sings about
 - word: TOMORROW
-  clue: It comes before ^
+  clue: It comes before <>
   transform: comes before
 - word: TODAY
-  clue: Remove the last letter and anagram ^ to get an animal
+  clue: Remove the last letter and anagram <> to get an animal
   transform: -Y, then anagram
 - word: TOAD
-  clue: Friend to ^ in children's lit
+  clue: Friend to <> in children's lit
   transform: best friend
 - word: FROG
   clue:

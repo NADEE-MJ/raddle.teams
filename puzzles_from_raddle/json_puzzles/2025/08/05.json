@@ -9,52 +9,52 @@
   "ladder": [
     {
       "word": "TREND",
-      "clue": "Change a letter in ^ to walk along",
+      "clue": "Change a letter in <> to walk along",
       "transform": "N->A"
     },
     {
       "word": "TREAD",
-      "clue": "Round thing with a ^",
+      "clue": "Round thing with a <>",
       "transform": "is on a"
     },
     {
       "word": "TIRE",
-      "clue": "Change a letter in ^ to get something hot",
+      "clue": "Change a letter in <> to get something hot",
       "transform": "T->F"
     },
     {
       "word": "FIRE",
-      "clue": "Felony involving ^",
+      "clue": "Felony involving <>",
       "transform": "as crime"
     },
     {
       "word": "ARSON",
-      "clue": "Add a C to ^ for a talk show host",
+      "clue": "Add a C to <> for a talk show host",
       "transform": "+C"
     },
     {
       "word": "CARSON",
-      "clue": "Who succeeded ^",
+      "clue": "Who succeeded <>",
       "transform": "preceded"
     },
     {
       "word": "LENO",
-      "clue": "Drop the first letter of ^ and reverse to get a number",
+      "clue": "Drop the first letter of <> and reverse to get a number",
       "transform": "-L, then reverse"
     },
     {
       "word": "ONE",
-      "clue": "“^ ___”, words found on a sign",
+      "clue": "“<> {}”, words found on a sign",
       "transform": "direction aka"
     },
     {
       "word": "WAY",
-      "clue": "A ^ is a small side ___",
+      "clue": "A <> is a small side {}",
       "transform": "is a small"
     },
     {
       "word": "STREET",
-      "clue": "Anagram ^ to get a volleyball position",
+      "clue": "Anagram <> to get a volleyball position",
       "transform": "anagrammed"
     },
     {

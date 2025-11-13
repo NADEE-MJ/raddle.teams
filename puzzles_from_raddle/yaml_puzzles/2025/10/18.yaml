@@ -1,0 +1,52 @@
+meta:
+  title: From SAHARA to DESERT
+  author: Sandy Weisz and Mao Reynolds
+  difficulty: medium
+  theme: Settlers of Catan
+  message: 
+    "
+    The Sahara Desert, spanning much of North Africa, is the largest hot desert in the world.
+    The Sahara actually consists of 70% gravel or other rock, and even includes an active volcano:
+    located in Chad’s Tibesti Mountains, Emi Koussi has been active for more than one million years.
+    (This week's Raddles each use one of the 6 terrains from Settlers of Catan: hill, forest, field, mountain, pasture, or desert.)
+    "
+ladder:
+- word: SAHARA
+  clue: Animal used for transportation in the <>
+  transform: transportation
+- word: CAMEL
+  clue: Feature of a <>
+  transform: has at least one
+- word: HUMP
+  clue: AKA <> day
+  transform: day
+- word: WEDNESDAY
+  clue: <> ^, current TV character
+  transform: …
+- word: ADDAMS
+  clue: Move the last letter of <> to the front to get a '90s political figure
+  transform: S to the front
+- word: SADDAM
+  clue: <> was the leader of ^
+  transform: led
+- word: IRAQ
+  clue: Change one letter in <> to get a neighbor of <>
+  transform: Q->N
+- word: IRAN
+  clue: Add a T to <> and anagram to get a method of transportation
+  transform: +T, then anagram
+- word: TRAIN
+  clue: Underground <>
+  transform: Underground
+- word: SUBWAY
+  clue: Signature offering at <>
+  transform: makes many a
+- word: SANDWICH
+  clue: Drop half of <> to get some gritty material
+  transform: -WICH
+- word: SAND
+  clue: Biome made up of <>
+  transform: makes up a
+- word: DESERT
+  clue:
+  transform:

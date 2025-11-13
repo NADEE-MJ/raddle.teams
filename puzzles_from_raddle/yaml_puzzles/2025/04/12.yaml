@@ -6,46 +6,46 @@ meta:
   message: I discovered Orville Peck after his first album [Pony](https://open.spotify.com/album/3950FHVErcINW3tjRgjebQ?si=6wJdIDI0QKqrkytCQWc10Q) came out in 2018, and it became a salve for me during the early days of the pandemic. He's the best masked queer country singer out there. Start with Pony, but don't miss his recent duo with Willie Nelson, [Cowboys are Frequently Secretly Fond of Each Other](https://open.spotify.com/track/06WARzJ6c5GYC9gSEmvO0q?si=c41ef69a26c64b70).
 ladder:
 - word: ORVILLE
-  clue: Pioneering brothers ^ & ___
+  clue: Pioneering brothers <> & ^
   transform: "is brother to"
 - word: WILBUR
-  clue: What kind of animal ^ is, in children's lit
+  clue: What kind of animal <> is, in children's lit
   transform: is a
 - word: PIG
-  clue: Where a ^ lives
+  clue: Where a <> lives
   transform: lives in a
 - word: STY
-  clue: Insert a bigram (two letters) into ^ to get a word that describes some food
+  clue: Insert a bigram (two letters) into <> to get a word that describes some food
   transform: + AL
 - word: SALTY
-  clue: Remove every other letter in ^ to get a slick Stone?
+  clue: Remove every other letter in <> to get a slick Stone?
   transform: oddly is
 - word: SLY
-  clue: Animal often described as ^
+  clue: Animal often described as <>
   transform: as a
 - word: FOX
-  clue: Remove a letter in ^ to get an animal
+  clue: Remove a letter in <> to get an animal
   transform: -F
 - word: OX
-  clue: Plural form of ^
+  clue: Plural form of <>
   transform: plural
 - word: OXEN
-  clue: Change one letter in ^ to get something portentous
+  clue: Change one letter in <> to get something portentous
   transform: X->M
 - word: OMEN
-  clue: Reverse ^ to get a literary character from the 1870s
+  clue: Reverse <> to get a literary character from the 1870s
   transform: reverse
 - word: NEMO
-  clue: Company that made a 2003 movie about ^
+  clue: Company that made a 2003 movie about <>
   transform: is in a film by
 - word: PIXAR
-  clue: Protagonist of the first ^ movie
+  clue: Protagonist of the first <> movie
   transform: made a film about
 - word: WOODY
-  clue: Species of a cartoon ^
+  clue: Species of a cartoon <>
   transform: is a
 - word: WOODPECKER
-  clue: What a ^ does, as found inside ^
+  clue: What a <> does, as found inside <>
   transform: likes to
 - word: PECK
   clue:

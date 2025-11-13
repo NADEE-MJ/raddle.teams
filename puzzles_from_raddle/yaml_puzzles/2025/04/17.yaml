@@ -6,31 +6,31 @@ meta:
   message: "The signature dish of a Passover seder is matzah ball soup, which is typically a chicken broth served with one giant matzah ball, along with some carrots and herbs. This year we learned a new trick: adding a dollop of chili crisp. Five stars, would eat every day."
 ladder:
 - word: MATZAH
-  clue: Reverse the second half of ^, and move it to the front, to get a kind of suit
+  clue: Reverse the second half of <>, and move it to the front, to get a kind of suit
   transform: anagram
 - word: HAZMAT
-  clue: Second part of ^ is this flat thing
+  clue: Second part of <> is this flat thing
   transform: -HAZ
 - word: MAT
-  clue: Word often found on a certain ^
+  clue: Word often found on a certain <>
   transform: features the word
 - word: WELCOME
-  clue: Add a word to ^ to get a Disney song (and common phrase)
+  clue: Add a word to <> to get a Disney song (and common phrase)
   transform: "+YOU'RE"
 - word: YOURE WELCOME
-  clue: Phrase that prompts a "^"
+  clue: Phrase that prompts a "<>"
   transform: Follows
 - word: THANK YOU
-  clue: Animal that sounds like the second half of ^
+  clue: Animal that sounds like the second half of <>
   transform: partially sounds like
 - word: EWE
-  clue: Male counterpart of a ^
+  clue: Male counterpart of a <>
   transform: mates with a
 - word: RAM
-  clue: Company that spun off the ^ brand
+  clue: Company that spun off the <> brand
   transform: was originally part of
 - word: DODGE
-  clue: Object that follows ^ in a sport name
+  clue: Object that follows <> in a sport name
   transform: a
 - word: BALL
   clue:

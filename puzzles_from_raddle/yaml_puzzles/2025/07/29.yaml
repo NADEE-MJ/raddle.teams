@@ -2,45 +2,45 @@ meta:
   title: From BLACK to MIRROR
   author: Sandy Weisz and Mao Reynolds
   difficulty: medium
-  theme: Emmy nominations 2005
+  theme: Emmy nominations 2025
   message: 
     This week we're honoring some of this year's Emmy nominees.
 ladder:
 - word: BLACK
-  clue: Drink that is often ordered ^
+  clue: Drink that is often ordered <>
   transform: drink
 - word: COFFEE
-  clue: Popular ^ chain
+  clue: Popular <> chain
   transform: is served at
 - word: STARBUCKS
-  clue: Book that inspired the name ^
+  clue: Book that inspired the name <>
   transform: comes from 
 - word: MOBY-DICK
-  clue: ^ is a ___
+  clue: <> is a ^
   transform: is the name of the
 - word: WHALE
-  clue: Change one letter in ^ to get the entire thing
+  clue: Change one letter in <> to get the entire thing
   transform: A->O
 - word: WHOLE
-  clue: Supermarket ^ ___
-  transform: â¦
+  clue: Supermarket <> ^
+  transform: …
 - word: FOODS
-  clue: Change one letter of ^ to get some nincompoops
+  clue: Change one letter of <> to get some nincompoops
   transform: D->L
 - word: FOOLS
-  clue: What ^ do, as the saying goes
+  clue: What <> do, as the saying goes
   transform: do this
 - word: RUSH IN
-  clue: Language that sounds like "^"
+  clue: Language that sounds like "<>"
   transform: sounds like
 - word: RUSSIAN
-  clue: ^ ___, toy that's full of itself?
+  clue: <> ^, toy that's full of itself?
   transform: toy
 - word: DOLL
-  clue: Rhyme for ^ that you find in almost every sport
+  clue: Rhyme for <> that you find in almost every sport
   transform: rhymes with
 - word: BALL
-  clue: ___ ^, icon of disco
+  clue: ^ <>, icon of disco
   transform: that reflects
 - word: MIRROR
   clue:

@@ -8,37 +8,37 @@ meta:
     Did you know that Paul Rudd co-owns [Samuel's Sweet Shop](https://samuelssweetshop.com/about/), a candy shop in Rhinebeck, NY?"
 ladder:
 - word: SAMUEL
-  clue: Remove the second letter of ^ then anagram to get some animals
+  clue: Remove the second letter of <> then anagram to get some animals
   transform: -A, then anagram
 - word: MULES
-  clue: Animal that fathers ^
+  clue: Animal that fathers <>
   transform: dad
 - word: DONKEY
-  clue: Famous video game antagonist ^ ___
-  transform: â¦
+  clue: Famous video game antagonist <> ^
+  transform: …
 - word: KONG
-  clue: Change one letter in ^ to get a word that comes before ^
+  clue: Change one letter in <> to get a word that comes before <>
   transform: who is
 - word: KING
-  clue: Partner to a ^, often
+  clue: Partner to a <>, often
   transform: partner
 - word: QUEEN
-  clue: Lead singer of ^
+  clue: Lead singer of <>
   transform: led by
 - word: MERCURY
-  clue: ^ is the smallest ___
+  clue: <> is the smallest ^
   transform: is the smallest
 - word: PLANET
-  clue: Remove one letter in ^ to get a kind of organism
+  clue: Remove one letter in <> to get a kind of organism
   transform: -A
 - word: PLANT
-  clue: In your house, a ^ goes in a ___
+  clue: In your house, a <> goes in a ^
   transform: goes in a
 - word: POT
-  clue: Append three letters to ^ to get a piece of produce
+  clue: Append three letters to <> to get a piece of produce
   transform: +ATO
 - word: POTATO
-  clue: Kind of ^ that is reddish-orange
+  clue: Kind of <> that is reddish-orange
   transform: can be
 - word: SWEET
   clue:

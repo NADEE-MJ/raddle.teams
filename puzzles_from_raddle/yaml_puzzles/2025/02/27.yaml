@@ -2,45 +2,45 @@ meta:
   title: From WEST to EAST
   author: Sandy Weisz
   difficulty: medium
-  fromEmoji: â¬ï¸
-  toEmoji: â¡ï¸
+  fromEmoji: ⬅️
+  toEmoji: ➡️
 
 ladder:
 - word: WEST
-  clue: 'Anagram ^ to get a [food]'
+  clue: 'Anagram <> to get a ^'
   transform: 'anagrams to'
 - word: STEW
-  clue: 'Append a male name to ^ to get another [male name]'
+  clue: 'Append a male name to <> to get another ^'
   transform: "+ART"
 - word: STEWART
-  clue: "Remove first 3 letters of ^ to get a [blemish]"
+  clue: "Remove first 3 letters of <> to get a ^"
   transform: "-STE"
 - word: WART
-  clue: "Append a letter then reverse ^ to get a [utensil]"
+  clue: "Append a letter then reverse <> to get a ^"
   transform: "+S then reverse"
 - word: STRAW
-  clue: "Word for a [bundle] of ^"
+  clue: "Word for a ^ of <>"
   transform: "in a bundle is a"
 - word: BALE
-  clue: "^ famously played this [superhero]"
+  clue: "<> famously played this ^"
   transform: "played"
 - word: BATMAN
-  clue: "[Archnemesis] of ^"
+  clue: "^ of <>"
   transform: "is enemy of"
 - word: JOKER
-  clue: "In card games, a ^ is often this [quality]"
+  clue: "In card games, a <> is often this ^"
   transform: "can be"
 - word: WILD
-  clue: "Change the first letter of ^ to two new letters to get this rhyming word"
+  clue: "Change the first letter of <> to two new letters to get this rhyming word"
   transform: "-W' +CH'"
 - word: CHILD
-  clue: "A male ^ is called [this]"
+  clue: "A male <> is called ^"
   transform: "specifically is a"
 - word: SON
-  clue: "Change the middle letter of ^ to form this homophone"
+  clue: "Change the middle letter of <> to form this homophone"
   transform: "sounds like"
 - word: SUN
-  clue: "^ can be first seen in which direction"
+  clue: "<> can be first seen in which direction"
   transform: "rises in the"
 - word: EAST
   clue: ""

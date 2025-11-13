@@ -10,40 +10,40 @@ meta:
     Miles' invention saved lives and made taking a lift easier and more convenient. 
 ladder:
 - word: ELEVATOR
-  clue: Alternative to the ^, in most buildings
+  clue: Alternative to the <>, in most buildings
   transform: alternative
 - word: STAIRS
-  clue: Remove a letter from ^ to get some symbols
+  clue: Remove a letter from <> to get some symbols
   transform: -I
 - word: STARS
-  clue: '"^ and ___," nickname for something that flies'
+  clue: '"<> and ^," nickname for something that flies'
   transform: and
 - word: STRIPES
-  clue: Animal with ^
+  clue: Animal with <>
   transform: appear on a
 - word: ZEBRA
-  clue: Add an L to ^ and anagram to get a type of clothing
+  clue: Add an L to <> and anagram to get a type of clothing
   transform: +L and anagram
 - word: BLAZER
-  clue: A ^ is a type of ___
+  clue: A <> is a type of ^
   transform: is a type of
 - word: JACKET
-  clue: Kind of ^ you'd find on a book
+  clue: Kind of <> you'd find on a book
   transform: protects from 
 - word: DUST
-  clue: ___ the ^, to come to an end
+  clue: ^ the <>, to come to an end
   transform: in a
 - word: BITE
-  clue: ___^, a dental condition
+  clue: ^<>, a dental condition
   transform: can be
 - word: UNDER
-  clue: ^___, quality of a certain railroad
+  clue: <>^, quality of a certain railroad
   transform: the
 - word: GROUND
-  clue: ^ ___, a good thing to get in on
-  transform: â¦
+  clue: <> ^, a good thing to get in on
+  transform: …
 - word: FLOOR
-  clue: A ___ in the ^ might be a trap?
+  clue: A ^ in the <> might be a trap?
   transform: might have a
 - word: DOOR
   clue:

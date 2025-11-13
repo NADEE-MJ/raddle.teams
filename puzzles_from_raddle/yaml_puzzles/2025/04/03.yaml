@@ -6,40 +6,40 @@ meta:
   message: "[This week](/2025/04/01), I'm building Raddles around acts we saw at Big Ears. [Sunny War](https://www.sunnywar.com/) was a revelation. She plays a unique and incredibly fun brand of folk-punk. My wife compared her voice to Joan Armatrading, which is a very high compliment. [Listen on Spotify](https://open.spotify.com/album/4QHHLKn8d51lY9i6OiOohV?si=16uqBgs2Qc-KaAE95nYn2g)."
 ladder:
 - word: SUNNY
-  clue: Change first letter of ^ to get a kind of bone
+  clue: Change first letter of <> to get a kind of bone
   transform: S -> F
 - word: FUNNY
-  clue: '"No ^ ___!" -a parent''s warning'
-  transform: â¦
+  clue: '"No <> ^!" -a parent''s warning'
+  transform: …
 - word: BUSINESS
-  clue: Spot a ^ might spend a lot of money on
+  clue: Spot a <> might spend a lot of money on
   transform: makes a
 - word: COMMERCIAL
-  clue: Three-letter abbreviation for ^, as seen in a URL
+  clue: Three-letter abbreviation for <>, as seen in a URL
   transform: abbrevaited
 - word: COM
-  clue: Add two letters to ^ to get some punctuation
+  clue: Add two letters to <> to get some punctuation
   transform: +MA
 - word: COMMA
-  clue: A ^ with a dot is called this
+  clue: A <> with a dot is called this
   transform: with a dot
 - word: SEMICOLON
-  clue: The first part of ^ is a kind of ___
+  clue: The first part of <> is a kind of ^
   transform: is (partially) a kind of
 - word: TRUCK
-  clue: Change a letter in ^ to get something deceitful
+  clue: Change a letter in <> to get something deceitful
   transform: U -> I
 - word: TRICK
-  clue: Kind of ^ that might involve cards
+  clue: Kind of <> that might involve cards
   transform: is often a kind of
 - word: MAGIC
-  clue: Who often performs ^, in fiction
+  clue: Who often performs <>, in fiction
   transform: is performed by a
 - word: WIZARD
-  clue: Remove two letters from ^ to get something a ^ creates for protection
+  clue: Remove two letters from <> to get something a <> creates for protection
   transform: "-IZ"
 - word: WARD
-  clue: Remove letter of ^ to get a card game
+  clue: Remove letter of <> to get a card game
   transform: "-D"
 - word: WAR
   clue:

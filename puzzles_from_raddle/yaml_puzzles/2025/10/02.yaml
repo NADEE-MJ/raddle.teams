@@ -1,0 +1,46 @@
+meta:
+  title: From LEGENDS to FABLES
+  author: Sandy Weisz and Mao Reynolds
+  difficulty: medium
+  theme: 'Mystery Theme #2'
+  message: "Time for another mystery theme! Every Raddle this week (Sunday thru Friday)\
+    \ is part of a secret theme that you can figure out. The answer is a name. When\
+    \ you've solved it, [submit your name here](/mystery/2) to be included in the list of solvers. One correct entry will win a\
+    \ prize."
+ladder:
+- word: LEGENDS
+  clue: "Video game \"^ of <>\""
+  transform: are in a
+- word: LEAGUE
+  clue: ^ <>, a prestigious group of eight
+  transform: of eight universities
+- word: IVY
+  clue: "Drop a letter from <> to get a device that sounds like \"<>\""
+  transform: -Y
+- word: IV
+  clue: <> = ^
+  transform: "="
+- word: FOUR
+  clue: Change a letter in <> to get offensive
+  transform: R->L
+- word: FOUL
+  clue: <> ^, useful structures on many baseball fields
+  transform: balls go outside the
+- word: POLES
+  clue: Scientific instrument with two <>
+  transform: are either end of a
+- word: MAGNET
+  clue: Shape of the <> emoji
+  transform: is in the shape of a
+- word: U
+  clue: <>-^, subject of some signs
+  transform: "-"
+- word: TURN
+  clue: <> the ^ (reverse positions)
+  transform: the
+- word: TABLES
+  clue: Change one letter in <> to get some stories
+  transform: T->F
+- word: FABLES
+  clue:
+  transform:

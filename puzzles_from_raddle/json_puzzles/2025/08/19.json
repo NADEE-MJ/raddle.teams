@@ -1,0 +1,76 @@
+{
+  "meta": {
+    "title": "From BUTTER to PECAN",
+    "author": "Sandy Weisz and Mao Reynolds",
+    "difficulty": "medium",
+    "theme": "Ice cream",
+    "message": "Summer's not over yet! Let's enjoy some ice cream."
+  },
+  "ladder": [
+    {
+      "word": "BUTTER",
+      "clue": "Change one letter in <> to get something your mind shouldn't be in",
+      "transform": "B->G"
+    },
+    {
+      "word": "GUTTER",
+      "clue": "Sport that features a <> on each side",
+      "transform": "is featured in"
+    },
+    {
+      "word": "BOWLING",
+      "clue": "One of 10 in <>",
+      "transform": "target"
+    },
+    {
+      "word": "PIN",
+      "clue": "{}<>, the head honcho",
+      "transform": "in charge"
+    },
+    {
+      "word": "KING",
+      "clue": "Partner to a <>",
+      "transform": "partner"
+    },
+    {
+      "word": "QUEEN",
+      "clue": "{} <>, certain genderbender",
+      "transform": "in a dress"
+    },
+    {
+      "word": "DRAG",
+      "clue": "Append two letters to <> to get a mythical creature",
+      "transform": "+ON"
+    },
+    {
+      "word": "DRAGON",
+      "clue": "“<> {} Z”",
+      "transform": "…"
+    },
+    {
+      "word": "BALL",
+      "clue": "There are two {}<>s in your head",
+      "transform": "in your head"
+    },
+    {
+      "word": "EYE",
+      "clue": "Pluralize <> and then delete the first letter to get approval",
+      "transform": "E->S, then anagram"
+    },
+    {
+      "word": true,
+      "clue": "“<> {}” (famous political slogan)",
+      "transform": "…"
+    },
+    {
+      "word": "WE CAN",
+      "clue": "Change one letter in <> to get a nut",
+      "transform": "W->P"
+    },
+    {
+      "word": "PECAN",
+      "clue": null,
+      "transform": null
+    }
+  ]
+}

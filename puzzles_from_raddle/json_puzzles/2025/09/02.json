@@ -1,0 +1,81 @@
+{
+  "meta": {
+    "title": "From GHOST to FACE",
+    "author": "Sandy Weisz and Mao Reynolds",
+    "difficulty": "medium",
+    "theme": "Horror movie villains",
+    "message": "This week on Raddle we're featuring horror movie villains. Ghostface is the name of the villain in the *Scream* franchise. The costume was developed for Halloween stores in the early '90s — it's ubiquity is part of what makes the costume so powerful. Anyone could be hiding inside! While it resembles the face in Edvard Munch's *The Scream*, the mask's designer claims that they were not inspired by the painting."
+  },
+  "ladder": [
+    {
+      "word": "GHOST",
+      "clue": "Essential component of a <> costume",
+      "transform": "costume component"
+    },
+    {
+      "word": "SHEET",
+      "clue": "Change the vowels in <> to other vowels to get something you might say in disappointment",
+      "transform": "EE->OO"
+    },
+    {
+      "word": "SHOOT",
+      "clue": "Water park element that sounds like \"<>\"",
+      "transform": "sounds like"
+    },
+    {
+      "word": "CHUTE",
+      "clue": "Counterpart to a <>, in a board game",
+      "transform": "and"
+    },
+    {
+      "word": "LADDER",
+      "clue": "Anagram <> to get a word game",
+      "transform": "anagram"
+    },
+    {
+      "word": "RADDLE",
+      "clue": "Change one letter in <> to get something used with a horse",
+      "transform": "R->S"
+    },
+    {
+      "word": "SADDLE",
+      "clue": "What you might hold when sitting on a <>",
+      "transform": "sitters hold a"
+    },
+    {
+      "word": "REIN",
+      "clue": "Append four letters to <> to get an animal",
+      "transform": "+DEER"
+    },
+    {
+      "word": "REINDEER",
+      "clue": "Guy with nine <>",
+      "transform": "owner, famously"
+    },
+    {
+      "word": "SANTA CLAUS",
+      "clue": "Method of entry for <>",
+      "transform": "entryway"
+    },
+    {
+      "word": "CHIMNEY",
+      "clue": "It's found at the bottom of a <>",
+      "transform": "sits above a"
+    },
+    {
+      "word": "FIREPLACE",
+      "clue": "Tool used in a <> that shares its name with a game",
+      "transform": "tool"
+    },
+    {
+      "word": "POKER",
+      "clue": "2008 banger \"<> {}\"",
+      "transform": "…"
+    },
+    {
+      "word": "FACE",
+      "clue": null,
+      "transform": null
+    }
+  ]
+}

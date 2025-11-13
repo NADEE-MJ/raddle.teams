@@ -1,0 +1,66 @@
+{
+  "meta": {
+    "title": "From DOUBLE to DIP",
+    "author": "Sandy Weisz and Mao Reynolds",
+    "difficulty": "medium",
+    "theme": "Fall",
+    "message": "It’s finally fall. The Raddles this week are all related to \"fall\". Double dipping, as they made clear on \"Seinfeld\", is a major party foul. It can also refers to getting money from two sources at the same time or using the same set of college credits for two different degrees."
+  },
+  "ladder": [
+    {
+      "word": "DOUBLE",
+      "clue": "{} <>, a person on a movie set",
+      "transform": "who does a"
+    },
+    {
+      "word": "STUNT",
+      "clue": "Drop a letter from <> to awe",
+      "transform": "-T"
+    },
+    {
+      "word": "STUN",
+      "clue": "Anagram <> to get some bar food",
+      "transform": "reversed"
+    },
+    {
+      "word": "NUTS",
+      "clue": "Bird that is a synonym for <>",
+      "transform": "aka"
+    },
+    {
+      "word": "CUCKOO",
+      "clue": "Device that might hide a <>",
+      "transform": "might hide in a"
+    },
+    {
+      "word": "CLOCK",
+      "clue": "What to do around the <>, according to song",
+      "transform": "CL->R"
+    },
+    {
+      "word": "ROCK",
+      "clue": "Append two letters to <> to get a projectile",
+      "transform": "+ET"
+    },
+    {
+      "word": "ROCKET",
+      "clue": "<>{}, space-faring vehicles",
+      "transform": "…"
+    },
+    {
+      "word": "SHIPS",
+      "clue": "Change one letter in <> to get a snack",
+      "transform": "S->C"
+    },
+    {
+      "word": "CHIPS",
+      "clue": "Counterpart to <>, at a party",
+      "transform": "and"
+    },
+    {
+      "word": "DIP",
+      "clue": null,
+      "transform": null
+    }
+  ]
+}

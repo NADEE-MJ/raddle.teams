@@ -5,44 +5,44 @@ meta:
   theme: Paul Ruddle
   message: "Welcome to **RUDDLE**! For the next few days, we'll be rebranding as the only Paul Rudd-themed daily word game.
     We're starting with Paul's breakout role in Amy Heckerling's Clueless, where he plays the charming
-    Josh, a goateed Nietzsche-reading college boy who patiently negs Alicia Silverstoneâs Cher until she realizes she is in love with him, 
+    Josh, a goateed Nietzsche-reading college boy who patiently negs Alicia Silverstone’s Cher until she realizes she is in love with him, 
     thereby teaching Gen X some really weird things about relationships."
 ladder:
 - word: CLUE
-  clue: Reddish word used in a name in ^
+  clue: Reddish word used in a name in <>
   transform: features
 - word: SCARLETT
-  clue: Tabloid nickname for actress ^
+  clue: Tabloid nickname for actress <>
   transform: known as
 - word: SCARJO
-  clue: Remove a letter from ^ and anagram to get something ^ might get someday
+  clue: Remove a letter from <> and anagram to get something <> might get someday
   transform: "-J and anagram"
 - word: OSCAR
-  clue: ^ the ___
+  clue: <> the ^
   transform: the
 - word: GROUCH
-  clue: Append an O to ^ to get the first name of a comedian and actor
+  clue: Append an O to <> to get the first name of a comedian and actor
   transform: +O
 - word: GROUCHO
-  clue: Silent brother of ^
+  clue: Silent brother of <>
   transform: "'s brother is"
 - word: HARPO
-  clue: Reverse ^ to get a TV personality and businessperson
+  clue: Reverse <> to get a TV personality and businessperson
   transform: backwards
 - word: OPRAH
-  clue: Cable channel run by ^
+  clue: Cable channel run by <>
   transform: owns
 - word: OWN
-  clue: What the last letter of ^ stands for
+  clue: What the last letter of <> stands for
   transform: partially stands for
 - word: NETWORK
-  clue: Last word of most famous line from the movie ^
-  transform: "I'm not going to take it â¦"
+  clue: Last word of most famous line from the movie <>
+  transform: "I'm not going to take it …"
 - word: ANYMORE
-  clue: Adverb that is the last syllable of ^
+  clue: Adverb that is the last syllable of <>
   transform: -ANY
 - word: MORE
-  clue: Opposite of ^
+  clue: Opposite of <>
   transform: op
 - word: LESS
   clue:

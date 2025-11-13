@@ -1,0 +1,66 @@
+{
+  "meta": {
+    "title": "From LOCKED to ROOM",
+    "author": "Sandy Weisz and Mao Reynolds",
+    "difficulty": "medium",
+    "theme": "Crime Fiction",
+    "message": "This week’s Raddles unpack common tropes in crime fiction. In locked-room mysteries, there’s no clear way that the culprit could have entered the scene, killed and left. The first in this genre is generally considered to be Edgar Allan Poe’s “The Murders in the Rue Morgue,” published in 1841."
+  },
+  "ladder": [
+    {
+      "word": "LOCKED",
+      "clue": "Change one letter in <> to get punched",
+      "transform": "L->S"
+    },
+    {
+      "word": "SOCKED",
+      "clue": "Drop a bigram (two letters) in <> to get a piece of apparel",
+      "transform": "-ED"
+    },
+    {
+      "word": "SOCK",
+      "clue": "What covers a <>",
+      "transform": "goes inside a"
+    },
+    {
+      "word": "SHOE",
+      "clue": "{}<>, a kind of character in a mystery novel",
+      "transform": "made of"
+    },
+    {
+      "word": "GUM",
+      "clue": "Reverse <> to get a kind of shot",
+      "transform": "reversed"
+    },
+    {
+      "word": "MUG",
+      "clue": "Black or green stuff that might go in a <>",
+      "transform": "holds"
+    },
+    {
+      "word": "TEA",
+      "clue": "What might be served with <> and also starts and ends with \"<>\"",
+      "transform": "is served with"
+    },
+    {
+      "word": "TOAST",
+      "clue": "Uncooked <>",
+      "transform": "used to be"
+    },
+    {
+      "word": "BREAD",
+      "clue": "Drop a letter from <> to get a word on many school posters",
+      "transform": "-B"
+    },
+    {
+      "word": "READ",
+      "clue": "\"<> the {}!\"",
+      "transform": "the"
+    },
+    {
+      "word": "ROOM",
+      "clue": null,
+      "transform": null
+    }
+  ]
+}

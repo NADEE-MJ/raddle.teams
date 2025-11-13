@@ -9,52 +9,52 @@
   "ladder": [
     {
       "word": "PREVOST",
-      "clue": "Remove the first two letters of ^ then anagram to get a kitchen appliance",
+      "clue": "Remove the first two letters of <> then anagram to get a kitchen appliance",
       "transform": "-PR, then anagram"
     },
     {
       "word": "STOVE",
-      "clue": "Appliance usually attached to a ^",
+      "clue": "Appliance usually attached to a <>",
       "transform": "is attached to an"
     },
     {
       "word": "OVEN",
-      "clue": "An ^ ___ helps you pull things out of the ^",
+      "clue": "An <> {} helps you pull things out of the <>",
       "transform": "requires a"
     },
     {
       "word": "MITT",
-      "clue": "Sport where players use a ^",
+      "clue": "Sport where players use a <>",
       "transform": "is used in"
     },
     {
       "word": "BASEBALL",
-      "clue": "A ^er in the Bronx",
+      "clue": "A <>er in the Bronx",
       "transform": "player in the Bronx"
     },
     {
       "word": "YANKEE",
-      "clue": "Arguably the most famous ^ of all time",
+      "clue": "Arguably the most famous <> of all time",
       "transform": "#3"
     },
     {
       "word": "BABE RUTH",
-      "clue": "Actual first name of ^",
+      "clue": "Actual first name of <>",
       "transform": "aka"
     },
     {
       "word": "GEORGE",
-      "clue": "\"^ of the ___\", cartoon and movie",
+      "clue": "\"<> of the {}\", cartoon and movie",
       "transform": "of the"
     },
     {
       "word": "JUNGLE",
-      "clue": "King of the ^, it's said",
+      "clue": "King of the <>, it's said",
       "transform": "'s king"
     },
     {
       "word": "LION",
-      "clue": "Sign symbolized by a ^",
+      "clue": "Sign symbolized by a <>",
       "transform": "astrologically"
     },
     {

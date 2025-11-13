@@ -1,0 +1,71 @@
+{
+  "meta": {
+    "title": "From BLOCK to PARTY",
+    "author": "Sandy Weisz and Mao Reynolds",
+    "difficulty": "medium",
+    "theme": "Block Party",
+    "message": "This week, we're celebrating block parties. American block parties likely originated in New York City as a way to honor neighbors who were fighting abroad in World War I. Later, in the 1970s, hip-hop artists popularized block parties as cultural events where DJs and performers could showcase their music and build community, transforming them into birthplaces of a new musical movement."
+  },
+  "ladder": [
+    {
+      "word": "BLOCK",
+      "clue": "Before Netflix, we had <>{}",
+      "transform": "…"
+    },
+    {
+      "word": "BUSTER",
+      "clue": "Silent film star <> {}",
+      "transform": "of silent film"
+    },
+    {
+      "word": "KEATON",
+      "clue": "Actor {} <>, who famously played a superhero",
+      "transform": "who was Batman"
+    },
+    {
+      "word": "MICHAEL",
+      "clue": "Nickname for <>",
+      "transform": "aka"
+    },
+    {
+      "word": "MIKE",
+      "clue": "Change one letter in <> to get a fish",
+      "transform": "M->P"
+    },
+    {
+      "word": "PIKE",
+      "clue": "Change one letter in <> to get a tree",
+      "transform": "K->N"
+    },
+    {
+      "word": "PINE",
+      "clue": "<>{}, ubiquitous object on forest floors",
+      "transform": "reproduces via"
+    },
+    {
+      "word": "CONE",
+      "clue": "Treat often served in a <>",
+      "transform": "might feature"
+    },
+    {
+      "word": "ICE CREAM",
+      "clue": "\"What {} of <> do you want?\"",
+      "transform": "comes in many a"
+    },
+    {
+      "word": "FLAVOR",
+      "clue": "Drop a letter in <> to get something a friend might ask of you",
+      "transform": "-L"
+    },
+    {
+      "word": "FAVOR",
+      "clue": "{} <>, something to take home with you",
+      "transform": "is given out to guests at a"
+    },
+    {
+      "word": "PARTY",
+      "clue": null,
+      "transform": null
+    }
+  ]
+}

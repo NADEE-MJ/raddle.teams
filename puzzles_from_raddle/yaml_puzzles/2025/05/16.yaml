@@ -6,40 +6,40 @@ meta:
   message: We're honoring the Tony nominations this week. "Dead Outlaw" is a dark comedy about Elmer McCurdy, an Oklahoma outlaw whose dies in a shootout and then earns posthumous fame as a traveling mummified sideshow attraction. The show has seven nominations, including Best Musical. 
 ladder:
 - word: DEAD
-  clue: Word that follows ^ in a Marvel movie franchise
-  transform: â¦
+  clue: Word that follows <> in a Marvel movie franchise
+  transform: …
 - word: POOL
-  clue: Term that includes ^ and other similar sports
+  clue: Term that includes <> and other similar sports
   transform: is a kind of
 - word: BILLIARDS
-  clue: Replace the last four letters of ^ with two letters to get a number
+  clue: Replace the last four letters of <> with two letters to get a number
   transform: ARDS -> ON
 - word: BILLION
-  clue: A ^ has nine of these
+  clue: A <> has nine of these
   transform: has 9
 - word: ZEROES
-  clue: Swap one letter of ^ to get a Bowie song title
+  clue: Swap one letter of <> to get a Bowie song title
   transform: Z->H
 - word: HEROES
-  clue: Word that describes ^ that fly, among other things
+  clue: Word that describes <> that fly, among other things
   transform: are often
 - word: SUPER
-  clue: Plumber often described as ^
-  transform: â¦
+  clue: Plumber often described as <>
+  transform: …
 - word: MARIO
-  clue: Common thing that ^ eats
+  clue: Common thing that <> eats
   transform: loves to eat a
 - word: MUSHROOM
-  clue: Relation that's composed of the first letter + last two letters of ^
+  clue: Relation that's composed of the first letter + last two letters of <>
   transform: -"USHRO"
 - word: MOM
-  clue: More formal word for ^
+  clue: More formal word for <>
   transform: aka
 - word: MOTHER
-  clue: Words that get attached to ^ after marriage
+  clue: Words that get attached to <> after marriage
   transform: can be an
 - word: IN-LAW
-  clue: Opposite of an ^? ð
+  clue: Opposite of an <>? 😉
   transform: opposite, maybe
 - word: OUTLAW
   clue:

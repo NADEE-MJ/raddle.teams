@@ -5,41 +5,41 @@ meta:
   theme: Severance
   message:
     "In \"Severance\", four tempers guide the philosophy of Kier Eagan, the founder of Lumon Industries: woe, frolic, dread, and malice. 
-    According to Kier, controlling these tempers helps us control ourselves â and the world. 
+    According to Kier, controlling these tempers helps us control ourselves — and the world. 
     Super normal stuff."
 ladder:
 - word: WOE
-  clue: Anagram ^ to be in the red
+  clue: Anagram <> to be in the red
   transform: anagrammed
 - word: OWE
-  clue: Change one letter in ^ to get a bird
+  clue: Change one letter in <> to get a bird
   transform: E->L
 - word: OWL
-  clue: Human quality associated with an ^, thanks to Greek myth
+  clue: Human quality associated with an <>, thanks to Greek myth
   transform: represents
 - word: WISDOM
-  clue: ^ ___, one of four that may or may not be in your head
-  transform: â¦
+  clue: <> ^, one of four that may or may not be in your head
+  transform: …
 - word: TOOTH
-  clue: Kind of ^ that sounds like a letter plus a number
+  clue: Kind of <> that sounds like a letter plus a number
   transform: that's pointed
 - word: CANINE
-  clue: ^ means relating to a ___
+  clue: <> means relating to a ^
   transform: means relating to a
 - word: DOG
-  clue: What a ^ does to its tail
+  clue: What a <> does to its tail
   transform: does this to its tail
 - word: WAGS
-  clue: Change the last letter in ^ to get something earned at work
+  clue: Change the last letter in <> to get something earned at work
   transform: S->E
 - word: WAGE
-  clue: Your ^ is how much ___ you get
+  clue: Your <> is how much ^ you get
   transform: is regular payment of
 - word: MONEY
-  clue: Edible slang for ^
+  clue: Edible slang for <>
   transform: slang
 - word: BREAD
-  clue: Change the first letter of ^ to get a worrisome feeling
+  clue: Change the first letter of <> to get a worrisome feeling
   transform: B->D
 - word: DREAD
   clue:

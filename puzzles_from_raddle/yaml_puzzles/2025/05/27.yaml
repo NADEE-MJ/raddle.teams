@@ -9,37 +9,37 @@ meta:
     You can watch JJ's [winning live performance here](https://www.youtube.com/watch?v=rN7z7BOUU9I).
 ladder:
 - word: WASTED
-  clue: Another word for being ^
+  clue: Another word for being <>
   transform: aka
 - word: DRUNK
-  clue: Change one letter in ^ to get a part of a tree
+  clue: Change one letter in <> to get a part of a tree
   transform: D->T
 - word: TRUNK
-  clue: What they call a ^ in England
+  clue: What they call a <> in England
   transform: in England is a
 - word: BOOT
-  clue: Country sometimes refered to as the ^
+  clue: Country sometimes refered to as the <>
   transform: -shaped country
 - word: ITALY
-  clue: Food most associated with ^
+  clue: Food most associated with <>
   transform: loves its
 - word: PASTA
-  clue: Body part that shares its name with a type of ^
+  clue: Body part that shares its name with a type of <>
   transform: with a bend
 - word: ELBOW
-  clue: ^ ___, something hard to get on an airplane
-  transform: â¦
+  clue: <> ^, something hard to get on an airplane
+  transform: …
 - word: ROOM
-  clue: ^ ___, something found at a hotel
-  transform: â¦
+  clue: <> ^, something found at a hotel
+  transform: …
 - word: SERVICE
-  clue: Remove two letters from ^ to get something you do in the military
+  clue: Remove two letters from <> to get something you do in the military
   transform: -IC
 - word: SERVE
-  clue: Sport that starts with a ^
+  clue: Sport that starts with a <>
   transform: starts a game of
 - word: TENNIS
-  clue: Nothing in ^
+  clue: Nothing in <>
   transform: calls "zero"
 - word: LOVE
   clue:

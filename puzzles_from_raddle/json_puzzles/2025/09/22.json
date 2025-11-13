@@ -1,0 +1,71 @@
+{
+  "meta": {
+    "title": "From TUMBLE to WEED",
+    "author": "Sandy Weisz and Mao Reynolds",
+    "difficulty": "medium",
+    "theme": "Fall",
+    "message": "It’s finally feeling like fall! This week the Raddles are all related to fall — or rather, \"fall\". Today we tumble with the tumbleweeds, that staple of film Westerns. Every Christmas, the city of Chandler, Arizona celebrates not with an evergreen tree but a “tree” made of tumbleweeds."
+  },
+  "ladder": [
+    {
+      "word": "TUMBLE",
+      "clue": "Change one letter in <> to get a dating app",
+      "transform": "T->B"
+    },
+    {
+      "word": "BUMBLE",
+      "clue": "<>{}, a buzzer",
+      "transform": "…"
+    },
+    {
+      "word": "BEE",
+      "clue": "What a <> might do to you",
+      "transform": "might give you a"
+    },
+    {
+      "word": "STING",
+      "clue": "<>'s band",
+      "transform": "fronted"
+    },
+    {
+      "word": "THE POLICE",
+      "clue": "Nickname for <>",
+      "transform": "aka"
+    },
+    {
+      "word": "COPS",
+      "clue": "Reverse <> and add a letter to get a beloved sci-fi character",
+      "transform": "+K, then reverse"
+    },
+    {
+      "word": "SPOCK",
+      "clue": "<>'s superior",
+      "transform": "reported to"
+    },
+    {
+      "word": "KIRK",
+      "clue": "<> {}, classic Hollywood actor",
+      "transform": "…"
+    },
+    {
+      "word": "DOUGLAS",
+      "clue": "<> {}, a forest sight",
+      "transform": "is a kind of"
+    },
+    {
+      "word": "FIR",
+      "clue": "Product made from a <>",
+      "transform": "produces"
+    },
+    {
+      "word": "WOOD",
+      "clue": "Change the double vowel in <> to a different double vowel to get something grassy",
+      "transform": "OO->EE"
+    },
+    {
+      "word": "WEED",
+      "clue": null,
+      "transform": null
+    }
+  ]
+}

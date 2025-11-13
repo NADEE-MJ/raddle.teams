@@ -1,0 +1,76 @@
+{
+  "meta": {
+    "title": "From DANCING to QUEEN",
+    "author": "Sandy Weisz and Mao Reynolds",
+    "difficulty": "medium",
+    "theme": "Pride Month",
+    "message": "We're celebrating Pride Month with Raddles inspired by LGBTQ+ anthems. \"Dancing Queen\" by ABBA is a classic, and it was a #1 hit for the band in the US — yet, incredibly, the only one they had here. Unsurprisingly, its legacy lives on in dance clubs and pride parades and movie soundracks and [presidential campaigns](https://www.motherjones.com/politics/2008/08/mccain-former-prisoner-war-i-abba/)."
+  },
+  "ladder": [
+    {
+      "word": "DANCING",
+      "clue": "Kind of <> that originated in Egypt and is very  hip?",
+      "transform": "that's hip"
+    },
+    {
+      "word": "BELLY",
+      "clue": "Swap one vowel in <> to get a male name",
+      "transform": "E->I"
+    },
+    {
+      "word": "BILLY",
+      "clue": "A male {} is called a <>",
+      "transform": "that bleats"
+    },
+    {
+      "word": "GOAT",
+      "clue": "<> {} (good in a beet salad, imo)",
+      "transform": "makes milk that turns into"
+    },
+    {
+      "word": "CHEESE",
+      "clue": "Saying \"<>\" helps you do this (ideally)",
+      "transform": "yields a"
+    },
+    {
+      "word": "SMILE",
+      "clue": "Remove the first letter from <> to get a measurement",
+      "transform": "-S"
+    },
+    {
+      "word": "MILE",
+      "clue": "There are over 5000 of these in a <>",
+      "transform": "has 5280"
+    },
+    {
+      "word": "FEET",
+      "clue": "Counterparts to your <>",
+      "transform": "Counterparts"
+    },
+    {
+      "word": "HANDS",
+      "clue": "Device that often has three <>",
+      "transform": "are on a"
+    },
+    {
+      "word": "CLOCK",
+      "clue": "\"{} Around The <>\"",
+      "transform": "within the"
+    },
+    {
+      "word": "ROCK",
+      "clue": "<> {}, video game where you pretend you're in a <> {}",
+      "transform": "in a"
+    },
+    {
+      "word": "BAND",
+      "clue": "Mercury was in this <>",
+      "transform": "with Mercury"
+    },
+    {
+      "word": "QUEEN",
+      "clue": null,
+      "transform": null
+    }
+  ]
+}

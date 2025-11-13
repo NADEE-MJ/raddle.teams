@@ -9,62 +9,62 @@
   "ladder": [
     {
       "word": "EXPLOSIONS",
-      "clue": "^ are produced via this (especially in cartoons)",
+      "clue": "<> are produced via this (especially in cartoons)",
       "transform": "come from"
     },
     {
       "word": "TNT",
-      "clue": "Add a letter to ^ to get the acronym of this cartoon team",
+      "clue": "Add a letter to <> to get the acronym of this cartoon team",
       "transform": "+M"
     },
     {
       "word": "TMNT",
-      "clue": "Orange member of ^",
+      "clue": "Orange member of <>",
       "transform": "includes"
     },
     {
       "word": "MICHELANGELO",
-      "clue": "Very tall sculpture by ^",
+      "clue": "Very tall sculpture by <>",
       "transform": "made"
     },
     {
       "word": "DAVID",
-      "clue": "Acerbic comedian ^",
+      "clue": "Acerbic comedian <>",
       "transform": "as in"
     },
     {
       "word": "LARRY",
-      "clue": "^ is one of the Three ___",
+      "clue": "<> is one of the Three {}",
       "transform": "is a member of the The Three"
     },
     {
       "word": "STOOGES",
-      "clue": "Frontman for The ^",
+      "clue": "Frontman for The <>",
       "transform": "is fronted by"
     },
     {
       "word": "IGGY POP",
-      "clue": "Swap the two parts of ^ then drop two consecutive letters to get an animal",
+      "clue": "Swap the two parts of <> then drop two consecutive letters to get an animal",
       "transform": "last letter to start"
     },
     {
       "word": "PIGGY",
-      "clue": "^ is a character in this book",
+      "clue": "<> is a character in this book",
       "transform": "is a character in"
     },
     {
       "word": "LORD OF THE FLIES",
-      "clue": "Singular of last word in ^",
+      "clue": "Singular of last word in <>",
       "transform": "singularly"
     },
     {
       "word": "FLY",
-      "clue": "Baked food that rhymes with ^",
+      "clue": "Baked food that rhymes with <>",
       "transform": "rhymes with"
     },
     {
       "word": "PIE",
-      "clue": "^-in-the-___",
+      "clue": "<>-in-the-{}",
       "transform": "in the"
     },
     {

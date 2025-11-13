@@ -3,44 +3,44 @@ meta:
   author: Sandy Weisz
   difficulty: medium
   theme: Enigmarch 2025
-  fromEmoji: ð¢
-  toEmoji: ð³ï¸
+  fromEmoji: 🚢
+  toEmoji: 🕳️
 ladder:
 - word: SHIP
-  clue: The boss on a ^
+  clue: The boss on a <>
   transform: "led by a"
 - word: CAPTAIN
-  clue: Clothing item that follows ^ in kid lit
+  clue: Clothing item that follows <> in kid lit
   transform: "precedes"
 - word: UNDERPANTS
-  clue: Loose-fitting ^
+  clue: Loose-fitting <>
   transform: "style"
 - word: BOXERS
-  clue: Animal found inside ^
+  clue: Animal found inside <>
   transform: "hide an"
 - word: OX
-  clue: Item that connects one ^ to another
+  clue: Item that connects one <> to another
   transform: "attached to a"
 - word: YOKE
-  clue: Homophone of ^
+  clue: Homophone of <>
   transform: "sounds like"
 - word: YOLK
-  clue: A ^ is the center of one
+  clue: A <> is the center of one
   transform: "contains an"
 - word: EGG
-  clue: "Add some letters to get an ^'s brittle outside"
+  clue: "Add some letters to get an <>'s brittle outside"
   transform: "held in by an"
 - word: EGGSHELL
-  clue: Product that comes in many colors, including ^
+  clue: Product that comes in many colors, including <>
   transform: "is a color of"
 - word: PAINT
-  clue: Substance no longer found in ^, thankfully
+  clue: Substance no longer found in <>, thankfully
   transform: "no longer contains"
 - word: LEAD
-  clue: Opposite of ^
+  clue: Opposite of <>
   transform: "opposite"
 - word: FOLLOW
-  clue: Change first letter of ^ to get an empty space
+  clue: Change first letter of <> to get an empty space
   transform: "F -> H"
 - word: HOLLOW
   clue: ""

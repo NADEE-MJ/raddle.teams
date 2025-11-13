@@ -6,37 +6,37 @@ meta:
   message: It's spring! Let's stop to smell the flowers. 
 ladder:
 - word: MORNING
-  clue: Opposite of ^
+  clue: Opposite of <>
   transform: opposite
 - word: EVENING
-  clue: Abbreviation for ^, sometimes
+  clue: Abbreviation for <>, sometimes
   transform: abbreviated
 - word: PM
-  clue: Add a letter to ^ to get a female name
+  clue: Add a letter to <> to get a female name
   transform: +A
 - word: PAM
-  clue: Reverse ^ to help you find your way
+  clue: Reverse <> to help you find your way
   transform: reversed
 - word: MAP
-  clue: Kind of ^ with an X
+  clue: Kind of <> with an X
   transform: leads to
 - word: TREASURE
-  clue: Container often used to hold ^
+  clue: Container often used to hold <>
   transform: is held in a
 - word: CHEST
-  clue: Part of the ^ that rhymes with ^
+  clue: Part of the <> that rhymes with <>
   transform: rhymes with
 - word: BREAST
-  clue: What a ^ might produce
+  clue: What a <> might produce
   transform: produces
 - word: MILK
-  clue: Word that describes ^ in a common adage
+  clue: Word that describes <> in a common adage
   transform: might be
 - word: SPILLED
-  clue: Part of you that might be ^ in a vulnerable moment
-  transform: â¦
+  clue: Part of you that might be <> in a vulnerable moment
+  transform: …
 - word: GUTS
-  clue: "âNo ^ no ___â"
+  clue: "”No <> no ^”"
   transform: lead to
 - word: GLORY
   clue:

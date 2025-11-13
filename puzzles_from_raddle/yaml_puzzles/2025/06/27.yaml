@@ -6,37 +6,37 @@ meta:
   message: We're celebrating summer with Raddles based on fresh summer produce. And Prince songs.
 ladder:
 - word: RASPBERRY
-  clue: The second half of ^ sounds like what you might do to treasure
+  clue: The second half of <> sounds like what you might do to treasure
   transform: partially sounds like
 - word: BURY
-  clue: ^ the ___ at the end of a conflict
+  clue: <> the ^ at the end of a conflict
   transform: the
 - word: HATCHET
-  clue: Remove both ends of ^ and anagram to get something done less in the summer
+  clue: Remove both ends of <> and anagram to get something done less in the summer
   transform: -H -T, anagram
 - word: TEACH
-  clue: Change one letter in ^ to get a summertime destination
+  clue: Change one letter in <> to get a summertime destination
   transform: T->B
 - word: BEACH
-  clue: Rock group The ^ ___
-  transform: â¦
+  clue: Rock group The <> ^
+  transform: …
 - word: BOYS
-  clue: '"___ ^", 1995 movie that started a franchise'
+  clue: '"^ <>", 1995 movie that started a franchise'
   transform: might be
 - word: BAD
-  clue: ___ ^ wolf
+  clue: ^ <> wolf
   transform: wolf is also
 - word: BIG
-  clue: Change one letter in ^ to get a way to ask
+  clue: Change one letter in <> to get a way to ask
   transform: I->E
 - word: BEG
-  clue: '"I ^ your ___"'
+  clue: '"I <> your ^"'
   transform: your
 - word: PARDON
-  clue: '"^ my ___", a kind of apology'
+  clue: '"<> my ^", a kind of apology'
   transform: my
 - word: FRENCH
-  clue: Piece of stereotypical ^ headwear
+  clue: Piece of stereotypical <> headwear
   transform: headwear
 - word: BERET
   clue:

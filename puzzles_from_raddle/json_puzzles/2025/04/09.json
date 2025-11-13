@@ -9,72 +9,72 @@
   "ladder": [
     {
       "word": "OK",
-      "clue": "Shift a letter in ^ one back in the alphabet to get a drink",
+      "clue": "Shift a letter in <> one back in the alphabet to get a drink",
       "transform": "K->J"
     },
     {
       "word": "OJ",
-      "clue": "What the first letter of ^ stands for",
+      "clue": "What the first letter of <> stands for",
       "transform": "partially stands for"
     },
     {
       "word": "ORANGE",
-      "clue": "A ___ ^ (1971)",
+      "clue": "A {} <> (1971)",
       "transform": "follows"
     },
     {
       "word": "CLOCKWORK",
-      "clue": "Natural material found by removing 5 consecutive letters in ^",
+      "clue": "Natural material found by removing 5 consecutive letters in <>",
       "transform": "outside letters"
     },
     {
       "word": "CORK",
-      "clue": "Word that follows ^ in a tool name",
+      "clue": "Word that follows <> in a tool name",
       "transform": "+"
     },
     {
       "word": "SCREW",
-      "clue": "Word that follows ^ in a tool name",
+      "clue": "Word that follows <> in a tool name",
       "transform": "+"
     },
     {
       "word": "DRIVER",
-      "clue": "Actress ^",
+      "clue": "Actress <>",
       "transform": "as in"
     },
     {
       "word": "MINNIE",
-      "clue": "Partner to ^",
+      "clue": "Partner to <>",
       "transform": "partner"
     },
     {
       "word": "MICKEY",
-      "clue": "^ ___ (2025)",
+      "clue": "<> {} (2025)",
       "transform": "+"
     },
     {
       "word": "17",
-      "clue": "Musical with song about turning ^",
+      "clue": "Musical with song about turning <>",
       "transform": "sung about in"
     },
     {
       "word": "THE SOUND OF MUSIC",
-      "clue": "The initials of ^, backwards",
+      "clue": "The initials of <>, backwards",
       "transform": "initials, backwards"
     },
     {
       "word": "MOST",
-      "clue": "Change a letter in ^ to get a newspaper",
+      "clue": "Change a letter in <> to get a newspaper",
       "transform": "M->P"
     },
     {
       "word": "POST",
-      "clue": "Anagram ^ to get a sign",
+      "clue": "Anagram <> to get a sign",
       "transform": "anagrammed"
     },
     {
       "word": "STOP",
-      "clue": "Opposite of ^",
+      "clue": "Opposite of <>",
       "transform": "opposite"
     },
     {

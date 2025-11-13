@@ -1,0 +1,76 @@
+{
+  "meta": {
+    "title": "From RAIN to FOREST",
+    "author": "Sandy Weisz and Mao Reynolds",
+    "difficulty": "medium",
+    "theme": "Settlers of Catan",
+    "message": " Settlers of Catan was my first foray into strategic board games. It was the game that launched an unreasonable board game collection. The game is played on a game board made up of 19 tiles. Each tile is one of 6 different terrains: hill, forest, field, mountain, pasture, or desert. This week's Raddles each use one of those terrains. "
+  },
+  "ladder": [
+    {
+      "word": "RAIN",
+      "clue": "<> {}, a plan for another time",
+      "transform": "delay; please return with this"
+    },
+    {
+      "word": "CHECK",
+      "clue": "<> {}, a tick",
+      "transform": "…"
+    },
+    {
+      "word": "MARK",
+      "clue": "Append two letters to <> to get a shopping destination",
+      "transform": "+ET"
+    },
+    {
+      "word": "MARKET",
+      "clue": "Animal that goes to the <>, in a common poem",
+      "transform": "was visited by a"
+    },
+    {
+      "word": "PIGGY",
+      "clue": "Miss <> is a {}",
+      "transform": "is a"
+    },
+    {
+      "word": "MUPPET",
+      "clue": "The <> who drums",
+      "transform": "who drums"
+    },
+    {
+      "word": "ANIMAL",
+      "clue": "Popular video game franchise <> {}",
+      "transform": "…"
+    },
+    {
+      "word": "CROSSING",
+      "clue": "<> {}, one who works near a school",
+      "transform": "is watched over by a"
+    },
+    {
+      "word": "GUARD",
+      "clue": "{}<>, one who works near a pool",
+      "transform": "at a pool protects your"
+    },
+    {
+      "word": "LIFE",
+      "clue": "<> {}, feature of a biography",
+      "transform": "is told in a"
+    },
+    {
+      "word": "STORY",
+      "clue": "Change one letter in <> to get a shopping destination",
+      "transform": "Y->E"
+    },
+    {
+      "word": "STORE",
+      "clue": "Add an F to <> and anagram to get a biome",
+      "transform": "+F, then anagram"
+    },
+    {
+      "word": "FOREST",
+      "clue": null,
+      "transform": null
+    }
+  ]
+}

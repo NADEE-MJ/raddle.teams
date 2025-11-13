@@ -1,0 +1,66 @@
+{
+  "meta": {
+    "title": "From TWO to FLAT",
+    "author": "Sandy Weisz and Mao Reynolds",
+    "difficulty": "medium",
+    "theme": "Chicago",
+    "message": "This week, we’re celebrating some of the great things that are strongly associated with Chicago, our home town. The two-flat is a distinctive architectural feature of Chicago, often brick or graystone and having two stories, an apartment on each floor, with bay windows on the front. At the time of their development in the early 1900s, two-flats offered much-needed affordable housing and stability."
+  },
+  "ladder": [
+    {
+      "word": "TWO",
+      "clue": "Kind of character that sounds like <> + \"N\"",
+      "transform": "+\"N\""
+    },
+    {
+      "word": "TOON",
+      "clue": "Kind of animal that sounds like <> + \"Uh\"",
+      "transform": "+\"UH\""
+    },
+    {
+      "word": "TUNA",
+      "clue": "Change one letter in <> to get an instrument",
+      "transform": "N->B"
+    },
+    {
+      "word": "TUBA",
+      "clue": "Type of <> that goes around the body",
+      "transform": "on one's shoulder"
+    },
+    {
+      "word": "SOUSAPHONE",
+      "clue": "Foolish person found inside <>",
+      "transform": "features"
+    },
+    {
+      "word": "SAP",
+      "clue": "Tall thing that might produce <>",
+      "transform": "comes out of a"
+    },
+    {
+      "word": "TREE",
+      "clue": "What you might be doing at the wrong <>?",
+      "transform": "can be the target of some errant"
+    },
+    {
+      "word": "BARKING",
+      "clue": "Remove a letter from <> to get a kitchen activity",
+      "transform": "-R"
+    },
+    {
+      "word": "BAKING",
+      "clue": "<> {}, product used often while <>",
+      "transform": "…"
+    },
+    {
+      "word": "SODA",
+      "clue": "Like <> that's not fresh",
+      "transform": "sans bubbles is"
+    },
+    {
+      "word": "FLAT",
+      "clue": null,
+      "transform": null
+    }
+  ]
+}

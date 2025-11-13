@@ -9,34 +9,34 @@ meta:
       Which, assuming he was given that name before he left the planet, is some solid bit of nominative determinism.
 ladder:
 - word: KAL
-  clue: ^ ___, actor and member of the Obama administration
-  transform: â¦
+  clue: <> ^, actor and member of the Obama administration
+  transform: …
 - word: PENN
-  clue: Partner of ^
+  clue: Partner of <>
   transform: partner
 - word: TELLER
-  clue: Where a ^ works
+  clue: Where a <> works
   transform: works at a
 - word: BANK
-  clue: What's stored at a ^
+  clue: What's stored at a <>
   transform: stores
 - word: MONEY
-  clue: Change one letter in ^ to get a painter
+  clue: Change one letter in <> to get a painter
   transform: Y->T
 - word: MONET
-  clue: First name of ^
+  clue: First name of <>
   transform: first name
 - word: CLAUDE
-  clue: Word that sounds like ^ that describes crabs and bears
+  clue: Word that sounds like <> that describes crabs and bears
   transform: sounds like
 - word: CLAWED
-  clue: Discipline found inside ^
+  clue: Discipline found inside <>
   transform: features the word
 - word: LAW
-  clue: Drop a letter from ^ to get a place where ^ was practiced, on TV
+  clue: Drop a letter from <> to get a place where <> was practiced, on TV
   transform: -W
 - word: LA
-  clue: Masculine version of ^, in Spanish
+  clue: Masculine version of <>, in Spanish
   transform: counterpart
 - word: EL
   clue:

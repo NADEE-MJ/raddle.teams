@@ -6,37 +6,37 @@ meta:
   message: Summer's not over yet! Let's enjoy some ice cream.
 ladder:
 - word: RUM
-  clue: Add a letter to ^ to get an instrument
+  clue: Add a letter to <> to get an instrument
   transform: +D
 - word: DRUM
-  clue: Kind of ^ used in salsa
+  clue: Kind of <> used in salsa
   transform: played with hands
 - word: BONGO
-  clue: Change one letter in ^ to get a game
+  clue: Change one letter in <> to get a game
   transform: O->I
 - word: BINGO
-  clue: Drop a letter in ^ to get a variety of fruit
+  clue: Drop a letter in <> to get a variety of fruit
   transform: -O
 - word: BING
-  clue: Insert an animal into ^ to get a sport
+  clue: Insert an animal into <> to get a sport
   transform: +OX
 - word: BOXING
-  clue: ^ happens in a ___
+  clue: <> happens in a ^
   transform: happens in a
 - word: RING
-  clue: Add an E to ^ and anagram to get something a queen does
+  clue: Add an E to <> and anagram to get something a queen does
   transform: +E, then anagram
 - word: REIGN
-  clue: Natural phenomenon that sounds like ^
+  clue: Natural phenomenon that sounds like <>
   transform: sounds like
 - word: RAIN
-  clue: â___ ^â, seminal 1984 album
+  clue: “^ <>”, seminal 1984 album
   transform: around Prince is
 - word: PURPLE
-  clue: Flavor of most ^ soda
+  clue: Flavor of most <> soda
   transform: flavor
 - word: GRAPE
-  clue: A ^ devoid of water
+  clue: A <> devoid of water
   transform: sans water
 - word: RAISIN
   clue:

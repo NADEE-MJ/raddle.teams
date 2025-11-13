@@ -9,52 +9,52 @@
   "ladder": [
     {
       "word": "PHILOSOPHER",
-      "clue": "Object that \"belongs\" to a ^ in alchemy",
+      "clue": "Object that \"belongs\" to a <> in alchemy",
       "transform": "'s"
     },
     {
       "word": "STONE",
-      "clue": "Actress ^",
+      "clue": "Actress <>",
       "transform": "as in"
     },
     {
       "word": "EMMA",
-      "clue": "Author of ^",
+      "clue": "Author of <>",
       "transform": "by"
     },
     {
       "word": "AUSTEN",
-      "clue": "State whose capital sounds like \"^\"",
+      "clue": "State whose capital sounds like \"<>\"",
       "transform": "sounds like it's in"
     },
     {
       "word": "TEXAS",
-      "clue": "Swap the vowels in ^ to get some collections",
+      "clue": "Swap the vowels in <> to get some collections",
       "transform": "swap vowels"
     },
     {
       "word": "TAXES",
-      "clue": "Counterpart to ^, in a famous quote",
+      "clue": "Counterpart to <>, in a famous quote",
       "transform": "and"
     },
     {
       "word": "DEATH",
-      "clue": "\"^ of a ___\", seen on stage",
+      "clue": "\"<> of a {}\", seen on stage",
       "transform": "of a"
     },
     {
       "word": "SALESMAN",
-      "clue": "Rigged things that sound like the first part of ^",
+      "clue": "Rigged things that sound like the first part of <>",
       "transform": "part homophone"
     },
     {
       "word": "SAILS",
-      "clue": "Big ^ appear on a tall ___",
+      "clue": "Big <> appear on a tall {}",
       "transform": "propel a"
     },
     {
       "word": "SHIP",
-      "clue": "Many a worker on a ^",
+      "clue": "Many a worker on a <>",
       "transform": "employs many a"
     },
     {

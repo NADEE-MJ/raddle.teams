@@ -1,0 +1,76 @@
+{
+  "meta": {
+    "title": "From ROMANTIC to PARTNER",
+    "author": "Sandy Weisz and Mao Reynolds",
+    "difficulty": "medium",
+    "theme": "Mystery Theme #2",
+    "message": "Time for another mystery theme! Every Raddle this week (Sunday thru Friday) is part of a secret theme that you can figure out. The answer is a name. When you've solved it, [submit your name here](/mystery/2) to be included in the list of solvers. One correct entry will win a prize."
+  },
+  "ladder": [
+    {
+      "word": "ROMANTIC",
+      "clue": "Spanish word fittingly hidden backwards in <>",
+      "transform": "includes, backwards,"
+    },
+    {
+      "word": "AMOR",
+      "clue": "Add one letter to <> to get a protective layer",
+      "transform": "+R"
+    },
+    {
+      "word": "ARMOR",
+      "clue": "Kind of warrior who is often depicted wearing <>",
+      "transform": "is worn by a"
+    },
+    {
+      "word": "KNIGHT",
+      "clue": "Neighbor of a <>",
+      "transform": "sits next to a"
+    },
+    {
+      "word": "ROOK",
+      "clue": "A <> is in the same family as this similar bird",
+      "transform": "is cousin to a"
+    },
+    {
+      "word": "CROW",
+      "clue": "{}<>, something you might see in a field",
+      "transform": "is gonna get a"
+    },
+    {
+      "word": "SCARE",
+      "clue": "Drop a letter from <> to get some concern",
+      "transform": "-S"
+    },
+    {
+      "word": "CARE",
+      "clue": "<> {}, something you might get at camp",
+      "transform": "for someone? Send them"
+    },
+    {
+      "word": "PACKAGE",
+      "clue": "Biggest shipper of <>s in the US",
+      "transform": "is likely from"
+    },
+    {
+      "word": "AMAZON",
+      "clue": "Premium service from <>",
+      "transform": "premium service"
+    },
+    {
+      "word": "PRIME",
+      "clue": "Change one letter in <> to get something illegal",
+      "transform": "P->C"
+    },
+    {
+      "word": "CRIME",
+      "clue": "{} in <>",
+      "transform": "needs a"
+    },
+    {
+      "word": "PARTNER",
+      "clue": null,
+      "transform": null
+    }
+  ]
+}

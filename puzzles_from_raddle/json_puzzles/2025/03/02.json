@@ -1,0 +1,62 @@
+{
+  "meta": {
+    "title": "From FLOW to STAFF",
+    "author": "Sandy Weisz",
+    "difficulty": "medium",
+    "theme": "Enigmarch 2025",
+    "fromEmoji": "🚰",
+    "toEmoji": "🎼"
+  },
+  "ladder": [
+    {
+      "word": "FLOW",
+      "clue": "<>'s opposite, tide-wise []",
+      "transform": "'s opposite"
+    },
+    {
+      "word": "EBB",
+      "clue": "add a D & Y to <> to get {}",
+      "transform": "+ D & Y"
+    },
+    {
+      "word": "DEBBY",
+      "clue": "The final syllable of <> sounds like {}",
+      "transform": "-'deb'"
+    },
+    {
+      "word": "BEE",
+      "clue": "Result of a <> attack []",
+      "transform": "will"
+    },
+    {
+      "word": "STING",
+      "clue": "\"The <>\" features {}",
+      "transform": "starred"
+    },
+    {
+      "word": "PAUL NEWMAN",
+      "clue": "{} whose last name sounds like the opposite of <>'s last name",
+      "transform": "surname nemesis"
+    },
+    {
+      "word": "GARY OLDMAN",
+      "clue": "Second word of <>, with a space in the middle? []",
+      "transform": "- Gary"
+    },
+    {
+      "word": "OLD MAN",
+      "clue": "An <> often can be found walking with {}",
+      "transform": "uses a"
+    },
+    {
+      "word": "CANE",
+      "clue": "Another word for a <> []",
+      "transform": "synonym of"
+    },
+    {
+      "word": "STAFF",
+      "clue": "",
+      "transform": ""
+    }
+  ]
+}

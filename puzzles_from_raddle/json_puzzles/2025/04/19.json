@@ -1,0 +1,81 @@
+{
+  "meta": {
+    "title": "From FOUR to QUESTIONS",
+    "author": "Sandy Weisz",
+    "difficulty": "medium",
+    "theme": "Passover",
+    "message": "The Four Questions (Ma Nishtana) are a tradition in the seder where we ask, \"Why is this night different from all other nights?\" Traditionally, this is done by the youngest attendee around the table, though it's often the case that the youngest is often the shiest, and/or the least able to remember the song, and so the responsibility goes to their older sibling. Ask me how I know."
+  },
+  "ladder": [
+    {
+      "word": "FOUR",
+      "clue": "Add a 'B' sound to the beginning of <> and it sounds like a preposition",
+      "transform": "+ \"B\""
+    },
+    {
+      "word": "BEFORE",
+      "clue": "Opposite of <>",
+      "transform": "opposite"
+    },
+    {
+      "word": "AFTER",
+      "clue": "Add an 'L' sound to start of <> and it sounds like a reaction",
+      "transform": "+ \"L\""
+    },
+    {
+      "word": "LAUGHTER",
+      "clue": "Add a letter to the start of <> to get a violent act",
+      "transform": "+ S"
+    },
+    {
+      "word": "SLAUGHTER",
+      "clue": "Add a word and a number to <> to get a famous novel",
+      "transform": "+ \"HOUSE FIVE\""
+    },
+    {
+      "word": "SLAUGHTERHOUSE FIVE",
+      "clue": "Author of <>",
+      "transform": "is by"
+    },
+    {
+      "word": "KURT VONNEGUT",
+      "clue": "Popular novel by <>",
+      "transform": "wrote"
+    },
+    {
+      "word": "BREAKFAST OF CHAMPIONS",
+      "clue": "Product that uses the tagline \"The <>\"",
+      "transform": "is the tagline of"
+    },
+    {
+      "word": "WHEATIES",
+      "clue": "A word inside <> that describes what you do with <>",
+      "transform": "contains"
+    },
+    {
+      "word": "EAT",
+      "clue": "Past tense of <>",
+      "transform": "past tense"
+    },
+    {
+      "word": "ATE",
+      "clue": "Number that sounds like <>",
+      "transform": "sounds like"
+    },
+    {
+      "word": "EIGHT",
+      "clue": "<> and <> and four",
+      "transform": "x2.5"
+    },
+    {
+      "word": "TWENTY",
+      "clue": "Common game <> {}",
+      "transform": "…"
+    },
+    {
+      "word": "QUESTIONS",
+      "clue": null,
+      "transform": null
+    }
+  ]
+}

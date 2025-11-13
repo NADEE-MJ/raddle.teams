@@ -6,43 +6,43 @@ meta:
   message: It's Daddle Week! Father's Day is Sunday. Let's visit a few of our favorite dads in the animal kingdom.
 ladder:
 - word: CALF
-  clue: Your ^ is part of your ___
+  clue: Your <> is part of your ^
   transform: is part of your
 - word: LEG
-  clue: Sticky substance that is ^ backwards
+  clue: Sticky substance that is <> backwards
   transform: backwards
 - word: GEL
-  clue: ___ ^, product in the beauty aisle
+  clue: ^ <>, product in the beauty aisle
   transform: goes in your
 - word: HAIR
-  clue: Change one letter in ^ to get a legal term
+  clue: Change one letter in <> to get a legal term
   transform: A->E
 - word: HEIR
-  clue: Document that names an ^
+  clue: Document that names an <>
   transform: is named in a
 - word: WILL
-  clue: Longer form of ^
+  clue: Longer form of <>
   transform: is short for
 - word: WILLIAM
-  clue: Playwright ___ ^s
+  clue: Playwright ^ <>s
   transform: "-S,"
 - word: TENNESSEE
-  clue: Eastward neighbor of ^
+  clue: Eastward neighbor of <>
   transform: is west of
 - word: NORTH CAROLINA
-  clue: Nickname of someone from ^
+  clue: Nickname of someone from <>
   transform: demonym
 - word: TAR HEEL
-  clue: Material that is an anagram of ^
+  clue: Material that is an anagram of <>
   transform: anagram
 - word: LEATHER
-  clue: Sport with ^ gloves
+  clue: Sport with <> gloves
   transform: is used to make gloves in
 - word: BASEBALL
-  clue: Spot in a ^ stadium for warming up
+  clue: Spot in a <> stadium for warming up
   transform: practice happens in a
 - word: BULLPEN
-  clue: Animal at the start of ^
+  clue: Animal at the start of <>
   transform: -PEN
 - word: BULL
   clue:

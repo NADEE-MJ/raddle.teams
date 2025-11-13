@@ -1,0 +1,76 @@
+{
+  "meta": {
+    "title": "From FIELD to NOTES",
+    "author": "Sandy Weisz and Mao Reynolds",
+    "difficulty": "medium",
+    "theme": "Settlers of Catan",
+    "message": " [Field Notes](https://fieldnotesbrand.com/thelist) is a Chicago-based company that makes simple, durable, very handsome notebooks. We conspired on their [Clandestine edition](https://fieldnotesbrand.com/products/clandestine) a few years back. We're working with them on a new little thing. To find out about it when it launches, I might recommend joining their [mailing list](https://fieldnotesbrand.com/thelist). (This week's Raddles each use one of the 6 terrains from Settlers of Catan: hill, forest, field, mountain, pasture, or desert.) "
+  },
+  "ladder": [
+    {
+      "word": "FIELD",
+      "clue": "Gather on the bus, it's time for a <> {}",
+      "transform": "is visited on a"
+    },
+    {
+      "word": "TRIP",
+      "clue": "<>{}, something in a spy's toolkit",
+      "transform": "the"
+    },
+    {
+      "word": "WIRE",
+      "clue": "City where \"The <>\" is set",
+      "transform": "is set in"
+    },
+    {
+      "word": "BALTIMORE",
+      "clue": "American university found backwards in <>",
+      "transform": "features, backwards"
+    },
+    {
+      "word": "MIT",
+      "clue": "Wrap <> in two different letters to get an American college",
+      "transform": "+S, +H"
+    },
+    {
+      "word": "SMITH",
+      "clue": "Oscar winner {} <>",
+      "transform": "first name"
+    },
+    {
+      "word": "WILL",
+      "clue": "Rotate one letter in <> 180° to get a kind of machine",
+      "transform": "W->M"
+    },
+    {
+      "word": "MILL",
+      "clue": "{}<>, something found at the gym",
+      "transform": "with a long"
+    },
+    {
+      "word": "TREAD",
+      "clue": "Insert a letter in <> to get something in your clothes",
+      "transform": "+H"
+    },
+    {
+      "word": "THREAD",
+      "clue": "Basic tool used with <>",
+      "transform": "is attached to a"
+    },
+    {
+      "word": "NEEDLE",
+      "clue": "<>-{}, a phrase that describes something in a handyman's toolkit",
+      "transform": "is the shape of the pliers' nose"
+    },
+    {
+      "word": "NOSE",
+      "clue": "Add a T to <> and anagram to get some tones",
+      "transform": "+T, then anagram"
+    },
+    {
+      "word": "NOTES",
+      "clue": null,
+      "transform": null
+    }
+  ]
+}

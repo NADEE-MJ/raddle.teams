@@ -1,0 +1,49 @@
+meta:
+  title: From BLACK to MAIL
+  author: Sandy Weisz and Mao Reynolds
+  difficulty: medium
+  theme: Crime Fiction
+  message: This week’s Raddles unpack common tropes in crime fiction. 
+    The “mail” part of blackmail doesn’t mean sending letters; it comes from a Scottish term for paying rent. 
+    The “black” part denoted payment by goods or labor, as opposed to “white rent” paid in silver. 
+    One of the most notable mystery novels with blackmail is Raymond Chandler’s “The Big Sleep,” later adapted to film by Howard Hawks, featuring the captivating Bogey and Bacall.
+ladder:
+- word: BLACK
+  clue: Change a letter in <> to get a ^
+  transform: C->N
+- word: BLANK
+  clue: Drop a letter in <> to get part of a river
+  transform: -L
+- word: BANK
+  clue: One who interfaces with customers at a <>
+  transform: worker
+- word: TELLER
+  clue: <>'s partner
+  transform: partner
+- word: PENN
+  clue: Append a letter to <> to get a coin
+  transform: +Y
+- word: PENNY
+  clue: A <> is one ^
+  transform: is worth one
+- word: CENT
+  clue: "Email status that sounds like \"<>\""
+  transform: sounds like
+- word: SENT
+  clue: ^-<> (opportune)
+  transform: from
+- word: HEAVEN
+  clue: Opposite of <>
+  transform: opposite
+- word: HELL
+  clue: Add a letter to the front of <> to get something found at the beach
+  transform: +S
+- word: SHELL
+  clue: Animal with a spiral <>
+  transform: might contain a
+- word: SNAIL
+  clue: <> ^, or as we used to call it, just ^
+  transform: is slow at delivering
+- word: MAIL
+  clue:
+  transform:

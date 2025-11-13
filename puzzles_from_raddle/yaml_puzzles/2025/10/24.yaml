@@ -1,0 +1,47 @@
+meta:
+  title: From RED to HERRING
+  author: Sandy Weisz and Mao Reynolds
+  difficulty: medium
+  theme: Crime Fiction
+  message: This week’s Raddles unpack common tropes in crime fiction. 
+    Unearthing the origin of the phrase “red herring” can, appropriately, lead to some red herrings. 
+    First, there isn’t a fish species called red herring; this instead refers to herrings which have been smoked, also called kippers. 
+    Second, a folk etymology says that a wealthy English clergyman, Jasper Mayne, bequeathed a trunk to a servant, saying the contents would make him want to drink. 
+    The trunk instead held salted kippers. This etymology is most likely false; a more likely story, related by journalist William Cobbett in 1807, is that hunters would train dogs with herrings.
+ladder:
+- word: RED
+  clue: <> ^ cake, named for its texture
+  transform: kind of cake
+- word: VELVET
+  clue: The <> ^, '60s rock band
+  transform: …
+- word: UNDERGROUND
+  clue: <> transportation system
+  transform: transport
+- word: SUBWAY
+  clue: One of many that the <> travels in
+  transform: travels in a
+- word: TUNNEL
+  clue: <> ^, a kind of hyperfocus
+  transform: around one's
+- word: VISION
+  clue: Organ responsible for <>
+  transform: is performed by an
+- word: EYE
+  clue: <>^, to make an estimation
+  transform: is in the shape of a
+- word: BALL
+  clue: ^<>, sporting equipment that's not that ^
+  transform: that's not really
+- word: SOFT
+  clue: Opposite of <>
+  transform: opposite
+- word: HARD
+  clue: <> of ^, reduction of a certain sense
+  transform: of
+- word: HEARING
+  clue: Change one letter in <> to get a fish
+  transform: A->R
+- word: HERRING
+  clue:
+  transform:

@@ -4,48 +4,48 @@ meta:
   difficulty: medium
   theme: Paul Ruddle
   message: "Welcome to **RUDDLE**! This week we're rebranding as the only Paul Rudd-themed daily word game. 
-    Paul's been busy â he's got two movies coming out in the first half of this year: Friendship and Death of a Unicorn.
+    Paul's been busy — he's got two movies coming out in the first half of this year: Friendship and Death of a Unicorn.
     The latter apparently deals with the consequences of killing a unicorn in a hit and run while on your way to your billionaire boss' house.
     I've heard good things."
 ladder:
 - word: DEATH
-  clue: ^ comes at the end of one's ___
+  clue: <> comes at the end of one's ^
   transform: comes after
 - word: LIFE
-  clue: ^ is this kind of food product
+  clue: <> is this kind of food product
   transform: is a kind of
 - word: CEREAL
-  clue: The first two syllables of ^ is the name of this helper
+  clue: The first two syllables of <> is the name of this helper
   transform: phonetically includes
 - word: SIRI
-  clue: Flower that is ^, reversed
+  clue: Flower that is <>, reversed
   transform: backwards
 - word: IRIS
-  clue: Add a letter to ^ to get a nationality
+  clue: Add a letter to <> to get a nationality
   transform: +H
 - word: IRISH
-  clue: Holiday when folks celebrate the ^
+  clue: Holiday when folks celebrate the <>
   transform: celebrate
 - word: ST PATRICKS DAY
-  clue: Magical thing found in the middle of ^
+  clue: Magical thing found in the middle of <>
   transform: contains
 - word: TRICK
-  clue: Word precedes ^ in hockey or soccer
+  clue: Word precedes <> in hockey or soccer
   transform: may follow
 - word: HAT
-  clue: Animal that might come out of a ^
+  clue: Animal that might come out of a <>
   transform: may hold a
 - word: RABBIT
-  clue: Cousin to a ^
+  clue: Cousin to a <>
   transform: is cousin of a
 - word: HARE
-  clue: Change first letter of ^ to get an animal
+  clue: Change first letter of <> to get an animal
   transform: H->M
 - word: MARE
-  clue: ^ is a female ___
+  clue: <> is a female ^
   transform: is a female
 - word: HORSE
-  clue: A ^ with a horn
+  clue: A <> with a horn
   transform: "+ a horn"
 - word: UNICORN
   clue:

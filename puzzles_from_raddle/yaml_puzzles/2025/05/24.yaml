@@ -10,43 +10,43 @@ meta:
     either kill one person or do nothing. If they do nothing, the next night, they get to kill three people!"
 ladder:
 - word: SNAKE CHARMER
-  clue: U.S. state with the same initials as ^
+  clue: U.S. state with the same initials as <>
   transform: shares initails with
 - word: SOUTH CAROLINA
-  clue: It's just to the southwest of ^
+  clue: It's just to the southwest of <>
   transform: is just northeast of
 - word: GEORGIA
-  clue: Who went down to ^, in song
+  clue: Who went down to <>, in song
   transform: got a visit from
 - word: THE DEVIL
-  clue: One name for ^
+  clue: One name for <>
   transform: aka
 - word: SATAN
-  clue: Legendary guy that's an anagram of ^
+  clue: Legendary guy that's an anagram of <>
   transform: anagrammed
 - word: SANTA
-  clue: One who helps ^
+  clue: One who helps <>
   transform: employs many an
 - word: ELF
-  clue: Star of ^
+  clue: Star of <>
   transform: starring
 - word: WILL FERRELL
-  clue: Swap the two parts of ^ and it'll sound like most of the name of this singer
+  clue: Swap the two parts of <> and it'll sound like most of the name of this singer
   transform: reversed sounds like most of
 - word: PHARRELL WILLIAMS
-  clue: Emotion ^ famously sings about
+  clue: Emotion <> famously sings about
   transform: sings about being
 - word: HAPPY
-  clue: '"Many ^ ___"'
-  transform: â¦
+  clue: '"Many <> ^"'
+  transform: …
 - word: RETURNS
-  clue: Singular form of ^
+  clue: Singular form of <>
   transform: singularly
 - word: RETURN
-  clue: ___ of no ^
+  clue: ^ of no <>
   transform: "isn't possible past this"
 - word: POINT
-  clue: Drop three letters in ^ to get an abbreviation seen in some addresses
+  clue: Drop three letters in <> to get an abbreviation seen in some addresses
   transform: -INT
 - word: PO
   clue:

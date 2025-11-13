@@ -6,40 +6,40 @@ meta:
   message: We're honoring the Tony nominations this week. Today's puzzle is a tribute to "[Oh, Mary!](https://www.ohmaryplay.com/)", the campy retelling of Mary Todd Lincoln's presence in The White House in the days before the end of the Civil War. It was nominated for Best Play, along with five others. The best words I have for it are "unhinged" and "hilarious."
 ladder:
 - word: OH
-  clue: Reverse ^ and repeat it three times to get this holiday greeting
+  clue: Reverse <> and repeat it three times to get this holiday greeting
   transform: reverse and repeat
 - word: HO HO HO
-  clue: Who famously says "^"
+  clue: Who famously says "<>"
   transform: spoken by
 - word: SANTA CLAUS
-  clue: Part of the house that ^ travels through
+  clue: Part of the house that <> travels through
   transform: travels thru a
 - word: CHIMNEY
-  clue: Space at the bottom of a ^
+  clue: Space at the bottom of a <>
   transform: sits above a
 - word: FIREPLACE
-  clue: Objects you feed into a ^
+  clue: Objects you feed into a <>
   transform: contains
 - word: LOGS
-  clue: Change the last letter of ^ to get a mark
+  clue: Change the last letter of <> to get a mark
   transform: S->O
 - word: LOGO
-  clue: Nike's ^
+  clue: Nike's <>
   transform: of Nike
 - word: SWOOSH
-  clue: The odd letters of ^ spell this alert
+  clue: The odd letters of <> spell this alert
   transform: oddly
 - word: SOS
-  clue: The last letter of ^ might stand for this
+  clue: The last letter of <> might stand for this
   transform: partially stands for
 - word: SHIP
-  clue: Attach three letters to the start of ^ to get a religious act
+  clue: Attach three letters to the start of <> to get a religious act
   transform: +WOR
 - word: WORSHIP
-  clue: What a couple might do in a house of ^
+  clue: What a couple might do in a house of <>
   transform: house is where you might
 - word: MARRY
-  clue: Remove one letter in ^ to get a name
+  clue: Remove one letter in <> to get a name
   transform: -R
 - word: MARY
   clue:

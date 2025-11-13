@@ -1,0 +1,46 @@
+meta:
+  title: From TOMATO to SHADE
+  author: Sandy Weisz and Mao Reynolds
+  difficulty: medium
+  theme: "Mystery Theme #2"
+  message: "Time for another mystery theme! Every Raddle this week (Sunday thru Friday)\
+    \ is part of a secret theme that you can figure out. The answer is a name. When\
+    \ you've solved it, [submit your name here](/mystery/2) to be included in the list of solvers. One correct entry will win a\
+    \ prize."
+ladder:
+- word: TOMATO
+  clue: <> sauce
+  transform: sauce
+- word: MARINARA
+  clue: Italian staple often topped with <>
+  transform: goes on
+- word: PASTA
+  clue: Clothing item that's also a nickname for a type of <>
+  transform: that you wear around your neck
+- word: BOW TIE
+  clue: Get-up that often includes a <>
+  transform: is part of a
+- word: TUXEDO
+  clue: Animal whose look resembles a <>
+  transform: appears to be worn by a
+- word: PENGUIN
+  clue: The <>, in some portrayals, likes to carry this
+  transform: carries an
+- word: UMBRELLA
+  clue: Type of drink that might feature an <>
+  transform: might show up in your
+- word: COCKTAIL
+  clue: <> named after part of New York
+  transform: named after a part of NYC
+- word: MANHATTAN
+  clue: Part of <> that's also a long-running reality TV show
+  transform: neighborhood 
+- word: HELL'S KITCHEN
+  clue: Greek god who might be in charge of <>?
+  transform: is run by
+- word: HADES
+  clue: Move the last letter of <> to the front to get something you might throw?
+  transform: move S to the front
+- word: SHADE
+  clue:
+  transform:

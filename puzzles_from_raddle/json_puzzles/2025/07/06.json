@@ -1,0 +1,71 @@
+{
+  "meta": {
+    "title": "From METRIC to SYSTEM",
+    "author": "Mao Reynolds and Sandy Weisz",
+    "difficulty": "medium",
+    "theme": "250-year-old creations",
+    "message": "This week, in observation of Independence Day, we're celebrating inventions from around 250 years ago. During the French Revolution in 1790, a commission of the French Academy of Sciences created a [standardized metric system](https://usma.org/origin-of-the-metric-system), which met the need for “an invariable standard for all the measures and all the weights.” The metric system is used by a vast majority of countries today, though some (like the U.K. and Canada) use a mixture of metric and imperial, while the U.S. maintains a fierce grip on its precious inches and pounds."
+  },
+  "ladder": [
+    {
+      "word": "METRIC",
+      "clue": "Remove half of <> to get a professional baseballer",
+      "transform": "-RIC"
+    },
+    {
+      "word": "MET",
+      "clue": "Crosstown rival of a <>",
+      "transform": "vs."
+    },
+    {
+      "word": "YANKEE",
+      "clue": "<> {}, someone who likes macaroni?",
+      "transform": "who called things macaroni"
+    },
+    {
+      "word": "DOODLE",
+      "clue": "Change a letter in <> to get a dog breed",
+      "transform": "D->P"
+    },
+    {
+      "word": "POODLE",
+      "clue": "Clothing in the '50s that featured a <>",
+      "transform": "…"
+    },
+    {
+      "word": "SKIRT",
+      "clue": "<> {}, an option on a menu",
+      "transform": "…"
+    },
+    {
+      "word": "STEAK",
+      "clue": "Animal that <> comes from",
+      "transform": "comes from"
+    },
+    {
+      "word": "COW",
+      "clue": "Instrument sometimes attached to a <>",
+      "transform": "wears a"
+    },
+    {
+      "word": "BELL",
+      "clue": "Change one letter in <> to get a kind of phone",
+      "transform": "B->C"
+    },
+    {
+      "word": "CELL",
+      "clue": "{} <>, it's got lots of potential",
+      "transform": "that can be anything"
+    },
+    {
+      "word": "STEM",
+      "clue": "Insert two letters into <> to get a methodology",
+      "transform": "+YS"
+    },
+    {
+      "word": "SYSTEM",
+      "clue": null,
+      "transform": null
+    }
+  ]
+}

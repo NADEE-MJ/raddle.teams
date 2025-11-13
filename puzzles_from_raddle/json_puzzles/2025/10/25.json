@@ -1,0 +1,66 @@
+{
+  "meta": {
+    "title": "From TWIST to ENDING",
+    "author": "Sandy Weisz and Mao Reynolds",
+    "difficulty": "medium",
+    "theme": "Crime Fiction",
+    "message": "This week’s Raddles unpack common tropes in crime fiction. A twist ending is a last-minute surprise which radically alters the story’s outcome. Plot twists aren’t unique to crime fiction, but they certainly fit among all the other mystery tropes."
+  },
+  "ladder": [
+    {
+      "word": "TWIST",
+      "clue": "\"<> and {}\", hit song by The Beatles and others",
+      "transform": "and"
+    },
+    {
+      "word": "SHOUT",
+      "clue": "Change one letter in <> to get a mild exclamation",
+      "transform": "U->O"
+    },
+    {
+      "word": "SHOOT",
+      "clue": "<> the {}, something done idly",
+      "transform": "the"
+    },
+    {
+      "word": "BREEZE",
+      "clue": "Change one letter in <> to get something you might do to water",
+      "transform": "B->F"
+    },
+    {
+      "word": "FREEZE",
+      "clue": "\"<>!\", something you say when you want someone to {}",
+      "transform": "by which I mean"
+    },
+    {
+      "word": "STOP",
+      "clue": "Anagram <> to get a piece of a fence",
+      "transform": "anagrammed"
+    },
+    {
+      "word": "POST",
+      "clue": "<>{}, member of the executive branch",
+      "transform": "…"
+    },
+    {
+      "word": "MASTER",
+      "clue": "<>{}, the one pulling the strings",
+      "transform": "…"
+    },
+    {
+      "word": "MIND",
+      "clue": "<>-{}, like some drugs, or twisty movies",
+      "transform": "will be"
+    },
+    {
+      "word": "BENDING",
+      "clue": "Drop a letter from <> to get the last word",
+      "transform": "-B"
+    },
+    {
+      "word": "ENDING",
+      "clue": null,
+      "transform": null
+    }
+  ]
+}

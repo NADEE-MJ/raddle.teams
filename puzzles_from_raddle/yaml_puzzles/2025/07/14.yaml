@@ -5,43 +5,43 @@ meta:
   theme: Superman
   message:
     James Gunn's Superman landed at the box office this weekend, so we thought it'd be a good time to celebrate the man o' steel here at Raddle HQ. 
-    Superman's alter ego is â spoiler alert â Clark Kent, so what better way to kick off the week than a chain from one identity to another.
+    Superman's alter ego is — spoiler alert — Clark Kent, so what better way to kick off the week than a chain from one identity to another.
 ladder:
 - word: CLARK
-  clue: Classic actor ^ ___
+  clue: Classic actor <> ^
   transform: who was in movies
 - word: GABLE
-  clue: Add an E to ^ and anagram to get a dog
+  clue: Add an E to <> and anagram to get a dog
   transform: +E, then anagram
 - word: BEAGLE
-  clue: Scientist who famously travelled on the ^
+  clue: Scientist who famously travelled on the <>
   transform: passenger
 - word: DARWIN
-  clue: Theory often ascribed to ^
+  clue: Theory often ascribed to <>
   transform: theory
 - word: EVOLUTION
-  clue: Add a letter to the start of ^ to get a change
+  clue: Add a letter to the start of <> to get a change
   transform: +R
 - word: REVOLUTION
-  clue: One ^ around the sun
+  clue: One <> around the sun
   transform: around the sun
 - word: YEAR
-  clue: Change the first letter of ^ to get a fruit
+  clue: Change the first letter of <> to get a fruit
   transform: Y->R
 - word: PEAR
-  clue: Add an S to ^ and anagram to get something tired? (That also rhymes with ^)
+  clue: Add an S to <> and anagram to get something tired? (That also rhymes with <>)
   transform: +S, anagram 
 - word: SPARE
-  clue: Result that's better than a ^
+  clue: Result that's better than a <>
   transform: is worse than a
 - word: STRIKE
-  clue: Symbol for a ^out
+  clue: Symbol for a <>out
   transform: symbol
 - word: K
-  clue: Only element that starts with ^
+  clue: Only element that starts with <>
   transform: is the first letter of
 - word: KRYPTON
-  clue: Famous refugee from ^
+  clue: Famous refugee from <>
   transform: is the home of
 - word: SUPERMAN
   clue:

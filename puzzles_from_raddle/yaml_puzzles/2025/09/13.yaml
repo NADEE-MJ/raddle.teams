@@ -4,44 +4,44 @@ meta:
   difficulty: medium
   theme: Chicago
   message:
-    This week, weâre celebrating some of the great things that have come out of Chicago, our home town. 
-    The original Ferris Wheel debuted at the 1893 Chicago Worldâs Fair. It was gigantic, weighing more than 2,000,000 pounds, containing 3,000 light bulbs and rising to 264 feet, with each of its 36 cars able to hold up to 60 people. It was the tallest attraction at the fair and would go on to inspire countless other Ferris Wheels around the world, including the permanent one at ï»¿Chicago's Navy Pier.
+    This week, we’re celebrating some of the great things that have come out of Chicago, our home town. 
+    The original Ferris Wheel debuted at the 1893 Chicago World’s Fair. It was gigantic, weighing more than 2,000,000 pounds, containing 3,000 light bulbs and rising to 264 feet, with each of its 36 cars able to hold up to 60 people. It was the tallest attraction at the fair and would go on to inspire countless other Ferris Wheels around the world, including the permanent one at ﻿Chicago's Navy Pier.
 ladder:
 - word: FERRIS
-  clue: ^' best friend in a 1985 movie
+  clue: <>' best friend in a 1986 movie
   transform: best friend
 - word: CAMERON
-  clue: Double one letter in ^ to get a country name
+  clue: Double one letter in <> to get a country name
   transform: +O
 - word: CAMEROON
-  clue: ^ is in ___
+  clue: <> is in ^
   transform: is in
 - word: AFRICA
-  clue: "Band that sang \"^\""
+  clue: "Band that sang \"<>\""
   transform: is sung by
 - word: TOTO
-  clue: Change the vowels in ^ to other vowels to get a piece of clothing
+  clue: Change the vowels in <> to other vowels to get a piece of clothing
   transform: O->U
 - word: TUTU
-  clue: ^ is part of a ___ outfit
+  clue: <> is part of a ^ outfit
   transform: is worn during
 - word: BALLET
-  clue: Change one letter in ^ to get a piece of sporting equipment
+  clue: Change one letter in <> to get a piece of sporting equipment
   transform: B->M
 - word: MALLET
-  clue: A ^ is a type of ___
+  clue: A <> is a type of ^
   transform: is a
 - word: HAMMER
-  clue: ___ ^, '90s rap superstar
+  clue: ^ <>, '90s rap superstar
   transform: is an
 - word: MC
-  clue: "^___, a \"seasonal\" sandwich"
-  transform: â¦
+  clue: "<>^, a \"seasonal\" sandwich"
+  transform: …
 - word: RIB
-  clue: ^___, structural part of your body
+  clue: <>^, structural part of your body
   transform: is protected by a
 - word: CAGE
-  clue: Exercise equipment found in a certain ^ in your home?
+  clue: Exercise equipment found in a certain <> in your home?
   transform: might feature a
 - word: WHEEL
   clue:

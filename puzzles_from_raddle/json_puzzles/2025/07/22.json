@@ -1,0 +1,71 @@
+{
+  "meta": {
+    "title": "From MACRO to DATA",
+    "author": "Sandy Weisz and Mao Reynolds",
+    "difficulty": "medium",
+    "theme": "Severance",
+    "message": "In “Severance,” some Lumon employees work on Macrodata Refinement, a procedure as vague as its name suggests. At their desktop computers, they sort four sets of numbers into five bins, with each set provoking strong emotions in each employee. You may find some of these clues vague, but there’s nothing here as scary as a set of Category 1 numbers."
+  },
+  "ladder": [
+    {
+      "word": "MACRO",
+      "clue": "Add a letter to <> to get a world leader",
+      "transform": "+N"
+    },
+    {
+      "word": "MACRON",
+      "clue": "Add a letter to <> to get a sweet confection",
+      "transform": "+A"
+    },
+    {
+      "word": "MACARON",
+      "clue": "Add a letter to <> to get a sweet confection",
+      "transform": "+O"
+    },
+    {
+      "word": "MACAROON",
+      "clue": "Dominant flavor of a <>, usually",
+      "transform": "tastes like"
+    },
+    {
+      "word": "COCONUT",
+      "clue": "A “<>” sounds like a big fan of what beverage?",
+      "transform": "sounds like a lover of"
+    },
+    {
+      "word": "HOT CHOCOLATE",
+      "clue": "Something that often floats in <>",
+      "transform": "isn't complete without a"
+    },
+    {
+      "word": "MARSHMALLOW",
+      "clue": "Opposite of the last three letters of <>",
+      "transform": "is partially the opposite of"
+    },
+    {
+      "word": "HIGH",
+      "clue": "Demanding bosses often set a <> {}",
+      "transform": "thing for a taskmaster"
+    },
+    {
+      "word": "BAR",
+      "clue": "{} <>, something often under one's thumb?",
+      "transform": "under one's thumb"
+    },
+    {
+      "word": "SPACE",
+      "clue": "Classic TV show set in <>",
+      "transform": "is the final frontier for those on a"
+    },
+    {
+      "word": "STAR TREK",
+      "clue": "<> android",
+      "transform": "android"
+    },
+    {
+      "word": "DATA",
+      "clue": null,
+      "transform": null
+    }
+  ]
+}

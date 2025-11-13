@@ -1,0 +1,76 @@
+{
+  "meta": {
+    "title": "From X-RAY to VISION",
+    "author": "Sandy Weisz and Mao Reynolds",
+    "difficulty": "medium",
+    "theme": "Superman",
+    "message": "It's Superman week! X-ray vision is a Kryptonian power attributed to the Photonucleic Effect, meaning it can only be activated in the presence of a yellow star, like our sun. Originally, Superman's X-ray vision was depicted as a form of heat vision, but later was changed to be a separate power."
+  },
+  "ladder": [
+    {
+      "word": "X-RAY",
+      "clue": "What an <> can reveal is broken",
+      "transform": "shows a broken"
+    },
+    {
+      "word": "BONE",
+      "clue": "<> in the chest",
+      "transform": "in your chest"
+    },
+    {
+      "word": "RIB",
+      "clue": "Add a letter to <> to get a nursery item",
+      "transform": "+C"
+    },
+    {
+      "word": "CRIB",
+      "clue": "Change one letter in <> to get something under the sea",
+      "transform": "I->A"
+    },
+    {
+      "word": "CRAB",
+      "clue": "<> {}, popular appetizer",
+      "transform": "…"
+    },
+    {
+      "word": "RANGOON",
+      "clue": "2011 movie that is <> without the last two letters",
+      "transform": "-ON"
+    },
+    {
+      "word": "RANGO",
+      "clue": "Change the last letter in <> to get something in a kitchen",
+      "transform": "O->E"
+    },
+    {
+      "word": "RANGE",
+      "clue": "Luxury car <> {}",
+      "transform": "…"
+    },
+    {
+      "word": "ROVER",
+      "clue": "<> is a sterotypical name for a {}",
+      "transform": "is the name of many a"
+    },
+    {
+      "word": "DOG",
+      "clue": "{} <>, a friend that is specially trained to lead you around",
+      "transform": "might be your"
+    },
+    {
+      "word": "GUIDE",
+      "clue": "{} <>, publication that stopped printing in 2006",
+      "transform": "for what's on"
+    },
+    {
+      "word": "TV",
+      "clue": "What the second letter of <> stands for",
+      "transform": "partially stands for"
+    },
+    {
+      "word": "VISION",
+      "clue": null,
+      "transform": null
+    }
+  ]
+}

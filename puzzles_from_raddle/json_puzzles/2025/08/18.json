@@ -1,0 +1,66 @@
+{
+  "meta": {
+    "title": "From MOOSE to TRACKS",
+    "author": "Sandy Weisz and Mao Reynolds",
+    "difficulty": "medium",
+    "theme": "Ice cream",
+    "message": "Summer's not over yet! Let's enjoy some ice cream."
+  },
+  "ladder": [
+    {
+      "word": "MOOSE",
+      "clue": "Change one letter in <> to get a kind of bird",
+      "transform": "M->G"
+    },
+    {
+      "word": "GOOSE",
+      "clue": "A baby <>",
+      "transform": "baby"
+    },
+    {
+      "word": "GOSLING",
+      "clue": "Actor <>",
+      "transform": "first name"
+    },
+    {
+      "word": "RYAN",
+      "clue": "“Saving {} <>”",
+      "transform": "is the rank of"
+    },
+    {
+      "word": "PRIVATE",
+      "clue": "Opposite of <>",
+      "transform": "opposite"
+    },
+    {
+      "word": "PUBLIC",
+      "clue": "A celebrity is in the <> {}",
+      "transform": "…"
+    },
+    {
+      "word": "EYE",
+      "clue": "Change one letter in <> to get a female animal",
+      "transform": "Y->W"
+    },
+    {
+      "word": "EWE",
+      "clue": "A baby <>",
+      "transform": "baby"
+    },
+    {
+      "word": "LAMB",
+      "clue": "Add a U to <> and anagram to get a musical product",
+      "transform": "+U, then anagram"
+    },
+    {
+      "word": "ALBUM",
+      "clue": "An <> is subdivided into {}",
+      "transform": "is broken up into"
+    },
+    {
+      "word": "TRACKS",
+      "clue": null,
+      "transform": null
+    }
+  ]
+}

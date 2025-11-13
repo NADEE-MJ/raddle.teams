@@ -5,46 +5,46 @@ meta:
   theme: Eurovision
   message:
     It's Eurovision week! 
-    Luxembourg's entry is "La PoupÃ©e Monte Le Son", by artist Laura Thorn. It translates to the "Doll Turns Up the Sound", and it's an
-    homage to the 1965 Eurovision winner "PoupÃ©e de cire, poupÃ©e de son" by France Gall, which was the first song to win in the pop genre.
-    "PoupÃ©e de son" means "rag doll", but "son" also means "sound", leading to the double meaning of the 2025 entry.
+    Luxembourg's entry is "La Poupée Monte Le Son", by artist Laura Thorn. It translates to the "Doll Turns Up the Sound", and it's an
+    homage to the 1965 Eurovision winner "Poupée de cire, poupée de son" by France Gall, which was the first song to win in the pop genre.
+    "Poupée de son" means "rag doll", but "son" also means "sound", leading to the double meaning of the 2025 entry.
     [Here is Laura Thorn's live performance](https://www.youtube.com/watch?v=LVHu_KwHiKY&t=4s) from the finals.
 ladder:
 - word: DOLL
-  clue: Add a letter to ^ to get something useful on moving day
+  clue: Add a letter to <> to get something useful on moving day
   transform: +Y
 - word: DOLLY
-  clue: Musician ^
-  transform: â¦
+  clue: Musician <>
+  transform: …
 - word: PARTON
-  clue: Swap two letters in ^ to get an art lover
-  transform: R â-> T
+  clue: Swap two letters in <> to get an art lover
+  transform: R ←-> T
 - word: PATRON
-  clue: Spirit made by ^
+  clue: Spirit made by <>
   transform: makes
 - word: TEQUILA
-  clue: Cocktail ^ ___
-  transform: â¦
+  clue: Cocktail <> ^
+  transform: …
 - word: SUNRISE
-  clue: Opposite of ^
+  clue: Opposite of <>
   transform: Opposite
 - word: SUNSET
-  clue: Time period following ^
+  clue: Time period following <>
   transform: precedes
 - word: DUSK
-  clue: Change one letter in ^ to get an animal part
+  clue: Change one letter in <> to get an animal part
   transform: D->T
 - word: TUSK
-  clue: A ^ is a long one of these
+  clue: A <> is a long one of these
   transform: is a long
 - word: TOOTH
-  clue: The ^ ___, beloved benefactor
+  clue: The <> ^, beloved benefactor
   transform: buyer is a
 - word: FAIRY
-  clue: Change a bigram (two letters) in ^ to a single letter to get angry
+  clue: Change a bigram (two letters) in <> to a single letter to get angry
   transform: AI -> U
 - word: FURY
-  clue: '"The ___ and the ^"'
+  clue: '"The ^ and the <>"'
   transform: and the
 - word: SOUND
   clue:

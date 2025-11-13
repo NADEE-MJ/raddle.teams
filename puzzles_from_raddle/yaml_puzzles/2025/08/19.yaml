@@ -6,40 +6,40 @@ meta:
   message: Summer's not over yet! Let's enjoy some ice cream.
 ladder:
 - word: BUTTER
-  clue: Change one letter in ^ to get something your mind shouldn't be in
+  clue: Change one letter in <> to get something your mind shouldn't be in
   transform: B->G
 - word: GUTTER
-  clue: Sport that features a ^ on each side
+  clue: Sport that features a <> on each side
   transform: is featured in
 - word: BOWLING
-  clue: One of 10 in ^
+  clue: One of 10 in <>
   transform: target
 - word: PIN
-  clue: ___^, the head honcho
+  clue: ^<>, the head honcho
   transform: in charge
 - word: KING
-  clue: Partner to a ^
+  clue: Partner to a <>
   transform: partner
 - word: QUEEN
-  clue: ___ ^, certain genderbender
+  clue: ^ <>, certain genderbender
   transform: in a dress
 - word: DRAG
-  clue: Append two letters to ^ to get a mythical creature
+  clue: Append two letters to <> to get a mythical creature
   transform: +ON
 - word: DRAGON
-  clue: "â^ ___ Zâ"
-  transform: â¦
+  clue: "“<> ^ Z”"
+  transform: …
 - word: BALL
-  clue: There are two ___^s in your head
+  clue: There are two ^<>s in your head
   transform: in your head
 - word: EYE
-  clue: Pluralize ^ and then delete the first letter to get approval
+  clue: Pluralize <> and then delete the first letter to get approval
   transform: E->S, then anagram
 - word: YES
-  clue: â^ ___â (famous political slogan)
-  transform: â¦
+  clue: “<> ^” (famous political slogan)
+  transform: …
 - word: WE CAN
-  clue: Change one letter in ^ to get a nut
+  clue: Change one letter in <> to get a nut
   transform: W->P
 - word: PECAN
   clue:

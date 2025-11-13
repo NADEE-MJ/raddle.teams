@@ -1,0 +1,71 @@
+{
+  "meta": {
+    "title": "From BIG to EARS",
+    "author": "Sandy Weisz",
+    "difficulty": "medium",
+    "theme": "Big Ears 2025",
+    "message": "This weekend, I attended my first [Big Ears Music Festival](https://bigearsfestival.org/) in Knoxville, TN. Over four days, my family and I saw something close to 50 incredible artists. Over the course of the next week, I'll be posting Raddles inspired by some of the acts we enjoyed. 🎶"
+  },
+  "ladder": [
+    {
+      "word": "BIG",
+      "clue": "Star of <>",
+      "transform": "featured"
+    },
+    {
+      "word": "TOM HANKS",
+      "clue": "Remove two consecutive letters from <> for some gratitude",
+      "transform": "-OM"
+    },
+    {
+      "word": "THANKS",
+      "clue": "Texter's way of saying <>",
+      "transform": "abbreviated"
+    },
+    {
+      "word": "THX",
+      "clue": "Add a stroke to one letter of <> to get a payment",
+      "transform": "H->A"
+    },
+    {
+      "word": "TAX",
+      "clue": "U.S. agency in charge of <>",
+      "transform": "is collected by"
+    },
+    {
+      "word": "IRS",
+      "clue": "Add a letter to <> to get a flower",
+      "transform": "+I"
+    },
+    {
+      "word": "IRIS",
+      "clue": "Reverse <> to get a helper",
+      "transform": "backwards"
+    },
+    {
+      "word": "SIRI",
+      "clue": "Company <> works for",
+      "transform": "works for"
+    },
+    {
+      "word": "APPLE",
+      "clue": "Center of an <>",
+      "transform": "center is a"
+    },
+    {
+      "word": "CORE",
+      "clue": "Change one letter of <> to get a food",
+      "transform": "E->N"
+    },
+    {
+      "word": "CORN",
+      "clue": "Units of <>",
+      "transform": "comes in"
+    },
+    {
+      "word": "EARS",
+      "clue": null,
+      "transform": null
+    }
+  ]
+}

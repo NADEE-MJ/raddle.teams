@@ -4,41 +4,41 @@ meta:
   difficulty: medium
   theme: Rolling Stones
   message:
-    "This weekâs Raddles are inspired by songs by the Rolling Stones. Todayâs is âGimme Shelter,â the first track from their 1969 album âLet It Bleed.â In an interview with NPR, in the wake of Hurricane Sandy, Jagger said about the song: âIt was a very moody piece about the world closing in on you a bit [â¦] When it was recorded, early '69 or something, it was a time of war and tension, so that's reflected in this tune. It's still wheeled out when big storms happen, as they did the other week. It's been used a lot to evoke natural disaster.â "
+    "This week’s Raddles are inspired by songs by the Rolling Stones. Today’s is “Gimme Shelter,” the first track from their 1969 album “Let It Bleed.” In an interview with NPR, in the wake of Hurricane Sandy, Jagger said about the song: “It was a very moody piece about the world closing in on you a bit […] When it was recorded, early '69 or something, it was a time of war and tension, so that's reflected in this tune. It's still wheeled out when big storms happen, as they did the other week. It's been used a lot to evoke natural disaster.” "
 ladder:
 - word: GIMME
-  clue: Change the vowels in ^ to get a kind of ray
+  clue: Change the vowels in <> to get a kind of ray
   transform: I->A, E->A
 - word: GAMMA
-  clue: ^ is a ___ letter
+  clue: <> is a ^ letter
   transform: is
 - word: GREEK
-  clue: Nike is a ^ ___
-  transform: â¦
+  clue: Nike is a <> ^
+  transform: …
 - word: GOD
-  clue: Reverse ^ to get a pet
+  clue: Reverse <> to get a pet
   transform: reversed
 - word: DOG
-  clue: ^ ___ of summer
-  transform: â¦
+  clue: <> ^ of summer
+  transform: …
 - word: DAYS
-  clue: ___ ^ (metaphor for youth)
+  clue: ^ <> (metaphor for youth)
   transform: were carefree, back when we ate
 - word: SALAD
-  clue: Topping for ^ with a geographical name
+  clue: Topping for <> with a geographical name
   transform: dressing
 - word: THOUSAND ISLAND
-  clue: Asian country made up of over seven ^s
+  clue: Asian country made up of over seven <>s
   transform: x7
 - word: PHILIPPINES
-  clue: Capital of the ^
+  clue: Capital of the <>
   transform: capital
 - word: MANILA
-  clue: Anagram ^ to get a creature
+  clue: Anagram <> to get a creature
   transform: anagram
 - word: ANIMAL
-  clue: ^ ___ (home for rescues)
-  transform: â¦
+  clue: <> ^ (home for rescues)
+  transform: …
 - word: SHELTER
   clue:
   transform:

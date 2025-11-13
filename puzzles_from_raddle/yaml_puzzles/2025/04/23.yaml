@@ -9,43 +9,43 @@ meta:
     you start each day a little smarter about how to win the game.
 ladder:
 - word: ROGUE
-  clue: Swap two adjacent letters in ^ to get some makeup
-  transform: OââU
+  clue: Swap two adjacent letters in <> to get some makeup
+  transform: O←→U
 - word: ROUGE
-  clue: Body part that can feature ^
+  clue: Body part that can feature <>
   transform: goes on your
 - word: CHEEK
-  clue: Turn the ___ ^
+  clue: Turn the ^ <>
   transform: kind that's turned
 - word: OTHER
-  clue: Add a letter to ^ to get a relation
+  clue: Add a letter to <> to get a relation
   transform: +M
 - word: MOTHER
-  clue: Animal that follows ^ in nursery rhymes
-  transform: â¦
+  clue: Animal that follows <> in nursery rhymes
+  transform: …
 - word: GOOSE
-  clue: When repeated, it comes before ^
+  clue: When repeated, it comes before <>
   transform: follows a double
 - word: DUCK
-  clue: Kind of ^ that is vulnerable
+  clue: Kind of <> that is vulnerable
   transform: can be
 - word: SITTING
-  clue: Your first job might be ___^
+  clue: Your first job might be ^<>
   transform: the
 - word: BABY
-  clue: When repeated, it comes before "^" in a song title
+  clue: When repeated, it comes before "<>" in a song title
   transform: follows a double
 - word: ICE
-  clue: Add a bigram (two letters) to the front of ^ to get a piece of pizza
+  clue: Add a bigram (two letters) to the front of <> to get a piece of pizza
   transform: +SL
 - word: SLICE
-  clue: Sport where you might want to hit a ^
+  clue: Sport where you might want to hit a <>
   transform: is performed in
 - word: TENNIS
-  clue: Zero in ^
+  clue: Zero in <>
   transform: uses the term
 - word: LOVE
-  clue: A milder form of "^"
+  clue: A milder form of "<>"
   transform: is stronger than
 - word: LIKE
   clue:

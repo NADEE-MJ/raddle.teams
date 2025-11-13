@@ -10,43 +10,43 @@ meta:
     I used to listen to that album _a lot_ in college.
 ladder:
 - word: BUENA
-  clue: Change the first letter of ^ to K and anagram to get the first name of a famous actor 
+  clue: Change the first letter of <> to K and anagram to get the first name of a famous actor 
   transform: B->K then anagram
 - word: KEANU
-  clue: Iconic character played by ^ in 1999
+  clue: Iconic character played by <> in 1999
   transform: played
 - word: NEO
-  clue: Move the last letter of ^ to the front to get a number
+  clue: Move the last letter of <> to the front to get a number
   transform: move last letter to front
 - word: ONE
-  clue: '"^ in a ___", something special'
+  clue: '"<> in a ^", something special'
   transform: in a
 - word: MILLION
-  clue: ^ Dollar ___ (2004)
+  clue: <> Dollar ^ (2004)
   transform: Dollar
 - word: BABY
-  clue: ^ ___, something played by a musician
-  transform: â¦
+  clue: <> ^, something played by a musician
+  transform: …
 - word: GRAND
-  clue: Add a word to ^ to get a phrase you'd see on a banner in front of a store
+  clue: Add a word to <> to get a phrase you'd see on a banner in front of a store
   transform: "+ OPENING"
 - word: GRAND OPENING
-  clue: The first letters of ^ spell this game
+  clue: The first letters of <> spell this game
   transform: initials
 - word: GO
-  clue: ^-___, found at an amusement park
+  clue: <>-^, found at an amusement park
   transform: "-"
 - word: KART
-  clue: Change first letter of ^ to get a cartoon character
+  clue: Change first letter of <> to get a cartoon character
   transform: K->B
 - word: BART
-  clue: Sister of ^
+  clue: Sister of <>
   transform: sister
 - word: LISA
-  clue: Change first letter of ^ to get something in one's wallet
+  clue: Change first letter of <> to get something in one's wallet
   transform: L->V
 - word: VISA
-  clue: Insert a letter into ^ to get a nice view
+  clue: Insert a letter into <> to get a nice view
   transform: "+T"
 - word: VISTA
   clue:

@@ -1,0 +1,46 @@
+meta:
+  title: From EGG to TOSS
+  author: Sandy Weisz and Mao Reynolds
+  difficulty: medium
+  theme: Block Party
+  message: 
+    In an egg toss, teams of two attempt to throw a egg to each other from longer and longer distances without breaking their shells. 
+    As players drop their eggs and are eliminated, the ground becomes littered with splattered yolk and cracked eggshells.
+    My friend Cory and I actually won the neighborhood egg toss this year, beating out a slate of grizzled egg-tossing vets.
+ladder:
+- word: EGG
+  clue: ^ <>, an <> rolled in meat
+  transform: rolled in meat is 
+- word: SCOTCH
+  clue: Where to order a <>
+  transform: is ordered at a
+- word: BAR
+  clue: A weightlifting phenom might ^ the <> on how to ^ a <>
+  transform: is something you should
+- word: RAISE
+  clue: "Baseball team that sounds like \"<>\""
+  transform: sounds like
+- word: RAYS
+  clue: Add a letter to the front of <> to get what a churchgoer does
+  transform: +P
+- word: PRAYS
+  clue: Move the last letter of <> to front to get a hose function
+  transform: S to the front
+- word: SPRAY
+  clue: Change one letter in <> to wander
+  transform: P->T
+- word: STRAY
+  clue: <> ^, some alley dwellers
+  transform: animals in alleys
+- word: CATS
+  clue: "Biggest hit from \"<>\""
+  transform: sing
+- word: MEMORY
+  clue: <> ^, result of a concussion
+  transform: malady
+- word: LOSS
+  clue: Change one letter in <> to get a lob
+  transform: L->T
+- word: TOSS
+  clue:
+  transform:

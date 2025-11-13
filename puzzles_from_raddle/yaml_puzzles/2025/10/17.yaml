@@ -1,0 +1,47 @@
+meta:
+  title: From PUT OUT to PASTURE
+  author: Sandy Weisz and Mao Reynolds
+  difficulty: medium
+  theme: Settlers of Catan
+  message: 
+    "
+    \"Putting out to pasture\" means forcing someone or something into retirement, as a farmer would force out livestock to feed.
+    (This week's Raddles each use one of the 6 terrains from Settlers of Catan: hill, forest, field, mountain, pasture, or desert.)
+    "
+ladder:
+- word: PUT OUT
+  clue: Drop a bigram (two letters) from <> to get a golf term
+  transform: "-OU"
+- word: PUTT
+  clue: Where one makes a <>
+  transform: on a
+- word: GREEN
+  clue: <> ^, a good quality in a person
+  transform: kind of signal
+- word: FLAG
+  clue: What has a <> with a leaf
+  transform: with a leaf
+- word: CANADA
+  clue: "\"^ <>\""
+  transform: follows 
+- word: O
+  clue: Counterpart to <>, on a note
+  transform: counterpart
+- word: X
+  clue: What <> indicates, according to an expression
+  transform: marks the
+- word: SPOT
+  clue: Drop the middle two letters of <> to get an abbreviation on road signs
+  transform: -PO
+- word: ST
+  clue: American city <> ^
+  transform: …
+- word: LOUIS
+  clue: <> ^, famous chemist
+  transform: last name
+- word: PASTEUR
+  clue: Move one letter of <> to the end to get some farmland
+  transform: E to the end
+- word: PASTURE
+  clue:
+  transform:

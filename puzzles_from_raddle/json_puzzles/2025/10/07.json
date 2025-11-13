@@ -1,0 +1,81 @@
+{
+  "meta": {
+    "title": "From MAKE to NOISE",
+    "author": "Sandy Weisz and Mao Reynolds",
+    "difficulty": "medium",
+    "theme": "Make Some Noise",
+    "message": "This week's Raddles are in honor of the upcoming season of \"[Make Some Noise](https://www.youtube.com/watch?v=tKBcWn-tqWE),\" which premieres on Monday, October 13. It's a regular Monday night ritual in our house and one of the best things on the internet. Each show features three improvisers, one host, and a set of bonkers improvisational prompts. \"Make Some Noise\" is available with a subscription to [Dropout](https://signup.dropout.tv/), which is well worth it."
+  },
+  "ladder": [
+    {
+      "word": "MAKE",
+      "clue": "Change one letter in <> to get a piece of audio equipment",
+      "transform": "A->I"
+    },
+    {
+      "word": "MIKE",
+      "clue": "\"{} <>\", 2012 movie",
+      "transform": "moved like"
+    },
+    {
+      "word": "MAGIC",
+      "clue": "The <> word",
+      "transform": "word is"
+    },
+    {
+      "word": "PLEASE",
+      "clue": "Anagram <> to describe yourself for one-third of your life",
+      "transform": "anagrammed"
+    },
+    {
+      "word": "ASLEEP",
+      "clue": "<> at the {}, a dangerous thing to be",
+      "transform": "at the"
+    },
+    {
+      "word": "WHEEL",
+      "clue": "\"<>! Of! {}!\"",
+      "transform": "of"
+    },
+    {
+      "word": "FORTUNE",
+      "clue": "<> {}, a kind of {} that contains a <>",
+      "transform": "appears inside a"
+    },
+    {
+      "word": "COOKIE",
+      "clue": "<> {}, popular ice cream flavor",
+      "transform": "starts out as"
+    },
+    {
+      "word": "DOUGH",
+      "clue": "<> is a nickname for this",
+      "transform": "is slang for"
+    },
+    {
+      "word": "MONEY",
+      "clue": "<> that you put in a pot",
+      "transform": "that goes in a pot"
+    },
+    {
+      "word": "ANTE",
+      "clue": "Anagram <> to get tidy",
+      "transform": "anagrammed"
+    },
+    {
+      "word": "NEAT",
+      "clue": "If you order something \"<>\" it is served with {}",
+      "transform": "means"
+    },
+    {
+      "word": "NO ICE",
+      "clue": "Change one letter in <> to get a racket",
+      "transform": "C->S"
+    },
+    {
+      "word": "NOISE",
+      "clue": null,
+      "transform": null
+    }
+  ]
+}

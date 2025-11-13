@@ -3,58 +3,58 @@
     "title": "From WHITE to LOTUS",
     "author": "Sandy Weisz and Mao Reynolds",
     "difficulty": "medium",
-    "theme": "Emmy nominations 2005",
+    "theme": "Emmy nominations 2025",
     "message": "This week we're honoring some of this year's Emmy nominees."
   },
   "ladder": [
     {
       "word": "WHITE",
-      "clue": "Change one letter in ^ to get a complaint",
+      "clue": "Change one letter in <> to get a complaint",
       "transform": "T->N"
     },
     {
       "word": "WHINE",
-      "clue": "Drink that sounds like ^",
+      "clue": "Drink that sounds like <>",
       "transform": "-H"
     },
     {
       "word": "WINE",
-      "clue": "^ is made from ___",
+      "clue": "<> is made from {}",
       "transform": "is made from"
     },
     {
       "word": "GRAPES",
-      "clue": "Word for a collection of ^",
+      "clue": "Word for a collection of <>",
       "transform": "come in a"
     },
     {
       "word": "BUNCH",
-      "clue": "Famous ^ on TV",
+      "clue": "Famous <> on TV",
       "transform": "on TV"
     },
     {
       "word": "BRADY",
-      "clue": "^ played mostly for The ___",
+      "clue": "<> played mostly for The {}",
       "transform": "played for the"
     },
     {
       "word": "PATRIOTS",
-      "clue": "The ^ are a football ___",
+      "clue": "The <> are a football {}",
       "transform": "is a football"
     },
     {
       "word": "TEAM",
-      "clue": "Anagram ^ to get a friend",
+      "clue": "Anagram <> to get a friend",
       "transform": "anagrammed"
     },
     {
       "word": "MATE",
-      "clue": "___^, someone you might search for",
+      "clue": "{}<>, someone you might search for",
       "transform": "for your"
     },
     {
       "word": "SOUL",
-      "clue": "Add a letter to ^ and anagram to get a flower",
+      "clue": "Add a letter to <> and anagram to get a flower",
       "transform": "+T, then anagram"
     },
     {

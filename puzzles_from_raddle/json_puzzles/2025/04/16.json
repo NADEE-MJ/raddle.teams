@@ -1,0 +1,76 @@
+{
+  "meta": {
+    "title": "From UNLEAVENED to BREAD",
+    "author": "Sandy Weisz",
+    "difficulty": "medium",
+    "theme": "Passover",
+    "message": "During Passover we eat matzah, which is made by mixing flour and water and baking quickly before any natural fermentation can occur. It commemorates the Exodus from Egypt when fleeing Jews had no time to let dough rise. There's no better daytime snack that a piece of matzah with a spread of salted butter. 🤤"
+  },
+  "ladder": [
+    {
+      "word": "UNLEAVENED",
+      "clue": "Change a trigram (three letters) in <> to a D to get a word related to cars",
+      "transform": "VEN -> D"
+    },
+    {
+      "word": "UNLEADED",
+      "clue": "Substance that's often <>",
+      "transform": "…"
+    },
+    {
+      "word": "GASOLINE",
+      "clue": "Less refined, and more efficient, alternative to <>",
+      "transform": "vs."
+    },
+    {
+      "word": "DIESEL",
+      "clue": "First name of actor <>",
+      "transform": "goes by"
+    },
+    {
+      "word": "VIN",
+      "clue": "Append a letter to <> for a onetime app",
+      "transform": "+E"
+    },
+    {
+      "word": "VINE",
+      "clue": "Fruit found on a <> (as you may have heard)",
+      "transform": "features many a"
+    },
+    {
+      "word": "GRAPE",
+      "clue": "Change a letter in <> to get a female name",
+      "transform": "P->C"
+    },
+    {
+      "word": "GRACE",
+      "clue": "Historically popular song \"{} <>\"",
+      "transform": "can be"
+    },
+    {
+      "word": "AMAZING",
+      "clue": "Puzzling thing that's the second syllable of <>",
+      "transform": "contains"
+    },
+    {
+      "word": "MAZE",
+      "clue": "Food that sounds like <>",
+      "transform": "sounds like"
+    },
+    {
+      "word": "MAIZE",
+      "clue": "Food also known as <>",
+      "transform": "is"
+    },
+    {
+      "word": "CORN",
+      "clue": "Word that follows <> in southern cooking",
+      "transform": "…"
+    },
+    {
+      "word": "BREAD",
+      "clue": null,
+      "transform": null
+    }
+  ]
+}

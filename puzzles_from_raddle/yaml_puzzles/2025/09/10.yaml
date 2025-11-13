@@ -7,37 +7,37 @@ meta:
     "It's time for a Mystery Theme! Every Raddle this week (Monday thru Friday) is part of a secret theme that you can figure out. The answer is one word. When you've solved it, [submit your name here](/mystery) to be included in the list of solvers."
 ladder:
 - word: MID
-  clue: Reverse ^ to lose light
+  clue: Reverse <> to lose light
   transform: reversed
 - word: DIM
-  clue: ^ ___, some small plates
-  transform: â¦
+  clue: <> ^, some small plates
+  transform: …
 - word: SUM
-  clue: Change one letter in ^ to get a liquor
+  clue: Change one letter in <> to get a liquor
   transform: S->R
 - word: RUM
-  clue: Common ^ go-with
+  clue: Common <> go-with
   transform: "&"
 - word: COKE
-  clue: Change one letter in ^ to get something funny (hopefully)
+  clue: Change one letter in <> to get something funny (hopefully)
   transform: C->J
 - word: JOKE
-  clue: What often comes at the end of a ^
+  clue: What often comes at the end of a <>
   transform: ends with a
 - word: PUNCH LINE
-  clue: Change the first letter of ^ to get something a kid might be in during school
+  clue: Change the first letter of <> to get something a kid might be in during school
   transform: P->L
 - word: LUNCH LINE
-  clue: What you might be holding in a ^
+  clue: What you might be holding in a <>
   transform: while holding a
 - word: TRAY
-  clue: Add a letter to the start of ^ to wander
+  clue: Add a letter to the start of <> to wander
   transform: +S
 - word: STRAY
-  clue: ^ ___, something that might appear at your back door
+  clue: <> ^, something that might appear at your back door
   transform: animal
 - word: CAT
-  clue: Change one letter in ^ to get a topper
+  clue: Change one letter in <> to get a topper
   transform: T->P
 - word: CAP
   clue:

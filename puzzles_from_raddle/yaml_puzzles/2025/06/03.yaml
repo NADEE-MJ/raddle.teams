@@ -11,43 +11,43 @@ meta:
     If you're looking for more ways to support the community, 
     [A Trans Person Made Your Puzzle](https://sites.google.com/view/transxwords) is 
     raising money for LGBTQ+-aligned charities, and offering a pack of great puzzles in return.
-    ð 
+    🌈 
 ladder:
 - word: PRIDE
-  clue: A member of a ^
+  clue: A member of a <>
   transform: has many a
 - word: LION
-  clue: '"The ^ ___"'
-  transform: â¦
+  clue: '"The <> ^"'
+  transform: …
 - word: KING
-  clue: A ^ sits on this
+  clue: A <> sits on this
   transform: sits on a 
 - word: THRONE
-  clue: Change one letter in ^ and add a space to get a nickname for someone special
+  clue: Change one letter in <> and add a space to get a nickname for someone special
   transform: R->E + space
 - word: THE ONE
-  clue: '"^â¦" starts almost every episode of this show'
+  clue: '"<>…" starts almost every episode of this show'
   transform: with the six
 - word: FRIENDS
-  clue: Opposite of ^
+  clue: Opposite of <>
   transform: opposite
 - word: ENEMIES
-  clue: The first two syllables of ^ sound like the abbreviation for this state
+  clue: The first two syllables of <> sound like the abbreviation for this state
   transform: partially sounds like
 - word: NEW MEXICO
-  clue: Capital of ^
+  clue: Capital of <>
   transform: capital
 - word: SANTA FE
-  clue: The second part of ^ can stand for this
+  clue: The second part of <> can stand for this
   transform: partially stands for
 - word: IRON
-  clue: ^ ___, a long time ago
-  transform: â¦
+  clue: <> ^, a long time ago
+  transform: …
 - word: AGE
-  clue: "One's ^ is usually measured in this"
+  clue: "One's <> is usually measured in this"
   transform: is measured in
 - word: YEARS
-  clue: Subdivision of ^
+  clue: Subdivision of <>
   transform: have many a
 - word: MONTH
   clue:

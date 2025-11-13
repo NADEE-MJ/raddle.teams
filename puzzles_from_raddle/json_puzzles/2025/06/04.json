@@ -1,0 +1,66 @@
+{
+  "meta": {
+    "title": "From RAINBOW to FLAG",
+    "author": "Sandy Weisz and Mao Reynolds",
+    "difficulty": "medium",
+    "theme": "Pride Month",
+    "message": "Happy Pride! 🌈 The original pride flag, as designed by Gilbert Baker in 1978, had eight colors: hot pink, red, orange, yellow, green, turquoise, indigo, and violet. Baker [said of his design](https://www.britannica.com/story/how-did-the-rainbow-flag-become-a-symbol-of-lgbt-pride), “Our job as gay people was to come out, to be visible, to live in the truth, as I say, to get out of the lie.\""
+  },
+  "ladder": [
+    {
+      "word": "RAINBOW",
+      "clue": "Eye part that shares its name with the Greek goddess of the <>",
+      "transform": "god is"
+    },
+    {
+      "word": "IRIS",
+      "clue": "It's surrounded by an <>",
+      "transform": "surrounds a"
+    },
+    {
+      "word": "PUPIL",
+      "clue": "Profession that is often responsible for many <>s",
+      "transform": "learns from a"
+    },
+    {
+      "word": "TEACHER",
+      "clue": "Anagram <> to get someone a <> wouldn't appreciate",
+      "transform": "anagram"
+    },
+    {
+      "word": "CHEATER",
+      "clue": "Mammal that sounds like a <> to Bostonian",
+      "transform": "sounds like"
+    },
+    {
+      "word": "CHEETAH",
+      "clue": "They cover a <>",
+      "transform": "never changes its"
+    },
+    {
+      "word": "SPOTS",
+      "clue": "Reverse <> to get things found in an organ",
+      "transform": "reverse"
+    },
+    {
+      "word": "STOPS",
+      "clue": "Simple toy found inside <>",
+      "transform": "remove ends"
+    },
+    {
+      "word": "TOP",
+      "clue": "<>{}, popular chain for folks who {}",
+      "transform": "…"
+    },
+    {
+      "word": "GOLF",
+      "clue": "Red thing in the emoji for <>",
+      "transform": "emoji features a"
+    },
+    {
+      "word": "FLAG",
+      "clue": null,
+      "transform": null
+    }
+  ]
+}

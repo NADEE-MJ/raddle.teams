@@ -9,40 +9,40 @@ meta:
     `ABCDEFGHIJKLMNOPQRSTUVWXYZ`"
 ladder:
 - word: TIGER
-  clue: Shift every letter in ^ four spaces back in the alphabet to get a nut
+  clue: Shift every letter in <> four spaces back in the alphabet to get a nut
   transform: shifted back 4
 - word: PECAN
-  clue: Insert a bigram (two letters) into ^ to get a bird
+  clue: Insert a bigram (two letters) into <> to get a bird
   transform: +LI
 - word: PELICAN
-  clue: City where the ^s play
+  clue: City where the <>s play
   transform: plays in
 - word: NEW ORLEANS
-  clue: Nickname for ^
+  clue: Nickname for <>
   transform: aka
 - word: NOLA
-  clue: Add a letter to ^ to get a movie director
+  clue: Add a letter to <> to get a movie director
   transform: +N
 - word: NOLAN
-  clue: 2023 biopic directed by ^
+  clue: 2023 biopic directed by <>
   transform: directed
 - word: OPPENHEIMER
-  clue: Name for ^'s Project
+  clue: Name for <>'s Project
   transform: led the project of
 - word: MANHATTAN
-  clue: Covering found inside ^
+  clue: Covering found inside <>
   transform: includes
 - word: HAT
-  clue: Change one letter in ^ to get a rodent
+  clue: Change one letter in <> to get a rodent
   transform: H->R
 - word: RAT
-  clue: Smaller, cuter cousin of a ^
+  clue: Smaller, cuter cousin of a <>
   transform: is cousin to a
 - word: MOUSE
-  clue: Word that can follow ^ on your office desk
+  clue: Word that can follow <> on your office desk
   transform: uses a
 - word: PAD
-  clue: Type of ^ in a pond
+  clue: Type of <> in a pond
   transform: might feature a
 - word: LILY
   clue:

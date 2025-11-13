@@ -9,62 +9,62 @@
   "ladder": [
     {
       "word": "INNIE",
-      "clue": "Remove the first letter of ^ and anagram to get a number",
+      "clue": "Remove the first letter of <> and anagram to get a number",
       "transform": "-I, and anagrammed"
     },
     {
       "word": "NINE",
-      "clue": "Cats might have ^ of these",
+      "clue": "Cats might have <> of these",
       "transform": "things a cat has"
     },
     {
       "word": "LIVES",
-      "clue": "Opposite of ^",
+      "clue": "Opposite of <>",
       "transform": "opposite"
     },
     {
       "word": "DIES",
-      "clue": "Anagram ^ to get a kind of piece?",
+      "clue": "Anagram <> to get a kind of piece?",
       "transform": "anagrammed"
     },
     {
       "word": "SIDE",
-      "clue": "Change the two vowels in ^ to other vowels to get something you drink",
+      "clue": "Change the two vowels in <> to other vowels to get something you drink",
       "transform": "I->O, E->A"
     },
     {
       "word": "SODA",
-      "clue": "Some call it ^, some call it ___, and some call it ^ ___",
+      "clue": "Some call it <>, some call it {}, and some call it <> {}",
       "transform": "aka"
     },
     {
       "word": "POP",
-      "clue": "^ is a nickname for one's ___",
+      "clue": "<> is a nickname for one's {}",
       "transform": "is your"
     },
     {
       "word": "DAD",
-      "clue": "Change one letter in ^ to get a media format",
+      "clue": "Change one letter in <> to get a media format",
       "transform": "A->V"
     },
     {
       "word": "DVD",
-      "clue": "What the middle letter of ^ stands for",
+      "clue": "What the middle letter of <> stands for",
       "transform": "partially stands for"
     },
     {
       "word": "VIDEO",
-      "clue": "Counterpart to ^",
+      "clue": "Counterpart to <>",
       "transform": "counterpart"
     },
     {
       "word": "AUDIO",
-      "clue": "Drop the last letter of ^ to get a car make",
+      "clue": "Drop the last letter of <> to get a car make",
       "transform": "-O"
     },
     {
       "word": "AUDI",
-      "clue": "Body part slang (for some folks) that sounds like ^",
+      "clue": "Body part slang (for some folks) that sounds like <>",
       "transform": "sounds like"
     },
     {

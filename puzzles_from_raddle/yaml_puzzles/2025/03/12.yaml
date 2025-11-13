@@ -3,44 +3,44 @@ meta:
   author: Sandy Weisz
   difficulty: medium
   theme: Enigmarch 2025
-  fromEmoji: ð 
-  toEmoji: â³ï¸
+  fromEmoji: 🏠
+  toEmoji: ⛳️
 ladder:
 - word: HOUSE
-  clue: You might have a full ^ in this game
+  clue: You might have a full <> in this game
   transform: "can be full in"
 - word: POKER
-  clue: ^ is a tool to help manage this space
+  clue: <> is a tool to help manage this space
   transform: "used in a"
 - word: FIREPLACE
-  clue: The area in front of a ^
+  clue: The area in front of a <>
   transform: "abuts a"
 - word: HEARTH
-  clue: Remove last letter of ^ to get a part of the body
+  clue: Remove last letter of <> to get a part of the body
   transform: "-H"
 - word: HEART
-  clue: Remove outside letters of ^ to get a part of the body
+  clue: Remove outside letters of <> to get a part of the body
   transform: "-H & T"
 - word: EAR
-  clue: Gross stuff found in an ^
+  clue: Gross stuff found in an <>
   transform: "contains"
 - word: WAX
-  clue: Opposite of ^
+  clue: Opposite of <>
   transform: "opposite"
 - word: WANE
-  clue: This character's alter ego sounds like ^
+  clue: This character's alter ego sounds like <>
   transform: "sounds like the guy who's"
 - word: BATMAN
-  clue: Enemy of ^ who might enjoy this site
+  clue: Enemy of <> who might enjoy this site
   transform: "vs."
 - word: RIDDLER
-  clue: Dominant color of ^'s jacket
+  clue: Dominant color of <>'s jacket
   transform: "wears"
 - word: GREEN
-  clue: Sport that ends on a ^
+  clue: Sport that ends on a <>
   transform: "in the game of"
 - word: GOLF
-  clue: Change one letter of ^ and reverse it to get a signal
+  clue: Change one letter of <> and reverse it to get a signal
   transform: "O->A, then reverse"
 - word: FLAG
   clue: ""

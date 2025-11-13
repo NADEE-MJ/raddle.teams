@@ -7,43 +7,43 @@ meta:
     "It's time for a Mystery Theme! Every Raddle this week (Monday thru Friday) is part of a secret theme that you can figure out. The answer is one word. When you've solved it, [submit your name here](/mystery) to be included in the list of solvers."
 ladder:
 - word: WEEK
-  clue: "Homophone of \"^\" that sounds frail"
+  clue: "Homophone of \"<>\" that sounds frail"
   transform: E->A
 - word: WEAK
-  clue: Opposite of ^
+  clue: Opposite of <>
   transform: opposite
 - word: STRONG
-  clue: ___^ (a spaceman); or ^___ (to use force)
+  clue: ^<> (a spaceman); or <>^ (to use force)
   transform: "+"
 - word: ARM
-  clue: Swap two letters in ^ to get an animal
+  clue: Swap two letters in <> to get an animal
   transform: R<->A
 - word: RAM
-  clue: Mate for a ^
+  clue: Mate for a <>
   transform: mate
 - word: EWE
-  clue: "Letter that sounds like \"^\""
+  clue: "Letter that sounds like \"<>\""
   transform: sounds like
 - word: U
-  clue: ^ is ___st out of 26
+  clue: <> is ^st out of 26
   transform: "is letter #"
 - word: '21'
-  clue: Game also known as ^
+  clue: Game also known as <>
   transform: aka
 - word: BLACKJACK
-  clue: Common venue for ^
+  clue: Common venue for <>
   transform: is played in a
 - word: CASINO
-  clue: Drop the 2nd letter in ^ and anagram to get a video game hero
+  clue: Drop the 2nd letter in <> and anagram to get a video game hero
   transform: -A, then anagram
 - word: SONIC
-  clue: Friend of ^ with two ___, which is why they call him ___
+  clue: Friend of <> with two ^, which is why they call him ^
   transform: has a friend named
 - word: TAILS
-  clue: Counterpart of ^
+  clue: Counterpart of <>
   transform: Counterpart
 - word: HEADS
-  clue: Anagram ^ to get something thrown?
+  clue: Anagram <> to get something thrown?
   transform: anagram
 - word: SHADE
   clue:

@@ -1,0 +1,47 @@
+meta:
+  title: From IMPROVISATIONAL to PROMPT
+  author: Sandy Weisz and Mao Reynolds
+  difficulty: medium
+  theme: Make Some Noise
+  message:
+    This week's Raddles are in honor of the upcoming season of "[Make Some Noise](https://www.youtube.com/watch?v=tKBcWn-tqWE)," which premieres on Monday, October 13. 
+    It's a regular Monday night ritual in our house and one of the best things on the internet.
+    Each show features three improvisers, one host, and a set of bonkers improvisational prompts. 
+    "Make Some Noise" is available with a subscription to [Dropout](https://signup.dropout.tv/), which is well worth it.
+ladder:
+- word: IMPROVISATIONAL
+  clue: Credit card at the center of <>
+  transform: contains
+- word: VISA
+  clue: Move the last letter of <> to the front to get a car rental company
+  transform: anagrammed
+- word: AVIS
+  clue: Add a letter to the start of <> to the name of a Cup
+  transform: +D
+- word: DAVIS
+  clue: Jazz musician ^ <>
+  transform: with the trumpet
+- word: MILES
+  clue: Move the last letter of <> to the front to get an expression
+  transform: anagrammed
+- word: SMILE
+  clue: The opposite of a <>
+  transform: opposite
+- word: FROWN
+  clue: Change one letter in <> to get some headwear
+  transform: F->C
+- word: CROWN
+  clue: Someone who conventionally wears a <>
+  transform: is worn by a
+- word: QUEEN
+  clue: Event where a teenager becomes a <>
+  transform: is crowned at
+- word: PROM
+  clue: Move the first letter of <> to the end to get a fun time
+  transform: P to the end
+- word: ROMP
+  clue: Add a letter to the start of <> and another to the end to be on time
+  transform: +P, +T
+- word: PROMPT
+  clue:
+  transform:

@@ -6,37 +6,37 @@ meta:
   message: We're celebrating summer with Raddles based on fresh summer produce.
 ladder:
 - word: CHERRY
-  clue: Hard part of a ^
+  clue: Hard part of a <>
   transform: seed is called the
 - word: PIT
-  clue: Reverse ^ to get a point
+  clue: Reverse <> to get a point
   transform: reversed
 - word: TIP
-  clue: You ^ this as a sign of respect
+  clue: You <> this as a sign of respect
   transform: of the
 - word: HAT
-  clue: Kind of ^ it'd be appropriate to wear in an alley?
+  clue: Kind of <> it'd be appropriate to wear in an alley?
   transform: type
 - word: BOWLER
-  clue: Change one letter in ^ to get a video game villain
+  clue: Change one letter in <> to get a video game villain
   transform: L->S
 - word: BOWSER
-  clue: Hero who fights ^
+  clue: Hero who fights <>
   transform: fights
 - word: MARIO
-  clue: Canonical adjective to describe ^
+  clue: Canonical adjective to describe <>
   transform: is
 - word: SUPER
-  clue: Anagram ^ to get something you can do with your lips
+  clue: Anagram <> to get something you can do with your lips
   transform: anagrammed
 - word: PURSE
-  clue: Word that follows ^ when describing a budget
-  transform: â¦
+  clue: Word that follows <> when describing a budget
+  transform: …
 - word: STRINGS
-  clue: Instrument with six ^
+  clue: Instrument with six <>
   transform: number six on a
 - word: GUITAR
-  clue: Tool used to play ^
+  clue: Tool used to play <>
   transform: is played with a
 - word: PICK
   clue:

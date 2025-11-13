@@ -9,37 +9,37 @@ meta:
     Not to be confused with the Newfoundland (or Newfie), who run bigger and fluffier. Both are excellent doggies.
 ladder:
 - word: LAB
-  clue: ^ ___, something often worn in a ^
+  clue: <> ^, something often worn in a <>
   transform: outerwear
 - word: COAT
-  clue: A fresh ^ of ___
+  clue: A fresh <> of ^
   transform: of
 - word: PAINT
-  clue: Change one letter in ^ to get a virtuous person
+  clue: Change one letter in <> to get a virtuous person
   transform: P->S
 - word: SAINT
-  clue: Opposite of ^
+  clue: Opposite of <>
   transform: Opposite
 - word: SINNER
-  clue: Change the last letter in ^, then reverse, to get the sport that ^ plays
+  clue: Change the last letter in <>, then reverse, to get the sport that <> plays
   transform: "is #1 player in"
 - word: TENNIS
-  clue: Zero in ^
+  clue: Zero in <>
   transform: zero
 - word: LOVE
-  clue: '"^ ___", 1989 banger about a structure'
-  transform: â¦
+  clue: '"<> ^", 1989 banger about a structure'
+  transform: …
 - word: SHACK
-  clue: Move the first letter of ^ to the end to get an HBO show
+  clue: Move the first letter of <> to the end to get an HBO show
   transform: Move S to the end
 - word: HACKS
-  clue: A tech-savvy criminal ^ into one
+  clue: A tech-savvy criminal <> into one
   transform: into a
 - word: COMPUTER
-  clue: ^ attachment with an animal name
+  clue: <> attachment with an animal name
   transform: is used with a
 - word: MOUSE
-  clue: Genetic cousin of the ^ that is often confused for a ^
+  clue: Genetic cousin of the <> that is often confused for a <>
   transform: is often confused for a
 - word: RAT
   clue:

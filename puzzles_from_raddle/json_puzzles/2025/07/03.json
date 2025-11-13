@@ -9,57 +9,57 @@
   "ladder": [
     {
       "word": "CIRCULAR",
-      "clue": "Delete an R in ^ and anagram to become essential",
+      "clue": "Delete an R in <> and anagram to become essential",
       "transform": "-R, then anagram"
     },
     {
       "word": "CRUCIAL",
-      "clue": "A secretive organization hidden in ^",
+      "clue": "A secretive organization hidden in <>",
       "transform": "includes"
     },
     {
       "word": "CIA",
-      "clue": "President who previously headed the ^",
+      "clue": "President who previously headed the <>",
       "transform": "was headed by"
     },
     {
       "word": "BUSH",
-      "clue": "Insert an R into ^ to get a tool",
+      "clue": "Insert an R into <> to get a tool",
       "transform": "+R"
     },
     {
       "word": "BRUSH",
-      "clue": "Artist who uses a ^",
+      "clue": "Artist who uses a <>",
       "transform": "is used by a"
     },
     {
       "word": "PAINTER",
-      "clue": "^ with a signature mustache",
+      "clue": "<> with a signature mustache",
       "transform": "with a mustache"
     },
     {
       "word": "DALI",
-      "clue": "Home country of ^",
+      "clue": "Home country of <>",
       "transform": "is from"
     },
     {
       "word": "SPAIN",
-      "clue": "Affirmative answer in ^",
+      "clue": "Affirmative answer in <>",
       "transform": "'s \"yes\""
     },
     {
       "word": "SI",
-      "clue": "Verb that's ^ backwards",
+      "clue": "Verb that's <> backwards",
       "transform": "backwards"
     },
     {
       "word": "IS",
-      "clue": "Past tense of ^",
+      "clue": "Past tense of <>",
       "transform": "in the past"
     },
     {
       "word": "WAS",
-      "clue": "Tool that's ^ written backwards",
+      "clue": "Tool that's <> written backwards",
       "transform": "backwards"
     },
     {

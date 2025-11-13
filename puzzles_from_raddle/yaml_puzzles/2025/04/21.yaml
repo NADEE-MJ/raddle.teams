@@ -7,43 +7,43 @@ meta:
     But every day you start over from scratch, and every day the doors in the mansion lead to different rooms in a arrangement that's different than the day before. And the key to solving the mystery is to solve the puzzles embedded within. Hard recommend."
 ladder:
 - word: BLUE
-  clue: ^ ___, something uncommon
-  transform: â¦
+  clue: <> ^, something uncommon
+  transform: …
 - word: MOON
-  clue: First on the ^
+  clue: First on the <>
   transform: was first visited by
 - word: ARMSTRONG
-  clue: Swap the two syllables in ^ to be forceful
+  clue: Swap the two syllables in <> to be forceful
   transform: swap syllables
 - word: STRONGARM
-  clue: Replace the middle letters of ^ with an O to get something tumultuous
+  clue: Replace the middle letters of <> with an O to get something tumultuous
   transform: RONGA->O
 - word: STORM
-  clue: Word that can precede ^ to describe what you hear in a ^
+  clue: Word that can precede <> to describe what you hear in a <>
   transform: features
 - word: THUNDER
-  clue: The first three letters of ^ often stand for this
+  clue: The first three letters of <> often stand for this
   transform: partially stands for
 - word: THURSDAY
-  clue: What comes after ^
+  clue: What comes after <>
   transform: comes before
 - word: FRIDAY
-  clue: Word that precedes ^ in April
+  clue: Word that precedes <> in April
   transform: is sometimes
 - word: GOOD
-  clue: Opposite of ^
+  clue: Opposite of <>
   transform: opposite
 - word: BAD
-  clue: Musician who sang â^â
+  clue: Musician who sang “<>”
   transform: sung by
 - word: MICHAEL JACKSON
-  clue: Nickname given to ^
+  clue: Nickname given to <>
   transform: was the
 - word: KING OF POP
-  clue: The first word of ^
+  clue: The first word of <>
   transform: first word
 - word: KING
-  clue: Son of a ^
+  clue: Son of a <>
   transform: is the father of a
 - word: PRINCE
   clue:

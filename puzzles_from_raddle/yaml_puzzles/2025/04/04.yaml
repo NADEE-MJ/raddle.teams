@@ -6,43 +6,43 @@ meta:
   message: "[This week](/2025/04/01), I'm building Raddles around acts we saw at Big Ears. [Yo La Tengo](https://matadorrecords.com/pages/artists/yo-la-tengo) played twice, once alone, and once with the jazz legends of the [Sun Ra Arkestra](https://open.spotify.com/artist/5V5vvh5MgM7vDuPp4lJYkh), which we got to see. They went back and forth playing each other's songs, blending rock and jazz, mellow and bombastic, high and low. It was an unexpected treat."
 ladder:
 - word: YO LA
-  clue: Change one letter (and remove space) in ^ to get a common hashtag
+  clue: Change one letter (and remove space) in <> to get a common hashtag
   transform: A -> O
 - word: YOLO
-  clue: What the last letter of ^ stands for
+  clue: What the last letter of <> stands for
   transform: partially stands for
 - word: ONCE
-  clue: ^ is the Spanish word for ___
+  clue: <> is the Spanish word for ^
   transform: is Spanish for
 - word: ELEVEN
-  clue: TV show with a character named ^
+  clue: TV show with a character named <>
   transform: is a character on
 - word: STRANGER THINGS
-  clue: The first 7 letters of ^ (it's weird)
+  clue: The first 7 letters of <> (it's weird)
   transform: first 7 letters
 - word: STRANGE
-  clue: Add an honorific to ^ to get a superhero
+  clue: Add an honorific to <> to get a superhero
   transform: + DOCTOR
 - word: DOCTOR STRANGE
-  clue: ^ famously wears a red one
+  clue: <> famously wears a red one
   transform: wears a
 - word: CAPE
-  clue: Famous ^ in New England
-  transform: â¦
+  clue: Famous <> in New England
+  transform: …
 - word: COD
-  clue: What the last letter of ^ stands for, in shipping
+  clue: What the last letter of <> stands for, in shipping
   transform: partially stands for
 - word: DELIVERY
-  clue: The last three letters of ^, when anagrammed, spell this crop
+  clue: The last three letters of <>, when anagrammed, spell this crop
   transform: anagram last 3 letters
 - word: RYE
-  clue: ^ is this kind of drink
+  clue: <> is this kind of drink
   transform: is a kind of
 - word: WHISKEY
-  clue: Three steps before ^, in a certain alphabet
+  clue: Three steps before <>, in a certain alphabet
   transform: is three steps after
 - word: TANGO
-  clue: Change second letter of ^ to get a Spanish verb
+  clue: Change second letter of <> to get a Spanish verb
   transform: A -> E
 - word: TENGO
   clue:

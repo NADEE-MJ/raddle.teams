@@ -6,38 +6,38 @@ meta:
   message: Summer's not over yet! Let's enjoy some ice cream.
 ladder:
 - word: WAFFLE
-  clue: Change one letter in ^ to get a kind of ball
+  clue: Change one letter in <> to get a kind of ball
   transform: A->I
 - word: WIFFLE
-  clue: Drop a bigram (two letters) in ^ to get a relation
+  clue: Drop a bigram (two letters) in <> to get a relation
   transform: -FL
 - word: WIFE
-  clue: Change one letter in ^ to get something that often requires a passphrase
+  clue: Change one letter in <> to get something that often requires a passphrase
   transform: E->I
 - word: WIFI
-  clue: ^ helps you get on the ___
+  clue: <> helps you get on the ^
   transform: gets you on the
 - word: INTERNET
-  clue: Prefix associated with things on the ^
+  clue: Prefix associated with things on the <>
   transform: prefix
 - word: E
-  clue: What ^ means on street signs
+  clue: What <> means on street signs
   transform: stands for
 - word: EAST
-  clue: Change one letter in ^ to become simple
+  clue: Change one letter in <> to become simple
   transform: T->Y
 - word: EASY
-  clue: ___ ^, a breakfast order
+  clue: ^ <>, a breakfast order
   transform: and flipped
 - word: OVER
-  clue: ^ the ___ (beyond acceptable)
+  clue: <> the ^ (beyond acceptable)
   transform: the
 - word: LINE
-  clue: Change one letter in ^ to get a tree
+  clue: Change one letter in <> to get a tree
   transform: L->P
 - word: PINE
-  clue: ^ ___, organ that helps produce more ^s
-  transform: â¦
+  clue: <> ^, organ that helps produce more <>s
+  transform: …
 - word: CONE
   clue:
   transform:

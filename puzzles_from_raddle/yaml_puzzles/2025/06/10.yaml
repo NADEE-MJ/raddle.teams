@@ -6,40 +6,40 @@ meta:
   message: It's Daddle Week! Father's Day is Sunday. Let's visit a few of our favorite dads in the animal kingdom.
 ladder:
 - word: LAMB
-  clue: The hair of a ^
+  clue: The hair of a <>
   transform: produces
 - word: WOOL
-  clue: Change one letter in ^ to get a watery place
+  clue: Change one letter in <> to get a watery place
   transform: W->P
 - word: POOL
-  clue: Thing you hold while shooting ^
+  clue: Thing you hold while shooting <>
   transform: is played with a
 - word: CUE
-  clue: Homophone of ^ that's often very long
+  clue: Homophone of <> that's often very long
   transform: sounds like
 - word: QUEUE
-  clue: What a ^ is called in the U.S.
+  clue: What a <> is called in the U.S.
   transform: aka
 - word: LINE
-  clue: Swap the consonants of ^ to get a river
-  transform: Lâ->N
+  clue: Swap the consonants of <> to get a river
+  transform: L←->N
 - word: NILE
-  clue: Northernmost country of The ^
+  clue: Northernmost country of The <>
   transform: is partially in
 - word: EGYPT
-  clue: Capital of ^
+  clue: Capital of <>
   transform: capital
 - word: CAIRO
-  clue: Remove a letter from ^ and swap two letters to get a greeting
+  clue: Remove a letter from <> and swap two letters to get a greeting
   transform: -R, then anagram
 - word: CIAO
-  clue: Language of "^"
+  clue: Language of "<>"
   transform: is from
 - word: ITALIAN
-  clue: Tomato-based ^ sauce
+  clue: Tomato-based <> sauce
   transform: sauce with tomatoes
 - word: MARINARA
-  clue: The first three letters of ^, reversed, spell this animal
+  clue: The first three letters of <>, reversed, spell this animal
   transform: first three letters reversed
 - word: RAM
   clue:

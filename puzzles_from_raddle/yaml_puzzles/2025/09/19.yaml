@@ -4,40 +4,40 @@ meta:
   difficulty: medium
   theme: Chicago
   message:
-    This week, weâre celebrating some of the great things that have come out of Chicago, our home town. 
+    This week, we’re celebrating some of the great things that have come out of Chicago, our home town. 
     A roller derby is a roller skating competition with roots in Chicago. 
-    Leo Seltzer trademarked the term âRoller Derbyâ in 1935 and hosted the first one in Chicago, inviting both men and women. 
+    Leo Seltzer trademarked the term “Roller Derby” in 1935 and hosted the first one in Chicago, inviting both men and women. 
     The roller track became a symbol of feminist freedom, and many all-women leagues still exist in Chicago.
 ladder:
 - word: ROLLER
-  clue: Change a double letter in ^ to a different double letter to get a thief
+  clue: Change a double letter in <> to a different double letter to get a thief
   transform: LL->BB
 - word: ROBBER
-  clue: ^ ___, an unscrupulous businessman
-  transform: â¦
+  clue: <> ^, an unscrupulous businessman
+  transform: …
 - word: BARON
-  clue: Change one letter in ^ to get a breakfast food
+  clue: Change one letter in <> to get a breakfast food
   transform: R->C
 - word: BACON
-  clue: ___ ^, famous game subject, to a certain degree?
+  clue: ^ <>, famous game subject, to a certain degree?
   transform: first name
 - word: KEVIN
-  clue: "'90s movie about a kid named ^"
+  clue: "'90s movie about a kid named <>"
   transform: was left
 - word: HOME ALONE
-  clue: "Painting that inspired a shot in \"^\""
+  clue: "Painting that inspired a shot in \"<>\""
   transform: was inspired by
 - word: THE SCREAM
-  clue: "Who created \"^\""
+  clue: "Who created \"<>\""
   transform: artist
 - word: MUNCH
-  clue: ^ (to ___ loudly)
+  clue: <> (to ^ loudly)
   transform: loudly when you
 - word: EAT
-  clue: What you might offer to ^, confidently
+  clue: What you might offer to <>, confidently
   transform: one's
 - word: HAT
-  clue: ^ with a rounded top
+  clue: <> with a rounded top
   transform: with a rounded top
 - word: DERBY
   clue:

@@ -9,37 +9,37 @@ meta:
     This observation led to Calle creating the ice cream scoop, which he patented in 1897, becoming the first Black man in Pittsburgh to earn a patent. 
 ladder:
 - word: ICE CREAM
-  clue: Italian-style ^
+  clue: Italian-style <>
   transform: in Italy
 - word: GELATO
-  clue: Body part that is the first half of ^ reversed
+  clue: Body part that is the first half of <> reversed
   transform: -ATO, and reversed
 - word: LEG
-  clue: '"___ a ^!", which you only ever say ironically (I hope!)'
+  clue: '"^ a <>!", which you only ever say ironically (I hope!)'
   transform: should (ironically)
 - word: BREAK
-  clue: Tennis term ^ ___; or cult favorite "___ ^"
+  clue: Tennis term <> ^; or cult favorite "^ <>"
   transform: a serve with one more
 - word: POINT
-  clue: ___ ^, an academy in the U.S.
+  clue: ^ <>, an academy in the U.S.
   transform: for the military
 - word: WEST
-  clue: "90Â° clockwise from ^"
-  transform: is 90Â° CCW from
+  clue: "90° clockwise from <>"
+  transform: is 90° CCW from
 - word: NORTH
-  clue: Anagram ^ to get a pointy thing
+  clue: Anagram <> to get a pointy thing
   transform: anagrammed
 - word: THORN
-  clue: Flower known for having ^s
+  clue: Flower known for having <>s
   transform: is on the stem of a
 - word: ROSE
-  clue: Opposite of ^
+  clue: Opposite of <>
   transform: Opposite
 - word: FELL
-  clue: '"One ^ ___", a phrase originally from "Macbeth"'
-  transform: â¦
+  clue: '"One <> ^", a phrase originally from "Macbeth"'
+  transform: …
 - word: SWOOP
-  clue: Change one letter in ^ to get a news story
+  clue: Change one letter in <> to get a news story
   transform: W->C
 - word: SCOOP
   clue:

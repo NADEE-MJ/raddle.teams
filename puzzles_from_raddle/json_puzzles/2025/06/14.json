@@ -9,62 +9,62 @@
   "ladder": [
     {
       "word": "CHICK",
-      "clue": "Append an ingredient to ^ to get another ingredient that is neither a ^ nor the ingredient you added",
+      "clue": "Append an ingredient to <> to get another ingredient that is neither a <> nor the ingredient you added",
       "transform": "+PEA"
     },
     {
       "word": "CHICKPEA",
-      "clue": "Alternate name for a ^",
+      "clue": "Alternate name for a <>",
       "transform": "aka"
     },
     {
       "word": "GARBANZO BEAN",
-      "clue": "Island with the same initials as ^",
+      "clue": "Island with the same initials as <>",
       "transform": "share initials with"
     },
     {
       "word": "GREAT BRITAIN",
-      "clue": "Smallest country in ^",
+      "clue": "Smallest country in <>",
       "transform": "contains England, Scotland, and"
     },
     {
       "word": "WALES",
-      "clue": "Animals that sound like ^",
+      "clue": "Animals that sound like <>",
       "transform": "+H"
     },
     {
       "word": "WHALES",
-      "clue": "\"___ the ^\", environmental campaign since the 1970s",
+      "clue": "\"{} the <>\", environmental campaign since the 1970s",
       "transform": "are beasts we should"
     },
     {
       "word": "SAVE",
-      "clue": "Insert a letter in ^ to get a barbershop offering",
+      "clue": "Insert a letter in <> to get a barbershop offering",
       "transform": "+H"
     },
     {
       "word": "SHAVE",
-      "clue": "A ___ ^, when you barely make it",
+      "clue": "A {} <>, when you barely make it",
       "transform": "can be"
     },
     {
       "word": "CLOSE",
-      "clue": "What you might ^ by hitting an X",
+      "clue": "What you might <> by hitting an X",
       "transform": "the"
     },
     {
       "word": "WINDOW",
-      "clue": "^ ___, one option when flying",
+      "clue": "<> {}, one option when flying",
       "transform": "is next to an airplane"
     },
     {
       "word": "SEAT",
-      "clue": "___ ^, for kids who aren't quite big enough",
+      "clue": "{} <>, for kids who aren't quite big enough",
       "transform": "that raises"
     },
     {
       "word": "BOOSTER",
-      "clue": "Change one letter in ^ to get a bird",
+      "clue": "Change one letter in <> to get a bird",
       "transform": "B->R"
     },
     {

@@ -1,0 +1,46 @@
+meta:
+  title: From BEER to PONG
+  author: Sandy Weisz and Mao Reynolds
+  difficulty: medium
+  theme: Block Party
+  message: 
+    Beer pong is typically associated with rowdy college frat houses, but it's also a common sight at block parties.
+    A paddle version originated at Dartmouth in the 1950s, and a paddle-free variety later arose at Bucknell and LeHigh. 
+    The game — or, as some argue, the sport — has since spawned several professional leagues along with the World Series of Beer Pong.
+ladder:
+- word: BEER
+  clue: "Common style of <> that’s light in appearance"
+  transform: that's light
+- word: LAGER
+  clue: Reverse <> to become majestic
+  transform: reversed
+- word: REGAL
+  clue: Change one letter in <> to become legitimate
+  transform: R->L
+- word: LEGAL
+  clue: Money is <> ^
+  transform: purchasing paper
+- word: TENDER
+  clue: "What’d the termite say at the pub? \"Mmmm, ^ <>!\""
+  transform: of a
+- word: BAR
+  clue: ^<>, a tool for opening things
+  transform: that kinda looks like a
+- word: CROW
+  clue: ^ <> (admit defeat)
+  transform: is a bad thing to
+- word: EAT
+  clue: Change one letter in <> get a small animal
+  transform: E->R
+- word: RAT
+  clue: Reverse <> to get a thick substance
+  transform: reversed
+- word: TAR
+  clue: Add a letter to the front and back of <> to get a video game company
+  transform: +A, +I
+- word: ATARI
+  clue: First big hit by <>
+  transform: produced
+- word: PONG
+  clue:
+  transform:

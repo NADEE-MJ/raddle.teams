@@ -3,47 +3,47 @@ meta:
   author: Sandy Weisz
   difficulty: medium
   theme: Enigmarch 2025
-  fromEmoji: ð¼
-  toEmoji: ð¥£
+  fromEmoji: 💼
+  toEmoji: 🥣
 ladder:
 - word: CASE
-  clue: Add a P to ^ and anagram to get a gap
+  clue: Add a P to <> and anagram to get a gap
   transform: "+P and anagram"
 - word: SPACE
-  clue: '"___ ^", by Taylor Swift'
+  clue: '"^ <>", by Taylor Swift'
   transform: for your name is
 - word: BLANK
-  clue: Add two letters to ^ to get a covering
+  clue: Add two letters to <> to get a covering
   transform: "+ET"
 - word: BLANKET
-  clue: Type of ^ with patches
+  clue: Type of <> with patches
   transform: "with patches is a"
 - word: QUILT
-  clue: Remove a letter from ^ to get a computer command
+  clue: Remove a letter from <> to get a computer command
   transform: "-L"
 - word: QUIT
-  clue: Change the last letter of ^ to get a test
+  clue: Change the last letter of <> to get a test
   transform: "T -> Z"
 - word: QUIZ
-  clue: Kind of ^ that's a surprise
+  clue: Kind of <> that's a surprise
   transform: "can be"
 - word: POP
-  clue: ^ is one of the mascots for this product
+  clue: <> is one of the mascots for this product
   transform: "represents"
 - word: RICE KRISPIES
-  clue: Brand that makes ^
+  clue: Brand that makes <>
   transform: "is made by"
 - word: KELLOGGS
-  clue: The first letter of ^ means this in baseball
+  clue: The first letter of <> means this in baseball
   transform: "first letter means"
 - word: STRIKEOUT
-  clue: The first part of ^ is the best result in what sport?
+  clue: The first part of <> is the best result in what sport?
   transform: "is partly the best result in"
 - word: BOWLING
-  clue: To leave a big gap while ^
+  clue: To leave a big gap while <>
   transform: "can lead to a"
 - word: SPLIT
-  clue: Opposite of ^
+  clue: Opposite of <>
   transform: "is the opposite of"
 - word: COMBINE
   clue: ""

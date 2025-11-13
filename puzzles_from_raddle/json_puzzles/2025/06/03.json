@@ -1,0 +1,76 @@
+{
+  "meta": {
+    "title": "From PRIDE to MONTH",
+    "author": "Sandy Weisz and Mao Reynolds",
+    "difficulty": "medium",
+    "theme": "Pride Month",
+    "message": "Happy Pride! Whether you're a member of the LGBTQIA+ community or an ally, Pride Month is a time to celebrate love, diversity, and acceptance. We'll be posting Pride-themed Raddles over the next week in celebration. If you're looking for more ways to support the community, [A Trans Person Made Your Puzzle](https://sites.google.com/view/transxwords) is raising money for LGBTQ+-aligned charities, and offering a pack of great puzzles in return. 🌈"
+  },
+  "ladder": [
+    {
+      "word": "PRIDE",
+      "clue": "A member of a <>",
+      "transform": "has many a"
+    },
+    {
+      "word": "LION",
+      "clue": "\"The <> {}\"",
+      "transform": "…"
+    },
+    {
+      "word": "KING",
+      "clue": "A <> sits on this",
+      "transform": "sits on a"
+    },
+    {
+      "word": "THRONE",
+      "clue": "Change one letter in <> and add a space to get a nickname for someone special",
+      "transform": "R->E + space"
+    },
+    {
+      "word": "THE ONE",
+      "clue": "\"<>…\" starts almost every episode of this show",
+      "transform": "with the six"
+    },
+    {
+      "word": "FRIENDS",
+      "clue": "Opposite of <>",
+      "transform": "opposite"
+    },
+    {
+      "word": "ENEMIES",
+      "clue": "The first two syllables of <> sound like the abbreviation for this state",
+      "transform": "partially sounds like"
+    },
+    {
+      "word": "NEW MEXICO",
+      "clue": "Capital of <>",
+      "transform": "capital"
+    },
+    {
+      "word": "SANTA FE",
+      "clue": "The second part of <> can stand for this",
+      "transform": "partially stands for"
+    },
+    {
+      "word": "IRON",
+      "clue": "<> {}, a long time ago",
+      "transform": "…"
+    },
+    {
+      "word": "AGE",
+      "clue": "One's <> is usually measured in this",
+      "transform": "is measured in"
+    },
+    {
+      "word": "YEARS",
+      "clue": "Subdivision of <>",
+      "transform": "have many a"
+    },
+    {
+      "word": "MONTH",
+      "clue": null,
+      "transform": null
+    }
+  ]
+}

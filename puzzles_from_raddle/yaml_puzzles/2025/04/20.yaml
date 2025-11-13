@@ -8,34 +8,34 @@ meta:
     The song lists all the miracles God bestowed upon the Jews, and after each one, we sing in unison: \"Dayenu\"."
 ladder:
 - word: DAYENU
-  clue: Currency found inside ^
+  clue: Currency found inside <>
   transform: holds
 - word: YEN
-  clue: Country where you use ^
+  clue: Country where you use <>
   transform: is spent in
 - word: JAPAN
-  clue: Capital of ^
+  clue: Capital of <>
   transform: "'s capital"
 - word: TOKYO
-  clue: ^ ___ (action movie title)
-  transform: â¦
+  clue: <> ^ (action movie title)
+  transform: …
 - word: DRIFT
-  clue: Change a bigram in ^ to a single letter to get a verb associated with baking
+  clue: Change a bigram in <> to a single letter to get a verb associated with baking
   transform: DR->S
 - word: SIFT
-  clue: What you often ^ in a kitchen
+  clue: What you often <> in a kitchen
   transform: is done to
 - word: FLOUR
-  clue: Water mixed with ^ makes this
+  clue: Water mixed with <> makes this
   transform: + water =
 - word: DOUGH
-  clue: ^ is a slang for this
+  clue: <> is a slang for this
   transform: aka
 - word: MONEY
-  clue: Adjective that describes ^ when ^ isn't real
+  clue: Adjective that describes <> when <> isn't real
   transform: can be
 - word: FUNNY
-  clue: Pronounce ^ backwards to get an adverb
+  clue: Pronounce <> backwards to get an adverb
   transform: pronounced backwards
 - word: ENOUGH
   clue:

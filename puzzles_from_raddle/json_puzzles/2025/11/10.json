@@ -1,0 +1,76 @@
+{
+  "meta": {
+    "title": "From RED to VIOLET",
+    "author": "Sandy Weisz and Mao Reynolds",
+    "difficulty": "medium",
+    "theme": "7x7",
+    "message": "I’m turning 49 this week. 49 is 7x7, so I’m celebrating with seven sets of seven: seven Raddles that go from the first to the seventh. A rainbow contains seven main colors, red through violet, often memorized with the term Roy G. Biv. It was Isaac Newton who pushed for the inclusion of indigo, a tertiary color, in the rainbow canon, though his definition of indigo differs from our current perception: his indigo is our blue, and his blue was our cyan."
+  },
+  "ladder": [
+    {
+      "word": "RED",
+      "clue": "Double a letter in <> to get a plant",
+      "transform": "+E"
+    },
+    {
+      "word": "REED",
+      "clue": "{} <>, Underground musician?",
+      "transform": "first name"
+    },
+    {
+      "word": "LOU",
+      "clue": "Change one letter in <> to get a place to go abroad?",
+      "transform": "U->O"
+    },
+    {
+      "word": "LOO",
+      "clue": "Append a letter to <> to get a bird",
+      "transform": "+N"
+    },
+    {
+      "word": "LOON",
+      "clue": "Add a trigram (three letters) to the front of <> to get a party sight",
+      "transform": "+BAL"
+    },
+    {
+      "word": "BALLOON",
+      "clue": "What a <> is often filled with",
+      "transform": "is often filled with"
+    },
+    {
+      "word": "HELIUM",
+      "clue": "Symbol for <>",
+      "transform": "symbol"
+    },
+    {
+      "word": "HE",
+      "clue": "<> {}, S<> {}",
+      "transform": "and she both"
+    },
+    {
+      "word": "SAID",
+      "clue": "Anagram <> to get a platform",
+      "transform": "anagrammed"
+    },
+    {
+      "word": "DAIS",
+      "clue": "Insert a letter in the middle of <> to get the last name of a jazz icon",
+      "transform": "+V"
+    },
+    {
+      "word": "DAVIS",
+      "clue": "Oscar-winning actress {} <>",
+      "transform": "first name"
+    },
+    {
+      "word": "VIOLA",
+      "clue": "Change the last letter of <> to a bigram (two letters) to get a color",
+      "transform": "A->ET"
+    },
+    {
+      "word": "VIOLET",
+      "clue": null,
+      "transform": null
+    }
+  ]
+}

@@ -6,34 +6,34 @@ meta:
   message: We're celebrating summer with Raddles based on fresh summer produce. And summer lawn games.
 ladder:
 - word: CORN
-  clue: Prepend a letter to ^ to get a nut
+  clue: Prepend a letter to <> to get a nut
   transform: +A
 - word: ACORN
-  clue: Creature that loves to collect ^s
+  clue: Creature that loves to collect <>s
   transform: collected by
 - word: SQUIRREL
-  clue: Something one might ^ away
+  clue: Something one might <> away
   transform: away
 - word: MONEY
-  clue: Change a letter in ^ to get something sweet
+  clue: Change a letter in <> to get something sweet
   transform: M->H
 - word: HONEY
-  clue: ^___ pattern
-  transform: â¦
+  clue: <>^ pattern
+  transform: …
 - word: COMB
-  clue: What you usually use a ^ on
+  clue: What you usually use a <> on
   transform: straightens
 - word: HAIR
-  clue: Lacking ^
+  clue: Lacking <>
   transform: -less aka
 - word: BALD
-  clue: Bird that might be "^"
-  transform: â¦
+  clue: Bird that might be "<>"
+  transform: …
 - word: EAGLE
-  clue: Sport where ^ is a great achievement
+  clue: Sport where <> is a great achievement
   transform: is a heck of a score in
 - word: GOLF
-  clue: One of many on a ^ course
+  clue: One of many on a <> course
   transform: has many a
 - word: HOLE
   clue:

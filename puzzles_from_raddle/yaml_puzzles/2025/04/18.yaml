@@ -3,38 +3,38 @@ meta:
   author: Sandy Weisz
   difficulty: medium
   theme: Passover
-  message: At the end of the Seder we traditionally sing "[One Little Goat](https://en.wikipedia.org/wiki/Chad_Gadya)" ("Chad Gadya"). It's a cumulative song â each verse adds a new character to the story. The first verse is about a goat, the second verse is about a cat that eats the goat, and so on. I considered writing Raddles that traverse the whole chain in the song, but I didn't want to burden myself with finding a chain from ANGEL OF DEATH to THE HOLY ONE BLESSED BE HE. Please enjoy [this video](https://www.youtube.com/watch?v=M7_2WtzqvzM) of Jack Black singing the song.
+  message: At the end of the Seder we traditionally sing "[One Little Goat](https://en.wikipedia.org/wiki/Chad_Gadya)" ("Chad Gadya"). It's a cumulative song — each verse adds a new character to the story. The first verse is about a goat, the second verse is about a cat that eats the goat, and so on. I considered writing Raddles that traverse the whole chain in the song, but I didn't want to burden myself with finding a chain from ANGEL OF DEATH to THE HOLY ONE BLESSED BE HE. Please enjoy [this video](https://www.youtube.com/watch?v=M7_2WtzqvzM) of Jack Black singing the song.
 
 ladder:
 - word: GOAT
-  clue: What the last letter of ^ stands for
+  clue: What the last letter of <> stands for
   transform: partially stands for
 - word: TIME
-  clue: Very small unit of ^
+  clue: Very small unit of <>
   transform: in small measure is a
 - word: SECOND
-  clue: One better than ^
+  clue: One better than <>
   transform: is one behind
 - word: FIRST
-  clue: "Word that rhymes with ^ and can mean the opposite of ^"
+  clue: "Word that rhymes with <> and can mean the opposite of <>"
   transform: rhymes with
 - word: WORST
-  clue: Food that sounds like ^
+  clue: Food that sounds like <>
   transform: sounds like
 - word: WURST
-  clue: Country most associated with ^s
+  clue: Country most associated with <>s
   transform: is eaten in
 - word: GERMANY
-  clue: Country directly north of ^
+  clue: Country directly north of <>
   transform: is south of
 - word: DENMARK
-  clue: Remove four letters in ^ to get a place to live
+  clue: Remove four letters in <> to get a place to live
   transform: "-MARK"
 - word: DEN
-  clue: ___'s ^, a dangerous situation
+  clue: ^'s <>, a dangerous situation
   transform: is home to a
 - word: LION
-  clue: A ^ is a big ___
+  clue: A <> is a big ^
   transform: is a big
 - word: CAT
   clue:

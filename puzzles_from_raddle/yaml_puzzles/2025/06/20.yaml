@@ -11,43 +11,43 @@ meta:
     Another golf player, Dr. William Lowell, developed his own golf tee in 1922, but today the United States Golf Association recognizes Grant as the original inventor. 
 ladder:
 - word: GOLF
-  clue: Tool used to play ^
+  clue: Tool used to play <>
   transform: tool
 - word: CLUB
-  clue: ^ ___, a popular mixer
-  transform: â¦
+  clue: <> ^, a popular mixer
+  transform: …
 - word: SODA
-  clue: What Midwesterners call ^
+  clue: What Midwesterners call <>
   transform: to a Midwesterner
 - word: POP
-  clue: One might kneel to ^ the ___
+  clue: One might kneel to <> the ^
   transform: the
 - word: QUESTION
-  clue: '"Do you have a ^, ___" should end with a ^ ___'
-  transform: â¦
+  clue: '"Do you have a <>, ^" should end with a <> ^'
+  transform: …
 - word: MARK
-  clue: 19th century writer ^ ___
+  clue: 19th century writer <> ^
   transform: who wrote
 - word: TWAIN
-  clue: Add an A to ^ and anagram to get a country
+  clue: Add an A to <> and anagram to get a country
   transform: +A, then anagram
 - word: TAIWAN
-  clue: Capital of ^
+  clue: Capital of <>
   transform: capital
 - word: TAIPEI
-  clue: Kind of personality that sounds like "^"
+  clue: Kind of personality that sounds like "<>"
   transform: sounds like
 - word: TYPE A
-  clue: Body part used to ^ space
+  clue: Body part used to <> space
   transform: space with your
 - word: THUMB
-  clue: Like a gardener's ^
+  clue: Like a gardener's <>
   transform: might be
 - word: GREEN
-  clue: Drink that's often black or ^
+  clue: Drink that's often black or <>
   transform: drink
 - word: TEA
-  clue: Homophone of "^" that you wear
+  clue: Homophone of "<>" that you wear
   transform: sounds like
 - word: TEE
   clue:

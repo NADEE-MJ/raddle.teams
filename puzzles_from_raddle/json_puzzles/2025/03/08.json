@@ -1,0 +1,72 @@
+{
+  "meta": {
+    "title": "From LINK to QUARTER",
+    "author": "Sandy Weisz",
+    "difficulty": "medium",
+    "theme": "Enigmarch 2025",
+    "fromEmoji": "🔗",
+    "toEmoji": "¼"
+  },
+  "ladder": [
+    {
+      "word": "LINK",
+      "clue": "<> is often trying to save her",
+      "transform": "saves"
+    },
+    {
+      "word": "ZELDA",
+      "clue": "The title of <>",
+      "transform": "is a"
+    },
+    {
+      "word": "PRINCESS",
+      "clue": "The male form of a <>",
+      "transform": "male version"
+    },
+    {
+      "word": "PRINCE",
+      "clue": "Color associated with <>",
+      "transform": "loves the color"
+    },
+    {
+      "word": "PURPLE",
+      "clue": "Fruit that is <>",
+      "transform": "as a"
+    },
+    {
+      "word": "PLUM",
+      "clue": "Move the first letter of <> to the end",
+      "transform": "P to the end"
+    },
+    {
+      "word": "LUMP",
+      "clue": "Change the first letter of <> to get a titular film character",
+      "transform": "L -> G"
+    },
+    {
+      "word": "GUMP",
+      "clue": "<> was played by him",
+      "transform": "was played by"
+    },
+    {
+      "word": "TOM HANKS",
+      "clue": "City where <> couldn't sleep",
+      "transform": "was sleepless in"
+    },
+    {
+      "word": "SEATTLE",
+      "clue": "<> is in this state",
+      "transform": "is in"
+    },
+    {
+      "word": "WASHINGTON",
+      "clue": "<> is featured on this",
+      "transform": "is on the"
+    },
+    {
+      "word": "QUARTER",
+      "clue": "",
+      "transform": ""
+    }
+  ]
+}

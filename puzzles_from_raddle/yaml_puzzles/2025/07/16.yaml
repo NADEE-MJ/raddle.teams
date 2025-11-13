@@ -11,40 +11,40 @@ meta:
     separate power.
 ladder:
 - word: X-RAY
-  clue: What an ^ can reveal is broken
+  clue: What an <> can reveal is broken
   transform: shows a broken
 - word: BONE
-  clue: ^ in the chest
+  clue: <> in the chest
   transform: in your chest
 - word: RIB
-  clue: Add a letter to ^ to get a nursery item
+  clue: Add a letter to <> to get a nursery item
   transform: +C
 - word: CRIB
-  clue: Change one letter in ^ to get something under the sea
+  clue: Change one letter in <> to get something under the sea
   transform: I->A
 - word: CRAB
-  clue: ^ ___, popular appetizer
-  transform: â¦
+  clue: <> ^, popular appetizer
+  transform: …
 - word: RANGOON
-  clue: 2011 movie that is ^ without the last two letters
+  clue: 2011 movie that is <> without the last two letters
   transform: -ON
 - word: RANGO
-  clue: Change the last letter in ^ to get something in a kitchen
+  clue: Change the last letter in <> to get something in a kitchen
   transform: O->E 
 - word: RANGE
-  clue: Luxury car ^ ___
-  transform: â¦
+  clue: Luxury car <> ^
+  transform: …
 - word: ROVER
-  clue: ^ is a sterotypical name for a ___
+  clue: <> is a sterotypical name for a ^
   transform: is the name of many a
 - word: DOG
-  clue: ___ ^, a friend that is specially trained to lead you around
+  clue: ^ <>, a friend that is specially trained to lead you around
   transform: might be your
 - word: GUIDE
-  clue: ___ ^, publication that stopped printing in 2006
+  clue: ^ <>, publication that stopped printing in 2006
   transform: for what's on
 - word: TV
-  clue: What the second letter of ^ stands for
+  clue: What the second letter of <> stands for
   transform: partially stands for
 - word: VISION
   clue:

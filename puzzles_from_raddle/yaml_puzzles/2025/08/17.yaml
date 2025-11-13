@@ -4,40 +4,40 @@ meta:
   difficulty: medium
   theme: Shakespearean phrases
   message:
-    "Today's theme comes from Act II, Scene II of \"The Merry Wives of Windsor,\" in which Ancient Pistol, speaking to John Falstaff, says: \"Why then the worldâs mine oyster, / Which I with sword will open.\" Oysters donât open freely; they must be forced open, and Pistol argues the same logic applies to taking advantage of life."
+    "Today's theme comes from Act II, Scene II of \"The Merry Wives of Windsor,\" in which Ancient Pistol, speaking to John Falstaff, says: \"Why then the world’s mine oyster, / Which I with sword will open.\" Oysters don’t open freely; they must be forced open, and Pistol argues the same logic applies to taking advantage of life."
 ladder:
 - word: WORLD
-  clue: Football competition The ^ ___
-  transform: â¦
+  clue: Football competition The <> ^
+  transform: …
 - word: CUP
-  clue: Small mat that a ^ may sit on
+  clue: Small mat that a <> may sit on
   transform: sits on a
 - word: COASTER
-  clue: Change the first letter in ^ to get a kitchen appliance
+  clue: Change the first letter in <> to get a kitchen appliance
   transform: C->T
 - word: TOASTER
-  clue: Anagram ^ to get the namesake of a famous stone
+  clue: Anagram <> to get the namesake of a famous stone
   transform: anagrammed
 - word: ROSETTA
-  clue: Flower found at the start of ^
+  clue: Flower found at the start of <>
   transform: starts with a
 - word: ROSE
-  clue: Football competition The ^ ___
-  transform: â¦
+  clue: Football competition The <> ^
+  transform: …
 - word: BOWL
-  clue: Second best result when you ^
+  clue: Second best result when you <>
   transform: result
 - word: SPARE
-  clue: "Trim ^ by one letter \u2026 to trim"
+  clue: "Trim <> by one letter \u2026 to trim"
   transform: -S
 - word: PARE
-  clue: Anagram ^ to get a fruit that rhymes with ^
+  clue: Anagram <> to get a fruit that rhymes with <>
   transform: anagrammed
 - word: PEAR
-  clue: Add a letter to ^ to get something often found on a necklace
+  clue: Add a letter to <> to get something often found on a necklace
   transform: +L
 - word: PEARL
-  clue: Creature that produces a ^
+  clue: Creature that produces a <>
   transform: is made by an
 - word: OYSTER
   clue:

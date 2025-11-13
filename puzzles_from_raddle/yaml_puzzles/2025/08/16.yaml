@@ -7,37 +7,37 @@ meta:
     "Today's theme comes from Act II, Scene II of \"Hamlet,\" in which Polonius remarks: \"Therefore, since brevity is the soul of wit, / And tediousness the limbs and outward flourishes, / I will be brief: your noble son is mad.\""
 ladder:
 - word: BREVITY
-  clue: Part of speech found reversed in ^
+  clue: Part of speech found reversed in <>
   transform: includes the reverse of
 - word: VERB
-  clue: Change a letter in ^ to get an edible plant
+  clue: Change a letter in <> to get an edible plant
   transform: V->H
 - word: HERB
-  clue: ^ used in a Mojito
+  clue: <> used in a Mojito
   transform: in a Mojito
 - word: MINT
-  clue: Weapon that can precede ^ in a variety of ^
+  clue: Weapon that can precede <> in a variety of <>
   transform: follows
 - word: SPEAR
-  clue: Drop a letter from ^ to get a fruit
+  clue: Drop a letter from <> to get a fruit
   transform: -S
 - word: PEAR
-  clue: Poker term that sounds like ^
+  clue: Poker term that sounds like <>
   transform: sounds like
 - word: PAIR
-  clue: A ^ is ___ of something
+  clue: A <> is ^ of something
   transform: is
 - word: TWO
-  clue: Household object that often has ^ hands
+  clue: Household object that often has <> hands
   transform: hands on a
 - word: CLOCK
-  clue: Portable ^
+  clue: Portable <>
   transform: is a big
 - word: WATCH
-  clue: Part of the body that might sport a ^
+  clue: Part of the body that might sport a <>
   transform: lives on one's
 - word: WRIST
-  clue: Drop the even letters of ^ to get some humor
+  clue: Drop the even letters of <> to get some humor
   transform: "oddly"
 - word: WIT
   clue:

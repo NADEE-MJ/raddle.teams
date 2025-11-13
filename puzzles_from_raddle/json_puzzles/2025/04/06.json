@@ -9,62 +9,62 @@
   "ladder": [
     {
       "word": "MERCE",
-      "clue": "Change one letter of ^ into an A and anagram to get a dairy product",
+      "clue": "Change one letter of <> into an A and anagram to get a dairy product",
       "transform": "E->A then anagram"
     },
     {
       "word": "CREAM",
-      "clue": "Add a letter to ^ to get a horror film",
+      "clue": "Add a letter to <> to get a horror film",
       "transform": "+S"
     },
     {
       "word": "SCREAM",
-      "clue": "Movie with an iconic shot that mimics The ^",
+      "clue": "Movie with an iconic shot that mimics The <>",
       "transform": "is mimicked in"
     },
     {
       "word": "HOME ALONE",
-      "clue": "Last name of the star of ^",
+      "clue": "Last name of the star of <>",
       "transform": "stars"
     },
     {
       "word": "CULKIN",
-      "clue": "Prestige TV show co-starring a ^",
+      "clue": "Prestige TV show co-starring a <>",
       "transform": "stars in"
     },
     {
       "word": "SUCCESSION",
-      "clue": "Family at the center of ^",
+      "clue": "Family at the center of <>",
       "transform": "features the family"
     },
     {
       "word": "ROY",
-      "clue": "Add another word to ^ to get a classic cocktail",
+      "clue": "Add another word to <> to get a classic cocktail",
       "transform": "+ ROB"
     },
     {
       "word": "ROB ROY",
-      "clue": "Change the Scotch part of a ^ to its American equivalent, and you'll have this",
+      "clue": "Change the Scotch part of a <> to its American equivalent, and you'll have this",
       "transform": "is close to a"
     },
     {
       "word": "MANHATTAN",
-      "clue": "Bright, busy part of ^",
+      "clue": "Bright, busy part of <>",
       "transform": "is the home of"
     },
     {
       "word": "TIMES SQUARE",
-      "clue": "^ is named after The ___",
+      "clue": "<> is named after The {}",
       "transform": "is named after The"
     },
     {
       "word": "NEW YORK TIMES",
-      "clue": "The ^ of France, you might say",
+      "clue": "The <> of France, you might say",
       "transform": "of France"
     },
     {
       "word": "LE MONDE",
-      "clue": "Drop the last two letters of ^ to get a fruit",
+      "clue": "Drop the last two letters of <> to get a fruit",
       "transform": "-DE"
     },
     {

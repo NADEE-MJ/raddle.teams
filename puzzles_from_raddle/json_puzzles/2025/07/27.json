@@ -1,0 +1,76 @@
+{
+    "meta": {
+        "title": "From LUMON to INDUSTRIES",
+        "author": "Sandy Weisz and Mao Reynolds",
+        "difficulty": "medium",
+        "theme": "Severance",
+        "message": "We're wrapping up our week of \"Severance\" Raddles, and what better way to end it than with the shady corporation behind it all, Lumon Industries. Lumon is definitely violating hundreds of labor laws (and other laws, too), but has somehow kept operating for more than two centuries. Unlike the real world, where big corporations behave ethically all the time."
+    },
+    "ladder": [
+        {
+            "word": "LUMON",
+            "clue": "Change one letter in <> to get a fruit",
+            "transform": "U->E"
+        },
+        {
+            "word": "LEMON",
+            "clue": "Drop the last letter of <> and anagram the rest to get a fuzzy TV character",
+            "transform": "-N, then anagram"
+        },
+        {
+            "word": "ELMO",
+            "clue": "Where <> lives",
+            "transform": "lives on"
+        },
+        {
+            "word": "SESAME STREET",
+            "clue": "Feathered friend on <>",
+            "transform": "feathered guy"
+        },
+        {
+            "word": "BIG BIRD",
+            "clue": "<> from Australia",
+            "transform": "in Australia"
+        },
+        {
+            "word": "EMU",
+            "clue": "Add a letter to either side of <> to get a part of your body",
+            "transform": "+F +R"
+        },
+        {
+            "word": "FEMUR",
+            "clue": "<> is the name of a {}",
+            "transform": "is a"
+        },
+        {
+            "word": "BONE",
+            "clue": "<>{}, a stupid person",
+            "transform": "…"
+        },
+        {
+            "word": "HEAD",
+            "clue": "<>{}, something mostly done for C-suite positions",
+            "transform": "of a company often needs"
+        },
+        {
+            "word": "HUNTING",
+            "clue": "1997 movie \"{} <>\"",
+            "transform": "for the very"
+        },
+        {
+            "word": "GOOD WILL",
+            "clue": "Drop the space in <> to get a destination for hand-me-downs",
+            "transform": "- space"
+        },
+        {
+            "word": "GOODWILL",
+            "clue": "Word that follows <> in their official business name, surprisingly",
+            "transform": "…"
+        },
+        {
+            "word": "INDUSTRIES",
+            "clue": null,
+            "transform": null
+        }
+    ]
+}

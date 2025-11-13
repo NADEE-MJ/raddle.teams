@@ -11,43 +11,43 @@ meta:
     In her patent application, she stated the ironing board would be \"a cheap, simple, and highly effective device.\""
 ladder:
 - word: IRONING
-  clue: Remove the outside letters of ^ to get a kind of fighter
+  clue: Remove the outside letters of <> to get a kind of fighter
   transform: -I -G
 - word: RONIN
-  clue: Change one letter in ^ to get a bird
+  clue: Change one letter in <> to get a bird
   transform: N->B
 - word: ROBIN
-  clue: '"^" sounds like what this kind of criminal would be doin'''
+  clue: '"<>" sounds like what this kind of criminal would be doin'''
   transform: sounds like the work of a
 - word: THIEF
-  clue: Change one letter in ^ to get a nickname for a boss
+  clue: Change one letter in <> to get a nickname for a boss
   transform: T->C
 - word: CHIEF
-  clue: ^ of ___, role in an administration
+  clue: <> of ^, role in an administration
   transform: of
 - word: STAFF
-  clue: Name of the lower ^, on certain sheets
+  clue: Name of the lower <>, on certain sheets
   transform: below treble
 - word: BASS
-  clue: Range just above ^
+  clue: Range just above <>
   transform: is just below
 - word: TENOR
-  clue: 700-year-old monument whose first word is an anagram of ^
+  clue: 700-year-old monument whose first word is an anagram of <>
   transform: anagrammmed is the start of
 - word: NOTRE DAME
-  clue: Name for the athletes at ^
+  clue: Name for the athletes at <>
   transform: athletes are the
 - word: FIGHTING IRISH
-  clue: The first two and last two letters of ^ make this animal
+  clue: The first two and last two letters of <> make this animal
   transform: without the middle is
 - word: FISH
-  clue: ^ live in this
+  clue: <> live in this
   transform: live in
 - word: WATER
-  clue: Bubbles from ^ breaking
+  clue: Bubbles from <> breaking
   transform: breaks to become
 - word: SURF
-  clue: When you ^, you're on a ___
+  clue: When you <>, you're on a ^
   transform: on a
 - word: BOARD
   clue:

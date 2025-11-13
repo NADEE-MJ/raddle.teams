@@ -2,45 +2,45 @@ meta:
   title: From YES to CHEF
   author: Sandy Weisz and Mao Reynolds
   difficulty: medium
-  theme: Emmy nominations 2005
+  theme: Emmy nominations 2025
   message:
     This week we're honoring some of this year's Emmy nominees, including "The Bear", from which we all learned the phrase "Yes, Chef!"
 ladder:
 - word: YES
-  clue: "\"^\" in France"
+  clue: "\"<>\" in France"
   transform: in French
 - word: OUI
-  clue: Pronoun that sounds like ^
+  clue: Pronoun that sounds like <>
   transform: sounds like
 - word: WE
-  clue: Something ^ didn't do, according to song?
+  clue: Something <> didn't do, according to song?
   transform: didn't
 - word: START THE FIRE
-  clue: Classic cartoon character whose last name could ^
+  clue: Classic cartoon character whose last name could <>
   transform: with
 - word: FLINTSTONE
-  clue: Neighbor of ^
+  clue: Neighbor of <>
   transform: neighbor
 - word: RUBBLE
-  clue: Add a T to the start of ^ and it sounds like something you don't want to be in
+  clue: Add a T to the start of <> and it sounds like something you don't want to be in
   transform: + "T" sound
 - word: TROUBLE
-  clue: Change a bigram (two consecutive letters) in ^ to a single vowel to get a musical term
+  clue: Change a bigram (two consecutive letters) in <> to a single vowel to get a musical term
   transform: OU->E
 - word: TREBLE
-  clue: Counterpart to ^
+  clue: Counterpart to <>
   transform: counterpart
 - word: BASS
-  clue: Change one letter in ^ to get a shot-caller
+  clue: Change one letter in <> to get a shot-caller
   transform: A->O
 - word: BOSS
-  clue: The ^'s ^'s ^, etc., all the way to the top
+  clue: The <>'s <>'s <>, etc., all the way to the top
   transform: of bosses
 - word: CEO
-  clue: What the first letter of ^ stands for
+  clue: What the first letter of <> stands for
   transform: partially stands for
 - word: CHIEF
-  clue: Drop the middle letter of ^ to get someone who can stand the heat?
+  clue: Drop the middle letter of <> to get someone who can stand the heat?
   transform: -I
 - word: CHEF
   clue:

@@ -10,40 +10,40 @@ meta:
     The farm's a long way from academia, so here's hoping the Professor can hack it.
 ladder:
 - word: PROFESSOR
-  clue: Marvel ^
+  clue: Marvel <>
   transform: known as
 - word: X
-  clue: Add a first name to ^ to make a medical tool
+  clue: Add a first name to <> to make a medical tool
   transform: +RAY
 - word: X-RAY
-  clue: In a certain alphabet, this first name is two before ^
+  clue: In a certain alphabet, this first name is two before <>
   transform: comes two after
 - word: VICTOR
-  clue: Another word for ^
+  clue: Another word for <>
   transform: synonym
 - word: WINNER
-  clue: Swap one letter in ^ to get a part of the year
+  clue: Swap one letter in <> to get a part of the year
   transform: N->T
 - word: WINTER
-  clue: What comes after ^
+  clue: What comes after <>
   transform: precedes
 - word: SPRING
-  clue: Remove a bigram (two letters) from ^ to get something you might wear
+  clue: Remove a bigram (two letters) from <> to get something you might wear
   transform: -SP
 - word: RING
-  clue: Shape of a ^, usually
+  clue: Shape of a <>, usually
   transform: is shaped like a
 - word: CIRCLE
-  clue: Title that sounds like the first syllable of ^
+  clue: Title that sounds like the first syllable of <>
   transform: partially sounds like
 - word: SIR
-  clue: A ___ is often known as a "^"
+  clue: A ^ is often known as a "<>"
   transform: is a
 - word: KNIGHT
-  clue: Protection worn by a ^
+  clue: Protection worn by a <>
   transform: wears
 - word: ARMOR
-  clue: Profession that rhymes with ^
+  clue: Profession that rhymes with <>
   transform: rhymes with
 - word: FARMER
   clue:

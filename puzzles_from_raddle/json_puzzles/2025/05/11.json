@@ -1,0 +1,81 @@
+{
+  "meta": {
+    "title": "From MOTHERS to DAY",
+    "author": "Sandy Weisz",
+    "difficulty": "medium",
+    "theme": "Mother's Day",
+    "message": "Happy Mother's Day to all the mothers out there. I hope you have a relaxing day doing what you want, whether that's solving the entire [back catalog of Raddles](/archive), or going to a spa. Why not both!"
+  },
+  "ladder": [
+    {
+      "word": "MOTHERS",
+      "clue": "Creature found at the start of <>",
+      "transform": "contains"
+    },
+    {
+      "word": "MOTH",
+      "clue": "What a <> is drawn to",
+      "transform": "loves a"
+    },
+    {
+      "word": "FLAME",
+      "clue": "Cylindrical thing that holds a <>",
+      "transform": "is found on a"
+    },
+    {
+      "word": "CANDLE",
+      "clue": "Number of <>s in a 80s movie title",
+      "transform": "count"
+    },
+    {
+      "word": "SIXTEEN",
+      "clue": "Word that precedes <> in a common celebration",
+      "transform": "can be"
+    },
+    {
+      "word": "SWEET",
+      "clue": "{} <> {}",
+      "transform": "is sandwiched between"
+    },
+    {
+      "word": "HOME",
+      "clue": "The <> {}, popular US retailer",
+      "transform": "…"
+    },
+    {
+      "word": "DEPOT",
+      "clue": "Remove the first letter of <> and anagram to get a kind of writer",
+      "transform": "-D, then anagram"
+    },
+    {
+      "word": "POET",
+      "clue": "Famous <> found inside <>",
+      "transform": "-T"
+    },
+    {
+      "word": "POE",
+      "clue": "Animal <> famously wrote about",
+      "transform": "wrote about a"
+    },
+    {
+      "word": "RAVEN",
+      "clue": "Color of a <>",
+      "transform": "is"
+    },
+    {
+      "word": "BLACK",
+      "clue": "As <> as {}",
+      "transform": "as"
+    },
+    {
+      "word": "NIGHT",
+      "clue": "Opposite of <>",
+      "transform": "opposite"
+    },
+    {
+      "word": "DAY",
+      "clue": null,
+      "transform": null
+    }
+  ]
+}

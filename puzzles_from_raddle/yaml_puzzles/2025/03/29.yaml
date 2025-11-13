@@ -3,44 +3,44 @@ meta:
   author: Sandy Weisz
   difficulty: medium
   theme: Enigmarch 2025
-  fromEmoji: âï¸
-  toEmoji: ð§­
+  fromEmoji: ✍️
+  toEmoji: 🧭
 ladder:
 - word: DRAW
-  clue: Spell ^ backwards to get a kind of spell
+  clue: Spell <> backwards to get a kind of spell
   transform: backwards
 - word: WARD
-  clue: Prefix ^ with a number and it sounds like this direction
+  clue: Prefix <> with a number and it sounds like this direction
   transform: + "Four"
 - word: FORWARD
-  clue: Opposite of ^, in a car
+  clue: Opposite of <>, in a car
   transform: opposite
 - word: REVERSE
-  clue: One step after ^, in a car
+  clue: One step after <>, in a car
   transform: is one step above
 - word: NEUTRAL
-  clue: European car make that's an anagram of ^
+  clue: European car make that's an anagram of <>
   transform: anagram
 - word: RENAULT
-  clue: ^ sounds like a mispronunciation of this American city
+  clue: <> sounds like a mispronunciation of this American city
   transform: kinda sounds like
 - word: RENO
-  clue: Add a T then reverse ^ to get a liquid
+  clue: Add a T then reverse <> to get a liquid
   transform: +T, then reverse
 - word: TONER
-  clue: Office product that relies on a supply of ^
+  clue: Office product that relies on a supply of <>
   transform: is used in a 
 - word: PRINTER
-  clue: Change second letter of ^ to get a kind of artist
+  clue: Change second letter of <> to get a kind of artist
   transform: R->A
 - word: PAINTER
-  clue: Tool used by a ^
+  clue: Tool used by a <>
   transform: uses a 
 - word: BRUSH
-  clue: Counterpart of a ^, for a stylist
+  clue: Counterpart of a <>, for a stylist
   transform: and
 - word: COMB
-  clue: Remove one stroke from last letter of ^, then add an animal, to get a tool
+  clue: Remove one stroke from last letter of <>, then add an animal, to get a tool
   transform: B->P, +ASS
 - word: COMPASS
   clue:

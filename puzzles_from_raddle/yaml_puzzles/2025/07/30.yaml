@@ -2,39 +2,39 @@ meta:
   title: From ABBOTT to ELEMENTARY
   author: Sandy Weisz and Mao Reynolds
   difficulty: medium
-  theme: Emmy nominations 2005
+  theme: Emmy nominations 2025
   message:
     This week we're honoring some of this year's Emmy nominees.
 ladder:
 - word: ABBOTT
-  clue: "^'s comedy partner"
+  clue: "<>'s comedy partner"
   transform: partner
 - word: COSTELLO
-  clue: Change a trigram (three consecutive letters) in ^ to one letter to get a major retailer
+  clue: Change a trigram (three consecutive letters) in <> to one letter to get a major retailer
   transform: ELL->C
 - word: COSTCO
-  clue: Delete the middle two letters in ^ to get a Pixar movie
+  clue: Delete the middle two letters in <> to get a Pixar movie
   transform: Remove ST
 - word: COCO
-  clue: Fashionista ^
-  transform: â¦
+  clue: Fashionista <>
+  transform: …
 - word: CHANEL
-  clue: Insert a letter in ^ to get something on TV
+  clue: Insert a letter in <> to get something on TV
   transform: +N
 - word: CHANNEL
-  clue: The ___ ^, famous swimming location
+  clue: The ^ <>, famous swimming location
   transform: connecting Atlantic and North Sea
 - word: ENGLISH
-  clue: An ^ ___ always includes a banger?
+  clue: An <> ^ always includes a banger?
   transform: love a hearty
 - word: BREAKFAST
-  clue: Meal after ^
+  clue: Meal after <>
   transform: then
 - word: LUNCH
-  clue: ^ is enjoyed in the ___ of the day
+  clue: <> is enjoyed in the ^ of the day
   transform: is eaten in the
 - word: MIDDLE
-  clue: It comes before ^, school-wise
+  clue: It comes before <>, school-wise
   transform: school comes after
 - word: ELEMENTARY
   clue:

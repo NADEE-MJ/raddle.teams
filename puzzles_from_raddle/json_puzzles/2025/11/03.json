@@ -1,0 +1,71 @@
+{
+  "meta": {
+    "title": "From BOUNCY to HOUSE",
+    "author": "Sandy Weisz and Mao Reynolds",
+    "difficulty": "medium",
+    "theme": "Block Party",
+    "message": "Bouncy houses and other inflatable structures are common sights at block parties. The bouncy house we know today was invented in 1958 by John Scurlock, who taught at Tulane University and also worked for NASA — but Scurlock’s wife, Frances, was the one who thought of renting out the inflatable houses for parties."
+  },
+  "ladder": [
+    {
+      "word": "BOUNCY",
+      "clue": "Change one letter in <> to get a kind of reward",
+      "transform": "C->T"
+    },
+    {
+      "word": "BOUNTY",
+      "clue": "\"{} on the <>\", novel and movie about a true event",
+      "transform": "suffered a"
+    },
+    {
+      "word": "MUTINY",
+      "clue": "Metal found inside <>",
+      "transform": "includes"
+    },
+    {
+      "word": "TIN",
+      "clue": "Movie that features a <> man",
+      "transform": "man went off to see"
+    },
+    {
+      "word": "THE WIZARD OF OZ",
+      "clue": "Dog from <>",
+      "transform": "dog"
+    },
+    {
+      "word": "TOTO",
+      "clue": "Biggest hit from <>",
+      "transform": "sang about the rains down in"
+    },
+    {
+      "word": "AFRICA",
+      "clue": "There are 54 {} in <>",
+      "transform": "has 54"
+    },
+    {
+      "word": "COUNTRIES",
+      "clue": "Muppet found at the start of <>",
+      "transform": "-RIES"
+    },
+    {
+      "word": "COUNT",
+      "clue": "<>{}, a New Year’s Eve tradition",
+      "transform": "the numbers"
+    },
+    {
+      "word": "DOWN",
+      "clue": "<> and {} (destitute)",
+      "transform": "and"
+    },
+    {
+      "word": "OUT",
+      "clue": "<>{}, an old-fashioned place to go?",
+      "transform": "back there's a tiny"
+    },
+    {
+      "word": "HOUSE",
+      "clue": null,
+      "transform": null
+    }
+  ]
+}

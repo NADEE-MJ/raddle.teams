@@ -7,37 +7,37 @@ meta:
     "It's time for a Mystery Theme! Every Raddle this week (Monday thru Friday) is part of a secret theme that you can figure out. The answer is one word. When you've solved it, [submit your name here](/mystery) to be included in the list of solvers."
 ladder:
 - word: OVER
-  clue: Opposite of ^
+  clue: Opposite of <>
   transform: opposite
 - word: UNDER
-  clue: Someone in financial straits is ^___
-  transform: â¦
+  clue: Someone in financial straits is <>^
+  transform: …
 - word: WATER
-  clue: Where to spend a relaxing day by the ^
+  clue: Where to spend a relaxing day by the <>
   transform: laps up on a
 - word: BEACH
-  clue: What a ^ is made of
+  clue: What a <> is made of
   transform: is made
 - word: SAND
-  clue: A large mound of ^
+  clue: A large mound of <>
   transform: piled up
 - word: DUNE
-  clue: "Nickname for the drug in \"^\""
+  clue: "Nickname for the drug in \"<>\""
   transform: characters hunt for the
 - word: SPICE
-  clue: Only ^ Girl named after a ^
+  clue: Only <> Girl named after a <>
   transform: Girl
 - word: GINGER
-  clue: Change one letter in ^ to get a digit
+  clue: Change one letter in <> to get a digit
   transform: G->F
 - word: FINGER
-  clue: Body part that includes ^s
+  clue: Body part that includes <>s
   transform: is part of your 
 - word: HAND
-  clue: Common instrument with 2-3 ^s
+  clue: Common instrument with 2-3 <>s
   transform: is on a
 - word: CLOCK
-  clue: What's told by a ^
+  clue: What's told by a <>
   transform: tells
 - word: TIME
   clue:

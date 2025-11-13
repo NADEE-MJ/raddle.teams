@@ -1,0 +1,71 @@
+{
+  "meta": {
+    "title": "From MURDER to MYSTERY",
+    "author": "Sandy Weisz and Mao Reynolds",
+    "difficulty": "medium",
+    "theme": "Crime Fiction",
+    "message": "This week’s Raddles unpack common tropes in crime fiction. The first murder mystery, according to the [New York Times](https://www.nytimes.com/2011/01/09/books/review/Collins-t.html?pagewanted=all&_r=1&) was “The Notting Hill Mystery,” published in 1862 under the pseudonym Charles Felix. Like a dogged detective tracking down the culprit, the Times found that the true identity of Felix was Charles Warren Adams, an English lawyer, publisher and anti-vivisectionist (that is, someone opposed to animal experimentation). The latest murder mystery is a \"Murder Book\" puzzle that we made with our friends at Field Notes. [Get one here](https://fieldnotesbrand.com/dispatches/wednesday-murder-club)!"
+  },
+  "ladder": [
+    {
+      "word": "MURDER",
+      "clue": "One animal in a <>",
+      "transform": "contains many a"
+    },
+    {
+      "word": "CROW",
+      "clue": "{}<>, something found in a field (or walking on a certain road)",
+      "transform": "will get a"
+    },
+    {
+      "word": "SCARE",
+      "clue": "Change one letter in <> to get something found in many a trunk",
+      "transform": "C->P"
+    },
+    {
+      "word": "SPARE",
+      "clue": "Only result better than a <>",
+      "transform": "is only worse than a"
+    },
+    {
+      "word": "STRIKE",
+      "clue": "Three <>s",
+      "transform": "x3"
+    },
+    {
+      "word": "OUT",
+      "clue": "{} <> (auditions)",
+      "transform": "…"
+    },
+    {
+      "word": "TRIES",
+      "clue": "Change the first letter in <> to get a zodiac sign",
+      "transform": "T->A"
+    },
+    {
+      "word": "ARIES",
+      "clue": "Add an R to <> and anagram to get a Spanish geographical term",
+      "transform": "+R, then anagram"
+    },
+    {
+      "word": "SIERRA",
+      "clue": "<> {}, one-time soft drink",
+      "transform": "…"
+    },
+    {
+      "word": "MIST",
+      "clue": "Seminal video game that sounds like \"<>\"",
+      "transform": "I->Y"
+    },
+    {
+      "word": "MYST",
+      "clue": "Append three letters to <> to get a conundrum",
+      "transform": "+ERY"
+    },
+    {
+      "word": "MYSTERY",
+      "clue": null,
+      "transform": null
+    }
+  ]
+}

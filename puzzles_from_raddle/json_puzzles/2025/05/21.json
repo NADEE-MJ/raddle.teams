@@ -9,67 +9,67 @@
   "ladder": [
     {
       "word": "PIXIE",
-      "clue": "Remove a Greek letter from ^ to get something sweet",
+      "clue": "Remove a Greek letter from <> to get something sweet",
       "transform": "-XI"
     },
     {
       "word": "PIE",
-      "clue": "The bottom and top of a ^, usually",
+      "clue": "The bottom and top of a <>, usually",
       "transform": "is surrounded by"
     },
     {
       "word": "CRUST",
-      "clue": "One layer below the ^",
+      "clue": "One layer below the <>",
       "transform": "covers the"
     },
     {
       "word": "MANTLE",
-      "clue": "Yankee ^",
+      "clue": "Yankee <>",
       "transform": "as in"
     },
     {
       "word": "MICKEY",
-      "clue": "Partner of ^",
+      "clue": "Partner of <>",
       "transform": "loves"
     },
     {
       "word": "MINNIE",
-      "clue": "Rotate one letter in ^ 180Â° to get a bear",
+      "clue": "Rotate one letter in <> 180° to get a bear",
       "transform": "M->W"
     },
     {
       "word": "WINNIE",
-      "clue": "Animal sound that sounds like \"^\"",
+      "clue": "Animal sound that sounds like \"<>\"",
       "transform": "sounds like"
     },
     {
       "word": "WHINNY",
-      "clue": "Animal that makes a ^",
+      "clue": "Animal that makes a <>",
       "transform": "is made by a"
     },
     {
       "word": "HORSE",
-      "clue": "^___, vegetable that is neither ^ nor ___",
+      "clue": "<>{}, vegetable that is neither <> nor {}",
       "transform": "+"
     },
     {
       "word": "RADISH",
-      "clue": "Change one letter of ^ to a bigram (two letters) to get a word that describes many a ^",
+      "clue": "Change one letter of <> to a bigram (two letters) to get a word that describes many a <>",
       "transform": "A->ED"
     },
     {
       "word": "REDDISH",
-      "clue": "Planet that is ^",
+      "clue": "Planet that is <>",
       "transform": "planet"
     },
     {
       "word": "MARS",
-      "clue": "^ is the god of ___",
+      "clue": "<> is the god of {}",
       "transform": "is the god of"
     },
     {
       "word": "WAR",
-      "clue": "One who participates in a ^",
+      "clue": "One who participates in a <>",
       "transform": "is fought by a"
     },
     {

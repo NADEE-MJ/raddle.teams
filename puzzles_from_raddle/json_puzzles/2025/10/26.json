@@ -1,0 +1,76 @@
+{
+  "meta": {
+    "title": "From CRUELLA to DE VIL",
+    "author": "Sandy Weisz and Mao Reynolds",
+    "difficulty": "medium",
+    "theme": "Whodunit",
+    "message": "A murder has been committed at our Halloween party! Seven witnesses (in costume) have given testimony, in the form of Raddles. First up is Cruella De Vil — but she's just one piece of the puzzle. Stay tuned as more witnesses come forward. [Update: the solution [can be found here](/mystery/whodunit)]"
+  },
+  "ladder": [
+    {
+      "word": "CRUELLA",
+      "clue": "Sport that sounds like the first syllable of \"<>\"",
+      "transform": "partially sounds like"
+    },
+    {
+      "word": "CREW",
+      "clue": "<> {}, a type of 👕",
+      "transform": "kind of"
+    },
+    {
+      "word": "NECK",
+      "clue": "Change one letter in <> to get a kiss",
+      "transform": "N->P"
+    },
+    {
+      "word": "PECK",
+      "clue": "Four <>s",
+      "transform": "x4"
+    },
+    {
+      "word": "BUSHEL",
+      "clue": "Add an I to <> and anagram to get a living (or dead) comedian-actor",
+      "transform": "+I, then anagram"
+    },
+    {
+      "word": "BELUSHI",
+      "clue": "Show that featured <>",
+      "transform": "actored on"
+    },
+    {
+      "word": "SNL",
+      "clue": "What the middle letter of <> stands for",
+      "transform": "partially stands for"
+    },
+    {
+      "word": "NIGHT",
+      "clue": "<> {}, something found in a kid’s bedroom",
+      "transform": "N->L"
+    },
+    {
+      "word": "LIGHT",
+      "clue": "Change one letter in <> to get something said in agreement",
+      "transform": "L->R"
+    },
+    {
+      "word": "RIGHT",
+      "clue": "A <> {} looks like an L",
+      "transform": "is a kind of"
+    },
+    {
+      "word": "ANGLE",
+      "clue": "Swap two letters in <> to get a particular pro baseballer",
+      "transform": "L<->E"
+    },
+    {
+      "word": "ANGEL",
+      "clue": "Counterpart of an <>",
+      "transform": "counterpart"
+    },
+    {
+      "word": "DE VIL",
+      "clue": null,
+      "transform": null
+    }
+  ]
+}

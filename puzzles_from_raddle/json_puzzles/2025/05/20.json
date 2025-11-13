@@ -9,57 +9,57 @@
   "ladder": [
     {
       "word": "CANNIBAL",
-      "clue": "First name of a famous fictional ^ (that rhymes with ^)",
+      "clue": "First name of a famous fictional <> (that rhymes with <>)",
       "transform": "C->H"
     },
     {
       "word": "HANNIBAL",
-      "clue": "Most famous movie with ^",
+      "clue": "Most famous movie with <>",
       "transform": "was in"
     },
     {
       "word": "THE SILENCE OF THE LAMBS",
-      "clue": "The animals in ^ are baby ___",
+      "clue": "The animals in <> are baby {}",
       "transform": "are baby"
     },
     {
       "word": "SHEEP",
-      "clue": "Change one letter in ^ to get some rest",
+      "clue": "Change one letter in <> to get some rest",
       "transform": "H->L"
     },
     {
       "word": "SLEEP",
-      "clue": "What many of us do while we ^",
+      "clue": "What many of us do while we <>",
       "transform": "perchance to"
     },
     {
       "word": "DREAM",
-      "clue": "Change a bigram (two letters) to a single letter in ^ to get an instrument",
+      "clue": "Change a bigram (two letters) to a single letter in <> to get an instrument",
       "transform": "EA->U"
     },
     {
       "word": "DRUM",
-      "clue": "Drop one letter of ^ to get a liquor",
+      "clue": "Drop one letter of <> to get a liquor",
       "transform": "-D"
     },
     {
       "word": "RUM",
-      "clue": "Popular drink ^ & ___",
+      "clue": "Popular drink <> & {}",
       "transform": "&"
     },
     {
       "word": "COKE",
-      "clue": "Drug that is sometimes called ^",
+      "clue": "Drug that is sometimes called <>",
       "transform": "aka"
     },
     {
       "word": "COCAINE",
-      "clue": "Actor whose last name is ^ minus a bigram (two letters)",
+      "clue": "Actor whose last name is <> minus a bigram (two letters)",
       "transform": "-CO +MICHAEL"
     },
     {
       "word": "MICHAEL CAINE",
-      "clue": "Job occupied by ^ in three movies",
+      "clue": "Job occupied by <> in three movies",
       "transform": "thrice played a"
     },
     {

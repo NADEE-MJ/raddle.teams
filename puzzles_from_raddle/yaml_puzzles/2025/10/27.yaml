@@ -1,0 +1,50 @@
+meta:
+  title: From AUSTIN to POWERS
+  author: Sandy Weisz and Mao Reynolds
+  difficulty: medium
+  theme: Whodunit
+  message: 
+    "A murder has been committed at our Halloween party! Seven witnesses (in costume) have given testimony, in the form of Raddles. 
+    Our second witness is the shagadelic Austin Powers, who offered up one piece of the solution. 
+    He's here to help, baby! 
+    [Update: the solution [can be found here](/mystery/whodunit)]"
+ladder:
+- word: AUSTIN
+  clue: <>, ^
+  transform: is the capital of
+- word: TEXAS
+  clue: Swap the vowels in <> to get some duties
+  transform: A<->E
+- word: TAXES
+  clue: Counterpart to <>, according to a famous saying
+  transform: "&"
+- word: DEATH
+  clue: Beverage brand ^ <>
+  transform: in the form of
+- word: LIQUID
+  clue: A <> when it gets 🥵
+  transform: boiled turns into
+- word: GAS
+  clue: Add an E to <> and anagram to get a game company
+  transform: +E, then anagram
+- word: SEGA
+  clue: Blue mascot of <>
+  transform: mascot
+- word: SONIC
+  clue: Drop the first letter of <> and anagram to something you can flip
+  transform: -S, then anagram
+- word: COIN
+  clue: "\"… to <> a ^\""
+  transform: a
+- word: PHRASE
+  clue: Drop the second letter of <> and anagram to get some fruit
+  transform: -H, then anagram
+- word: PEARS
+  clue: Change the third letter of <> to a U and anagram to become remarkable
+  transform: A->U, then anagram
+- word: SUPER
+  clue: "<>^, something Batman doesn’t have"
+  transform: abilities
+- word: POWERS
+  clue:
+  transform:

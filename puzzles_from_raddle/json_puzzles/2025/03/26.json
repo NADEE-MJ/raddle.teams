@@ -1,0 +1,77 @@
+{
+  "meta": {
+    "title": "From RANDOM to PLAY",
+    "author": "Sandy Weisz",
+    "difficulty": "medium",
+    "theme": "Enigmarch 2025",
+    "fromEmoji": "🎲",
+    "toEmoji": "🎭"
+  },
+  "ladder": [
+    {
+      "word": "RANDOM",
+      "clue": "Remove a letter from the end of <> and add one to the beginning to get a famous actor",
+      "transform": "+B -M"
+    },
+    {
+      "word": "BRANDO",
+      "clue": "<>'s first name",
+      "transform": "'s first name is"
+    },
+    {
+      "word": "MARLON",
+      "clue": "Fish that sounds like <>",
+      "transform": "sounds like"
+    },
+    {
+      "word": "MARLIN",
+      "clue": "Creature that can be found in the same city as a <>",
+      "transform": "lives in Miami with a"
+    },
+    {
+      "word": "DOLPHIN",
+      "clue": "Part of a <>, both phonetically and physiologically",
+      "transform": "has a"
+    },
+    {
+      "word": "FIN",
+      "clue": "Person whose face is found on the bill called a \"<>\"",
+      "transform": "features"
+    },
+    {
+      "word": "LINCOLN",
+      "clue": "Adjective canonically used to describe <>",
+      "transform": "is"
+    },
+    {
+      "word": "HONEST",
+      "clue": "An <> person can't do this",
+      "transform": "person can't"
+    },
+    {
+      "word": "LIE",
+      "clue": "Add 3 letters to <> to get a dog breed",
+      "transform": "+COL"
+    },
+    {
+      "word": "COLLIE",
+      "clue": "Name of a famous <> on television",
+      "transform": "named"
+    },
+    {
+      "word": "LASSIE",
+      "clue": "Type of people who call a girl a <>",
+      "transform": "is"
+    },
+    {
+      "word": "SCOTTISH",
+      "clue": "\"The <> {}\": nickname for a famous 17th century work",
+      "transform": "…"
+    },
+    {
+      "word": "PLAY",
+      "clue": null,
+      "transform": null
+    }
+  ]
+}

@@ -3,44 +3,44 @@ meta:
   author: Sandy Weisz
   difficulty: medium
   theme: Enigmarch 2025
-  fromEmoji: ð
-  toEmoji: ð
+  fromEmoji: 💍
+  toEmoji: 🔎
 ladder:
 - word: RING
-  clue: Where you might find a ^ on a bull
+  clue: Where you might find a <> on a bull
   transform: can be found in a bull's
 - word: NOSE
-  clue: Bone in the middle of a ^
+  clue: Bone in the middle of a <>
   transform: contains a
 - word: SEPTUM
-  clue: Double a letter in ^ and anagram to get an ensemble
+  clue: Double a letter in <> and anagram to get an ensemble
   transform: +P and anagram
 - word: MUPPETS
-  clue: Protagonist of most ^ films
+  clue: Protagonist of most <> films
   transform: features
 - word: KERMIT THE FROG
-  clue: Love interest of ^
+  clue: Love interest of <>
   transform: loves
 - word: MISS PIGGY
-  clue: Voice of ^
+  clue: Voice of <>
   transform: is performed by
 - word: FRANK OZ
-  clue: What the second part of ^ stands for
+  clue: What the second part of <> stands for
   transform: contains abbreviation for
 - word: OUNCE
-  clue: ^ is a measurement of this
+  clue: <> is a measurement of this
   transform: is a unit of
 - word: WEIGHT
-  clue: Number that's most of ^
+  clue: Number that's most of <>
   transform: -W
 - word: EIGHT
-  clue: A letter + ^ = this drink
+  clue: A letter + <> = this drink
   transform: +V
 - word: V8
-  clue: ^ describes a kind of what
+  clue: <> describes a kind of what
   transform: is a kind of
 - word: ENGINE
-  clue: Kind of ^ found on the web
+  clue: Kind of <> found on the web
   transform: can help you
 - word: SEARCH
   clue:

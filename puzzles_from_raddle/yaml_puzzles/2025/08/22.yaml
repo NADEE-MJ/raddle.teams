@@ -6,37 +6,37 @@ meta:
   message: Summer's not over yet! Let's enjoy some ice cream.
 ladder:
 - word: ROCKY
-  clue: Last name of ^, in movies
-  transform: â¦
+  clue: Last name of <>, in movies
+  transform: …
 - word: BALBOA
-  clue: Costume item found at the end of ^
+  clue: Costume item found at the end of <>
   transform: -BAL
 - word: BOA
-  clue: A ^ is a kind of ___
+  clue: A <> is a kind of ^
   transform: is a kind of
 - word: SNAKE
-  clue: Type of ^ that's also a programming language
+  clue: Type of <> that's also a programming language
   transform: that's also a language
 - word: PYTHON
-  clue: Britain's "___ ^"
+  clue: Britain's "^ <>"
   transform: known for silly walks
 - word: MONTY
-  clue: Change one letter in ^ to get something in your wallet
+  clue: Change one letter in <> to get something in your wallet
   transform: T->E
 - word: MONEY
-  clue: Type of ^ found backwards in ^
+  clue: Type of <> found backwards in <>
   transform: features, backwards,
 - word: YEN
-  clue: Change one letter in ^ to a bigram (two letters) to get a measurement of time
+  clue: Change one letter in <> to a bigram (two letters) to get a measurement of time
   transform: N->AR
 - word: YEAR
-  clue: Add an adjective to the front of ^ to get a Fortune 500 company
+  clue: Add an adjective to the front of <> to get a Fortune 500 company
   transform: +GOOD
 - word: GOODYEAR
-  clue: Signature products of ^
+  clue: Signature products of <>
   transform: makes
 - word: TIRES
-  clue: ^ run on a ___
+  clue: <> run on a ^
   transform: run on the
 - word: ROAD
   clue:

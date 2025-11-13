@@ -4,45 +4,45 @@ meta:
   difficulty: medium
   theme: Severance
   message:
-    Optics & Design is a department of Lumon Industries in âSeverance.â 
+    Optics & Design is a department of Lumon Industries in “Severance.” 
     Like much of the TV show, the department is shrouded in mystery. 
     It oversees the installation of paintings in the office, which are unsettling and inscrutable at best, and often, upon further inspection, deeply filled with lore.
 ladder:
 - word: OPTICS
-  clue: Anagram ^ to get some school subjects
+  clue: Anagram <> to get some school subjects
   transform: anagrammed
 - word: TOPICS
-  clue: Add a letter to ^ to get a section of Earth
+  clue: Add a letter to <> to get a section of Earth
   transform: +R
 - word: TROPICS
-  clue: Tree associated with the ^
+  clue: Tree associated with the <>
   transform: tree
 - word: PALM
-  clue: Your ^ is on the side of your ___ you don't know as well
+  clue: Your <> is on the side of your ^ you don't know as well
   transform: is on one side of your
 - word: HAND
-  clue: Face with 2 or 3 ^s
+  clue: Face with 2 or 3 <>s
   transform: is on a
 - word: CLOCK
-  clue: Drop a letter from ^ to get something in a door
+  clue: Drop a letter from <> to get something in a door
   transform: -C
 - word: LOCK
-  clue: A ^ is a few strands of ___
+  clue: A <> is a few strands of ^
   transform: is a few strands of
 - word: HAIR
-  clue: Princess Bubblegum from "Adventure Time" has ___ ^
+  clue: Princess Bubblegum from "Adventure Time" has ^ <>
   transform: on Princess Bubblegum
 - word: PINK
-  clue: Drop a letter from ^ to get something in a printer
+  clue: Drop a letter from <> to get something in a printer
   transform: -P
 - word: INK
-  clue: Implement filled with ^
+  clue: Implement filled with <>
   transform: is in a
 - word: PEN
-  clue: Used a ^ to approve something
+  clue: Used a <> to approve something
   transform: is used by one who
 - word: SIGNED
-  clue: Anagram ^ to get a plan
+  clue: Anagram <> to get a plan
   transform: anagrammed
 - word: DESIGN
   clue:

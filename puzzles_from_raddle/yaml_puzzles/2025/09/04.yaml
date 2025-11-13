@@ -10,41 +10,41 @@ meta:
     and became a breakthrough hit partially due to its marketing campaign that blurred the lines between fake documentary and real.
 ladder:
 - word: BLAIR
-  clue: Zodiac sign that is an anagram of ^
+  clue: Zodiac sign that is an anagram of <>
   transform: anagram
 - word: LIBRA
-  clue: Measuring tool that is the symbol for ^
+  clue: Measuring tool that is the symbol for <>
   transform: features
 - word: SCALES
-  clue: Disney princess with ^
+  clue: Disney princess with <>
   transform: on the tail of
 - word: ARIEL
-  clue: Drop the even letters of ^ to suffer
+  clue: Drop the even letters of <> to suffer
   transform: drop even letters
 - word: AIL
-  clue: Add different letters to the front and back of ^ to get things found on most mammals
+  clue: Add different letters to the front and back of <> to get things found on most mammals
   transform: +T, +S
 - word: TAILS
-  clue: "Stories that sound like \"^\""
+  clue: "Stories that sound like \"<>\""
   transform: sounds like
 - word: TALES
-  clue: ___^, an animated TV show of the '80s and 2010s
+  clue: ^<>, an animated TV show of the '80s and 2010s
   transform: of a
 - word: DUCK
-  clue: ___ ^, something found in the bath
+  clue: ^ <>, something found in the bath
   transform: in the bath
 - word: RUBBER
-  clue: Counterpart of ^, in a children's taunt
+  clue: Counterpart of <>, in a children's taunt
   transform: i am, you are
 - word: GLUE
-  clue: Change one letter in ^ to get some evidence
+  clue: Change one letter in <> to get some evidence
   transform: G->C
 - word: CLUE
-  clue: Miss ___ from ^
+  clue: Miss ^ from <>
   transform: features Miss
 - word: SCARLET
-  clue: Marvel character The ^ ___
-  transform: â¦
+  clue: Marvel character The <> ^
+  transform: …
 - word: WITCH
   clue:
   transform:

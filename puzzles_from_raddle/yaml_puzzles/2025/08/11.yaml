@@ -11,43 +11,43 @@ meta:
     I guess this means poodles are the greatest breed. (And the greatest of them all is our 7-year-old standard, Cleo.)
 ladder:
 - word: YANKEE
-  clue: Crosstown rival of a ^
+  clue: Crosstown rival of a <>
   transform: rival
 - word: MET
-  clue: Add a letter to ^ to get a tech company
+  clue: Add a letter to <> to get a tech company
   transform: +A
 - word: META
-  clue: Anagram ^ to get a group of people
+  clue: Anagram <> to get a group of people
   transform: anagram
 - word: TEAM
-  clue: "What isn\u2019t in ^?"
+  clue: "What isn\u2019t in <>?"
   transform: doesn't have an
 - word: I
-  clue: "\u201CThe ___ and ^\u201D"
+  clue: "\u201CThe ^ and <>\u201D"
   transform: and the
 - word: KING
-  clue: Drop a letter from ^ to get some relatives
+  clue: Drop a letter from <> to get some relatives
   transform: -G
 - word: KIN
-  clue: ^ is a broader term for your ___
+  clue: <> is a broader term for your ^
   transform: is
 - word: FAMILY
-  clue: Structure that might use to display your ^ in detail
+  clue: Structure that might use to display your <> in detail
   transform: diagram
 - word: TREE
-  clue: A large group of ^s
+  clue: A large group of <>s
   transform: x1000
 - word: FOREST
-  clue: ___^, a dense ecosystem
+  clue: ^<>, a dense ecosystem
   transform: has lots of 
 - word: RAIN
-  clue: Add a letter to ^ to get an organ in your body
+  clue: Add a letter to <> to get an organ in your body
   transform: +B
 - word: BRAIN
-  clue: Food-based nickname for your ^
+  clue: Food-based nickname for your <>
   transform: aka your
 - word: NOODLE
-  clue: Change one letter in ^ to get a sketch
+  clue: Change one letter in <> to get a sketch
   transform: N->D
 - word: DOODLE
   clue:

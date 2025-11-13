@@ -1,0 +1,46 @@
+meta:
+  title: From LUST to PRIDE
+  author: Sandy Weisz and Mao Reynolds
+  difficulty: medium
+  theme: 7x7
+  message: "I'm turning 49 this week. 49 is 7x7, so I'm celebrating with seven sets
+    of seven: seven Raddles that go from the first to the seventh.
+    (And today is my birthday, so you'll forgive me for indulging in a bit of Gen X nostalgia.)
+    According to the Catholic Church, the seven deadly sins are lust, gluttony, greed, sloth, wrath, envy and pride. This specific set isn’t actually mentioned in the Bible; the first person to classify them was Tertullian, who lived in the second century. The worst sin is often believed to be pride, hence the phrase “Pride goeth before a fall.”"
+ladder:
+- word: LUST
+  clue: Change one letter in <> to get a kind of sculpture
+  transform: L->B
+- word: BUST
+  clue: "\"<> a ^\", 1989 hit song with lots of samples"
+  transform: a
+- word: MOVE
+  clue: Insert a letter in <> to get a kind of entertainment
+  transform: +I
+- word: MOVIE
+  clue: Famous <> award
+  transform: award
+- word: OSCAR
+  clue: One step back from <> in a certain alphabet (also, what it is right now)
+  transform: is one after
+- word: NOVEMBER
+  clue: "\"<> ^\", 1992 hit with an epic music video"
+  transform: is so cold it's hard to hold a candle in the
+- word: RAIN
+  clue: "\"^ in the <>\", classic film from 1952"
+  transform: is good for
+- word: SINGIN
+  clue: "Insert an H into <> and anagram to get something the sun’s doing"
+  transform: +H, then anagram
+- word: SHINING
+  clue: "Author of \"The <>\""
+  transform: author
+- word: KING
+  clue: "\"The ^ <>\", story told on screen and stage"
+  transform: Mufasa is a
+- word: LION
+  clue: Many a <>
+  transform: + lion + lion (etc.) =
+- word: PRIDE
+  clue:
+  transform:

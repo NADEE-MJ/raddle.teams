@@ -8,43 +8,43 @@ meta:
     No one suspects a thing, even as he gets all the scoops on Superman.  
 ladder:
 - word: DAILY
-  clue: Change a letter in ^ to get a table decoration
+  clue: Change a letter in <> to get a table decoration
   transform: A->O
 - word: DOILY
-  clue: Greasy substance found inside ^
+  clue: Greasy substance found inside <>
   transform: -D, -Y
 - word: OIL
-  clue: Popular fruit-based ^ for cooking
+  clue: Popular fruit-based <> for cooking
   transform: comes from an
 - word: OLIVE
-  clue: ^ ___, a restaurant run by your family?
-  transform: â¦
+  clue: <> ^, a restaurant run by your family?
+  transform: …
 - word: GARDEN
-  clue: Anagram ^ to get a Starbucks order
+  clue: Anagram <> to get a Starbucks order
   transform: anagrammed
 - word: GRANDE
-  clue: Singer ^
+  clue: Singer <>
   transform: is the last name of
 - word: ARIANA
-  clue: Remove the last two letters of ^ to get a solo song
+  clue: Remove the last two letters of <> to get a solo song
   transform: -NA
 - word: ARIA
-  clue: Performance that might feature an ^
+  clue: Performance that might feature an <>
   transform: is featured in an
 - word: OPERA
-  clue: ___ ^, staple of daytime TV
+  clue: ^ <>, staple of daytime TV
   transform: on TV
 - word: SOAP
-  clue: Activity that might feature bubbly ^
+  clue: Activity that might feature bubbly <>
   transform: is used in a
 - word: BATH
-  clue: A fancy ^ might massage you with these
+  clue: A fancy <> might massage you with these
   transform: might have powerful
 - word: JETS
-  clue: ^ are types of ___
+  clue: <> are types of ^
   transform: are
 - word: PLANES
-  clue: Change the last letter of ^ to get a big orb
+  clue: Change the last letter of <> to get a big orb
   transform: S->T
 - word: PLANET
   clue:

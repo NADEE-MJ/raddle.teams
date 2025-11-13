@@ -3,44 +3,44 @@ meta:
   author: Sandy Weisz
   difficulty: medium
   theme: Enigmarch 2025
-  fromEmoji: â©ï¸
-  toEmoji: ð
+  fromEmoji: ↩️
+  toEmoji: 🔗
 ladder:
 - word: TURN
-  clue: Add two letters to the start of ^ to get this planet
+  clue: Add two letters to the start of <> to get this planet
   transform: "+ SA"
 - word: SATURN
-  clue: One of many around ^
+  clue: One of many around <>
   transform: "has many a"
 - word: RING
-  clue: Who carried a powerful ^ a great distance
+  clue: Who carried a powerful <> a great distance
   transform: "was carried by"
 - word: FRODO
-  clue: Change fourth letter of ^ to get a dessert
+  clue: Change fourth letter of <> to get a dessert
   transform: "D->Y"
 - word: FROYO
-  clue: Remove the first and last letters of ^ to get a male name
+  clue: Remove the first and last letters of <> to get a male name
   transform: "-F -O"
 - word: ROY
-  clue: ^ is the first part of this longer acronym
+  clue: <> is the first part of this longer acronym
   transform: "is part of"
 - word: ROY G BIV
-  clue: The second letter of ^ stands for this
+  clue: The second letter of <> stands for this
   transform: "contains"
 - word: ORANGE
-  clue: Drop the first letter of ^ to get a kitchen appliance
+  clue: Drop the first letter of <> to get a kitchen appliance
   transform: "-O"
 - word: RANGE
-  clue: Word that follows ^ in a car model
+  clue: Word that follows <> in a car model
   transform: "precedes"
 - word: ROVER
-  clue: ^ is a classic name for this kind of pet
+  clue: <> is a classic name for this kind of pet
   transform: "is a"
 - word: DOG
-  clue: The ^ in Toy Story is this kind of toy
+  clue: The <> in Toy Story is this kind of toy
   transform: "in Toy Story is named"
 - word: SLINKY
-  clue: Remove the first and last letters of ^ to make a connection
+  clue: Remove the first and last letters of <> to make a connection
   transform: "-S -Y"
 - word: LINK
   clue: ""

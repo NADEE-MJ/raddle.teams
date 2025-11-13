@@ -7,40 +7,40 @@ meta:
     "It's time for a Mystery Theme! Every Raddle this week (Monday thru Friday) is part of a secret theme that you can figure out. The answer is one word. When you've solved it, [submit your name here](/mystery) to be included in the list of solvers."
 ladder:
 - word: FORT
-  clue: ^ ___, where to go for the gold?
+  clue: <> ^, where to go for the gold?
   transform: in Kentucky with gold
 - word: KNOX
-  clue: "Sounds that sound like \"^\""
+  clue: "Sounds that sound like \"<>\""
   transform: sounds like
 - word: KNOCKS
-  clue: What one ^ on, usually
+  clue: What one <> on, usually
   transform: on a
 - word: DOOR
-  clue: "Add an \"E\" sound to ^ to get the titular film character"
+  clue: "Add an \"E\" sound to <> to get the titular film character"
   transform: +"E"
 - word: DORY
-  clue: Close friend of ^
+  clue: Close friend of <>
   transform: is friends with
 - word: NEMO
-  clue: Add a letter to the end of ^ and reverse it to get some people
+  clue: Add a letter to the end of <> and reverse it to get some people
   transform: +W, then reverse
 - word: WOMEN
-  clue: Young ^
+  clue: Young <>
   transform: but younger
 - word: GIRLS
-  clue: What ^ run, according to a popular 2011 pop song
+  clue: What <> run, according to a popular 2011 pop song
   transform: according to Beyonce, run
 - word: THE WORLD
-  clue: International sports competition ^ ___
-  transform: â¦
+  clue: International sports competition <> ^
+  transform: …
 - word: CUP
-  clue: Remove one letter in ^ to get a direction
+  clue: Remove one letter in <> to get a direction
   transform: -C
 - word: UP
-  clue: Opposite of ^
+  clue: Opposite of <>
   transform: opposite
 - word: DOWN
-  clue: Change one letter in ^ to get a dress
+  clue: Change one letter in <> to get a dress
   transform: D->G
 - word: GOWN
   clue:

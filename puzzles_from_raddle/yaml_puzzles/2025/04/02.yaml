@@ -6,43 +6,43 @@ meta:
   message: "[This week](/2025/04/01), I'm building Raddles around acts we saw at Big Ears. Our first show was [Rich Ruth](https://thirdmanrecords.com/collections/rich-ruth), a Nashville-based musician who plays an entrancing style of ambient instrumental music. Jazzy, synthy, and a little bit spacey, Ruth and his band set the perfect tone for kicking things off."
 ladder:
 - word: RICH
-  clue: Add an A to ^ and anagram to get something with legs
+  clue: Add an A to <> and anagram to get something with legs
   transform: +A, then anagram
 - word: CHAIR
-  clue: Kind of ^ found on a porch
+  clue: Kind of <> found on a porch
   transform: can be 
 - word: ROCKING
-  clue: Animal that can follow ^
-  transform: â¦
+  clue: Animal that can follow <>
+  transform: …
 - word: HORSE
-  clue: Kind of ^ with something surprising inside
+  clue: Kind of <> with something surprising inside
   transform: can be
 - word: TROJAN
-  clue: City that the ^s were from
+  clue: City that the <>s were from
   transform: is from
 - word: TROY
-  clue: Change one letter of ^ to get an '80s movie
+  clue: Change one letter of <> to get an '80s movie
   transform: Y -> N
 - word: TRON
-  clue: Star of ^
+  clue: Star of <>
   transform: stars
 - word: JEFF BRIDGES
-  clue: Add an R to the second part of ^ to get the last name of this indie rock star
+  clue: Add an R to the second part of <> to get the last name of this indie rock star
   transform: +R
 - word: PHOEBE BRIDGERS
-  clue: ^ has the same initials as this widespread foodstuff
+  clue: <> has the same initials as this widespread foodstuff
   transform: has the same initials as
 - word: PEANUT BUTTER
-  clue: Append 5 letters to the second part of ^ to get some insects
+  clue: Append 5 letters to the second part of <> to get some insects
   transform: +FLIES
 - word: BUTTERFLIES
-  clue: The final 4 letters of ^ are these deceptions
+  clue: The final 4 letters of <> are these deceptions
   transform: last 4 letters are
 - word: LIES
-  clue: Opposite of ^
+  clue: Opposite of <>
   transform: opposite of
 - word: TRUTHS
-  clue: Remove the first and last letters of ^ to get a woman's name
+  clue: Remove the first and last letters of <> to get a woman's name
   transform: "-T -S"
 - word: RUTH
   clue:

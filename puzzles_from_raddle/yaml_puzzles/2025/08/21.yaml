@@ -6,37 +6,37 @@ meta:
   message: Summer's not over yet! Let's enjoy some ice cream.
 ladder:
 - word: RAINBOW
-  clue: Substance found at the end of a ^
+  clue: Substance found at the end of a <>
   transform: leads to
 - word: GOLD
-  clue: Measurement used for ^
+  clue: Measurement used for <>
   transform: is many a
 - word: KARAT
-  clue: Vegetable that sounds like ^
+  clue: Vegetable that sounds like <>
   transform: sounds like
 - word: CARROT
-  clue: Alternative to a ^, for discipline
+  clue: Alternative to a <>, for discipline
   transform: or the
 - word: STICK
-  clue: Choice that rhymes with ^
+  clue: Choice that rhymes with <>
   transform: rhymes with
 - word: PICK
-  clue: ^ your ___â, something asked ironically (hopefully!) by a bartender
+  clue: <> your ^”, something asked ironically (hopefully!) by a bartender
   transform: your
 - word: POISON
-  clue: Change one letter in ^ to get a lock-up
+  clue: Change one letter in <> to get a lock-up
   transform: O->R
 - word: PRISON
-  clue: One who runs a ^
+  clue: One who runs a <>
   transform: is run by a
 - word: WARDEN
-  clue: Change one letter in ^ to get something with flowers
+  clue: Change one letter in <> to get something with flowers
   transform: W->G
 - word: GARDEN
-  clue: What might be used to water a ^
+  clue: What might be used to water a <>
   transform: is watered by a
 - word: SPRINKLER
-  clue: Drop one letter from ^ to get a treat
+  clue: Drop one letter from <> to get a treat
   transform: R->S
 - word: SPRINKLE
   clue:

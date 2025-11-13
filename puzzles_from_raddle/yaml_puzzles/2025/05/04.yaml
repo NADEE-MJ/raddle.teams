@@ -8,37 +8,37 @@ meta:
     Raddle has received no compensation for this promotion, but as a fan of Rudd, Robinson, and the concept of friendship, I'm happy to do it."
 ladder:
 - word: FRIEND
-  clue: Pluralize ^ to get a TV show
+  clue: Pluralize <> to get a TV show
   transform: +S
 - word: FRIENDS
-  clue: Blonde character on ^
+  clue: Blonde character on <>
   transform: features
 - word: PHOEBE
-  clue: Tool found within ^
+  clue: Tool found within <>
   transform: contains a
 - word: HOE
-  clue: Add a letter to ^ to get something you might make with a ^
+  clue: Add a letter to <> to get something you might make with a <>
   transform: +L
 - word: HOLE
-  clue: Kind of ^ found in space
+  clue: Kind of <> found in space
   transform: can be
 - word: BLACK
-  clue: Opposite of ^
+  clue: Opposite of <>
   transform: opposite
 - word: WHITE
-  clue: Beloved TV actress ^
+  clue: Beloved TV actress <>
   transform: as in
 - word: BETTY
-  clue: Change the last letter of ^ to get something you might find in an aquarium
+  clue: Change the last letter of <> to get something you might find in an aquarium
   transform: Y->A
 - word: BETTA
-  clue: A ^ is this kind of animal
+  clue: A <> is this kind of animal
   transform: is a
 - word: FISH
-  clue: Band that sounds like ^
+  clue: Band that sounds like <>
   transform: sounds like
 - word: PHISH
-  clue: Remove the last letter of ^ and anagram to get a vessel
+  clue: Remove the last letter of <> and anagram to get a vessel
   transform: -H, anagram
 - word: SHIP
   clue:

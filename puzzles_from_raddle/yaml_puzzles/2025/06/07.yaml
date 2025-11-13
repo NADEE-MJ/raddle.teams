@@ -8,37 +8,37 @@ meta:
     TIL it was co-written by Paul Shaffer, the bandleader of the "Late Show with David Letterman".
 ladder:
 - word: RAINING
-  clue: When it's ^ a lot, it's ^ these
+  clue: When it's <> a lot, it's <> these
   transform: heavily, aka
 - word: CATS AND DOGS
-  clue: Category that ^ fall into
+  clue: Category that <> fall into
   transform: are
 - word: PETS
-  clue: Reverse ^ to get part of a walk
+  clue: Reverse <> to get part of a walk
   transform: backwards
 - word: STEP
-  clue: '"^ ___", 2008 movie'
-  transform: â¦
+  clue: '"<> ^", 2008 movie'
+  transform: …
 - word: BROTHERS
-  clue: Biblical term "^ ___"
-  transform: â¦
+  clue: Biblical term "<> ^"
+  transform: …
 - word: KEEPER
-  clue: 'One who might wear a protective suit: ___^'
+  clue: 'One who might wear a protective suit: ^<>'
   transform: of many a
 - word: BEE
-  clue: Term for the ^ in charge
+  clue: Term for the <> in charge
   transform: in charge
 - word: QUEEN
-  clue: Counterpart of a ^
+  clue: Counterpart of a <>
   transform: Counterpart
 - word: KING
-  clue: London neighborhood ^'s ___
+  clue: London neighborhood <>'s ^
   transform: "'s"
 - word: CROSS
-  clue: It looks like a tilted ^
+  clue: It looks like a tilted <>
   transform: tilted
 - word: X
-  clue: Word that follows ^ in comic books
+  clue: Word that follows <> in comic books
   transform: "-"
 - word: MEN
   clue:

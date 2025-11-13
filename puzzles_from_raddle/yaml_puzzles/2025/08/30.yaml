@@ -4,45 +4,45 @@ meta:
   difficulty: medium
   theme: Rolling Stones
   message:
-    This weekâs Raddles are inspired by songs by the Rolling Stones. Todayâs is âUnder My Thumb,â which was never released as a single but appeared on their 1966 album âAftermath.â 
+    This week’s Raddles are inspired by songs by the Rolling Stones. Today’s is “Under My Thumb,” which was never released as a single but appeared on their 1966 album “Aftermath.” 
     It was this song that was being played during the deadly incident at Altamont, as depicted in the documentary film "Gimme Shelter."
 ladder:
 - word: UNDER
-  clue: Change one letter in ^ to get part of a cow
+  clue: Change one letter in <> to get part of a cow
   transform: N->D
 - word: UDDER
-  clue: What comes out of an ^
+  clue: What comes out of an <>
   transform: channels
 - word: MILK
-  clue: ^ & ___, the hallmarks of abundance
+  clue: <> & ^, the hallmarks of abundance
   transform: "&"
 - word: HONEY
-  clue: Animal that makes ^
+  clue: Animal that makes <>
   transform: is made by a
 - word: BEE
-  clue: Change one letter in ^ to ask for a pardon?
+  clue: Change one letter in <> to ask for a pardon?
   transform: E->G
 - word: BEG
-  clue: Change one letter in ^ to get a container
+  clue: Change one letter in <> to get a container
   transform: E->A
 - word: BAG
-  clue: Kind of ^ given out at a restaurant
+  clue: Kind of <> given out at a restaurant
   transform: at a restaurant
 - word: DOGGY
-  clue: ^ ___, a way to swim
+  clue: <> ^, a way to swim
   transform: swimming style
 - word: PADDLE
-  clue: Attached ^ on some boats
+  clue: Attached <> on some boats
   transform: that's locked in
 - word: OAR
-  clue: Add a letter to the start of ^ to describe what some birds do
+  clue: Add a letter to the start of <> to describe what some birds do
   transform: +S
 - word: SOAR
-  clue: Painful thing that sounds like ^
+  clue: Painful thing that sounds like <>
   transform: sounds like
 - word: SORE
-  clue: ^ ___, something that sticks out?
-  transform: â¦
+  clue: <> ^, something that sticks out?
+  transform: …
 - word: THUMB
   clue:
   transform:

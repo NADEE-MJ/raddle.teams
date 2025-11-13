@@ -8,37 +8,37 @@ meta:
     If you're lucky, you'll find some new rooms every day, which might hold some items you need to get closer to solving the mystery.
 ladder:
 - word: MOUNT
-  clue: Famous sculpture ^ ___
-  transform: â¦
+  clue: Famous sculpture <> ^
+  transform: …
 - word: RUSHMORE
-  clue: Director of ^
+  clue: Director of <>
   transform: was directed by
 - word: WES ANDERSON
-  clue: Crafty act that is the first part of ^, backwards
+  clue: Crafty act that is the first part of <>, backwards
   transform: reversed, partilaly
 - word: SEW
-  clue: Change the first letter of ^ to get an animal sound
+  clue: Change the first letter of <> to get an animal sound
   transform: S->M
 - word: MEW
-  clue: Animal that might ^ when hungry
+  clue: Animal that might <> when hungry
   transform: comes out of a
 - word: CAT
-  clue: Food found by reversing ^ and adding a letter
+  clue: Food found by reversing <> and adding a letter
   transform: backwards + O
 - word: TACO
-  clue: Restaurant ^ ___
-  transform: â¦
+  clue: Restaurant <> ^
+  transform: …
 - word: BELL
-  clue: Change one letter in ^ to get a piece of clothing
+  clue: Change one letter in <> to get a piece of clothing
   transform: L->T
 - word: BELT
-  clue: Constellation with a ^
+  clue: Constellation with a <>
   transform: worn by
 - word: ORION
-  clue: ^ is known as The ___
+  clue: <> is known as The ^
   transform: the
 - word: HUNTER
-  clue: Actress ^
+  clue: Actress <>
   transform: as in
 - word: HOLLY
   clue:

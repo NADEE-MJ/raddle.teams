@@ -1,0 +1,51 @@
+meta:
+  title: From HURDLES to 800
+  author: Sandy Weisz and Mao Reynolds
+  difficulty: medium
+  theme: 7x7
+  message: "I'm turning 49 this week. 49 is 7x7, so I'm celebrating with seven sets
+    of seven: seven Raddles that go from the first to the seventh.
+    A heptathlon is a combination of seven track and field events.
+    The women’s Olympic heptathlon consists of 100-meter hurdles, a high jump, shot put, a 200-meter dash, a long jump, a javelin throw and a 800-meter run.
+    Men compete in a ten-part Olympic decathlon, but women don’t. Athletes have been [campaigning](https://www.nytimes.com/2021/07/06/sports/olympics/us-track-field-decathlon-women-heptathlon.html) to change this.
+    "
+ladder:
+- word: HURDLES
+  clue: The singular form of <> rhymes with this popular word game
+  transform: -S, rhymes with
+- word: WORDLE
+  clue: "\"Sibling\" of <> that uses 4 colors"
+  transform: is a "sibling" to
+- word: CONNECTIONS
+  clue: Body part that sounds like the 2nd syllable of <>
+  transform: partially sounds like
+- word: NECK
+  clue: A real ^ in the <>
+  transform: has a
+- word: PAIN
+  clue: <> is French for ^
+  transform: is French for
+- word: BREAD
+  clue: <> is slang for ^
+  transform: is slang for
+- word: MONEY
+  clue: Change one letter in <> to get something sweet
+  transform: M->H
+- word: HONEY
+  clue: <> is produced inside a ^
+  transform: comes from a
+- word: HIVE
+  clue: Replace the first letter of <> with its alphabetical neighbor to donate
+  transform: H->G
+- word: GIVE
+  clue: <> up the ^, to pass
+  transform: up the
+- word: GHOST
+  clue: What a <> says, conventionally
+  transform: says
+- word: BOO
+  clue: <>, on a calculator
+  transform: in calculator-speak
+- word: '800'
+  clue:
+  transform:

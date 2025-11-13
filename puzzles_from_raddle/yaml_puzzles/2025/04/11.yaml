@@ -6,43 +6,43 @@ meta:
   message: "I first saw [Andrew Bird](https://www.andrewbird.net/) perform in the basement of a frat house when we were both in college at Northwestern, when I (probably) said, \"This kid's going places.\" Hard to pick my favorite Andrew Bird song, but I suppose it'd have to be the [one with lyrics that sound like palindromes](https://genius.com/Andrew-bird-fake-palindromes-lyrics)."
 ladder:
 - word: ANDREW
-  clue: Rearrange the letters of ^ to roam around
+  clue: Rearrange the letters of <> to roam around
   transform: anagram
 - word: WANDER
-  clue: Change a letter in ^ to get something awe-inspiring
+  clue: Change a letter in <> to get something awe-inspiring
   transform: A->O
 - word: WONDER
-  clue: Add a word to ^ to get a superhero
+  clue: Add a word to <> to get a superhero
   transform: +WOMAN
 - word: WONDER WOMAN
-  clue: Unconventional weapon used by ^
+  clue: Unconventional weapon used by <>
   transform: uses a
 - word: LASSO
-  clue: TV's ^ is associated with this sport
+  clue: TV's <> is associated with this sport
   transform: coaches
 - word: SOCCER
-  clue: ^ is played on a ___, outside of the US
+  clue: <> is played on a ^, outside of the US
   transform: is played on a
 - word: PITCH
-  clue: Name for a very speedy ^
+  clue: Name for a very speedy <>
   transform: can be a
 - word: FASTBALL
-  clue: Swap the two halves of ^, and change one vowel, and the result will sound like this world city
+  clue: Swap the two halves of <>, and change one vowel, and the result will sound like this world city
   transform: swap halves, change vowel
 - word: BELFAST
-  clue: ^ is located on this island
+  clue: <> is located on this island
   transform: is in
 - word: IRELAND
-  clue: Color most associated with the country of ^
+  clue: Color most associated with the country of <>
   transform: is associated with
 - word: GREEN
-  clue: Digit that can be ^
+  clue: Digit that can be <>
   transform: +
 - word: THUMB
-  clue: Two away from the ^
+  clue: Two away from the <>
   transform: is two away from
 - word: MIDDLE FINGER
-  clue: Nickname for an extended ^
+  clue: Nickname for an extended <>
   transform: can be called the
 - word: BIRD
   clue:

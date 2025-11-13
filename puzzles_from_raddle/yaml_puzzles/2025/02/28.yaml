@@ -2,42 +2,42 @@ meta:
   title: From PINKY to THUMB
   author: Sandy Weisz
   difficulty: medium
-  fromEmoji: ð¤
-  toEmoji: ð
+  fromEmoji: 🤙
+  toEmoji: 👍
 
 ladder:
 - word: PINKY
-  clue: "^'s cartoon [partner]"
+  clue: "<>'s cartoon ^"
   transform: "and"
 - word: the brain
-  clue: "^ is missing from this [film character]"
+  clue: "<> is missing from this ^"
   transform: "is missing from"
 - word: scarecrow
-  clue: "^ is befriended by this [young girl]"
+  clue: "<> is befriended by this ^"
   transform: "is befriended by"
 - word: dorothy
-  clue: "[Nickname] for ^"
+  clue: "^ for <>"
   transform: "aka"
 - word: dot
-  clue: "^ can be preceded by this [dance]"
+  clue: "<> can be preceded by this ^"
   transform: "comes after"
 - word: polka
-  clue: "^ commonly features this [instrument]"
+  clue: "<> commonly features this ^"
   transform: "often features an"
 - word: accordion
-  clue: "Remove final 3 letters from ^ to get an [agreement]"
+  clue: "Remove final 3 letters from <> to get an ^"
   transform: "-ION"
 - word: accord
-  clue: "^ is made by this [Japanese company]"
+  clue: "<> is made by this ^"
   transform: "is made by"
 - word: honda
-  clue: "^ makes this kind of [product]"
+  clue: "<> makes this kind of ^"
   transform: "is a make of"
 - word: car
-  clue: "Word for a [strange passenger] in a ^"
+  clue: "Word for a ^ in a <>"
   transform: "picks up a"
 - word: hitchhiker
-  clue: "Prominent [digit] of a ^"
+  clue: "Prominent ^ of a <>"
   transform: "sticks out their"
 - word: THUMB
   clue: ""

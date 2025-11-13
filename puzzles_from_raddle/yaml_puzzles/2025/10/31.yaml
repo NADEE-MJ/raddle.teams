@@ -1,0 +1,51 @@
+meta:
+  title: From GEORGE to SMILEY
+  author: Sandy Weisz and Mao Reynolds
+  difficulty: medium
+  theme: Whodunit
+  message: 
+    "A murder has been committed at our Halloween party! Seven witnesses (in costume) have given testimony, in the form of Raddles. 
+    Our sixth witness is George Smiley, who's been around a mystery or two.
+    His hint: consider why _these_ characters make good witnesses, and not others. 
+    Someone dressed as, say, Bo Peep, or Meriadoc Brandybuck, would not fit in a Raddle-based mystery.
+    [Update: the solution [can be found here](/mystery/whodunit)]"
+ladder:
+- word: GEORGE
+  clue: <> ^, filmmaker whose most famous character is a nickname for ^
+  transform: who made Star Wars
+- word: LUCAS
+  clue: Anagram <> to get a gift-giver
+  transform: anagrammed
+- word: CLAUS
+  clue: Animal associated with Mr. <>
+  transform: kept a few
+- word: REINDEER
+  clue: The lead <>, according to song
+  transform: all loved
+- word: RUDOLPH
+  clue: Famous part of <>
+  transform: had a red
+- word: NOSE
+  clue: Where to find the <> on a 🐕
+  transform: aka your
+- word: SNOUT
+  clue: Change one letter in <> to get a kind of lookout
+  transform: N->C
+- word: SCOUT
+  clue: A ^ <> might be a brownie? (in the US)
+  transform: might be a
+- word: GIRL
+  clue: Counterpart to <>
+  transform: counterpart
+- word: BOY
+  clue: Change the last letter of <> to a bigram (two letters) to get something with a spine
+  transform: Y->OK
+- word: BOOK
+  clue: ^<>, a popular modern marketplace
+  transform: of
+- word: FACE
+  clue: ^ <>, foundation for many emoji
+  transform: emoji might have a
+- word: SMILEY
+  clue:
+  transform:

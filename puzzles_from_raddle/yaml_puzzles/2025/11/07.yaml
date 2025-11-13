@@ -1,0 +1,47 @@
+meta:
+  title: From FOUR to SQUARE
+  author: Sandy Weisz and Mao Reynolds
+  difficulty: medium
+  theme: Block Party
+  message: 
+    One popular block party game is four square, where players in a 2x2 grid bounce the ball to each other’s squares while trying to get other players to miss. It’s an easy option for outdoor block parties because the playing area can be made with a few strokes of chalk on the pavement.
+ladder:
+- word: FOUR
+  clue: Insert a letter into <> to get a baking ingredient
+  transform: +L
+- word: FLOUR
+  clue: "Organism that sounds like \"<>\""
+  transform: sounds like
+- word: FLOWER
+  clue: <> ^, a peace movement
+  transform: can give you
+- word: POWER
+  clue: <>^, often used to describe a competitor of great strength
+  transform: concentrated in one
+- word: HOUSE
+  clue: Change one letter in <> to get a tiny creature
+  transform: H->M
+- word: MOUSE
+  clue: Change one letter in <> to get a large creature
+  transform: U->O
+- word: MOOSE
+  clue: <> ^, an ice cream flavor
+  transform: …
+- word: TRACKS
+  clue: Drop a letter from <> to get some sharp things
+  transform: -R
+- word: TACKS
+  clue: Add an /ē/ (long e) sound to the end of <> to get a way to go
+  transform: +/ē/
+- word: TAXI
+  clue: "What’s paid for a <> ride"
+  transform: cost
+- word: FARE
+  clue: "Celebration that sounds like \"<>\""
+  transform: sounds like
+- word: FAIR
+  clue: <> and ^
+  transform: and
+- word: SQUARE
+  clue:
+  transform:

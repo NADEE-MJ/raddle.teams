@@ -9,57 +9,57 @@
   "ladder": [
     {
       "word": "CANDY",
-      "clue": "Change one letter in ^ to get a stylish fellow",
+      "clue": "Change one letter in <> to get a stylish fellow",
       "transform": "C->D"
     },
     {
       "word": "DANDY",
-      "clue": "Yankee ___ ^",
+      "clue": "Yankee {} <>",
       "transform": "is a Yankee"
     },
     {
       "word": "DOODLE",
-      "clue": "Change one letter in ^ to get a foodstuff",
+      "clue": "Change one letter in <> to get a foodstuff",
       "transform": "D->N"
     },
     {
       "word": "NOODLE",
-      "clue": "Type of ^ from Japan",
+      "clue": "Type of <> from Japan",
       "transform": "type from Janpan"
     },
     {
       "word": "UDON",
-      "clue": "Drop one letter in ^ to get a name that's also a verb",
+      "clue": "Drop one letter in <> to get a name that's also a verb",
       "transform": "-U"
     },
     {
       "word": "DON",
-      "clue": "Add a letter inside ^ to get a direction",
+      "clue": "Add a letter inside <> to get a direction",
       "transform": "+W"
     },
     {
       "word": "DOWN",
-      "clue": "^ for the ___",
+      "clue": "<> for the {}",
       "transform": "for the"
     },
     {
       "word": "COUNT",
-      "clue": "\"The ^ of ___\", nineteenth century classic",
+      "clue": "\"The <> of {}\", nineteenth century classic",
       "transform": "of"
     },
     {
       "word": "MONTE CRISTO",
-      "clue": "In a restaurant, a ^ is a ___",
+      "clue": "In a restaurant, a <> is a {}",
       "transform": "is a"
     },
     {
       "word": "SANDWICH",
-      "clue": "What is on either side of a ^, conventionally",
+      "clue": "What is on either side of a <>, conventionally",
       "transform": "is surrounded by"
     },
     {
       "word": "BREAD",
-      "clue": "Ginger^ ___",
+      "clue": "Ginger<> {}",
       "transform": "of ginger in the shape of a"
     },
     {
