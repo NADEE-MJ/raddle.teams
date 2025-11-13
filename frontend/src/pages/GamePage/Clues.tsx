@@ -179,7 +179,8 @@ export default function Clues({ puzzle, direction, currentQuestion, currentAnswe
 
             const isActiveClue = stepId === currentQuestion;
 
-            const answerWordRendered = renderAnswerWord(answerWord!);
+            if (!answerWord) throw new Error('Answer word not found for upward clue');
+            const answerWordRendered = renderAnswerWord(answerWord);
 
             const parts = renderClueParts(clue, null, answerWordRendered);
 

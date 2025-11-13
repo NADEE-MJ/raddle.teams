@@ -133,6 +133,10 @@ export default function LobbyDetails({ lobbyId, onClose, onLobbyDeleted, refresh
                 } else if (message.type === GameWebSocketEvents.GAME_STARTED) {
                     // Game started, reload game state
                     loadGameState();
+                } else if (message.type === GameWebSocketEvents.GAME_WON) {
+                    // Game won, reload game state to mark it as inactive
+                    console.log('[Admin] Game won, reloading game state');
+                    loadGameState();
                 }
             } catch (err) {
                 console.error('[Admin] Error parsing WebSocket message:', err);

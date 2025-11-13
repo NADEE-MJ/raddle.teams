@@ -43,13 +43,16 @@ export default function LobbyPage() {
             setLobbyInfo(lobbyInfoData);
 
             // Check if game is already started - if so, redirect to game page
+            // But don't redirect if the game is already completed
             if (playerData.team_id) {
                 try {
                     const puzzleData = await api.player.game.getPuzzle(sessionId);
-                    if (puzzleData && puzzleData.puzzle) {
+                    if (puzzleData && puzzleData.puzzle && !puzzleData.state.is_completed) {
                         console.log('[LobbyPage] Game already in progress, redirecting to game page');
                         navigate('/game');
                         return;
+                    } else if (puzzleData && puzzleData.state.is_completed) {
+                        console.log('[LobbyPage] Game completed, staying on lobby page');
                     }
                 } catch (err) {
                     // No active game yet, stay on lobby page

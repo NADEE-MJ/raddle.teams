@@ -147,6 +147,16 @@ async def get_game_state(lobby_id: int, db: Session = Depends(get_session)):
         api_logger.info(f"No active game in lobby_id={lobby_id}")
         return GameStateResponse(is_game_active=False, teams=[])
 
+    # Check if any game has been completed (winner declared)
+    # A game is completed when its completed_at field is set
+    has_completed_game = False
+    for team in teams_with_games:
+        if team.game_id:
+            game = db.get(Game, team.game_id)
+            if game and game.completed_at is not None:
+                has_completed_game = True
+                break
+
     # Build progress data for each team
     team_progress_list = []
     for team in teams:
@@ -181,5 +191,8 @@ async def get_game_state(lobby_id: int, db: Session = Depends(get_session)):
         )
         team_progress_list.append(team_progress)
 
-    api_logger.info(f"Returning game state for lobby_id={lobby_id}: {len(team_progress_list)} teams")
-    return GameStateResponse(is_game_active=True, teams=team_progress_list)
+    api_logger.info(
+        f"Returning game state for lobby_id={lobby_id}: {len(team_progress_list)} teams, "
+        f"is_game_active={not has_completed_game}"
+    )
+    return GameStateResponse(is_game_active=not has_completed_game, teams=team_progress_list)

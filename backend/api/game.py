@@ -166,6 +166,11 @@ async def start_game(
         # Link team to their puzzle
         team.game_id = game.id
 
+        # Reset team state for new game (clear previous game completion)
+        team.completed_at = None
+        team.revealed_steps = "[]"
+        team.last_updated_at = None
+
         # Initialize state machine
         machine = TeamStateMachine(puzzle)
         initial_state = machine.get_current_state()
@@ -396,11 +401,47 @@ async def handle_guess_submission(
                     ).all()
 
                     if len(completed_teams) == 1:
-                        # This team won! Mark their game as completed
-                        team_game = session.get(Game, team.game_id)
-                        if team_game:
-                            team_game.completed_at = datetime.now(tz=timezone.utc)
-                            session.add(team_game)
+                        # This team won! Mark ALL games in this lobby as completed
+                        completion_time = datetime.now(tz=timezone.utc)
+                        all_lobby_games = session.exec(select(Game).where(Game.lobby_id == lobby_id)).all()
+                        for lobby_game in all_lobby_games:
+                            if not lobby_game.completed_at:
+                                lobby_game.completed_at = completion_time
+                                session.add(lobby_game)
+
+                        # Reveal all puzzles for all teams (so everyone can see complete solutions)
+                        all_teams = session.exec(select(Team).where(Team.lobby_id == lobby_id)).all()
+                        for other_team in all_teams:
+                            if not other_team.game_id:
+                                continue
+
+                            # Get the game (puzzle) for this team
+                            other_game = session.get(Game, other_team.game_id)
+                            if not other_game:
+                                continue
+
+                            # Parse the puzzle to get ladder length
+                            other_puzzle = PuzzlePydantic(**other_game.puzzle_data)
+
+                            # Reveal all steps (0 to len-1)
+                            all_steps = set(range(len(other_puzzle.ladder)))
+
+                            # Update team state
+                            other_team.revealed_steps = json.dumps(sorted(list(all_steps)))
+                            other_team.last_updated_at = datetime.now(tz=timezone.utc)
+                            if not other_team.completed_at:
+                                other_team.completed_at = datetime.now(tz=timezone.utc)
+
+                            session.add(other_team)
+
+                            # Broadcast state update to this team
+                            team_state_event = StateUpdateEvent(
+                                team_id=other_team.id,
+                                revealed_steps=sorted(list(all_steps)),
+                                is_completed=True,
+                                last_updated_at=other_team.last_updated_at.isoformat(),
+                            )
+                            await websocket_manager.broadcast_to_team(lobby_id, other_team.id, team_state_event)
 
                         # Broadcast win to entire lobby
                         win_event = GameWonEvent(

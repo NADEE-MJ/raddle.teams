@@ -13,7 +13,7 @@ import { useNavigate, useLocation } from 'react-router-dom';
 import { useGameState } from '@/hooks/useGameState';
 import { useGlobalOutletContext } from '@/hooks/useGlobalOutletContext';
 import type { Puzzle } from '@/types/game';
-import type { Player, LobbyInfo, GameStartedEvent, GameWonEvent } from '@/types';
+import type { Player, GameWonEvent } from '@/types';
 import { api } from '@/services/api';
 import LadderStep from './LadderStep';
 import Clues from './Clues';
@@ -51,13 +51,6 @@ export default function GamePage() {
                         setSessionId(currentSessionId);
                     }
                 }
-
-                // Get data from navigation state
-                const state = location.state as {
-                    player?: Player;
-                    lobbyInfo?: LobbyInfo;
-                    gameStartedEvent?: GameStartedEvent;
-                } | null;
 
                 if (!currentSessionId) {
                     throw new Error('No session ID found. Please log in again.');
@@ -133,7 +126,7 @@ function Game({ puzzle, player, teamName, lobbyId, sessionId, initialState }: Ga
     const [showFullLadder, setShowFullLadder] = useState(false);
 
     // WebSocket URL
-    const wsUrl = `ws://${window.location.host}/ws/lobby/${lobbyId}/player/${sessionId}`;
+    const wsUrl = `/ws/lobby/${lobbyId}/player/${sessionId}`;
 
     const {
         revealedSteps,
@@ -273,7 +266,7 @@ function Game({ puzzle, player, teamName, lobbyId, sessionId, initialState }: Ga
         return visibleSteps;
     }, [puzzle?.ladder, activeStepId]);
 
-    const mobileVisibleSteps = useMemo(() => getVisibleStepsOnMobile(), [revealedSteps, getVisibleStepsOnMobile]);
+    const mobileVisibleSteps = useMemo(() => getVisibleStepsOnMobile(), [getVisibleStepsOnMobile]);
 
     return (
         <div>
@@ -320,7 +313,8 @@ function Game({ puzzle, player, teamName, lobbyId, sessionId, initialState }: Ga
                             {puzzle.ladder.map((ladderStep, stepId) => {
                                 const shouldRenderStepOnMobile = mobileVisibleSteps.includes(stepId);
 
-                                if (!showFullLadder && !shouldRenderStepOnMobile) {
+                                // Always show all steps when completed, otherwise use showFullLadder/mobile logic
+                                if (!isCompleted && !showFullLadder && !shouldRenderStepOnMobile) {
                                     return null;
                                 }
                                 return (
@@ -334,8 +328,10 @@ function Game({ puzzle, player, teamName, lobbyId, sessionId, initialState }: Ga
                                         isCurrentAnswer={isCurrentAnswer(stepId)}
                                         isStepRevealed={isStepRevealed(stepId)}
                                         isActive={isActiveStep(stepId)}
+                                        isDisabled={isCompleted}
                                         shouldShowTransform={isStepRevealed(stepId) && isStepRevealed(stepId + 1)}
                                         shouldRenderTransform={
+                                            isCompleted ||
                                             (stepId !== mobileVisibleSteps[mobileVisibleSteps.length - 1] &&
                                                 !showFullLadder) ||
                                             showFullLadder
@@ -399,7 +395,15 @@ function Game({ puzzle, player, teamName, lobbyId, sessionId, initialState }: Ga
                                     : `${winnerTeamName} won the game!`}
                             </p>
                             <button
-                                onClick={() => navigate('/lobby')}
+                                onClick={() => {
+                                    setShowWinModal(false);
+                                }}
+                                className='mb-3 rounded-lg bg-green-600 px-6 py-3 font-medium text-white transition-colors hover:bg-green-700'
+                            >
+                                View Complete Puzzle
+                            </button>
+                            <button
+                                onClick={() => navigate('/')}
                                 className='rounded-lg bg-blue-600 px-6 py-3 font-medium text-white transition-colors hover:bg-blue-700'
                             >
                                 Return to Lobby

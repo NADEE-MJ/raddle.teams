@@ -42,32 +42,39 @@ export function useGameState({ puzzle, initialState, websocketUrl, onGameWon, on
     // Calculate current solving positions based on direction
     const getNextUnrevealedIndex = useCallback(
         (fromStart: boolean): number => {
-            const ladder_length = puzzle.ladder.length;
+            const ladderLength = puzzle.ladder.length;
             if (fromStart) {
-                // Downward: find first unrevealed from start
-                for (let i = 1; i < ladder_length; i++) {
+                for (let i = 1; i < ladderLength; i++) {
                     if (!revealedSteps.has(i)) {
                         return i;
                     }
                 }
-                return ladder_length - 1;
-            } else {
-                // Upward: find first unrevealed from end
-                for (let i = ladder_length - 2; i >= 0; i--) {
-                    if (!revealedSteps.has(i)) {
-                        return i;
-                    }
-                }
-                return 0;
+                return ladderLength - 1;
             }
+
+            for (let i = ladderLength - 2; i >= 0; i--) {
+                if (!revealedSteps.has(i)) {
+                    return i;
+                }
+            }
+            return 0;
         },
         [puzzle.ladder.length, revealedSteps]
     );
 
-    const currentAnswer = getNextUnrevealedIndex(direction === 'down');
-    const currentQuestion =
-        direction === 'down' ? Math.max(0, currentAnswer - 1) : Math.min(puzzle.ladder.length - 1, currentAnswer + 1);
-    const activeStepId = currentAnswer;
+    let currentQuestion: number;
+    let currentAnswer: number;
+    let activeStepId: number;
+
+    if (direction === 'down') {
+        currentAnswer = getNextUnrevealedIndex(true);
+        currentQuestion = Math.max(0, currentAnswer - 1);
+        activeStepId = currentAnswer;
+    } else {
+        currentQuestion = getNextUnrevealedIndex(false);
+        currentAnswer = Math.min(puzzle.ladder.length - 1, currentQuestion + 1);
+        activeStepId = currentQuestion;
+    }
 
     // Can switch direction if there are unrevealed steps in both directions
     const canSwitchDirection = !isCompleted && revealedSteps.size < puzzle.ladder.length;
