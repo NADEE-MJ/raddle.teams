@@ -6,10 +6,17 @@ import yaml
 
 
 def convert_yaml_to_json(yaml_file_path, json_file_path):
-    """Convert a single YAML file to JSON format."""
+    """Convert a single YAML file to JSON format and transform ^ to {}."""
     try:
         with open(yaml_file_path, "r", encoding="utf-8") as yaml_file:
             data = yaml.safe_load(yaml_file)
+
+        # Transform ^ to {} in clue fields
+        if "ladder" in data:
+            for step in data["ladder"]:
+                if "clue" in step and step["clue"]:
+                    # Replace all ^ with {} in the clue
+                    step["clue"] = step["clue"].replace("^", "{}")
 
         # Create the output directory if it doesn't exist
         os.makedirs(os.path.dirname(json_file_path), exist_ok=True)
@@ -19,7 +26,7 @@ def convert_yaml_to_json(yaml_file_path, json_file_path):
 
         return True
     except Exception as e:
-        print(f"Error converting {yaml_file_path}: {e}")
+        print(f"❌ Error converting {yaml_file_path}: {e}")
         return False
 
 
@@ -57,12 +64,12 @@ def convert_all_yaml_files():
 
         # Skip if JSON file already exists
         if json_file.exists():
-            print(f"Skipping {json_file}, already exists")
+            print(f"⏭️  Skipping {json_file}, already exists")
             skipped_count += 1
             continue
 
         if convert_yaml_to_json(yaml_file, json_file):
-            print(f"Converted {yaml_file} -> {json_file}")
+            print(f"✅ Converted {yaml_file} -> {json_file}")
             converted_count += 1
         else:
             error_count += 1
