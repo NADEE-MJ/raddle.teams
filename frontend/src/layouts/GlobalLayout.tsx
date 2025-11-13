@@ -18,6 +18,7 @@ const GlobalLayout: React.FC = () => {
     useEffect(() => {
         if (
             location.pathname.startsWith('/lobby') ||
+            location.pathname.startsWith('/game') ||
             (location.pathname.startsWith('/admin') && !location.pathname.includes('login'))
         ) {
             setShowLogout(true);
@@ -122,7 +123,11 @@ const GlobalLayout: React.FC = () => {
                     <div className='flex h-16 items-center justify-between'>
                         <div className='flex items-center gap-4'>
                             <h1 className='text-tx-primary text-2xl font-bold'>
-                                <Link to='/' className='flex items-center transition-all duration-50 active:scale-90 hover:scale-105' data-testid='home-link'>
+                                <Link
+                                    to='/'
+                                    className='flex items-center transition-all duration-50 hover:scale-105 active:scale-90'
+                                    data-testid='home-link'
+                                >
                                     R
                                     <img src='/img/ladder.svg' alt='A' className='inline-block h-6 w-6 brightness-75' />
                                     DDLE
@@ -144,8 +149,8 @@ const GlobalLayout: React.FC = () => {
                                         {isLoggingOut
                                             ? 'Logging out'
                                             : location.pathname.startsWith('/admin')
-                                                ? '🔒 Admin Logout'
-                                                : '🚪 Leave Lobby'}
+                                              ? '🔒 Admin Logout'
+                                              : '🚪 Leave Lobby'}
                                     </Button>
                                 ) : (
                                     <div className='flex gap-1'>
