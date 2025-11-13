@@ -44,7 +44,7 @@ async def lobby_websocket(websocket: WebSocket, lobby_id: int, player_session_id
         return
 
     try:
-        await lobby_websocket_manager.continuous_listening(websocket)
+        await lobby_websocket_manager.continuous_listening(websocket, lobby_id, player_session_id)
     except WebSocketDisconnect:
         websocket_logger.info(
             f"Player websocket disconnected (WebSocketDisconnect): lobby_id={lobby_id} player_session_id={player_session_id}"

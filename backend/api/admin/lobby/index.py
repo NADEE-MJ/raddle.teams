@@ -1,11 +1,13 @@
 from uuid import uuid4
+import json
 
 from fastapi import APIRouter, Depends, HTTPException
 from sqlalchemy.orm import selectinload
 from sqlmodel import Session, select
+from pydantic import BaseModel
 
 from backend.custom_logging import api_logger
-from backend.database import Lobby, Player, get_session
+from backend.database import Lobby, Player, Team, Game, get_session
 from backend.dependencies import check_admin_token
 from backend.schemas import LobbyCreate, LobbyInfo, MessageResponse
 from backend.websocket.managers import lobby_websocket_manager
@@ -101,3 +103,83 @@ async def delete_lobby(lobby_id: int, db: Session = Depends(get_session)):
     api_logger.info(f"Successfully deleted lobby_id={lobby_id} name={lobby.name}")
 
     return MessageResponse(status=True, message=f"Lobby '{lobby.name}' deleted successfully")
+
+
+# Response models for game state endpoint
+class TeamGameProgress(BaseModel):
+    team_id: int
+    team_name: str
+    puzzle: dict  # Full puzzle with all words visible to admin
+    revealed_steps: list[int]
+    is_completed: bool
+    completed_at: str | None
+
+
+class GameStateResponse(BaseModel):
+    is_game_active: bool
+    teams: list[TeamGameProgress]
+
+
+@router.get("/lobby/{lobby_id}/game-state", response_model=GameStateResponse)
+async def get_game_state(lobby_id: int, db: Session = Depends(get_session)):
+    """
+    Get the current game state for all teams in a lobby.
+    Returns full puzzle data (all words visible) and current progress for admin view.
+    """
+    api_logger.info(f"Admin requested game state: lobby_id={lobby_id}")
+
+    # Check if lobby exists
+    lobby = db.get(Lobby, lobby_id)
+    if not lobby:
+        api_logger.warning(f"Lobby not found lobby_id={lobby_id}")
+        raise HTTPException(status_code=404, detail="Lobby not found")
+
+    # Get all teams in the lobby
+    teams = db.exec(select(Team).where(Team.lobby_id == lobby_id)).all()
+
+    if not teams:
+        api_logger.info(f"No teams found in lobby_id={lobby_id}")
+        return GameStateResponse(is_game_active=False, teams=[])
+
+    # Check if any team has a game assigned
+    teams_with_games = [team for team in teams if team.game_id is not None]
+    if not teams_with_games:
+        api_logger.info(f"No active game in lobby_id={lobby_id}")
+        return GameStateResponse(is_game_active=False, teams=[])
+
+    # Build progress data for each team
+    team_progress_list = []
+    for team in teams:
+        if not team.game_id:
+            continue
+
+        # Get the game (puzzle) for this team
+        game = db.get(Game, team.game_id)
+        if not game:
+            continue
+
+        # Parse revealed steps
+        revealed_steps_list = (
+            json.loads(team.revealed_steps) if isinstance(team.revealed_steps, str) else team.revealed_steps
+        )
+        revealed_steps = revealed_steps_list if revealed_steps_list else []
+
+        # Transform puzzle data to flatten structure for frontend
+        puzzle_data = game.puzzle_data
+        transformed_puzzle = {
+            "title": puzzle_data.get("meta", {}).get("title", "Untitled Puzzle"),
+            "ladder": puzzle_data.get("ladder", []),
+        }
+
+        team_progress = TeamGameProgress(
+            team_id=team.id,
+            team_name=team.name,
+            puzzle=transformed_puzzle,
+            revealed_steps=revealed_steps,
+            is_completed=team.completed_at is not None,
+            completed_at=team.completed_at.isoformat() if team.completed_at else None,
+        )
+        team_progress_list.append(team_progress)
+
+    api_logger.info(f"Returning game state for lobby_id={lobby_id}: {len(team_progress_list)} teams")
+    return GameStateResponse(is_game_active=True, teams=team_progress_list)

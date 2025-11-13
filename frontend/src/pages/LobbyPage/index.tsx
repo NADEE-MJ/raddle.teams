@@ -4,7 +4,7 @@ import { api } from '@/services/api';
 import { useWebSocket } from '@/hooks/useWebSocket';
 import { useGlobalOutletContext } from '@/hooks/useGlobalOutletContext';
 import { useDebounce } from '@/hooks/useDebounce';
-import { WebSocketMessage, LobbyWebSocketEvents, Player, LobbyInfo } from '@/types';
+import { WebSocketMessage, LobbyWebSocketEvents, GameWebSocketEvents, Player, LobbyInfo } from '@/types';
 import { LoadingSpinner, CopyableCode, Button, ErrorMessage, StatusIndicator, Alert } from '@/components';
 
 export default function LobbyPage() {
@@ -41,12 +41,27 @@ export default function LobbyPage() {
 
             const lobbyInfoData = await api.player.lobby.getLobbyInfo(playerData.lobby_id, sessionId);
             setLobbyInfo(lobbyInfoData);
+
+            // Check if game is already started - if so, redirect to game page
+            if (playerData.team_id) {
+                try {
+                    const puzzleData = await api.player.game.getPuzzle(sessionId);
+                    if (puzzleData && puzzleData.puzzle) {
+                        console.log('[LobbyPage] Game already in progress, redirecting to game page');
+                        navigate('/game');
+                        return;
+                    }
+                } catch (err) {
+                    // No active game yet, stay on lobby page
+                    console.log('[LobbyPage] No active game found, staying on lobby page');
+                }
+            }
         } catch (err) {
             setError(err instanceof Error ? err.message : 'Failed to fetch lobby data');
         } finally {
             setIsLoading(false);
         }
-    }, [sessionId]);
+    }, [sessionId, navigate]);
 
     const scheduleReload = useDebounce(refreshLobbyInfo);
 
@@ -83,22 +98,42 @@ export default function LobbyPage() {
                     scheduleReload();
                     break;
                 case LobbyWebSocketEvents.PLAYER_KICKED:
-                    alert('You have been kicked from the lobby by an admin.');
-                    setSessionId(null);
-                    setPlayer(null);
-                    setLobbyInfo(null);
-                    navigate('/');
+                    // Check if it was us or another player
+                    if (message.player_session_id === sessionId) {
+                        // We were kicked
+                        alert('You have been kicked from the lobby by an admin.');
+                        setSessionId(null);
+                        setPlayer(null);
+                        setLobbyInfo(null);
+                        navigate('/');
+                        return;
+                    } else {
+                        // Another player was kicked, refresh lobby info
+                        console.log('Another player was kicked, refreshing lobby');
+                        scheduleReload();
+                    }
+                    break;
+                case GameWebSocketEvents.GAME_STARTED:
+                    console.log('Game started! Navigating to game page...');
+                    // Navigate to game page
+                    navigate('/game', {
+                        state: {
+                            player,
+                            lobbyInfo,
+                            gameStartedEvent: message,
+                        },
+                    });
                     return;
                 default:
                     console.log('Unknown lobby WebSocket message type:', message.type);
                     scheduleReload();
             }
         },
-        [scheduleReload, setSessionId, navigate]
+        [scheduleReload, setSessionId, navigate, player, lobbyInfo]
     );
 
     const wsUrl = useMemo(
-        () => player?.lobby_id && sessionId ? `/ws/lobby/${player.lobby_id}/player/${sessionId}` : '',
+        () => (player?.lobby_id && sessionId ? `/ws/lobby/${player.lobby_id}/player/${sessionId}` : ''),
         [player?.lobby_id, sessionId]
     );
 
@@ -162,10 +197,11 @@ export default function LobbyPage() {
                                 <div
                                     key={playerItem.id}
                                     data-testid={`player-list-row-${playerItem.name}`}
-                                    className={`flex items-center justify-between rounded-lg p-3 ${playerItem.id === player.id
-                                        ? 'dark:border-accent dark:bg-accent/20 border-2 border-blue-300 bg-blue-100'
-                                        : 'dark:border-border-light dark:bg-secondary border border-gray-200 bg-white'
-                                        }`}
+                                    className={`flex items-center justify-between rounded-lg p-3 ${
+                                        playerItem.id === player.id
+                                            ? 'dark:border-accent dark:bg-accent/20 border-2 border-blue-300 bg-blue-100'
+                                            : 'dark:border-border-light dark:bg-secondary border border-gray-200 bg-white'
+                                    }`}
                                 >
                                     <div className='flex items-center gap-3'>
                                         <span
@@ -220,10 +256,11 @@ export default function LobbyPage() {
                                                 {lobbyInfo.players_by_team[team.id].map(teamPlayer => (
                                                     <span
                                                         key={teamPlayer.id}
-                                                        className={`inline-block rounded px-2 py-1 text-xs ${teamPlayer.id === player.id
-                                                            ? 'bg-accent/20 text-accent font-semibold'
-                                                            : 'bg-elevated text-tx-secondary'
-                                                            }`}
+                                                        className={`inline-block rounded px-2 py-1 text-xs ${
+                                                            teamPlayer.id === player.id
+                                                                ? 'bg-accent/20 text-accent font-semibold'
+                                                                : 'bg-elevated text-tx-secondary'
+                                                        }`}
                                                         data-testid={`team-member-${teamPlayer.name}`}
                                                     >
                                                         {teamPlayer.name}

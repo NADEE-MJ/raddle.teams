@@ -58,7 +58,7 @@ export enum LobbyWebSocketEvents {
 }
 
 export interface WebSocketMessage {
-    type: LobbyWebSocketEvents | string;
+    type: LobbyWebSocketEvents | GameWebSocketEvents | string;
     data?: Record<string, unknown>;
     player_session_id?: string;
     message?: Record<string, unknown>;
@@ -67,4 +67,146 @@ export interface WebSocketMessage {
     state?: string;
     old_team_id?: number;
     new_team_id?: number;
+}
+
+// #########################################################################
+// ? GAME TYPES
+// #########################################################################
+
+export enum GameWebSocketEvents {
+    GAME_STARTED = 'game_started',
+    GUESS_SUBMITTED = 'guess_submitted',
+    WORD_SOLVED = 'word_solved',
+    DIRECTION_CHANGED = 'direction_changed',
+    TEAM_COMPLETED = 'team_completed',
+    GAME_WON = 'game_won',
+    STATE_UPDATE = 'state_update',
+    ALREADY_SOLVED = 'already_solved',
+}
+
+export type Direction = 'down' | 'up';
+
+export type GamePhase = 'DOWNWARD' | 'UPWARD' | 'DIRECTION_LOCKED' | 'COMPLETED';
+
+export interface GameState {
+    phase: GamePhase;
+    direction: Direction;
+    revealed_steps: number[];
+    current_question: number;
+    current_answer: number;
+    is_completed: boolean;
+    last_updated_at: string;
+}
+
+export interface Guess {
+    id: number;
+    team_id: number;
+    player_id: number;
+    word_index: number;
+    direction: Direction;
+    guess: string;
+    is_correct: boolean;
+    created_at: string;
+}
+
+export interface GameStartedEvent {
+    type: GameWebSocketEvents.GAME_STARTED;
+    team_id: number;
+    puzzle_title: string;
+    puzzle_length: number;
+}
+
+export interface GuessSubmittedEvent {
+    type: GameWebSocketEvents.GUESS_SUBMITTED;
+    team_id: number;
+    player_id: number;
+    player_name: string;
+    word_index: number;
+    guess: string;
+    is_correct: boolean;
+    direction: Direction;
+}
+
+export interface WordSolvedEvent {
+    type: GameWebSocketEvents.WORD_SOLVED;
+    team_id: number;
+    player_id: number;
+    player_name: string;
+    word_index: number;
+    word: string;
+    direction: Direction;
+}
+
+export interface DirectionChangedEvent {
+    type: GameWebSocketEvents.DIRECTION_CHANGED;
+    team_id: number;
+    player_id: number;
+    player_name: string;
+    new_direction: Direction;
+}
+
+export interface StateUpdateEvent {
+    type: GameWebSocketEvents.STATE_UPDATE;
+    team_id: number;
+    phase: GamePhase;
+    direction: Direction;
+    revealed_steps: number[];
+    current_question: number;
+    current_answer: number;
+    is_completed: boolean;
+    last_updated_at: string;
+}
+
+export interface TeamCompletedEvent {
+    type: GameWebSocketEvents.TEAM_COMPLETED;
+    team_id: number;
+    team_name: string;
+    completed_at: string;
+}
+
+export interface GameWonEvent {
+    type: GameWebSocketEvents.GAME_WON;
+    lobby_id: number;
+    winning_team_id: number;
+    winning_team_name: string;
+}
+
+export interface AlreadySolvedEvent {
+    type: GameWebSocketEvents.ALREADY_SOLVED;
+    team_id: number;
+    word_index: number;
+}
+
+export type GameEvent =
+    | GameStartedEvent
+    | GuessSubmittedEvent
+    | WordSolvedEvent
+    | DirectionChangedEvent
+    | StateUpdateEvent
+    | TeamCompletedEvent
+    | GameWonEvent
+    | AlreadySolvedEvent;
+
+// #########################################################################
+// ? ADMIN GAME STATE
+// #########################################################################
+
+export interface TeamGameProgress {
+    team_id: number;
+    team_name: string;
+    puzzle: {
+        title: string;
+        ladder: Array<{
+            word: string;
+            transform: string;
+        }>;
+    };
+    revealed_steps: number[];
+    is_completed: boolean;
+    completed_at: string | null;
+}
+
+export interface GameStateResponse {
+    is_game_active: boolean;
+    teams: TeamGameProgress[];
 }

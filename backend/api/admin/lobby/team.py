@@ -41,6 +41,11 @@ async def move_player_to_team(
     db.add(player)
     db.commit()
 
+    if team_id:
+        lobby_websocket_manager.register_player_team(player.session_id, team_id)
+    else:
+        lobby_websocket_manager.unregister_player_team(player.session_id)
+
     await lobby_websocket_manager.broadcast_to_lobby(
         lobby_id=player.lobby_id,
         event=TeamChangedEvent(
@@ -91,13 +96,20 @@ async def create_teams(
 
     teams = db.exec(select(Team).where(Team.lobby_id == lobby_id)).all()
 
-    random.shuffle(players)
-    for i, player in enumerate(players):
+    # Convert to regular list before shuffling (SQLAlchemy collections can't be shuffled directly)
+    players_list = list(players)
+    random.shuffle(players_list)
+    for i, player in enumerate(players_list):
         team_index = i % team_data.num_teams
         player.team_id = teams[team_index].id
         db.add(player)
 
     db.commit()
+
+    # Ensure websocket manager knows each player's team for targeted broadcasts
+    for player in players_list:
+        if player.team_id:
+            lobby_websocket_manager.register_player_team(player.session_id, player.team_id)
 
     await lobby_websocket_manager.broadcast_to_lobby(
         lobby_id=lobby_id,
@@ -105,6 +117,6 @@ async def create_teams(
     )
 
     api_logger.info(
-        f"Successfully created {team_data.num_teams} teams for lobby_id={lobby_id} with {len(players)} players"
+        f"Successfully created {team_data.num_teams} teams for lobby_id={lobby_id} with {len(players_list)} players"
     )
     return MessageResponse(status=True, message=f"Created {team_data.num_teams} teams with players randomly assigned")

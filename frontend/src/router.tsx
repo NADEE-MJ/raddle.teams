@@ -7,6 +7,7 @@ import { LoadingSpinner } from '@/components';
 const LandingPage = lazy(() => import('@/pages/LandingPage'));
 const TutorialPage = lazy(() => import('@/pages/TutorialPage'));
 const LobbyPage = lazy(() => import('@/pages/LobbyPage'));
+const GamePage = lazy(() => import('@/pages/GamePage'));
 const AdminPage = lazy(() => import('@/pages/AdminPage'));
 const AdminLoginPage = lazy(() => import('@/pages/AdminLoginPage'));
 const ComponentShowcasePage = lazy(() => import('@/pages/ComponentShowcasePage'));
@@ -22,6 +23,7 @@ const router = createBrowserRouter([
             { index: true, element: withSuspense(<LandingPage />) },
             { path: 'tutorial', element: withSuspense(<TutorialPage />) },
             { path: 'lobby/:lobbyCode', element: withSuspense(<LobbyPage />) },
+            { path: 'game', element: withSuspense(<GamePage />) },
             { path: 'admin', element: withSuspense(<AdminPage />) },
             { path: 'admin/login', element: withSuspense(<AdminLoginPage />) },
             { path: 'component-showcase', element: withSuspense(<ComponentShowcasePage />) },

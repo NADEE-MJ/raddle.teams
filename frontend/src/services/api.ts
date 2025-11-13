@@ -1,4 +1,14 @@
-import { Player, Lobby, LobbyInfo, ApiResponse, AdminAuthAdminAuthenticatedResponse } from '@/types';
+import {
+    Player,
+    Lobby,
+    LobbyInfo,
+    ApiResponse,
+    AdminAuthAdminAuthenticatedResponse,
+    GameState,
+    Guess,
+    GameStateResponse,
+} from '@/types';
+import type { Puzzle } from '@/types/game';
 
 const API_BASE = '/api';
 
@@ -81,6 +91,23 @@ export const api = {
                     );
                 },
             },
+            async startGame(
+                lobbyId: number,
+                difficulty: 'easy' | 'medium' | 'hard',
+                bearerToken: string
+            ): Promise<{ success: boolean; game_id: number; message: string }> {
+                return request<{ success: boolean; game_id: number; message: string }>(
+                    `/admin/lobby/${lobbyId}/start`,
+                    {
+                        method: 'POST',
+                        body: JSON.stringify({ difficulty }),
+                    },
+                    bearerToken
+                );
+            },
+            async getGameState(lobbyId: number, bearerToken: string): Promise<GameStateResponse> {
+                return request<GameStateResponse>(`/admin/lobby/${lobbyId}/game-state`, {}, bearerToken);
+            },
         },
         async checkCredentials(bearerToken: string): Promise<AdminAuthAdminAuthenticatedResponse> {
             return request<AdminAuthAdminAuthenticatedResponse>('/admin/check', {}, bearerToken);
@@ -115,6 +142,25 @@ export const api = {
                     },
                     sessionId
                 );
+            },
+        },
+        game: {
+            async getPuzzle(sessionId: string): Promise<{
+                puzzle: Puzzle;
+                team_id: number;
+                team_name: string;
+                lobby_id: number;
+                state: GameState;
+                guesses: Guess[];
+            }> {
+                return request<{
+                    puzzle: Puzzle;
+                    team_id: number;
+                    team_name: string;
+                    lobby_id: number;
+                    state: GameState;
+                    guesses: Guess[];
+                }>(`/game/puzzle?player_session_id=${sessionId}`, {}, sessionId);
             },
         },
     },

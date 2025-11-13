@@ -105,3 +105,60 @@ class PlayerActions:
 
     async def wait_for_websocket_update(self, delay: int = 1000):
         await self.page.wait_for_timeout(delay)
+
+    async def wait_for_game_to_start(self, timeout: int = 30000):
+        """Wait for game to start and navigate to game page."""
+        # Wait for navigation to /game
+        await self.page.wait_for_url("**/game", timeout=timeout)
+        # Wait a moment for the page to stabilize
+        await self.page.wait_for_timeout(1000)
+
+    async def verify_in_team(self, team_name: str, timeout: int = 5000):
+        """Verify that player sees themselves in a specific team."""
+        team_section = self.page.locator(f'[data-testid="team-section-{team_name}"]')
+        await expect(team_section).to_be_visible(timeout=timeout)
+        # Verify player is in this team
+        await expect(team_section.locator(f'[data-testid="team-member-{self.player_name}"]')).to_be_visible(
+            timeout=timeout
+        )
+
+    async def verify_unassigned(self, timeout: int = 5000):
+        """Verify that player sees themselves as unassigned."""
+        await expect(
+            self.page.locator(f'[data-testid="team-status-{self.player_name}"]:has-text("No team")')
+        ).to_be_visible(timeout=timeout)
+
+    async def verify_team_count(self, expected_count: int, timeout: int = 5000):
+        """Verify the number of teams visible."""
+        await expect(
+            self.page.locator(f'[data-testid="player-teams-heading"]:has-text("Teams ({expected_count})")')
+        ).to_be_visible(timeout=timeout)
+
+    async def submit_guess(self, word: str, word_index: int | None = None):
+        """Submit a guess in the game."""
+        # Wait for game page to be ready
+        await expect(self.page.locator("text=/Puzzle:|Team:/")).to_be_visible()
+
+        # Type the guess
+        guess_input = self.page.locator('input[placeholder*="guess"], input[type="text"]').first
+        await guess_input.fill(word)
+
+        # Press Enter to submit
+        await guess_input.press("Enter")
+
+        # Wait a moment for the guess to be processed
+        await self.page.wait_for_timeout(500)
+
+    async def verify_word_revealed(self, word: str, timeout: int = 10000):
+        """Verify that a word appears as revealed in the ladder."""
+        await expect(self.page.locator(f"text={word}").first).to_be_visible(timeout=timeout)
+
+    async def verify_game_completed(self, timeout: int = 30000):
+        """Verify that the game shows as completed."""
+        # Look for completion indicator
+        await expect(self.page.locator("text=Completed, text=Won, text=Finished").first).to_be_visible(timeout=timeout)
+
+    async def wait_for_team_status_change(self, expected_status: str, timeout: int = 5000):
+        """Wait for player's team status to change in the player list."""
+        player_status = self.page.locator(f"text={self.player_name}").locator("..").locator("div")
+        await expect(player_status).to_contain_text(expected_status, timeout=timeout)

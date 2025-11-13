@@ -1,11 +1,12 @@
 import logging
 import os
+from contextlib import asynccontextmanager
 
 from sqlalchemy import event
 from sqlmodel import Session, SQLModel, create_engine
 
 from backend.custom_logging import database_logger
-from backend.database.models import Lobby, Player, Team  # noqa: F401
+from backend.database.models import Game, Guess, Lobby, Player, Team  # noqa: F401
 from backend.settings import settings
 
 DATABASE_URL = settings.DATABASE_URL
@@ -66,5 +67,15 @@ def create_db_and_tables():
 
 
 def get_session():
+    with Session(engine) as session:
+        yield session
+
+
+@asynccontextmanager
+async def get_session_context():
+    """
+    Async context manager for getting a database session.
+    Use this in WebSocket handlers and other async contexts where Depends() isn't available.
+    """
     with Session(engine) as session:
         yield session

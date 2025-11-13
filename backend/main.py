@@ -8,6 +8,7 @@ from fastapi.staticfiles import StaticFiles
 from backend.api.admin.auth import router as admin_auth_router
 from backend.api.admin.lobby.index import router as admin_lobby_router
 from backend.api.admin.lobby.team import router as admin_lobby_team_router
+from backend.api.game import router as game_router
 from backend.api.lobby import router as lobby_router
 from backend.custom_logging import api_logger, server_logger
 from backend.database import create_db_and_tables, drop_all_tables
@@ -58,6 +59,9 @@ server_logger.info("Included admin api routes")
 app.include_router(admin_lobby_router, prefix="/api/admin", tags=["AdminLobby"])
 app.include_router(admin_auth_router, prefix="/api/admin", tags=["AdminAuth"])
 app.include_router(admin_lobby_team_router, prefix="/api/admin", tags=["AdminLobbyTeam"])
+
+server_logger.info("Included game api routes")
+app.include_router(game_router, prefix="/api", tags=["Game"])
 
 server_logger.info("Included websocket routes")
 app.include_router(websocket_router, prefix="/ws", tags=["WebSocket"])

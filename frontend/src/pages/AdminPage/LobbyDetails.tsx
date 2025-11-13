@@ -1,9 +1,10 @@
-import { useState, useEffect, useCallback } from 'react';
-import { LobbyInfo } from '@/types';
+import { useState, useEffect, useCallback, useRef } from 'react';
+import { LobbyInfo, GameStateResponse, GameWebSocketEvents } from '@/types';
 import { Modal, CopyableCode, Button, TextInput, Select, ErrorMessage, Card } from '@/components';
 import { api } from '@/services/api';
 import { useGlobalOutletContext } from '@/hooks/useGlobalOutletContext';
 import { useDebounce } from '@/hooks/useDebounce';
+import GameProgressView from './GameProgressView';
 
 interface LobbyDetailsProps {
     lobbyId: number;
@@ -21,6 +22,12 @@ export default function LobbyDetails({ lobbyId, onClose, onLobbyDeleted, refresh
     const [movingPlayerId, setMovingPlayerId] = useState<number | null>(null);
     const [loading, setLoading] = useState(true);
     const [error, setError] = useState('');
+    const [difficulty, setDifficulty] = useState<'easy' | 'medium' | 'hard'>('medium');
+    const [isStartingGame, setIsStartingGame] = useState(false);
+
+    // Game state
+    const [gameState, setGameState] = useState<GameStateResponse | null>(null);
+    const wsRef = useRef<WebSocket | null>(null);
 
     const loadLobbyDetails = useCallback(async () => {
         if (!adminApiToken) {
@@ -42,11 +49,112 @@ export default function LobbyDetails({ lobbyId, onClose, onLobbyDeleted, refresh
         }
     }, [adminApiToken, lobbyId]);
 
+    const loadGameState = useCallback(async () => {
+        if (!adminApiToken) return;
+
+        try {
+            const state = await api.admin.lobby.getGameState(lobbyId, adminApiToken);
+            setGameState(state);
+        } catch (err) {
+            console.error('Error loading game state:', err);
+            // Don't set error - game might just not be started yet
+        }
+    }, [adminApiToken, lobbyId]);
+
     const scheduleReload = useDebounce(loadLobbyDetails);
 
     useEffect(() => {
         loadLobbyDetails();
-    }, [loadLobbyDetails, refreshKey]);
+        loadGameState();
+    }, [loadLobbyDetails, loadGameState, refreshKey]);
+
+    // WebSocket connection for real-time game updates
+    useEffect(() => {
+        if (!adminApiToken) return;
+
+        // Connect to admin WebSocket
+        const ws = new WebSocket(`ws://${window.location.host}/ws/admin/${adminApiToken}`);
+        wsRef.current = ws;
+
+        ws.onopen = () => {
+            console.log('[Admin] WebSocket connected');
+            // Subscribe to this lobby
+            ws.send(JSON.stringify({ action: 'subscribe_lobby', lobby_id: lobbyId }));
+        };
+
+        ws.onmessage = event => {
+            try {
+                const message = JSON.parse(event.data);
+                console.log('[Admin] Received WebSocket message:', message);
+
+                // Handle game events
+                if (message.type === GameWebSocketEvents.STATE_UPDATE) {
+                    // Update the specific team's progress
+                    setGameState(prev => {
+                        if (!prev || !prev.is_game_active) return prev;
+
+                        const updatedTeams = prev.teams.map(team => {
+                            if (team.team_id === message.team_id) {
+                                return {
+                                    ...team,
+                                    revealed_steps: message.revealed_steps,
+                                    is_completed: message.is_completed,
+                                };
+                            }
+                            return team;
+                        });
+
+                        return {
+                            ...prev,
+                            teams: updatedTeams,
+                        };
+                    });
+                } else if (message.type === GameWebSocketEvents.TEAM_COMPLETED) {
+                    // Mark team as completed
+                    setGameState(prev => {
+                        if (!prev || !prev.is_game_active) return prev;
+
+                        const updatedTeams = prev.teams.map(team => {
+                            if (team.team_id === message.team_id) {
+                                return {
+                                    ...team,
+                                    is_completed: true,
+                                    completed_at: message.completed_at,
+                                };
+                            }
+                            return team;
+                        });
+
+                        return {
+                            ...prev,
+                            teams: updatedTeams,
+                        };
+                    });
+                } else if (message.type === GameWebSocketEvents.GAME_STARTED) {
+                    // Game started, reload game state
+                    loadGameState();
+                }
+            } catch (err) {
+                console.error('[Admin] Error parsing WebSocket message:', err);
+            }
+        };
+
+        ws.onerror = error => {
+            console.error('[Admin] WebSocket error:', error);
+        };
+
+        ws.onclose = () => {
+            console.log('[Admin] WebSocket disconnected');
+        };
+
+        return () => {
+            if (ws.readyState === WebSocket.OPEN) {
+                ws.send(JSON.stringify({ action: 'unsubscribe_lobby', lobby_id: lobbyId }));
+            }
+            ws.close();
+            wsRef.current = null;
+        };
+    }, [adminApiToken, lobbyId, loadGameState]);
 
     const handleCreateTeams = useCallback(async () => {
         if (!adminApiToken || !selectedLobby) {
@@ -126,6 +234,34 @@ export default function LobbyDetails({ lobbyId, onClose, onLobbyDeleted, refresh
         }
     }, [adminApiToken, selectedLobby, onLobbyDeleted, onClose]);
 
+    const handleStartGame = useCallback(async () => {
+        if (!adminApiToken || !selectedLobby) {
+            setError(adminApiToken ? 'Lobby not selected' : 'Admin API token is required to start game');
+            return;
+        }
+
+        if (!selectedLobby.teams || selectedLobby.teams.length < 2) {
+            setError('Need at least 2 teams to start the game');
+            return;
+        }
+
+        if (confirm(`Start the game with ${difficulty} difficulty?`)) {
+            setIsStartingGame(true);
+            try {
+                setError('');
+                const result = await api.admin.lobby.startGame(selectedLobby.lobby.id, difficulty, adminApiToken);
+                console.log('Game started:', result);
+                // Load game state to show progress
+                await loadGameState();
+            } catch (err) {
+                setError('Failed to start game');
+                console.error('Error starting game:', err);
+            } finally {
+                setIsStartingGame(false);
+            }
+        }
+    }, [adminApiToken, selectedLobby, difficulty, loadGameState]);
+
     if (loading) {
         return (
             <Modal isOpen={true} onClose={onClose} maxWidth='max-w-6xl' isLoading={true}>
@@ -180,7 +316,7 @@ export default function LobbyDetails({ lobbyId, onClose, onLobbyDeleted, refresh
                     </div>
                 </div>
 
-                <div className='mb-6 grid gap-6 md:grid-cols-2'>
+                <div className='mb-6'>
                     <Card>
                         <div className='text-tx-secondary mb-3 text-sm tracking-wide uppercase'>Lobby Info</div>
                         <div className='text-tx-primary space-y-2 text-sm'>
@@ -195,53 +331,31 @@ export default function LobbyDetails({ lobbyId, onClose, onLobbyDeleted, refresh
                                 <strong>Created:</strong>{' '}
                                 {new Date(selectedLobby.lobby.created_at).toLocaleDateString()}
                             </p>
+                            <p>
+                                <strong>Total Players:</strong> {selectedLobby.players.length}
+                            </p>
                         </div>
                     </Card>
+                </div>
 
-                    <Card>
-                        <div className='text-tx-secondary mb-3 text-sm tracking-wide uppercase'>
-                            Players ({selectedLobby.players.length})
-                        </div>
-                        {selectedLobby.players.length === 0 ? (
-                            <div className='text-tx-muted pt-4 pb-4 text-center'>No players in this lobby yet</div>
-                        ) : (
-                            <div className='max-h-48 space-y-2 overflow-y-auto'>
-                                {selectedLobby.players.map(player => (
-                                    <div
-                                        key={player.id}
-                                        data-testid={`player-row-${player.name}`}
-                                        className='bg-secondary border-border flex items-center justify-between rounded border p-2'
-                                    >
-                                        <div className='flex items-center gap-2'>
+                {(!selectedLobby.teams || selectedLobby.teams.length === 0) && selectedLobby.players.length > 0 && (
+                    <>
+                        <div className='mb-6'>
+                            <div
+                                className='text-tx-secondary mb-3 text-sm tracking-wide uppercase'
+                                data-testid='players-heading'
+                            >
+                                Players ({selectedLobby.players.length})
+                            </div>
+                            <Card>
+                                <div className='space-y-2'>
+                                    {selectedLobby.players.map(player => (
+                                        <div
+                                            key={player.id}
+                                            data-testid={`player-row-${player.name}`}
+                                            className='bg-secondary border-border flex items-center justify-between rounded border p-2'
+                                        >
                                             <span className='text-tx-primary text-sm font-medium'>{player.name}</span>
-                                            <span
-                                                className='bg-blue/20 text-blue rounded px-2 py-1 text-xs'
-                                                data-testid={`team-status-${player.name}`}
-                                            >
-                                                {player.team_id ? `Team ${player.team_id}` : 'No team'}
-                                            </span>
-                                        </div>
-                                        <div className='flex items-center gap-1'>
-                                            {selectedLobby.teams && selectedLobby.teams.length > 0 && (
-                                                <Select
-                                                    value={player.team_id || ''}
-                                                    onChange={value =>
-                                                        handleMovePlayer(
-                                                            player.id!,
-                                                            value ? parseInt(value.toString()) : 0
-                                                        )
-                                                    }
-                                                    options={[
-                                                        { value: '', label: 'No team' },
-                                                        ...(selectedLobby.teams?.map(team => ({
-                                                            value: team.id,
-                                                            label: team.name,
-                                                        })) || []),
-                                                    ]}
-                                                    disabled={movingPlayerId === player.id}
-                                                    data-testid={`team-dropdown-${player.name}`}
-                                                />
-                                            )}
                                             <Button
                                                 onClick={() => handleKickPlayer(player.id!)}
                                                 variant='destructive'
@@ -252,48 +366,46 @@ export default function LobbyDetails({ lobbyId, onClose, onLobbyDeleted, refresh
                                                 Kick
                                             </Button>
                                         </div>
-                                    </div>
-                                ))}
-                            </div>
-                        )}
-                    </Card>
-                </div>
-
-                {(!selectedLobby.teams || selectedLobby.teams.length === 0) && selectedLobby.players.length > 0 && (
-                    <div className='mb-6'>
-                        <div
-                            className='text-tx-secondary mb-3 text-sm tracking-wide uppercase'
-                            data-testid='create-teams-heading'
-                        >
-                            Create Teams
+                                    ))}
+                                </div>
+                            </Card>
                         </div>
-                        <Card>
-                            <div className='flex flex-col gap-3 md:flex-row md:items-center'>
-                                <TextInput
-                                    type='number'
-                                    label='Number of teams:'
-                                    value={numTeams.toString()}
-                                    onChange={value => setNumTeams(parseInt(value) || 2)}
-                                    className='w-20 text-sm'
-                                    data-testid='num-teams-input'
-                                />
-                                <Button
-                                    onClick={handleCreateTeams}
-                                    disabled={isCreatingTeams || numTeams < 2}
-                                    variant='secondary'
-                                    size='sm'
-                                    loading={isCreatingTeams}
-                                    className='text-accent'
-                                    data-testid='create-teams-button'
-                                >
-                                    {isCreatingTeams ? 'Creating' : 'Create Teams'}
-                                </Button>
+
+                        <div className='mb-6'>
+                            <div
+                                className='text-tx-secondary mb-3 text-sm tracking-wide uppercase'
+                                data-testid='create-teams-heading'
+                            >
+                                Create Teams
                             </div>
-                            <p className='text-tx-secondary mt-2 text-xs'>
-                                Players will be randomly assigned to {numTeams} teams
-                            </p>
-                        </Card>
-                    </div>
+                            <Card>
+                                <div className='flex flex-col gap-3 md:flex-row md:items-center'>
+                                    <TextInput
+                                        type='number'
+                                        label='Number of teams:'
+                                        value={numTeams.toString()}
+                                        onChange={value => setNumTeams(parseInt(value) || 2)}
+                                        className='w-20 text-sm'
+                                        data-testid='num-teams-input'
+                                    />
+                                    <Button
+                                        onClick={handleCreateTeams}
+                                        disabled={isCreatingTeams || numTeams < 2}
+                                        variant='secondary'
+                                        size='sm'
+                                        loading={isCreatingTeams}
+                                        className='text-accent'
+                                        data-testid='create-teams-button'
+                                    >
+                                        {isCreatingTeams ? 'Creating' : 'Create Teams'}
+                                    </Button>
+                                </div>
+                                <p className='text-tx-secondary mt-2 text-xs'>
+                                    Players will be randomly assigned to {numTeams} teams
+                                </p>
+                            </Card>
+                        </div>
+                    </>
                 )}
 
                 {selectedLobby.teams && selectedLobby.teams.length > 0 && (
@@ -305,40 +417,68 @@ export default function LobbyDetails({ lobbyId, onClose, onLobbyDeleted, refresh
                             Teams ({selectedLobby.teams.length})
                         </div>
                         <div className='grid gap-4 md:grid-cols-2'>
-                            {selectedLobby.teams.map(team => (
-                                <Card key={team.id}>
-                                    <h4 className='text-tx-primary mb-2 font-semibold'>{team.name}</h4>
-                                    <p className='text-tx-secondary mb-3 text-xs'>
-                                        Current word index:{' '}
-                                        <span className='bg-accent/30 text-accent rounded px-1 font-mono'>
-                                            {team.current_word_index}
-                                        </span>
-                                    </p>
-                                    {selectedLobby.players_by_team && selectedLobby.players_by_team[team.id] && (
-                                        <div>
-                                            <p className='text-tx-secondary mb-2 text-xs font-medium tracking-wide uppercase'>
-                                                Members:
-                                            </p>
-                                            <div className='flex flex-wrap gap-1'>
-                                                {selectedLobby.players_by_team[team.id].map(player => (
-                                                    <span
+                            {selectedLobby.teams.map(team => {
+                                const teamPlayers = selectedLobby.players_by_team?.[team.id] || [];
+                                return (
+                                    <Card key={team.id}>
+                                        <h4 className='text-tx-primary mb-3 font-semibold'>{team.name}</h4>
+                                        {teamPlayers.length === 0 ? (
+                                            <div className='text-tx-muted py-4 text-center text-sm'>
+                                                No players in this team
+                                            </div>
+                                        ) : (
+                                            <div className='space-y-2'>
+                                                {teamPlayers.map(player => (
+                                                    <div
                                                         key={player.id}
-                                                        className='bg-blue/20 text-blue inline-block rounded px-2 py-1 text-xs'
+                                                        data-testid={`team-player-row-${player.name}`}
+                                                        className='bg-secondary border-border flex items-center justify-between rounded border p-2'
                                                     >
-                                                        {player.name}
-                                                    </span>
+                                                        <span className='text-tx-primary text-sm font-medium'>
+                                                            {player.name}
+                                                        </span>
+                                                        <div className='flex items-center gap-1'>
+                                                            <Select
+                                                                value={player.team_id || ''}
+                                                                onChange={value =>
+                                                                    handleMovePlayer(
+                                                                        player.id!,
+                                                                        value ? parseInt(value.toString()) : 0
+                                                                    )
+                                                                }
+                                                                options={[
+                                                                    { value: '', label: 'Unassign' },
+                                                                    ...(selectedLobby.teams?.map(t => ({
+                                                                        value: t.id,
+                                                                        label: t.name,
+                                                                    })) || []),
+                                                                ]}
+                                                                disabled={movingPlayerId === player.id}
+                                                                data-testid={`team-move-dropdown-${player.name}`}
+                                                            />
+                                                            <Button
+                                                                onClick={() => handleKickPlayer(player.id!)}
+                                                                variant='destructive'
+                                                                size='sm'
+                                                                className='text-xs'
+                                                                data-testid={`team-kick-button-${player.name}`}
+                                                            >
+                                                                Kick
+                                                            </Button>
+                                                        </div>
+                                                    </div>
                                                 ))}
                                             </div>
-                                        </div>
-                                    )}
-                                </Card>
-                            ))}
+                                        )}
+                                    </Card>
+                                );
+                            })}
                         </div>
                     </div>
                 )}
 
                 {unassignedPlayers.length > 0 && selectedLobby.teams && selectedLobby.teams.length > 0 && (
-                    <div>
+                    <div className='mb-6'>
                         <div
                             className='text-tx-secondary mb-3 text-sm tracking-wide uppercase'
                             data-testid='unassigned-players-heading'
@@ -385,6 +525,56 @@ export default function LobbyDetails({ lobbyId, onClose, onLobbyDeleted, refresh
                                 </Card>
                             ))}
                         </div>
+                    </div>
+                )}
+
+                {selectedLobby.teams && selectedLobby.teams.length >= 2 && !gameState?.is_game_active && (
+                    <div className='mb-6'>
+                        <div
+                            className='text-tx-secondary mb-3 text-sm tracking-wide uppercase'
+                            data-testid='start-game-heading'
+                        >
+                            Start Game
+                        </div>
+                        <Card>
+                            <div className='flex flex-col gap-4 md:flex-row md:items-center md:justify-between'>
+                                <div className='flex items-center gap-3'>
+                                    <label className='text-tx-primary text-sm font-medium'>Difficulty:</label>
+                                    <Select
+                                        value={difficulty}
+                                        onChange={value => setDifficulty(value as 'easy' | 'medium' | 'hard')}
+                                        options={[
+                                            { value: 'easy', label: 'Easy' },
+                                            { value: 'medium', label: 'Medium' },
+                                            { value: 'hard', label: 'Hard' },
+                                        ]}
+                                        disabled={gameState?.is_game_active || isStartingGame}
+                                        data-testid='difficulty-select'
+                                    />
+                                </div>
+                                <Button
+                                    onClick={handleStartGame}
+                                    disabled={isStartingGame || gameState?.is_game_active}
+                                    variant='primary'
+                                    size='md'
+                                    loading={isStartingGame}
+                                    data-testid='start-game-button'
+                                >
+                                    {isStartingGame ? 'Starting Game...' : 'Start Game'}
+                                </Button>
+                            </div>
+                            <p className='text-tx-secondary mt-3 text-xs'>
+                                Each team will receive a different word puzzle of {difficulty} difficulty. The first
+                                team to complete their puzzle wins!
+                            </p>
+                        </Card>
+                    </div>
+                )}
+
+                {/* Game Progress View */}
+                {gameState && gameState.is_game_active && (
+                    <div className='mb-6'>
+                        <GameProgressView teams={gameState.teams} />
                     </div>
                 )}
             </div>
