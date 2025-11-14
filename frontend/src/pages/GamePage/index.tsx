@@ -15,6 +15,7 @@ import { useGlobalOutletContext } from '@/hooks/useGlobalOutletContext';
 import type { Puzzle } from '@/types/game';
 import type { Player, GameWonEvent } from '@/types';
 import { api } from '@/services/api';
+import { Modal, Button, ConnectionBadge } from '@/components';
 import LadderStep from './LadderStep';
 import Clues from './Clues';
 
@@ -23,6 +24,7 @@ interface GamePageProps {
     player: Player;
     teamName: string;
     lobbyId: number;
+    lobbyCode: string;
     sessionId: string;
     initialState: {
         revealed_steps: number[];
@@ -62,12 +64,14 @@ export default function GamePage() {
 
                 // Fetch player info
                 const player = await api.player.lobby.activeUser(currentSessionId);
+                const lobbyInfo = await api.player.lobby.getLobbyInfo(player.lobby_id, currentSessionId);
 
                 setGameData({
                     puzzle: puzzleResponse.puzzle,
                     player,
                     teamName: puzzleResponse.team_name,
                     lobbyId: puzzleResponse.lobby_id,
+                    lobbyCode: lobbyInfo.lobby.code,
                     sessionId: currentSessionId,
                     initialState: puzzleResponse.state,
                 });
@@ -117,7 +121,7 @@ interface GameProps extends GamePageProps {}
 
 // GameProps now includes sessionId from GamePageProps
 
-function Game({ puzzle, player, teamName, lobbyId, sessionId, initialState }: GameProps) {
+function Game({ puzzle, player, teamName, lobbyId, lobbyCode, sessionId, initialState }: GameProps) {
     const navigate = useNavigate();
     const inputRef = useRef<HTMLInputElement>(null);
     const [showWinModal, setShowWinModal] = useState(false);
@@ -193,6 +197,14 @@ function Game({ puzzle, player, teamName, lobbyId, sessionId, initialState }: Ga
             mediaQuery.removeEventListener('change', handleResize);
         };
     }, [focusInput]);
+
+    const handleReturnToLobby = useCallback(() => {
+        if (lobbyCode) {
+            navigate(`/lobby/${lobbyCode}`);
+        } else {
+            navigate('/');
+        }
+    }, [navigate, lobbyCode]);
 
     const handleGuessChange = useCallback(
         (guess: string) => {
@@ -274,13 +286,11 @@ function Game({ puzzle, player, teamName, lobbyId, sessionId, initialState }: Ga
             <div className='mb-4 flex flex-col items-center text-center'>
                 <h1 className='text-tx-primary text-2xl font-semibold md:text-3xl'>{puzzle.title}</h1>
                 <div className='mt-2 flex w-full justify-center'>
-                    <div
-                        className={`inline-flex w-28 items-center justify-center rounded-full px-3 py-1 text-xs font-medium ${
-                            isConnected ? 'bg-green-100 text-green-800' : 'bg-red-100 text-red-800'
-                        }`}
-                    >
-                        {isConnected ? '● Connected' : '● Disconnected'}
-                    </div>
+                    <ConnectionBadge
+                        isConnected={isConnected}
+                        connectedText='Connected to game'
+                        disconnectedText='Reconnecting...'
+                    />
                 </div>
             </div>
 
@@ -357,17 +367,17 @@ function Game({ puzzle, player, teamName, lobbyId, sessionId, initialState }: Ga
                         currentQuestion={currentQuestion}
                         currentAnswer={currentAnswer}
                         revealedSteps={new Set(revealedSteps)}
+                        isCompleted={isCompleted}
                     />
                 </div>
             </div>
 
             {/* Completion message */}
             {isCompleted && (
-                <div className='mt-6 rounded-lg border-l-4 border-green-500 bg-green-50 p-6'>
-                    <h2 className='mb-2 text-xl font-bold text-green-800'>Puzzle Complete! 🎉</h2>
-                    <p className='text-green-700'>
-                        Your team has completed the word ladder. Waiting for other teams...
-                    </p>
+                <div className='mt-8 flex justify-end'>
+                    <Button onClick={handleReturnToLobby} variant='primary' size='md'>
+                        Back to Lobby
+                    </Button>
                 </div>
             )}
 
@@ -379,35 +389,51 @@ function Game({ puzzle, player, teamName, lobbyId, sessionId, initialState }: Ga
             )}
 
             {/* Win Modal */}
-            {showWinModal && (
-                <div className='bg-opacity-50 fixed inset-0 z-50 flex items-center justify-center bg-black p-4'>
-                    <div className='w-full max-w-md rounded-lg bg-white p-8'>
-                        <div className='text-center'>
-                            <div className='mb-4 text-6xl'>{isOurTeamWinner ? '🎉' : '🏁'}</div>
-                            <h2 className='mb-4 text-3xl font-bold'>{isOurTeamWinner ? 'You Won!' : 'Game Over'}</h2>
-                            <p className='mb-6 text-lg'>
+            <Modal isOpen={showWinModal} onClose={() => setShowWinModal(false)} maxWidth='max-w-lg'>
+                <div className='animate-pop px-6 pt-2 pb-8 text-center'>
+                    <div className='bg-accent/20 mx-auto mb-4 flex h-16 w-16 items-center justify-center rounded-full text-3xl'>
+                        {isOurTeamWinner ? '🏆' : '🚀'}
+                    </div>
+                    <h2 className='text-tx-primary mb-2 text-3xl font-extrabold'>
+                        {isOurTeamWinner ? 'Champions!' : 'Game Over'}
+                    </h2>
+                    <p className='text-tx-secondary text-sm'>
+                        {isOurTeamWinner
+                            ? 'You crushed the puzzle. Take a breather while the admin spins up the next round.'
+                            : `${winnerTeamName || 'Another team'} finished first. Ask the admin to drop you back into the next game.`}
+                    </p>
+
+                    <div className='mt-6 grid gap-3 text-left sm:grid-cols-2'>
+                        <div className='border-border/60 bg-secondary/70 rounded-lg border p-4'>
+                            <p className='text-tx-muted text-xs tracking-wide uppercase'>Winning Team</p>
+                            <p className='text-tx-primary text-lg font-semibold'>{winnerTeamName || 'TBD'}</p>
+                            {!isOurTeamWinner && (
+                                <p className='text-tx-secondary mt-1 text-xs'>
+                                    Give them a 👏 and get ready for the rematch.
+                                </p>
+                            )}
+                        </div>
+                        <div className='border-border/60 bg-secondary/70 rounded-lg border p-4'>
+                            <p className='text-tx-muted text-xs tracking-wide uppercase'>Your Team</p>
+                            <p className='text-tx-primary text-lg font-semibold'>{teamName}</p>
+                            <p className='text-tx-secondary mt-1 text-xs'>
                                 {isOurTeamWinner
-                                    ? 'Congratulations! Your team won the game!'
-                                    : `${winnerTeamName} won the game!`}
+                                    ? 'Enjoy the victory lap while we prep the next ladder.'
+                                    : 'Stay ready—once the admin assigns teams again you will jump right in.'}
                             </p>
-                            <button
-                                onClick={() => {
-                                    setShowWinModal(false);
-                                }}
-                                className='mb-3 rounded-lg bg-green-600 px-6 py-3 font-medium text-white transition-colors hover:bg-green-700'
-                            >
-                                View Complete Puzzle
-                            </button>
-                            <button
-                                onClick={() => navigate('/')}
-                                className='rounded-lg bg-blue-600 px-6 py-3 font-medium text-white transition-colors hover:bg-blue-700'
-                            >
-                                Return to Lobby
-                            </button>
                         </div>
                     </div>
+
+                    <div className='mt-8 flex flex-col gap-3'>
+                        <Button onClick={() => setShowWinModal(false)} variant='primary' size='lg' className='w-full'>
+                            Review Puzzle
+                        </Button>
+                        <Button onClick={handleReturnToLobby} variant='secondary' size='lg' className='w-full'>
+                            Back to Lobby
+                        </Button>
+                    </div>
                 </div>
-            )}
+            </Modal>
         </div>
     );
 }

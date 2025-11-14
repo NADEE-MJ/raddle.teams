@@ -11,11 +11,15 @@ class PlayerCreate(BaseModel):
 
 
 class LobbyCreate(BaseModel):
-    name: str
+    name: str | None = None
 
 
 class TeamCreate(BaseModel):
     num_teams: int
+
+
+class TeamUpdate(BaseModel):
+    name: str
 
 
 #############################################################################
@@ -31,6 +35,10 @@ class LobbyInfo(BaseModel):
 class MessageResponse(BaseModel):
     status: bool
     message: str
+
+
+class GeneratedNameResponse(BaseModel):
+    name: str
 
 
 class ApiRootResponse(BaseModel):

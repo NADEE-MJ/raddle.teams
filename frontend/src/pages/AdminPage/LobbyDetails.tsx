@@ -24,6 +24,8 @@ export default function LobbyDetails({ lobbyId, onClose, onLobbyDeleted, refresh
     const [error, setError] = useState('');
     const [difficulty, setDifficulty] = useState<'easy' | 'medium' | 'hard'>('medium');
     const [isStartingGame, setIsStartingGame] = useState(false);
+    const [editingTeamId, setEditingTeamId] = useState<number | null>(null);
+    const [editingTeamName, setEditingTeamName] = useState('');
 
     // Game state
     const [gameState, setGameState] = useState<GameStateResponse | null>(null);
@@ -238,6 +240,38 @@ export default function LobbyDetails({ lobbyId, onClose, onLobbyDeleted, refresh
         }
     }, [adminApiToken, selectedLobby, onLobbyDeleted, onClose]);
 
+    const handleUpdateTeamName = useCallback(
+        async (teamId: number) => {
+            if (!adminApiToken || !selectedLobby || !editingTeamName.trim()) {
+                setEditingTeamId(null);
+                setEditingTeamName('');
+                return;
+            }
+
+            try {
+                setError('');
+                await api.admin.lobby.team.updateName(teamId, editingTeamName.trim(), adminApiToken);
+                setEditingTeamId(null);
+                setEditingTeamName('');
+                scheduleReload();
+            } catch (err) {
+                setError('Failed to update team name');
+                console.error('Error updating team name:', err);
+            }
+        },
+        [adminApiToken, selectedLobby, editingTeamName, scheduleReload]
+    );
+
+    const handleStartTeamNameEdit = (teamId: number, currentName: string) => {
+        setEditingTeamId(teamId);
+        setEditingTeamName(currentName);
+    };
+
+    const handleCancelTeamNameEdit = () => {
+        setEditingTeamId(null);
+        setEditingTeamName('');
+    };
+
     const handleStartGame = useCallback(async () => {
         if (!adminApiToken || !selectedLobby) {
             setError(adminApiToken ? 'Lobby not selected' : 'Admin API token is required to start game');
@@ -425,9 +459,56 @@ export default function LobbyDetails({ lobbyId, onClose, onLobbyDeleted, refresh
                         <div className='grid gap-4 md:grid-cols-2'>
                             {selectedLobby.teams.map(team => {
                                 const teamPlayers = selectedLobby.players_by_team?.[team.id] || [];
+                                const isEditing = editingTeamId === team.id;
                                 return (
                                     <Card key={team.id}>
-                                        <h4 className='text-tx-primary mb-3 font-semibold'>{team.name}</h4>
+                                        <div className='mb-3 flex items-center justify-between gap-2'>
+                                            {isEditing ? (
+                                                <div className='flex flex-1 items-center gap-2'>
+                                                    <TextInput
+                                                        value={editingTeamName}
+                                                        onChange={setEditingTeamName}
+                                                        className='text-sm'
+                                                        autoFocus
+                                                        onKeyDown={e => {
+                                                            if (e.key === 'Enter') {
+                                                                handleUpdateTeamName(team.id);
+                                                            } else if (e.key === 'Escape') {
+                                                                handleCancelTeamNameEdit();
+                                                            }
+                                                        }}
+                                                    />
+                                                    <Button
+                                                        onClick={() => handleUpdateTeamName(team.id)}
+                                                        variant='primary'
+                                                        size='sm'
+                                                        className='text-xs'
+                                                    >
+                                                        Save
+                                                    </Button>
+                                                    <Button
+                                                        onClick={handleCancelTeamNameEdit}
+                                                        variant='secondary'
+                                                        size='sm'
+                                                        className='text-xs'
+                                                    >
+                                                        Cancel
+                                                    </Button>
+                                                </div>
+                                            ) : (
+                                                <>
+                                                    <h4 className='text-tx-primary font-semibold'>{team.name}</h4>
+                                                    <Button
+                                                        onClick={() => handleStartTeamNameEdit(team.id, team.name)}
+                                                        variant='secondary'
+                                                        size='sm'
+                                                        className='text-xs'
+                                                    >
+                                                        Edit
+                                                    </Button>
+                                                </>
+                                            )}
+                                        </div>
                                         {teamPlayers.length === 0 ? (
                                             <div className='text-tx-muted py-4 text-center text-sm'>
                                                 No players in this team

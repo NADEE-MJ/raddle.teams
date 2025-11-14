@@ -41,6 +41,10 @@ export interface ApiResponse {
     message: string;
 }
 
+export interface GeneratedNameResponse {
+    name: string;
+}
+
 export interface AdminAuthAdminAuthenticatedResponse {
     session_id: string;
 }

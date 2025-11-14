@@ -76,11 +76,12 @@ export default function LadderStep({
     }, [wordSegments, letterCountLabel]);
 
     const color = useMemo(() => {
+        if (isDisabled) return 'bg-revealed-step';
         if (isCurrentQuestion) return 'bg-question-step';
         if (isCurrentAnswer) return 'bg-answer-step';
         if (isStepRevealed) return 'bg-revealed-step';
         return 'bg-hidden-step';
-    }, [isCurrentQuestion, isCurrentAnswer, isStepRevealed]);
+    }, [isDisabled, isCurrentQuestion, isCurrentAnswer, isStepRevealed]);
 
     const renderEmptyTransformFn = () => {
         return (

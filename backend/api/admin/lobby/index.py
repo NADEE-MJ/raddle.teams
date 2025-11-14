@@ -9,7 +9,8 @@ from pydantic import BaseModel
 from backend.custom_logging import api_logger
 from backend.database import Lobby, Player, Team, Game, get_session
 from backend.dependencies import check_admin_token
-from backend.schemas import LobbyCreate, LobbyInfo, MessageResponse
+from backend.schemas import GeneratedNameResponse, LobbyCreate, LobbyInfo, MessageResponse
+from backend.utils.name_generator import generate_lobby_name
 from backend.websocket.managers import lobby_websocket_manager
 
 router = APIRouter(dependencies=[Depends(check_admin_token)])
@@ -20,13 +21,23 @@ async def create_lobby(
     lobby_data: LobbyCreate,
     db: Session = Depends(get_session),
 ):
-    api_logger.info(f"Admin requested lobby creation: name={lobby_data.name}")
-    lobby = Lobby(**lobby_data.model_dump(), code=uuid4().hex[:6].upper())
+    # Auto-generate lobby name if not provided
+    lobby_name = lobby_data.name if lobby_data.name else generate_lobby_name()
+    api_logger.info(f"Admin requested lobby creation: name={lobby_name}")
+    lobby = Lobby(name=lobby_name, code=uuid4().hex[:6].upper())
     db.add(lobby)
     db.commit()
     db.refresh(lobby)
     api_logger.info(f"Created lobby id={lobby.id} code={lobby.code} name={lobby.name}")
     return lobby
+
+
+@router.get("/lobby/random-name", response_model=GeneratedNameResponse)
+async def get_random_lobby_name():
+    """Return a randomly generated lobby name for admins to use in the UI."""
+    name = generate_lobby_name()
+    api_logger.info(f"Generated random lobby name='{name}'")
+    return GeneratedNameResponse(name=name)
 
 
 @router.get("/lobby", response_model=list[Lobby])

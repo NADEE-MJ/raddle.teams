@@ -64,13 +64,11 @@
    3. should it notify the admin that a player has been disconnected?
    4. should it attempt to reconnect to the player
    5. should it resend the message later?
-9. flesh out the puzzles_from_raddle functions to load and convert puzzles from raddle format to our format
-10. create tests for tutorial guide component
-11. implement scroll similar to raddle.quest scrolling to  pin the ladder to the top of the screen when scrolling down
-12. add websocket reconnection logic everywhere on the frontend
-13. fix color scheme
-14. - in a answer should probably show as something else or maybe just dont include those
-15. easy and hard mode dont work when starting a game
-16. need to display a better error message when trying to login as someone who is already logged in with that name at that lobby
+9. implement better error handling for websockets in general. add websocket reconnection logic everywhere on the frontend
+10. - in a answer should probably show as something else or maybe just dont include those
+11. when someone gets kicked they should be sent back to the home page
+12. show the admin websocket connected status on the page somewhere
+13. when a new game starts everyone should be sent to the new game page even if they are looking at the old game page
+
 
 ## BUGS

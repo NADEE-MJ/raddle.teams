@@ -5,7 +5,7 @@ import { useWebSocket } from '@/hooks/useWebSocket';
 import { useGlobalOutletContext } from '@/hooks/useGlobalOutletContext';
 import { useDebounce } from '@/hooks/useDebounce';
 import { WebSocketMessage, LobbyWebSocketEvents, GameWebSocketEvents, Player, LobbyInfo } from '@/types';
-import { LoadingSpinner, CopyableCode, Button, ErrorMessage, StatusIndicator, Alert } from '@/components';
+import { LoadingSpinner, CopyableCode, Button, ErrorMessage, Alert, Card, ConnectionBadge } from '@/components';
 
 export default function LobbyPage() {
     const navigate = useNavigate();
@@ -170,127 +170,230 @@ export default function LobbyPage() {
         );
     }
 
+    const hasTeams = lobbyInfo.teams && lobbyInfo.teams.length > 0;
+    const unassignedPlayers = lobbyInfo.players.filter(p => !p.team_id);
+    const hasGameStarted = lobbyInfo.teams?.some(team => team.game_id);
+    const playerTeamName = lobbyInfo.teams?.find(team => team.id === player.team_id)?.name;
+    let gameStatus = {
+        icon: '👥',
+        title: 'Waiting for more players',
+        description: 'Waiting for more players to join or for the admin to start the game.',
+    };
+
+    if (hasGameStarted) {
+        gameStatus = {
+            icon: '⚡️',
+            title: 'Game in progress',
+            description: player.team_id
+                ? 'Hang tight while your team wraps up this round.'
+                : 'A round is live. Ask the admin to assign you to a team so you can join in.',
+        };
+    } else if (hasTeams) {
+        gameStatus = {
+            icon: '🚦',
+            title: 'Teams are ready',
+            description: 'Waiting for the admin to start the game.',
+        };
+    }
+
     return (
-        <div>
-            <div className='mb-6'>
-                <div className='mb-2 flex items-center justify-between'>
-                    <h1 className='text-tx-primary text-3xl font-bold'>{lobbyInfo.lobby.name}</h1>
-                    <StatusIndicator isConnected={isConnected} className='ml-4' />
+        <div className='space-y-6'>
+            {/* Header */}
+            <div className='border-border bg-secondary/70 rounded-xl border p-4 shadow-lg'>
+                <div className='flex flex-col gap-4 md:flex-row md:items-center md:justify-between'>
+                    <div>
+                        <p className='text-tx-muted text-xs font-semibold tracking-wide uppercase'>Lobby</p>
+                        <h1 className='text-tx-primary text-3xl font-bold'>{lobbyInfo.lobby.name}</h1>
+                        <div className='text-tx-secondary mt-2 flex flex-wrap items-center gap-2 text-sm'>
+                            <span>Lobby Code:</span>
+                            <CopyableCode code={lobbyInfo.lobby.code} className='text-lg' data-testid='lobby-code' />
+                        </div>
+                    </div>
+                    <div className='flex flex-col items-start gap-2 md:items-end'>
+                        <ConnectionBadge
+                            isConnected={isConnected}
+                            connectedText='Connected to lobby'
+                            disconnectedText='Reconnecting...'
+                        />
+                        <div className='text-tx-muted flex flex-wrap gap-4 text-xs font-semibold tracking-wide uppercase'>
+                            <span className='text-tx-secondary'>
+                                Players{' '}
+                                <span className='text-tx-primary text-base font-bold'>{lobbyInfo.players.length}</span>
+                            </span>
+                            <span className='text-tx-secondary'>
+                                Teams{' '}
+                                <span className='text-tx-primary text-base font-bold'>
+                                    {lobbyInfo.teams?.length || 0}
+                                </span>
+                            </span>
+                        </div>
+                    </div>
                 </div>
-                <p className='text-tx-secondary mt-1'>
-                    Lobby Code:
-                    <CopyableCode code={lobbyInfo.lobby.code} className='ml-2 text-lg' data-testid='lobby-code' />
-                </p>
             </div>
 
             <ErrorMessage message={error} data-testid='lobby-error-message' />
             {wsError && <Alert variant='error'>{wsError}</Alert>}
 
-            <div className='grid gap-6 md:grid-cols-2'>
-                {/* Players List */}
-                <div className='dark:bg-tertiary dark:border-border-light rounded-lg bg-gray-50 p-4 dark:border'>
-                    <h2 className='dark:text-tx-primary mb-4 text-xl font-semibold text-gray-900'>
-                        Players ({lobbyInfo.players.length})
-                    </h2>
-                    {lobbyInfo.players.length === 0 ? (
-                        <p className='dark:text-tx-muted text-gray-500'>No players in lobby yet</p>
-                    ) : (
-                        <div className='max-h-64 space-y-2 overflow-y-auto'>
-                            {lobbyInfo.players.map(playerItem => (
-                                <div
-                                    key={playerItem.id}
-                                    data-testid={`player-list-row-${playerItem.name}`}
-                                    className={`flex items-center justify-between rounded-lg p-3 ${
-                                        playerItem.id === player.id
-                                            ? 'dark:border-accent dark:bg-accent/20 border-2 border-blue-300 bg-blue-100'
-                                            : 'dark:border-border-light dark:bg-secondary border border-gray-200 bg-white'
-                                    }`}
-                                >
-                                    <div className='flex items-center gap-3'>
-                                        <span
-                                            className='dark:text-tx-primary font-medium text-gray-900'
-                                            data-testid={`player-name-${playerItem.name}`}
-                                        >
-                                            {playerItem.name}
-                                            {playerItem.id === player.id && ' (You)'}
-                                        </span>
-                                    </div>
-                                    <div
-                                        className='team-status-container'
-                                        data-testid={`team-status-container-${playerItem.name}`}
-                                    >
-                                        <span
-                                            className='dark:bg-elevated dark:text-tx-secondary rounded bg-gray-100 px-2 py-1 text-sm text-gray-500'
-                                            data-testid={`team-status-${playerItem.name}`}
-                                        >
-                                            {playerItem.team_id ? `Team ${playerItem.team_id}` : 'No team'}
-                                        </span>
-                                    </div>
-                                </div>
-                            ))}
+            {/* Game Status Card */}
+            <div>
+                <Card className='bg-elevated/70 shadow-lg'>
+                    <div className='flex items-start gap-4'>
+                        <div className='text-3xl' aria-hidden='true'>
+                            {gameStatus.icon}
                         </div>
-                    )}
-                </div>
+                        <div>
+                            <div className='text-tx-secondary text-xs font-semibold tracking-wide uppercase'>
+                                Game Status
+                            </div>
+                            <p className='text-tx-primary text-lg font-semibold'>{gameStatus.title}</p>
+                            <p className='text-tx-secondary text-sm'>{gameStatus.description}</p>
+                        </div>
+                    </div>
+                </Card>
+            </div>
 
-                {/* Teams List */}
-                <div className='bg-tertiary border-border-light rounded-lg border p-4'>
-                    <h2 className='text-tx-primary mb-4 text-xl font-semibold' data-testid='player-teams-heading'>
-                        Teams ({lobbyInfo.teams && lobbyInfo.teams.length > 0 ? lobbyInfo.teams.length : 0})
-                    </h2>
-                    {lobbyInfo.teams && lobbyInfo.teams.length > 0 ? (
-                        <div className='space-y-3'>
-                            {lobbyInfo.teams.map(team => (
-                                <div
-                                    key={team.id}
-                                    className='border-border-light bg-secondary rounded-lg border p-4'
-                                    data-testid={`team-section-${team.name}`}
-                                >
-                                    <h3 className='text-tx-primary mb-2 text-lg font-semibold'>{team.name}</h3>
-                                    <div className='text-tx-secondary mb-2 text-sm'>
-                                        Progress: Word {team.current_word_index + 1}
+            {/* No teams created yet - show all players */}
+            {!hasTeams && (
+                <div className='mb-6'>
+                    <div className='text-tx-secondary mb-3 text-sm tracking-wide uppercase'>
+                        Players ({lobbyInfo.players.length})
+                    </div>
+                    <Card className='bg-secondary/70'>
+                        {lobbyInfo.players.length === 0 ? (
+                            <p className='text-tx-muted text-center'>Waiting for players to join this lobby.</p>
+                        ) : (
+                            <div className='space-y-3'>
+                                {lobbyInfo.players.map(playerItem => (
+                                    <div
+                                        key={playerItem.id}
+                                        data-testid={`player-list-row-${playerItem.name}`}
+                                        className={`bg-elevated/70 flex items-center justify-between rounded-xl border px-4 py-3 text-base font-semibold shadow-sm transition hover:-translate-y-0.5 hover:shadow-lg ${
+                                            playerItem.id === player.id
+                                                ? 'border-accent/70 text-accent'
+                                                : 'border-border/70 text-tx-primary'
+                                        }`}
+                                    >
+                                        <span className='text-lg' data-testid={`player-name-${playerItem.name}`}>
+                                            <span className='flex items-center gap-2'>
+                                                {playerItem.name}
+                                                {playerItem.id === player.id && (
+                                                    <span className='border-accent/40 text-accent rounded-full border px-2 py-0.5 text-[10px] font-semibold tracking-wide uppercase'>
+                                                        You
+                                                    </span>
+                                                )}
+                                            </span>
+                                        </span>
                                     </div>
-                                    {lobbyInfo.players_by_team && lobbyInfo.players_by_team[team.id] && (
-                                        <div>
-                                            <p className='text-tx-secondary mb-1 text-sm font-medium'>Members:</p>
+                                ))}
+                            </div>
+                        )}
+                    </Card>
+                </div>
+            )}
+
+            {/* Teams created - show teams with players */}
+            {hasTeams && (
+                <>
+                    <div className='mb-6'>
+                        <div
+                            className='text-tx-secondary mb-3 text-sm tracking-wide uppercase'
+                            data-testid='player-teams-heading'
+                        >
+                            Teams ({lobbyInfo.teams.length})
+                        </div>
+                        <div className='grid gap-4 md:grid-cols-2'>
+                            {lobbyInfo.teams.map(team => {
+                                const teamPlayers = lobbyInfo.players_by_team?.[team.id] || [];
+                                const isMyTeam = teamPlayers.some(p => p.id === player.id);
+                                return (
+                                    <Card
+                                        key={team.id}
+                                        className={`${isMyTeam ? 'border-accent border-2' : ''} transition-colors`}
+                                        data-testid={`team-section-${team.name}`}
+                                    >
+                                        <div className='mb-3 flex items-center justify-between gap-2'>
+                                            <div>
+                                                <h3 className='text-tx-primary text-lg font-semibold'>{team.name}</h3>
+                                                <p className='text-tx-secondary text-xs'>
+                                                    {teamPlayers.length}{' '}
+                                                    {teamPlayers.length === 1 ? 'player' : 'players'}
+                                                </p>
+                                            </div>
+                                            {isMyTeam && (
+                                                <span className='bg-accent/20 text-accent rounded-full px-2 py-0.5 text-[10px] font-semibold tracking-wide uppercase'>
+                                                    Your Team
+                                                </span>
+                                            )}
+                                        </div>
+                                        {teamPlayers.length === 0 ? (
+                                            <p className='text-tx-muted text-center text-sm'>No players in this team</p>
+                                        ) : (
                                             <div
-                                                className='flex flex-wrap gap-1'
+                                                className='flex flex-wrap gap-2'
                                                 data-testid={`team-members-${team.name}`}
                                             >
-                                                {lobbyInfo.players_by_team[team.id].map(teamPlayer => (
+                                                {teamPlayers.map(teamPlayer => (
                                                     <span
                                                         key={teamPlayer.id}
-                                                        className={`inline-block rounded px-2 py-1 text-xs ${
+                                                        className={`bg-elevated text-tx-primary flex items-center gap-2 rounded-full px-3 py-1 text-xs ${
                                                             teamPlayer.id === player.id
-                                                                ? 'bg-accent/20 text-accent font-semibold'
-                                                                : 'bg-elevated text-tx-secondary'
+                                                                ? 'ring-accent font-semibold ring-2'
+                                                                : ''
                                                         }`}
                                                         data-testid={`team-member-${teamPlayer.name}`}
                                                     >
-                                                        {teamPlayer.name}
+                                                        <span>{teamPlayer.name}</span>
+                                                        {teamPlayer.id === player.id && (
+                                                            <span className='border-accent/40 text-accent rounded-full border px-2 py-0.5 text-[10px] font-semibold tracking-wide uppercase'>
+                                                                You
+                                                            </span>
+                                                        )}
                                                     </span>
                                                 ))}
                                             </div>
-                                        </div>
-                                    )}
-                                </div>
-                            ))}
+                                        )}
+                                    </Card>
+                                );
+                            })}
                         </div>
-                    ) : (
-                        <p className='text-tx-muted'>No teams created yet. Waiting for admin to set up teams...</p>
-                    )}
-                </div>
-            </div>
+                    </div>
 
-            {/* Game Status */}
-            <div className='mt-6 rounded-lg border border-blue-200 bg-blue-50 p-4 dark:border-blue-700 dark:bg-blue-900/20'>
-                <h3 className='mb-2 text-lg font-semibold text-blue-900 dark:text-blue-300'>Game Status</h3>
-                <p className='text-blue-700 dark:text-blue-300'>Waiting for admin to start the game...</p>
-                {player.team_id ? (
-                    <p className='mt-2 text-blue-700 dark:text-blue-300'>You are assigned to Team {player.team_id}</p>
-                ) : (
-                    <p className='mt-2 text-blue-700 dark:text-blue-300'>You are not assigned to a team yet</p>
-                )}
-            </div>
+                    {/* Unassigned Players */}
+                    {unassignedPlayers.length > 0 && (
+                        <div className='mb-6'>
+                            <div className='text-tx-secondary mb-3 text-sm tracking-wide uppercase'>
+                                Unassigned Players ({unassignedPlayers.length})
+                            </div>
+                            <Card variant='warning'>
+                                <p className='text-orange/80 text-xs'>
+                                    These players still need teams. Ping the admin if you are waiting to join.
+                                </p>
+                                <div className='mt-3 space-y-2'>
+                                    {unassignedPlayers.map(playerItem => (
+                                        <div
+                                            key={playerItem.id}
+                                            data-testid={`unassigned-player-${playerItem.name}`}
+                                            className='flex items-center justify-between'
+                                        >
+                                            <span className='text-orange text-sm font-medium'>
+                                                <span className='flex items-center gap-2'>
+                                                    {playerItem.name}
+                                                    {playerItem.id === player.id && (
+                                                        <span className='border-orange/60 text-orange rounded-full border px-2 py-0.5 text-[10px] font-semibold tracking-wide uppercase'>
+                                                            You
+                                                        </span>
+                                                    )}
+                                                </span>
+                                            </span>
+                                            <span className='text-orange text-xs'>Not assigned</span>
+                                        </div>
+                                    ))}
+                                </div>
+                            </Card>
+                        </div>
+                    )}
+                </>
+            )}
         </div>
     );
 }

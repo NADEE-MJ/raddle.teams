@@ -7,11 +7,34 @@ from sqlmodel import Session, select
 from backend.custom_logging import api_logger
 from backend.database import Lobby, Player, Team, get_session
 from backend.dependencies import check_admin_token
-from backend.schemas import MessageResponse, TeamCreate
+from backend.schemas import MessageResponse, TeamCreate, TeamUpdate
+from backend.utils.name_generator import generate_multiple_team_names
 from backend.websocket.events import TeamAssignedEvent, TeamChangedEvent
 from backend.websocket.managers import lobby_websocket_manager
 
 router = APIRouter(dependencies=[Depends(check_admin_token)])
+
+
+@router.put("/lobby/team/{team_id}/name", response_model=MessageResponse)
+async def update_team_name(
+    team_id: int,
+    team_update: TeamUpdate,
+    db: Session = Depends(get_session),
+):
+    api_logger.info(f"Admin requested team name update: team_id={team_id} new_name={team_update.name}")
+
+    team = db.get(Team, team_id)
+    if not team:
+        api_logger.warning(f"Team name update failed: team not found team_id={team_id}")
+        raise HTTPException(status_code=404, detail="Team not found")
+
+    old_name = team.name
+    team.name = team_update.name
+    db.add(team)
+    db.commit()
+
+    api_logger.info(f"Successfully updated team_id={team_id} name from '{old_name}' to '{team_update.name}'")
+    return MessageResponse(status=True, message=f"Team name updated to '{team_update.name}'")
 
 
 @router.put("/lobby/team/{team_id}/player/{player_id}", response_model=MessageResponse)
@@ -86,9 +109,12 @@ async def create_teams(
     if len(players) == 0:
         raise HTTPException(status_code=400, detail="Cannot create teams with no players")
 
+    # Generate funny names for teams
+    team_names = generate_multiple_team_names(team_data.num_teams)
+
     teams = []
     for i in range(team_data.num_teams):
-        team = Team(name=f"Team {i + 1}", lobby_id=lobby_id)
+        team = Team(name=team_names[i], lobby_id=lobby_id)
         db.add(team)
         teams.append(team)
 

@@ -1,6 +1,7 @@
 export { default as Alert } from '@/components/Alert';
 export { default as Button } from '@/components/Button';
 export { default as Card } from '@/components/Card';
+export { default as ConnectionBadge } from '@/components/ConnectionBadge';
 export { default as CopyableCode } from '@/components/CopyableCode';
 export { default as ErrorMessage } from '@/components/ErrorMessage';
 export { default as HintConfirmationModal } from '@/components/HintConfirmationModal';

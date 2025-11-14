@@ -7,9 +7,17 @@ interface CluesProps {
     currentQuestion: number;
     currentAnswer: number;
     revealedSteps: Set<number>;
+    isCompleted: boolean;
 }
 
-export default function Clues({ puzzle, direction, currentQuestion, currentAnswer, revealedSteps }: CluesProps) {
+export default function Clues({
+    puzzle,
+    direction,
+    currentQuestion,
+    currentAnswer,
+    revealedSteps,
+    isCompleted,
+}: CluesProps) {
     const ladder = useMemo(() => puzzle.ladder, [puzzle.ladder]);
     const isDownward = useMemo(() => direction === 'down', [direction]);
     const questionWord = useMemo(() => {
@@ -28,6 +36,23 @@ export default function Clues({ puzzle, direction, currentQuestion, currentAnswe
         },
         [revealedSteps]
     );
+
+    const baseChipClasses = 'p-1 pb-0.5 font-mono';
+    const neutralChipClass = `${baseChipClasses} bg-border/40 text-tx-secondary`;
+    const solvedClueTextClass = isCompleted ? 'text-tx-secondary' : 'text-clue-text-muted';
+
+    const questionChipClass = isCompleted
+        ? neutralChipClass
+        : `${baseChipClasses} bg-clue-question-word text-clue-text-word`;
+    const questionSolvedChipClass = isCompleted
+        ? neutralChipClass
+        : `${baseChipClasses} bg-clue-question-word-solved text-clue-text-muted-word`;
+    const answerChipClass = isCompleted
+        ? neutralChipClass
+        : `${baseChipClasses} bg-clue-answer-word text-clue-text-word`;
+    const answerSolvedChipClass = isCompleted
+        ? neutralChipClass
+        : `${baseChipClasses} bg-clue-answer-word-solved text-clue-text-muted-word`;
 
     // Shuffle with a consistent seed based on puzzle title
     const shuffleWithSeed = useCallback(<T,>(array: T[], seedStr: string): T[] => {
@@ -68,49 +93,49 @@ export default function Clues({ puzzle, direction, currentQuestion, currentAnswe
         return stepIds;
     }, [ladder.length, isStepRevealed]);
 
-    const renderQuestionWord = useCallback((word: string) => {
-        return (
-            <span
-                className='bg-clue-question-word text-clue-text-word p-1 pb-0.5 font-mono'
-                data-testid={`question-word-${word?.toLowerCase()}`}
-            >
-                {word}
-            </span>
-        );
-    }, []);
+    const renderQuestionWord = useCallback(
+        (word: string) => {
+            return (
+                <span className={questionChipClass} data-testid={`question-word-${word?.toLowerCase()}`}>
+                    {word}
+                </span>
+            );
+        },
+        [questionChipClass]
+    );
 
-    const renderQuestionWordSolved = useCallback((word: string) => {
-        return (
-            <span
-                className='bg-clue-question-word-solved text-clue-text-muted-word p-1 pb-0.5 font-mono'
-                data-testid={`question-word-${word?.toLowerCase()}`}
-            >
-                {word}
-            </span>
-        );
-    }, []);
+    const renderQuestionWordSolved = useCallback(
+        (word: string) => {
+            return (
+                <span className={questionSolvedChipClass} data-testid={`question-word-${word?.toLowerCase()}`}>
+                    {word}
+                </span>
+            );
+        },
+        [questionSolvedChipClass]
+    );
 
-    const renderAnswerWord = useCallback((word: string) => {
-        return (
-            <span
-                className='bg-clue-answer-word text-clue-text-word p-1 pb-0.5 font-mono'
-                data-testid={`answer-word-${word?.toLowerCase()}`}
-            >
-                {word}
-            </span>
-        );
-    }, []);
+    const renderAnswerWord = useCallback(
+        (word: string) => {
+            return (
+                <span className={answerChipClass} data-testid={`answer-word-${word?.toLowerCase()}`}>
+                    {word}
+                </span>
+            );
+        },
+        [answerChipClass]
+    );
 
-    const renderAnswerWordSolved = useCallback((word: string) => {
-        return (
-            <span
-                className='bg-clue-answer-word-solved text-clue-text-muted-word p-1 pb-0.5 font-mono'
-                data-testid={`answer-word-${word?.toLowerCase()}`}
-            >
-                {word}
-            </span>
-        );
-    }, []);
+    const renderAnswerWordSolved = useCallback(
+        (word: string) => {
+            return (
+                <span className={answerSolvedChipClass} data-testid={`answer-word-${word?.toLowerCase()}`}>
+                    {word}
+                </span>
+            );
+        },
+        [answerSolvedChipClass]
+    );
 
     const renderClueParts = useCallback(
         (clue: string, questionWordRendered: JSX.Element | null, answerWordRendered: JSX.Element | null) => {
@@ -157,12 +182,12 @@ export default function Clues({ puzzle, direction, currentQuestion, currentAnswe
             }
 
             return (
-                <div className='text-clue-text-muted my-3 mb-2' data-testid={`solved-clue-${stepId}`}>
+                <div className={`${solvedClueTextClass} my-3 mb-2`} data-testid={`solved-clue-${stepId}`}>
                     {parts}
                 </div>
             );
         },
-        [renderClueParts, renderQuestionWordSolved, renderAnswerWordSolved, ladder]
+        [renderClueParts, renderQuestionWordSolved, renderAnswerWordSolved, ladder, solvedClueTextClass]
     );
 
     const renderDownwardClue = useCallback(

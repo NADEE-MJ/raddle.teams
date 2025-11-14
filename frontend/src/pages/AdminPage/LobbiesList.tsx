@@ -68,10 +68,27 @@ export default function LobbiesList({ onViewDetails, refreshKey, onDebouncedRefr
         }
     };
 
+    const generateLobbyName = useCallback(async () => {
+        if (!adminApiToken) {
+            setError('Admin API token is required to generate a lobby name');
+            console.error('Admin API token is missing');
+            return '';
+        }
+
+        try {
+            const { name } = await api.admin.lobby.getRandomName(adminApiToken);
+            return name;
+        } catch (err) {
+            setError('Failed to generate lobby name');
+            console.error('Error generating lobby name:', err);
+            return '';
+        }
+    }, [adminApiToken]);
+
     return (
         <div>
             <div className='mb-4'>
-                <CreateLobbyForm onCreateLobby={createLobby} />
+                <CreateLobbyForm onCreateLobby={createLobby} onGenerateLobbyName={generateLobbyName} />
             </div>
 
             <ErrorMessage message={error} data-testid='lobbies-error-message' />

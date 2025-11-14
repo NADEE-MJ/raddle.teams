@@ -3,6 +3,7 @@ import {
     Lobby,
     LobbyInfo,
     ApiResponse,
+    GeneratedNameResponse,
     AdminAuthAdminAuthenticatedResponse,
     GameState,
     Guess,
@@ -81,6 +82,9 @@ export const api = {
                     bearerToken
                 );
             },
+            async getRandomName(bearerToken: string): Promise<GeneratedNameResponse> {
+                return request<GeneratedNameResponse>('/admin/lobby/random-name', {}, bearerToken);
+            },
             async getAll(bearerToken: string): Promise<Lobby[]> {
                 return request<Lobby[]>('/admin/lobby', {}, bearerToken);
             },
@@ -112,6 +116,16 @@ export const api = {
                         `/admin/lobby/team/${teamId}/player/${playerId}`,
                         {
                             method: 'PUT',
+                        },
+                        bearerToken
+                    );
+                },
+                async updateName(teamId: number, name: string, bearerToken: string): Promise<ApiResponse> {
+                    return request<ApiResponse>(
+                        `/admin/lobby/team/${teamId}/name`,
+                        {
+                            method: 'PUT',
+                            body: JSON.stringify({ name }),
                         },
                         bearerToken
                     );
