@@ -69,6 +69,6 @@
 11. when someone gets kicked they should be sent back to the home page
 12. show the admin websocket connected status on the page somewhere
 13. when a new game starts everyone should be sent to the new game page even if they are looking at the old game page
-
+14. remove the need for the frontend to have the entire puzzle state frontend side that should only exist server side and words are sent as needed once they are answered correctly
 
 ## BUGS
