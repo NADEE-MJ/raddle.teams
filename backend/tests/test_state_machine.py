@@ -8,7 +8,7 @@ from pathlib import Path
 # Add parent directory to path
 sys.path.insert(0, str(Path(__file__).parent.parent.parent))
 
-from backend.game.state_machine import TeamStateMachine, TeamState, GuessResult
+from backend.game.state_machine import TeamStateMachine, TeamState
 from backend.game.puzzles import Puzzle, LadderStep, PuzzleMeta
 
 

@@ -17,4 +17,7 @@ dist/
 
 # yaml files
 *.yaml
-*.ymlpuzzles_from_raddle/
+*.yml
+
+# Puzzle assets
+puzzles_from_raddle/

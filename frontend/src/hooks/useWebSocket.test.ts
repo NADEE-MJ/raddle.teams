@@ -241,7 +241,7 @@ describe('useWebSocket Hook', () => {
         });
 
         test('does not reconnect when autoReconnect is false', async () => {
-            const { result } = renderHook(() => useWebSocket('ws://localhost:8000', { autoReconnect: false }));
+            renderHook(() => useWebSocket('ws://localhost:8000', { autoReconnect: false }));
 
             await act(async () => {
                 await vi.runOnlyPendingTimersAsync();
@@ -363,7 +363,7 @@ describe('useWebSocket Hook', () => {
             const onMessage1 = vi.fn();
             const onMessage2 = vi.fn();
 
-            const { result, rerender } = renderHook(
+            const { rerender } = renderHook(
                 ({ onMessage }) => useWebSocket('ws://localhost:8000', { onMessage }),
                 { initialProps: { onMessage: onMessage1 } }
             );
