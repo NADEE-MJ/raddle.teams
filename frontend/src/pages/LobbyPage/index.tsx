@@ -13,7 +13,8 @@ export default function LobbyPage() {
 
     const [player, setPlayer] = useState<Player | null>(null);
     const [lobbyInfo, setLobbyInfo] = useState<LobbyInfo | null>(null);
-    const [isLoading, setIsLoading] = useState(true);
+    const [isInitialLoad, setIsInitialLoad] = useState(true);
+    const [isRefreshing, setIsRefreshing] = useState(false);
     const [error, setError] = useState<string | null>(null);
     const [wsError, setWsError] = useState<string | null>(null);
 
@@ -29,12 +30,12 @@ export default function LobbyPage() {
         if (!sessionId) {
             setError('No session ID found. Please log in again.');
             console.error('No session ID found when trying to refresh lobby info');
-            setIsLoading(false);
+            setIsInitialLoad(false);
             return;
         }
 
         try {
-            setIsLoading(true);
+            setIsRefreshing(true);
             setError(null);
             const playerData = await api.player.lobby.activeUser(sessionId);
             setPlayer(playerData);
@@ -62,7 +63,8 @@ export default function LobbyPage() {
         } catch (err) {
             setError(err instanceof Error ? err.message : 'Failed to fetch lobby data');
         } finally {
-            setIsLoading(false);
+            setIsInitialLoad(false);
+            setIsRefreshing(false);
         }
     }, [sessionId, navigate]);
 
@@ -148,7 +150,7 @@ export default function LobbyPage() {
         autoReconnect: true,
     });
 
-    if (isLoading) {
+    if (isInitialLoad) {
         return <LoadingSpinner />;
     }
 

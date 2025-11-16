@@ -20,7 +20,8 @@ export default function LobbyDetails({ lobbyId, onClose, onLobbyDeleted, refresh
     const [numTeams, setNumTeams] = useState<number>(2);
     const [isCreatingTeams, setIsCreatingTeams] = useState(false);
     const [movingPlayerId, setMovingPlayerId] = useState<number | null>(null);
-    const [loading, setLoading] = useState(true);
+    const [isInitialLoad, setIsInitialLoad] = useState(true);
+    const [isRefreshing, setIsRefreshing] = useState(false);
     const [error, setError] = useState('');
     const [difficulty, setDifficulty] = useState<'easy' | 'medium' | 'hard'>('medium');
     const [isStartingGame, setIsStartingGame] = useState(false);
@@ -34,12 +35,12 @@ export default function LobbyDetails({ lobbyId, onClose, onLobbyDeleted, refresh
     const loadLobbyDetails = useCallback(async () => {
         if (!adminApiToken) {
             setError('Admin API token is required to load lobby details');
-            setLoading(false);
+            setIsInitialLoad(false);
             return;
         }
 
         try {
-            setLoading(true);
+            setIsRefreshing(true);
             setError('');
             const lobbyInfo = await api.admin.lobby.getInfo(lobbyId, adminApiToken);
             setSelectedLobby(lobbyInfo);
@@ -47,7 +48,8 @@ export default function LobbyDetails({ lobbyId, onClose, onLobbyDeleted, refresh
             setError('Failed to load lobby details');
             console.error('Error loading lobby details:', err);
         } finally {
-            setLoading(false);
+            setIsInitialLoad(false);
+            setIsRefreshing(false);
         }
     }, [adminApiToken, lobbyId]);
 
@@ -302,7 +304,7 @@ export default function LobbyDetails({ lobbyId, onClose, onLobbyDeleted, refresh
         }
     }, [adminApiToken, selectedLobby, difficulty, loadGameState]);
 
-    if (loading) {
+    if (isInitialLoad) {
         return (
             <Modal isOpen={true} onClose={onClose} maxWidth='max-w-6xl' isLoading={true}>
                 <div></div>
@@ -336,13 +338,13 @@ export default function LobbyDetails({ lobbyId, onClose, onLobbyDeleted, refresh
                     <div className='grid grid-cols-2 items-center gap-2 md:grid-cols-3'>
                         <Button
                             onClick={scheduleReload}
-                            disabled={loading}
+                            disabled={isRefreshing}
                             variant='primary'
                             size='sm'
-                            loading={loading}
+                            loading={isRefreshing}
                             data-testid='refresh-lobby-button'
                         >
-                            {loading ? 'Refreshing' : 'Refresh'}
+                            {isRefreshing ? 'Refreshing...' : 'Refresh'}
                         </Button>
                         <Button
                             onClick={handleDeleteLobby}
