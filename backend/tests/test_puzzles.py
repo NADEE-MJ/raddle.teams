@@ -23,11 +23,11 @@ def temp_puzzle_dir():
     """Create a temporary directory with test puzzles."""
     with TemporaryDirectory() as tmpdir:
         puzzle_dir = Path(tmpdir)
-        
+
         # Create easy puzzles
         easy_dir = puzzle_dir / "easy"
         easy_dir.mkdir()
-        
+
         for i in range(3):
             puzzle_data = {
                 "meta": {
@@ -45,11 +45,11 @@ def temp_puzzle_dir():
             }
             with open(easy_dir / f"puzzle{i}.json", "w") as f:
                 json.dump(puzzle_data, f)
-        
+
         # Create medium puzzles with different lengths
         medium_dir = puzzle_dir / "medium"
         medium_dir.mkdir()
-        
+
         # 5-word puzzle
         puzzle_data = {
             "meta": {
@@ -66,18 +66,18 @@ def temp_puzzle_dir():
         }
         with open(medium_dir / "short.json", "w") as f:
             json.dump(puzzle_data, f)
-        
+
         # 7-word puzzle
         puzzle_data["meta"]["title"] = "Medium Puzzle Long"
         puzzle_data["ladder"].append({"word": "WORD6", "clue": "6", "transform": ""})
         puzzle_data["ladder"].append({"word": "WORD7", "clue": "7", "transform": ""})
         with open(medium_dir / "long.json", "w") as f:
             json.dump(puzzle_data, f)
-        
+
         # Create hard puzzle
         hard_dir = puzzle_dir / "hard"
         hard_dir.mkdir()
-        
+
         puzzle_data = {
             "meta": {
                 "title": "Hard Puzzle",
@@ -93,7 +93,7 @@ def temp_puzzle_dir():
         }
         with open(hard_dir / "puzzle.json", "w") as f:
             json.dump(puzzle_data, f)
-        
+
         # Create invalid puzzle (too short)
         invalid_puzzle = {
             "meta": {"title": "Invalid", "difficulty": "easy"},
@@ -104,7 +104,7 @@ def temp_puzzle_dir():
         }
         with open(easy_dir / "invalid.json", "w") as f:
             json.dump(invalid_puzzle, f)
-        
+
         yield puzzle_dir
 
 
@@ -140,17 +140,17 @@ class TestPuzzleManagerLoading:
         easy1 = puzzle_manager.load_puzzles_by_difficulty("easy")
         easy2 = puzzle_manager.load_puzzles_by_difficulty("EASY")
         easy3 = puzzle_manager.load_puzzles_by_difficulty("Easy")
-        
+
         assert len(easy1) == len(easy2) == len(easy3)
 
     def test_caching_puzzles(self, puzzle_manager):
         """Should cache loaded puzzles."""
         # First load
         puzzles1 = puzzle_manager.load_puzzles_by_difficulty("easy")
-        
+
         # Second load should use cache (same objects)
         puzzles2 = puzzle_manager.load_puzzles_by_difficulty("easy")
-        
+
         assert puzzles1 is puzzles2  # Same list object from cache
 
     def test_skip_invalid_puzzles(self, puzzle_manager):
@@ -196,10 +196,10 @@ class TestTeamPuzzleAssignment:
     def test_get_puzzles_for_teams(self, puzzle_manager):
         """Should return different puzzles for each team."""
         puzzles = puzzle_manager.get_puzzles_for_teams(3, "easy")
-        
+
         assert len(puzzles) == 3
         assert all(p.meta.difficulty == "easy" for p in puzzles)
-        
+
         # All puzzles should be unique
         titles = [p.meta.title for p in puzzles]
         assert len(titles) == len(set(titles))
@@ -219,7 +219,7 @@ class TestTeamPuzzleAssignment:
         # With only 2 medium puzzles of different lengths (5 and 7),
         # this test just verifies the function returns the right number
         puzzles = puzzle_manager.get_puzzles_for_teams(2, "medium")
-        
+
         assert len(puzzles) == 2
         # Both should be medium difficulty
         assert all(p.meta.difficulty == "medium" for p in puzzles)
@@ -262,19 +262,13 @@ class TestPuzzleValidation:
         """Puzzle must have at least 5 steps."""
         # Valid puzzle
         valid_ladder = [LadderStep(word=f"W{i}", clue="", transform="") for i in range(5)]
-        puzzle = Puzzle(
-            meta=PuzzleMeta(title="Test", difficulty="easy"),
-            ladder=valid_ladder
-        )
+        puzzle = Puzzle(meta=PuzzleMeta(title="Test", difficulty="easy"), ladder=valid_ladder)
         assert len(puzzle.ladder) == 5
 
         # Invalid puzzle (too short)
         short_ladder = [LadderStep(word=f"W{i}", clue="", transform="") for i in range(3)]
         with pytest.raises(ValueError, match="at least 5 steps"):
-            Puzzle(
-                meta=PuzzleMeta(title="Test", difficulty="easy"),
-                ladder=short_ladder
-            )
+            Puzzle(meta=PuzzleMeta(title="Test", difficulty="easy"), ladder=short_ladder)
 
 
 class TestPuzzleSerialization:
@@ -284,7 +278,7 @@ class TestPuzzleSerialization:
         """Should convert puzzle to dictionary."""
         puzzle = puzzle_manager.get_random_puzzle("easy")
         puzzle_dict = puzzle_manager.puzzle_to_dict(puzzle)
-        
+
         assert "meta" in puzzle_dict
         assert "ladder" in puzzle_dict
         assert puzzle_dict["meta"]["difficulty"] == "easy"
@@ -293,16 +287,16 @@ class TestPuzzleSerialization:
         """Should validate a valid puzzle dictionary."""
         puzzle = puzzle_manager.get_random_puzzle("easy")
         puzzle_dict = puzzle_manager.puzzle_to_dict(puzzle)
-        
+
         assert puzzle_manager.validate_puzzle(puzzle_dict)
 
     def test_validate_puzzle_invalid(self, puzzle_manager):
         """Should reject invalid puzzle dictionary."""
         invalid_puzzle = {
             "meta": {"title": "Test", "difficulty": "easy"},
-            "ladder": []  # Empty ladder
+            "ladder": [],  # Empty ladder
         }
-        
+
         assert not puzzle_manager.validate_puzzle(invalid_puzzle)
 
 
@@ -313,7 +307,7 @@ class TestGlobalPuzzleManager:
         """Should return same instance on multiple calls."""
         manager1 = get_puzzle_manager()
         manager2 = get_puzzle_manager()
-        
+
         assert manager1 is manager2
 
     def test_global_manager_default_directory(self):

@@ -46,7 +46,7 @@ describe('Card Component', () => {
         it('calls onClick when clicked', () => {
             const handleClick = vi.fn();
             render(<Card onClick={handleClick}>Clickable</Card>);
-            
+
             fireEvent.click(screen.getByText('Clickable'));
             expect(handleClick).toHaveBeenCalledTimes(1);
         });
@@ -66,7 +66,11 @@ describe('Card Component', () => {
         });
 
         it('combines variant and custom classes', () => {
-            const { container } = render(<Card variant='warning' className='extra-class'>Content</Card>);
+            const { container } = render(
+                <Card variant='warning' className='extra-class'>
+                    Content
+                </Card>
+            );
             const card = container.firstChild as HTMLElement;
             expect(card).toHaveClass('border-orange', 'extra-class');
         });

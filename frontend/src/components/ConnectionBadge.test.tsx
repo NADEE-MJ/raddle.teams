@@ -66,7 +66,7 @@ describe('ConnectionBadge Component', () => {
         it('updates text when connection state changes', () => {
             const { rerender } = render(<ConnectionBadge isConnected={true} />);
             expect(screen.getByText('Connected')).toBeInTheDocument();
-            
+
             rerender(<ConnectionBadge isConnected={false} />);
             expect(screen.getByText('Reconnecting...')).toBeInTheDocument();
         });

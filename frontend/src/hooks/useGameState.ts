@@ -2,7 +2,7 @@
  * Simplified game state hook - fully authoritative server model.
  */
 
-import { useCallback, useState, useMemo } from 'react';
+import { useCallback, useState } from 'react';
 import { useWebSocket } from './useWebSocket';
 import type { Puzzle } from '@/types/game';
 import type { GameWonEvent, WebSocketMessage } from '@/types';
