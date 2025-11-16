@@ -71,9 +71,9 @@ The core lobby and team management system is implemented and functional. The bac
 
 ### Prerequisites
 
-- **Python 3.11+**
-- **Node.js** (compatible with latest Vite)
-- **Poetry** (install from [python-poetry.org](https://python-poetry.org/))
+- **Python 3.12+**
+- **Node.js 18+** (compatible with latest Vite)
+- **uv** (install from [astral.sh/uv](https://astral.sh/uv))
 
 ### Installation
 
@@ -84,26 +84,21 @@ The core lobby and team management system is implemented and functional. The bac
    cd raddle.teams
    ```
 
-2. **Install Python dependencies**
+2. **Install dependencies**
 
    ```bash
-   poetry install
-   apt install python3-typer
+   ./rt install
    ```
 
-3. **Install JavaScript dependencies**
+   This will install both Python and JavaScript dependencies using `uv sync` and `npm install`.
 
-   ```bash
-   npm install
+3. **Set up environment variables**
+
+   Create a `.env` file in the root directory with the following variables:
+   ```env
+   RADDLE_ENV=development
+   ADMIN_TOKEN=your_admin_token_here
    ```
-
-4. **Build the frontend**
-   ```bash
-   npm run build
-   ```
-
-5. **Set up environment variables**
-create a .env file in the root directory following the convetions set in the .env.testing file
 
 ### Running the Application
 
@@ -111,25 +106,32 @@ create a .env file in the root directory following the convetions set in the .en
 
 ```bash
 # Starts the FastAPI server serving both backend API and frontend
-npm run server
-# or
-poetry run python bin/run_server.py development
+./rt server
 ```
 
 Then open http://localhost:8000
 
-#### Option 2: Development Mode
+#### Option 2: Development Mode with Auto-Rebuild
 
 ```bash
-# Terminal 1: Start backend
-npm run server
+# Start server with frontend watch mode
+./rt server --watch
+```
 
-# Terminal 2: Start frontend dev server (optional)
+This automatically rebuilds the frontend when files change.
+
+#### Option 3: Frontend Development
+
+```bash
+# Terminal 1: Start backend server (without building frontend)
+./rt server --no-build
+
+# Terminal 2: Start frontend dev server
 npm run dev
 ```
 
 - Backend: http://localhost:8000
-- Frontend dev: http://localhost:5173 (if running dev server)
+- Frontend dev: http://localhost:5173
 
 ## 🎮 How to Play
 
@@ -156,9 +158,12 @@ raddle.teams/
 │   ├── api/             # REST API endpoints
 │   │   ├── admin/       # Admin-specific endpoints
 │   │   │   ├── auth.py  # Admin authentication
-│   │   │   └── lobby.py # Admin lobby management
+│   │   │   └── lobby/   # Admin lobby management
+│   │   ├── game.py      # Game endpoints
 │   │   └── lobby.py     # Player lobby endpoints
 │   ├── database/        # Database models and configuration
+│   ├── game/            # Game logic (state machine, puzzles)
+│   ├── utils/           # Utility functions
 │   ├── websocket/       # WebSocket handlers for real-time features
 │   ├── main.py          # FastAPI application entry point
 │   ├── schemas.py       # Pydantic request/response models
@@ -168,7 +173,6 @@ raddle.teams/
 ├── frontend/            # React frontend application
 │   ├── src/
 │   │   ├── components/  # Reusable React components
-│   │   ├── context/     # React context providers
 │   │   ├── hooks/       # Custom React hooks
 │   │   ├── layouts/     # Layout components
 │   │   ├── pages/       # Main application pages
@@ -179,12 +183,11 @@ raddle.teams/
 │   │   └── router.tsx   # React Router configuration
 │   ├── index.html       # HTML template
 │   └── public/          # Static assets
-├── bin/                 # Executable scripts
-│   ├── run_server.py    # Development server launcher
-│   └── run_tests.py     # Test runner
-├── puzzles/             # Game puzzle definitions
-│   └── tutorial.json    # Tutorial puzzle
+├── e2e/                 # End-to-end tests
+├── puzzles_from_raddle/ # Game puzzle definitions
+│   └── json_puzzles/    # Puzzle JSON files
 ├── static/              # Built frontend assets (generated)
+├── rt                   # Command runner script
 ├── pyproject.toml       # Python dependencies
 ├── package.json         # JavaScript dependencies
 ├── vite.config.ts       # Vite build configuration
@@ -198,24 +201,19 @@ raddle.teams/
 
 ```bash
 # Run with auto-reload
-npm run server
-# or directly:
-poetry run python bin/run_server.py development
+./rt server --reload
 
 # Run tests
-npm run test
-# or directly:
-poetry run python bin/run_tests.py
+./rt test
+
+# Run Python unit tests
+pytest
 
 # Format Python code
-npm run format:python
-# or directly:
-poetry run ruff format .
+./rt format --backend-only
 
-# Lint Python code
-npm run lint:python
-# or directly:
-poetry run ruff check .
+# Type check Python code
+uvx ty check
 ```
 
 ### Frontend Development
@@ -225,25 +223,22 @@ poetry run ruff check .
 npm run dev
 
 # Build for production
-npm run build
+./rt build
 
 # Build with file watching
-npm run build:watch
+./rt build --watch
+
+# Run unit tests
+./rt vitest
 
 # Type check
 npm run type-check
 
-# Lint
-npm run lint
-
-# Fix lint issues
-npm run lint:fix
+# Format
+./rt format --frontend-only
 
 # Check formatting
-npm run format:check
-
-# Run all checks
-npm run check
+./rt format --check
 ```
 
 ### API Documentation
