@@ -1,0 +1,47 @@
+meta:
+  title: From SIGNAL to NOISE
+  author: Sandy Weisz and Mao Reynolds
+  difficulty: medium
+  theme: X to Y
+  message:
+    In science and engineering, the signal-to-noise ratio measures the difference between the signal (communication of data) and the noise (unwanted disruptions).
+ladder:
+- word: SIGNAL
+  clue: Drop the last two letters from <> to get an omen
+  transform: -AL
+- word: SIGN
+  clue: "Math concept that sounds like \"<>\""
+  transform: sounds like
+- word: SINE
+  clue: Insert an H into <> to get a glow
+  transform: +H
+- word: SHINE
+  clue: ^ & <>
+  transform: and
+- word: RISE
+  clue: Insert an N into <> to hose off
+  transform: +N
+- word: RINSE
+  clue: Add a /p/ sound to the start of <> to get a title
+  transform: +/p/
+- word: PRINCE
+  clue: <> ^, British figure
+  transform: who will inherit the throne
+- word: WILLIAM
+  clue: Playwright <> ^
+  transform: "Avon Lad"
+- word: SHAKESPEARE
+  clue: "Oscar-winning film \"<> in ^\""
+  transform: in
+- word: LOVE
+  clue: Flower associated with <>
+  transform: is often expressed with a
+- word: ROSE
+  clue: Change one letter in <> to get a part of the body
+  transform: R->N
+- word: NOSE
+  clue: Insert an I into <> to get a racket
+  transform: +I
+- word: NOISE
+  clue:
+  transform:

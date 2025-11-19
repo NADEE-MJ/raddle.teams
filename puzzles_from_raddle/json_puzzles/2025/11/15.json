@@ -1,0 +1,76 @@
+{
+  "meta": {
+    "title": "From RADIO to GAMMA",
+    "author": "Sandy Weisz and Mao Reynolds",
+    "difficulty": "medium",
+    "theme": "7x7",
+    "message": " The electromagnetic spectrum is composed of seven types of waves: radio, microwave, infrared, visible, ultraviolet, x-ray and gamma ray. Radio has the lowest frequency while gamma has the highest. Radio waves were formerly known as Hertzian waves in honor of Heinrich Hertz, who proved the existence of electromagnetic radiation in the 1880s."
+  },
+  "ladder": [
+    {
+      "word": "RADIO",
+      "clue": "Long-time retailer <> {}",
+      "transform": "hobbiest shopped at The"
+    },
+    {
+      "word": "SHACK",
+      "clue": "{} <>, popular chain that serves burgers and {}s",
+      "transform": "where you can buy a tasty"
+    },
+    {
+      "word": "SHAKE",
+      "clue": "Change one letter in <> to get something many folks do every morning",
+      "transform": "K->V"
+    },
+    {
+      "word": "SHAVE",
+      "clue": "\"That was a {} <>!\"",
+      "transform": "that almost cuts is"
+    },
+    {
+      "word": "CLOSE",
+      "clue": "Opposite of <>",
+      "transform": "opposite"
+    },
+    {
+      "word": "OPEN",
+      "clue": "Change one letter in <> to get an appliance",
+      "transform": "P->V"
+    },
+    {
+      "word": "OVEN",
+      "clue": "What’s often situated atop an <>",
+      "transform": "is situated under a"
+    },
+    {
+      "word": "STOVE",
+      "clue": "Turning on a <> usually produces {}",
+      "transform": "emits"
+    },
+    {
+      "word": "FIRE",
+      "clue": "\"Ready, {}, <>!\"",
+      "transform": "after you"
+    },
+    {
+      "word": "AIM",
+      "clue": "Reverse <> to get a female name",
+      "transform": "reversed"
+    },
+    {
+      "word": "MIA",
+      "clue": "\"{} <>!\", a musical sensation",
+      "transform": "…"
+    },
+    {
+      "word": "MAMMA",
+      "clue": "Change one letter in <> to get a Greek letter",
+      "transform": "M->G"
+    },
+    {
+      "word": "GAMMA",
+      "clue": null,
+      "transform": null
+    }
+  ]
+}

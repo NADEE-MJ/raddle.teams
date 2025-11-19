@@ -1,6 +1,6 @@
 import { useState, useEffect, useCallback, useRef } from 'react';
 import { LobbyInfo, GameStateResponse, GameWebSocketEvents } from '@/types';
-import { Modal, CopyableCode, Button, TextInput, Select, ErrorMessage, Card } from '@/components';
+import { Modal, CopyableCode, Button, TextInput, Select, ErrorMessage, Card, ConnectionBadge } from '@/components';
 import { api, ApiError } from '@/services/api';
 import { useGlobalOutletContext } from '@/hooks/useGlobalOutletContext';
 import { useDebounce } from '@/hooks/useDebounce';
@@ -24,13 +24,17 @@ export default function LobbyDetails({ lobbyId, onClose, onLobbyDeleted, refresh
     const [isRefreshing, setIsRefreshing] = useState(false);
     const [error, setError] = useState('');
     const [difficulty, setDifficulty] = useState<'easy' | 'medium' | 'hard'>('medium');
+    const [puzzleMode, setPuzzleMode] = useState<'same' | 'different'>('different');
+    const [wordCountMode, setWordCountMode] = useState<'exact' | 'balanced'>('balanced');
     const [isStartingGame, setIsStartingGame] = useState(false);
+    const [isEndingGame, setIsEndingGame] = useState(false);
     const [editingTeamId, setEditingTeamId] = useState<number | null>(null);
     const [editingTeamName, setEditingTeamName] = useState('');
 
     // Game state
     const [gameState, setGameState] = useState<GameStateResponse | null>(null);
     const wsRef = useRef<WebSocket | null>(null);
+    const [isWsConnected, setIsWsConnected] = useState(false);
 
     const loadLobbyDetails = useCallback(async () => {
         if (!adminApiToken) {
@@ -65,7 +69,12 @@ export default function LobbyDetails({ lobbyId, onClose, onLobbyDeleted, refresh
         }
     }, [adminApiToken, lobbyId]);
 
-    const scheduleReload = useDebounce(loadLobbyDetails);
+    const reloadAll = useCallback(async () => {
+        await loadLobbyDetails();
+        await loadGameState();
+    }, [loadLobbyDetails, loadGameState]);
+
+    const scheduleReload = useDebounce(reloadAll);
 
     useEffect(() => {
         loadLobbyDetails();
@@ -76,12 +85,18 @@ export default function LobbyDetails({ lobbyId, onClose, onLobbyDeleted, refresh
     useEffect(() => {
         if (!adminApiToken) return;
 
-        // Connect to admin WebSocket
-        const ws = new WebSocket(`/ws/admin/${adminApiToken}`);
+        // Connect to admin WebSocket with token as query parameter
+        // Construct absolute WebSocket URL
+        const protocol = window.location.protocol === 'https:' ? 'wss:' : 'ws:';
+        const host = window.location.host;
+        const wsUrl = `${protocol}//${host}/ws/admin/${adminApiToken}?token=${adminApiToken}`;
+
+        const ws = new WebSocket(wsUrl);
         wsRef.current = ws;
 
         ws.onopen = () => {
-            console.log('[Admin] WebSocket connected');
+            console.log('[Admin] WebSocket connected to:', wsUrl);
+            setIsWsConnected(true);
             // Subscribe to this lobby
             ws.send(JSON.stringify({ action: 'subscribe_lobby', lobby_id: lobbyId }));
         };
@@ -149,10 +164,12 @@ export default function LobbyDetails({ lobbyId, onClose, onLobbyDeleted, refresh
 
         ws.onerror = error => {
             console.error('[Admin] WebSocket error:', error);
+            console.error('[Admin] WebSocket URL was:', wsUrl);
         };
 
         ws.onclose = () => {
             console.log('[Admin] WebSocket disconnected');
+            setIsWsConnected(false);
         };
 
         return () => {
@@ -285,11 +302,21 @@ export default function LobbyDetails({ lobbyId, onClose, onLobbyDeleted, refresh
             return;
         }
 
-        if (confirm(`Start the game with ${difficulty} difficulty?`)) {
+        const puzzleModeLabel = puzzleMode === 'same' ? 'the same puzzle' : 'different puzzles';
+        const wordCountLabel = wordCountMode === 'exact' ? 'exact word count' : 'balanced (±1 word)';
+        const confirmMessage = `Start the game with ${difficulty} difficulty?\n\nPuzzles: ${puzzleModeLabel}\nWord count: ${wordCountLabel}`;
+
+        if (confirm(confirmMessage)) {
             setIsStartingGame(true);
             try {
                 setError('');
-                const result = await api.admin.lobby.startGame(selectedLobby.lobby.id, difficulty, adminApiToken);
+                const result = await api.admin.lobby.startGame(
+                    selectedLobby.lobby.id,
+                    difficulty,
+                    puzzleMode,
+                    wordCountMode,
+                    adminApiToken
+                );
                 console.log('Game started:', result);
                 // Load game state to show progress
                 await loadGameState();
@@ -302,7 +329,37 @@ export default function LobbyDetails({ lobbyId, onClose, onLobbyDeleted, refresh
                 setIsStartingGame(false);
             }
         }
-    }, [adminApiToken, selectedLobby, difficulty, loadGameState]);
+    }, [adminApiToken, selectedLobby, difficulty, puzzleMode, wordCountMode, loadGameState]);
+
+    const handleEndGame = useCallback(async () => {
+        if (!adminApiToken || !selectedLobby) {
+            setError(adminApiToken ? 'Lobby not selected' : 'Admin API token is required to end game');
+            return;
+        }
+
+        if (!gameState?.is_game_active) {
+            setError('No active game to end');
+            return;
+        }
+
+        if (confirm('Are you sure you want to end the current game? This will reset all team progress.')) {
+            setIsEndingGame(true);
+            try {
+                setError('');
+                const result = await api.admin.lobby.endGame(selectedLobby.lobby.id, adminApiToken);
+                console.log('Game ended:', result);
+                // Reload lobby and game state
+                await reloadAll();
+            } catch (err) {
+                const message =
+                    err instanceof ApiError ? err.message : err instanceof Error ? err.message : 'Failed to end game';
+                setError(message);
+                console.error('Error ending game:', err);
+            } finally {
+                setIsEndingGame(false);
+            }
+        }
+    }, [adminApiToken, selectedLobby, gameState, reloadAll]);
 
     if (isInitialLoad) {
         return (
@@ -329,32 +386,40 @@ export default function LobbyDetails({ lobbyId, onClose, onLobbyDeleted, refresh
             <div className='p-6'>
                 <ErrorMessage message={error} data-testid='lobby-details-error-message' />
 
-                <div className='mb-6 flex items-center justify-between'>
-                    <div>
-                        <h2 className='text-tx-primary mb-1 text-2xl font-semibold'>Lobby Details</h2>
-                        <p className='text-tx-secondary'>{selectedLobby.lobby.name}</p>
-                    </div>
+                <div className='mb-6 flex flex-col gap-4'>
+                    <div className='flex items-center justify-between'>
+                        <div>
+                            <h2 className='text-tx-primary mb-1 text-2xl font-semibold'>Lobby Details</h2>
+                            <p className='text-tx-secondary'>{selectedLobby.lobby.name}</p>
+                        </div>
 
-                    <div className='grid grid-cols-2 items-center gap-2 md:grid-cols-3'>
-                        <Button
-                            onClick={scheduleReload}
-                            disabled={isRefreshing}
-                            variant='primary'
-                            size='sm'
-                            loading={isRefreshing}
-                            data-testid='refresh-lobby-button'
-                        >
-                            {isRefreshing ? 'Refreshing...' : 'Refresh'}
-                        </Button>
-                        <Button
-                            onClick={handleDeleteLobby}
-                            variant='destructive'
-                            size='sm'
-                            data-testid='delete-lobby-button'
-                        >
-                            Delete Lobby
-                        </Button>
-                        <div className='md:hidden'></div>
+                        <div className='flex items-center gap-3'>
+                            <Button
+                                onClick={scheduleReload}
+                                disabled={isRefreshing}
+                                variant='primary'
+                                size='lg'
+                                loading={isRefreshing}
+                                data-testid='refresh-lobby-button'
+                            >
+                                {isRefreshing ? 'Refreshing...' : 'Refresh'}
+                            </Button>
+                            <Button
+                                onClick={handleDeleteLobby}
+                                variant='destructive'
+                                size='lg'
+                                data-testid='delete-lobby-button'
+                            >
+                                Delete Lobby
+                            </Button>
+                        </div>
+                    </div>
+                    <div className='flex justify-end'>
+                        <ConnectionBadge
+                            isConnected={isWsConnected}
+                            connectedText='Connected to lobby'
+                            disconnectedText='Reconnecting...'
+                        />
                     </div>
                 </div>
 
@@ -626,7 +691,7 @@ export default function LobbyDetails({ lobbyId, onClose, onLobbyDeleted, refresh
                             Start Game
                         </div>
                         <Card>
-                            <div className='flex flex-col gap-4 md:flex-row md:items-center md:justify-between'>
+                            <div className='grid grid-cols-1 gap-4 md:grid-cols-3'>
                                 <div className='flex items-center gap-3'>
                                     <label className='text-tx-primary text-sm font-medium'>Difficulty:</label>
                                     <Select
@@ -641,6 +706,34 @@ export default function LobbyDetails({ lobbyId, onClose, onLobbyDeleted, refresh
                                         data-testid='difficulty-select'
                                     />
                                 </div>
+                                <div className='flex items-center gap-3'>
+                                    <label className='text-tx-primary text-sm font-medium'>Puzzle Mode:</label>
+                                    <Select
+                                        value={puzzleMode}
+                                        onChange={value => setPuzzleMode(value as 'same' | 'different')}
+                                        options={[
+                                            { value: 'different', label: 'Different Puzzles' },
+                                            { value: 'same', label: 'Same Puzzle' },
+                                        ]}
+                                        disabled={gameState?.is_game_active || isStartingGame}
+                                        data-testid='puzzle-mode-select'
+                                    />
+                                </div>
+                                <div className='flex items-center gap-3'>
+                                    <label className='text-tx-primary text-sm font-medium'>Word Count:</label>
+                                    <Select
+                                        value={wordCountMode}
+                                        onChange={value => setWordCountMode(value as 'exact' | 'balanced')}
+                                        options={[
+                                            { value: 'balanced', label: 'Balanced (±1)' },
+                                            { value: 'exact', label: 'Exact Match' },
+                                        ]}
+                                        disabled={gameState?.is_game_active || isStartingGame || puzzleMode === 'same'}
+                                        data-testid='word-count-mode-select'
+                                    />
+                                </div>
+                            </div>
+                            <div className='mt-4 flex justify-end'>
                                 <Button
                                     onClick={handleStartGame}
                                     disabled={isStartingGame || gameState?.is_game_active}
@@ -653,8 +746,11 @@ export default function LobbyDetails({ lobbyId, onClose, onLobbyDeleted, refresh
                                 </Button>
                             </div>
                             <p className='text-tx-secondary mt-3 text-xs'>
-                                Each team will receive a different word puzzle of {difficulty} difficulty. The first
-                                team to complete their puzzle wins!
+                                {puzzleMode === 'same'
+                                    ? `All teams will receive the same ${difficulty} puzzle. First team to finish wins!`
+                                    : `Each team will receive a different ${difficulty} puzzle with ${
+                                          wordCountMode === 'exact' ? 'the exact same' : 'similar (±1)'
+                                      } word count. First team to finish wins!`}
                             </p>
                         </Card>
                     </div>
@@ -663,6 +759,24 @@ export default function LobbyDetails({ lobbyId, onClose, onLobbyDeleted, refresh
                 {/* Game Progress View */}
                 {gameState && gameState.is_game_active && (
                     <div className='mb-6'>
+                        <div className='mb-4 flex items-center justify-between'>
+                            <div
+                                className='text-tx-secondary text-sm tracking-wide uppercase'
+                                data-testid='game-progress-heading'
+                            >
+                                Game In Progress
+                            </div>
+                            <Button
+                                onClick={handleEndGame}
+                                disabled={isEndingGame}
+                                variant='destructive'
+                                size='md'
+                                loading={isEndingGame}
+                                data-testid='end-game-button'
+                            >
+                                {isEndingGame ? 'Ending Game...' : 'End Game'}
+                            </Button>
+                        </div>
                         <GameProgressView teams={gameState.teams} />
                     </div>
                 )}

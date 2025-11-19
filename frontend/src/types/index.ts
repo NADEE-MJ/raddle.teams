@@ -49,6 +49,18 @@ export interface AdminAuthAdminAuthenticatedResponse {
     session_id: string;
 }
 
+export interface StartGameRequest {
+    difficulty: 'easy' | 'medium' | 'hard';
+    puzzle_mode: 'same' | 'different';
+    word_count_mode: 'exact' | 'balanced';
+}
+
+export interface StartGameResponse {
+    success: boolean;
+    game_id: number;
+    message: string;
+}
+
 // #########################################################################
 // ? WEBSOCKET EVENTS
 // #########################################################################

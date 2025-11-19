@@ -15,16 +15,10 @@ export default function GameProgressView({ teams }: GameProgressViewProps) {
     }
 
     return (
-        <div className='space-y-6'>
-            <div className='text-tx-secondary mb-3 text-sm tracking-wide uppercase'>
-                Game in Progress ({teams.length} Teams)
-            </div>
-
-            <div className='grid gap-6 md:grid-cols-2'>
-                {teams.map(team => (
-                    <TeamProgress key={team.team_id} team={team} />
-                ))}
-            </div>
+        <div className='grid gap-6 md:grid-cols-2'>
+            {teams.map(team => (
+                <TeamProgress key={team.team_id} team={team} />
+            ))}
         </div>
     );
 }
@@ -37,6 +31,30 @@ function TeamProgress({ team }: TeamProgressProps) {
     const revealedSet = new Set(team.revealed_steps);
     const totalSteps = team.puzzle.ladder.length;
     const progressPercent = Math.round((team.revealed_steps.length / totalSteps) * 100);
+
+    // Calculate current solving positions
+    const getNextUnrevealedIndex = (fromStart: boolean): number => {
+        if (fromStart) {
+            for (let i = 1; i < totalSteps; i++) {
+                if (!revealedSet.has(i)) {
+                    return i;
+                }
+            }
+            return totalSteps - 1;
+        }
+
+        for (let i = totalSteps - 2; i >= 0; i--) {
+            if (!revealedSet.has(i)) {
+                return i;
+            }
+        }
+        return 0;
+    };
+
+    const currentDownAnswerIndex = getNextUnrevealedIndex(true);
+    const currentDownQuestionIndex = Math.max(0, currentDownAnswerIndex - 1);
+    const currentUpQuestionIndex = getNextUnrevealedIndex(false);
+    const currentUpAnswerIndex = Math.min(totalSteps - 1, currentUpQuestionIndex + 1);
 
     // Helper to render forward clue (downward solving: show question, hide answer)
     const renderForwardClue = (clue: string, questionWord: string) => {
@@ -109,6 +127,11 @@ function TeamProgress({ team }: TeamProgressProps) {
         return <>{parts}</>;
     };
 
+    const downQuestion = team.puzzle.ladder[currentDownQuestionIndex];
+    const downAnswer = team.puzzle.ladder[currentDownAnswerIndex];
+    const upQuestion = team.puzzle.ladder[currentUpQuestionIndex];
+    const upAnswer = team.puzzle.ladder[currentUpAnswerIndex];
+
     return (
         <Card>
             <div className='mb-4'>
@@ -130,6 +153,75 @@ function TeamProgress({ team }: TeamProgressProps) {
                     />
                 </div>
             </div>
+
+            {/* Current solving positions */}
+            {!team.is_completed && (
+                <div className='border-border mb-4 space-y-3 rounded-lg border bg-blue-50/50 p-4'>
+                    <div className='text-tx-secondary mb-2 text-xs font-semibold tracking-wide uppercase'>
+                        Current Solving Positions
+                    </div>
+
+                    {/* Down (forward) solving */}
+                    <div className='bg-primary rounded-lg border border-blue-200 p-3'>
+                        <div className='mb-2 flex items-center gap-2'>
+                            <span className='text-xs font-semibold text-blue-700'>↓ SOLVING DOWN</span>
+                            <span className='text-tx-muted text-xs'>
+                                (Step #{currentDownQuestionIndex} → #{currentDownAnswerIndex})
+                            </span>
+                        </div>
+                        <div className='text-tx-primary mb-1 text-sm'>
+                            <span className='font-semibold'>Known:</span>{' '}
+                            <span className='font-mono font-bold'>{downQuestion.word}</span>
+                        </div>
+                        {downQuestion.clue && (
+                            <div className='text-tx-secondary mb-2 text-sm'>
+                                <span className='font-semibold'>Clue:</span>{' '}
+                                {renderForwardClue(downQuestion.clue, downQuestion.word)}
+                            </div>
+                        )}
+                        <div className='text-tx-primary text-sm'>
+                            <span className='font-semibold'>Solving for:</span>{' '}
+                            <span className='font-mono font-bold'>
+                                {revealedSet.has(currentDownAnswerIndex) ? (
+                                    <span className='text-green-700'>{downAnswer.word} ✓</span>
+                                ) : (
+                                    <span className='text-tx-muted'>{downAnswer.word}</span>
+                                )}
+                            </span>
+                        </div>
+                    </div>
+
+                    {/* Up (backward) solving */}
+                    <div className='bg-primary rounded-lg border border-green-200 p-3'>
+                        <div className='mb-2 flex items-center gap-2'>
+                            <span className='text-xs font-semibold text-green-700'>↑ SOLVING UP</span>
+                            <span className='text-tx-muted text-xs'>
+                                (Step #{currentUpQuestionIndex} → #{currentUpAnswerIndex})
+                            </span>
+                        </div>
+                        <div className='text-tx-primary mb-1 text-sm'>
+                            <span className='font-semibold'>Known:</span>{' '}
+                            <span className='font-mono font-bold'>{upAnswer.word}</span>
+                        </div>
+                        {upQuestion.clue && (
+                            <div className='text-tx-secondary mb-2 text-sm'>
+                                <span className='font-semibold'>Clue:</span>{' '}
+                                {renderBackwardClue(upQuestion.clue, upAnswer.word)}
+                            </div>
+                        )}
+                        <div className='text-tx-primary text-sm'>
+                            <span className='font-semibold'>Solving for:</span>{' '}
+                            <span className='font-mono font-bold'>
+                                {revealedSet.has(currentUpQuestionIndex) ? (
+                                    <span className='text-green-700'>{upQuestion.word} ✓</span>
+                                ) : (
+                                    <span className='text-tx-muted'>{upQuestion.word}</span>
+                                )}
+                            </span>
+                        </div>
+                    </div>
+                </div>
+            )}
 
             {/* Ladder display */}
             <div className='max-h-96 space-y-2 overflow-y-auto'>

@@ -363,10 +363,9 @@ describe('useWebSocket Hook', () => {
             const onMessage1 = vi.fn();
             const onMessage2 = vi.fn();
 
-            const { rerender } = renderHook(
-                ({ onMessage }) => useWebSocket('ws://localhost:8000', { onMessage }),
-                { initialProps: { onMessage: onMessage1 } }
-            );
+            const { rerender } = renderHook(({ onMessage }) => useWebSocket('ws://localhost:8000', { onMessage }), {
+                initialProps: { onMessage: onMessage1 },
+            });
 
             await act(async () => {
                 await vi.runOnlyPendingTimersAsync();

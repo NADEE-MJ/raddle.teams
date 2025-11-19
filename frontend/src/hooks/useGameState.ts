@@ -19,9 +19,23 @@ interface UseGameStateProps {
     websocketUrl: string;
     onGameWon?: (event: GameWonEvent) => void;
     onTeamCompleted?: () => void;
+    onPlayerKicked?: () => void;
+    onTeamChanged?: () => void;
+    onGameEnded?: () => void;
+    sessionId?: string;
 }
 
-export function useGameState({ puzzle, initialState, websocketUrl, onGameWon, onTeamCompleted }: UseGameStateProps) {
+export function useGameState({
+    puzzle,
+    initialState,
+    websocketUrl,
+    onGameWon,
+    onTeamCompleted,
+    onPlayerKicked,
+    onTeamChanged,
+    onGameEnded,
+    sessionId,
+}: UseGameStateProps) {
     const [revealedSteps, setRevealedSteps] = useState<Set<number>>(new Set(initialState.revealed_steps));
     const [isCompleted, setIsCompleted] = useState(initialState.is_completed);
     const [direction, setDirection] = useState<'down' | 'up'>('down');
@@ -33,9 +47,11 @@ export function useGameState({ puzzle, initialState, websocketUrl, onGameWon, on
 
             switch (message.type) {
                 case 'state_update':
-                    setRevealedSteps(new Set(message.revealed_steps));
-                    setIsCompleted(message.is_completed);
-                    setError(null);
+                    if ('revealed_steps' in message && 'is_completed' in message) {
+                        setRevealedSteps(new Set(message.revealed_steps as number[]));
+                        setIsCompleted(message.is_completed as boolean);
+                        setError(null);
+                    }
                     break;
 
                 case 'already_solved':
@@ -50,14 +66,35 @@ export function useGameState({ puzzle, initialState, websocketUrl, onGameWon, on
 
                 case 'game_won':
                     console.log('[GameState] Game won!', message);
-                    onGameWon?.(message);
+                    onGameWon?.(message as GameWonEvent);
+                    break;
+
+                case 'player_kicked':
+                    console.log('[GameState] Player kicked event received');
+                    // Check if it was us
+                    if (sessionId && message.player_session_id === sessionId) {
+                        onPlayerKicked?.();
+                    }
+                    break;
+
+                case 'team_changed':
+                    console.log('[GameState] Team changed event received');
+                    // Check if it was us
+                    if (sessionId && message.player_session_id === sessionId) {
+                        onTeamChanged?.();
+                    }
+                    break;
+
+                case 'game_ended':
+                    console.log('[GameState] Game ended by admin');
+                    onGameEnded?.();
                     break;
 
                 default:
                     break;
             }
         },
-        [onGameWon, onTeamCompleted]
+        [onGameWon, onTeamCompleted, onPlayerKicked, onTeamChanged, onGameEnded, sessionId]
     );
 
     const { isConnected, sendMessage } = useWebSocket(websocketUrl, {

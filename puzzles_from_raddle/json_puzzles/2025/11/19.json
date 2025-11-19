@@ -1,0 +1,71 @@
+{
+  "meta": {
+    "title": "From HEAVENS to BETSY",
+    "author": "Sandy Weisz and Bailey Holtz",
+    "difficulty": "medium",
+    "theme": "X to Y",
+    "message": "“Heavens to Betsy” is dated expression of surprise or dismay, along the lines of “good heavens” or “good grief.” The origins of the expression are, according to lexicographer Charles Earle Funk, [“completely unsolvable.”](https://www.worldwidewords.org/qa-hea1.html) We hope this Raddle isn’t."
+  },
+  "ladder": [
+    {
+      "word": "HEAVENS",
+      "clue": "Result of the <> opening up",
+      "transform": "open up and produce"
+    },
+    {
+      "word": "RAIN",
+      "clue": "Homophone of \"<>\" that a queen does",
+      "transform": "sounds like"
+    },
+    {
+      "word": "REIGN",
+      "clue": "Add a G to <> and anagram to get a spice",
+      "transform": "+G, then anagram"
+    },
+    {
+      "word": "GINGER",
+      "clue": "<> is a nickname for a {}",
+      "transform": "aka"
+    },
+    {
+      "word": "REDHEAD",
+      "clue": "Disney movie with a <>ed princess",
+      "transform": "princess in"
+    },
+    {
+      "word": "BRAVE",
+      "clue": "\"<> New {}\"",
+      "transform": "New"
+    },
+    {
+      "word": "WORLD",
+      "clue": "Our <>",
+      "transform": "we live on"
+    },
+    {
+      "word": "EARTH",
+      "clue": "\"{} on <>\", common refrains around the holidays",
+      "transform": "deserves"
+    },
+    {
+      "word": "PEACE",
+      "clue": "Change one letter in <> to get a location",
+      "transform": "E->L"
+    },
+    {
+      "word": "PLACE",
+      "clue": "Heard at a racetrack: \"<> your {}!\"",
+      "transform": "your"
+    },
+    {
+      "word": "BETS",
+      "clue": "Append a letter to <> to get a female name",
+      "transform": "+Y"
+    },
+    {
+      "word": "BETSY",
+      "clue": null,
+      "transform": null
+    }
+  ]
+}

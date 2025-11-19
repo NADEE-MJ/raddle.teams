@@ -25,7 +25,7 @@ class TestTeamNameGeneration:
         """Team name should be in 'Adjective Noun' format."""
         name = generate_team_name()
         parts = name.split()
-        
+
         assert len(parts) == 2
         assert parts[0] in TEAM_ADJECTIVES
         assert parts[1] in TEAM_NOUNS
@@ -33,7 +33,7 @@ class TestTeamNameGeneration:
     def test_generate_team_name_multiple_calls(self):
         """Generating multiple team names should work."""
         names = [generate_team_name() for _ in range(10)]
-        
+
         assert len(names) == 10
         for name in names:
             parts = name.split()
@@ -43,14 +43,14 @@ class TestTeamNameGeneration:
         """Should generate unique team names."""
         count = 5
         names = generate_multiple_team_names(count)
-        
+
         assert len(names) == count
         assert len(set(names)) == count  # All unique
 
     def test_generate_multiple_team_names_valid_format(self):
         """Generated team names should all have valid format."""
         names = generate_multiple_team_names(5)
-        
+
         for name in names:
             parts = name.split()
             assert len(parts) == 2
@@ -60,7 +60,7 @@ class TestTeamNameGeneration:
     def test_generate_multiple_team_names_max_limit(self):
         """Should raise error when requesting more than possible combinations."""
         max_combinations = len(TEAM_ADJECTIVES) * len(TEAM_NOUNS)
-        
+
         with pytest.raises(ValueError, match="Cannot generate"):
             generate_multiple_team_names(max_combinations + 1)
 
@@ -69,7 +69,7 @@ class TestTeamNameGeneration:
         # Test with a reasonable subset
         count = min(100, len(TEAM_ADJECTIVES) * len(TEAM_NOUNS))
         names = generate_multiple_team_names(count)
-        
+
         assert len(names) == count
         assert len(set(names)) == count
 
@@ -81,7 +81,7 @@ class TestLobbyNameGeneration:
         """Lobby name should be in 'Adjective Noun' format."""
         name = generate_lobby_name()
         parts = name.split()
-        
+
         assert len(parts) == 2
         assert parts[0] in LOBBY_ADJECTIVES
         assert parts[1] in LOBBY_NOUNS
@@ -89,7 +89,7 @@ class TestLobbyNameGeneration:
     def test_generate_lobby_name_multiple_calls(self):
         """Generating multiple lobby names should work."""
         names = [generate_lobby_name() for _ in range(10)]
-        
+
         assert len(names) == 10
         for name in names:
             parts = name.split()

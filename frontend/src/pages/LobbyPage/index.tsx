@@ -134,7 +134,7 @@ export default function LobbyPage() {
                     scheduleReload();
             }
         },
-        [scheduleReload, setSessionId, navigate, player, lobbyInfo]
+        [scheduleReload, setSessionId, navigate, player, lobbyInfo, sessionId]
     );
 
     const wsUrl = useMemo(

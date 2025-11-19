@@ -1,0 +1,71 @@
+{
+  "meta": {
+    "title": "From NINE to FIVE",
+    "author": "Sandy Weisz and Mao Reynolds",
+    "difficulty": "medium",
+    "theme": "X to Y",
+    "message": "The 1980 comedy “9 to 5” starred Jane Fonda, Dolly Parton and Lily Tomlin as three women who work a nine-to-five job. Parton also wrote the film’s title song, which features an unlikely instrument: her acrylic fingernails."
+  },
+  "ladder": [
+    {
+      "word": "NINE",
+      "clue": "Sport where a team has <> players on the field",
+      "transform": "players per side in"
+    },
+    {
+      "word": "BASEBALL",
+      "clue": "Subdivision of a <> game",
+      "transform": "is made up of many an"
+    },
+    {
+      "word": "INNING",
+      "clue": "Add a letter to the front of <> to get a kind of streak",
+      "transform": "+W"
+    },
+    {
+      "word": "WINNING",
+      "clue": "Change one letter in <> to describe many a long road",
+      "transform": "N->D"
+    },
+    {
+      "word": "WINDING",
+      "clue": "Insert a G into <> to get one of many glyphs",
+      "transform": "+G"
+    },
+    {
+      "word": "WINGDING",
+      "clue": "Guitar part that rhymes with either half of <>",
+      "transform": "rhymes with"
+    },
+    {
+      "word": "STRING",
+      "clue": "Change the first half of <> to a small animal to get something often composed of stars",
+      "transform": "STR->RAT"
+    },
+    {
+      "word": "RATING",
+      "clue": "Drop the 4th letter of <> and anagram to get a US President",
+      "transform": "-I, then anagram"
+    },
+    {
+      "word": "GRANT",
+      "clue": "British actor {} <>",
+      "transform": ","
+    },
+    {
+      "word": "HUGH",
+      "clue": "Change one letter in <> to get a kind of school",
+      "transform": "U->I"
+    },
+    {
+      "word": "HIGH",
+      "clue": "<> {}, a quick celebration or greeting",
+      "transform": "hand slap"
+    },
+    {
+      "word": "FIVE",
+      "clue": null,
+      "transform": null
+    }
+  ]
+}

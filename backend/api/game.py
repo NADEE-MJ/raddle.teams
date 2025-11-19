@@ -14,6 +14,7 @@ from backend.dependencies import check_admin_token
 from backend.game.puzzles import Puzzle as PuzzlePydantic
 from backend.game.puzzles import get_puzzle_manager
 from backend.game.state_machine import GuessResult, TeamState, TeamStateMachine
+from backend.schemas import AdminStartGameRequest
 from backend.websocket.events import (
     AlreadySolvedEvent,
     GameStartedEvent,
@@ -30,10 +31,6 @@ router = APIRouter()
 ####################################################################
 # ? REQUEST/RESPONSE MODELS
 ####################################################################
-
-
-class StartGameRequest(BaseModel):
-    difficulty: str  # "easy", "medium", "hard"
 
 
 class StartGameResponse(BaseModel):
@@ -110,7 +107,7 @@ def save_team_state(team: Team, state: TeamState, session: Session):
 @router.post("/admin/lobby/{lobby_id}/start", response_model=StartGameResponse)
 async def start_game(
     lobby_id: int,
-    request: StartGameRequest,
+    request: AdminStartGameRequest,
     session: Session = Depends(get_session),
     is_admin: bool = Depends(check_admin_token),
 ):
@@ -119,10 +116,16 @@ async def start_game(
 
     This endpoint:
     1. Creates a Game record
-    2. Assigns different puzzles to each team (same difficulty)
+    2. Assigns puzzles to each team based on configuration (same or different)
     3. Initializes team state machines
     4. Broadcasts GAME_STARTED event to all players
     """
+    # Validate puzzle_mode and word_count_mode
+    if request.puzzle_mode not in ["same", "different"]:
+        raise HTTPException(status_code=400, detail="puzzle_mode must be 'same' or 'different'")
+    if request.word_count_mode not in ["exact", "balanced"]:
+        raise HTTPException(status_code=400, detail="word_count_mode must be 'exact' or 'balanced'")
+
     # Check if lobby exists
     lobby = session.get(Lobby, lobby_id)
     if not lobby:
@@ -141,10 +144,15 @@ async def start_game(
     if not teams:
         raise HTTPException(status_code=400, detail="No teams in lobby")
 
-    # Get puzzles for each team
+    # Get puzzles for each team based on configuration
     puzzle_manager = get_puzzle_manager()
     try:
-        puzzles = puzzle_manager.get_puzzles_for_teams(len(teams), request.difficulty)
+        if request.puzzle_mode == "same":
+            # All teams get the same puzzle
+            puzzles = puzzle_manager.get_same_puzzle_for_teams(len(teams), request.difficulty)
+        else:
+            # Each team gets a different puzzle
+            puzzles = puzzle_manager.get_puzzles_for_teams(len(teams), request.difficulty, request.word_count_mode)
     except ValueError as e:
         raise HTTPException(status_code=400, detail=str(e))
 
@@ -383,6 +391,8 @@ async def handle_guess_submission(
                     last_updated_at=result.new_state.last_updated_at.isoformat(),
                 )
                 await websocket_manager.broadcast_to_team(lobby_id, team.id, state_event)
+                # Also broadcast to admins so they can see team progress
+                await websocket_manager.admin_web_socket_manager.broadcast_to_lobby(lobby_id, state_event)
 
                 # If completed, broadcast team completion
                 if result.new_state.is_completed:
@@ -394,6 +404,8 @@ async def handle_guess_submission(
                         else datetime.now(tz=timezone.utc).isoformat(),
                     )
                     await websocket_manager.broadcast_to_team(lobby_id, team.id, team_completed_event)
+                    # Also broadcast to admins
+                    await websocket_manager.admin_web_socket_manager.broadcast_to_lobby(lobby_id, team_completed_event)
 
                     # Check if this is the first team to complete
                     completed_teams = session.exec(
@@ -442,6 +454,10 @@ async def handle_guess_submission(
                                 last_updated_at=other_team.last_updated_at.isoformat(),
                             )
                             await websocket_manager.broadcast_to_team(lobby_id, other_team.id, team_state_event)
+                            # Also broadcast to admins
+                            await websocket_manager.admin_web_socket_manager.broadcast_to_lobby(
+                                lobby_id, team_state_event
+                            )
 
                         # Broadcast win to entire lobby
                         win_event = GameWonEvent(

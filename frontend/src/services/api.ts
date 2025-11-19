@@ -8,6 +8,8 @@ import {
     GameState,
     Guess,
     GameStateResponse,
+    StartGameRequest,
+    StartGameResponse,
 } from '@/types';
 import type { Puzzle } from '@/types/game';
 
@@ -145,19 +147,35 @@ export const api = {
             async startGame(
                 lobbyId: number,
                 difficulty: 'easy' | 'medium' | 'hard',
+                puzzleMode: 'same' | 'different',
+                wordCountMode: 'exact' | 'balanced',
                 bearerToken: string
-            ): Promise<{ success: boolean; game_id: number; message: string }> {
-                return request<{ success: boolean; game_id: number; message: string }>(
+            ): Promise<StartGameResponse> {
+                const requestBody: StartGameRequest = {
+                    difficulty,
+                    puzzle_mode: puzzleMode,
+                    word_count_mode: wordCountMode,
+                };
+                return request<StartGameResponse>(
                     `/admin/lobby/${lobbyId}/start`,
                     {
                         method: 'POST',
-                        body: JSON.stringify({ difficulty }),
+                        body: JSON.stringify(requestBody),
                     },
                     bearerToken
                 );
             },
             async getGameState(lobbyId: number, bearerToken: string): Promise<GameStateResponse> {
                 return request<GameStateResponse>(`/admin/lobby/${lobbyId}/game-state`, {}, bearerToken);
+            },
+            async endGame(lobbyId: number, bearerToken: string): Promise<StartGameResponse> {
+                return request<StartGameResponse>(
+                    `/admin/lobby/${lobbyId}/end`,
+                    {
+                        method: 'POST',
+                    },
+                    bearerToken
+                );
             },
         },
         async checkCredentials(bearerToken: string): Promise<AdminAuthAdminAuthenticatedResponse> {
