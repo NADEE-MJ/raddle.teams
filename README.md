@@ -78,38 +78,10 @@ Common commands:
 - **Swagger UI**: http://localhost:8000/docs
 - **ReDoc**: http://localhost:8000/redoc
 
-## 🔮 Future Enhancements
-
-### Planned Features
-- **Hint System**: Strategic hints with time penalties
-- **Elimination Mechanics**: Remove slowest teams per puzzle
-- **Spectator Mode**: Watch other teams compete after finishing
-- **Multi-word Answers**: Support phrases like "NEW YORK"
-- **Enhanced Analytics**: Detailed team performance metrics
-- **Game Templates**: Pre-configured game setups
-- **Custom Puzzles**: In-game puzzle creation tools
-
-### Technical Improvements
-- **Multiple Concurrent Games**: Support many lobbies simultaneously
-- **Enhanced Reconnection**: Seamless player reconnection handling
-- **Advanced Analytics**: Live team performance graphs
-- **Puzzle Variety**: Different chain lengths and difficulty levels
-
 ## 📄 License
 
 This project is licensed under the MIT License.
 
 ## 🙏 Acknowledgments
 
-Inspired by [raddle.quest](https://raddle.quest) and built with modern web technologies for real-time multiplayer collaboration.
-
-## 📸 Screenshots
-
-**Player Lobby Interface**
-![Player Lobby](https://github.com/user-attachments/assets/03568107-ed00-4bea-8cb5-a3de0c6412d9)
-
-**Admin Control Panel**
-![Admin Panel](https://github.com/user-attachments/assets/1fd191fe-3120-421d-a767-ca086e025348)
-
-**Player in Lobby (Connected)**
-![Player Connected](https://github.com/user-attachments/assets/97708782-fb23-44ee-9169-fea8da424357)
+This is a blatant rip off of [raddle.quest](https://raddle.quest) built with modern web technologies for real-time multiplayer collaboration
