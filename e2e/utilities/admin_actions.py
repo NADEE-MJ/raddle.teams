@@ -271,8 +271,9 @@ class AdminActions:
             await puzzle_mode_dropdown.select_option(value=puzzle_mode)
 
         # Select word count mode by value (options: 'balanced' -> 'Balanced (±1)', 'exact' -> 'Exact Match')
+        # Note: This dropdown is disabled when puzzle_mode is "same"
         word_count_dropdown = self.page.locator('[data-testid="word-count-mode-select"]')
-        if await word_count_dropdown.is_visible(timeout=1000):
+        if await word_count_dropdown.is_visible(timeout=1000) and await word_count_dropdown.is_enabled(timeout=1000):
             await word_count_dropdown.select_option(value=word_count_mode)
 
         # Click start game button

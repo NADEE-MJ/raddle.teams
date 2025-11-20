@@ -343,3 +343,125 @@ class PlayerActions:
                     break
             except Exception:
                 pass
+
+    async def switch_solving_direction(self):
+        """
+        Click the direction toggle button to switch between upward and downward solving.
+        Direction is a client-side UI feature that changes which word is active.
+        """
+        # Find the direction toggle button
+        direction_button = self.page.locator(
+            'button:has-text("Switch to solving"), button:has-text("↑"), button:has-text("↓")'
+        ).first
+
+        try:
+            await expect(direction_button).to_be_visible(timeout=5000)
+            await direction_button.click()
+            # Wait for UI to update after direction change
+            await self.page.wait_for_timeout(300)
+            print(f"  [{self.player_name}] Switched solving direction")
+        except Exception as e:
+            print(f"  [{self.player_name}] Could not find direction toggle button: {e}")
+            raise
+
+    async def get_current_direction(self) -> str:
+        """
+        Get the current solving direction from the UI.
+        Returns 'upward' or 'downward' based on button text.
+        """
+        # The button text shows the OPPOSITE direction (what you'll switch TO)
+        direction_button = self.page.locator(
+            'button:has-text("Switch to solving"), button:has-text("↑"), button:has-text("↓")'
+        ).first
+
+        try:
+            button_text = await direction_button.text_content(timeout=2000)
+            if "↑" in button_text or "upward" in button_text.lower():
+                return "downward"  # If button says "switch to upward", we're currently downward
+            elif "↓" in button_text or "downward" in button_text.lower():
+                return "upward"  # If button says "switch to downward", we're currently upward
+            else:
+                return "unknown"
+        except Exception:
+            return "unknown"
+
+    async def solve_word_at_index(self, word: str):
+        """
+        Submit a guess for the currently active word (whatever direction is active).
+        This is simpler than submit_guess() - just solves the word that's currently active.
+        """
+        # Wait for active input
+        active_input = self.page.locator('[data-testid="active-step-input"]')
+
+        try:
+            await expect(active_input).to_be_visible(timeout=5000)
+        except Exception as e:
+            print(f"  [{self.player_name}] Could not find active input: {e}")
+            raise
+
+        # Submit the word
+        await active_input.fill(word)
+        await active_input.press("Enter")
+
+        # Wait for processing
+        await self.page.wait_for_timeout(500)
+        print(f"  [{self.player_name}] Solved: {word}")
+
+    async def solve_partial_puzzle_alternating(
+        self, session_id: str, server_url: str, num_words_from_start: int, num_words_from_end: int
+    ):
+        """
+        Solve puzzle from both directions by alternating between start and end.
+        This simulates realistic multi-direction solving behavior.
+
+        Args:
+            session_id: Player's session ID
+            server_url: Server URL
+            num_words_from_start: How many words to solve from the beginning (downward direction)
+            num_words_from_end: How many words to solve from the end (upward direction)
+        """
+        # Get puzzle data
+        puzzle_data = await self.get_puzzle_data(session_id, server_url)
+        ladder = puzzle_data["puzzle"]["ladder"]
+        total_words = len(ladder)
+
+        print(f"  [{self.player_name}] Solving {num_words_from_start} words from start, {num_words_from_end} from end")
+
+        # Ensure we're starting in downward direction
+        current_direction = await self.get_current_direction()
+        if current_direction == "upward":
+            await self.switch_solving_direction()
+
+        # Solve words from the start (downward direction)
+        for i in range(num_words_from_start):
+            word_idx = i + 1  # Skip first word (index 0) as it's pre-revealed
+            if word_idx >= total_words - 1:  # Don't solve last word
+                break
+
+            target_word = ladder[word_idx]["word"]
+
+            try:
+                await self.solve_word_at_index(target_word)
+            except Exception as e:
+                print(f"  [{self.player_name}] Failed to solve word {word_idx}: {e}")
+                break
+
+        # Switch to upward direction if we need to solve from end
+        if num_words_from_end > 0:
+            await self.switch_solving_direction()
+
+            # Solve words from the end (upward direction)
+            for i in range(num_words_from_end):
+                word_idx = total_words - 2 - i  # Start from second-to-last word (last is pre-revealed)
+                if word_idx <= 0:  # Don't go past the first word
+                    break
+
+                target_word = ladder[word_idx]["word"]
+
+                try:
+                    await self.solve_word_at_index(target_word)
+                except Exception as e:
+                    print(f"  [{self.player_name}] Failed to solve word {word_idx}: {e}")
+                    break
+
+        print(f"  [{self.player_name}] Finished partial solving")
