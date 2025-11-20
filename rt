@@ -40,7 +40,10 @@ def rerun_in_uv():
             raise typer.Exit(1)
 
 
-def run_command(cmd: List[str], description: str) -> int:
+def run_command(cmd: List[str], description: str, cwd: Path | None = None) -> int:
+    if cwd is None:
+        cwd = PROJECT_ROOT
+
     with Progress(
         SpinnerColumn(),
         TextColumn("[bold blue]{task.description}"),
@@ -49,7 +52,7 @@ def run_command(cmd: List[str], description: str) -> int:
         task = progress.add_task(f"[bright_yellow]🔄 {description}...", total=None)
         console.print(f"[dim blue]   💻 Running: {' '.join(cmd)}[/dim blue]")
 
-        result = subprocess.run(cmd, cwd=PROJECT_ROOT)
+        result = subprocess.run(cmd, cwd=cwd)
         progress.update(task, completed=True)
 
         if result.returncode == 0:
@@ -60,10 +63,13 @@ def run_command(cmd: List[str], description: str) -> int:
         return result.returncode
 
 
-def run_command_in_background(cmd: List[str], description: str) -> subprocess.Popen:
+def run_command_in_background(cmd: List[str], description: str, cwd: Path | None = None) -> subprocess.Popen:
+    if cwd is None:
+        cwd = PROJECT_ROOT
+
     console.print(f"[bright_yellow]🔄 {description}...[/bright_yellow]")
     console.print(f"[dim blue]   🌌 Running in background: {' '.join(cmd)}[/dim blue]")
-    process = subprocess.Popen(cmd, cwd=PROJECT_ROOT)
+    process = subprocess.Popen(cmd, cwd=cwd)
     console.print(f"[green]✅ Started background process (PID: {process.pid})[/green]")
     return process
 
@@ -690,6 +696,28 @@ add_command_and_aliases(
     "setup",
     ["init"],
     help="🎬 First-time setup wizard",
+)
+
+
+def sync_raddles():
+    """🔄 Sync Raddle games from the raddle website by running scripts in the puzzles_from_raddle folder"""
+
+    console.print("[bold magenta]🔄 Syncing Raddle games...[/bold magenta]")
+
+    puzzles_dir = PROJECT_ROOT / "puzzles_from_raddle"
+
+    result = run_command(["python", "pull_down_raddles.py"], "Pulling down Raddle games", cwd=puzzles_dir)
+    if result != 0:
+        return result
+
+    return run_command(["python", "convert_yaml_to_json.py"], "Converting Raddle YAML to JSON", cwd=puzzles_dir)
+
+
+add_command_and_aliases(
+    sync_raddles,
+    "sync-raddles",
+    ["rs", "raddles-sync"],
+    help="🔄 Sync Raddle games from the Raddle website",
 )
 
 
