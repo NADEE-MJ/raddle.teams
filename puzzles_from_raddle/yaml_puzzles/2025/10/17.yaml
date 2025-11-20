@@ -3,7 +3,7 @@ meta:
   author: Sandy Weisz and Mao Reynolds
   difficulty: medium
   theme: Settlers of Catan
-  message: 
+  message:
     "
     \"Putting out to pasture\" means forcing someone or something into retirement, as a farmer would force out livestock to feed.
     (This week's Raddles each use one of the 6 terrains from Settlers of Catan: hill, forest, field, mountain, pasture, or desert.)
@@ -23,7 +23,7 @@ ladder:
   transform: with a leaf
 - word: CANADA
   clue: "\"^ <>\""
-  transform: follows 
+  transform: follows
 - word: O
   clue: Counterpart to <>, on a note
   transform: counterpart

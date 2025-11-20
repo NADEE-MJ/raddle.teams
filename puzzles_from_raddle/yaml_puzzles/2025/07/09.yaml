@@ -3,9 +3,9 @@ meta:
   author: Sandy Weisz and Mao Reynolds
   difficulty: medium
   theme: Tour de France
-  message: 
-      The Tour de France is this week and we’re honoring it with bike-themed Raddles. 
-      Like a well-oiled bicycle chain, a food chain keeps things in an ecosystem chugging along. 
+  message:
+      The Tour de France is this week and we’re honoring it with bike-themed Raddles.
+      Like a well-oiled bicycle chain, a food chain keeps things in an ecosystem chugging along.
       The concept of food chains was developed first by al-Jahiz, an 8th-century scholar in modern-day Iraq, and was later independently developed by an English ecologist named Charles Elton.
 ladder:
 - word: FOOD

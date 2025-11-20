@@ -4,9 +4,9 @@ meta:
   difficulty: medium
   theme: Severance
   message:
-    We are introduced to “Defiant Jazz” in S1E7 of “Severance,” 
-    In the episode, department supervisor Milchick throws Helly R. a “Music Dance Experience,” 
-    allowing her to choose from a list of colorfully named genres. 
+    We are introduced to “Defiant Jazz” in S1E7 of “Severance,”
+    In the episode, department supervisor Milchick throws Helly R. a “Music Dance Experience,”
+    allowing her to choose from a list of colorfully named genres.
     Defiant Jazz is the correct choice, but I fall asleep at night wondering what Effusive Ska and Reckless Disco could be.
 ladder:
 - word: DEFIANT
@@ -23,7 +23,7 @@ ladder:
   transform: -US
 - word: COIN
   clue: What a referee does to a <>
-  transform: is given a 
+  transform: is given a
 - word: FLIP
   clue: Drop a letter from <> to get part of one's body
   transform: -F

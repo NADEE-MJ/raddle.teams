@@ -4,8 +4,8 @@ meta:
   difficulty: medium
   theme: Superman
   message:
-    It's Superman week! 
-    X-ray vision is a Kryptonian power attributed to the Photonucleic Effect, 
+    It's Superman week!
+    X-ray vision is a Kryptonian power attributed to the Photonucleic Effect,
     meaning it can only be activated in the presence of a yellow star, like our sun.
     Originally, Superman's X-ray vision was depicted as a form of heat vision, but later was changed to be a
     separate power.
@@ -30,7 +30,7 @@ ladder:
   transform: -ON
 - word: RANGO
   clue: Change the last letter in <> to get something in a kitchen
-  transform: O->E 
+  transform: O->E
 - word: RANGE
   clue: Luxury car <> ^
   transform: …

@@ -3,8 +3,8 @@ meta:
   author: Sandy Weisz and Mao Reynolds
   difficulty: medium
   theme: Block Party
-  message: 
-    Bouncy houses and other inflatable structures are common sights at block parties. 
+  message:
+    Bouncy houses and other inflatable structures are common sights at block parties.
     The bouncy house we know today was invented in 1958 by John Scurlock, who taught at Tulane University and also worked for NASA — but Scurlock’s wife, Frances, was the one who thought of renting out the inflatable houses for parties.
 ladder:
 - word: BOUNCY
@@ -18,7 +18,7 @@ ladder:
   transform: includes
 - word: TIN
   clue: Movie that features a <> man
-  transform: man went off to see 
+  transform: man went off to see
 - word: THE WIZARD OF OZ
   clue: Dog from <>
   transform: dog

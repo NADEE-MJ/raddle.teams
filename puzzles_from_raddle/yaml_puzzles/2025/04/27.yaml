@@ -3,7 +3,7 @@ meta:
   author: Sandy Weisz
   difficulty: medium
   theme: flowers
-  message: It's spring! Let's stop to smell the flowers. 
+  message: It's spring! Let's stop to smell the flowers.
 ladder:
 - word: BLACK EYED
   clue: Small metal thing found inside <>
@@ -25,7 +25,7 @@ ladder:
   transform: known as
 - word: BUGS BUNNY
   clue: 1996 movie featuring <> and friends
-  transform: is in 
+  transform: is in
 - word: SPACE JAM
   clue: What they play in <>
   transform: is about

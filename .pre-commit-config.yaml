@@ -42,6 +42,6 @@ repos:
         name: run prettier
         language: system
         files: ^.*$
-        types_or: [javascript, json, ts, tsx, jsx, json, python, css, scss, markdown, html]
+        types_or: [javascript, json, ts, tsx, jsx, json, css, scss, markdown, html]
         entry: |
-          bash -c 'prettier --config .prettierrc.json --check --write "${@}"' --
+          bash -c 'npx prettier --config .prettierrc.json --check --write "${@}"' --

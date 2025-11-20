@@ -3,10 +3,10 @@ meta:
   author: Sandy Weisz and Mao Reynolds
   difficulty: medium
   theme: Whodunit
-  message: 
-    "A murder has been committed at our Halloween party! Seven witnesses (in costume) have given testimony, in the form of Raddles. 
-    Our final witness is Tinker Bell, who no one ever notices but who sees it all. 
-    Her hint: you need to solve each Raddle before being able to solve the mystery. 
+  message:
+    "A murder has been committed at our Halloween party! Seven witnesses (in costume) have given testimony, in the form of Raddles.
+    Our final witness is Tinker Bell, who no one ever notices but who sees it all.
+    Her hint: you need to solve each Raddle before being able to solve the mystery.
     Check the previous few Raddles for more hints!
     [Update: the solution [can be found here](/mystery/whodunit)]"
 ladder:

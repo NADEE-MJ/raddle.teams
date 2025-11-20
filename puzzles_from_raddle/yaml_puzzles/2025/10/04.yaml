@@ -3,10 +3,10 @@ meta:
   author: Sandy Weisz and Mao Reynolds
   difficulty: medium
   theme: Midwest Crossword Tournament
-  message: 
-    The [Midwest Crossword Tournament](https://www.mwxwt.com/) is today! 
-    Hundreds of contestants are gathering in Chicago to solve a set of custom-made crosswords. We’re sponsors of the event, as well as contestants. 
-    [Sign up here](https://www.mwxwt.com/) to learn about next year’s event. 
+  message:
+    The [Midwest Crossword Tournament](https://www.mwxwt.com/) is today!
+    Hundreds of contestants are gathering in Chicago to solve a set of custom-made crosswords. We’re sponsors of the event, as well as contestants.
+    [Sign up here](https://www.mwxwt.com/) to learn about next year’s event.
     If you’re hungry for more puzzles, especially crosswords, check out our newsletter [Signals](https://signals.mysteryleague.com/), where we publish our own crosswords — with a twist.
 ladder:
 - word: CROSS

@@ -26,7 +26,7 @@ ladder:
   transform: with the President and staff
 - word: WEST
   clue: '"^ ^ <>," title of a movie, TV show, and song'
-  transform: is 
+  transform: is
 - word: WILD
   clue: No longer <>
   transform: opposite

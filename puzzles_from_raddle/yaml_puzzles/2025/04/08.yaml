@@ -28,7 +28,7 @@ ladder:
   transform: -BAY, anagram
 - word: FLEA
   clue: <> is a member of this band
-  transform: is in 
+  transform: is in
 - word: RED HOT CHILI PEPPERS
   clue: Canonical adjective used to describe <>
   transform: are

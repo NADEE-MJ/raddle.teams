@@ -19,7 +19,7 @@ ladder:
   transform: goes by
 - word: VIN
   clue: Append a letter to <> for a onetime app
-  transform: +E 
+  transform: +E
 - word: VINE
   clue: "Fruit found on a <> (as you may have heard)"
   transform: features many a

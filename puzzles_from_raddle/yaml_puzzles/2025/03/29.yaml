@@ -29,13 +29,13 @@ ladder:
   transform: +T, then reverse
 - word: TONER
   clue: Office product that relies on a supply of <>
-  transform: is used in a 
+  transform: is used in a
 - word: PRINTER
   clue: Change second letter of <> to get a kind of artist
   transform: R->A
 - word: PAINTER
   clue: Tool used by a <>
-  transform: uses a 
+  transform: uses a
 - word: BRUSH
   clue: Counterpart of a <>, for a stylist
   transform: and

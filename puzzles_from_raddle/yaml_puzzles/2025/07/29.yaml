@@ -3,7 +3,7 @@ meta:
   author: Sandy Weisz and Mao Reynolds
   difficulty: medium
   theme: Emmy nominations 2025
-  message: 
+  message:
     This week we're honoring some of this year's Emmy nominees.
 ladder:
 - word: BLACK
@@ -14,7 +14,7 @@ ladder:
   transform: is served at
 - word: STARBUCKS
   clue: Book that inspired the name <>
-  transform: comes from 
+  transform: comes from
 - word: MOBY-DICK
   clue: <> is a ^
   transform: is the name of the

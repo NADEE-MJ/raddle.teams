@@ -4,7 +4,7 @@ meta:
   difficulty: medium
   theme: Paul Ruddle
   message: "Welcome to **RUDDLE**! This week we're rebranding as the only Paul Rudd-themed daily word game.
-    Today's game is inspired by Rudd's movie This is Forty, where he confronts his mid-life and considers the possibility of having a crisis. 
+    Today's game is inspired by Rudd's movie This is Forty, where he confronts his mid-life and considers the possibility of having a crisis.
     When it came out, I was only 36, so I found it totally unrelatable."
 ladder:
 - word: THIS IS
@@ -23,7 +23,7 @@ ladder:
   clue: Number associated with <>
   transform: means
 - word: TWELVE
-  clue: Word that means <> x <> 
+  clue: Word that means <> x <>
   transform: squared is a
 - word: GROSS
   clue: Remove the first letter from <> to get a person's name

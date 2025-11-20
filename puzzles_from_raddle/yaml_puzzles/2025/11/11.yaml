@@ -5,8 +5,8 @@ meta:
   theme: 7x7
   message: "I’m turning 49 this week. 49 is 7x7, so I’m celebrating with seven sets\
     \ of seven: seven Raddles that go from the first to the seventh.
-    Seven-layer dip is an appetizer that uses elements of Tex-Mex cuisine. 
-    The typical layers are refried beans, guacamole, sour cream, salsa, grated cheese, scallions and black olives, 
+    Seven-layer dip is an appetizer that uses elements of Tex-Mex cuisine.
+    The typical layers are refried beans, guacamole, sour cream, salsa, grated cheese, scallions and black olives,
     though there are many variations."
 ladder:
 - word: BEANS
@@ -37,7 +37,7 @@ ladder:
   clue: Insert a letter in <> to get a span
   transform: +G
 - word: BRIDGE
-  clue: What often goes under a <> 
+  clue: What often goes under a <>
   transform: spans a
 - word: RIVER
   clue: Swap the first letter in <> with a bigram (two letters) to get a musical and movie

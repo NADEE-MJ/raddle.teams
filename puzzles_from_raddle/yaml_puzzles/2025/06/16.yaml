@@ -5,10 +5,10 @@ meta:
   theme: Juneteenth
   message:
     "In celebration of Juneteeth, we're building Raddles featuring technology by Black inventors.
-    Today we honor [Garrett Morgan](https://highways.dot.gov/highway-history/general-highway-history/safer-stop-and-go-garrett-morgans-traffic-signal-legacy), the son of formerly enslaved people, who invented the three-signal traffic light in 1923. 
-    Previously, traffic lights were manually operated and had only two positions: STOP and GO. 
-    Adding a third option allowed for smoother, safer traffic; 
-    his design was later improved upon and replaced by the green, yellow and red lights we use today. 
+    Today we honor [Garrett Morgan](https://highways.dot.gov/highway-history/general-highway-history/safer-stop-and-go-garrett-morgans-traffic-signal-legacy), the son of formerly enslaved people, who invented the three-signal traffic light in 1923.
+    Previously, traffic lights were manually operated and had only two positions: STOP and GO.
+    Adding a third option allowed for smoother, safer traffic;
+    his design was later improved upon and replaced by the green, yellow and red lights we use today.
     Morgan also invented the gas mask, just in time to protect countless soldiers in World War I."
 ladder:
 - word: TRAFFIC

@@ -3,14 +3,14 @@ meta:
   author: Sandy Weisz
   difficulty: medium
   theme: Tony nominations
-  message: We're honoring the Tony nominations this week. 
+  message: We're honoring the Tony nominations this week.
     "[Buena Vista Social Club](https://www.tonyawards.com/shows/buena-vista-social-club/)" earned 10 Tony nominations this year (tied for the most this year), including Best Musical, Best Direction, Best Choreography, and Best Performance.
     It's based on the best-selling album and documentary film of the same name,
     featuring a group of Cuban musicians who came together in the 1990s to perform traditional Cuban music to international audiences.
     I used to listen to that album _a lot_ in college.
 ladder:
 - word: BUENA
-  clue: Change the first letter of <> to K and anagram to get the first name of a famous actor 
+  clue: Change the first letter of <> to K and anagram to get the first name of a famous actor
   transform: B->K then anagram
 - word: KEANU
   clue: Iconic character played by <> in 1999

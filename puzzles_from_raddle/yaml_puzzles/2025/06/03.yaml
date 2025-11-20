@@ -3,15 +3,15 @@ meta:
   author: Sandy Weisz and Mao Reynolds
   difficulty: medium
   theme: Pride Month
-  message: 
-    Happy Pride! 
-    Whether you're a member of the LGBTQIA+ community or an ally, 
+  message:
+    Happy Pride!
+    Whether you're a member of the LGBTQIA+ community or an ally,
     Pride Month is a time to celebrate love, diversity, and acceptance.
-    We'll be posting Pride-themed Raddles over the next week in celebration. 
-    If you're looking for more ways to support the community, 
-    [A Trans Person Made Your Puzzle](https://sites.google.com/view/transxwords) is 
+    We'll be posting Pride-themed Raddles over the next week in celebration.
+    If you're looking for more ways to support the community,
+    [A Trans Person Made Your Puzzle](https://sites.google.com/view/transxwords) is
     raising money for LGBTQ+-aligned charities, and offering a pack of great puzzles in return.
-    🌈 
+    🌈
 ladder:
 - word: PRIDE
   clue: A member of a <>
@@ -21,7 +21,7 @@ ladder:
   transform: …
 - word: KING
   clue: A <> sits on this
-  transform: sits on a 
+  transform: sits on a
 - word: THRONE
   clue: Change one letter in <> and add a space to get a nickname for someone special
   transform: R->E + space
