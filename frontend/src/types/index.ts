@@ -81,6 +81,10 @@ export interface WebSocketMessage {
     team_id?: number;
     lobby_id?: number;
     state?: string;
+    revealed_steps?: number[];
+    is_completed?: boolean;
+    completed_at?: string;
+    last_updated_at?: string;
     old_team_id?: number;
     new_team_id?: number;
 }

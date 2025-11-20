@@ -1,9 +1,10 @@
-import { useState, useEffect, useCallback, useRef } from 'react';
-import { LobbyInfo, GameStateResponse, GameWebSocketEvents } from '@/types';
+import { useState, useEffect, useCallback, useMemo } from 'react';
+import { LobbyInfo, GameStateResponse, GameWebSocketEvents, WebSocketMessage } from '@/types';
 import { Modal, CopyableCode, Button, TextInput, Select, ErrorMessage, Card, ConnectionBadge } from '@/components';
 import { api, ApiError } from '@/services/api';
 import { useGlobalOutletContext } from '@/hooks/useGlobalOutletContext';
 import { useDebounce } from '@/hooks/useDebounce';
+import { useWebSocket } from '@/hooks/useWebSocket';
 import GameProgressView from './GameProgressView';
 
 interface LobbyDetailsProps {
@@ -14,7 +15,7 @@ interface LobbyDetailsProps {
 }
 
 export default function LobbyDetails({ lobbyId, onClose, onLobbyDeleted, refreshKey }: LobbyDetailsProps) {
-    const { adminApiToken } = useGlobalOutletContext();
+    const { adminApiToken, adminSessionId } = useGlobalOutletContext();
 
     const [selectedLobby, setSelectedLobby] = useState<LobbyInfo | null>(null);
     const [numTeams, setNumTeams] = useState<number>(2);
@@ -33,8 +34,6 @@ export default function LobbyDetails({ lobbyId, onClose, onLobbyDeleted, refresh
 
     // Game state
     const [gameState, setGameState] = useState<GameStateResponse | null>(null);
-    const wsRef = useRef<WebSocket | null>(null);
-    const [isWsConnected, setIsWsConnected] = useState(false);
 
     const loadLobbyDetails = useCallback(async () => {
         if (!adminApiToken) {
@@ -81,105 +80,94 @@ export default function LobbyDetails({ lobbyId, onClose, onLobbyDeleted, refresh
         loadGameState();
     }, [loadLobbyDetails, loadGameState, refreshKey]);
 
-    // WebSocket connection for real-time game updates
-    useEffect(() => {
-        if (!adminApiToken) return;
+    const onMessage = useCallback(
+        (message: WebSocketMessage) => {
+            console.log('[Admin] Received WebSocket message:', message);
 
-        // Connect to admin WebSocket with token as query parameter
-        // Construct absolute WebSocket URL
-        const protocol = window.location.protocol === 'https:' ? 'wss:' : 'ws:';
-        const host = window.location.host;
-        const wsUrl = `${protocol}//${host}/ws/admin/${adminApiToken}?token=${adminApiToken}`;
+            if (message.type === GameWebSocketEvents.STATE_UPDATE) {
+                setGameState(prev => {
+                    if (!prev || !prev.is_game_active) return prev;
 
-        const ws = new WebSocket(wsUrl);
-        wsRef.current = ws;
-
-        ws.onopen = () => {
-            console.log('[Admin] WebSocket connected to:', wsUrl);
-            setIsWsConnected(true);
-            // Subscribe to this lobby
-            ws.send(JSON.stringify({ action: 'subscribe_lobby', lobby_id: lobbyId }));
-        };
-
-        ws.onmessage = event => {
-            try {
-                const message = JSON.parse(event.data);
-                console.log('[Admin] Received WebSocket message:', message);
-
-                // Handle game events
-                if (message.type === GameWebSocketEvents.STATE_UPDATE) {
-                    // Update the specific team's progress
-                    setGameState(prev => {
-                        if (!prev || !prev.is_game_active) return prev;
-
-                        const updatedTeams = prev.teams.map(team => {
-                            if (team.team_id === message.team_id) {
-                                return {
-                                    ...team,
-                                    revealed_steps: message.revealed_steps,
-                                    is_completed: message.is_completed,
-                                };
-                            }
-                            return team;
-                        });
-
-                        return {
-                            ...prev,
-                            teams: updatedTeams,
-                        };
+                    const updatedTeams = prev.teams.map(team => {
+                        if (team.team_id === message.team_id) {
+                            return {
+                                ...team,
+                                revealed_steps: message.revealed_steps,
+                                is_completed: message.is_completed,
+                            };
+                        }
+                        return team;
                     });
-                } else if (message.type === GameWebSocketEvents.TEAM_COMPLETED) {
-                    // Mark team as completed
-                    setGameState(prev => {
-                        if (!prev || !prev.is_game_active) return prev;
 
-                        const updatedTeams = prev.teams.map(team => {
-                            if (team.team_id === message.team_id) {
-                                return {
-                                    ...team,
-                                    is_completed: true,
-                                    completed_at: message.completed_at,
-                                };
-                            }
-                            return team;
-                        });
+                    return {
+                        ...prev,
+                        teams: updatedTeams,
+                    };
+                });
+            } else if (message.type === GameWebSocketEvents.TEAM_COMPLETED) {
+                setGameState(prev => {
+                    if (!prev || !prev.is_game_active) return prev;
 
-                        return {
-                            ...prev,
-                            teams: updatedTeams,
-                        };
+                    const updatedTeams = prev.teams.map(team => {
+                        if (team.team_id === message.team_id) {
+                            return {
+                                ...team,
+                                is_completed: true,
+                                completed_at: message.completed_at,
+                            };
+                        }
+                        return team;
                     });
-                } else if (message.type === GameWebSocketEvents.GAME_STARTED) {
-                    // Game started, reload game state
-                    loadGameState();
-                } else if (message.type === GameWebSocketEvents.GAME_WON) {
-                    // Game won, reload game state to mark it as inactive
-                    console.log('[Admin] Game won, reloading game state');
-                    loadGameState();
-                }
-            } catch (err) {
-                console.error('[Admin] Error parsing WebSocket message:', err);
+
+                    return {
+                        ...prev,
+                        teams: updatedTeams,
+                    };
+                });
+            } else if (message.type === GameWebSocketEvents.GAME_STARTED) {
+                loadGameState();
+            } else if (message.type === GameWebSocketEvents.GAME_WON) {
+                console.log('[Admin] Game won, reloading game state');
+                loadGameState();
             }
-        };
+        },
+        [loadGameState]
+    );
 
-        ws.onerror = error => {
-            console.error('[Admin] WebSocket error:', error);
-            console.error('[Admin] WebSocket URL was:', wsUrl);
-        };
+    const onError = useCallback((event: Event) => {
+        console.error('[Admin] WebSocket error:', event);
+    }, []);
 
-        ws.onclose = () => {
-            console.log('[Admin] WebSocket disconnected');
-            setIsWsConnected(false);
-        };
+    const onDisconnect = useCallback(() => {
+        console.log('[Admin] WebSocket disconnected');
+    }, []);
+
+    const onConnect = useCallback(() => {
+        console.log('[Admin] WebSocket connected');
+    }, []);
+
+    const wsUrl = useMemo(
+        () => (adminSessionId && adminApiToken ? `/ws/admin/${adminSessionId}?token=${adminApiToken}` : ''),
+        [adminSessionId, adminApiToken]
+    );
+
+    const { isConnected: isWsConnected, sendMessage } = useWebSocket(wsUrl, {
+        onMessage,
+        onConnect,
+        onDisconnect,
+        onError,
+        autoReconnect: true,
+    });
+
+    useEffect(() => {
+        if (!sendMessage || !isWsConnected) return;
+
+        sendMessage({ action: 'subscribe_lobby', lobby_id: lobbyId });
 
         return () => {
-            if (ws.readyState === WebSocket.OPEN) {
-                ws.send(JSON.stringify({ action: 'unsubscribe_lobby', lobby_id: lobbyId }));
-            }
-            ws.close();
-            wsRef.current = null;
+            sendMessage({ action: 'unsubscribe_lobby', lobby_id: lobbyId });
         };
-    }, [adminApiToken, lobbyId, loadGameState]);
+    }, [isWsConnected, lobbyId, sendMessage]);
 
     const handleCreateTeams = useCallback(async () => {
         if (!adminApiToken || !selectedLobby) {
