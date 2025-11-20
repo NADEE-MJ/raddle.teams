@@ -544,12 +544,14 @@ export default function LobbyDetails({ lobbyId, onClose, onLobbyDeleted, refresh
                                                                 handleCancelTeamNameEdit();
                                                             }
                                                         }}
+                                                        data-testid={`edit-team-name-input-${team.id}`}
                                                     />
                                                     <Button
                                                         onClick={() => handleUpdateTeamName(team.id)}
                                                         variant='primary'
                                                         size='sm'
                                                         className='text-xs'
+                                                        data-testid={`save-team-name-button-${team.id}`}
                                                     >
                                                         Save
                                                     </Button>
@@ -558,18 +560,25 @@ export default function LobbyDetails({ lobbyId, onClose, onLobbyDeleted, refresh
                                                         variant='secondary'
                                                         size='sm'
                                                         className='text-xs'
+                                                        data-testid={`cancel-team-name-button-${team.id}`}
                                                     >
                                                         Cancel
                                                     </Button>
                                                 </div>
                                             ) : (
                                                 <>
-                                                    <h4 className='text-tx-primary font-semibold'>{team.name}</h4>
+                                                    <h4
+                                                        className='text-tx-primary font-semibold'
+                                                        data-testid={`team-name-${team.id}`}
+                                                    >
+                                                        {team.name}
+                                                    </h4>
                                                     <Button
                                                         onClick={() => handleStartTeamNameEdit(team.id, team.name)}
                                                         variant='secondary'
                                                         size='sm'
                                                         className='text-xs'
+                                                        data-testid={`edit-team-name-button-${team.id}`}
                                                     >
                                                         Edit
                                                     </Button>

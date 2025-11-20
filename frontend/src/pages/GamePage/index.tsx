@@ -149,6 +149,11 @@ function Game({ puzzle, player, teamName, lobbyId, lobbyCode, sessionId, initial
         navigate(`/lobby/${lobbyCode}`);
     }, [navigate, lobbyCode]);
 
+    const handleGameStarted = useCallback(() => {
+        alert('A new game has been started! Returning to lobby...');
+        navigate(`/lobby/${lobbyCode}`);
+    }, [navigate, lobbyCode]);
+
     const {
         revealedSteps,
         isCompleted,
@@ -170,6 +175,7 @@ function Game({ puzzle, player, teamName, lobbyId, lobbyCode, sessionId, initial
         onPlayerKicked: handlePlayerKicked,
         onTeamChanged: handleTeamChanged,
         onGameEnded: handleGameEnded,
+        onGameStarted: handleGameStarted,
         sessionId,
     });
 

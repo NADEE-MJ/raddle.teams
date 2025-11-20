@@ -16,15 +16,13 @@ vi.mock('@/services/api', () => ({
     },
 }));
 
-// Mock useNavigate
 const mockNavigate = vi.fn();
-vi.mock('react-router-dom', async () => {
-    const actual = await vi.importActual('react-router-dom');
-    return {
-        ...actual,
-        useNavigate: () => mockNavigate,
-    };
-});
+
+vi.mock('react-router-dom', () => ({
+    BrowserRouter: ({ children }: { children: React.ReactNode }) => <div>{children}</div>,
+    useNavigate: () => mockNavigate,
+    Link: ({ children, ...props }: any) => <a {...props}>{children}</a>,
+}));
 
 // Mock JoinForm component for isolation
 vi.mock('@/pages/LandingPage/JoinForm', () => ({

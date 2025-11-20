@@ -22,10 +22,17 @@ class ServerManager:
         self._kill_port_process()
 
         # Start new server process
+        # Use shell=False and full path to rt script
+        import pathlib
+
+        project_root = pathlib.Path(__file__).parent.parent.parent
+        rt_path = project_root / "rt"
+
         self.process = subprocess.Popen(
-            ["rt", "server"],
+            [str(rt_path), "server"],
             stdout=subprocess.DEVNULL,
             stderr=subprocess.DEVNULL,
+            cwd=str(project_root),
         )
 
         # Wait for server to be ready

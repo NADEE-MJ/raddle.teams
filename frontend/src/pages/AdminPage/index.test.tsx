@@ -11,15 +11,13 @@ vi.mock('@/hooks/useWebSocket', () => ({
     useWebSocket: mockUseWebSocket,
 }));
 
-// Mock useNavigate
 const mockNavigate = vi.fn();
-vi.mock('react-router-dom', async () => {
-    const actual = await vi.importActual('react-router-dom');
-    return {
-        ...actual,
-        useNavigate: () => mockNavigate,
-    };
-});
+
+vi.mock('react-router-dom', () => ({
+    BrowserRouter: ({ children }: { children: React.ReactNode }) => <div>{children}</div>,
+    useNavigate: () => mockNavigate,
+    Link: ({ children, ...props }: any) => <a {...props}>{children}</a>,
+}));
 
 // Mock useGlobalOutletContext
 const mockAdminApiToken = 'test-admin-token';
@@ -184,7 +182,7 @@ describe('AdminPage Component', () => {
             );
 
             expect(mockUseWebSocket).toHaveBeenCalledWith(
-                `ws://localhost:8000/ws/admin/${mockAdminSessionId}?token=${mockAdminApiToken}`,
+                `/ws/admin/${mockAdminSessionId}?token=${mockAdminApiToken}`,
                 expect.objectContaining({
                     autoReconnect: false,
                 })

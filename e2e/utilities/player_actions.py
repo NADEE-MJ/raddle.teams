@@ -124,9 +124,10 @@ class PlayerActions:
 
     async def verify_unassigned(self, timeout: int = 5000):
         """Verify that player sees themselves as unassigned."""
-        await expect(
-            self.page.locator(f'[data-testid="team-status-{self.player_name}"]:has-text("No team")')
-        ).to_be_visible(timeout=timeout)
+        # Check if player appears in the "Unassigned Players" section
+        await expect(self.page.locator(f'[data-testid="unassigned-player-{self.player_name}"]')).to_be_visible(
+            timeout=timeout
+        )
 
     async def verify_team_count(self, expected_count: int, timeout: int = 5000):
         """Verify the number of teams visible."""
@@ -162,3 +163,96 @@ class PlayerActions:
         """Wait for player's team status to change in the player list."""
         player_status = self.page.locator(f"text={self.player_name}").locator("..").locator("div")
         await expect(player_status).to_contain_text(expected_status, timeout=timeout)
+
+    async def get_current_puzzle_word(self) -> str:
+        """Get the current word that needs to be guessed (from the active step)."""
+        # Look for the active input field which should have the word length as maxLength
+        active_input = self.page.locator('input[type="text"]').first
+        await expect(active_input).to_be_visible(timeout=5000)
+
+        # Get the maxLength attribute to determine word length
+        max_length = await active_input.get_attribute("maxLength")
+        return max_length if max_length else "5"
+
+    async def submit_incorrect_guess(self):
+        """Submit an intentionally incorrect guess."""
+        # Get the word length from the input
+        active_input = self.page.locator('input[type="text"]').first
+        max_length_str = await active_input.get_attribute("maxLength")
+        max_length = int(max_length_str) if max_length_str else 5
+
+        # Create a nonsense word of the right length
+        incorrect_word = "Z" * max_length
+
+        await active_input.fill(incorrect_word)
+        await active_input.press("Enter")
+
+        # Wait a moment for the guess to be processed
+        await self.page.wait_for_timeout(500)
+
+    async def verify_kicked_from_game(self, timeout: int = 5000):
+        """Verify that player has been kicked and sees appropriate message."""
+        # Should see an alert and be redirected to home page
+        await expect(self.page.locator('[data-testid="landing-page-title"]')).to_be_visible(timeout=timeout)
+
+    async def verify_team_changed_redirect(self, timeout: int = 10000):
+        """Verify that player sees alert about team change and is redirected to lobby."""
+        # Player should be redirected to lobby page
+        await self.page.wait_for_url("**/lobby/**", timeout=timeout)
+
+    async def verify_game_ended_redirect(self, timeout: int = 10000):
+        """Verify that player is redirected to lobby when game ends."""
+        # Player should be redirected to lobby page
+        await self.page.wait_for_url("**/lobby/**", timeout=timeout)
+
+    async def solve_complete_puzzle(self, session_id: str, server_url: str):
+        """
+        Solve the complete puzzle by getting puzzle data from API and submitting all correct guesses.
+        """
+        import httpx
+
+        # Get puzzle data from API
+        async with httpx.AsyncClient() as client:
+            response = await client.get(f"{server_url}/api/game/puzzle", params={"player_session_id": session_id})
+            response.raise_for_status()
+            puzzle_data = response.json()
+
+        puzzle = puzzle_data["puzzle"]
+        ladder = puzzle["ladder"]
+
+        print(f"Solving puzzle with {len(ladder)} words...")
+
+        # Solve each word in sequence
+        for idx, step in enumerate(ladder):
+            # Skip first and last words (they're revealed by default)
+            if idx == 0 or idx == len(ladder) - 1:
+                continue
+
+            target_word = step["word"]
+            print(f"  Solving word {idx}: {target_word}")
+
+            # Wait for the active input to be available
+            active_input = self.page.locator('[data-testid="active-step-input"]')
+
+            try:
+                await expect(active_input).to_be_visible(timeout=5000)
+            except Exception as e:
+                print(f"  Could not find active input for word {idx}: {e}")
+                # Game might be complete
+                break
+
+            # Submit the correct word
+            await active_input.fill(target_word)
+            await active_input.press("Enter")
+
+            # Wait for the guess to be processed
+            await self.page.wait_for_timeout(800)
+
+            # Check if we've been redirected (game ended, kicked, etc.)
+            try:
+                current_url = self.page.url
+                if "lobby" in current_url and "game" not in current_url:
+                    print("  Redirected to lobby, stopping puzzle solving")
+                    break
+            except Exception:
+                pass

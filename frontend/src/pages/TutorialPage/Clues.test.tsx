@@ -89,7 +89,7 @@ describe('Clues Component', () => {
             render(<Clues gameState={gameState} shuffleWithSeed={mockShuffleWithSeed} />);
 
             const questionWords = screen.getAllByTestId('question-word-down');
-            expect(questionWords[0]).toHaveClass('bg-green/30', 'text-green');
+            expect(questionWords[0]).toHaveClass('bg-clue-question-word', 'text-clue-text-word');
         });
 
         test('applies correct styling to answer words', () => {
@@ -97,7 +97,7 @@ describe('Clues Component', () => {
             render(<Clues gameState={gameState} shuffleWithSeed={mockShuffleWithSeed} />);
 
             const answerWords = screen.getAllByTestId('answer-word-south');
-            expect(answerWords[0]).toHaveClass('bg-yellow/30', 'text-yellow');
+            expect(answerWords[0]).toHaveClass('bg-clue-answer-word', 'text-clue-text-word');
         });
     });
 
@@ -280,7 +280,7 @@ describe('Clues Component', () => {
 
             // The clue for step 0 should be greyed out because hint was used on the answer step
             const unsolvedClue = screen.getByTestId('unsolved-clue-1');
-            expect(unsolvedClue).toHaveClass('text-tx-muted', 'opacity-50');
+            expect(unsolvedClue).toHaveClass('text-clue-text-muted', 'opacity-50');
         });
 
         test('highlights active clue with blue border when hint is used', () => {
@@ -291,9 +291,10 @@ describe('Clues Component', () => {
             });
             render(<Clues gameState={gameStateWithHints} shuffleWithSeed={mockShuffleWithSeed} />);
 
-            // The active clue (step 0) should have blue border styling when hint used on answer step
+            // The active clue (step 0) keeps the standard clue styling when hint used on answer step
             const activeClue = screen.getByTestId('unsolved-clue-0');
-            expect(activeClue).toHaveClass('border-blue-500');
+            expect(activeClue).toHaveClass('bg-clue-bg', 'border-clue-border', 'text-clue-text');
+            expect(activeClue).not.toHaveClass('text-clue-text-muted');
         });
 
         test('greys out clues when hints are used in upward mode', () => {
@@ -311,7 +312,7 @@ describe('Clues Component', () => {
             const nonActiveClues = unsolvedClues.filter(clue => !clue.getAttribute('data-testid')?.includes('7'));
 
             nonActiveClues.forEach(clue => {
-                expect(clue).toHaveClass('text-tx-muted', 'opacity-50');
+                expect(clue).toHaveClass('text-clue-text-muted', 'opacity-50');
             });
         });
 

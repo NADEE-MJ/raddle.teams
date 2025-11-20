@@ -397,7 +397,7 @@ describe('LadderStep Component', () => {
             );
 
             const input = screen.getByTestId('unrevealed-step-input');
-            expect(input).toHaveAttribute('placeholder', '◼️◼️◼️◼️◼️ (5)');
+            expect(input).toHaveAttribute('placeholder', '◻️◻️◻️◻️◻️ (5)');
         });
     });
 
@@ -462,7 +462,7 @@ describe('LadderStep Component', () => {
                 />
             );
 
-            expect(container.firstChild).toHaveClass('bg-green/50');
+            expect(container.firstChild).toHaveClass('bg-question-step');
         });
 
         test('applies correct background color for answer status', () => {
@@ -481,7 +481,7 @@ describe('LadderStep Component', () => {
                 />
             );
 
-            expect(container.firstChild).toHaveClass('bg-yellow/80');
+            expect(container.firstChild).toHaveClass('bg-answer-step');
         });
 
         test('applies correct background color for revealed status', () => {
@@ -500,7 +500,7 @@ describe('LadderStep Component', () => {
                 />
             );
 
-            expect(container.firstChild).toHaveClass('bg-grey');
+            expect(container.firstChild).toHaveClass('bg-revealed-step');
         });
 
         test('applies default background color for unrevealed status', () => {
@@ -519,7 +519,7 @@ describe('LadderStep Component', () => {
                 />
             );
 
-            expect(container.firstChild).toHaveClass('bg-secondary');
+            expect(container.firstChild).toHaveClass('bg-hidden-step');
         });
     });
 
@@ -631,7 +631,7 @@ describe('LadderStep Component', () => {
             );
 
             const input = screen.getByTestId('unrevealed-step-input');
-            expect(input).toHaveAttribute('placeholder', '◼️◼️◼️ (3)');
+            expect(input).toHaveAttribute('placeholder', '◻️◻️◻️ (3)');
         });
 
         test('shows correct word length indicator for active step', () => {

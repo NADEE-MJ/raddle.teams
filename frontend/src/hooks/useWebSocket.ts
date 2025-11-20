@@ -79,7 +79,7 @@ export function useWebSocket(wsUrl: string, options: UseWebSocketOptions = {}) {
         if (wsRef.current && wsRef.current.readyState === WebSocket.OPEN) {
             wsRef.current.send(JSON.stringify(message));
         } else {
-            console.warn('Admin WebSocket is not connected, cannot send message:', message);
+            console.warn('websocket is not connected, cannot send message:', message);
         }
     }, []);
 

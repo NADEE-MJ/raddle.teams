@@ -61,7 +61,13 @@ describe('Button Component', () => {
             render(<Button variant='hint'>Hint</Button>);
 
             const button = screen.getByRole('button');
-            expect(button).toHaveClass('bg-blue-500', 'border', 'border-blue-600', 'hover:bg-blue-600', 'text-white');
+            expect(button).toHaveClass(
+                'bg-transform-bg',
+                'border-[0.5px]',
+                'border-ladder-rungs',
+                'hover:bg-blue-600',
+                'text-white'
+            );
         });
     });
 

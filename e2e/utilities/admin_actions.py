@@ -1,5 +1,7 @@
 import re
+
 from playwright.async_api import Page, expect
+
 from backend.settings import settings
 
 
@@ -28,13 +30,20 @@ class AdminActions:
         await expect(self.page.locator('[data-testid="admin-dashboard-title"]')).to_be_visible()
 
     async def create_lobby(self, lobby_name: str = "Test Lobby") -> str:
+        # Count existing lobbies first
+        # existing_lobby_cards = await self.page.locator("button.font-bold").count()
+
         name_input = self.page.locator('[data-testid="lobby-name-input"]')
         await name_input.fill(lobby_name)
 
         create_button = self.page.locator('[data-testid="create-lobby-submit"]')
         await create_button.click()
 
-        lobby_code_element = self.page.locator("button.font-bold").first
+        # Wait for a new lobby to appear
+        await self.page.wait_for_timeout(500)
+
+        # Get the newly created lobby (last one, not first)
+        lobby_code_element = self.page.locator("button.font-bold").last
         await expect(lobby_code_element).to_be_visible()
         lobby_code = await lobby_code_element.text_content()
 
@@ -109,20 +118,46 @@ class AdminActions:
 
     async def move_player_to_team(self, player_name: str, team_name: str, timeout: int = 5000):
         """Move a player to a specific team using the dropdown."""
-        # Find the player's row
-        player_row = self.page.locator(f"text={player_name}").locator("..")
-        # Find the select dropdown in that row
-        team_dropdown = player_row.locator("select")
-        await team_dropdown.select_option(label=team_name)
+        # Try unassigned dropdown first
+        unassigned_dropdown = self.page.locator(f'[data-testid="unassigned-team-dropdown-{player_name}"]')
+        team_dropdown_selector = self.page.locator(f'[data-testid="team-move-dropdown-{player_name}"]')
+
+        # Check which dropdown is visible
+        dropdown = None
+        if await unassigned_dropdown.is_visible(timeout=1000):
+            dropdown = unassigned_dropdown
+        elif await team_dropdown_selector.is_visible(timeout=1000):
+            dropdown = team_dropdown_selector
+        else:
+            raise Exception(f"Could not find dropdown for player {player_name}")
+
+        # Wait for dropdown to have options
+        await self.page.wait_for_timeout(500)
+
+        # Get all options and find the one matching our team name
+        # Use evaluate to get option texts
+        options = await dropdown.evaluate(
+            """(select) => Array.from(select.options).map(opt => ({ value: opt.value, label: opt.text }))"""
+        )
+        print(f"Available options for {player_name}: {options}")
+
+        # Find matching option
+        target_option = next((opt for opt in options if opt["label"] == team_name), None)
+        if target_option:
+            await dropdown.select_option(value=target_option["value"])
+        else:
+            raise Exception(
+                f"Team '{team_name}' not found in dropdown options for {player_name}. Available: {[opt['label'] for opt in options]}"
+            )
 
         # Wait a bit for the change to propagate
         await self.page.wait_for_timeout(500)
 
     async def unassign_player(self, player_name: str, timeout: int = 5000):
         """Unassign a player from their team."""
-        player_row = self.page.locator(f"text={player_name}").locator("..")
-        team_dropdown = player_row.locator("select")
-        await team_dropdown.select_option("")
+        # Player must be in a team to unassign
+        team_dropdown = self.page.locator(f'[data-testid="team-move-dropdown-{player_name}"]')
+        await team_dropdown.select_option(label="Unassign")
 
         # Wait for unassignment
         await self.page.wait_for_timeout(500)
@@ -183,3 +218,47 @@ class AdminActions:
         team_card = self.page.locator(f'h3:has-text("{team_name}")').locator("..")
         completed_badge = team_card.locator("text=/✓ Completed/")
         await expect(completed_badge).to_be_visible(timeout=timeout)
+
+    async def get_team_names(self) -> list[str]:
+        """Get the names of all teams."""
+        # Find all team name elements
+        team_names_locator = self.page.locator('[data-testid^="team-name-"]')
+        count = await team_names_locator.count()
+        names = []
+        for i in range(count):
+            name = await team_names_locator.nth(i).text_content()
+            if name:
+                names.append(name.strip())
+        return names
+
+    async def rename_team(self, team_id: int, new_name: str):
+        """Rename a team."""
+        # Click the edit button for the team
+        edit_button = self.page.locator(f'[data-testid="edit-team-name-button-{team_id}"]')
+        await edit_button.click()
+
+        # Wait for input to appear and fill it
+        name_input = self.page.locator(f'[data-testid="edit-team-name-input-{team_id}"]')
+        await expect(name_input).to_be_visible()
+        await name_input.fill(new_name)
+
+        # Click save button
+        save_button = self.page.locator(f'[data-testid="save-team-name-button-{team_id}"]')
+        await save_button.click()
+
+        # Wait for the new name to appear
+        await expect(self.page.locator(f'[data-testid="team-name-{team_id}"]:has-text("{new_name}")')).to_be_visible(
+            timeout=5000
+        )
+
+    async def end_game(self):
+        """End the current game."""
+        # Set up dialog handler to accept the confirmation
+        self.page.on("dialog", lambda dialog: dialog.accept())
+
+        # Click end game button
+        end_button = self.page.locator('[data-testid="end-game-button"]')
+        await end_button.click()
+
+        # Wait for game to end - the start game button should reappear
+        await expect(self.page.locator('[data-testid="start-game-button"]')).to_be_visible(timeout=15000)

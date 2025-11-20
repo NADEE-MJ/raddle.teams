@@ -4,15 +4,12 @@ import { describe, test, expect, beforeEach, vi } from 'vitest';
 import { BrowserRouter } from 'react-router-dom';
 import NotFoundPage from '@/pages/NotFoundPage/index';
 
-// Mock useNavigate
 const mockNavigate = vi.fn();
-vi.mock('react-router-dom', async () => {
-    const actual = await vi.importActual('react-router-dom');
-    return {
-        ...actual,
-        useNavigate: () => mockNavigate,
-    };
-});
+vi.mock('react-router-dom', () => ({
+    BrowserRouter: ({ children }: { children: React.ReactNode }) => <div>{children}</div>,
+    useNavigate: () => mockNavigate,
+    Link: ({ children, ...props }: any) => <a {...props}>{children}</a>,
+}));
 
 const TestWrapper = ({ children }: { children: React.ReactNode }) => <BrowserRouter>{children}</BrowserRouter>;
 

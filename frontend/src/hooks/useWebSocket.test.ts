@@ -169,7 +169,7 @@ describe('useWebSocket Hook', () => {
             });
 
             expect(mockWebSocket.send).not.toHaveBeenCalled();
-            expect(consoleSpy).toHaveBeenCalledWith('Admin WebSocket is not connected, cannot send message:', message);
+            expect(consoleSpy).toHaveBeenCalledWith('websocket is not connected, cannot send message:', message);
 
             consoleSpy.mockRestore();
         });

@@ -22,6 +22,7 @@ interface UseGameStateProps {
     onPlayerKicked?: () => void;
     onTeamChanged?: () => void;
     onGameEnded?: () => void;
+    onGameStarted?: () => void;
     sessionId?: string;
 }
 
@@ -34,6 +35,7 @@ export function useGameState({
     onPlayerKicked,
     onTeamChanged,
     onGameEnded,
+    onGameStarted,
     sessionId,
 }: UseGameStateProps) {
     const [revealedSteps, setRevealedSteps] = useState<Set<number>>(new Set(initialState.revealed_steps));
@@ -90,11 +92,16 @@ export function useGameState({
                     onGameEnded?.();
                     break;
 
+                case 'game_started':
+                    console.log('[GameState] New game started');
+                    onGameStarted?.();
+                    break;
+
                 default:
                     break;
             }
         },
-        [onGameWon, onTeamCompleted, onPlayerKicked, onTeamChanged, onGameEnded, sessionId]
+        [onGameWon, onTeamCompleted, onPlayerKicked, onTeamChanged, onGameEnded, onGameStarted, sessionId]
     );
 
     const { isConnected, sendMessage } = useWebSocket(websocketUrl, {

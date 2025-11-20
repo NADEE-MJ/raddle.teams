@@ -8,6 +8,24 @@ export default defineConfig({
         environment: 'jsdom',
         setupFiles: [resolve(__dirname, './frontend/vitestSetup.ts')],
         globals: true,
+        pool: 'vmThreads',
+        poolOptions: {
+            vmThreads: {
+                singleThread: true,
+            },
+        },
+        server: {
+            deps: {
+                inline: ['react-router', 'react-router/dom', 'react-router-dom'],
+            },
+        },
+        deps: {
+            optimizer: {
+                web: {
+                    include: ['react-router', 'react-router/dom', 'react-router-dom'],
+                },
+            },
+        },
     },
     resolve: {
         alias: {

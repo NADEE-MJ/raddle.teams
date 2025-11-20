@@ -24,6 +24,7 @@ export default function LobbiesList({ onViewDetails, refreshKey, onDebouncedRefr
         if (!adminApiToken) {
             setError('Admin API token is required to fetch lobbies');
             console.error('Admin API token is missing');
+            setIsInitialLoad(false);
             return;
         }
 

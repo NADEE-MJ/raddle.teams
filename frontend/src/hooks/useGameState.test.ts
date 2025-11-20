@@ -188,33 +188,33 @@ describe('useGameState', () => {
         it('should handle already_solved message', async () => {
             vi.useFakeTimers();
 
-            const { result } = renderHook(() =>
-                useGameState({
-                    puzzle: mockPuzzle,
-                    initialState: mockInitialState,
-                    websocketUrl: 'ws://test',
-                })
-            );
+            try {
+                const { result } = renderHook(() =>
+                    useGameState({
+                        puzzle: mockPuzzle,
+                        initialState: mockInitialState,
+                        websocketUrl: 'ws://test',
+                    })
+                );
 
-            const options = (globalThis as any).__mockWebSocketOptions;
+                const options = (globalThis as any).__mockWebSocketOptions;
 
-            act(() => {
-                options.onMessage({
-                    type: 'already_solved',
+                act(() => {
+                    options.onMessage({
+                        type: 'already_solved',
+                    });
                 });
-            });
 
-            expect(result.current.error).toBe('This word was just solved by a teammate!');
+                expect(result.current.error).toBe('This word was just solved by a teammate!');
 
-            act(() => {
-                vi.advanceTimersByTime(3000);
-            });
+                await act(async () => {
+                    await vi.runAllTimersAsync();
+                });
 
-            await waitFor(() => {
                 expect(result.current.error).toBeNull();
-            });
-
-            vi.useRealTimers();
+            } finally {
+                vi.useRealTimers();
+            }
         });
 
         it('should call onTeamCompleted when team_completed message received', () => {
