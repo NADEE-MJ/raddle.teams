@@ -1,25 +1,3 @@
-"""
-Comprehensive end-to-end test covering the complete game flow.
-
-This test covers:
-1. Admin login and lobby creation
-2. Multiple players joining lobbies
-3. Team creation and management
-4. Player movement between teams
-5. Kicking and re-joining players
-6. Duplicate name handling
-7. Multiple lobby management
-8. Starting games
-9. Playing games (correct and incorrect guesses)
-10. Kicking players during games
-11. Moving players during games
-12. Renaming teams during games
-13. Game completion and victory screen
-14. Returning to lobby after game
-15. Starting a new game
-16. Admin ending a game
-"""
-
 from typing import Awaitable, Callable
 
 from playwright.async_api import Page, expect
