@@ -4,8 +4,8 @@ meta:
   difficulty: medium
   theme: Horror movie villains
   message:
-    This week on Raddle we're featuring horror movie villains. 
-    Leatherface — our second face-based villain in a row — is the main antagonist of the *Texas Chainsaw Massacre* franchise, known for his chainsaw and, well, his leathery face. I'm not going to tell you what the face is made of, iykyk. 
+    This week on Raddle we're featuring horror movie villains.
+    Leatherface — our second face-based villain in a row — is the main antagonist of the *Texas Chainsaw Massacre* franchise, known for his chainsaw and, well, his leathery face. I'm not going to tell you what the face is made of, iykyk.
     Apparently he's one of the most influential characters in slasher movies, as he first appeared in 1974 and inspired many of the iconic villains that followed.
 ladder:
 - word: LEATHER
@@ -34,7 +34,7 @@ ladder:
   transform: +V
 - word: NOVEL
   clue: Bookstore section where you'd find a <>
-  transform: can be found under 
+  transform: can be found under
 - word: FICTION
   clue: Counterpart to <>
   transform: Counterpart

@@ -4,8 +4,8 @@ meta:
   difficulty: medium
   theme: Superman
   message:
-    It’s Superman week! 
-    Among other abilities, Superman is immune to bullets. 
+    It’s Superman week!
+    Among other abilities, Superman is immune to bullets.
     Reasoning for his invincibility has varied over time — it's his alien DNA, it's his suit — but whatever the logic is, it helped earn him his nickname as the Man of Steel.
 ladder:
 - word: BULLET
@@ -40,7 +40,7 @@ ladder:
   transform: R->D
 - word: DOUGH
   clue: To let <> rise
-  transform: is something you 
+  transform: is something you
 - word: PROOF
   clue:
   transform:

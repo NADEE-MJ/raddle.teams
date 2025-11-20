@@ -3,8 +3,8 @@ meta:
   author: Sandy Weisz and Mao Reynolds
   difficulty: medium
   theme: Crime Fiction
-  message: 
-    This week’s Raddles unpack common tropes in crime fiction. 
+  message:
+    This week’s Raddles unpack common tropes in crime fiction.
     This sense of “hardboiled,” meaning “severe” or “tough,” dates to at least 1886, according to the Oxford English Dictionary.
     Cynical, unemotional protagonists dominated the wave of hardboiled pulp novels in the 1930s.
 ladder:
@@ -31,7 +31,7 @@ ladder:
   transform: might be made of
 - word: ICE
   clue: "\"As ^ as <>\""
-  transform: is 
+  transform: is
 - word: COLD
   clue: Change one letter in <> to get a word related to fonts
   transform: C->B

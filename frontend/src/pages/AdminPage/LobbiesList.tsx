@@ -16,18 +16,20 @@ export default function LobbiesList({ onViewDetails, refreshKey, onDebouncedRefr
     const { adminApiToken } = useGlobalOutletContext();
 
     const [lobbies, setLobbies] = useState<Lobby[]>([]);
-    const [loading, setLoading] = useState(false);
+    const [isInitialLoad, setIsInitialLoad] = useState(true);
+    const [isRefreshing, setIsRefreshing] = useState(false);
     const [error, setError] = useState('');
 
     const refreshLobbies = useCallback(async () => {
         if (!adminApiToken) {
             setError('Admin API token is required to fetch lobbies');
             console.error('Admin API token is missing');
+            setIsInitialLoad(false);
             return;
         }
 
         try {
-            setLoading(true);
+            setIsRefreshing(true);
             setError('');
             const fetchedLobbies = await api.admin.lobby.getAll(adminApiToken);
             setLobbies(fetchedLobbies);
@@ -35,7 +37,8 @@ export default function LobbiesList({ onViewDetails, refreshKey, onDebouncedRefr
             setError('Failed to load lobbies');
             console.error('Error loading lobbies:', err);
         } finally {
-            setLoading(false);
+            setIsInitialLoad(false);
+            setIsRefreshing(false);
         }
     }, [adminApiToken]);
 
@@ -99,16 +102,16 @@ export default function LobbiesList({ onViewDetails, refreshKey, onDebouncedRefr
                 </div>
                 <Button
                     onClick={debouncedRefreshLobbies}
-                    disabled={loading}
+                    disabled={isRefreshing}
                     variant='secondary'
                     size='sm'
                     data-testid='refresh-lobbies-button'
                 >
-                    Refresh
+                    {isRefreshing ? 'Refreshing...' : 'Refresh'}
                 </Button>
             </div>
 
-            {loading ? (
+            {isInitialLoad ? (
                 <LoadingSpinner />
             ) : lobbies.length === 0 ? (
                 <div className='border-border bg-tertiary text-tx-muted rounded-md border pt-8 pb-8 text-center'>

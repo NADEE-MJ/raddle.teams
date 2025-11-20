@@ -6,7 +6,7 @@ meta:
   message:
     One last dog breed-themed for the dog days of August.
     Except that doodle isn't a dog breed; rather it's a cross between a poodle and some other breed.
-    You got your labradoodles, golden doodles, bernedoodles, schnoodles, and even corgipoos. 
+    You got your labradoodles, golden doodles, bernedoodles, schnoodles, and even corgipoos.
     Everyone wants to poodle.
     I guess this means poodles are the greatest breed. (And the greatest of them all is our 7-year-old standard, Cleo.)
 ladder:
@@ -39,7 +39,7 @@ ladder:
   transform: x1000
 - word: FOREST
   clue: ^<>, a dense ecosystem
-  transform: has lots of 
+  transform: has lots of
 - word: RAIN
   clue: Add a letter to <> to get an organ in your body
   transform: +B

@@ -123,6 +123,7 @@ interface GameProps extends GamePageProps {}
 
 function Game({ puzzle, player, teamName, lobbyId, lobbyCode, sessionId, initialState }: GameProps) {
     const navigate = useNavigate();
+    const { setSessionId } = useGlobalOutletContext();
     const inputRef = useRef<HTMLInputElement>(null);
     const [showWinModal, setShowWinModal] = useState(false);
     const [winnerTeamName, setWinnerTeamName] = useState('');
@@ -131,6 +132,27 @@ function Game({ puzzle, player, teamName, lobbyId, lobbyCode, sessionId, initial
 
     // WebSocket URL
     const wsUrl = `/ws/lobby/${lobbyId}/player/${sessionId}`;
+
+    const handlePlayerKicked = useCallback(() => {
+        alert('You have been kicked from the lobby by an admin.');
+        setSessionId(null);
+        navigate('/');
+    }, [navigate, setSessionId]);
+
+    const handleTeamChanged = useCallback(() => {
+        alert('Your team assignment has changed. Returning to lobby...');
+        navigate(`/lobby/${lobbyCode}`);
+    }, [navigate, lobbyCode]);
+
+    const handleGameEnded = useCallback(() => {
+        alert('The game has been ended by an admin. Returning to lobby...');
+        navigate(`/lobby/${lobbyCode}`);
+    }, [navigate, lobbyCode]);
+
+    const handleGameStarted = useCallback(() => {
+        alert('A new game has been started! Returning to lobby...');
+        navigate(`/lobby/${lobbyCode}`);
+    }, [navigate, lobbyCode]);
 
     const {
         revealedSteps,
@@ -150,6 +172,11 @@ function Game({ puzzle, player, teamName, lobbyId, lobbyCode, sessionId, initial
         websocketUrl: wsUrl,
         onGameWon: handleGameWon,
         onTeamCompleted: handleTeamCompleted,
+        onPlayerKicked: handlePlayerKicked,
+        onTeamChanged: handleTeamChanged,
+        onGameEnded: handleGameEnded,
+        onGameStarted: handleGameStarted,
+        sessionId,
     });
 
     function handleGameWon(event: GameWonEvent) {
@@ -285,6 +312,11 @@ function Game({ puzzle, player, teamName, lobbyId, lobbyCode, sessionId, initial
             {/* Header with team info and connection status */}
             <div className='mb-4 flex flex-col items-center text-center'>
                 <h1 className='text-tx-primary text-2xl font-semibold md:text-3xl'>{puzzle.title}</h1>
+                <div className='text-tx-secondary mt-2 text-sm md:text-base'>
+                    <span className='font-medium'>{player.name}</span>
+                    <span className='mx-2'>•</span>
+                    <span className='text-accent font-semibold'>{teamName}</span>
+                </div>
                 <div className='mt-2 flex w-full justify-center'>
                     <ConnectionBadge
                         isConnected={isConnected}

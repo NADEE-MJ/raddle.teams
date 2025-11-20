@@ -23,7 +23,7 @@ ladder:
   transform: "-O"
 - word: DUMB
   clue: Opposite of <>
-  transform: opposite 
+  transform: opposite
 - word: SMART
   clue: Change one letter in <> to get a sudden movement
   transform: M->T

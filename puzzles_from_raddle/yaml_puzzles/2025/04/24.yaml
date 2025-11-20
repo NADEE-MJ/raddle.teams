@@ -3,7 +3,7 @@ meta:
   author: Sandy Weisz
   difficulty: medium
   theme: flowers
-  message: It's spring! Let's stop to smell the flowers. 
+  message: It's spring! Let's stop to smell the flowers.
 ladder:
 - word: SNAP
   clue: Reverse <> to get some cookware

@@ -4,10 +4,10 @@ meta:
   difficulty: medium
   theme: Juneteenth
   message:
-    In celebration of Juneteeth, we're building Raddles honoring Black inventors. 
-    [Lloyd Ray](https://www.thoughtco.com/lloyd-ray-dust-pans-4071178) received a patent for the improved dustpan in 1897. 
-    His invention made sweeping cleaner, easier and faster. 
-    The design even served as the foundation for modern pet waste scoopers. 
+    In celebration of Juneteeth, we're building Raddles honoring Black inventors.
+    [Lloyd Ray](https://www.thoughtco.com/lloyd-ray-dust-pans-4071178) received a patent for the improved dustpan in 1897.
+    His invention made sweeping cleaner, easier and faster.
+    The design even served as the foundation for modern pet waste scoopers.
 ladder:
 - word: DUST
   clue: <> ^, something you might find under your bed
@@ -35,13 +35,13 @@ ladder:
   transform: -I
 - word: PLOT
   clue: What the <> does when it gets interesting
-  transform: gets intereting and 
+  transform: gets intereting and
 - word: THICKENS
   clue: Change the first letter in <>, and drop the last letter, to get a bird
   transform: T->C, -S
 - word: CHICKEN
   clue: <> ^ pie, a hearty dish
-  transform: pie in a 
+  transform: pie in a
 - word: POT
   clue: Counterpart to a <>
   transform: and

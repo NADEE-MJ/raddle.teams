@@ -7,14 +7,39 @@ class PlayerActions:
         self.server_url = server_url
         self.player_name = player_name
 
-    async def goto_home_page(self):
-        await self.page.goto(f"{self.server_url}/", wait_until="networkidle")
+    async def goto_home_page(self, force_clear_session: bool = False):
+        """Navigate to home page, handling redirects from game/lobby pages."""
+        current_url = self.page.url
+
+        # If forced or in a game, clear session first to avoid redirects
+        if force_clear_session or "game" in current_url:
+            # Clear localStorage to reset session
+            await self.page.evaluate("localStorage.clear()")
+            await self.page.wait_for_timeout(200)
+
+        # Navigate to home page
+        await self.page.goto(f"{self.server_url}/", wait_until="domcontentloaded")
+
+        # Wait for any redirects
+        await self.page.wait_for_timeout(500)
+
+        # Check if we're on landing page
         try:
             await expect(self.page.locator('[data-testid="landing-page-title"]')).to_be_visible(timeout=2000)
+            return
         except AssertionError:
-            if await self.page.locator("p:has-text('Lobby Code:')").is_visible():
-                return
-            await expect(self.page.locator('[data-testid="landing-page-title"]')).to_be_visible()
+            pass
+
+        # If not, check where we are
+        if await self.page.locator("p:has-text('Lobby Code:')").is_visible():
+            # In lobby, leave and try again
+            await self.leave_lobby()
+            return
+
+        # Still not on home page, force clear and reload
+        await self.page.evaluate("localStorage.clear()")
+        await self.page.goto(f"{self.server_url}/", wait_until="networkidle")
+        await expect(self.page.locator('[data-testid="landing-page-title"]')).to_be_visible(timeout=3000)
 
     async def fill_name_and_code(self, name: str, lobby_code: str):
         name_input = self.page.locator('[data-testid="name-input"]')
@@ -27,7 +52,47 @@ class PlayerActions:
         join_button = self.page.locator('[data-testid="join-lobby-button"]')
         await join_button.click()
 
-        await expect(self.page.locator('[data-testid="lobby-code"]')).to_be_visible()
+        # Wait for navigation - could be lobby or game page (if game is active)
+        await self.page.wait_for_timeout(1500)
+
+        # Check what page we landed on
+        current_url = self.page.url
+        print(f"After join_lobby, URL is: {current_url}")
+
+        # Check if there's an error message (try multiple possible selectors)
+        has_error = False
+        error_text = None
+        if await self.page.locator('[data-testid="error-message"]').is_visible(timeout=500):
+            has_error = True
+            error_text = await self.page.locator('[data-testid="error-message"]').text_content()
+        elif await self.page.locator(".error").is_visible(timeout=500):
+            has_error = True
+            error_text = await self.page.locator(".error").text_content()
+
+        if has_error:
+            print(f"Error message visible: {error_text}")
+            raise Exception(f"Failed to join lobby: {error_text}")
+
+        # Check if we're in game page
+        if "/game" in current_url:
+            print("Joined and redirected to game page (game is active)")
+            await self.page.wait_for_timeout(500)
+            return
+
+        # Check if we're in lobby page
+        if "/lobby/" in current_url:
+            # Wait for lobby page to load
+            await expect(self.page.locator('[data-testid="lobby-code"]')).to_be_visible(timeout=5000)
+            # Wait for WebSocket connection
+            await self.page.wait_for_timeout(500)
+            return
+
+        # Not sure where we are, print page content for debugging
+        page_title = await self.page.title()
+        print(f"Unexpected page after join_lobby. Title: {page_title}, URL: {current_url}")
+
+        # Try to find lobby code anyway
+        await expect(self.page.locator('[data-testid="lobby-code"]')).to_be_visible(timeout=5000)
 
     async def join_lobby_expect_error(self):
         join_button = self.page.locator('[data-testid="join-lobby-button"]')
@@ -64,7 +129,7 @@ class PlayerActions:
         await expect(self.page.locator(f"text={expected_code}")).to_be_visible()
         await expect(self.page.locator(f"text={self.player_name}")).to_be_visible()
 
-    async def wait_for_other_players(self, expected_count: int, timeout: int = 30000):
+    async def wait_for_other_players(self, expected_count: int, timeout: int = 10000):
         await expect(self.page.locator(f"text=/{expected_count} players?/")).to_be_visible(timeout=timeout)
 
     async def check_connection_status(self):
@@ -93,25 +158,26 @@ class PlayerActions:
         submit_button = self.page.locator('button:has-text("Submit"), button:has-text("Guess")')
         await submit_button.click()
 
-    async def wait_for_team_assignment(self, timeout: int = 30000):
+    async def wait_for_team_assignment(self, timeout: int = 10000):
         await expect(self.page.locator("text=Team, text=assigned")).to_be_visible(timeout=timeout)
 
     async def refresh_lobby(self):
         await self.page.reload(wait_until="networkidle")
         await self.wait_in_lobby()
 
-    async def wait_for_player_count(self, expected_count: int, timeout: int = 15000):
+    async def wait_for_player_count(self, expected_count: int, timeout: int = 10000):
         await expect(self.page.locator(f"text=Players ({expected_count})")).to_be_visible(timeout=timeout)
 
-    async def wait_for_websocket_update(self, delay: int = 1000):
+    async def wait_for_websocket_update(self, delay: int = 500):
+        """Wait for WebSocket updates to propagate."""
         await self.page.wait_for_timeout(delay)
 
     async def wait_for_game_to_start(self, timeout: int = 30000):
         """Wait for game to start and navigate to game page."""
         # Wait for navigation to /game
         await self.page.wait_for_url("**/game", timeout=timeout)
-        # Wait a moment for the page to stabilize
-        await self.page.wait_for_timeout(1000)
+        # Wait for page to stabilize
+        await self.page.wait_for_timeout(500)
 
     async def verify_in_team(self, team_name: str, timeout: int = 5000):
         """Verify that player sees themselves in a specific team."""
@@ -124,9 +190,10 @@ class PlayerActions:
 
     async def verify_unassigned(self, timeout: int = 5000):
         """Verify that player sees themselves as unassigned."""
-        await expect(
-            self.page.locator(f'[data-testid="team-status-{self.player_name}"]:has-text("No team")')
-        ).to_be_visible(timeout=timeout)
+        # Check if player appears in the "Unassigned Players" section
+        await expect(self.page.locator(f'[data-testid="unassigned-player-{self.player_name}"]')).to_be_visible(
+            timeout=timeout
+        )
 
     async def verify_team_count(self, expected_count: int, timeout: int = 5000):
         """Verify the number of teams visible."""
@@ -146,8 +213,8 @@ class PlayerActions:
         # Press Enter to submit
         await guess_input.press("Enter")
 
-        # Wait a moment for the guess to be processed
-        await self.page.wait_for_timeout(500)
+        # Wait for the guess to be processed
+        await self.page.wait_for_timeout(300)
 
     async def verify_word_revealed(self, word: str, timeout: int = 10000):
         """Verify that a word appears as revealed in the ladder."""
@@ -162,3 +229,117 @@ class PlayerActions:
         """Wait for player's team status to change in the player list."""
         player_status = self.page.locator(f"text={self.player_name}").locator("..").locator("div")
         await expect(player_status).to_contain_text(expected_status, timeout=timeout)
+
+    async def get_current_puzzle_word(self) -> str:
+        """Get the current word that needs to be guessed (from the active step)."""
+        # Look for the active input field which should have the word length as maxLength
+        active_input = self.page.locator('input[type="text"]').first
+        await expect(active_input).to_be_visible(timeout=5000)
+
+        # Get the maxLength attribute to determine word length
+        max_length = await active_input.get_attribute("maxLength")
+        return max_length if max_length else "5"
+
+    async def submit_incorrect_guess(self):
+        """Submit an intentionally incorrect guess."""
+        # Get the word length from the input
+        active_input = self.page.locator('input[type="text"]').first
+
+        # Wait for input to be visible
+        await expect(active_input).to_be_visible(timeout=10000)
+
+        max_length_str = await active_input.get_attribute("maxLength")
+        max_length = int(max_length_str) if max_length_str else 5
+
+        # Create a nonsense word of the right length
+        incorrect_word = "Z" * max_length
+
+        await active_input.fill(incorrect_word)
+        await active_input.press("Enter")
+
+        # Wait for the guess to be processed
+        await self.page.wait_for_timeout(300)
+
+    async def verify_kicked_from_game(self, timeout: int = 5000):
+        """Verify that player has been kicked and sees appropriate message."""
+        # Should see landing page after being kicked
+        await expect(self.page.locator('[data-testid="landing-page-title"]')).to_be_visible(timeout=timeout)
+
+    async def verify_team_changed_redirect(self, timeout: int = 10000):
+        """Verify that player sees alert about team change and is redirected to lobby."""
+        # Player should be redirected to lobby page
+        await self.page.wait_for_url("**/lobby/**", timeout=timeout)
+
+    async def verify_game_ended_redirect(self, timeout: int = 10000):
+        """Verify that player is redirected to lobby when game ends."""
+        # Player should be redirected to lobby page
+        await self.page.wait_for_url("**/lobby/**", timeout=timeout)
+
+    async def get_puzzle_data(self, session_id: str, server_url: str) -> dict:
+        """
+        Get puzzle data from the API for the current player's game.
+        Returns the full puzzle data including ladder, team info, etc.
+        """
+        import httpx
+
+        async with httpx.AsyncClient() as client:
+            response = await client.get(f"{server_url}/api/game/puzzle", params={"player_session_id": session_id})
+            response.raise_for_status()
+            return response.json()
+
+    async def verify_puzzle_word_count(self, session_id: str, server_url: str, min_words: int, max_words: int):
+        """Verify that the puzzle has a word count within the expected range."""
+        puzzle_data = await self.get_puzzle_data(session_id, server_url)
+        ladder = puzzle_data["puzzle"]["ladder"]
+        word_count = len(ladder)
+
+        print(f"Puzzle has {word_count} words (expected {min_words}-{max_words})")
+
+        assert min_words <= word_count <= max_words, (
+            f"Puzzle word count {word_count} is not in expected range {min_words}-{max_words}"
+        )
+
+    async def solve_complete_puzzle(self, session_id: str, server_url: str):
+        """
+        Solve the complete puzzle by getting puzzle data from API and submitting all correct guesses.
+        """
+        puzzle_data = await self.get_puzzle_data(session_id, server_url)
+        puzzle = puzzle_data["puzzle"]
+        ladder = puzzle["ladder"]
+
+        print(f"Solving puzzle with {len(ladder)} words...")
+
+        # Solve each word in sequence
+        for idx, step in enumerate(ladder):
+            # Skip first and last words (they're revealed by default)
+            if idx == 0 or idx == len(ladder) - 1:
+                continue
+
+            target_word = step["word"]
+            print(f"  Solving word {idx}: {target_word}")
+
+            # Wait for the active input to be available
+            active_input = self.page.locator('[data-testid="active-step-input"]')
+
+            try:
+                await expect(active_input).to_be_visible(timeout=5000)
+            except Exception as e:
+                print(f"  Could not find active input for word {idx}: {e}")
+                # Game might be complete
+                break
+
+            # Submit the correct word
+            await active_input.fill(target_word)
+            await active_input.press("Enter")
+
+            # Wait for the guess to be processed
+            await self.page.wait_for_timeout(500)
+
+            # Check if we've been redirected (game ended, kicked, etc.)
+            try:
+                current_url = self.page.url
+                if "lobby" in current_url and "game" not in current_url:
+                    print("  Redirected to lobby, stopping puzzle solving")
+                    break
+            except Exception:
+                pass

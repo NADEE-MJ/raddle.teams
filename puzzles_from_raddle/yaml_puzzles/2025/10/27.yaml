@@ -3,10 +3,10 @@ meta:
   author: Sandy Weisz and Mao Reynolds
   difficulty: medium
   theme: Whodunit
-  message: 
-    "A murder has been committed at our Halloween party! Seven witnesses (in costume) have given testimony, in the form of Raddles. 
-    Our second witness is the shagadelic Austin Powers, who offered up one piece of the solution. 
-    He's here to help, baby! 
+  message:
+    "A murder has been committed at our Halloween party! Seven witnesses (in costume) have given testimony, in the form of Raddles.
+    Our second witness is the shagadelic Austin Powers, who offered up one piece of the solution.
+    He's here to help, baby!
     [Update: the solution [can be found here](/mystery/whodunit)]"
 ladder:
 - word: AUSTIN

@@ -29,9 +29,16 @@ async def update_team_name(
         raise HTTPException(status_code=404, detail="Team not found")
 
     old_name = team.name
+    lobby_id = team.lobby_id
     team.name = team_update.name
     db.add(team)
     db.commit()
+
+    # Broadcast team name change to all players in the lobby
+    await lobby_websocket_manager.broadcast_to_lobby(
+        lobby_id=lobby_id,
+        event=TeamAssignedEvent(lobby_id=lobby_id, player_session_id=""),
+    )
 
     api_logger.info(f"Successfully updated team_id={team_id} name from '{old_name}' to '{team_update.name}'")
     return MessageResponse(status=True, message=f"Team name updated to '{team_update.name}'")

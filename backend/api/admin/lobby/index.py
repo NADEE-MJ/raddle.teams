@@ -207,3 +207,64 @@ async def get_game_state(lobby_id: int, db: Session = Depends(get_session)):
         f"is_game_active={not has_completed_game}"
     )
     return GameStateResponse(is_game_active=not has_completed_game, teams=team_progress_list)
+
+
+@router.post("/lobby/{lobby_id}/end", response_model=MessageResponse)
+async def end_game(
+    lobby_id: int,
+    db: Session = Depends(get_session),
+):
+    """
+    End the current game for a lobby (admin only).
+
+    This endpoint:
+    1. Marks all active games as completed
+    2. Resets team states
+    3. Broadcasts GAME_ENDED event to all players
+    """
+    api_logger.info(f"Admin requested to end game: lobby_id={lobby_id}")
+
+    # Check if lobby exists
+    lobby = db.get(Lobby, lobby_id)
+    if not lobby:
+        api_logger.warning(f"End game failed: lobby not found lobby_id={lobby_id}")
+        raise HTTPException(status_code=404, detail="Lobby not found")
+
+    # Get all active (not completed) games for this lobby
+    active_games = db.exec(select(Game).where(Game.lobby_id == lobby_id).where(Game.completed_at.is_(None))).all()
+
+    if not active_games:
+        api_logger.warning(f"End game failed: no active game lobby_id={lobby_id}")
+        raise HTTPException(status_code=400, detail="No active game to end")
+
+    # Get all teams in the lobby
+    teams = db.exec(select(Team).where(Team.lobby_id == lobby_id)).all()
+
+    # Mark all games as completed
+    from datetime import datetime, timezone
+
+    for game in active_games:
+        game.completed_at = datetime.now(timezone.utc)
+
+    # Reset team states
+    for team in teams:
+        team.completed_at = None
+        team.revealed_steps = "[]"
+        team.last_updated_at = None
+        team.game_id = None
+
+    db.commit()
+
+    # Broadcast game ended event to all players in the lobby
+    from pydantic import BaseModel
+
+    # Create a simple game ended event
+    class GameEndedEvent(BaseModel):
+        type: str = "game_ended"
+        lobby_id: int
+
+    event = GameEndedEvent(lobby_id=lobby_id)
+    await lobby_websocket_manager.broadcast_to_lobby(lobby_id, event)
+
+    api_logger.info(f"Successfully ended game for lobby_id={lobby_id}")
+    return MessageResponse(status=True, message=f"Game ended for lobby {lobby.name}")

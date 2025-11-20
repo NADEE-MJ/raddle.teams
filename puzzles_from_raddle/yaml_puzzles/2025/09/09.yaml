@@ -32,7 +32,7 @@ ladder:
   transform: G->F
 - word: FINGER
   clue: Body part that includes <>s
-  transform: is part of your 
+  transform: is part of your
 - word: HAND
   clue: Common instrument with 2-3 <>s
   transform: is on a

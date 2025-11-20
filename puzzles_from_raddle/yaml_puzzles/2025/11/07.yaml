@@ -3,7 +3,7 @@ meta:
   author: Sandy Weisz and Mao Reynolds
   difficulty: medium
   theme: Block Party
-  message: 
+  message:
     One popular block party game is four square, where players in a 2x2 grid bounce the ball to each other’s squares while trying to get other players to miss. It’s an easy option for outdoor block parties because the playing area can be made with a few strokes of chalk on the pavement.
 ladder:
 - word: FOUR

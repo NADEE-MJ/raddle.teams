@@ -4,7 +4,7 @@ meta:
   difficulty: medium
   theme: Superman
   message:
-    James Gunn's Superman landed at the box office this weekend, so we thought it'd be a good time to celebrate the man o' steel here at Raddle HQ. 
+    James Gunn's Superman landed at the box office this weekend, so we thought it'd be a good time to celebrate the man o' steel here at Raddle HQ.
     Superman's alter ego is — spoiler alert — Clark Kent, so what better way to kick off the week than a chain from one identity to another.
 ladder:
 - word: CLARK
@@ -30,7 +30,7 @@ ladder:
   transform: Y->R
 - word: PEAR
   clue: Add an S to <> and anagram to get something tired? (That also rhymes with <>)
-  transform: +S, anagram 
+  transform: +S, anagram
 - word: SPARE
   clue: Result that's better than a <>
   transform: is worse than a

@@ -3,12 +3,12 @@ meta:
   author: Sandy Weisz
   difficulty: medium
   theme: Blood on the Clocktower
-  message: My favorite game is [Blood on the Clocktower](https://bloodontheclocktower.com/), 
+  message: My favorite game is [Blood on the Clocktower](https://bloodontheclocktower.com/),
     a social deduction game that is endlessly replayable due to volume and variety of character options.
-    Each character has a special ability, and most of them involve learning information about other players, 
-    or affecting other players' info (or existence) in some way. 
-    But a few special characters actually get to embody other characters, either by taking their power or pretending to be them for Reasons. 
-    The archetypal example of this is the [Philosopher](https://wiki.bloodontheclocktower.com/Philosopher), who gets to pick another character and earn their power. 
+    Each character has a special ability, and most of them involve learning information about other players,
+    or affecting other players' info (or existence) in some way.
+    But a few special characters actually get to embody other characters, either by taking their power or pretending to be them for Reasons.
+    The archetypal example of this is the [Philosopher](https://wiki.bloodontheclocktower.com/Philosopher), who gets to pick another character and earn their power.
     In today's Raddle, the Philosopher is turning into their friend, the [Sailor](https://wiki.bloodontheclocktower.com/Sailor).
 ladder:
 - word: PHILOSOPHER
@@ -34,7 +34,7 @@ ladder:
   transform: of a
 - word: SALESMAN
   clue: Rigged things that sound like the first part of <>
-  transform: part homophone 
+  transform: part homophone
 - word: SAILS
   clue: Big <> appear on a tall ^
   transform: propel a

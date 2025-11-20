@@ -21,7 +21,7 @@ ladder:
   transform: L->Z
 - word: ZONE
   clue: There are two ^ <>s on a (certain) field
-  transform: is at the 
+  transform: is at the
 - word: END
   clue: ^ <>, part of a pool
   transform: where you shouldn't go off

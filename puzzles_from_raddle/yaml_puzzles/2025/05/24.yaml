@@ -3,9 +3,9 @@ meta:
   author: Sandy Weisz
   difficulty: medium
   theme: Blood on the Clocktower
-  message: "It's Blood on the Clocktower Week. ([See Day 1's note](https://raddle.quest/2025/05/19).) 
-    The [Snake Charmer](https://wiki.bloodontheclocktower.com/Snake_Charmer) is a good character who picks a player every night, 
-    and if they happen to snipe the Demon, they swap roles with that Demon. The Demon could be any number of characters, but in 
+  message: "It's Blood on the Clocktower Week. ([See Day 1's note](https://raddle.quest/2025/05/19).)
+    The [Snake Charmer](https://wiki.bloodontheclocktower.com/Snake_Charmer) is a good character who picks a player every night,
+    and if they happen to snipe the Demon, they swap roles with that Demon. The Demon could be any number of characters, but in
     the case of this puzzle, we're looking at the [Po](https://wiki.bloodontheclocktower.com/Po), a demon who has a choice every night:
     either kill one person or do nothing. If they do nothing, the next night, they get to kill three people!"
 ladder:

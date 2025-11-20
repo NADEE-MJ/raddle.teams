@@ -13,7 +13,7 @@ export default function LobbyPage() {
 
     const [player, setPlayer] = useState<Player | null>(null);
     const [lobbyInfo, setLobbyInfo] = useState<LobbyInfo | null>(null);
-    const [isLoading, setIsLoading] = useState(true);
+    const [isInitialLoad, setIsInitialLoad] = useState(true);
     const [error, setError] = useState<string | null>(null);
     const [wsError, setWsError] = useState<string | null>(null);
 
@@ -29,12 +29,11 @@ export default function LobbyPage() {
         if (!sessionId) {
             setError('No session ID found. Please log in again.');
             console.error('No session ID found when trying to refresh lobby info');
-            setIsLoading(false);
+            setIsInitialLoad(false);
             return;
         }
 
         try {
-            setIsLoading(true);
             setError(null);
             const playerData = await api.player.lobby.activeUser(sessionId);
             setPlayer(playerData);
@@ -62,7 +61,7 @@ export default function LobbyPage() {
         } catch (err) {
             setError(err instanceof Error ? err.message : 'Failed to fetch lobby data');
         } finally {
-            setIsLoading(false);
+            setIsInitialLoad(false);
         }
     }, [sessionId, navigate]);
 
@@ -132,7 +131,7 @@ export default function LobbyPage() {
                     scheduleReload();
             }
         },
-        [scheduleReload, setSessionId, navigate, player, lobbyInfo]
+        [scheduleReload, setSessionId, navigate, player, lobbyInfo, sessionId]
     );
 
     const wsUrl = useMemo(
@@ -148,7 +147,7 @@ export default function LobbyPage() {
         autoReconnect: true,
     });
 
-    if (isLoading) {
+    if (isInitialLoad) {
         return <LoadingSpinner />;
     }
 
@@ -173,7 +172,6 @@ export default function LobbyPage() {
     const hasTeams = lobbyInfo.teams && lobbyInfo.teams.length > 0;
     const unassignedPlayers = lobbyInfo.players.filter(p => !p.team_id);
     const hasGameStarted = lobbyInfo.teams?.some(team => team.game_id);
-    const playerTeamName = lobbyInfo.teams?.find(team => team.id === player.team_id)?.name;
     let gameStatus = {
         icon: '👥',
         title: 'Waiting for more players',
@@ -299,10 +297,10 @@ export default function LobbyPage() {
                             className='text-tx-secondary mb-3 text-sm tracking-wide uppercase'
                             data-testid='player-teams-heading'
                         >
-                            Teams ({lobbyInfo.teams.length})
+                            Teams ({lobbyInfo.teams?.length})
                         </div>
                         <div className='grid gap-4 md:grid-cols-2'>
-                            {lobbyInfo.teams.map(team => {
+                            {lobbyInfo.teams?.map(team => {
                                 const teamPlayers = lobbyInfo.players_by_team?.[team.id] || [];
                                 const isMyTeam = teamPlayers.some(p => p.id === player.id);
                                 return (

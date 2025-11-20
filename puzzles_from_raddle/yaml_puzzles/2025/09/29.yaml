@@ -34,7 +34,7 @@ ladder:
   transform: named after a part of NYC
 - word: MANHATTAN
   clue: Part of <> that's also a long-running reality TV show
-  transform: neighborhood 
+  transform: neighborhood
 - word: HELL'S KITCHEN
   clue: Greek god who might be in charge of <>?
   transform: is run by

@@ -10,7 +10,7 @@ ladder:
   transform: +A, then anagram
 - word: CHAIR
   clue: Kind of <> found on a porch
-  transform: can be 
+  transform: can be
 - word: ROCKING
   clue: Animal that can follow <>
   transform: …

@@ -3,7 +3,7 @@ meta:
   author: Sandy Weisz
   difficulty: medium
   theme: Eurovision
-  message: 
+  message:
     It's Eurovision week! Spain's entry is "Esa Diva", by artist Melody. Esa Diva translates to "That Diva" in English.
     [Here is Melody's live performance](https://www.youtube.com/watch?v=H46FB-rLh04) from the finals.
 ladder:
@@ -27,7 +27,7 @@ ladder:
   transform: Entertainment Cheese aka
 - word: CHUCK E CHEESE
   clue: Species of <>, canonically
-  transform: is a 
+  transform: is a
 - word: MOUSE
   clue: Word that follows <> in your kitchen, or on your board game table
   transform: caught in a

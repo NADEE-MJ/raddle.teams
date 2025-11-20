@@ -5,9 +5,9 @@ meta:
   theme: Make Some Noise
   message: "This week's Raddles are in honor of the upcoming season of \"[Make Some\
     \ Noise](https://www.youtube.com/watch?v=tKBcWn-tqWE),\" which premieres on Monday,\
-    \ October 13. Each show features a set of improvisational prompts that — as emphasized by the host, Sam Reich, 
+    \ October 13. Each show features a set of improvisational prompts that — as emphasized by the host, Sam Reich,
     at the start — \"the players have never seen before.\""
-    
+
 ladder:
 - word: NEVER
   clue: Change one letter in <> to get an illness

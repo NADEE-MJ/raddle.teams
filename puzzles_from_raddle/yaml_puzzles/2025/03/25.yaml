@@ -23,13 +23,13 @@ ladder:
   transform: -T, anagrammed
 - word: OLIVE
   clue: Cartoon boyfriend of a woman named <>
-  transform: <3s 
+  transform: <3s
 - word: POPEYE
   clue: <> loves to eat this
   transform: eats
 - word: SPINACH
   clue: <> can be the base of this
-  transform: is in a 
+  transform: is in a
 - word: SALAD
   clue: Double a letter in <> and reverse to get a city
   transform: +L, reversed

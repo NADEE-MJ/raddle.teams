@@ -8,7 +8,7 @@ meta:
 ladder:
 - word: LOOP
   clue: The <> is in the center of this city
-  transform: is in 
+  transform: is in
 - word: CHICAGO
   clue: Nickname for <>
   transform: is called
@@ -24,7 +24,7 @@ ladder:
 - word: D
   clue: "When lowercase, and rotated 180°, <> looks like this"
   transform: upside-down
-- word: P 
+- word: P
   clue: Vegetable that sounds like <>
   transform: sounds like
 - word: PEA

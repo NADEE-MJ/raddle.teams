@@ -3,12 +3,12 @@ meta:
   author: Sandy Weisz and Mao Reynolds
   difficulty: medium
   theme: Settlers of Catan
-  message: 
+  message:
     "
-    Settlers of Catan was my first foray into strategic board games. 
+    Settlers of Catan was my first foray into strategic board games.
     It was the game that launched an unreasonable board game collection.
-    The game is played on a game board made up of 19 tiles. 
-    Each tile is one of 6 different terrains: hill, forest, field, mountain, pasture, or desert. 
+    The game is played on a game board made up of 19 tiles.
+    Each tile is one of 6 different terrains: hill, forest, field, mountain, pasture, or desert.
     This week's Raddles each use one of those terrains.
     "
 ladder:

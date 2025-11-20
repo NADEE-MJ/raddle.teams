@@ -131,14 +131,37 @@ class PuzzleManager:
             return None
         return random.choice(puzzles)
 
-    def get_puzzles_for_teams(self, num_teams: int, difficulty: str) -> List[Puzzle]:
+    def get_same_puzzle_for_teams(self, num_teams: int, difficulty: str) -> List[Puzzle]:
+        """
+        Get the same puzzle for all teams.
+
+        Args:
+            num_teams: Number of teams that will use this puzzle
+            difficulty: Difficulty level for the puzzle
+
+        Returns:
+            List of the same puzzle repeated num_teams times
+
+        Raises:
+            ValueError: If no puzzles available for the difficulty
+        """
+        puzzle = self.get_random_puzzle(difficulty)
+        if not puzzle:
+            raise ValueError(
+                f"No {difficulty} puzzles are available yet. "
+                "Add some puzzles for this difficulty or choose another one."
+            )
+        # Return the same puzzle for all teams
+        return [puzzle] * num_teams
+
+    def get_puzzles_for_teams(self, num_teams: int, difficulty: str, word_count_mode: str = "balanced") -> List[Puzzle]:
         """
         Get different puzzles for each team, all of the same difficulty.
-        Ensures all teams get puzzles with similar word counts (within ±1 words).
 
         Args:
             num_teams: Number of teams that need puzzles
             difficulty: Difficulty level for all puzzles
+            word_count_mode: "exact" for same word count, "balanced" for ±1 words
 
         Returns:
             List of puzzles (length = num_teams)
@@ -165,24 +188,55 @@ class PuzzleManager:
                 puzzles_by_length[length] = []
             puzzles_by_length[length].append(puzzle)
 
-        # Try to find a word count that has enough puzzles for all teams (±1 word)
         # Sort by length to prefer balanced puzzles
         sorted_lengths = sorted(puzzles_by_length.keys())
 
-        for target_length in sorted_lengths:
-            # Collect puzzles within ±1 words of target length
-            candidate_puzzles = []
+        if word_count_mode == "exact":
+            # Find a word count that has enough puzzles for exact match
+            for target_length in sorted_lengths:
+                if len(puzzles_by_length[target_length]) >= num_teams:
+                    return random.sample(puzzles_by_length[target_length], num_teams)
+
+            # If no exact match available, raise error
+            raise ValueError(
+                f"Not enough {difficulty} puzzles with the same word count. "
+                "Try 'balanced' mode or a different difficulty."
+            )
+        else:
+            # Balanced mode: ±1 word (default)
+            # Strategy: Pick one puzzle first, then find others within ±1 of its size
+
+            # Pick the first puzzle randomly from all available
+            first_puzzle = random.choice(puzzles)
+            selected = [first_puzzle]
+
+            # Get the target length from the first puzzle
+            target_length = len(first_puzzle.ladder)
+
+            # Collect all other puzzles within ±1 words of the target
+            candidates = []
             for length in range(target_length - 1, target_length + 2):
                 if length in puzzles_by_length:
-                    candidate_puzzles.extend(puzzles_by_length[length])
+                    candidates.extend(puzzles_by_length[length])
 
-            # If we have enough puzzles in this range, use them
-            if len(candidate_puzzles) >= num_teams:
-                return random.sample(candidate_puzzles, num_teams)
+            # Remove the first puzzle from candidates to avoid duplication
+            candidates = [p for p in candidates if p != first_puzzle]
 
-        # Fallback: if we can't find enough puzzles with similar word counts,
-        # just select randomly (should rarely happen given the above logic)
-        return random.sample(puzzles, num_teams)
+            # Check if we have enough puzzles in this range
+            if len(candidates) >= num_teams - 1:
+                # Randomly select the remaining puzzles from candidates
+                selected.extend(random.sample(candidates, num_teams - 1))
+                return selected
+
+            # Fallback: if we don't have enough puzzles in the ±1 range,
+            # just select randomly from all available (excluding the first)
+            remaining = [p for p in puzzles if p != first_puzzle]
+            if len(remaining) >= num_teams - 1:
+                selected.extend(random.sample(remaining, num_teams - 1))
+                return selected
+
+            # Edge case: not enough total puzzles
+            raise ValueError(f"Not enough {difficulty} puzzles available. Need {num_teams}, found {len(puzzles)}")
 
     def puzzle_to_dict(self, puzzle: Puzzle) -> Dict[str, Any]:
         """

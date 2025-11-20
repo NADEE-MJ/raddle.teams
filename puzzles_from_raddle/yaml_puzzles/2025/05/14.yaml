@@ -3,10 +3,10 @@ meta:
   author: Sandy Weisz
   difficulty: medium
   theme: Tony nominations
-  message: We're honoring the Tony nominations this week. 
-    Andrew Lloyd Webber's "Sunset Boulevard" was nominated for seven Tonys, 
-    including Best Revival of a Musical, and 
-    Best Performance by an Actress in a Musical for Nicole Scherzinger‍. 
+  message: We're honoring the Tony nominations this week.
+    Andrew Lloyd Webber's "Sunset Boulevard" was nominated for seven Tonys,
+    including Best Revival of a Musical, and
+    Best Performance by an Actress in a Musical for Nicole Scherzinger‍.
 ladder:
 - word: SUNSET
   clue: The time of day immediately following <>

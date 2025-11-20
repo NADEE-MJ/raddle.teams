@@ -4,7 +4,7 @@ meta:
   difficulty: medium
   theme: Dog Days of Summer
   message:
-    August is the "dog days" of summer, so we're featuring Raddles built around phrases that have a dog breed in them. 
+    August is the "dog days" of summer, so we're featuring Raddles built around phrases that have a dog breed in them.
     Today we recognize the Boxer, a muscular German breed known for its square jaw, energetic personality, and playful nature.
     What a great doggy.
 ladder:
@@ -42,5 +42,5 @@ ladder:
   clue: Documents submitted to a <>
   transform: asks for
 - word: BRIEFS
-  clue: 
+  clue:
   transform:

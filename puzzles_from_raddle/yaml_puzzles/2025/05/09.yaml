@@ -3,7 +3,7 @@ meta:
   author: Sandy Weisz
   difficulty: medium
   theme: Habemus Papam
-  message: There's a new pope! Robert Prevost is Pope Leo XIV. And he's from my city of Chicago, which could give new meaning to the term Papal Bull. 
+  message: There's a new pope! Robert Prevost is Pope Leo XIV. And he's from my city of Chicago, which could give new meaning to the term Papal Bull.
     This also means there's a non-zero chance
     that I've crossed paths with the Pope sometime in my life, like maybe when were both waiting in line at [Hot Doug's](https://en.wikipedia.org/wiki/Hot_Doug%27s)?
 ladder:
@@ -27,7 +27,7 @@ ladder:
   transform: "#3"
 - word: BABE RUTH
   clue: Actual first name of <>
-  transform: aka 
+  transform: aka
 - word: GEORGE
   clue: '"<> of the ^", cartoon and movie'
   transform: of the

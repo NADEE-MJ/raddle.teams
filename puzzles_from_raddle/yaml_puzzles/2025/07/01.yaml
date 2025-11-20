@@ -5,8 +5,8 @@ meta:
   theme: 250-year-old creations
   message:
     This week, in observation of Independence Day, we’re celebrating inventions from around 250 years ago.
-    In 1775, a Scottish watchmaker named Alexander Cummings received a patent for the flushable toilet. 
-    The toilet had been invented and improved for thousands of years, but Cummings' invention included an S-shaped pipe below the toilet bowl, which prevented the spread of foul odors. 
+    In 1775, a Scottish watchmaker named Alexander Cummings received a patent for the flushable toilet.
+    The toilet had been invented and improved for thousands of years, but Cummings' invention included an S-shaped pipe below the toilet bowl, which prevented the spread of foul odors.
     Contrary to the popular myth, Thomas Crapper didn’t have much to do with the modern toilet, besides developing a tank-filling mechanism called the ballcock.
 ladder:
 - word: FLUSH
@@ -44,7 +44,7 @@ ladder:
   transform: is served in a
 - word: BOWL
   clue: ^ <>, a fixture in a bathroom
-  transform: is part of a 
+  transform: is part of a
 - word: TOILET
   clue:
   transform:
