@@ -1,0 +1,76 @@
+{
+  "meta": {
+    "title": "From MACY'S to PARADE",
+    "author": "Sandy Weisz and Bailey Holtz",
+    "difficulty": "medium",
+    "theme": "Thanksgiving 2025",
+    "message": "Don’t be fooled by the upbeat news coverage: Macy’s Thanksgiving Day Parade floats have suffered terrible injuries over the years. In the 1997 parade alone, Sonic the Hedgehog’s head was ripped open, the Pink Panther was pierced by a streetlight, and Spiderman’s hands and feet deflated—a particularly poignant torture."
+  },
+  "ladder": [
+    {
+      "word": "MACY'S",
+      "clue": "Weapon heard at the start of <>",
+      "transform": "partially sounds like"
+    },
+    {
+      "word": "MACE",
+      "clue": "Drop the first letter of <> to get a card",
+      "transform": "-M"
+    },
+    {
+      "word": "ACE",
+      "clue": "<> {}, protagonist of three comedies",
+      "transform": "alrighty then"
+    },
+    {
+      "word": "VENTURA",
+      "clue": "Change one letter in <> to get an enterprise",
+      "transform": "A->E"
+    },
+    {
+      "word": "VENTURE",
+      "clue": "<> {}, a form of funding",
+      "transform": "…"
+    },
+    {
+      "word": "CAPITAL",
+      "clue": "Russia’s <>",
+      "transform": "of Russia"
+    },
+    {
+      "word": "MOSCOW",
+      "clue": "Change one letter in the first half of <> to get the sound the second half of <> makes",
+      "transform": "S->O, -COW"
+    },
+    {
+      "word": "MOO",
+      "clue": "Add an R to the end of <> and reverse to get some space",
+      "transform": "+R, then reverse"
+    },
+    {
+      "word": "ROOM",
+      "clue": "Change the last letter of <> to get something that sits above a <>",
+      "transform": "M->F"
+    },
+    {
+      "word": "ROOF",
+      "clue": "Stretch of metal attached to a <>",
+      "transform": "is lined with a"
+    },
+    {
+      "word": "GUTTER",
+      "clue": "What collects in a <>",
+      "transform": "collects"
+    },
+    {
+      "word": "RAIN",
+      "clue": "A bad thing for it to <> on",
+      "transform": "may fall on a"
+    },
+    {
+      "word": "PARADE",
+      "clue": null,
+      "transform": null
+    }
+  ]
+}

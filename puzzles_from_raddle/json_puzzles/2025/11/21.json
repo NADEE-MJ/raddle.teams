@@ -1,0 +1,71 @@
+{
+  "meta": {
+    "title": "From DRESSED to KILL",
+    "author": "Sandy Weisz and Bailey Holtz",
+    "difficulty": "medium",
+    "theme": "X to Y",
+    "message": "One might dress to kill when attending a special event or celebration—or a deadly masquerade ball, like the one described in the [Field Notes Murder Book](https://fieldnotesbrand.com/dispatches/wednesday-murder-club) we helped design. If you were playing along and trying to find the homicidal guest described in its pages, you can see the solution at that link."
+  },
+  "ladder": [
+    {
+      "word": "DRESSED",
+      "clue": "Change the first letter in <> to a bigram (two letters) to feel the pressure",
+      "transform": "D->ST"
+    },
+    {
+      "word": "STRESSED",
+      "clue": "Reverse <> to get some sweet stuff",
+      "transform": "reversed"
+    },
+    {
+      "word": "DESSERTS",
+      "clue": "Drop a letter in <> to get some dry spots",
+      "transform": "-S"
+    },
+    {
+      "word": "DESERTS",
+      "clue": "What’s found all over <>",
+      "transform": "are filled with"
+    },
+    {
+      "word": "SAND",
+      "clue": "Sport with <>-based dangers",
+      "transform": "traps appear in"
+    },
+    {
+      "word": "GOLF",
+      "clue": "Area of <> named after its color",
+      "transform": "game ends on a"
+    },
+    {
+      "word": "GREEN",
+      "clue": "Famously <> superhero",
+      "transform": "superhero"
+    },
+    {
+      "word": "HULK",
+      "clue": "Actor who most recently played The <>",
+      "transform": "played by"
+    },
+    {
+      "word": "RUFFALO",
+      "clue": "Change one letter in <> to get a mammal",
+      "transform": "R->B"
+    },
+    {
+      "word": "BUFFALO",
+      "clue": "<> {}, member of a certain football team",
+      "transform": "footballer"
+    },
+    {
+      "word": "BILL",
+      "clue": "\"{} <>,\" early 2000’s movie",
+      "transform": "B->K"
+    },
+    {
+      "word": "KILL",
+      "clue": null,
+      "transform": null
+    }
+  ]
+}

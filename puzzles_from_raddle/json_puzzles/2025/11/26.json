@@ -1,0 +1,76 @@
+{
+  "meta": {
+    "title": "From SWEET to POTATO",
+    "author": "Sandy Weisz and Bailey Holtz",
+    "difficulty": "medium",
+    "theme": "Thanksgiving 2025",
+    "message": "Carotenemia is a condition brought on by the overconsumption of beta-carotene, a pigment found in sweet potatoes, among other foods. Carotenemia turns your skin a faint orange color. So if you start to go rust-colored this Thanksgiving, it’s time to put the casserole down."
+  },
+  "ladder": [
+    {
+      "word": "SWEET",
+      "clue": "Counterpart to <>",
+      "transform": "counterpart"
+    },
+    {
+      "word": "SOUR",
+      "clue": "Castle part that rhymes with <>",
+      "transform": "rhymes with"
+    },
+    {
+      "word": "TOWER",
+      "clue": "Anagram <> to get something an author did",
+      "transform": "anagrammed"
+    },
+    {
+      "word": "WROTE",
+      "clue": "Direction that sounds like the present tense of <>",
+      "transform": "is past tense for WRITE which sounds like"
+    },
+    {
+      "word": "RIGHT",
+      "clue": "<> {} man",
+      "transform": "appendage"
+    },
+    {
+      "word": "HAND",
+      "clue": "Household object that usually has two or three <>s",
+      "transform": "on a"
+    },
+    {
+      "word": "CLOCK",
+      "clue": "{} the <>, a dedicated way to work",
+      "transform": "goes"
+    },
+    {
+      "word": "AROUND",
+      "clue": "<> the {} (everywhere)",
+      "transform": "the"
+    },
+    {
+      "word": "WORLD",
+      "clue": "What the <> is, according to Shakespeare",
+      "transform": "is a"
+    },
+    {
+      "word": "STAGE",
+      "clue": "<>{}, an old-fashioned way to travel",
+      "transform": "…"
+    },
+    {
+      "word": "COACH",
+      "clue": "Change one letter in <> to get a kind of seat",
+      "transform": "A->U"
+    },
+    {
+      "word": "COUCH",
+      "clue": "<> {}, someone lazy",
+      "transform": "sitter"
+    },
+    {
+      "word": "POTATO",
+      "clue": null,
+      "transform": null
+    }
+  ]
+}
