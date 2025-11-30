@@ -1,0 +1,71 @@
+{
+  "meta": {
+    "title": "From ALICE'S to RESTAURANT",
+    "author": "Sandy Weisz and Bailey Holtz",
+    "difficulty": "medium",
+    "theme": "Thanksgiving 2025",
+    "message": "Alice’s Restaurant is the name of a [1967 Arlo Guthrie song](https://www.youtube.com/watch?v=WaKIX6oaSLs), which many families listen to each year as a Thanksgiving tradition. The song is 18 minutes long and features a humorous monologue about an experience Guthrie had one Thanksgiving — ultimately becoming more about the Vietnam War than about Thanksgiving."
+  },
+  "ladder": [
+    {
+      "word": "ALICE'S",
+      "clue": "Drop the outside letters of <> to get some small bugs",
+      "transform": "-A, -S"
+    },
+    {
+      "word": "LICE",
+      "clue": "Singular form of <>",
+      "transform": "in the singular"
+    },
+    {
+      "word": "LOUSE",
+      "clue": "Country that sounds like \"<>\"",
+      "transform": "sounds like"
+    },
+    {
+      "word": "LAOS",
+      "clue": "What’s directly east of <>",
+      "transform": "is west of"
+    },
+    {
+      "word": "VIETNAM",
+      "clue": "Yellow thing on the flag of <>",
+      "transform": "flag features a"
+    },
+    {
+      "word": "STAR",
+      "clue": "Our <>",
+      "transform": "that's closest"
+    },
+    {
+      "word": "SUN",
+      "clue": "<>{}, something often bought in a bottle",
+      "transform": "protection"
+    },
+    {
+      "word": "BLOCK",
+      "clue": "Drop the first letter of <> to get a form of protection",
+      "transform": "-B"
+    },
+    {
+      "word": "LOCK",
+      "clue": "What you need to open a <>",
+      "transform": "needs a"
+    },
+    {
+      "word": "KEY",
+      "clue": "<>{}, something that’s often just a ring",
+      "transform": "ring and sometimes a"
+    },
+    {
+      "word": "CHAIN",
+      "clue": "You might visit a <> {} on a highway stop",
+      "transform": "…"
+    },
+    {
+      "word": "RESTAURANT",
+      "clue": null,
+      "transform": null
+    }
+  ]
+}

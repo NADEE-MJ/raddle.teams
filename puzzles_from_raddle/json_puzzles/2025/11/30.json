@@ -1,0 +1,70 @@
+{
+  "meta": {
+    "title": "From ADELE to ELBOW",
+    "author": "Sandy Weisz and Bailey Holtz",
+    "difficulty": "medium",
+    "theme": "mystery4"
+  },
+  "ladder": [
+    {
+      "word": "ADELE",
+      "clue": "Big hit by <>",
+      "transform": "sings"
+    },
+    {
+      "word": "HELLO",
+      "clue": "Drop the last letter from <> to get a fiery place",
+      "transform": "-O"
+    },
+    {
+      "word": "HELL",
+      "clue": "Ruler of <>, according to some",
+      "transform": "is ruled by"
+    },
+    {
+      "word": "SATAN",
+      "clue": "Totally real guy that’s an anagram of <>",
+      "transform": "anagrammed"
+    },
+    {
+      "word": "SANTA",
+      "clue": "Last name of <>",
+      "transform": "last name"
+    },
+    {
+      "word": "CLAUS",
+      "clue": "Animal part that sounds like \"<>\"",
+      "transform": "U->W"
+    },
+    {
+      "word": "CLAWS",
+      "clue": "Household pet with <>",
+      "transform": "are on a"
+    },
+    {
+      "word": "CAT",
+      "clue": "Counterpart to <> in a chase",
+      "transform": "chases a"
+    },
+    {
+      "word": "MOUSE",
+      "clue": "Bait for a <>",
+      "transform": "loves"
+    },
+    {
+      "word": "CHEESE",
+      "clue": "{} & <>",
+      "transform": "goes with"
+    },
+    {
+      "word": "MACARONI",
+      "clue": "Body part used to describe <>",
+      "transform": "aka"
+    },
+    {
+      "word": "ELBOW",
+      "clue": null,
+      "transform": null
+    }
+  ]
+}
