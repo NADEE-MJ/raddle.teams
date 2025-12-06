@@ -16,6 +16,7 @@ want major flows covered, not every edge case, that is what unit tests are for.
 - Wrong-guess labels use concrete thresholds (below).
 - Awards helper stays pure; stats endpoint injects awards to avoid circular imports.
 - UI must register/handle new WebSocket events (`TEAM_PLACED`/`TEAM_FINISHED`, `ROUND_ENDED`, `NEW_ROUND_STARTED`) in the client event map/store so toasts, admin views, lobby crown/leaderboard refresh correctly.
+- Do **not** start a new game until the current one is finished (all teams complete or admin ends it); the next `Game` row is only created after that.
 
 ## Overview
 
@@ -37,6 +38,7 @@ This document outlines the implementation plan for adding tournament-style featu
   - Cap = 75% of base
   - Earned = `max(1, ceil(min(cap, base * completion_pct)))`
   - Example: 5 teams, 2 finish → base=4, cap=3; 50% complete → ceil(4 * 0.5)=2 pts; 80% complete → ceil(min(3, 3.2))=3 pts (needs ≥2.75 to reach 3)
+- **Immediate updates**: When a team finishes, persist and broadcast their awarded points immediately; DNFs are handled when the round ends.
 
 ### Game Flow (Clarified)
 - **Game ending**: Admin ends the game or all teams finish; do not mark completed on first finish.
@@ -48,6 +50,7 @@ This document outlines the implementation plan for adding tournament-style featu
   - All wrong guesses
   - Fun award names based on performance
 - **Round visibility**: Admin must be able to view results of the previous game/round; lobby should surface the last round winner with a crown indicator
+- **Lobby recap**: After a game ends, the lobby shows per-player results for your own team so players can review individual performance.
 - **Team metrics**: Track total wrong guesses per team (with playful labels), time-to-complete per team, and per-player contributions/accuracy after each game
 
 ## Current Architecture
