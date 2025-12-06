@@ -1,4 +1,21 @@
-# Tournament Feature Implementation Plan
+# Tournament Feature Implementation Plan (Updated with Clarifications)
+
+## Testing
+
+At every phase, ensure that you have unit tests written for both backend and frontend functionality that all pass as well as
+adding any e2e tests to the comprehensive test suite to cover new user flows. In the comprehensive e2e test suite we just
+want major flows covered, not every edge case, that is what unit tests are for.
+
+## Ground Rules (Agreed)
+
+- A game is **not completed** until **all teams finish** or the **admin ends the game**. Winner announced, but others keep playing. Admin gets real-time updates as teams finish.
+- Placements are determined **only from the database** (transactional write then placement query). The first persisted completion wins earlier placement.
+- DB migrations not needed; DB will be recreated by deleting and regenerating.
+- DNF scoring: Use the **current lowest awarded place points** (points of the worst finished team, or highest if none finished) as base. DNFs earn up to **75% of that base**, `ceil` to nearest whole number, minimum **1 point**. Example: 5 teams, 2 finish → lowest awarded is 4 points; DNFs max out at `ceil(4 * 0.75) = 3`, needing ≥2.75 equivalent progress to round to 3.
+- After ending a round, **create a new Game row** for the next round; keep old game state immutable. Reattach teams to the new game and broadcast `NEW_ROUND_STARTED`.
+- Wrong-guess labels use concrete thresholds (below).
+- Awards helper stays pure; stats endpoint injects awards to avoid circular imports.
+- UI must register/handle new WebSocket events (`TEAM_PLACED`/`TEAM_FINISHED`, `ROUND_ENDED`, `NEW_ROUND_STARTED`) in the client event map/store so toasts, admin views, lobby crown/leaderboard refresh correctly.
 
 ## Overview
 
@@ -12,16 +29,18 @@ This document outlines the implementation plan for adding tournament-style featu
 
 ## User Requirements
 
-### Scoring System
+### Scoring System (Clarified)
 - **Points allocation**: Reverse placement (n, n-1, n-2... where n = number of teams)
   - Example with 5 teams: 1st gets 5pts, 2nd gets 4pts, 3rd gets 3pts, 4th gets 2pts, 5th gets 1pt
-- **DNF (Did Not Finish) teams**: Scaled by progress
-  - Partial points based on % of puzzle completed
-  - Example: 50% complete = half of last place points
+- **DNF (Did Not Finish) teams**:
+  - Base = current lowest awarded place points (worst finished team’s points; if none finished, use top value n)
+  - Cap = 75% of base
+  - Earned = `max(1, ceil(min(cap, base * completion_pct)))`
+  - Example: 5 teams, 2 finish → base=4, cap=3; 50% complete → ceil(4 * 0.5)=2 pts; 80% complete → ceil(min(3, 3.2))=3 pts (needs ≥2.75 to reach 3)
 
-### Game Flow
-- **Game ending**: Admin manually ends the game (teams can play indefinitely)
-- **Winner notification**: Just a notification banner ("Team X finished 1st! Keep going to compete for 2nd place")
+### Game Flow (Clarified)
+- **Game ending**: Admin ends the game or all teams finish; do not mark completed on first finish.
+- **Winner notification**: Notification banner ("Team X finished 1st! Keep going to compete for 2nd place")
 - **Player metrics**: Show individual stats including:
   - Correct guesses count
   - Guess accuracy rate
@@ -59,17 +78,17 @@ Teams already survive across multiple games in the same lobby:
 
 ### Phase 1: Modify Game Completion for Continuous Play
 
-**Goal**: Remove auto-reveal logic when first team wins, allow teams to keep playing
+**Goal**: Remove auto-reveal logic when first team wins; keep game active until all teams finish or admin ends; track placements from DB.
 
 **Files to modify**:
 - `backend/api/game.py` (lines 415-461)
 
 **Changes**:
-1. **Remove** the "reveal all puzzles" loop (lines 424-461)
-2. **Keep** marking games as completed (lines 416-423)
-3. **Keep** broadcasting `GAME_WON` event (lines 462-468)
-4. **Add** logic to track team placements (1st, 2nd, 3rd...) as they finish
-5. **Add** broadcast `TEAM_PLACED` event for each subsequent completion
+1. **Remove** the "reveal all puzzles" loop (lines 424-461).
+2. **Keep** marking teams as completed, but do **not** mark the game as completed at first finish.
+3. **Keep** broadcasting `GAME_WON` for first finisher, and add `TEAM_PLACED` for every finisher (including 1st if desired).
+4. **Placement determination**: In a transaction, persist completion, then query DB to count prior completions ordered by `completed_at`/insert order to derive placement.
+5. **Admin visibility**: Broadcast `TEAM_PLACED`/`TEAM_FINISHED` to both the team and admins for live progress; game stays open until all teams done or admin ends.
 
 **New WebSocket event needed** in `backend/websocket/events.py`:
 ```python
@@ -81,9 +100,9 @@ class TeamPlacedEvent(GameEvent):
 ```
 
 **Technical details**:
-- Count completed teams to determine placement
-- Broadcast to both the team and admins
-- Don't reveal puzzles until admin manually ends game
+- Count completed teams in DB to determine placement; no in-memory counters.
+- Broadcast after DB write so payload reflects persisted placement.
+- Don't reveal puzzles until admin manually ends game.
 
 **Complexity**: Medium (1-2 hours)
 
@@ -91,7 +110,7 @@ class TeamPlacedEvent(GameEvent):
 
 ### Phase 2: Add Database Schema for Points and Round Tracking
 
-**Goal**: Extend Team model to track cumulative statistics
+**Goal**: Extend Team model to track cumulative statistics.
 
 **Files to modify**:
 - `backend/database/models.py`
@@ -131,8 +150,8 @@ class RoundResult(SQLModel, table=True):
 ```
 
 **Database migration**:
-- SQLModel will auto-create new tables/columns on restart (SQLite)
-- Existing teams will default to 0 points/rounds
+- SQLModel will auto-create new tables/columns on restart (SQLite) and DB will be recreated manually.
+- Existing teams will default to 0 points/rounds.
 
 **Complexity**: Low (1-2 hours)
 
@@ -140,7 +159,7 @@ class RoundResult(SQLModel, table=True):
 
 ### Phase 3: Implement Player Statistics Aggregation
 
-**Goal**: Create endpoint to calculate per-player stats from Guess records
+**Goal**: Create endpoint to calculate per-player stats from Guess records.
 
 **New file**: `backend/api/stats.py`
 
@@ -165,7 +184,7 @@ class TeamGameStats(BaseModel):
     points_earned: int
     wrong_guesses: int
     wrong_guess_rate: float
-    wrong_guess_label: str  # playful tag like "Oops-o-meter", "Spice Rack", "Plot Twist Generator"
+    wrong_guess_label: str  # playful tag like "Oops-o-meter", etc.
     completed_at: Optional[str]
     completion_percentage: float
     time_to_complete: Optional[int]  # seconds
@@ -180,12 +199,12 @@ class GameStatsResponse(BaseModel):
 ```
 
 **SQL queries needed**:
-1. Group guesses by player, count correct/total
-2. Find first correct guess per word_index to determine who "solved" it
-3. Collect all wrong guesses per player
-4. Aggregate wrong guesses per team and derive rate (wrong/total) + attach playful label
-5. Calculate completion percentage: `len(revealed_steps) / len(puzzle.ladder)`
-6. Calculate time: `completed_at - game.started_at` (in seconds)
+1. Group guesses by player, count correct/total.
+2. Find first correct guess per word_index to determine who "solved" it.
+3. Collect all wrong guesses per player.
+4. Aggregate wrong guesses per team and derive rate (wrong/total) + attach playful label (thresholds below).
+5. Calculate completion percentage: `len(revealed_steps) / len(puzzle.ladder)`.
+6. Calculate time: `completed_at - game.started_at` (in seconds).
 
 **Implementation details**:
 ```python
@@ -215,9 +234,17 @@ for player in team.players:
             words_solved.append(word_idx)
 ```
 
-**Team wrong-guess label generation**:
-- Sum wrong guesses across team players; compute rate vs total guesses
-- Map ranges to playful tags (examples: 0-1 → "Laser Focus", 2-5 → "Oops-o-meter", 6-10 → "Spice Rack", 10+ → "Chaos Engine")
+**Team wrong-guess label generation (thresholds)**:
+- 0–1: “Laser Focus”
+- 2–4: “Precision Mode”
+- 5–7: “Oops-o-meter”
+- 8–12: “Spice Rack”
+- 13–20: “Chaos Engine”
+- 21+: “Plot Twist Factory”
+
+**Awards integration fix**:
+- Keep `assign_awards` in `backend/utils/awards.py`, accepting plain data/dicts.
+- Stats endpoint builds `PlayerGameStats`, calls `assign_awards(team_stats, puzzle_length)`, then injects awards to avoid circular imports.
 
 **Complexity**: Medium (2-3 hours)
 
@@ -225,7 +252,7 @@ for player in team.players:
 
 ### Phase 4: Create Admin Summary Screen
 
-**Goal**: New UI component showing detailed round results, also a way to view previous rounds (fix current issue where admin cannot see previous game)
+**Goal**: New UI component showing detailed round results; admin can view previous rounds.
 
 **New file**: `frontend/src/pages/AdminPage/RoundSummary.tsx`
 
@@ -240,44 +267,29 @@ interface RoundSummaryProps {
 export function RoundSummary({ lobbyId, gameId, onClose }: RoundSummaryProps) {
   const [stats, setStats] = useState<GameStatsResponse | null>(null);
 
-  // Fetch stats from /api/stats/game/{gameId}
+  // Fetch stats from /api/stats/game/{game_id}
 
   return (
     <div className="round-summary">
       <RoundMetadata />
-      <TeamRankingsTable teams={stats.teams} showWinnerCrown />
-      {stats.teams.map(team => (
+      <TeamRankingsTable teams={stats?.teams ?? []} showWinnerCrown />
+      {(stats?.teams ?? []).map(team => (
         <ExpandableTeamDetails key={team.team_id} team={team} />
       ))}
       <button onClick={onClose}>Close</button>
     </div>
   );
 }
-
-// Sub-components:
-// - RoundMetadata: Round #, duration, date
-// - TeamRankingsTable: Rankings with placement badges and crown on winner
-// - ExpandableTeamDetails:
-//   - PlayerStatsTable
-//   - WrongGuessesList (collapsible)
-//   - TeamMetrics (time-to-complete, wrong guess totals + playful label, accuracy)
 ```
 
 **Display elements**:
-- **Placement badges**: 🥇 1st, 🥈 2nd, 🥉 3rd
-- **Team rankings table** (with crown on winning team and wrong-guess tag):
-  - Rank | Team | Points | Time | Completion % | Wrong guesses (tag + count)
-- **Player breakdown** (expandable per team):
-  - Player name + award emoji/title
-  - Correct/Total guesses
-  - Accuracy percentage
-  - Words solved (colored chips showing word indices)
-  - Wrong guesses (collapsible list)
+- Placement badges: 🥇 1st, 🥈 2nd, 🥉 3rd; crown on winner.
+- Team rankings table: Rank | Team | Points | Time | Completion % | Wrong guesses (tag + count).
+- Player breakdown: awards, correct/total, accuracy, words solved, wrong guesses.
 
 **Integration point**: `AdminPage/LobbyDetails.tsx`
-- Add "View Last Round Results" button after game ends; ensure admin always sees the immediately previous round (bug fix)
-- Show crown on the winning team row in the summary and on the lobby recap widget
-- Show as modal or slide-over panel
+- Add "View Last Round Results" button after game ends; ensure admin always sees the immediately previous round.
+- Modal/slide-over presentation.
 
 **Complexity**: Medium (3-4 hours)
 
@@ -285,41 +297,29 @@ export function RoundSummary({ lobbyId, gameId, onClose }: RoundSummaryProps) {
 
 ### Phase 5: Add Points Calculation System
 
-**Goal**: Calculate and award points when admin ends game
+**Goal**: Calculate and award points when admin ends game (or when last team finishes).
 
 **Files to modify**:
 - `backend/api/admin/lobby/index.py` (end game endpoint, lines 212-270)
 
-**Points algorithm**:
+**Points algorithm (clarified)**:
 ```python
 def calculate_points(
     placement: int,
     total_teams: int,
     completion_percentage: float,
-    completed: bool
+    completed: bool,
+    worst_finished_points: int
 ) -> int:
     """
-    Reverse placement: 1st gets n points, 2nd gets n-1, etc.
-    DNF teams get partial points based on completion %
-
-    Args:
-        placement: Team's finishing position (1-indexed)
-        total_teams: Total number of teams in lobby
-        completion_percentage: 0.0 to 1.0, how much puzzle was solved
-        completed: Whether team finished the puzzle
-
-    Returns:
-        Points earned this round
+    Reverse placement for finishers; DNFs get up to 75% of worst finished points,
+    scaled by completion pct, ceil, min 1.
     """
     if completed:
-        # Completed teams get full points for their placement
         return total_teams - placement + 1
-    else:
-        # DNF teams get partial points
-        # Last place would get 1 point if completed
-        # DNF teams get fraction of that based on progress
-        last_place_points = 1
-        return int(last_place_points * completion_percentage)
+    base = worst_finished_points
+    cap = base * 0.75
+    return max(1, math.ceil(min(cap, base * completion_percentage)))
 ```
 
 **Modified end game flow**:
@@ -327,36 +327,31 @@ def calculate_points(
 @router.post("/lobby/{lobby_id}/end")
 async def end_game(lobby_id: int, session: SessionDep):
     """
-    End the current game and calculate round results
+    End the current game and calculate round results.
     """
-    # 1. Get all teams and their current game states
     teams = session.exec(select(Team).where(Team.lobby_id == lobby_id)).all()
 
-    # 2. Sort completed teams by completion time
     completed_teams = [t for t in teams if t.completed_at]
     completed_teams.sort(key=lambda t: t.completed_at)
 
-    # 3. Get DNF teams and calculate their completion %
     dnf_teams = [t for t in teams if not t.completed_at]
     for team in dnf_teams:
         puzzle = get_team_puzzle(team)
         revealed = json.loads(team.revealed_steps)
         team.completion_pct = len(revealed) / len(puzzle.ladder)
-
-    # 4. Sort DNF by completion %
     dnf_teams.sort(key=lambda t: t.completion_pct, reverse=True)
 
-    # 5. Assign placements
     all_teams_ranked = completed_teams + dnf_teams
 
-    # 6. Calculate round number
     round_number = session.exec(
         select(func.max(RoundResult.round_number))
         .where(RoundResult.lobby_id == lobby_id)
     ).first() or 0
     round_number += 1
 
-    # 7. Award points and create RoundResult records
+    # worst_finished_points: points awarded to the lowest finished placement
+    worst_finished_points = len(teams) - len(completed_teams) + 1 if completed_teams else len(teams)
+
     for placement, team in enumerate(all_teams_ranked, start=1):
         completed = team in completed_teams
         completion_pct = 1.0 if completed else team.completion_pct
@@ -365,16 +360,15 @@ async def end_game(lobby_id: int, session: SessionDep):
             placement,
             len(teams),
             completion_pct,
-            completed
+            completed,
+            worst_finished_points
         )
 
-        # Update team stats
         team.total_points += points
         team.rounds_played += 1
         if placement == 1:
             team.rounds_won += 1
 
-        # Create round result record
         time_to_complete = None
         if completed:
             time_to_complete = int(
@@ -394,21 +388,25 @@ async def end_game(lobby_id: int, session: SessionDep):
         )
         session.add(round_result)
 
-    # 8. Mark all games as completed
     games = session.exec(select(Game).where(Game.lobby_id == lobby_id)).all()
     for game in games:
         game.completed_at = datetime.now(tz=timezone.utc)
 
-    # 9. Reset team game states (but keep points/stats)
+    session.commit()
+
+    # Create a new Game row for next round; reattach teams and reset per-round fields
+    new_game = Game(lobby_id=lobby_id, started_at=datetime.now(tz=timezone.utc))
+    session.add(new_game)
+    session.commit()
+    session.refresh(new_game)
+
     for team in teams:
         team.completed_at = None
         team.revealed_steps = "[]"
         team.last_updated_at = None
-        team.game_id = None
-
+        team.game_id = new_game.id
     session.commit()
 
-    # 10. Broadcast round ended event
     await websocket_manager.broadcast_to_lobby(
         lobby_id,
         RoundEndedEvent(
@@ -417,15 +415,25 @@ async def end_game(lobby_id: int, session: SessionDep):
             results=all_teams_ranked  # Summary data
         )
     )
+    await websocket_manager.broadcast_to_lobby(
+        lobby_id,
+        NewRoundStartedEvent(lobby_id=lobby_id, game_id=new_game.id, round_number=round_number + 1)
+    )
 ```
 
-**New WebSocket event**:
+**New WebSocket events**:
 ```python
 class RoundEndedEvent(BaseModel):
     type: str = "round_ended"
     lobby_id: int
     round_number: int
     results: list[dict]  # Team placements and points
+
+class NewRoundStartedEvent(BaseModel):
+    type: str = "new_round_started"
+    lobby_id: int
+    game_id: int
+    round_number: int
 ```
 
 **New endpoint**: `GET /admin/lobby/{lobby_id}/round-results/{round_number}`
@@ -444,7 +452,6 @@ async def get_round_results(
         .order_by(RoundResult.placement)
     ).all()
 
-    # Join with team/game data and return
     return results
 ```
 
@@ -454,7 +461,7 @@ async def get_round_results(
 
 ### Phase 6: Build Team Leaderboard for Lobby Page
 
-**Goal**: Show persistent tournament standings in lobby
+**Goal**: Show persistent tournament standings in lobby.
 
 **Files to modify**:
 - `frontend/src/pages/LobbyPage/index.tsx`
@@ -515,7 +522,6 @@ async def get_leaderboard(lobby_id: int, session: SessionDep):
         .order_by(Team.total_points.desc())
     ).all()
 
-    # Find last round winner for crown marker + recap link
     last_round_number = session.exec(
         select(func.max(RoundResult.round_number))
         .where(RoundResult.lobby_id == lobby_id)
@@ -533,10 +539,8 @@ async def get_leaderboard(lobby_id: int, session: SessionDep):
             last_round_winner_id = last_round_winner.team_id
             last_round_game_id = last_round_winner.game_id
 
-    # Get placement breakdown for each team
     entries = []
     for team in teams:
-        # Count placements from RoundResult
         placements = session.exec(
             select(
                 func.count(RoundResult.id).filter(RoundResult.placement == 1).label('first'),
@@ -557,7 +561,6 @@ async def get_leaderboard(lobby_id: int, session: SessionDep):
             last_round_winner=team.id == last_round_winner_id
         ))
 
-    # Get current round number
     current_round = session.exec(
         select(func.max(RoundResult.round_number))
         .where(RoundResult.lobby_id == lobby_id)
@@ -566,14 +569,14 @@ async def get_leaderboard(lobby_id: int, session: SessionDep):
     return LeaderboardResponse(
         teams=entries,
         current_round=current_round,
-        total_rounds=current_round,  # Or set a max if you want
+        total_rounds=current_round,
         last_round_game_id=last_round_game_id
     )
 ```
 
 **Integration**: Add `<TeamLeaderboard />` to LobbyPage
-- Show above or beside team assignments, and add a compact "Last Round" card with crown on the winning team and a link to open the previous round results
-- Real-time updates via WebSocket when round ends
+- Show above or beside team assignments, add a compact "Last Round" card with crown on the winning team and a link to open the previous round results
+- Real-time updates via WebSocket when round ends or new round starts
 - Highlight current leader and crown the last winner even before next game starts
 
 **Complexity**: Low-Medium (2-3 hours)
@@ -582,7 +585,7 @@ async def get_leaderboard(lobby_id: int, session: SessionDep):
 
 ### Phase 7: Add Game Notifications for Team Placements
 
-**Goal**: Show banner when teams finish during gameplay
+**Goal**: Show banner when teams finish during gameplay.
 
 **Files to modify**:
 - `frontend/src/pages/GamePage/index.tsx`
@@ -643,7 +646,7 @@ export function PlacementNotification({
 
 ### Phase 8: Implement Fun Player Awards System
 
-**Goal**: Generate fun titles based on player performance
+**Goal**: Generate fun titles based on player performance.
 
 **New file**: `backend/utils/awards.py`
 
@@ -722,95 +725,61 @@ AWARDS_CATALOG = {
 }
 
 def assign_awards(
-    team_stats: List[PlayerGameStats],
+    team_stats: List[dict],  # plain dicts to avoid circular imports
     puzzle_length: int
 ) -> dict[int, List[PlayerAward]]:
     """
     Assign 1-3 awards per player based on performance
-
-    Args:
-        team_stats: List of player statistics for the team
-        puzzle_length: Total number of words in puzzle
-
-    Returns:
-        Dictionary mapping player_id to list of awards
     """
-    awards_by_player = {p.player_id: [] for p in team_stats}
+    awards_by_player = {p["player_id"]: [] for p in team_stats}
 
     if not team_stats:
         return awards_by_player
 
-    # MVP: Most correct guesses
-    max_correct = max(p.correct_guesses for p in team_stats)
-    mvp = [p for p in team_stats if p.correct_guesses == max_correct][0]
-    awards_by_player[mvp.player_id].append(AWARDS_CATALOG["MVP"])
+    max_correct = max(p["correct_guesses"] for p in team_stats)
+    mvp = [p for p in team_stats if p["correct_guesses"] == max_correct][0]
+    awards_by_player[mvp["player_id"]].append(AWARDS_CATALOG["MVP"])
 
-    # Sharpshooter: Highest accuracy (min 5 guesses to qualify)
-    qualified = [p for p in team_stats if p.total_guesses >= 5]
+    qualified = [p for p in team_stats if p["total_guesses"] >= 5]
     if qualified:
-        sharpshooter = max(qualified, key=lambda p: p.accuracy_rate)
-        if sharpshooter.accuracy_rate >= 0.7:  # At least 70% accuracy
-            awards_by_player[sharpshooter.player_id].append(AWARDS_CATALOG["SHARPSHOOTER"])
+        sharpshooter = max(qualified, key=lambda p: p["accuracy_rate"])
+        if sharpshooter["accuracy_rate"] >= 0.7:
+            awards_by_player[sharpshooter["player_id"]].append(AWARDS_CATALOG["SHARPSHOOTER"])
 
-    # Clutch: Solved the final word (last index in puzzle)
     final_word_idx = puzzle_length - 1
     for player in team_stats:
-        if final_word_idx in player.words_solved:
-            awards_by_player[player.player_id].append(AWARDS_CATALOG["CLUTCH"])
+        if final_word_idx in player["words_solved"]:
+            awards_by_player[player["player_id"]].append(AWARDS_CATALOG["CLUTCH"])
             break
 
-    # Creative: Most wrong guesses (lovingly)
-    max_wrong = max(len(p.wrong_guesses) for p in team_stats)
+    max_wrong = max(len(p["wrong_guesses"]) for p in team_stats)
     if max_wrong > 0:
-        creative = [p for p in team_stats if len(p.wrong_guesses) == max_wrong][0]
-        awards_by_player[creative.player_id].append(AWARDS_CATALOG["CREATIVE"])
+        creative = [p for p in team_stats if len(p["wrong_guesses"]) == max_wrong][0]
+        awards_by_player[creative["player_id"]].append(AWARDS_CATALOG["CREATIVE"])
 
-    # Wildcard: Most total guesses
-    max_guesses = max(p.total_guesses for p in team_stats)
-    wildcard = [p for p in team_stats if p.total_guesses == max_guesses][0]
-    if wildcard.player_id != mvp.player_id:  # Don't double-award with MVP
-        awards_by_player[wildcard.player_id].append(AWARDS_CATALOG["WILDCARD"])
+    max_guesses = max(p["total_guesses"] for p in team_stats)
+    wildcard = [p for p in team_stats if p["total_guesses"] == max_guesses][0]
+    if wildcard["player_id"] != mvp["player_id"]:
+        awards_by_player[wildcard["player_id"]].append(AWARDS_CATALOG["WILDCARD"])
 
-    # Cheerleader: Fewest guesses but team completed
-    min_guesses = min(p.total_guesses for p in team_stats)
-    cheerleader = [p for p in team_stats if p.total_guesses == min_guesses][0]
-    if cheerleader.total_guesses < max_guesses * 0.5:  # Less than half of max
-        awards_by_player[cheerleader.player_id].append(AWARDS_CATALOG["CHEERLEADER"])
+    min_guesses = min(p["total_guesses"] for p in team_stats)
+    cheerleader = [p for p in team_stats if p["total_guesses"] == min_guesses][0]
+    if cheerleader["total_guesses"] < max_guesses * 0.5:
+        awards_by_player[cheerleader["player_id"]].append(AWARDS_CATALOG["CHEERLEADER"])
 
-    # Puzzle Master: Solved the most words first
-    max_solved = max(len(p.words_solved) for p in team_stats)
+    max_solved = max(len(p["words_solved"]) for p in team_stats)
     if max_solved > 0:
-        masters = [p for p in team_stats if len(p.words_solved) == max_solved]
+        masters = [p for p in team_stats if len(p["words_solved"]) == max_solved]
         for master in masters:
-            if master.player_id != mvp.player_id:  # Avoid double-award
-                awards_by_player[master.player_id].append(AWARDS_CATALOG["PUZZLE_MASTER"])
+            if master["player_id"] != mvp["player_id"]:
+                awards_by_player[master["player_id"]].append(AWARDS_CATALOG["PUZZLE_MASTER"])
 
     return awards_by_player
 ```
 
 **Integration**:
-- Call `assign_awards()` in Phase 3's stats endpoint
-- Include in `PlayerGameStats.awards` field
-- Display in Phase 4's summary screen next to player names
-
-**Display in UI**:
-```tsx
-<div className="player-row">
-  <span className="player-name">John Doe</span>
-  <div className="awards">
-    {player.awards.map(award => (
-      <span
-        key={award.key}
-        className="award-badge"
-        title={award.description}
-      >
-        {award.emoji} {award.title}
-      </span>
-    ))}
-  </div>
-  <span className="stats">15/20 (75%)</span>
-</div>
-```
+- Call `assign_awards()` in Phase 3's stats endpoint (pass plain dicts), attach awards to `PlayerGameStats`.
+- Display in Phase 4's summary screen next to player names.
 
 **Complexity**: Medium (2-3 hours)
 
@@ -860,7 +829,7 @@ Phase 7 (Notifications) ───→ (Independent, can implement anytime)
 
 ### Phase 1: Continuous Play
 - [ ] First team completes → `GAME_WON` broadcast, other teams can still play
-- [ ] Second team completes → `TEAM_PLACED` broadcast with placement=2
+- [ ] Second team completes → `TEAM_PLACED` broadcast with placement derived from DB order
 - [ ] Puzzles NOT auto-revealed for other teams
 - [ ] All placements tracked correctly (3rd, 4th, 5th...)
 
@@ -886,19 +855,20 @@ Phase 7 (Notifications) ───→ (Independent, can implement anytime)
 - [ ] Rankings table shows correct placements and points
 - [ ] Winner shows crown in rankings table and lobby recap card
 - [ ] Team metrics show time, wrong-guess totals/rate/tag, completion %
-- [ ] Player breakdown shows contributions and wrong guesses per player
+- [ ] Player breakdown shows contributions, awards, and wrong guesses per player
 
 ### Phase 5: Points System
 - [ ] Points calculated correctly for all placements
-- [ ] DNF teams get scaled points
+- [ ] DNFs get capped 75% scaled points (min 1), based on worst finished points
 - [ ] Round results saved to database
 - [ ] Team totals update correctly
 - [ ] Multiple rounds accumulate properly
+- [ ] New Game row created after end; teams reattached; clients see `NEW_ROUND_STARTED`
 
 ### Phase 6: Leaderboard
 - [ ] Teams sorted by total points
 - [ ] Placement breakdown accurate
-- [ ] Updates in real-time after round ends
+- [ ] Updates in real-time after round ends/starts
 - [ ] Shows correct round number
 - [ ] Last round crown appears on winner and opens last results modal/link
 
@@ -919,15 +889,15 @@ Phase 7 (Notifications) ───→ (Independent, can implement anytime)
 
 ## Future Enhancements (Not in Initial Scope)
 
-- **Historical round browser**: View results from all past rounds
-- **Player profiles**: Individual stats across all lobbies/rounds
-- **Achievement system**: Unlock badges for milestones
-- **Export results**: Download CSV/PDF of tournament results
-- **Configurable point values**: Let admin customize scoring system
-- **Team draft mode**: Balanced team creation based on skill
-- **Live spectator mode**: Watch teams compete without joining
-- **Round timer**: Auto-end rounds after time limit
-- **Bonus points**: Extra points for speed, accuracy, etc.
+- Historical round browser: View results from all past rounds
+- Player profiles: Individual stats across all lobbies/rounds
+- Achievement system: Unlock badges for milestones
+- Export results: Download CSV/PDF of tournament results
+- Configurable point values: Let admin customize scoring system
+- Team draft mode: Balanced team creation based on skill
+- Live spectator mode: Watch teams compete without joining
+- Round timer: Auto-end rounds after time limit
+- Bonus points: Extra points for speed, accuracy, etc.
 
 ---
 
@@ -975,29 +945,20 @@ RoundResult
 - `GET /admin/lobby/{lobby_id}/round-results/{round_number}` - Get specific round results
 
 ### Modified Endpoints
-- `POST /admin/lobby/{lobby_id}/end` - Enhanced to calculate points and save results
+- `POST /admin/lobby/{lobby_id}/end` - Enhanced to calculate points, save results, create new Game, and broadcast
 
 ### New WebSocket Events
-- `TEAM_PLACED` - Broadcast when team finishes after winner
+- `TEAM_PLACED` / `TEAM_FINISHED` - Broadcast when team finishes with DB-derived placement
 - `ROUND_ENDED` - Broadcast when admin ends game with results summary
+- `NEW_ROUND_STARTED` - Broadcast when new game is created for next round
 
 ---
 
 ## Questions & Decisions Needed
 
-1. **Award customization**: Should admins be able to customize award names/criteria?
-2. **Leaderboard reset**: How should admins reset tournament standings? New button?
-3. **Round history**: Should we show all past rounds or just last N rounds?
-4. **Tiebreakers**: If teams have same points, how to rank? (completion time avg? wins?)
-5. **UI placement**: Where exactly should leaderboard go on lobby page?
-6. **Mobile responsiveness**: Ensure all new UI works on mobile devices?
+1. Tie-breaker for identical `completed_at` timestamps (e.g., created_at or DB insertion order as secondary).
+2. Leaderboard placement in lobby layout (sidebar vs top).
+3. DNFs base fallback: if no team finishes, continue using top value (n) as base (current plan).
+4. UI styling preference for leaderboard/summary modal placement on mobile.
 
 ---
-
-## Notes
-
-- All code follows existing patterns in codebase
-- Uses existing WebSocket infrastructure
-- Minimal breaking changes (mostly additions)
-- SQLite auto-migration keeps things simple
-- Can implement incrementally and test each phase
