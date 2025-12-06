@@ -5,7 +5,7 @@ import random
 from pathlib import Path
 from typing import Any, Dict, List, Optional
 
-from pydantic import BaseModel, validator
+from pydantic import BaseModel, field_validator
 
 
 class LadderStep(BaseModel):
@@ -25,7 +25,8 @@ class PuzzleMeta(BaseModel):
     theme: Optional[str] = None
     message: Optional[str] = None
 
-    @validator("difficulty")
+    @field_validator("difficulty")
+    @classmethod
     def validate_difficulty(cls, v: str) -> str:
         """Validate difficulty is one of the allowed values."""
         allowed = ["easy", "medium", "hard"]
@@ -40,7 +41,8 @@ class Puzzle(BaseModel):
     meta: PuzzleMeta
     ladder: List[LadderStep]
 
-    @validator("ladder")
+    @field_validator("ladder")
+    @classmethod
     def validate_ladder_length(cls, v: List[LadderStep]) -> List[LadderStep]:
         """Ensure ladder has at least 5 steps."""
         if len(v) < 5:

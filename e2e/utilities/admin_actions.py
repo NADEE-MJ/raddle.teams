@@ -128,17 +128,48 @@ class AdminActions:
         await expect(self.page.locator(f"button:has-text('{lobby_code}')")).not_to_be_visible(timeout=5000)
 
     async def create_teams(self, num_teams: int, timeout: int = 5000):
-        """Create teams in the lobby details view."""
-        teams_input = self.page.locator('input[type="number"]')
-        await teams_input.fill(str(num_teams))
+        """
+        Create teams in the lobby details view using the new counter controls.
+        The admin UI now uses +/- buttons instead of a numeric input.
+        """
+        # If teams already exist, nothing to do
+        existing_teams_heading = self.page.locator('[data-testid="teams-heading"]')
+        if await existing_teams_heading.is_visible(timeout=1000):
+            return
 
-        create_teams_button = self.page.locator('[data-testid="create-teams-button"]')
-        await create_teams_button.click()
+        num_display = self.page.locator('[data-testid="num-teams-display"]')
+        increase_button = self.page.locator('[data-testid="increase-num-teams"]')
+        decrease_button = self.page.locator('[data-testid="decrease-num-teams"]')
+        create_button = self.page.locator('[data-testid="create-teams-button"]')
 
-        # Wait for teams to be created
+        await expect(num_display).to_be_visible(timeout=timeout)
+
+        # Read the current number of teams from the display
+        current_text = await num_display.text_content()
+        current_num = int(current_text.strip()) if current_text else 0
+
+        # Adjust using the +/- controls
+        for _ in range(15):
+            if current_num == num_teams:
+                break
+            if current_num < num_teams:
+                await increase_button.click()
+                current_num += 1
+            else:
+                await decrease_button.click()
+                current_num -= 1
+            await self.page.wait_for_timeout(100)
+
+        if current_num != num_teams:
+            raise Exception(f"Failed to set desired team count. Current: {current_num}, Target: {num_teams}")
+
+        await expect(create_button).to_be_enabled(timeout=timeout)
+        await create_button.click()
+
+        # Wait for teams to be created and visible
         await expect(self.page.locator(f"text=/Teams \\({num_teams}\\)/")).to_be_visible(timeout=timeout)
 
-        # Wait for WebSocket update
+        # Allow WebSocket updates to propagate
         await self.page.wait_for_timeout(500)
 
     async def move_player_to_team(self, player_name: str, team_name: str, timeout: int = 5000):
