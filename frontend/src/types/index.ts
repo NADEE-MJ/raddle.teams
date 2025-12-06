@@ -109,6 +109,10 @@ export enum GameWebSocketEvents {
     GAME_WON = 'game_won',
     STATE_UPDATE = 'state_update',
     ALREADY_SOLVED = 'already_solved',
+    TEAM_PLACED = 'team_placed',
+    TEAM_FINISHED = 'team_finished',
+    ROUND_ENDED = 'round_ended',
+    NEW_ROUND_STARTED = 'new_round_started',
 }
 
 export type Direction = 'down' | 'up';
@@ -204,6 +208,35 @@ export interface AlreadySolvedEvent {
     word_index: number;
 }
 
+export interface TeamPlacedEvent {
+    type: GameWebSocketEvents.TEAM_PLACED;
+    team_id: number;
+    team_name: string;
+    placement: number;
+    completed_at: string;
+}
+
+export interface TeamFinishedEvent {
+    type: GameWebSocketEvents.TEAM_FINISHED;
+    team_id: number;
+    team_name: string;
+    placement: number;
+    completed_at: string;
+}
+
+export interface RoundEndedEvent {
+    type: 'round_ended';
+    lobby_id: number;
+    round_number: number;
+}
+
+export interface NewRoundStartedEvent {
+    type: 'new_round_started';
+    lobby_id: number;
+    game_id: number;
+    round_number: number;
+}
+
 export type GameEvent =
     | GameStartedEvent
     | GuessSubmittedEvent
@@ -212,7 +245,77 @@ export type GameEvent =
     | StateUpdateEvent
     | TeamCompletedEvent
     | GameWonEvent
-    | AlreadySolvedEvent;
+    | AlreadySolvedEvent
+    | TeamPlacedEvent
+    | TeamFinishedEvent;
+
+// #########################################################################
+// ? TOURNAMENT TYPES
+// #########################################################################
+
+export interface PlayerAward {
+    key: string;
+    title: string;
+    emoji: string;
+    description: string;
+}
+
+export interface PlayerGameStats {
+    player_id: number;
+    player_name: string;
+    correct_guesses: number;
+    total_guesses: number;
+    accuracy_rate: number;
+    words_solved: number[];
+    wrong_guesses: string[];
+    awards: PlayerAward[];
+}
+
+export interface TeamGameStats {
+    team_id: number;
+    team_name: string;
+    placement: number;
+    points_earned: number;
+    wrong_guesses: number;
+    wrong_guess_rate: number;
+    wrong_guess_label: string;
+    completed_at: string | null;
+    completion_percentage: number;
+    time_to_complete: number | null;
+    player_stats: PlayerGameStats[];
+}
+
+export interface GameStatsResponse {
+    game_id: number;
+    round_number: number;
+    started_at: string;
+    teams: TeamGameStats[];
+    last_round_winner_id: number | null;
+}
+
+export interface PlacementBreakdown {
+    first: number;
+    second: number;
+    third: number;
+    dnf: number;
+}
+
+export interface TeamLeaderboardEntry {
+    team_id: number;
+    team_name: string;
+    total_points: number;
+    rounds_won: number;
+    rounds_played: number;
+    placement_breakdown: PlacementBreakdown;
+    last_round_winner: boolean;
+}
+
+export interface LeaderboardResponse {
+    teams: TeamLeaderboardEntry[];
+    current_round: number;
+    total_rounds: number;
+    last_round_game_id: number | null;
+}
 
 // #########################################################################
 // ? ADMIN GAME STATE

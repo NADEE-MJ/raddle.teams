@@ -5,7 +5,7 @@
 import { useCallback, useState } from 'react';
 import { useWebSocket } from './useWebSocket';
 import type { Puzzle } from '@/types/game';
-import type { GameWonEvent, GuessSubmittedEvent, WebSocketMessage } from '@/types';
+import type { GameWonEvent, GuessSubmittedEvent, WebSocketMessage, TeamPlacedEvent } from '@/types';
 
 interface GameState {
     revealed_steps: number[];
@@ -19,10 +19,13 @@ interface UseGameStateProps {
     websocketUrl: string;
     onGameWon?: (event: GameWonEvent) => void;
     onTeamCompleted?: () => void;
+    onTeamPlaced?: (event: TeamPlacedEvent) => void;
     onPlayerKicked?: () => void;
     onTeamChanged?: () => void;
     onGameEnded?: () => void;
     onGameStarted?: () => void;
+    onRoundEnded?: () => void;
+    onNewRoundStarted?: () => void;
     sessionId?: string;
     maxRetries?: number;
     onMaxRetriesReached?: () => void;
@@ -35,10 +38,13 @@ export function useGameState({
     websocketUrl,
     onGameWon,
     onTeamCompleted,
+    onTeamPlaced,
     onPlayerKicked,
     onTeamChanged,
     onGameEnded,
     onGameStarted,
+    onRoundEnded,
+    onNewRoundStarted,
     sessionId,
     maxRetries,
     onMaxRetriesReached,
@@ -77,9 +83,25 @@ export function useGameState({
                     onTeamCompleted?.();
                     break;
 
+                case 'team_placed':
+                case 'team_finished':
+                    console.log('[GameState] Team placed:', message);
+                    onTeamPlaced?.(message as TeamPlacedEvent);
+                    break;
+
                 case 'game_won':
                     console.log('[GameState] Game won!', message);
                     onGameWon?.(message as GameWonEvent);
+                    break;
+
+                case 'round_ended':
+                    console.log('[GameState] Round ended');
+                    onRoundEnded?.();
+                    break;
+
+                case 'new_round_started':
+                    console.log('[GameState] New round started');
+                    onNewRoundStarted?.();
                     break;
 
                 case 'player_kicked':
@@ -112,7 +134,18 @@ export function useGameState({
                     break;
             }
         },
-        [onGameWon, onTeamCompleted, onPlayerKicked, onTeamChanged, onGameEnded, onGameStarted, sessionId]
+        [
+            onGameWon,
+            onTeamCompleted,
+            onTeamPlaced,
+            onPlayerKicked,
+            onTeamChanged,
+            onGameEnded,
+            onGameStarted,
+            onRoundEnded,
+            onNewRoundStarted,
+            sessionId,
+        ]
     );
 
     const { isConnected, sendMessage, connectionStatus, retryCount, manualReconnect } = useWebSocket(websocketUrl, {

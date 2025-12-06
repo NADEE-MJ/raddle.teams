@@ -6,6 +6,7 @@ import { useGlobalOutletContext } from '@/hooks/useGlobalOutletContext';
 import { useDebounce } from '@/hooks/useDebounce';
 import { useWebSocket } from '@/hooks/useWebSocket';
 import GameProgressView from './GameProgressView';
+import RoundSummary from './RoundSummary';
 
 const MIN_TEAMS = 2;
 const MAX_TEAMS = 10;
@@ -36,6 +37,8 @@ export default function LobbyDetails({ lobbyId, onClose, onLobbyDeleted, refresh
     const [removingTeamId, setRemovingTeamId] = useState<number | null>(null);
     const [editingTeamId, setEditingTeamId] = useState<number | null>(null);
     const [editingTeamName, setEditingTeamName] = useState('');
+    const [showRoundSummary, setShowRoundSummary] = useState(false);
+    const [roundSummaryGameId, setRoundSummaryGameId] = useState<number | null>(null);
 
     // Game state
     const [gameState, setGameState] = useState<GameStateResponse | null>(null);
@@ -471,6 +474,26 @@ export default function LobbyDetails({ lobbyId, onClose, onLobbyDeleted, refresh
             }
         }
     }, [adminApiToken, selectedLobby, gameState, reloadAll]);
+
+    const handleViewRoundResults = useCallback(async () => {
+        if (!adminApiToken) {
+            setError('Admin API token is required');
+            return;
+        }
+
+        try {
+            const leaderboard = await api.leaderboard.getLobbyLeaderboard(lobbyId);
+            if (leaderboard.last_round_game_id) {
+                setRoundSummaryGameId(leaderboard.last_round_game_id);
+                setShowRoundSummary(true);
+            } else {
+                setError('No rounds have been completed yet');
+            }
+        } catch (err) {
+            setError('Failed to fetch round results');
+            console.error('Error fetching round results:', err);
+        }
+    }, [adminApiToken, lobbyId]);
 
     if (isInitialLoad) {
         return (
@@ -944,20 +967,42 @@ export default function LobbyDetails({ lobbyId, onClose, onLobbyDeleted, refresh
                             >
                                 Game In Progress
                             </div>
-                            <Button
-                                onClick={handleEndGame}
-                                disabled={isEndingGame}
-                                variant='destructive'
-                                size='md'
-                                loading={isEndingGame}
-                                loadingIndicatorPlacement='left'
-                                data-testid='end-game-button'
-                            >
-                                End Game
-                            </Button>
+                            <div className='flex gap-2'>
+                                <Button
+                                    onClick={handleViewRoundResults}
+                                    variant='secondary'
+                                    size='md'
+                                    data-testid='view-round-results-button'
+                                >
+                                    View Last Round Results
+                                </Button>
+                                <Button
+                                    onClick={handleEndGame}
+                                    disabled={isEndingGame}
+                                    variant='destructive'
+                                    size='md'
+                                    loading={isEndingGame}
+                                    loadingIndicatorPlacement='left'
+                                    data-testid='end-game-button'
+                                >
+                                    End Game
+                                </Button>
+                            </div>
                         </div>
                         <GameProgressView teams={gameState.teams} />
                     </div>
+                )}
+
+                {/* Round Summary Modal */}
+                {showRoundSummary && roundSummaryGameId && (
+                    <RoundSummary
+                        lobbyId={lobbyId}
+                        gameId={roundSummaryGameId}
+                        onClose={() => {
+                            setShowRoundSummary(false);
+                            setRoundSummaryGameId(null);
+                        }}
+                    />
                 )}
             </div>
         </Modal>

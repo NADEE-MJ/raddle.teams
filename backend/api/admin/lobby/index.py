@@ -1,17 +1,22 @@
 from uuid import uuid4
 import json
+import math
 
 from fastapi import APIRouter, Depends, HTTPException
 from sqlalchemy.orm import selectinload
-from sqlmodel import Session, select
+from sqlmodel import Session, select, func
 from pydantic import BaseModel
+from datetime import datetime, timezone
 
 from backend.custom_logging import api_logger
 from backend.database import Lobby, Player, Team, Game, get_session
+from backend.database.models import RoundResult
 from backend.dependencies import check_admin_token
 from backend.schemas import GeneratedNameResponse, LobbyCreate, LobbyInfo, MessageResponse
 from backend.utils.name_generator import generate_lobby_name
 from backend.websocket.managers import lobby_websocket_manager
+from backend.websocket.events import RoundEndedEvent, NewRoundStartedEvent
+from backend.game.puzzles import Puzzle as PuzzlePydantic
 
 router = APIRouter(dependencies=[Depends(check_admin_token)])
 
@@ -209,18 +214,42 @@ async def get_game_state(lobby_id: int, db: Session = Depends(get_session)):
     return GameStateResponse(is_game_active=not has_completed_game, teams=team_progress_list)
 
 
+def calculate_points(
+    placement: int,
+    total_teams: int,
+    completion_percentage: float,
+    completed: bool,
+    worst_finished_points: int,
+) -> int:
+    """
+    Calculate points for a team based on placement and completion.
+
+    Reverse placement for finishers; DNFs get up to 75% of worst finished points,
+    scaled by completion pct, ceil, min 1.
+    """
+    if completed:
+        return total_teams - placement + 1
+    base = worst_finished_points
+    cap = base * 0.75
+    return max(1, math.ceil(min(cap, base * completion_percentage)))
+
+
 @router.post("/lobby/{lobby_id}/end", response_model=MessageResponse)
 async def end_game(
     lobby_id: int,
     db: Session = Depends(get_session),
 ):
     """
-    End the current game for a lobby (admin only).
+    End the current game for a lobby and calculate round results.
 
     This endpoint:
-    1. Marks all active games as completed
-    2. Resets team states
-    3. Broadcasts GAME_ENDED event to all players
+    1. Determines placements for all teams
+    2. Calculates and awards points
+    3. Saves round results to database
+    4. Updates team statistics
+    5. Marks games as completed
+    6. Creates a new game for the next round
+    7. Broadcasts ROUND_ENDED and NEW_ROUND_STARTED events
     """
     api_logger.info(f"Admin requested to end game: lobby_id={lobby_id}")
 
@@ -240,31 +269,127 @@ async def end_game(
     # Get all teams in the lobby
     teams = db.exec(select(Team).where(Team.lobby_id == lobby_id)).all()
 
+    if not teams:
+        raise HTTPException(status_code=400, detail="No teams in lobby")
+
+    # Separate completed and DNF teams
+    completed_teams = [t for t in teams if t.completed_at]
+    completed_teams.sort(key=lambda t: (t.completed_at, t.id))  # Sort by completion time, then ID for tie-breaking
+
+    dnf_teams = [t for t in teams if not t.completed_at]
+
+    # Calculate completion percentage for DNF teams
+    for team in dnf_teams:
+        if not team.game_id:
+            team.completion_pct = 0.0
+            continue
+        game = db.get(Game, team.game_id)
+        if not game:
+            team.completion_pct = 0.0
+            continue
+        puzzle = PuzzlePydantic(**game.puzzle_data)
+        revealed = json.loads(team.revealed_steps) if team.revealed_steps else []
+        team.completion_pct = len(revealed) / len(puzzle.ladder) if len(puzzle.ladder) > 0 else 0.0
+
+    # Sort DNF teams by completion percentage (descending)
+    dnf_teams.sort(key=lambda t: t.completion_pct, reverse=True)
+
+    # Combine into ranked list
+    all_teams_ranked = completed_teams + dnf_teams
+
+    # Get next round number
+    round_number = (
+        db.exec(select(func.max(RoundResult.round_number)).where(RoundResult.lobby_id == lobby_id)).first() or 0
+    )
+    round_number += 1
+
+    # Calculate worst_finished_points: points awarded to the lowest finished placement
+    worst_finished_points = len(teams) - len(completed_teams) + 1 if completed_teams else len(teams)
+
+    # Calculate points and save results
+    for placement, team in enumerate(all_teams_ranked, start=1):
+        completed = team in completed_teams
+        completion_pct = 1.0 if completed else getattr(team, "completion_pct", 0.0)
+
+        points = calculate_points(
+            placement,
+            len(teams),
+            completion_pct,
+            completed,
+            worst_finished_points,
+        )
+
+        # Update team totals
+        team.total_points += points
+        team.rounds_played += 1
+        if placement == 1:
+            team.rounds_won += 1
+
+        # Calculate time to complete
+        time_to_complete = None
+        if completed and team.game_id:
+            game = db.get(Game, team.game_id)
+            if game and game.started_at and team.completed_at:
+                time_to_complete = int((team.completed_at - game.started_at).total_seconds())
+
+        # Save round result
+        round_result = RoundResult(
+            lobby_id=lobby_id,
+            game_id=team.game_id if team.game_id else active_games[0].id,
+            team_id=team.id,
+            round_number=round_number,
+            placement=placement,
+            points_earned=points,
+            completion_percentage=completion_pct,
+            time_to_complete=time_to_complete,
+            completed_at=team.completed_at,
+        )
+        db.add(round_result)
+
     # Mark all games as completed
-    from datetime import datetime, timezone
-
+    completion_time = datetime.now(timezone.utc)
     for game in active_games:
-        game.completed_at = datetime.now(timezone.utc)
+        game.completed_at = completion_time
+        db.add(game)
 
-    # Reset team states
+    db.commit()
+
+    # Create a new Game row for next round
+    # Use the same difficulty as the last game
+    new_game = Game(
+        lobby_id=lobby_id,
+        difficulty=active_games[0].difficulty if active_games else "medium",
+        puzzle_data=active_games[0].puzzle_data if active_games else "{}",
+        started_at=datetime.now(tz=timezone.utc),
+    )
+    db.add(new_game)
+    db.commit()
+    db.refresh(new_game)
+
+    # Reattach teams to new game and reset per-round fields
     for team in teams:
         team.completed_at = None
         team.revealed_steps = "[]"
         team.last_updated_at = None
-        team.game_id = None
+        team.game_id = new_game.id
+        db.add(team)
 
     db.commit()
 
-    # Broadcast game ended event to all players in the lobby
-    from pydantic import BaseModel
+    # Broadcast round ended event
+    round_ended_event = RoundEndedEvent(
+        lobby_id=lobby_id,
+        round_number=round_number,
+    )
+    await lobby_websocket_manager.broadcast_to_lobby(lobby_id, round_ended_event)
 
-    # Create a simple game ended event
-    class GameEndedEvent(BaseModel):
-        type: str = "game_ended"
-        lobby_id: int
+    # Broadcast new round started event
+    new_round_event = NewRoundStartedEvent(
+        lobby_id=lobby_id,
+        game_id=new_game.id,
+        round_number=round_number + 1,
+    )
+    await lobby_websocket_manager.broadcast_to_lobby(lobby_id, new_round_event)
 
-    event = GameEndedEvent(lobby_id=lobby_id)
-    await lobby_websocket_manager.broadcast_to_lobby(lobby_id, event)
-
-    api_logger.info(f"Successfully ended game for lobby_id={lobby_id}")
-    return MessageResponse(status=True, message=f"Game ended for lobby {lobby.name}")
+    api_logger.info(f"Successfully ended round {round_number} for lobby_id={lobby_id}")
+    return MessageResponse(status=True, message=f"Round {round_number} ended, round {round_number + 1} started")

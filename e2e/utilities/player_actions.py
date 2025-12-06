@@ -465,3 +465,36 @@ class PlayerActions:
                     break
 
         print(f"  [{self.player_name}] Finished partial solving")
+
+    async def wait_for_lobby_page(self, timeout: int = 10000):
+        """Wait for player to be on the lobby page."""
+        await self.page.wait_for_url("**/lobby/**", timeout=timeout)
+        await expect(self.page.locator('[data-testid="lobby-code"]')).to_be_visible(timeout=5000)
+
+    async def complete_puzzle_fast(self, timeout: int = 30000):
+        """Complete the entire puzzle as fast as possible."""
+        # Get session ID from localStorage
+        session_id = await self.page.evaluate("localStorage.getItem('sessionId')")
+
+        # Fetch puzzle data
+        puzzle_data = await self.get_puzzle_data(session_id, self.server_url)
+        ladder = puzzle_data["puzzle"]["ladder"]
+
+        # Solve all words
+        for idx, step in enumerate(ladder):
+            word = step["word"]
+            try:
+                await self.solve_word_at_index(word)
+            except Exception as e:
+                print(f"  [{self.player_name}] Failed at word {idx}: {e}")
+                break
+
+        # Wait for completion
+        await self.verify_game_completed(timeout=timeout)
+
+    async def make_guess(self, word_index: int, guess: str):
+        """Make a guess for a specific word index."""
+        active_input = self.page.locator('input[type="text"]').nth(word_index)
+        await active_input.fill(guess)
+        await active_input.press("Enter")
+        await self.page.wait_for_timeout(300)

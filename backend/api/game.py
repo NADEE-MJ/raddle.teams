@@ -22,6 +22,7 @@ from backend.websocket.events import (
     GuessSubmittedEvent,
     StateUpdateEvent,
     TeamCompletedEvent,
+    TeamPlacedEvent,
     WordSolvedEvent,
 )
 
@@ -407,59 +408,38 @@ async def handle_guess_submission(
                     # Also broadcast to admins
                     await websocket_manager.admin_web_socket_manager.broadcast_to_lobby(lobby_id, team_completed_event)
 
-                    # Check if this is the first team to complete
-                    completed_teams = session.exec(
-                        select(Team).where(Team.lobby_id == lobby_id).where(Team.completed_at.isnot(None))
+                    # Determine placement by counting prior completions in database
+                    session.flush()  # Ensure team.completed_at is persisted
+
+                    # Count teams that completed before this team (or at same time with lower ID for tie-breaking)
+                    from sqlmodel import or_
+
+                    placement_count = session.exec(
+                        select(Team)
+                        .where(Team.lobby_id == lobby_id)
+                        .where(Team.completed_at.isnot(None))
+                        .where(
+                            or_(
+                                Team.completed_at < team.completed_at,
+                                (Team.completed_at == team.completed_at) & (Team.id < team.id),
+                            )
+                        )
                     ).all()
 
-                    if len(completed_teams) == 1:
-                        # This team won! Mark ALL games in this lobby as completed
-                        completion_time = datetime.now(tz=timezone.utc)
-                        all_lobby_games = session.exec(select(Game).where(Game.lobby_id == lobby_id)).all()
-                        for lobby_game in all_lobby_games:
-                            if not lobby_game.completed_at:
-                                lobby_game.completed_at = completion_time
-                                session.add(lobby_game)
+                    placement = len(placement_count) + 1
 
-                        # Reveal all puzzles for all teams (so everyone can see complete solutions)
-                        all_teams = session.exec(select(Team).where(Team.lobby_id == lobby_id)).all()
-                        for other_team in all_teams:
-                            if not other_team.game_id:
-                                continue
+                    # Broadcast placement to team and admins
+                    team_placed_event = TeamPlacedEvent(
+                        team_id=team.id,
+                        team_name=team.name,
+                        placement=placement,
+                        completed_at=team.completed_at.isoformat(),
+                    )
+                    await websocket_manager.broadcast_to_team(lobby_id, team.id, team_placed_event)
+                    await websocket_manager.admin_web_socket_manager.broadcast_to_lobby(lobby_id, team_placed_event)
 
-                            # Get the game (puzzle) for this team
-                            other_game = session.get(Game, other_team.game_id)
-                            if not other_game:
-                                continue
-
-                            # Parse the puzzle to get ladder length
-                            other_puzzle = PuzzlePydantic(**other_game.puzzle_data)
-
-                            # Reveal all steps (0 to len-1)
-                            all_steps = set(range(len(other_puzzle.ladder)))
-
-                            # Update team state
-                            other_team.revealed_steps = json.dumps(sorted(list(all_steps)))
-                            other_team.last_updated_at = datetime.now(tz=timezone.utc)
-                            if not other_team.completed_at:
-                                other_team.completed_at = datetime.now(tz=timezone.utc)
-
-                            session.add(other_team)
-
-                            # Broadcast state update to this team
-                            team_state_event = StateUpdateEvent(
-                                team_id=other_team.id,
-                                revealed_steps=sorted(list(all_steps)),
-                                is_completed=True,
-                                last_updated_at=other_team.last_updated_at.isoformat(),
-                            )
-                            await websocket_manager.broadcast_to_team(lobby_id, other_team.id, team_state_event)
-                            # Also broadcast to admins
-                            await websocket_manager.admin_web_socket_manager.broadcast_to_lobby(
-                                lobby_id, team_state_event
-                            )
-
-                        # Broadcast win to entire lobby
+                    # If this is first place, broadcast GAME_WON
+                    if placement == 1:
                         win_event = GameWonEvent(
                             lobby_id=lobby_id,
                             winning_team_id=team.id,

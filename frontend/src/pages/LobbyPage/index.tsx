@@ -6,6 +6,7 @@ import { useGlobalOutletContext } from '@/hooks/useGlobalOutletContext';
 import { useDebounce } from '@/hooks/useDebounce';
 import { WebSocketMessage, LobbyWebSocketEvents, GameWebSocketEvents, Player, LobbyInfo } from '@/types';
 import { LoadingSpinner, CopyableCode, Button, ErrorMessage, Alert, Card, ConnectionBadge } from '@/components';
+import TeamLeaderboard from '@/components/TeamLeaderboard';
 
 export default function LobbyPage() {
     const navigate = useNavigate();
@@ -16,6 +17,7 @@ export default function LobbyPage() {
     const [isInitialLoad, setIsInitialLoad] = useState(true);
     const [error, setError] = useState<string | null>(null);
     const [wsError, setWsError] = useState<string | null>(null);
+    const [leaderboardRefresh, setLeaderboardRefresh] = useState(0);
 
     useEffect(() => {
         if (!sessionId) {
@@ -126,12 +128,18 @@ export default function LobbyPage() {
                         },
                     });
                     return;
+                case 'round_ended':
+                case 'new_round_started':
+                    console.log('Round event received, refreshing leaderboard');
+                    setLeaderboardRefresh(prev => prev + 1);
+                    scheduleReload();
+                    break;
                 default:
                     console.log('Unknown lobby WebSocket message type:', message.type);
                     scheduleReload();
             }
         },
-        [scheduleReload, setSessionId, navigate, player, lobbyInfo, sessionId]
+        [scheduleReload, setSessionId, navigate, player, lobbyInfo, sessionId, setLeaderboardRefresh]
     );
 
     const wsUrl = useMemo(
@@ -236,6 +244,13 @@ export default function LobbyPage() {
 
             <ErrorMessage message={error} data-testid='lobby-error-message' />
             {wsError && <Alert variant='error'>{wsError}</Alert>}
+
+            {/* Tournament Leaderboard */}
+            {hasTeams && (
+                <div className='mb-6'>
+                    <TeamLeaderboard lobbyId={lobbyInfo.lobby.id} refreshTrigger={leaderboardRefresh} />
+                </div>
+            )}
 
             {/* Game Status Card */}
             <div>

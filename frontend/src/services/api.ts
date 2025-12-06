@@ -10,6 +10,8 @@ import {
     GameStateResponse,
     StartGameRequest,
     StartGameResponse,
+    GameStatsResponse,
+    LeaderboardResponse,
 } from '@/types';
 import type { Puzzle } from '@/types/game';
 
@@ -249,6 +251,16 @@ export const api = {
                     guesses: Guess[];
                 }>(`/game/puzzle?player_session_id=${sessionId}`, {}, sessionId);
             },
+        },
+    },
+    stats: {
+        async getGameStats(gameId: number): Promise<GameStatsResponse> {
+            return request<GameStatsResponse>(`/stats/game/${gameId}`);
+        },
+    },
+    leaderboard: {
+        async getLobbyLeaderboard(lobbyId: number): Promise<LeaderboardResponse> {
+            return request<LeaderboardResponse>(`/lobby/${lobbyId}/leaderboard`);
         },
     },
 };

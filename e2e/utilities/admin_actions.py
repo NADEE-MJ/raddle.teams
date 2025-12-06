@@ -375,3 +375,7 @@ class AdminActions:
 
         # Wait for game to end - the start game button should reappear
         await expect(self.page.locator('[data-testid="start-game-button"]')).to_be_visible(timeout=15000)
+
+    async def end_current_game(self):
+        """Alias for end_game."""
+        await self.end_game()

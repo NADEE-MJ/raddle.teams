@@ -13,9 +13,10 @@ import { useNavigate, useLocation } from 'react-router-dom';
 import { useGameState } from '@/hooks/useGameState';
 import { useGlobalOutletContext } from '@/hooks/useGlobalOutletContext';
 import type { Puzzle } from '@/types/game';
-import type { Player, GameWonEvent } from '@/types';
+import type { Player, GameWonEvent, TeamPlacedEvent } from '@/types';
 import { api } from '@/services/api';
 import { Modal, Button, ConnectionBadge } from '@/components';
+import PlacementNotification from '@/components/PlacementNotification';
 import LadderStep from './LadderStep';
 import Clues from './Clues';
 
@@ -142,6 +143,14 @@ function Game({ puzzle, player, teamName, lobbyId, lobbyCode, sessionId, initial
     const [isOurTeamWinner, setIsOurTeamWinner] = useState(false);
     const [showFullLadder, setShowFullLadder] = useState(false);
     const [stepFeedback, setStepFeedback] = useState<Record<number, StepFeedbackEntry>>({});
+    const [placementNotifications, setPlacementNotifications] = useState<
+        Array<{
+            id: string;
+            placement: number;
+            teamName: string;
+            isOwnTeam: boolean;
+        }>
+    >([]);
 
     // WebSocket URL
     const wsUrl = `/ws/lobby/${lobbyId}/player/${sessionId}`;
@@ -188,6 +197,7 @@ function Game({ puzzle, player, teamName, lobbyId, lobbyCode, sessionId, initial
         websocketUrl: wsUrl,
         onGameWon: handleGameWon,
         onTeamCompleted: handleTeamCompleted,
+        onTeamPlaced: handleTeamPlaced,
         onPlayerKicked: handlePlayerKicked,
         onTeamChanged: handleTeamChanged,
         onGameEnded: handleGameEnded,
@@ -210,6 +220,17 @@ function Game({ puzzle, player, teamName, lobbyId, lobbyCode, sessionId, initial
     function handleTeamCompleted() {
         console.log('[GamePage] Team completed!');
         // Winner announcement will come via GAME_WON event
+    }
+
+    function handleTeamPlaced(event: TeamPlacedEvent) {
+        console.log('[GamePage] Team placed:', event);
+        const notification = {
+            id: `${event.team_id}-${Date.now()}`,
+            placement: event.placement,
+            teamName: event.team_name,
+            isOwnTeam: event.team_id === player.team_id,
+        };
+        setPlacementNotifications(prev => [...prev, notification]);
     }
 
     const focusInput = useCallback(() => {
@@ -546,6 +567,19 @@ function Game({ puzzle, player, teamName, lobbyId, lobbyCode, sessionId, initial
                     <p className='text-sm text-red-700'>{error}</p>
                 </div>
             )}
+
+            {/* Placement Notifications */}
+            {placementNotifications.map(notification => (
+                <PlacementNotification
+                    key={notification.id}
+                    placement={notification.placement}
+                    teamName={notification.teamName}
+                    isOwnTeam={notification.isOwnTeam}
+                    onDismiss={() => {
+                        setPlacementNotifications(prev => prev.filter(n => n.id !== notification.id));
+                    }}
+                />
+            ))}
 
             {/* Win Modal */}
             <Modal isOpen={showWinModal} onClose={() => setShowWinModal(false)} maxWidth='max-w-lg'>
