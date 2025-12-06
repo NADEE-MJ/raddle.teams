@@ -107,20 +107,13 @@ describe('Button Component', () => {
             );
         });
 
-        test('handles loading state', () => {
-            render(<Button loading>Loading</Button>);
+        test('shows spinner and keeps label when loading', () => {
+            render(<Button loading>Load Data</Button>);
 
-            const button = screen.getByRole('button');
+            const button = screen.getByRole('button', { name: 'Load Data' });
             expect(button).toBeDisabled();
-            expect(button).toHaveTextContent('Loading...');
-        });
-
-        test('does not add ellipsis to loading text that already contains them', () => {
-            render(<Button loading>Loading...</Button>);
-
-            const button = screen.getByRole('button');
-            expect(button).toHaveTextContent('Loading...');
-            expect(button.textContent).not.toBe('Loading......');
+            expect(screen.getByRole('status', { name: /loading/i })).toBeInTheDocument();
+            expect(button).toHaveTextContent('Load Data');
         });
 
         test('preserves non-string children when loading', () => {
@@ -131,6 +124,32 @@ describe('Button Component', () => {
             );
 
             expect(screen.getByText('Loading Icon')).toBeInTheDocument();
+        });
+
+        test('shows adjacent spinner when loading', () => {
+            render(<Button loading>Refresh</Button>);
+
+            const button = screen.getByRole('button', { name: 'Refresh' });
+            expect(button).toBeDisabled();
+            expect(button).toHaveTextContent('Refresh');
+
+            const spinner = screen.getByRole('status', { name: /loading/i });
+            expect(spinner).toBeInTheDocument();
+        });
+
+        test('supports left-aligned adjacent spinner', () => {
+            const { container } = render(
+                <Button loading loadingIndicatorPlacement='left'>
+                    Refresh
+                </Button>
+            );
+
+            const button = screen.getByRole('button', { name: 'Refresh' });
+            expect(button).toBeDisabled();
+
+            const spinner = screen.getByRole('status', { name: /loading/i });
+            expect(spinner).toBeInTheDocument();
+            expect(container.firstChild?.firstChild).toBe(spinner);
         });
     });
 

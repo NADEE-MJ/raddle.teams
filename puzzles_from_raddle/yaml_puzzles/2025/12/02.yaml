@@ -1,0 +1,45 @@
+meta:
+  title: From PILLOW to OPUS
+  author: Sandy Weisz and Bailey Holtz
+  difficulty: medium
+  theme: mystery4
+ladder:
+- word: PILLOW
+  clue: Put your ^ on a <>
+  transform: holds your
+- word: HEAD
+  clue: ^<>, member of a particular music subculture
+  transform: H->D
+- word: DEAD
+  clue: Opposite of <>
+  transform: or
+- word: ALIVE
+  clue: "\"^' <>\", hit disco song"
+  transform: is how you should be
+- word: STAYIN
+  clue: Drop a letter from <> to get a mark
+  transform: -Y
+- word: STAIN
+  clue: "Football uniforms often have ^ <>s on them"
+  transform: on one's knees
+- word: GRASS
+  clue: "Kitchen item that’s another term for <>"
+  transform: aka
+- word: POT
+  clue: ^<>, site of a tempest?
+  transform: holds water for
+- word: TEA
+  clue: Change one letter in <> to get a small green thing
+  transform: T->P
+- word: PEA
+  clue: <>^, delicious things that are in the same family as <>s and not really ^
+  transform: …
+- word: NUTS
+  clue: "\"From ^ to <>\""
+  transform: all the way from
+- word: SOUP
+  clue: Musical work that is an anagram of <>
+  transform: anagrammed
+- word: OPUS
+  clue:
+  transform:

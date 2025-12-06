@@ -1,0 +1,70 @@
+{
+  "meta": {
+    "title": "From BODY to DEPOT",
+    "author": "Sandy Weisz and Bailey Holtz",
+    "difficulty": "medium",
+    "theme": "mystery4"
+  },
+  "ladder": [
+    {
+      "word": "BODY",
+      "clue": "<> {}, some nonverbal communication",
+      "transform": "has its own"
+    },
+    {
+      "word": "LANGUAGE",
+      "clue": "Official <> of Austria",
+      "transform": "of Austria"
+    },
+    {
+      "word": "GERMAN",
+      "clue": "Swap the two halves of <> to get something found in a horse stable",
+      "transform": "with halves swapped"
+    },
+    {
+      "word": "MANGER",
+      "clue": "One famously born in a <>",
+      "transform": "was the birthplace of"
+    },
+    {
+      "word": "JESUS",
+      "clue": "Mild oath that’s a shortening of <>",
+      "transform": "shortened"
+    },
+    {
+      "word": "GEEZ",
+      "clue": "\"<>, {}\", a rhyming indicator of surprise",
+      "transform": ","
+    },
+    {
+      "word": "LOUISE",
+      "clue": "French 101 word found inside <>",
+      "transform": "partially features"
+    },
+    {
+      "word": "OUI",
+      "clue": "Pronoun that sounds like \"<>\"",
+      "transform": "sounds like"
+    },
+    {
+      "word": "WE",
+      "clue": "Rotate one letter in <> 180° to get one member of \"<>\"",
+      "transform": "W->M"
+    },
+    {
+      "word": "ME",
+      "clue": "Add a bigram (two letters) to the start of <> to get a residence",
+      "transform": "+HO"
+    },
+    {
+      "word": "HOME",
+      "clue": "The <> {}, massive retail chain",
+      "transform": "…"
+    },
+    {
+      "word": "DEPOT",
+      "clue": null,
+      "transform": null
+    }
+  ]
+}

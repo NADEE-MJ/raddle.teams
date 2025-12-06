@@ -71,7 +71,7 @@ export default function CreateLobbyForm({ onCreateLobby, onGenerateLobbyName }: 
                                 disabled={loading}
                                 data-testid='generate-lobby-name-button'
                             >
-                                {isGeneratingName ? 'Surprising' : 'Surprise me'}
+                                Surprise me
                             </Button>
                         )}
                         <Button
@@ -80,6 +80,7 @@ export default function CreateLobbyForm({ onCreateLobby, onGenerateLobbyName }: 
                             size='md'
                             disabled={loading || !newLobbyName.trim()}
                             loading={loading}
+                            loadingIndicatorPlacement='right'
                             data-testid='create-lobby-submit'
                         >
                             Create Lobby

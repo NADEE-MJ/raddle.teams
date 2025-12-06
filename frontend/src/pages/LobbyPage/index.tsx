@@ -139,12 +139,16 @@ export default function LobbyPage() {
         [player?.lobby_id, sessionId]
     );
 
-    const { isConnected } = useWebSocket(wsUrl, {
+    const { connectionStatus, retryCount, manualReconnect } = useWebSocket(wsUrl, {
         onConnect,
         onDisconnect,
         onError,
         onMessage,
         autoReconnect: true,
+        maxRetries: 10,
+        onMaxRetriesReached: () => {
+            alert('Unable to connect to lobby. Please refresh the page or check your internet connection.');
+        },
     });
 
     if (isInitialLoad) {
@@ -209,9 +213,10 @@ export default function LobbyPage() {
                     </div>
                     <div className='flex flex-col items-start gap-2 md:items-end'>
                         <ConnectionBadge
-                            isConnected={isConnected}
+                            connectionStatus={connectionStatus}
+                            retryCount={retryCount}
+                            onRetry={connectionStatus === 'failed' ? manualReconnect : undefined}
                             connectedText='Connected to lobby'
-                            disconnectedText='Reconnecting...'
                         />
                         <div className='text-tx-muted flex flex-wrap gap-4 text-xs font-semibold tracking-wide uppercase'>
                             <span className='text-tx-secondary'>

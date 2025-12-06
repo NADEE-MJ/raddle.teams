@@ -1,4 +1,14 @@
 import { useState, useMemo } from 'react';
+import { CheckIcon, LockClosedIcon, XMarkIcon } from '@heroicons/react/24/solid';
+
+export interface LadderStepFeedback {
+    status: 'submitting' | 'correct' | 'incorrect';
+    guess: string;
+    wordIndex: number;
+    playerId: number;
+    isSelf: boolean;
+    token: number;
+}
 
 interface LadderStepProps {
     onGuessChange: (guess: string) => void;
@@ -12,6 +22,9 @@ interface LadderStepProps {
     isDisabled?: boolean;
     shouldShowTransform: boolean;
     shouldRenderTransform: boolean;
+    isLocked?: boolean;
+    feedback?: LadderStepFeedback | null;
+    isMobileCollapsed?: boolean;
 }
 
 export default function LadderStep({
@@ -26,6 +39,9 @@ export default function LadderStep({
     isDisabled = false,
     shouldShowTransform,
     shouldRenderTransform,
+    isLocked = false,
+    feedback,
+    isMobileCollapsed = false,
 }: LadderStepProps) {
     const [currentGuess, setCurrentGuess] = useState('');
     const wordSegments = useMemo(() => {
@@ -129,6 +145,7 @@ export default function LadderStep({
                     autoCorrect='off'
                     autoCapitalize='off'
                     spellCheck='false'
+                    disabled={isLocked}
                     data-testid='active-step-input'
                 />
                 {renderEmptyTransform && renderEmptyTransformFn()}
@@ -191,12 +208,69 @@ export default function LadderStep({
 
     const transitionClasses = 'transition-colors duration-200 ease-in-out';
 
+    const renderFeedbackBadge = () => {
+        if (!feedback) return null;
+
+        const baseClasses =
+            'flex items-center justify-center rounded-md border px-2 py-1 shadow-sm md:px-2.5 md:py-1.5';
+
+        const statusClasses =
+            feedback.status === 'submitting'
+                ? 'border-blue-300/60 bg-blue-900/40 text-blue-50'
+                : feedback.status === 'incorrect'
+                  ? 'border-red-300/60 bg-red-900/40 text-red-50'
+                  : 'border-green-300/70 bg-green-900/35 text-green-50';
+
+        const Spinner = ({ className = '' }: { className?: string }) => (
+            <span
+                className={`h-4 w-4 animate-spin rounded-full border-2 border-[var(--color-accent)] border-t-transparent md:h-5 md:w-5 ${className}`}
+            />
+        );
+
+        const Icon =
+            feedback.status === 'submitting' ? Spinner : feedback.status === 'incorrect' ? XMarkIcon : CheckIcon;
+
+        const ariaLabel =
+            feedback.status === 'submitting'
+                ? feedback.isSelf
+                    ? 'Submitting guess'
+                    : 'Teammate submitting guess'
+                : feedback.status === 'incorrect'
+                  ? feedback.isSelf
+                      ? `Incorrect guess: ${feedback.guess}`
+                      : `Teammate incorrect guess: ${feedback.guess}`
+                  : feedback.isSelf
+                    ? 'Correct guess'
+                    : 'Teammate correct guess';
+
+        return (
+            <div className={`${isMobileCollapsed ? 'animate-ladder-slide-up' : ''}`} aria-live='polite'>
+                <div className={`${baseClasses} ${statusClasses}`} role='status' aria-label={ariaLabel}>
+                    <div className='flex items-center gap-1.5 md:gap-2'>
+                        {isLocked && feedback.status === 'submitting' && (
+                            <LockClosedIcon className='h-4 w-4 text-[var(--color-accent)] md:h-5 md:w-5' />
+                        )}
+                        <Icon className={feedback.status === 'submitting' ? '' : 'h-4 w-4 md:h-5 md:w-5'} />
+                        {feedback.status === 'incorrect' && (
+                            <span className='font-mono text-xs font-medium md:text-sm'>{feedback.guess}</span>
+                        )}
+                    </div>
+                </div>
+            </div>
+        );
+    };
+
     return (
         <div
             className={`relative font-mono text-sm md:text-lg ${color} text-tx-primary ${transitionClasses}`}
             data-testid={`ladder-word-${word.toLowerCase()}`}
         >
-            {renderStep(word, transform)}
+            <div className='relative flex-1'>{renderStep(word, transform)}</div>
+            {feedback && (
+                <div className='pointer-events-none absolute top-1/2 right-2 max-w-[52vw] -translate-y-1/2 sm:max-w-[44vw] md:max-w-[280px]'>
+                    {renderFeedbackBadge()}
+                </div>
+            )}
         </div>
     );
 }

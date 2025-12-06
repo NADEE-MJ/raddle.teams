@@ -113,6 +113,24 @@ export const api = {
                         bearerToken
                     );
                 },
+                async addOne(lobbyId: number, bearerToken: string): Promise<ApiResponse> {
+                    return request<ApiResponse>(
+                        `/admin/lobby/${lobbyId}/team/add-one`,
+                        {
+                            method: 'POST',
+                        },
+                        bearerToken
+                    );
+                },
+                async remove(teamId: number, bearerToken: string): Promise<ApiResponse> {
+                    return request<ApiResponse>(
+                        `/admin/lobby/team/${teamId}`,
+                        {
+                            method: 'DELETE',
+                        },
+                        bearerToken
+                    );
+                },
                 async move(playerId: number, teamId: number, bearerToken: string): Promise<ApiResponse> {
                     return request<ApiResponse>(
                         `/admin/lobby/team/${teamId}/player/${playerId}`,

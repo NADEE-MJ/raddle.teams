@@ -5,7 +5,7 @@ from sqlalchemy.orm import selectinload
 from sqlmodel import Session, select
 
 from backend.custom_logging import api_logger
-from backend.database import Lobby, Player, Team, get_session
+from backend.database import Game, Lobby, Player, Team, get_session
 from backend.dependencies import check_admin_token
 from backend.schemas import MessageResponse, TeamCreate, TeamUpdate
 from backend.utils.name_generator import generate_multiple_team_names
@@ -13,6 +13,19 @@ from backend.websocket.events import TeamAssignedEvent, TeamChangedEvent
 from backend.websocket.managers import lobby_websocket_manager
 
 router = APIRouter(dependencies=[Depends(check_admin_token)])
+
+MAX_TEAMS_PER_LOBBY = 10
+
+
+def generate_unique_team_name(existing_names: set[str]) -> str:
+    """Generate a team name that is unlikely to collide with existing names."""
+    # Try a few times to avoid duplicates
+    for _ in range(5):
+        candidate = generate_multiple_team_names(1)[0]
+        if candidate not in existing_names:
+            return candidate
+    # Fall back to whatever is generated last
+    return generate_multiple_team_names(1)[0]
 
 
 @router.put("/lobby/team/{team_id}/name", response_model=MessageResponse)
@@ -109,8 +122,8 @@ async def create_teams(
         api_logger.warning(f"Team creation failed: teams already exist lobby_id={lobby_id}")
         raise HTTPException(status_code=400, detail="Teams already exist for this lobby")
 
-    if team_data.num_teams < 2 or team_data.num_teams > 10:
-        raise HTTPException(status_code=400, detail="Number of teams must be between 2 and 10")
+    if team_data.num_teams < 2 or team_data.num_teams > MAX_TEAMS_PER_LOBBY:
+        raise HTTPException(status_code=400, detail=f"Number of teams must be between 2 and {MAX_TEAMS_PER_LOBBY}")
 
     players = lobby.players
     if len(players) == 0:
@@ -153,3 +166,100 @@ async def create_teams(
         f"Successfully created {team_data.num_teams} teams for lobby_id={lobby_id} with {len(players_list)} players"
     )
     return MessageResponse(status=True, message=f"Created {team_data.num_teams} teams with players randomly assigned")
+
+
+def lobby_has_active_game(db: Session, lobby_id: int) -> bool:
+    return db.exec(select(Game).where(Game.lobby_id == lobby_id).where(Game.completed_at.is_(None))).first() is not None
+
+
+@router.post("/lobby/{lobby_id}/team/add-one", response_model=MessageResponse)
+async def add_single_team(
+    lobby_id: int,
+    db: Session = Depends(get_session),
+):
+    api_logger.info(f"Admin requested to add a single team: lobby_id={lobby_id}")
+
+    lobby = db.exec(
+        select(Lobby).options(selectinload(Lobby.players), selectinload(Lobby.teams)).where(Lobby.id == lobby_id)
+    ).first()
+    if not lobby:
+        api_logger.warning(f"Add team failed: lobby not found lobby_id={lobby_id}")
+        raise HTTPException(status_code=404, detail="Lobby not found")
+
+    if lobby_has_active_game(db, lobby_id):
+        raise HTTPException(status_code=400, detail="Cannot modify teams while a game is active")
+
+    if len(lobby.teams) >= MAX_TEAMS_PER_LOBBY:
+        raise HTTPException(status_code=400, detail=f"Maximum of {MAX_TEAMS_PER_LOBBY} teams reached")
+
+    existing_names = {team.name for team in lobby.teams}
+    new_team_name = generate_unique_team_name(existing_names)
+    new_team = Team(name=new_team_name, lobby_id=lobby_id)
+    db.add(new_team)
+    db.commit()
+    db.refresh(new_team)
+
+    await lobby_websocket_manager.broadcast_to_lobby(
+        lobby_id=lobby_id,
+        event=TeamAssignedEvent(lobby_id=lobby_id, player_session_id=""),
+    )
+
+    api_logger.info(f"Successfully added team_id={new_team.id} name='{new_team.name}' to lobby_id={lobby_id}")
+    return MessageResponse(status=True, message=f"Added new team '{new_team.name}'")
+
+
+@router.delete("/lobby/team/{team_id}", response_model=MessageResponse)
+async def remove_team(
+    team_id: int,
+    db: Session = Depends(get_session),
+):
+    api_logger.info(f"Admin requested to remove team: team_id={team_id}")
+
+    team = db.get(Team, team_id)
+    if not team:
+        api_logger.warning(f"Remove team failed: team not found team_id={team_id}")
+        raise HTTPException(status_code=404, detail="Team not found")
+
+    lobby = db.exec(
+        select(Lobby).options(selectinload(Lobby.players), selectinload(Lobby.teams)).where(Lobby.id == team.lobby_id)
+    ).first()
+    if not lobby:
+        api_logger.warning(f"Remove team failed: lobby not found for team_id={team_id}")
+        raise HTTPException(status_code=404, detail="Lobby not found")
+
+    if lobby_has_active_game(db, lobby.id):
+        raise HTTPException(status_code=400, detail="Cannot modify teams while a game is active")
+
+    if len(lobby.teams) <= 2:
+        raise HTTPException(status_code=400, detail="At least two teams are required")
+
+    players_on_team = db.exec(select(Player).where(Player.team_id == team_id)).all()
+    for player in players_on_team:
+        player.team_id = None
+        db.add(player)
+    db.delete(team)
+    db.commit()
+
+    for player in players_on_team:
+        lobby_websocket_manager.unregister_player_team(player.session_id)
+        await lobby_websocket_manager.broadcast_to_lobby(
+            lobby_id=team.lobby_id,
+            event=TeamChangedEvent(
+                lobby_id=team.lobby_id,
+                player_session_id=player.session_id,
+                old_team_id=team_id,
+                new_team_id=0,
+            ),
+        )
+
+    await lobby_websocket_manager.broadcast_to_lobby(
+        lobby_id=team.lobby_id,
+        event=TeamAssignedEvent(lobby_id=team.lobby_id, player_session_id=""),
+    )
+
+    api_logger.info(
+        f"Successfully removed team_id={team_id} from lobby_id={team.lobby_id}; unassigned {len(players_on_team)} players"
+    )
+    return MessageResponse(
+        status=True, message=f"Removed team and unassigned {len(players_on_team)} player(s) back to the lobby"
+    )

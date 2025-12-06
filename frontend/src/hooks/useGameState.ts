@@ -5,7 +5,7 @@
 import { useCallback, useState } from 'react';
 import { useWebSocket } from './useWebSocket';
 import type { Puzzle } from '@/types/game';
-import type { GameWonEvent, WebSocketMessage } from '@/types';
+import type { GameWonEvent, GuessSubmittedEvent, WebSocketMessage } from '@/types';
 
 interface GameState {
     revealed_steps: number[];
@@ -24,6 +24,9 @@ interface UseGameStateProps {
     onGameEnded?: () => void;
     onGameStarted?: () => void;
     sessionId?: string;
+    maxRetries?: number;
+    onMaxRetriesReached?: () => void;
+    onReconnecting?: (attemptNumber: number) => void;
 }
 
 export function useGameState({
@@ -37,11 +40,15 @@ export function useGameState({
     onGameEnded,
     onGameStarted,
     sessionId,
+    maxRetries,
+    onMaxRetriesReached,
+    onReconnecting,
 }: UseGameStateProps) {
     const [revealedSteps, setRevealedSteps] = useState<Set<number>>(new Set(initialState.revealed_steps));
     const [isCompleted, setIsCompleted] = useState(initialState.is_completed);
     const [direction, setDirection] = useState<'down' | 'up'>('down');
     const [error, setError] = useState<string | null>(null);
+    const [lastGuessResult, setLastGuessResult] = useState<GuessSubmittedEvent | null>(null);
 
     const handleServerMessage = useCallback(
         (message: WebSocketMessage) => {
@@ -59,6 +66,10 @@ export function useGameState({
                 case 'already_solved':
                     setError('This word was just solved by a teammate!');
                     setTimeout(() => setError(null), 3000);
+                    break;
+
+                case 'guess_submitted':
+                    setLastGuessResult(message as GuessSubmittedEvent);
                     break;
 
                 case 'team_completed':
@@ -104,9 +115,12 @@ export function useGameState({
         [onGameWon, onTeamCompleted, onPlayerKicked, onTeamChanged, onGameEnded, onGameStarted, sessionId]
     );
 
-    const { isConnected, sendMessage } = useWebSocket(websocketUrl, {
+    const { isConnected, sendMessage, connectionStatus, retryCount, manualReconnect } = useWebSocket(websocketUrl, {
         onMessage: handleServerMessage,
         autoReconnect: true,
+        maxRetries,
+        onMaxRetriesReached,
+        onReconnecting,
     });
 
     // Calculate current solving positions based on direction
@@ -152,11 +166,11 @@ export function useGameState({
         (guess: string) => {
             if (!isConnected) {
                 setError('Not connected to server');
-                return;
+                return false;
             }
 
             if (isCompleted) {
-                return;
+                return false;
             }
 
             const message = {
@@ -167,6 +181,7 @@ export function useGameState({
 
             console.log('[GameState] Submitting guess:', message);
             sendMessage(message);
+            return true;
         },
         [isConnected, isCompleted, activeStepId, sendMessage]
     );
@@ -190,5 +205,9 @@ export function useGameState({
         error,
         submitGuess,
         switchDirection,
+        connectionStatus,
+        retryCount,
+        manualReconnect,
+        lastGuessResult,
     };
 }

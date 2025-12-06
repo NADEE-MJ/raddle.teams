@@ -74,7 +74,7 @@ export default function ComponentShowcasePage() {
                         <div className='flex flex-wrap gap-3'>
                             <Button disabled>Disabled</Button>
                             <Button loading={buttonLoading} onClick={handleButtonLoadingTest}>
-                                {buttonLoading ? 'Loading...' : 'Click for Loading'}
+                                Click for Loading
                             </Button>
                         </div>
                     </div>

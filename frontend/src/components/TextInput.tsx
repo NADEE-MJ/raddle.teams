@@ -8,6 +8,7 @@ interface TextInputProps {
     required?: boolean;
     maxLength?: number;
     minLength?: number;
+    inputMode?: 'none' | 'text' | 'tel' | 'url' | 'email' | 'numeric' | 'decimal' | 'search';
     className?: string;
     label?: string;
     error?: string;
@@ -24,6 +25,7 @@ export default function TextInput({
     required = false,
     maxLength,
     minLength,
+    inputMode,
     className = '',
     label,
     error,
@@ -58,6 +60,7 @@ export default function TextInput({
                 required={required}
                 maxLength={maxLength}
                 minLength={minLength}
+                inputMode={inputMode}
                 className={inputClasses}
                 data-testid={dataTestId}
             />

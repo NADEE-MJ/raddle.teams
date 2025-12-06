@@ -119,16 +119,29 @@ export default function GamePage() {
 
 interface GameProps extends GamePageProps {}
 
+type StepFeedbackStatus = 'submitting' | 'correct' | 'incorrect';
+
+type StepFeedbackEntry = {
+    status: StepFeedbackStatus;
+    guess: string;
+    wordIndex: number;
+    playerId: number;
+    isSelf: boolean;
+    token: number;
+};
+
 // GameProps now includes sessionId from GamePageProps
 
 function Game({ puzzle, player, teamName, lobbyId, lobbyCode, sessionId, initialState }: GameProps) {
     const navigate = useNavigate();
     const { setSessionId } = useGlobalOutletContext();
     const inputRef = useRef<HTMLInputElement>(null);
+    const feedbackTimeoutsRef = useRef<Record<number, { token: number; timeout: ReturnType<typeof setTimeout> }>>({});
     const [showWinModal, setShowWinModal] = useState(false);
     const [winnerTeamName, setWinnerTeamName] = useState('');
     const [isOurTeamWinner, setIsOurTeamWinner] = useState(false);
     const [showFullLadder, setShowFullLadder] = useState(false);
+    const [stepFeedback, setStepFeedback] = useState<Record<number, StepFeedbackEntry>>({});
 
     // WebSocket URL
     const wsUrl = `/ws/lobby/${lobbyId}/player/${sessionId}`;
@@ -162,10 +175,13 @@ function Game({ puzzle, player, teamName, lobbyId, lobbyCode, sessionId, initial
         currentAnswer,
         activeStepId,
         canSwitchDirection,
-        isConnected,
         error,
         submitGuess,
         switchDirection,
+        connectionStatus,
+        retryCount,
+        manualReconnect,
+        lastGuessResult,
     } = useGameState({
         puzzle,
         initialState,
@@ -177,6 +193,12 @@ function Game({ puzzle, player, teamName, lobbyId, lobbyCode, sessionId, initial
         onGameEnded: handleGameEnded,
         onGameStarted: handleGameStarted,
         sessionId,
+        maxRetries: 10,
+        onMaxRetriesReached: () => {
+            alert(
+                'Connection failed after multiple attempts. Please check your internet connection and click the Retry button.'
+            );
+        },
     });
 
     function handleGameWon(event: GameWonEvent) {
@@ -236,10 +258,42 @@ function Game({ puzzle, player, teamName, lobbyId, lobbyCode, sessionId, initial
     const handleGuessChange = useCallback(
         (guess: string) => {
             if (guess.length === puzzle.ladder[activeStepId].word.length) {
-                submitGuess(guess);
+                const normalizedGuess = guess.toUpperCase();
+                const wasSent = submitGuess(normalizedGuess);
+                if (wasSent) {
+                    const token = Date.now() + Math.random();
+                    const entry: StepFeedbackEntry = {
+                        status: 'submitting',
+                        guess: normalizedGuess,
+                        wordIndex: activeStepId,
+                        playerId: player.id,
+                        isSelf: true,
+                        token,
+                    };
+
+                    setStepFeedback(prev => ({ ...prev, [activeStepId]: entry }));
+
+                    // Auto-clear submitting state in case no response returns
+                    if (feedbackTimeoutsRef.current[activeStepId]) {
+                        clearTimeout(feedbackTimeoutsRef.current[activeStepId].timeout);
+                    }
+                    feedbackTimeoutsRef.current[activeStepId] = {
+                        token,
+                        timeout: setTimeout(() => {
+                            setStepFeedback(prev => {
+                                const current = prev[activeStepId];
+                                if (!current || current.token !== token || current.status !== 'submitting') {
+                                    return prev;
+                                }
+                                const { [activeStepId]: _, ...rest } = prev;
+                                return rest;
+                            });
+                        }, 6500),
+                    };
+                }
             }
         },
-        [submitGuess, puzzle, activeStepId]
+        [submitGuess, puzzle, activeStepId, player.id]
     );
 
     const handleDirectionChange = useCallback(() => {
@@ -306,6 +360,64 @@ function Game({ puzzle, player, teamName, lobbyId, lobbyCode, sessionId, initial
     }, [puzzle?.ladder, activeStepId]);
 
     const mobileVisibleSteps = useMemo(() => getVisibleStepsOnMobile(), [getVisibleStepsOnMobile]);
+    const isMobileCollapsed = !showFullLadder && !isCompleted;
+
+    useEffect(() => {
+        if (!lastGuessResult) return;
+
+        const token = Date.now() + Math.random();
+        const entry: StepFeedbackEntry = {
+            status: lastGuessResult.is_correct ? 'correct' : 'incorrect',
+            guess: lastGuessResult.guess.toUpperCase(),
+            wordIndex: lastGuessResult.word_index,
+            playerId: lastGuessResult.player_id,
+            isSelf: lastGuessResult.player_id === player.id,
+            token,
+        };
+
+        setStepFeedback(prev => ({ ...prev, [lastGuessResult.word_index]: entry }));
+
+        if (feedbackTimeoutsRef.current[lastGuessResult.word_index]) {
+            clearTimeout(feedbackTimeoutsRef.current[lastGuessResult.word_index].timeout);
+        }
+        feedbackTimeoutsRef.current[lastGuessResult.word_index] = {
+            token,
+            timeout: setTimeout(
+                () => {
+                    setStepFeedback(prev => {
+                        const current = prev[lastGuessResult.word_index];
+                        if (!current || current.token !== token) return prev;
+                        const { [lastGuessResult.word_index]: _, ...rest } = prev;
+                        return rest;
+                    });
+                },
+                lastGuessResult.is_correct ? 2000 : 2600
+            ),
+        };
+    }, [lastGuessResult, player.id]);
+
+    useEffect(() => {
+        // Clear any stale submitting state when focus shifts to another step
+        setStepFeedback(prev => {
+            const activeSubmitting = prev[activeStepId];
+            if (activeSubmitting?.status === 'submitting') {
+                return prev;
+            }
+            const updated = { ...prev };
+            Object.entries(updated).forEach(([key, value]) => {
+                if (value.status === 'submitting' && Number(key) !== activeStepId) {
+                    delete updated[Number(key)];
+                }
+            });
+            return updated;
+        });
+    }, [activeStepId]);
+
+    useEffect(() => {
+        return () => {
+            Object.values(feedbackTimeoutsRef.current).forEach(entry => clearTimeout(entry.timeout));
+        };
+    }, []);
 
     return (
         <div>
@@ -319,17 +431,27 @@ function Game({ puzzle, player, teamName, lobbyId, lobbyCode, sessionId, initial
                 </div>
                 <div className='mt-2 flex w-full justify-center'>
                     <ConnectionBadge
-                        isConnected={isConnected}
+                        connectionStatus={connectionStatus}
+                        retryCount={retryCount}
+                        onRetry={connectionStatus === 'failed' ? manualReconnect : undefined}
                         connectedText='Connected to game'
-                        disconnectedText='Reconnecting...'
                     />
                 </div>
             </div>
 
+            {/* Back to Lobby button - Desktop (above puzzle) and Mobile (above puzzle) */}
+            {isCompleted && (
+                <div className='mb-6 flex justify-center'>
+                    <Button onClick={handleReturnToLobby} variant='primary' size='lg'>
+                        Back to Lobby
+                    </Button>
+                </div>
+            )}
+
             {/* Main game area with ladder and clues */}
             <div className='mx-auto max-w-6xl'>
                 <div id='game-area' className='md:grid md:grid-cols-[2fr_3fr] md:gap-8'>
-                    <div className={`${!showFullLadder ? 'sticky top-0 z-50' : ''} bg-primary py-3`}>
+                    <div className={`${!showFullLadder && !isCompleted ? 'sticky top-0 z-50' : ''} bg-primary py-3`}>
                         <div className='border-ladder-rungs border-x-5'>
                             <div className='border-ladder-rungs border-b'>
                                 <div className='hidden p-3 sm:hidden md:block'></div>
@@ -348,6 +470,8 @@ function Game({ puzzle, player, teamName, lobbyId, lobbyCode, sessionId, initial
 
                             {puzzle.ladder.map((ladderStep, stepId) => {
                                 const shouldRenderStepOnMobile = mobileVisibleSteps.includes(stepId);
+                                const feedbackForStep = stepFeedback[stepId] ?? null;
+                                const isStepLocked = isActiveStep(stepId) && feedbackForStep?.status === 'submitting';
 
                                 if (!isCompleted && !showFullLadder && !shouldRenderStepOnMobile) {
                                     return null;
@@ -371,6 +495,9 @@ function Game({ puzzle, player, teamName, lobbyId, lobbyCode, sessionId, initial
                                                     !showFullLadder) ||
                                                 showFullLadder
                                             }
+                                            isLocked={isStepLocked}
+                                            feedback={feedbackForStep}
+                                            isMobileCollapsed={isMobileCollapsed}
                                         />
                                     </div>
                                 );
@@ -404,10 +531,10 @@ function Game({ puzzle, player, teamName, lobbyId, lobbyCode, sessionId, initial
                 </div>
             </div>
 
-            {/* Completion message */}
+            {/* Back to Lobby button - Mobile only (below puzzle) */}
             {isCompleted && (
-                <div className='mt-8 flex justify-end'>
-                    <Button onClick={handleReturnToLobby} variant='primary' size='md'>
+                <div className='mt-8 flex justify-center md:hidden'>
+                    <Button onClick={handleReturnToLobby} variant='primary' size='lg'>
                         Back to Lobby
                     </Button>
                 </div>

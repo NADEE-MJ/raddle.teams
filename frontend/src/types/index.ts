@@ -89,6 +89,13 @@ export interface WebSocketMessage {
     new_team_id?: number;
 }
 
+export type ConnectionStatus =
+    | 'connecting' // Initial connection attempt
+    | 'connected' // Successfully connected
+    | 'reconnecting' // Lost connection, attempting to reconnect
+    | 'disconnected' // Manually disconnected
+    | 'failed'; // Max retries reached or permanent failure
+
 // #########################################################################
 // ? GAME TYPES
 // #########################################################################

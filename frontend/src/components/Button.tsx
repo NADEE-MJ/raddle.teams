@@ -8,6 +8,7 @@ interface ButtonProps {
     size?: ButtonSize;
     disabled?: boolean;
     loading?: boolean;
+    loadingIndicatorPlacement?: 'left' | 'right';
     children: ReactNode;
     className?: string;
     onClick?: (event: React.MouseEvent<HTMLButtonElement>) => void;
@@ -34,32 +35,47 @@ export default function Button({
     size = 'md',
     disabled = false,
     loading = false,
+    loadingIndicatorPlacement = 'right',
     children,
     className = '',
     onClick,
     type = 'button',
     'data-testid': dataTestId,
 }: ButtonProps) {
-    const baseClasses = 'rounded-md cursor-pointer font-medium transition-all duration-50 active:scale-90';
+    const baseClasses =
+        'inline-flex items-center justify-center rounded-md cursor-pointer font-medium transition-all duration-50 active:scale-90';
     const disabledClasses = 'disabled:opacity-50 disabled:cursor-not-allowed disabled:active:scale-100';
 
     const classes = [baseClasses, buttonVariants[variant], buttonSizes[size], disabledClasses, className]
         .filter(Boolean)
         .join(' ');
 
-    return (
+    const button = (
         <button
             type={type}
             className={classes}
             disabled={disabled || loading}
+            aria-disabled={disabled || loading || undefined}
             onClick={onClick}
             data-testid={dataTestId}
         >
-            {loading && typeof children === 'string'
-                ? children.includes('...')
-                    ? children
-                    : `${children}...`
-                : children}
+            {children}
         </button>
+    );
+
+    return (
+        <span className='inline-flex items-center'>
+            {loading && loadingIndicatorPlacement === 'left' && (
+                <span className='mr-2 inline-flex items-center justify-center' role='status' aria-label='Loading'>
+                    <span className='border-accent h-4 w-4 animate-spin rounded-full border-2 border-t-transparent'></span>
+                </span>
+            )}
+            {button}
+            {loading && loadingIndicatorPlacement === 'right' && (
+                <span className='ml-2 inline-flex items-center justify-center' role='status' aria-label='Loading'>
+                    <span className='border-accent h-4 w-4 animate-spin rounded-full border-2 border-t-transparent'></span>
+                </span>
+            )}
+        </span>
     );
 }

@@ -68,8 +68,8 @@ vi.mock('@/components', () => ({
         </div>
     ),
     Card: ({ children }: { children: React.ReactNode }) => <div data-testid='card'>{children}</div>,
-    ConnectionBadge: ({ isConnected }: { isConnected: boolean }) => (
-        <div data-testid='connection-badge'>{isConnected ? 'Connected' : 'Disconnected'}</div>
+    ConnectionBadge: ({ connectionStatus }: { connectionStatus: string }) => (
+        <div data-testid='connection-badge'>{connectionStatus === 'connected' ? 'Connected' : 'Disconnected'}</div>
     ),
 }));
 

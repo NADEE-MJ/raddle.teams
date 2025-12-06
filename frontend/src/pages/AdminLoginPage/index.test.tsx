@@ -39,9 +39,16 @@ vi.mock('@/components', () => ({
         </div>
     ),
     Button: ({ children, disabled, loading, 'data-testid': dataTestId, ...props }: any) => (
-        <button data-testid={dataTestId} disabled={disabled || loading} {...props}>
-            {loading ? 'Loading...' : children}
-        </button>
+        <span>
+            <button data-testid={dataTestId} disabled={disabled || loading} {...props}>
+                {children}
+            </button>
+            {loading && (
+                <div role='status' aria-label='Loading'>
+                    Loading...
+                </div>
+            )}
+        </span>
     ),
 }));
 
@@ -351,7 +358,7 @@ describe('AdminLoginPage Component', () => {
             await user.type(tokenInput, 'admin-token');
             await user.click(submitButton);
 
-            expect(screen.getByText('Loading...')).toBeInTheDocument();
+            expect(screen.getByRole('status', { name: /loading/i })).toBeInTheDocument();
             expect(submitButton).toBeDisabled();
             expect(tokenInput).toBeDisabled();
         });
@@ -382,7 +389,7 @@ describe('AdminLoginPage Component', () => {
             });
 
             // Should not show loading state after completion
-            expect(screen.queryByText('Logging in')).not.toBeInTheDocument();
+            expect(screen.queryByRole('status', { name: /loading/i })).not.toBeInTheDocument();
         });
 
         test('resets loading state after login error', async () => {
@@ -411,7 +418,7 @@ describe('AdminLoginPage Component', () => {
                 expect(screen.getByTestId('input-error')).toBeInTheDocument();
             });
 
-            expect(screen.queryByText('Logging in')).not.toBeInTheDocument();
+            expect(screen.queryByRole('status', { name: /loading/i })).not.toBeInTheDocument();
             expect(submitButton).not.toBeDisabled();
             expect(tokenInput).not.toBeDisabled();
 

@@ -104,7 +104,7 @@ export default function AdminLoginPage() {
                         className='w-full'
                         data-testid='admin-login-submit'
                     >
-                        {loading ? 'Logging in' : 'Login'}
+                        Login
                     </Button>
                 </div>
             </form>

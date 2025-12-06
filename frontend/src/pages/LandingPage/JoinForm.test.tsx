@@ -317,7 +317,7 @@ describe('JoinForm Component', () => {
             const submitButton = screen.getByTestId('join-lobby-button');
             await user.click(submitButton);
 
-            expect(screen.getByText('Joining...')).toBeInTheDocument();
+            expect(screen.getByRole('status', { name: /loading/i })).toBeInTheDocument();
             expect(submitButton).toBeDisabled();
             expect(nameInput).toBeDisabled();
             expect(lobbyCodeInput).toBeDisabled();
@@ -348,7 +348,7 @@ describe('JoinForm Component', () => {
             });
 
             // Form should not be in loading state after completion
-            expect(screen.queryByText('Joining')).not.toBeInTheDocument();
+            expect(screen.queryByRole('status', { name: /loading/i })).not.toBeInTheDocument();
         });
 
         test('resets loading state after API error', async () => {
@@ -376,7 +376,7 @@ describe('JoinForm Component', () => {
                 expect(screen.getByTestId('join-form-error')).toBeInTheDocument();
             });
 
-            expect(screen.queryByText('Joining')).not.toBeInTheDocument();
+            expect(screen.queryByRole('status', { name: /loading/i })).not.toBeInTheDocument();
             expect(submitButton).not.toBeDisabled();
             expect(nameInput).not.toBeDisabled();
             expect(lobbyCodeInput).not.toBeDisabled();

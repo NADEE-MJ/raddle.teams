@@ -206,7 +206,7 @@ describe('useWebSocket Hook', () => {
                 mockWebSocket.simulateError();
             });
 
-            expect(result.current.error).toBe('WebSocket connection failed');
+            expect(result.current.error).toBe('Connection lost');
             expect(onError).toHaveBeenCalledTimes(1);
         });
     });

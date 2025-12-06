@@ -103,11 +103,13 @@ export default function LobbiesList({ onViewDetails, refreshKey, onDebouncedRefr
                 <Button
                     onClick={debouncedRefreshLobbies}
                     disabled={isRefreshing}
+                    loading={isRefreshing}
+                    loadingIndicatorPlacement='left'
                     variant='secondary'
                     size='sm'
                     data-testid='refresh-lobbies-button'
                 >
-                    {isRefreshing ? 'Refreshing...' : 'Refresh'}
+                    Refresh
                 </Button>
             </div>
 

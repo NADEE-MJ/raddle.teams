@@ -87,7 +87,7 @@ export default function JoinForm() {
                 className='w-full'
                 data-testid='join-lobby-button'
             >
-                {loading ? 'Joining' : 'Join Lobby'}
+                Join Lobby
             </Button>
         </form>
     );

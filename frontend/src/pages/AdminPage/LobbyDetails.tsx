@@ -1,11 +1,14 @@
 import { useState, useEffect, useCallback, useMemo } from 'react';
-import { LobbyInfo, GameStateResponse, GameWebSocketEvents, WebSocketMessage } from '@/types';
+import { LobbyInfo, GameStateResponse, GameWebSocketEvents, LobbyWebSocketEvents, WebSocketMessage } from '@/types';
 import { Modal, CopyableCode, Button, TextInput, Select, ErrorMessage, Card, ConnectionBadge } from '@/components';
 import { api, ApiError } from '@/services/api';
 import { useGlobalOutletContext } from '@/hooks/useGlobalOutletContext';
 import { useDebounce } from '@/hooks/useDebounce';
 import { useWebSocket } from '@/hooks/useWebSocket';
 import GameProgressView from './GameProgressView';
+
+const MIN_TEAMS = 2;
+const MAX_TEAMS = 10;
 
 interface LobbyDetailsProps {
     lobbyId: number;
@@ -18,7 +21,7 @@ export default function LobbyDetails({ lobbyId, onClose, onLobbyDeleted, refresh
     const { adminApiToken, adminSessionId } = useGlobalOutletContext();
 
     const [selectedLobby, setSelectedLobby] = useState<LobbyInfo | null>(null);
-    const [numTeams, setNumTeams] = useState<number>(2);
+    const [numTeams, setNumTeams] = useState<number>(MIN_TEAMS);
     const [isCreatingTeams, setIsCreatingTeams] = useState(false);
     const [movingPlayerId, setMovingPlayerId] = useState<number | null>(null);
     const [isInitialLoad, setIsInitialLoad] = useState(true);
@@ -29,11 +32,30 @@ export default function LobbyDetails({ lobbyId, onClose, onLobbyDeleted, refresh
     const [wordCountMode, setWordCountMode] = useState<'exact' | 'balanced'>('balanced');
     const [isStartingGame, setIsStartingGame] = useState(false);
     const [isEndingGame, setIsEndingGame] = useState(false);
+    const [isAddingTeam, setIsAddingTeam] = useState(false);
+    const [removingTeamId, setRemovingTeamId] = useState<number | null>(null);
     const [editingTeamId, setEditingTeamId] = useState<number | null>(null);
     const [editingTeamName, setEditingTeamName] = useState('');
 
     // Game state
     const [gameState, setGameState] = useState<GameStateResponse | null>(null);
+
+    const maxTeamsAllowed = useMemo(() => {
+        if (!selectedLobby) return MAX_TEAMS;
+        const playerCount = selectedLobby.players.length;
+        const currentTeams = selectedLobby.teams?.length || MIN_TEAMS;
+        const playerBound = playerCount >= MIN_TEAMS ? playerCount : MIN_TEAMS;
+        return Math.min(Math.max(currentTeams, playerBound), MAX_TEAMS);
+    }, [selectedLobby]);
+
+    const clampTeamCount = useCallback(
+        (value: number) => {
+            const sanitized = Number.isFinite(value) ? value : MIN_TEAMS;
+            const lowerBounded = Math.max(MIN_TEAMS, sanitized);
+            return Math.min(lowerBounded, maxTeamsAllowed);
+        },
+        [maxTeamsAllowed]
+    );
 
     const loadLobbyDetails = useCallback(async () => {
         if (!adminApiToken) {
@@ -80,58 +102,75 @@ export default function LobbyDetails({ lobbyId, onClose, onLobbyDeleted, refresh
         loadGameState();
     }, [loadLobbyDetails, loadGameState, refreshKey]);
 
+    useEffect(() => {
+        setNumTeams(prev => clampTeamCount(prev));
+    }, [clampTeamCount]);
+
     const onMessage = useCallback(
         (message: WebSocketMessage) => {
             console.log('[Admin] Received WebSocket message:', message);
 
-            if (message.type === GameWebSocketEvents.STATE_UPDATE) {
-                setGameState(prev => {
-                    if (!prev || !prev.is_game_active) return prev;
+            switch (message.type) {
+                case GameWebSocketEvents.STATE_UPDATE:
+                    setGameState(prev => {
+                        if (!prev || !prev.is_game_active) return prev;
 
-                    const updatedTeams = prev.teams.map(team => {
-                        if (team.team_id === message.team_id) {
-                            return {
-                                ...team,
-                                revealed_steps: message.revealed_steps,
-                                is_completed: message.is_completed,
-                            };
-                        }
-                        return team;
+                        const updatedTeams = prev.teams.map(team => {
+                            if (team.team_id === message.team_id) {
+                                return {
+                                    ...team,
+                                    revealed_steps: message.revealed_steps,
+                                    is_completed: message.is_completed,
+                                };
+                            }
+                            return team;
+                        });
+
+                        return {
+                            ...prev,
+                            teams: updatedTeams,
+                        };
                     });
+                    break;
+                case GameWebSocketEvents.TEAM_COMPLETED:
+                    setGameState(prev => {
+                        if (!prev || !prev.is_game_active) return prev;
 
-                    return {
-                        ...prev,
-                        teams: updatedTeams,
-                    };
-                });
-            } else if (message.type === GameWebSocketEvents.TEAM_COMPLETED) {
-                setGameState(prev => {
-                    if (!prev || !prev.is_game_active) return prev;
+                        const updatedTeams = prev.teams.map(team => {
+                            if (team.team_id === message.team_id) {
+                                return {
+                                    ...team,
+                                    is_completed: true,
+                                    completed_at: message.completed_at,
+                                };
+                            }
+                            return team;
+                        });
 
-                    const updatedTeams = prev.teams.map(team => {
-                        if (team.team_id === message.team_id) {
-                            return {
-                                ...team,
-                                is_completed: true,
-                                completed_at: message.completed_at,
-                            };
-                        }
-                        return team;
+                        return {
+                            ...prev,
+                            teams: updatedTeams,
+                        };
                     });
-
-                    return {
-                        ...prev,
-                        teams: updatedTeams,
-                    };
-                });
-            } else if (message.type === GameWebSocketEvents.GAME_STARTED) {
-                loadGameState();
-            } else if (message.type === GameWebSocketEvents.GAME_WON) {
-                console.log('[Admin] Game won, reloading game state');
-                loadGameState();
+                    break;
+                case GameWebSocketEvents.GAME_STARTED:
+                case GameWebSocketEvents.GAME_WON:
+                    loadGameState();
+                    break;
+                case LobbyWebSocketEvents.CONNECTION_CONFIRMED:
+                case LobbyWebSocketEvents.TEAM_ASSIGNED:
+                case LobbyWebSocketEvents.TEAM_CHANGED:
+                case LobbyWebSocketEvents.DISCONNECTED:
+                case LobbyWebSocketEvents.PLAYER_KICKED:
+                    // Keep lobby details in sync when players join/leave or teams change
+                    scheduleReload();
+                    break;
+                default:
+                    console.log('[Admin] Unhandled WebSocket message:', message.type);
+                    break;
             }
         },
-        [loadGameState]
+        [loadGameState, scheduleReload]
     );
 
     const onError = useCallback((event: Event) => {
@@ -151,7 +190,11 @@ export default function LobbyDetails({ lobbyId, onClose, onLobbyDeleted, refresh
         [adminSessionId, adminApiToken]
     );
 
-    const { isConnected: isWsConnected, sendMessage } = useWebSocket(wsUrl, {
+    const {
+        isConnected: isWsConnected,
+        connectionStatus,
+        sendMessage,
+    } = useWebSocket(wsUrl, {
         onMessage,
         onConnect,
         onDisconnect,
@@ -279,6 +322,86 @@ export default function LobbyDetails({ lobbyId, onClose, onLobbyDeleted, refresh
         setEditingTeamName('');
     };
 
+    const handleStepTeams = useCallback(
+        (delta: number) => {
+            setNumTeams(prev => clampTeamCount(prev + delta));
+        },
+        [clampTeamCount]
+    );
+
+    const hasActiveGame = useMemo(() => Boolean(gameState?.is_game_active), [gameState]);
+
+    const handleAddTeam = useCallback(async () => {
+        if (!adminApiToken || !selectedLobby) {
+            setError(adminApiToken ? 'Lobby not selected' : 'Admin API token is required to add teams');
+            return;
+        }
+
+        const existingTeams = selectedLobby.teams?.length ?? 0;
+        if (existingTeams >= maxTeamsAllowed) {
+            setError(`Maximum of ${maxTeamsAllowed} teams reached`);
+            return;
+        }
+
+        if (hasActiveGame) {
+            setError('Cannot modify teams while a game is active');
+            return;
+        }
+
+        setIsAddingTeam(true);
+        try {
+            setError('');
+            await api.admin.lobby.team.addOne(selectedLobby.lobby.id, adminApiToken);
+            await reloadAll();
+        } catch (err) {
+            const message = err instanceof ApiError ? err.message : 'Failed to add team';
+            setError(message);
+            console.error('Error adding team:', err);
+        } finally {
+            setIsAddingTeam(false);
+        }
+    }, [adminApiToken, selectedLobby, maxTeamsAllowed, hasActiveGame, reloadAll]);
+
+    const handleRemoveTeam = useCallback(
+        async (teamId: number, teamName: string) => {
+            if (!adminApiToken || !selectedLobby) {
+                setError(adminApiToken ? 'Lobby not selected' : 'Admin API token is required to remove team');
+                return;
+            }
+
+            if (hasActiveGame) {
+                setError('Cannot modify teams while a game is active');
+                return;
+            }
+
+            const currentTeams = selectedLobby.teams?.length ?? 0;
+            if (currentTeams <= MIN_TEAMS) {
+                setError(`Need at least ${MIN_TEAMS} teams to keep the game running`);
+                return;
+            }
+
+            if (
+                !confirm(`Remove ${teamName}? Players on this team will be unassigned so you can place them elsewhere.`)
+            ) {
+                return;
+            }
+
+            setRemovingTeamId(teamId);
+            try {
+                setError('');
+                await api.admin.lobby.team.remove(teamId, adminApiToken);
+                await reloadAll();
+            } catch (err) {
+                const message = err instanceof ApiError ? err.message : 'Failed to remove team';
+                setError(message);
+                console.error('Error removing team:', err);
+            } finally {
+                setRemovingTeamId(null);
+            }
+        },
+        [adminApiToken, selectedLobby, hasActiveGame, reloadAll]
+    );
+
     const handleStartGame = useCallback(async () => {
         if (!adminApiToken || !selectedLobby) {
             setError(adminApiToken ? 'Lobby not selected' : 'Admin API token is required to start game');
@@ -368,6 +491,9 @@ export default function LobbyDetails({ lobbyId, onClose, onLobbyDeleted, refresh
     }
 
     const unassignedPlayers = selectedLobby.players.filter(player => !player.team_id);
+    const teamCount = selectedLobby.teams?.length || 0;
+    const teamLimitReached = teamCount >= maxTeamsAllowed;
+    const atMinimumTeams = teamCount <= MIN_TEAMS;
 
     return (
         <Modal isOpen={true} onClose={onClose} maxWidth='max-w-6xl'>
@@ -388,9 +514,10 @@ export default function LobbyDetails({ lobbyId, onClose, onLobbyDeleted, refresh
                                 variant='primary'
                                 size='lg'
                                 loading={isRefreshing}
+                                loadingIndicatorPlacement='left'
                                 data-testid='refresh-lobby-button'
                             >
-                                {isRefreshing ? 'Refreshing...' : 'Refresh'}
+                                Refresh
                             </Button>
                             <Button
                                 onClick={handleDeleteLobby}
@@ -403,11 +530,7 @@ export default function LobbyDetails({ lobbyId, onClose, onLobbyDeleted, refresh
                         </div>
                     </div>
                     <div className='flex justify-end'>
-                        <ConnectionBadge
-                            isConnected={isWsConnected}
-                            connectedText='Connected to lobby'
-                            disconnectedText='Reconnecting...'
-                        />
+                        <ConnectionBadge connectionStatus={connectionStatus} connectedText='Connected to lobby' />
                     </div>
                 </div>
 
@@ -474,30 +597,55 @@ export default function LobbyDetails({ lobbyId, onClose, onLobbyDeleted, refresh
                                 Create Teams
                             </div>
                             <Card>
-                                <div className='flex flex-col gap-3 md:flex-row md:items-center'>
-                                    <TextInput
-                                        type='number'
-                                        label='Number of teams:'
-                                        value={numTeams.toString()}
-                                        onChange={value => setNumTeams(parseInt(value) || 2)}
-                                        className='w-20 text-sm'
-                                        data-testid='num-teams-input'
-                                    />
-                                    <Button
-                                        onClick={handleCreateTeams}
-                                        disabled={isCreatingTeams || numTeams < 2}
-                                        variant='secondary'
-                                        size='sm'
-                                        loading={isCreatingTeams}
-                                        className='text-accent'
-                                        data-testid='create-teams-button'
-                                    >
-                                        {isCreatingTeams ? 'Creating' : 'Create Teams'}
-                                    </Button>
+                                <div className='flex flex-col gap-4'>
+                                    <div className='flex flex-wrap items-center justify-between gap-3'>
+                                        <div className='flex items-center gap-3'>
+                                            <span className='text-tx-primary text-sm font-medium'>Number of teams</span>
+                                            <div className='bg-tertiary border-border flex items-center gap-1 rounded-md border px-2 py-1'>
+                                                <Button
+                                                    onClick={() => handleStepTeams(-1)}
+                                                    disabled={isCreatingTeams || numTeams <= MIN_TEAMS}
+                                                    variant='secondary'
+                                                    size='sm'
+                                                    className='text-xs'
+                                                    data-testid='decrease-num-teams'
+                                                >
+                                                    -
+                                                </Button>
+                                                <div
+                                                    className='text-tx-primary w-12 text-center text-sm font-semibold'
+                                                    data-testid='num-teams-display'
+                                                >
+                                                    {numTeams}
+                                                </div>
+                                                <Button
+                                                    onClick={() => handleStepTeams(1)}
+                                                    disabled={isCreatingTeams || numTeams >= maxTeamsAllowed}
+                                                    variant='secondary'
+                                                    size='sm'
+                                                    className='text-xs'
+                                                    data-testid='increase-num-teams'
+                                                >
+                                                    +
+                                                </Button>
+                                            </div>
+                                            <span className='text-tx-secondary text-xs'>
+                                                Min {MIN_TEAMS} · Max {maxTeamsAllowed}
+                                            </span>
+                                        </div>
+                                        <Button
+                                            onClick={handleCreateTeams}
+                                            disabled={isCreatingTeams || numTeams < MIN_TEAMS}
+                                            variant='primary'
+                                            size='sm'
+                                            loading={isCreatingTeams}
+                                            className='text-accent'
+                                            data-testid='create-teams-button'
+                                        >
+                                            Create Teams
+                                        </Button>
+                                    </div>
                                 </div>
-                                <p className='text-tx-secondary mt-2 text-xs'>
-                                    Players will be randomly assigned to {numTeams} teams
-                                </p>
                             </Card>
                         </div>
                     </>
@@ -505,11 +653,29 @@ export default function LobbyDetails({ lobbyId, onClose, onLobbyDeleted, refresh
 
                 {selectedLobby.teams && selectedLobby.teams.length > 0 && (
                     <div className='mb-6'>
-                        <div
-                            className='text-tx-secondary mb-3 text-sm tracking-wide uppercase'
-                            data-testid='teams-heading'
-                        >
-                            Teams ({selectedLobby.teams.length})
+                        <div className='mb-3 flex flex-col gap-2 sm:flex-row sm:items-center sm:justify-between'>
+                            <div
+                                className='text-tx-secondary text-sm tracking-wide uppercase'
+                                data-testid='teams-heading'
+                            >
+                                Teams ({selectedLobby.teams.length})
+                            </div>
+                            <div className='flex flex-wrap items-center gap-2'>
+                                <Button
+                                    onClick={handleAddTeam}
+                                    disabled={isAddingTeam || teamLimitReached || hasActiveGame}
+                                    variant='primary'
+                                    size='sm'
+                                    loading={isAddingTeam}
+                                    loadingIndicatorPlacement='left'
+                                    data-testid='add-team-button'
+                                >
+                                    Add Team
+                                </Button>
+                                <div className='text-tx-secondary text-xs'>
+                                    Max {maxTeamsAllowed} teams · min {MIN_TEAMS} teams
+                                </div>
+                            </div>
                         </div>
                         <div className='grid gap-4 md:grid-cols-2'>
                             {selectedLobby.teams.map(team => {
@@ -517,61 +683,75 @@ export default function LobbyDetails({ lobbyId, onClose, onLobbyDeleted, refresh
                                 const isEditing = editingTeamId === team.id;
                                 return (
                                     <Card key={team.id}>
-                                        <div className='mb-3 flex items-center justify-between gap-2'>
-                                            {isEditing ? (
-                                                <div className='flex flex-1 items-center gap-2'>
-                                                    <TextInput
-                                                        value={editingTeamName}
-                                                        onChange={setEditingTeamName}
-                                                        className='text-sm'
-                                                        autoFocus
-                                                        onKeyDown={e => {
-                                                            if (e.key === 'Enter') {
-                                                                handleUpdateTeamName(team.id);
-                                                            } else if (e.key === 'Escape') {
-                                                                handleCancelTeamNameEdit();
-                                                            }
-                                                        }}
-                                                        data-testid={`edit-team-name-input-${team.id}`}
-                                                    />
-                                                    <Button
-                                                        onClick={() => handleUpdateTeamName(team.id)}
-                                                        variant='primary'
-                                                        size='sm'
-                                                        className='text-xs'
-                                                        data-testid={`save-team-name-button-${team.id}`}
-                                                    >
-                                                        Save
-                                                    </Button>
-                                                    <Button
-                                                        onClick={handleCancelTeamNameEdit}
-                                                        variant='secondary'
-                                                        size='sm'
-                                                        className='text-xs'
-                                                        data-testid={`cancel-team-name-button-${team.id}`}
-                                                    >
-                                                        Cancel
-                                                    </Button>
-                                                </div>
-                                            ) : (
-                                                <>
-                                                    <h4
-                                                        className='text-tx-primary font-semibold'
-                                                        data-testid={`team-name-${team.id}`}
-                                                    >
-                                                        {team.name}
-                                                    </h4>
-                                                    <Button
-                                                        onClick={() => handleStartTeamNameEdit(team.id, team.name)}
-                                                        variant='secondary'
-                                                        size='sm'
-                                                        className='text-xs'
-                                                        data-testid={`edit-team-name-button-${team.id}`}
-                                                    >
-                                                        Edit
-                                                    </Button>
-                                                </>
-                                            )}
+                                        <div className='mb-3 flex flex-wrap items-center justify-between gap-2'>
+                                            <div className='flex flex-1 items-center gap-2'>
+                                                {isEditing ? (
+                                                    <>
+                                                        <TextInput
+                                                            value={editingTeamName}
+                                                            onChange={setEditingTeamName}
+                                                            className='text-sm'
+                                                            autoFocus
+                                                            onKeyDown={e => {
+                                                                if (e.key === 'Enter') {
+                                                                    handleUpdateTeamName(team.id);
+                                                                } else if (e.key === 'Escape') {
+                                                                    handleCancelTeamNameEdit();
+                                                                }
+                                                            }}
+                                                            data-testid={`edit-team-name-input-${team.id}`}
+                                                        />
+                                                        <Button
+                                                            onClick={() => handleUpdateTeamName(team.id)}
+                                                            variant='primary'
+                                                            size='sm'
+                                                            className='text-xs'
+                                                            data-testid={`save-team-name-button-${team.id}`}
+                                                        >
+                                                            Save
+                                                        </Button>
+                                                        <Button
+                                                            onClick={handleCancelTeamNameEdit}
+                                                            variant='secondary'
+                                                            size='sm'
+                                                            className='text-xs'
+                                                            data-testid={`cancel-team-name-button-${team.id}`}
+                                                        >
+                                                            Cancel
+                                                        </Button>
+                                                    </>
+                                                ) : (
+                                                    <>
+                                                        <h4
+                                                            className='text-tx-primary font-semibold'
+                                                            data-testid={`team-name-${team.id}`}
+                                                        >
+                                                            {team.name}
+                                                        </h4>
+                                                        <Button
+                                                            onClick={() => handleStartTeamNameEdit(team.id, team.name)}
+                                                            variant='secondary'
+                                                            size='sm'
+                                                            className='text-xs'
+                                                            data-testid={`edit-team-name-button-${team.id}`}
+                                                        >
+                                                            Edit
+                                                        </Button>
+                                                    </>
+                                                )}
+                                            </div>
+                                            <Button
+                                                onClick={() => handleRemoveTeam(team.id, team.name)}
+                                                disabled={removingTeamId === team.id || atMinimumTeams || hasActiveGame}
+                                                variant='destructive'
+                                                size='sm'
+                                                loading={removingTeamId === team.id}
+                                                loadingIndicatorPlacement='left'
+                                                className='text-xs'
+                                                data-testid={`remove-team-button-${team.id}`}
+                                            >
+                                                Remove
+                                            </Button>
                                         </div>
                                         {teamPlayers.length === 0 ? (
                                             <div className='text-tx-muted py-4 text-center text-sm'>
@@ -737,9 +917,10 @@ export default function LobbyDetails({ lobbyId, onClose, onLobbyDeleted, refresh
                                     variant='primary'
                                     size='md'
                                     loading={isStartingGame}
+                                    loadingIndicatorPlacement='left'
                                     data-testid='start-game-button'
                                 >
-                                    {isStartingGame ? 'Starting Game...' : 'Start Game'}
+                                    Start Game
                                 </Button>
                             </div>
                             <p className='text-tx-secondary mt-3 text-xs'>
@@ -769,9 +950,10 @@ export default function LobbyDetails({ lobbyId, onClose, onLobbyDeleted, refresh
                                 variant='destructive'
                                 size='md'
                                 loading={isEndingGame}
+                                loadingIndicatorPlacement='left'
                                 data-testid='end-game-button'
                             >
-                                {isEndingGame ? 'Ending Game...' : 'End Game'}
+                                End Game
                             </Button>
                         </div>
                         <GameProgressView teams={gameState.teams} />

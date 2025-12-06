@@ -1,0 +1,70 @@
+{
+  "meta": {
+    "title": "From STRAY to EIGHT",
+    "author": "Sandy Weisz and Bailey Holtz",
+    "difficulty": "medium",
+    "theme": "mystery4"
+  },
+  "ladder": [
+    {
+      "word": "STRAY",
+      "clue": "Drop a letter from <> to get a visit",
+      "transform": "-R"
+    },
+    {
+      "word": "STAY",
+      "clue": "\"<> in {}!\", a farewell phrase",
+      "transform": "in"
+    },
+    {
+      "word": "TOUCH",
+      "clue": "<>{}, feature of a smartphone",
+      "transform": "your phone's"
+    },
+    {
+      "word": "SCREEN",
+      "clue": "Change the last sound in <> to an /m/ to get a loud sound",
+      "transform": "/N/->/M/"
+    },
+    {
+      "word": "SCREAM",
+      "clue": "Drop a letter from <> to get something found in coffee shops",
+      "transform": "-S"
+    },
+    {
+      "word": "CREAM",
+      "clue": "Add a word to the front of <> to get a summer treat",
+      "transform": "+ICE"
+    },
+    {
+      "word": "ICE CREAM",
+      "clue": "Swap out the second word in <> to get something that's often complimentary at a restaurant",
+      "transform": "CREAM->WATER"
+    },
+    {
+      "word": "ICE WATER",
+      "clue": "Add a /fl/ to the front of <> and the result will sound like a method of insect control",
+      "transform": "+/FL/"
+    },
+    {
+      "word": "FLY SWATTER",
+      "clue": "Scientific unit found inside <>",
+      "transform": "includes"
+    },
+    {
+      "word": "WATT",
+      "clue": "Change the third letter in <> to get something done at many a restaurant",
+      "transform": "T->I"
+    },
+    {
+      "word": "WAIT",
+      "clue": "Drop the first letter of <> and the result will sound like this number",
+      "transform": "-/w/"
+    },
+    {
+      "word": "EIGHT",
+      "clue": null,
+      "transform": null
+    }
+  ]
+}
