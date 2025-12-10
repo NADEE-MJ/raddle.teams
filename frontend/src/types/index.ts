@@ -109,6 +109,9 @@ export enum GameWebSocketEvents {
     GAME_WON = 'game_won',
     STATE_UPDATE = 'state_update',
     ALREADY_SOLVED = 'already_solved',
+    TEAM_PLACED = 'team_placed',
+    ROUND_ENDED = 'round_ended',
+    NEW_ROUND_STARTED = 'new_round_started',
 }
 
 export type Direction = 'down' | 'up';
@@ -204,6 +207,34 @@ export interface AlreadySolvedEvent {
     word_index: number;
 }
 
+export interface TeamPlacedEvent {
+    type: GameWebSocketEvents.TEAM_PLACED;
+    lobby_id: number;
+    team_id: number;
+    team_name: string;
+    placement: number;
+    completed_at: string;
+}
+
+export interface RoundEndedEvent {
+    type: GameWebSocketEvents.ROUND_ENDED;
+    lobby_id: number;
+    round_number: number;
+    results: Array<{
+        team_id: number;
+        team_name: string;
+        placement: number;
+        points_earned: number;
+    }>;
+}
+
+export interface NewRoundStartedEvent {
+    type: GameWebSocketEvents.NEW_ROUND_STARTED;
+    lobby_id: number;
+    game_id: number;
+    round_number: number;
+}
+
 export type GameEvent =
     | GameStartedEvent
     | GuessSubmittedEvent
@@ -212,7 +243,10 @@ export type GameEvent =
     | StateUpdateEvent
     | TeamCompletedEvent
     | GameWonEvent
-    | AlreadySolvedEvent;
+    | AlreadySolvedEvent
+    | TeamPlacedEvent
+    | RoundEndedEvent
+    | NewRoundStartedEvent;
 
 // #########################################################################
 // ? ADMIN GAME STATE
@@ -221,6 +255,7 @@ export type GameEvent =
 export interface TeamGameProgress {
     team_id: number;
     team_name: string;
+    game_id: number;
     puzzle: {
         title: string;
         ladder: Array<{
@@ -237,4 +272,95 @@ export interface TeamGameProgress {
 export interface GameStateResponse {
     is_game_active: boolean;
     teams: TeamGameProgress[];
+}
+
+export interface RoundHistoryEntry {
+    round_number: number;
+    game_id: number;
+    started_at: string | null;
+    completed_at: string | null;
+    winner_team_id: number | null;
+    winner_team_name: string | null;
+}
+
+// #########################################################################
+// ? TOURNAMENT TYPES
+// #########################################################################
+
+export interface PlayerAward {
+    key: string;
+    title: string;
+    emoji: string;
+    description: string;
+}
+
+export interface PlayerGameStats {
+    player_id: number;
+    player_name: string;
+    correct_guesses: number;
+    total_guesses: number;
+    accuracy_rate: number;
+    words_solved: number[];
+    wrong_guesses: string[];
+    awards: PlayerAward[];
+}
+
+export interface TeamGameStats {
+    team_id: number;
+    team_name: string;
+    placement: number;
+    points_earned: number;
+    wrong_guesses: number;
+    wrong_guess_rate: number;
+    wrong_guess_label: string;
+    completed_at: string | null;
+    completion_percentage: number;
+    time_to_complete: number | null;
+    player_stats: PlayerGameStats[];
+}
+
+export interface GameStatsResponse {
+    game_id: number;
+    round_number: number;
+    started_at: string;
+    teams: TeamGameStats[];
+    last_round_winner_id: number | null;
+}
+
+export interface PlacementBreakdown {
+    first: number;
+    second: number;
+    third: number;
+    dnf: number;
+}
+
+export interface TeamLeaderboardEntry {
+    team_id: number;
+    team_name: string;
+    total_points: number;
+    rounds_won: number;
+    rounds_played: number;
+    placement_breakdown: PlacementBreakdown;
+    last_round_winner: boolean;
+}
+
+export interface LeaderboardResponse {
+    teams: TeamLeaderboardEntry[];
+    current_round: number;
+    total_rounds: number;
+    last_round_game_id: number | null;
+}
+
+export interface RoundResultEntry {
+    id: number;
+    lobby_id: number;
+    game_id: number;
+    team_id: number;
+    round_number: number;
+    placement: number;
+    points_earned: number;
+    completion_percentage: number;
+    time_to_complete: number | null;
+    completed_at: string | null;
+    created_at: string;
 }

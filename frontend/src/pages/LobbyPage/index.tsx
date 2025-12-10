@@ -5,7 +5,16 @@ import { useWebSocket } from '@/hooks/useWebSocket';
 import { useGlobalOutletContext } from '@/hooks/useGlobalOutletContext';
 import { useDebounce } from '@/hooks/useDebounce';
 import { WebSocketMessage, LobbyWebSocketEvents, GameWebSocketEvents, Player, LobbyInfo } from '@/types';
-import { LoadingSpinner, CopyableCode, Button, ErrorMessage, Alert, Card, ConnectionBadge } from '@/components';
+import {
+    LoadingSpinner,
+    CopyableCode,
+    Button,
+    ErrorMessage,
+    Alert,
+    Card,
+    ConnectionBadge,
+    TeamLeaderboard,
+} from '@/components';
 
 export default function LobbyPage() {
     const navigate = useNavigate();
@@ -16,6 +25,7 @@ export default function LobbyPage() {
     const [isInitialLoad, setIsInitialLoad] = useState(true);
     const [error, setError] = useState<string | null>(null);
     const [wsError, setWsError] = useState<string | null>(null);
+    const [leaderboardRefresh, setLeaderboardRefresh] = useState(0);
 
     useEffect(() => {
         if (!sessionId) {
@@ -126,6 +136,16 @@ export default function LobbyPage() {
                         },
                     });
                     return;
+                case GameWebSocketEvents.ROUND_ENDED:
+                    console.log('Round ended, refreshing leaderboard');
+                    setLeaderboardRefresh(prev => prev + 1);
+                    scheduleReload();
+                    break;
+                case GameWebSocketEvents.NEW_ROUND_STARTED:
+                    console.log('New round started, refreshing leaderboard');
+                    setLeaderboardRefresh(prev => prev + 1);
+                    scheduleReload();
+                    break;
                 default:
                     console.log('Unknown lobby WebSocket message type:', message.type);
                     scheduleReload();
@@ -395,6 +415,11 @@ export default function LobbyPage() {
                             </Card>
                         </div>
                     )}
+
+                    {/* Tournament Leaderboard */}
+                    <div className='mb-6'>
+                        <TeamLeaderboard lobbyId={lobbyInfo.lobby.id} refreshTrigger={leaderboardRefresh} />
+                    </div>
                 </>
             )}
         </div>

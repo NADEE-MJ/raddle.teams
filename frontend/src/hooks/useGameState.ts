@@ -5,7 +5,7 @@
 import { useCallback, useState } from 'react';
 import { useWebSocket } from './useWebSocket';
 import type { Puzzle } from '@/types/game';
-import type { GameWonEvent, GuessSubmittedEvent, WebSocketMessage } from '@/types';
+import type { GameWonEvent, GuessSubmittedEvent, TeamPlacedEvent, WebSocketMessage } from '@/types';
 
 interface GameState {
     revealed_steps: number[];
@@ -19,10 +19,12 @@ interface UseGameStateProps {
     websocketUrl: string;
     onGameWon?: (event: GameWonEvent) => void;
     onTeamCompleted?: () => void;
+    onTeamPlaced?: (event: TeamPlacedEvent) => void;
     onPlayerKicked?: () => void;
     onTeamChanged?: () => void;
     onGameEnded?: () => void;
     onGameStarted?: () => void;
+    onNewRoundStarted?: () => void;
     sessionId?: string;
     maxRetries?: number;
     onMaxRetriesReached?: () => void;
@@ -35,10 +37,12 @@ export function useGameState({
     websocketUrl,
     onGameWon,
     onTeamCompleted,
+    onTeamPlaced,
     onPlayerKicked,
     onTeamChanged,
     onGameEnded,
     onGameStarted,
+    onNewRoundStarted,
     sessionId,
     maxRetries,
     onMaxRetriesReached,
@@ -82,6 +86,11 @@ export function useGameState({
                     onGameWon?.(message as GameWonEvent);
                     break;
 
+                case 'team_placed':
+                    console.log('[GameState] Team placed!', message);
+                    onTeamPlaced?.(message as TeamPlacedEvent);
+                    break;
+
                 case 'player_kicked':
                     console.log('[GameState] Player kicked event received');
                     // Check if it was us
@@ -107,12 +116,26 @@ export function useGameState({
                     console.log('[GameState] New game started');
                     onGameStarted?.();
                     break;
+                case 'new_round_started':
+                    console.log('[GameState] New round started event received');
+                    onNewRoundStarted?.();
+                    break;
 
                 default:
                     break;
             }
         },
-        [onGameWon, onTeamCompleted, onPlayerKicked, onTeamChanged, onGameEnded, onGameStarted, sessionId]
+        [
+            onGameWon,
+            onTeamCompleted,
+            onTeamPlaced,
+            onPlayerKicked,
+            onTeamChanged,
+            onGameEnded,
+            onGameStarted,
+            onNewRoundStarted,
+            sessionId,
+        ]
     );
 
     const { isConnected, sendMessage, connectionStatus, retryCount, manualReconnect } = useWebSocket(websocketUrl, {

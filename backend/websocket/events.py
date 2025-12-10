@@ -54,6 +54,9 @@ class GameWebSocketEvents(str, Enum):
     GAME_WON = "game_won"
     STATE_UPDATE = "state_update"
     ALREADY_SOLVED = "already_solved"
+    TEAM_PLACED = "team_placed"
+    ROUND_ENDED = "round_ended"
+    NEW_ROUND_STARTED = "new_round_started"
 
 
 class GameEvent(BaseModel):
@@ -116,3 +119,26 @@ class GameWonEvent(BaseModel):
 class AlreadySolvedEvent(GameEvent):
     type: GameWebSocketEvents = GameWebSocketEvents.ALREADY_SOLVED
     word_index: int
+
+
+class TeamPlacedEvent(BaseModel):
+    type: GameWebSocketEvents = GameWebSocketEvents.TEAM_PLACED
+    lobby_id: int
+    team_id: int
+    team_name: str
+    placement: int
+    completed_at: str
+
+
+class RoundEndedEvent(BaseModel):
+    type: GameWebSocketEvents = GameWebSocketEvents.ROUND_ENDED
+    lobby_id: int
+    round_number: int
+    results: list[dict]  # Summary data with placements and points
+
+
+class NewRoundStartedEvent(BaseModel):
+    type: GameWebSocketEvents = GameWebSocketEvents.NEW_ROUND_STARTED
+    lobby_id: int
+    game_id: int
+    round_number: int

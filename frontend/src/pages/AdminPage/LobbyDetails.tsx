@@ -1,11 +1,19 @@
 import { useState, useEffect, useCallback, useMemo } from 'react';
-import { LobbyInfo, GameStateResponse, GameWebSocketEvents, LobbyWebSocketEvents, WebSocketMessage } from '@/types';
+import {
+    LobbyInfo,
+    GameStateResponse,
+    GameWebSocketEvents,
+    LobbyWebSocketEvents,
+    WebSocketMessage,
+    RoundHistoryEntry,
+} from '@/types';
 import { Modal, CopyableCode, Button, TextInput, Select, ErrorMessage, Card, ConnectionBadge } from '@/components';
 import { api, ApiError } from '@/services/api';
 import { useGlobalOutletContext } from '@/hooks/useGlobalOutletContext';
 import { useDebounce } from '@/hooks/useDebounce';
 import { useWebSocket } from '@/hooks/useWebSocket';
 import GameProgressView from './GameProgressView';
+import { RoundSummary } from './RoundSummary';
 
 const MIN_TEAMS = 2;
 const MAX_TEAMS = 10;
@@ -39,6 +47,14 @@ export default function LobbyDetails({ lobbyId, onClose, onLobbyDeleted, refresh
 
     // Game state
     const [gameState, setGameState] = useState<GameStateResponse | null>(null);
+
+    // Round summary
+    const [showRoundSummary, setShowRoundSummary] = useState(false);
+    const [lastRoundGameId, setLastRoundGameId] = useState<number | null>(null);
+    const [summaryGameId, setSummaryGameId] = useState<number | null>(null);
+    const [roundHistory, setRoundHistory] = useState<RoundHistoryEntry[]>([]);
+    const [roundHistoryLoading, setRoundHistoryLoading] = useState(false);
+    const [roundHistoryError, setRoundHistoryError] = useState('');
 
     const maxTeamsAllowed = useMemo(() => {
         if (!selectedLobby) return MAX_TEAMS;
@@ -90,17 +106,36 @@ export default function LobbyDetails({ lobbyId, onClose, onLobbyDeleted, refresh
         }
     }, [adminApiToken, lobbyId]);
 
+    const loadRoundHistory = useCallback(async () => {
+        if (!adminApiToken) return;
+
+        try {
+            setRoundHistoryLoading(true);
+            setRoundHistoryError('');
+            const history = await api.admin.lobby.getRoundHistory(lobbyId, adminApiToken);
+            setRoundHistory(history);
+            setLastRoundGameId(history[0]?.game_id ?? null);
+        } catch (err) {
+            setRoundHistoryError('Failed to load round history');
+            console.error('Error loading round history:', err);
+        } finally {
+            setRoundHistoryLoading(false);
+        }
+    }, [adminApiToken, lobbyId]);
+
     const reloadAll = useCallback(async () => {
         await loadLobbyDetails();
         await loadGameState();
-    }, [loadLobbyDetails, loadGameState]);
+        await loadRoundHistory();
+    }, [loadLobbyDetails, loadGameState, loadRoundHistory]);
 
     const scheduleReload = useDebounce(reloadAll);
 
     useEffect(() => {
         loadLobbyDetails();
         loadGameState();
-    }, [loadLobbyDetails, loadGameState, refreshKey]);
+        loadRoundHistory();
+    }, [loadLobbyDetails, loadGameState, loadRoundHistory, refreshKey]);
 
     useEffect(() => {
         setNumTeams(prev => clampTeamCount(prev));
@@ -157,6 +192,11 @@ export default function LobbyDetails({ lobbyId, onClose, onLobbyDeleted, refresh
                 case GameWebSocketEvents.GAME_WON:
                     loadGameState();
                     break;
+                case GameWebSocketEvents.ROUND_ENDED:
+                case GameWebSocketEvents.NEW_ROUND_STARTED:
+                    loadGameState();
+                    loadRoundHistory();
+                    break;
                 case LobbyWebSocketEvents.CONNECTION_CONFIRMED:
                 case LobbyWebSocketEvents.TEAM_ASSIGNED:
                 case LobbyWebSocketEvents.TEAM_CHANGED:
@@ -211,6 +251,16 @@ export default function LobbyDetails({ lobbyId, onClose, onLobbyDeleted, refresh
             sendMessage({ action: 'unsubscribe_lobby', lobby_id: lobbyId });
         };
     }, [isWsConnected, lobbyId, sendMessage]);
+
+    const openRoundSummary = useCallback((gameId: number) => {
+        setSummaryGameId(gameId);
+        setShowRoundSummary(true);
+    }, []);
+
+    const closeRoundSummary = useCallback(() => {
+        setShowRoundSummary(false);
+        setSummaryGameId(null);
+    }, []);
 
     const handleCreateTeams = useCallback(async () => {
         if (!adminApiToken || !selectedLobby) {
@@ -453,10 +503,18 @@ export default function LobbyDetails({ lobbyId, onClose, onLobbyDeleted, refresh
             return;
         }
 
-        if (confirm('Are you sure you want to end the current game? This will reset all team progress.')) {
+        if (
+            confirm('Are you sure you want to end the current game? This will calculate points and start a new round.')
+        ) {
             setIsEndingGame(true);
             try {
                 setError('');
+                // Save the current game ID to show results later
+                const currentGameId = gameState.teams[0]?.game_id;
+                if (currentGameId) {
+                    setLastRoundGameId(currentGameId);
+                }
+
                 const result = await api.admin.lobby.endGame(selectedLobby.lobby.id, adminApiToken);
                 console.log('Game ended:', result);
                 // Reload lobby and game state
@@ -944,20 +1002,120 @@ export default function LobbyDetails({ lobbyId, onClose, onLobbyDeleted, refresh
                             >
                                 Game In Progress
                             </div>
-                            <Button
-                                onClick={handleEndGame}
-                                disabled={isEndingGame}
-                                variant='destructive'
-                                size='md'
-                                loading={isEndingGame}
-                                loadingIndicatorPlacement='left'
-                                data-testid='end-game-button'
-                            >
-                                End Game
-                            </Button>
+                            <div className='flex gap-2'>
+                                {lastRoundGameId && (
+                                    <Button
+                                        onClick={() => openRoundSummary(lastRoundGameId)}
+                                        variant='secondary'
+                                        size='md'
+                                        data-testid='view-last-round-results-button'
+                                    >
+                                        View Last Round Results
+                                    </Button>
+                                )}
+                                <Button
+                                    onClick={handleEndGame}
+                                    disabled={isEndingGame}
+                                    variant='destructive'
+                                    size='md'
+                                    loading={isEndingGame}
+                                    loadingIndicatorPlacement='left'
+                                    data-testid='end-game-button'
+                                >
+                                    End Round
+                                </Button>
+                            </div>
                         </div>
                         <GameProgressView teams={gameState.teams} />
                     </div>
+                )}
+
+                {/* View Results Button when no active game but we have results */}
+                {!gameState?.is_game_active && lastRoundGameId && (
+                    <div className='mb-6'>
+                        <Card>
+                            <div className='flex items-center justify-between'>
+                                <div>
+                                    <h3 className='text-tx-primary mb-1 text-lg font-semibold'>
+                                        Round Results Available
+                                    </h3>
+                                    <p className='text-tx-secondary text-sm'>
+                                        View detailed statistics from the last round
+                                    </p>
+                                </div>
+                                <Button
+                                    onClick={() => openRoundSummary(lastRoundGameId)}
+                                    variant='primary'
+                                    size='md'
+                                    data-testid='view-round-results-button'
+                                >
+                                    View Results
+                                </Button>
+                            </div>
+                        </Card>
+                    </div>
+                )}
+
+                <div className='mb-6'>
+                    <div className='mb-3 flex flex-col gap-2 sm:flex-row sm:items-center sm:justify-between'>
+                        <div className='text-tx-secondary text-sm tracking-wide uppercase'>Round History</div>
+                        <div className='text-tx-muted text-xs'>
+                            {roundHistory.length > 0 ? `${roundHistory.length} rounds` : 'No completed rounds yet'}
+                        </div>
+                    </div>
+                    <Card>
+                        {roundHistoryError && <ErrorMessage message={roundHistoryError} />}
+                        {roundHistoryLoading ? (
+                            <div className='text-tx-secondary py-4 text-sm'>Loading round history...</div>
+                        ) : roundHistory.length === 0 ? (
+                            <div className='text-tx-muted py-4 text-sm'>No rounds have been completed yet.</div>
+                        ) : (
+                            <div className='border-border overflow-hidden rounded-md border'>
+                                <table className='divide-border min-w-full divide-y'>
+                                    <thead className='bg-secondary text-tx-secondary text-left text-xs font-semibold uppercase'>
+                                        <tr>
+                                            <th className='px-4 py-2'>Round</th>
+                                            <th className='px-4 py-2'>Winner</th>
+                                            <th className='px-4 py-2'>Completed</th>
+                                            <th className='px-4 py-2 text-right'>Actions</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody className='divide-border bg-primary divide-y'>
+                                        {roundHistory.map(entry => (
+                                            <tr key={entry.game_id} className='hover:bg-tertiary/60'>
+                                                <td className='text-tx-primary px-4 py-3 text-sm font-semibold'>
+                                                    Round {entry.round_number}
+                                                </td>
+                                                <td className='text-tx-secondary px-4 py-3 text-sm'>
+                                                    {entry.winner_team_name || '—'}
+                                                </td>
+                                                <td className='text-tx-secondary px-4 py-3 text-sm'>
+                                                    {entry.completed_at
+                                                        ? new Date(entry.completed_at).toLocaleString()
+                                                        : '—'}
+                                                </td>
+                                                <td className='px-4 py-3 text-right'>
+                                                    <Button
+                                                        onClick={() => openRoundSummary(entry.game_id)}
+                                                        size='sm'
+                                                        variant='secondary'
+                                                        data-testid={`view-round-${entry.round_number}-summary`}
+                                                    >
+                                                        View summary
+                                                    </Button>
+                                                </td>
+                                            </tr>
+                                        ))}
+                                    </tbody>
+                                </table>
+                            </div>
+                        )}
+                    </Card>
+                </div>
+
+                {/* Round Summary Modal */}
+                {showRoundSummary && summaryGameId && (
+                    <RoundSummary gameId={summaryGameId} onClose={closeRoundSummary} />
                 )}
             </div>
         </Modal>

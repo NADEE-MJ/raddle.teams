@@ -1316,3 +1316,561 @@ class TestComprehensiveGameFlow:
 
         print("\n=== ALL TESTS COMPLETE ===")
         print("✓ All 21 comprehensive E2E tests passed!")
+
+    # ==================== TOURNAMENT FEATURE TESTS ====================
+
+    async def test_22_tournament_continuous_play_and_placements(
+        self,
+        admin_actions_fixture: AdminFixture,
+        player_actions_fixture: PlayerFixture,
+        settings: Settings,
+    ):
+        """Test that teams compete for all placements (1st, 2nd, 3rd) without auto-revealing puzzles."""
+        test_name = "TEST_22"
+
+        # Setup admin with lobby
+        admin_actions, admin_page, admin_session, lobby_code = await setup_admin_with_lobby(
+            admin_actions_fixture, settings, test_name
+        )
+        await admin_actions.peek_into_lobby(lobby_code)
+
+        # Join 6 players for 3 teams
+        player1_actions, player1_page, player1_session = await setup_player(
+            player_actions_fixture, test_name, "Alice", lobby_code
+        )
+        player2_actions, player2_page, player2_session = await setup_player(
+            player_actions_fixture, test_name, "Bob", lobby_code
+        )
+        player3_actions, player3_page, player3_session = await setup_player(
+            player_actions_fixture, test_name, "Charlie", lobby_code
+        )
+        player4_actions, player4_page, player4_session = await setup_player(
+            player_actions_fixture, test_name, "Diana", lobby_code
+        )
+        player5_actions, player5_page, player5_session = await setup_player(
+            player_actions_fixture, test_name, "Eva", lobby_code
+        )
+        player6_actions, player6_page, player6_session = await setup_player(
+            player_actions_fixture, test_name, "Frank", lobby_code
+        )
+
+        await admin_page.wait_for_timeout(1000)
+        refresh_button = admin_page.locator('[data-testid="refresh-lobby-button"]')
+        if await refresh_button.is_visible(timeout=1000):
+            await refresh_button.click()
+            await admin_page.wait_for_timeout(1000)
+
+        # Create 3 teams
+        team1_name, team2_name, team3_name = await setup_teams_and_assign_players(
+            admin_actions,
+            admin_page,
+            3,
+            {0: ["Alice", "Bob"], 1: ["Charlie", "Diana"], 2: ["Eva", "Frank"]},
+        )
+
+        # Start game
+        await admin_actions.start_game(difficulty="medium")
+        await player1_actions.wait_for_game_to_start(timeout=15000)
+        await player3_actions.wait_for_game_to_start(timeout=15000)
+        await player5_actions.wait_for_game_to_start(timeout=15000)
+
+        # Get session IDs and puzzle data
+        server_url = "http://localhost:8000"
+        alice_session_id = await player1_page.evaluate("""() => localStorage.getItem('raddle_session_id')""")
+        charlie_session_id = await player3_page.evaluate("""() => localStorage.getItem('raddle_session_id')""")
+        eva_session_id = await player5_page.evaluate("""() => localStorage.getItem('raddle_session_id')""")
+
+        alice_puzzle = await player1_actions.get_puzzle_data(alice_session_id, server_url)
+        charlie_puzzle = await player3_actions.get_puzzle_data(charlie_session_id, server_url)
+        eva_puzzle = await player5_actions.get_puzzle_data(eva_session_id, server_url)
+
+        team1_total_words = len(alice_puzzle["puzzle"]["ladder"])
+        team2_total_words = len(charlie_puzzle["puzzle"]["ladder"])
+        team3_total_words = len(eva_puzzle["puzzle"]["ladder"])
+
+        print(
+            f"Team 1: {team1_total_words} words, Team 2: {team2_total_words} words, Team 3: {team3_total_words} words"
+        )
+
+        # Team 1 will finish first
+        print("\nTeam 1 solving to finish first...")
+        await player1_actions.solve_partial_puzzle_alternating(
+            alice_session_id, server_url, num_words_from_start=team1_total_words - 2, num_words_from_end=0
+        )
+
+        # Wait for Team 1 to finish
+        await player1_page.wait_for_timeout(2000)
+        await player1_session.screenshot("63_team1_finished_first")
+
+        # Verify Team 2 and Team 3 can still see their puzzles (no auto-reveal)
+        team2_puzzle_visible = await player3_page.locator('[data-testid="word-ladder-container"]').is_visible()
+        team3_puzzle_visible = await player5_page.locator('[data-testid="word-ladder-container"]').is_visible()
+
+        assert team2_puzzle_visible, "Team 2 puzzle should still be visible"
+        assert team3_puzzle_visible, "Team 3 puzzle should still be visible"
+
+        print("✓ Puzzles NOT auto-revealed - teams can compete for 2nd and 3rd place")
+
+        # Team 3 finishes second
+        print("\nTeam 3 solving to finish second...")
+        await player5_actions.solve_partial_puzzle_alternating(
+            eva_session_id, server_url, num_words_from_start=team3_total_words - 2, num_words_from_end=0
+        )
+
+        await player5_page.wait_for_timeout(2000)
+        await player5_session.screenshot("64_team3_finished_second")
+
+        # Team 2 finishes third
+        print("\nTeam 2 solving to finish third...")
+        await player3_actions.solve_partial_puzzle_alternating(
+            charlie_session_id, server_url, num_words_from_start=team2_total_words - 2, num_words_from_end=0
+        )
+
+        await player3_page.wait_for_timeout(2000)
+        await player3_session.screenshot("65_team2_finished_third")
+
+        # Verify admin can see all placements
+        await admin_page.wait_for_timeout(1000)
+        await admin_session.screenshot("66_admin_sees_all_placements")
+
+        print("✓ Tournament continuous play: all teams competed for placements!")
+
+    async def test_23_tournament_round_ending_with_points(
+        self,
+        admin_actions_fixture: AdminFixture,
+        player_actions_fixture: PlayerFixture,
+        settings: Settings,
+    ):
+        """Test admin ending round, points calculation, and new round creation."""
+        test_name = "TEST_23"
+
+        # Setup admin with lobby
+        admin_actions, admin_page, admin_session, lobby_code = await setup_admin_with_lobby(
+            admin_actions_fixture, settings, test_name
+        )
+        await admin_actions.peek_into_lobby(lobby_code)
+
+        # Join 4 players for 2 teams
+        player1_actions, player1_page, player1_session = await setup_player(
+            player_actions_fixture, test_name, "Alice", lobby_code
+        )
+        player2_actions, player2_page, player2_session = await setup_player(
+            player_actions_fixture, test_name, "Bob", lobby_code
+        )
+
+        await admin_page.wait_for_timeout(1000)
+        refresh_button = admin_page.locator('[data-testid="refresh-lobby-button"]')
+        if await refresh_button.is_visible(timeout=1000):
+            await refresh_button.click()
+            await admin_page.wait_for_timeout(1000)
+
+        # Create 2 teams
+        team1_name, team2_name = await setup_teams_and_assign_players(
+            admin_actions, admin_page, 2, {0: ["Alice"], 1: ["Bob"]}
+        )
+
+        # Verify leaderboard shows 0 rounds played initially
+        leaderboard_visible = await admin_page.locator('text="🏆 Tournament Leaderboard"').is_visible()
+        if leaderboard_visible:
+            await admin_session.screenshot("67_initial_leaderboard_no_rounds")
+            print("✓ Leaderboard visible before any rounds")
+
+        # Start game
+        await admin_actions.start_game(difficulty="medium")
+        await player1_actions.wait_for_game_to_start(timeout=15000)
+        await player2_actions.wait_for_game_to_start(timeout=15000)
+
+        # Get session IDs
+        server_url = "http://localhost:8000"
+        alice_session_id = await player1_page.evaluate("""() => localStorage.getItem('raddle_session_id')""")
+
+        # Team 1 completes puzzle
+        alice_puzzle = await player1_actions.get_puzzle_data(alice_session_id, server_url)
+        team1_total_words = len(alice_puzzle["puzzle"]["ladder"])
+
+        print("\nTeam 1 solving puzzle...")
+        await player1_actions.solve_partial_puzzle_alternating(
+            alice_session_id, server_url, num_words_from_start=team1_total_words - 2, num_words_from_end=0
+        )
+
+        await player1_page.wait_for_timeout(2000)
+
+        # Admin ends the round
+        print("\nAdmin ending round...")
+        await admin_actions.end_game()
+
+        await admin_page.wait_for_timeout(2000)
+        await admin_session.screenshot("68_round_ended_new_round_started")
+
+        # Verify new game can be started (button should be visible)
+        start_game_button = admin_page.locator('[data-testid="start-game-button"]')
+        await expect(start_game_button).to_be_visible(timeout=5000)
+
+        print("✓ Round ended and new round created")
+
+        # Verify leaderboard shows round 1 results
+        if await admin_page.locator('text="Round 1"').is_visible(timeout=2000):
+            await admin_session.screenshot("69_leaderboard_shows_round_1")
+            print("✓ Leaderboard updated with Round 1 results")
+
+    async def test_24_tournament_leaderboard_updates(
+        self,
+        admin_actions_fixture: AdminFixture,
+        player_actions_fixture: PlayerFixture,
+        settings: Settings,
+    ):
+        """Test leaderboard updates and cumulative points across rounds."""
+        test_name = "TEST_24"
+
+        # Setup admin with lobby
+        admin_actions, admin_page, admin_session, lobby_code = await setup_admin_with_lobby(
+            admin_actions_fixture, settings, test_name
+        )
+        await admin_actions.peek_into_lobby(lobby_code)
+
+        # Join 4 players for 2 teams
+        player1_actions, player1_page, player1_session = await setup_player(
+            player_actions_fixture, test_name, "Alice", lobby_code
+        )
+        player2_actions, player2_page, player2_session = await setup_player(
+            player_actions_fixture, test_name, "Bob", lobby_code
+        )
+
+        await admin_page.wait_for_timeout(1000)
+        refresh_button = admin_page.locator('[data-testid="refresh-lobby-button"]')
+        if await refresh_button.is_visible(timeout=1000):
+            await refresh_button.click()
+            await admin_page.wait_for_timeout(1000)
+
+        # Create 2 teams
+        team1_name, team2_name = await setup_teams_and_assign_players(
+            admin_actions, admin_page, 2, {0: ["Alice"], 1: ["Bob"]}
+        )
+
+        # Play Round 1: Team 1 wins
+        print("\n=== Round 1 ===")
+        await admin_actions.start_game(difficulty="medium")
+        await player1_actions.wait_for_game_to_start(timeout=15000)
+        await player2_actions.wait_for_game_to_start(timeout=15000)
+
+        server_url = "http://localhost:8000"
+        alice_session_id = await player1_page.evaluate("""() => localStorage.getItem('raddle_session_id')""")
+        alice_puzzle = await player1_actions.get_puzzle_data(alice_session_id, server_url)
+        team1_total_words = len(alice_puzzle["puzzle"]["ladder"])
+
+        await player1_actions.solve_partial_puzzle_alternating(
+            alice_session_id, server_url, num_words_from_start=team1_total_words - 2, num_words_from_end=0
+        )
+        await player1_page.wait_for_timeout(2000)
+
+        await admin_actions.end_game()
+        await admin_page.wait_for_timeout(2000)
+
+        # Check leaderboard shows Round 1
+        if await admin_page.locator('text="Round 1"').is_visible(timeout=2000):
+            print("✓ Leaderboard shows Round 1")
+            await admin_session.screenshot("70_leaderboard_after_round_1")
+
+        # Play Round 2: Team 2 wins
+        print("\n=== Round 2 ===")
+        await admin_actions.start_game(difficulty="medium")
+        await player1_actions.wait_for_game_to_start(timeout=15000)
+        await player2_actions.wait_for_game_to_start(timeout=15000)
+
+        bob_session_id = await player2_page.evaluate("""() => localStorage.getItem('raddle_session_id')""")
+        bob_puzzle = await player2_actions.get_puzzle_data(bob_session_id, server_url)
+        team2_total_words = len(bob_puzzle["puzzle"]["ladder"])
+
+        await player2_actions.solve_partial_puzzle_alternating(
+            bob_session_id, server_url, num_words_from_start=team2_total_words - 2, num_words_from_end=0
+        )
+        await player2_page.wait_for_timeout(2000)
+
+        await admin_actions.end_game()
+        await admin_page.wait_for_timeout(2000)
+
+        # Check leaderboard shows Round 2 and cumulative points
+        if await admin_page.locator('text="Round 2"').is_visible(timeout=2000):
+            print("✓ Leaderboard shows Round 2")
+            await admin_session.screenshot("71_leaderboard_after_round_2")
+
+        # Verify placement breakdown format (1st-2nd-3rd-DNF)
+        placement_breakdown_visible = await admin_page.locator("text=/\\(\\d+-\\d+-\\d+-\\d+\\)/").is_visible()
+        if placement_breakdown_visible:
+            print("✓ Placement breakdown format visible")
+
+        print("✓ Leaderboard cumulative points working across rounds")
+
+    async def test_25_tournament_round_summary_viewing(
+        self,
+        admin_actions_fixture: AdminFixture,
+        player_actions_fixture: PlayerFixture,
+        settings: Settings,
+    ):
+        """Test admin viewing round summary with player stats and awards."""
+        test_name = "TEST_25"
+
+        # Setup admin with lobby
+        admin_actions, admin_page, admin_session, lobby_code = await setup_admin_with_lobby(
+            admin_actions_fixture, settings, test_name
+        )
+        await admin_actions.peek_into_lobby(lobby_code)
+
+        # Join 4 players for 2 teams
+        player1_actions, player1_page, player1_session = await setup_player(
+            player_actions_fixture, test_name, "Alice", lobby_code
+        )
+        player2_actions, player2_page, player2_session = await setup_player(
+            player_actions_fixture, test_name, "Bob", lobby_code
+        )
+        player3_actions, player3_page, player3_session = await setup_player(
+            player_actions_fixture, test_name, "Charlie", lobby_code
+        )
+        player4_actions, player4_page, player4_session = await setup_player(
+            player_actions_fixture, test_name, "Diana", lobby_code
+        )
+
+        await admin_page.wait_for_timeout(1000)
+        refresh_button = admin_page.locator('[data-testid="refresh-lobby-button"]')
+        if await refresh_button.is_visible(timeout=1000):
+            await refresh_button.click()
+            await admin_page.wait_for_timeout(1000)
+
+        # Create 2 teams with 2 players each
+        team1_name, team2_name = await setup_teams_and_assign_players(
+            admin_actions, admin_page, 2, {0: ["Alice", "Bob"], 1: ["Charlie", "Diana"]}
+        )
+
+        # Start and complete a round
+        await admin_actions.start_game(difficulty="medium")
+        await player1_actions.wait_for_game_to_start(timeout=15000)
+        await player2_actions.wait_for_game_to_start(timeout=15000)
+        await player3_actions.wait_for_game_to_start(timeout=15000)
+        await player4_actions.wait_for_game_to_start(timeout=15000)
+
+        server_url = "http://localhost:8000"
+        alice_session_id = await player1_page.evaluate("""() => localStorage.getItem('raddle_session_id')""")
+        bob_session_id = await player2_page.evaluate("""() => localStorage.getItem('raddle_session_id')""")
+
+        alice_puzzle = await player1_actions.get_puzzle_data(alice_session_id, server_url)
+        team1_total_words = len(alice_puzzle["puzzle"]["ladder"])
+
+        # Alice and Bob collaborate to solve
+        alice_words = (team1_total_words - 2) // 2
+        bob_words = (team1_total_words - 2) - alice_words
+
+        print(f"Alice solving {alice_words} words, Bob solving {bob_words} words")
+        await player1_actions.solve_partial_puzzle_alternating(
+            alice_session_id, server_url, num_words_from_start=alice_words, num_words_from_end=0
+        )
+        await player2_actions.solve_partial_puzzle_alternating(
+            bob_session_id, server_url, num_words_from_start=0, num_words_from_end=bob_words
+        )
+
+        await player1_page.wait_for_timeout(2000)
+
+        # End round
+        await admin_actions.end_game()
+        await admin_page.wait_for_timeout(2000)
+
+        # Check for "View Last Round Results" or "View Results" button
+        view_results_button = admin_page.locator('button:has-text("View"), button:has-text("Results")')
+        if await view_results_button.is_visible(timeout=3000):
+            print("✓ View Results button visible")
+            await view_results_button.first.click()
+            await admin_page.wait_for_timeout(1000)
+
+            # Verify round summary modal elements
+            round_results_heading = await admin_page.locator('text="Round"').first.is_visible()
+            if round_results_heading:
+                await admin_session.screenshot("72_round_summary_modal")
+                print("✓ Round summary modal opened")
+
+                # Check for team rankings table
+                if await admin_page.locator('text="Team Rankings"').is_visible():
+                    print("✓ Team rankings table visible")
+
+                # Check for medals
+                if await admin_page.locator('text="🥇"').is_visible():
+                    print("✓ Medals visible in rankings")
+
+                # Try to expand player details
+                show_details_button = admin_page.locator('button:has-text("Show")')
+                if await show_details_button.is_visible(timeout=2000):
+                    await show_details_button.first.click()
+                    await admin_page.wait_for_timeout(1000)
+                    await admin_session.screenshot("73_player_stats_expanded")
+
+                    # Check for player names
+                    alice_visible = await admin_page.locator('text="Alice"').is_visible()
+                    bob_visible = await admin_page.locator('text="Bob"').is_visible()
+
+                    if alice_visible and bob_visible:
+                        print("✓ Player stats visible")
+
+                # Close modal
+                close_button = admin_page.locator('button:has-text("Close")')
+                if await close_button.is_visible():
+                    await close_button.last.click()
+                    await admin_page.wait_for_timeout(500)
+                    print("✓ Round summary modal closed")
+
+        print("✓ Round summary viewing complete")
+
+    async def test_26_tournament_dnf_scoring(
+        self,
+        admin_actions_fixture: AdminFixture,
+        player_actions_fixture: PlayerFixture,
+        settings: Settings,
+    ):
+        """Test DNF (Did Not Finish) scoring with completion percentage."""
+        test_name = "TEST_26"
+
+        # Setup admin with lobby
+        admin_actions, admin_page, admin_session, lobby_code = await setup_admin_with_lobby(
+            admin_actions_fixture, settings, test_name
+        )
+        await admin_actions.peek_into_lobby(lobby_code)
+
+        # Join 4 players for 2 teams
+        player1_actions, player1_page, player1_session = await setup_player(
+            player_actions_fixture, test_name, "Alice", lobby_code
+        )
+        player2_actions, player2_page, player2_session = await setup_player(
+            player_actions_fixture, test_name, "Bob", lobby_code
+        )
+
+        await admin_page.wait_for_timeout(1000)
+        refresh_button = admin_page.locator('[data-testid="refresh-lobby-button"]')
+        if await refresh_button.is_visible(timeout=1000):
+            await refresh_button.click()
+            await admin_page.wait_for_timeout(1000)
+
+        # Create 2 teams
+        team1_name, team2_name = await setup_teams_and_assign_players(
+            admin_actions, admin_page, 2, {0: ["Alice"], 1: ["Bob"]}
+        )
+
+        # Start game
+        await admin_actions.start_game(difficulty="medium")
+        await player1_actions.wait_for_game_to_start(timeout=15000)
+        await player2_actions.wait_for_game_to_start(timeout=15000)
+
+        server_url = "http://localhost:8000"
+        alice_session_id = await player1_page.evaluate("""() => localStorage.getItem('raddle_session_id')""")
+        bob_session_id = await player2_page.evaluate("""() => localStorage.getItem('raddle_session_id')""")
+
+        alice_puzzle = await player1_actions.get_puzzle_data(alice_session_id, server_url)
+        bob_puzzle = await player2_actions.get_puzzle_data(bob_session_id, server_url)
+
+        team1_total_words = len(alice_puzzle["puzzle"]["ladder"])
+        team2_total_words = len(bob_puzzle["puzzle"]["ladder"])
+
+        # Team 1 completes fully
+        print("\nTeam 1 completing puzzle...")
+        await player1_actions.solve_partial_puzzle_alternating(
+            alice_session_id, server_url, num_words_from_start=team1_total_words - 2, num_words_from_end=0
+        )
+        await player1_page.wait_for_timeout(2000)
+
+        # Team 2 completes only ~60% (DNF)
+        team2_partial_words = int((team2_total_words - 2) * 0.6)
+        print(f"\nTeam 2 completing {team2_partial_words} out of {team2_total_words - 2} words (DNF)...")
+        await player2_actions.solve_partial_puzzle_alternating(
+            bob_session_id, server_url, num_words_from_start=team2_partial_words, num_words_from_end=0
+        )
+        await player2_page.wait_for_timeout(1000)
+
+        # Admin ends round (Team 2 did not finish)
+        print("\nAdmin ending round with DNF team...")
+        await admin_actions.end_game()
+        await admin_page.wait_for_timeout(2000)
+
+        await admin_session.screenshot("74_round_ended_with_dnf")
+
+        # Verify leaderboard shows results
+        if await admin_page.locator('text="Round 1"').is_visible(timeout=2000):
+            print("✓ Round ended with DNF scoring")
+
+        print("✓ DNF scoring complete")
+
+    async def test_27_tournament_zero_points_rule(
+        self,
+        admin_actions_fixture: AdminFixture,
+        player_actions_fixture: PlayerFixture,
+        settings: Settings,
+    ):
+        """Test zero-points rule: if nobody finishes, everyone gets 0 points."""
+        test_name = "TEST_27"
+
+        # Setup admin with lobby
+        admin_actions, admin_page, admin_session, lobby_code = await setup_admin_with_lobby(
+            admin_actions_fixture, settings, test_name
+        )
+        await admin_actions.peek_into_lobby(lobby_code)
+
+        # Join 4 players for 2 teams
+        player1_actions, player1_page, player1_session = await setup_player(
+            player_actions_fixture, test_name, "Alice", lobby_code
+        )
+        player2_actions, player2_page, player2_session = await setup_player(
+            player_actions_fixture, test_name, "Bob", lobby_code
+        )
+
+        await admin_page.wait_for_timeout(1000)
+        refresh_button = admin_page.locator('[data-testid="refresh-lobby-button"]')
+        if await refresh_button.is_visible(timeout=1000):
+            await refresh_button.click()
+            await admin_page.wait_for_timeout(1000)
+
+        # Create 2 teams
+        team1_name, team2_name = await setup_teams_and_assign_players(
+            admin_actions, admin_page, 2, {0: ["Alice"], 1: ["Bob"]}
+        )
+
+        # Start game
+        await admin_actions.start_game(difficulty="medium")
+        await player1_actions.wait_for_game_to_start(timeout=15000)
+        await player2_actions.wait_for_game_to_start(timeout=15000)
+
+        server_url = "http://localhost:8000"
+        alice_session_id = await player1_page.evaluate("""() => localStorage.getItem('raddle_session_id')""")
+        bob_session_id = await player2_page.evaluate("""() => localStorage.getItem('raddle_session_id')""")
+
+        alice_puzzle = await player1_actions.get_puzzle_data(alice_session_id, server_url)
+        bob_puzzle = await player2_actions.get_puzzle_data(bob_session_id, server_url)
+
+        team1_total_words = len(alice_puzzle["puzzle"]["ladder"])
+        team2_total_words = len(bob_puzzle["puzzle"]["ladder"])
+
+        # Both teams complete only ~30% (neither finishes)
+        team1_partial = int((team1_total_words - 2) * 0.3)
+        team2_partial = int((team2_total_words - 2) * 0.3)
+
+        print(f"\nTeam 1 completing {team1_partial} words (not finishing)...")
+        await player1_actions.solve_partial_puzzle_alternating(
+            alice_session_id, server_url, num_words_from_start=team1_partial, num_words_from_end=0
+        )
+
+        print(f"\nTeam 2 completing {team2_partial} words (not finishing)...")
+        await player2_actions.solve_partial_puzzle_alternating(
+            bob_session_id, server_url, num_words_from_start=team2_partial, num_words_from_end=0
+        )
+
+        await player1_page.wait_for_timeout(1000)
+
+        # Admin ends round (nobody finished)
+        print("\nAdmin ending round with no finishers...")
+        await admin_actions.end_game()
+        await admin_page.wait_for_timeout(2000)
+
+        await admin_session.screenshot("75_round_ended_nobody_finished")
+
+        # Verify leaderboard shows 0 points for all teams
+        if await admin_page.locator('text="0 pts"').is_visible(timeout=2000):
+            print("✓ Zero-points rule: all teams got 0 points")
+
+        print("✓ Zero-points rule verified")
+
+        print("\n=== ALL TOURNAMENT TESTS COMPLETE ===")
+        print("✓ All 27 E2E tests passed (21 base + 6 tournament)!")

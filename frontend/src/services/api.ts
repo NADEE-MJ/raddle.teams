@@ -10,6 +10,10 @@ import {
     GameStateResponse,
     StartGameRequest,
     StartGameResponse,
+    LeaderboardResponse,
+    GameStatsResponse,
+    RoundHistoryEntry,
+    RoundResultEntry,
 } from '@/types';
 import type { Puzzle } from '@/types/game';
 
@@ -186,6 +190,20 @@ export const api = {
             async getGameState(lobbyId: number, bearerToken: string): Promise<GameStateResponse> {
                 return request<GameStateResponse>(`/admin/lobby/${lobbyId}/game-state`, {}, bearerToken);
             },
+            async getRoundHistory(lobbyId: number, bearerToken: string): Promise<RoundHistoryEntry[]> {
+                return request<RoundHistoryEntry[]>(`/admin/lobby/${lobbyId}/rounds`, {}, bearerToken);
+            },
+            async getRoundResults(
+                lobbyId: number,
+                roundNumber: number,
+                bearerToken: string
+            ): Promise<RoundResultEntry[]> {
+                return request<RoundResultEntry[]>(
+                    `/admin/lobby/${lobbyId}/round-results/${roundNumber}`,
+                    {},
+                    bearerToken
+                );
+            },
             async endGame(lobbyId: number, bearerToken: string): Promise<StartGameResponse> {
                 return request<StartGameResponse>(
                     `/admin/lobby/${lobbyId}/end`,
@@ -249,6 +267,14 @@ export const api = {
                     guesses: Guess[];
                 }>(`/game/puzzle?player_session_id=${sessionId}`, {}, sessionId);
             },
+        },
+    },
+    tournament: {
+        async getLeaderboard(lobbyId: number): Promise<LeaderboardResponse> {
+            return request<LeaderboardResponse>(`/lobby/${lobbyId}/leaderboard`);
+        },
+        async getGameStats(gameId: number): Promise<GameStatsResponse> {
+            return request<GameStatsResponse>(`/stats/game/${gameId}`);
         },
     },
 };

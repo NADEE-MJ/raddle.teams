@@ -164,3 +164,18 @@ body {
 .animate-ladder-slide-up {
     animation: ladder-slide-up 0.22s ease-out both;
 }
+
+@keyframes slide-in-top {
+    from {
+        opacity: 0;
+        transform: translateY(-20px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+.animate-slide-in-top {
+    animation: slide-in-top 0.3s ease-out both;
+}

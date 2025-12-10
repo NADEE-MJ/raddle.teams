@@ -10,3 +10,5 @@ export { default as Modal } from '@/components/Modal';
 export { default as Select } from '@/components/Select';
 export { default as StatusIndicator } from '@/components/StatusIndicator';
 export { default as TextInput } from '@/components/TextInput';
+export { TeamLeaderboard } from '@/components/TeamLeaderboard';
+export { PlacementNotification, PlacementNotificationsContainer } from '@/components/PlacementNotification';
