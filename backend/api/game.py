@@ -466,6 +466,30 @@ async def handle_guess_submission(
                     )
                     await websocket_manager.broadcast_to_lobby(lobby_id, team_placed_event)
 
+                    incomplete_games = (
+                        session.exec(
+                            select(func.count(Game.id))
+                            .join(Team, Team.game_id == Game.id)
+                            .where(Team.lobby_id == lobby_id)
+                            .where(Game.completed_at.is_(None))
+                        ).first()
+                        or 0
+                    )
+                    if incomplete_games == 0:
+                        ready_players = session.exec(
+                            select(Player).where(Player.lobby_id == lobby_id, Player.is_ready.is_(True))
+                        ).all()
+                        if ready_players:
+                            for ready_player in ready_players:
+                                ready_player.is_ready = False
+                                session.add(ready_player)
+                            session.commit()
+
+                            await websocket_manager.broadcast_to_lobby(
+                                lobby_id,
+                                {"type": "game_ended", "lobby_id": lobby_id},
+                            )
+
             session.commit()
 
         except Exception as e:

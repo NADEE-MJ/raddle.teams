@@ -26,37 +26,67 @@ export default function GameProgressView({ teams }: GameProgressViewProps) {
         [teams, collapsedTeams]
     );
 
-    const stuckHint = useMemo(() => deriveStuckHint(teamStates), [teamStates]);
-    const [dismissedHintSignature, setDismissedHintSignature] = useState<string | null>(null);
-    const showStuckHint = stuckHint && stuckHint.signature !== dismissedHintSignature;
+    const stuckHints = useMemo(() => deriveStuckHints(teamStates), [teamStates]);
+    const [dismissedHintSignatures, setDismissedHintSignatures] = useState<Set<string>>(new Set());
 
     const toggleTeamCollapse = (teamId: number) => {
         setCollapsedTeams(prev => ({ ...prev, [teamId]: !prev[teamId] }));
     };
 
+    const dismissHint = (signature: string) => {
+        setDismissedHintSignatures(prev => new Set(prev).add(signature));
+    };
+
     return (
         <div className='space-y-4'>
-            {showStuckHint && stuckHint && (
-                <Alert variant='info' className='flex items-start gap-3' data-testid='stuck-clue-alert'>
-                    <div className='flex-1 space-y-1 text-sm text-blue-900'>
-                        <div className='font-semibold'>All teams are stuck on the {stuckHint.directionLabel} clue</div>
-                        <div>
-                            <span className='font-semibold'>Solve:</span>{' '}
-                            <span className='font-mono font-bold text-blue-900'>{stuckHint.word}</span>
+            {stuckHints.forward && !dismissedHintSignatures.has(stuckHints.forward.signature) && (
+                <Alert variant='warning' className='flex items-start gap-3' data-testid='stuck-clue-alert-forward'>
+                    <div className='flex-1 space-y-1 text-sm'>
+                        <div className='text-tx-primary font-semibold'>
+                            All teams are stuck on the {stuckHints.forward.directionLabel} clue
                         </div>
-                        <div className='text-xs leading-relaxed'>
-                            <span className='font-semibold text-blue-800'>Clue:</span>{' '}
-                            {stuckHint.direction === 'forward'
-                                ? renderForwardClue(stuckHint.clue, stuckHint.knownWord)
-                                : renderBackwardClue(stuckHint.clue, stuckHint.knownWord)}
+                        <div className='text-tx-primary'>
+                            <span className='font-semibold'>Solve:</span>{' '}
+                            <span className='font-mono font-bold'>{stuckHints.forward.word}</span>
+                        </div>
+                        <div className='text-tx-secondary text-xs leading-relaxed'>
+                            <span className='font-semibold'>Clue:</span>{' '}
+                            {renderForwardClue(stuckHints.forward.clue, stuckHints.forward.knownWord)}
                         </div>
                     </div>
                     <Button
                         variant='link'
                         size='sm'
-                        className='text-blue-900 underline'
-                        onClick={() => setDismissedHintSignature(stuckHint.signature)}
-                        data-testid='dismiss-stuck-clue-alert'
+                        className='text-tx-secondary underline'
+                        onClick={() => dismissHint(stuckHints.forward!.signature)}
+                        data-testid='dismiss-stuck-clue-alert-forward'
+                    >
+                        Dismiss
+                    </Button>
+                </Alert>
+            )}
+
+            {stuckHints.backward && !dismissedHintSignatures.has(stuckHints.backward.signature) && (
+                <Alert variant='warning' className='flex items-start gap-3' data-testid='stuck-clue-alert-backward'>
+                    <div className='flex-1 space-y-1 text-sm'>
+                        <div className='text-tx-primary font-semibold'>
+                            All teams are stuck on the {stuckHints.backward.directionLabel} clue
+                        </div>
+                        <div className='text-tx-primary'>
+                            <span className='font-semibold'>Solve:</span>{' '}
+                            <span className='font-mono font-bold'>{stuckHints.backward.word}</span>
+                        </div>
+                        <div className='text-tx-secondary text-xs leading-relaxed'>
+                            <span className='font-semibold'>Clue:</span>{' '}
+                            {renderBackwardClue(stuckHints.backward.clue, stuckHints.backward.knownWord)}
+                        </div>
+                    </div>
+                    <Button
+                        variant='link'
+                        size='sm'
+                        className='text-tx-secondary underline'
+                        onClick={() => dismissHint(stuckHints.backward!.signature)}
+                        data-testid='dismiss-stuck-clue-alert-backward'
                     >
                         Dismiss
                     </Button>
@@ -125,13 +155,13 @@ function TeamProgress({ team, solving, isCollapsed, onToggleCollapse }: TeamProg
 
             {/* Current solving positions */}
             {!team.is_completed && (
-                <div className='border-border mb-4 space-y-3 rounded-lg border bg-blue-50/50 p-4'>
+                <div className='border-border/60 bg-secondary/60 mb-4 space-y-3 rounded-lg border p-4'>
                     <div className='text-tx-secondary mb-2 text-xs font-semibold tracking-wide uppercase'>
                         Current Solving Positions
                     </div>
 
                     {/* Down (forward) solving */}
-                    <div className='bg-primary rounded-lg border border-blue-200 p-3'>
+                    <div className='border-border/70 bg-tertiary/40 rounded-lg border p-3'>
                         <div className='mb-2 flex items-center gap-2'>
                             <span className='text-xs font-semibold text-blue-700'>↓ SOLVING DOWN</span>
                             <span className='text-tx-muted text-xs'>
@@ -150,18 +180,17 @@ function TeamProgress({ team, solving, isCollapsed, onToggleCollapse }: TeamProg
                         )}
                         <div className='text-tx-primary text-sm'>
                             <span className='font-semibold'>Solving for:</span>{' '}
-                            <span className='font-mono font-bold'>
-                                {revealedSet.has(currentDownAnswerIndex) ? (
-                                    <span className='text-green-700'>{downAnswer.word} ✓</span>
-                                ) : (
-                                    <span className='text-tx-muted'>{downAnswer.word}</span>
+                            <span className='border-accent/40 bg-accent/15 text-accent ml-1 inline-flex items-center gap-2 rounded-full border px-3 py-1 font-mono text-sm font-bold'>
+                                {downAnswer.word}
+                                {revealedSet.has(currentDownAnswerIndex) && (
+                                    <span className='text-green text-[11px] font-semibold'>Solved ✓</span>
                                 )}
                             </span>
                         </div>
                     </div>
 
                     {/* Up (backward) solving */}
-                    <div className='bg-primary rounded-lg border border-green-200 p-3'>
+                    <div className='border-border/70 bg-tertiary/40 rounded-lg border p-3'>
                         <div className='mb-2 flex items-center gap-2'>
                             <span className='text-xs font-semibold text-green-700'>↑ SOLVING UP</span>
                             <span className='text-tx-muted text-xs'>
@@ -180,11 +209,10 @@ function TeamProgress({ team, solving, isCollapsed, onToggleCollapse }: TeamProg
                         )}
                         <div className='text-tx-primary text-sm'>
                             <span className='font-semibold'>Solving for:</span>{' '}
-                            <span className='font-mono font-bold'>
-                                {revealedSet.has(currentUpQuestionIndex) ? (
-                                    <span className='text-green-700'>{upQuestion.word} ✓</span>
-                                ) : (
-                                    <span className='text-tx-muted'>{upQuestion.word}</span>
+                            <span className='border-accent/40 bg-accent/15 text-accent ml-1 inline-flex items-center gap-2 rounded-full border px-3 py-1 font-mono text-sm font-bold'>
+                                {upQuestion.word}
+                                {revealedSet.has(currentUpQuestionIndex) && (
+                                    <span className='text-green text-[11px] font-semibold'>Solved ✓</span>
                                 )}
                             </span>
                         </div>
@@ -408,10 +436,10 @@ function renderBackwardClue(clue: string, answerWord: string) {
     return <>{parts}</>;
 }
 
-function deriveStuckHint(teamStates: Array<{ team: TeamGameProgress; solving: SolvingContext }>) {
+function deriveStuckHints(teamStates: Array<{ team: TeamGameProgress; solving: SolvingContext }>) {
     const activeTeams = teamStates.filter(({ team }) => !team.is_completed);
     if (activeTeams.length < 2) {
-        return null;
+        return { forward: null, backward: null };
     }
 
     const forwardTargets = activeTeams.map(({ solving }) => ({
@@ -437,29 +465,26 @@ function deriveStuckHint(teamStates: Array<{ team: TeamGameProgress; solving: So
         new Set(backwardTargets.map(t => t.word)).size === 1 &&
         new Set(backwardTargets.map(t => t.clue)).size === 1;
 
-    if (allForwardStuck) {
-        const { word, clue, knownWord } = forwardTargets[0];
-        return {
-            direction: 'forward' as const,
-            directionLabel: 'forward',
-            word,
-            clue,
-            knownWord,
-            signature: `forward:${word}:${clue}`,
-        };
-    }
-
-    if (allBackwardStuck) {
-        const { word, clue, knownWord } = backwardTargets[0];
-        return {
-            direction: 'backward' as const,
-            directionLabel: 'backward',
-            word,
-            clue,
-            knownWord,
-            signature: `backward:${word}:${clue}`,
-        };
-    }
-
-    return null;
+    return {
+        forward: allForwardStuck
+            ? {
+                  direction: 'forward' as const,
+                  directionLabel: 'forward',
+                  word: forwardTargets[0].word,
+                  clue: forwardTargets[0].clue,
+                  knownWord: forwardTargets[0].knownWord,
+                  signature: `forward:${forwardTargets[0].word}:${forwardTargets[0].clue}`,
+              }
+            : null,
+        backward: allBackwardStuck
+            ? {
+                  direction: 'backward' as const,
+                  directionLabel: 'backward',
+                  word: backwardTargets[0].word,
+                  clue: backwardTargets[0].clue,
+                  knownWord: backwardTargets[0].knownWord,
+                  signature: `backward:${backwardTargets[0].word}:${backwardTargets[0].clue}`,
+              }
+            : null,
+    };
 }

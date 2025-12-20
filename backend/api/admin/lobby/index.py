@@ -177,15 +177,14 @@ async def get_game_state(lobby_id: int, db: Session = Depends(get_session)):
         api_logger.info(f"No active game in lobby_id={lobby_id}")
         return GameStateResponse(is_game_active=False, teams=[])
 
-    # Check if any game has been completed (winner declared)
-    # A game is completed when its completed_at field is set
-    has_completed_game = False
-    for team in teams_with_games:
-        if team.game_id:
-            game = db.get(Game, team.game_id)
-            if game and game.completed_at is not None:
-                has_completed_game = True
-                break
+    # Game is active while any assigned game is still incomplete
+    active_game_count = db.exec(
+        select(Game)
+        .join(Team, Team.game_id == Game.id)
+        .where(Team.lobby_id == lobby_id)
+        .where(Game.completed_at.is_(None))
+    ).all()
+    has_active_game = len(active_game_count) > 0
 
     # Build progress data for each team
     team_progress_list = []
@@ -223,9 +222,9 @@ async def get_game_state(lobby_id: int, db: Session = Depends(get_session)):
 
     api_logger.info(
         f"Returning game state for lobby_id={lobby_id}: {len(team_progress_list)} teams, "
-        f"is_game_active={not has_completed_game}"
+        f"is_game_active={has_active_game}"
     )
-    return GameStateResponse(is_game_active=not has_completed_game, teams=team_progress_list)
+    return GameStateResponse(is_game_active=has_active_game, teams=team_progress_list)
 
 
 @router.post("/lobby/{lobby_id}/end", response_model=MessageResponse)
