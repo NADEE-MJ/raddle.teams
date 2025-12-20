@@ -121,19 +121,19 @@ class TestPuzzleManagerLoading:
         """Should load all easy puzzles."""
         puzzles = puzzle_manager.load_puzzles_by_difficulty("easy")
         assert len(puzzles) == 3  # 3 valid easy puzzles
-        assert all(p.meta.difficulty == "easy" for p in puzzles)
+        assert all(p.puzzle.meta.difficulty == "easy" for p in puzzles)
 
     def test_load_medium_puzzles(self, puzzle_manager):
         """Should load all medium puzzles."""
         puzzles = puzzle_manager.load_puzzles_by_difficulty("medium")
         assert len(puzzles) == 2
-        assert all(p.meta.difficulty == "medium" for p in puzzles)
+        assert all(p.puzzle.meta.difficulty == "medium" for p in puzzles)
 
     def test_load_hard_puzzles(self, puzzle_manager):
         """Should load all hard puzzles."""
         puzzles = puzzle_manager.load_puzzles_by_difficulty("hard")
         assert len(puzzles) == 1
-        assert puzzles[0].meta.difficulty == "hard"
+        assert puzzles[0].puzzle.meta.difficulty == "hard"
 
     def test_case_insensitive_difficulty(self, puzzle_manager):
         """Difficulty should be case-insensitive."""
@@ -165,19 +165,37 @@ class TestPuzzleManagerLoading:
         puzzles = puzzle_manager.load_puzzles_by_difficulty("impossible")
         assert puzzles == []
 
+    def test_load_puzzle_by_path_cached(self, puzzle_manager):
+        """Should cache puzzles by their normalized path."""
+        puzzle_file = puzzle_manager.get_random_puzzle("easy")
+        assert puzzle_file is not None
+
+        puzzle_path = puzzle_manager.normalize_puzzle_path(puzzle_file.path)
+        puzzle1 = puzzle_manager.load_puzzle_by_path(puzzle_path)
+        puzzle2 = puzzle_manager.load_puzzle_by_path(puzzle_path)
+
+        assert puzzle1 is puzzle2
+
 
 class TestRandomPuzzleSelection:
     """Tests for random puzzle selection."""
 
     def test_get_random_puzzle(self, puzzle_manager):
         """Should return a random puzzle of specified difficulty."""
-        puzzle = puzzle_manager.get_random_puzzle("easy")
-        assert puzzle is not None
-        assert puzzle.meta.difficulty == "easy"
+        puzzle_file = puzzle_manager.get_random_puzzle("easy")
+        assert puzzle_file is not None
+        assert puzzle_file.puzzle.meta.difficulty == "easy"
 
     def test_get_random_puzzle_nonexistent(self, puzzle_manager):
         """Should return None for non-existent difficulty."""
         puzzle = puzzle_manager.get_random_puzzle("impossible")
+        assert puzzle is None
+
+    def test_get_random_puzzle_excludes_used(self, puzzle_manager):
+        """Should return None when all puzzles are excluded."""
+        puzzles = puzzle_manager.load_puzzles_by_difficulty("easy")
+        exclude_paths = {puzzle_manager.normalize_puzzle_path(p.path) for p in puzzles}
+        puzzle = puzzle_manager.get_random_puzzle("easy", exclude_paths=exclude_paths)
         assert puzzle is None
 
     def test_random_puzzle_variability(self, puzzle_manager):
@@ -187,7 +205,7 @@ class TestRandomPuzzleSelection:
         puzzles = [puzzle_manager.get_random_puzzle("easy") for _ in range(10)]
         assert all(p is not None for p in puzzles)
         # At least check they're all valid
-        assert all(p.meta.difficulty == "easy" for p in puzzles)
+        assert all(p.puzzle.meta.difficulty == "easy" for p in puzzles if p is not None)
 
 
 class TestTeamPuzzleAssignment:
@@ -198,16 +216,23 @@ class TestTeamPuzzleAssignment:
         puzzles = puzzle_manager.get_puzzles_for_teams(3, "easy")
 
         assert len(puzzles) == 3
-        assert all(p.meta.difficulty == "easy" for p in puzzles)
+        assert all(p.puzzle.meta.difficulty == "easy" for p in puzzles)
 
         # All puzzles should be unique
-        titles = [p.meta.title for p in puzzles]
+        titles = [p.puzzle.meta.title for p in puzzles]
         assert len(titles) == len(set(titles))
 
     def test_not_enough_puzzles_raises_error(self, puzzle_manager):
         """Should raise error if not enough puzzles available."""
         with pytest.raises(ValueError, match="Not enough"):
             puzzle_manager.get_puzzles_for_teams(5, "easy")  # Only 3 available
+
+    def test_excluding_puzzles_reduces_available_pool(self, puzzle_manager):
+        """Should raise error when excluded puzzles leave too few options."""
+        puzzles = puzzle_manager.load_puzzles_by_difficulty("easy")
+        exclude_paths = {puzzle_manager.normalize_puzzle_path(p.path) for p in puzzles[:2]}
+        with pytest.raises(ValueError, match="Not enough"):
+            puzzle_manager.get_puzzles_for_teams(2, "easy", exclude_paths=exclude_paths)
 
     def test_no_puzzles_for_difficulty(self, puzzle_manager):
         """Should raise error if no puzzles for difficulty."""
@@ -222,7 +247,7 @@ class TestTeamPuzzleAssignment:
 
         assert len(puzzles) == 2
         # Both should be medium difficulty
-        assert all(p.meta.difficulty == "medium" for p in puzzles)
+        assert all(p.puzzle.meta.difficulty == "medium" for p in puzzles)
 
 
 class TestPuzzleValidation:
@@ -276,8 +301,8 @@ class TestPuzzleSerialization:
 
     def test_puzzle_to_dict(self, puzzle_manager):
         """Should convert puzzle to dictionary."""
-        puzzle = puzzle_manager.get_random_puzzle("easy")
-        puzzle_dict = puzzle_manager.puzzle_to_dict(puzzle)
+        puzzle_file = puzzle_manager.get_random_puzzle("easy")
+        puzzle_dict = puzzle_manager.puzzle_to_dict(puzzle_file.puzzle)
 
         assert "meta" in puzzle_dict
         assert "ladder" in puzzle_dict
@@ -285,8 +310,8 @@ class TestPuzzleSerialization:
 
     def test_validate_puzzle_valid(self, puzzle_manager):
         """Should validate a valid puzzle dictionary."""
-        puzzle = puzzle_manager.get_random_puzzle("easy")
-        puzzle_dict = puzzle_manager.puzzle_to_dict(puzzle)
+        puzzle_file = puzzle_manager.get_random_puzzle("easy")
+        puzzle_dict = puzzle_manager.puzzle_to_dict(puzzle_file.puzzle)
 
         assert puzzle_manager.validate_puzzle(puzzle_dict)
 

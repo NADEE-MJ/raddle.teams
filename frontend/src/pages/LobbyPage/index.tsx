@@ -4,18 +4,22 @@ import { api } from '@/services/api';
 import { useWebSocket } from '@/hooks/useWebSocket';
 import { useGlobalOutletContext } from '@/hooks/useGlobalOutletContext';
 import { useDebounce } from '@/hooks/useDebounce';
+import { useToast } from '@/hooks/useToast';
 import { WebSocketMessage, LobbyWebSocketEvents, GameWebSocketEvents, Player, LobbyInfo } from '@/types';
 import { LoadingSpinner, CopyableCode, Button, ErrorMessage, Alert, Card, ConnectionBadge } from '@/components';
 
 export default function LobbyPage() {
     const navigate = useNavigate();
     const { sessionId, setSessionId } = useGlobalOutletContext();
+    const { addToast } = useToast();
 
     const [player, setPlayer] = useState<Player | null>(null);
     const [lobbyInfo, setLobbyInfo] = useState<LobbyInfo | null>(null);
     const [isInitialLoad, setIsInitialLoad] = useState(true);
     const [error, setError] = useState<string | null>(null);
     const [wsError, setWsError] = useState<string | null>(null);
+    const [isTeamGameCompleted, setIsTeamGameCompleted] = useState<boolean | null>(null);
+    const [isTogglingReady, setIsTogglingReady] = useState(false);
 
     useEffect(() => {
         if (!sessionId) {
@@ -48,14 +52,17 @@ export default function LobbyPage() {
                     const puzzleData = await api.player.game.getPuzzle(sessionId);
                     if (puzzleData && puzzleData.puzzle && !puzzleData.state.is_completed) {
                         console.log('[LobbyPage] Game already in progress, redirecting to game page');
+                        setIsTeamGameCompleted(false);
                         navigate('/game');
                         return;
                     } else if (puzzleData && puzzleData.state.is_completed) {
                         console.log('[LobbyPage] Game completed, staying on lobby page');
+                        setIsTeamGameCompleted(true);
                     }
                 } catch (err) {
                     // No active game yet, stay on lobby page
                     console.log('[LobbyPage] No active game found, staying on lobby page');
+                    setIsTeamGameCompleted(null);
                 }
             }
         } catch (err) {
@@ -90,6 +97,10 @@ export default function LobbyPage() {
                     console.log('Connection confirmed to lobby');
                     scheduleReload();
                     break;
+                case LobbyWebSocketEvents.PLAYER_JOINED:
+                    console.log('Player joined lobby');
+                    scheduleReload();
+                    break;
                 case LobbyWebSocketEvents.TEAM_ASSIGNED:
                 case LobbyWebSocketEvents.TEAM_CHANGED:
                     console.log('Team assignment changed');
@@ -103,7 +114,7 @@ export default function LobbyPage() {
                     // Check if it was us or another player
                     if (message.player_session_id === sessionId) {
                         // We were kicked
-                        alert('You have been kicked from the lobby by an admin.');
+                        addToast('You have been kicked from the lobby by an admin.', 'error', 5000);
                         setSessionId(null);
                         setPlayer(null);
                         setLobbyInfo(null);
@@ -115,6 +126,17 @@ export default function LobbyPage() {
                         scheduleReload();
                     }
                     break;
+                case LobbyWebSocketEvents.READY_STATUS_CHANGED:
+                    console.log('Player ready status changed');
+                    scheduleReload();
+                    break;
+                case LobbyWebSocketEvents.LOBBY_DELETED:
+                    addToast('This lobby was deleted by an admin.', 'error', 5000);
+                    setSessionId(null);
+                    setPlayer(null);
+                    setLobbyInfo(null);
+                    navigate('/');
+                    return;
                 case GameWebSocketEvents.GAME_STARTED:
                     console.log('Game started! Navigating to game page...');
                     // Navigate to game page
@@ -131,8 +153,27 @@ export default function LobbyPage() {
                     scheduleReload();
             }
         },
-        [scheduleReload, setSessionId, navigate, player, lobbyInfo, sessionId]
+        [scheduleReload, setSessionId, navigate, player, lobbyInfo, sessionId, addToast]
     );
+
+    const handleToggleReady = useCallback(async () => {
+        if (!sessionId) {
+            setError('No session ID found');
+            return;
+        }
+
+        setIsTogglingReady(true);
+        try {
+            setError(null);
+            await api.player.lobby.toggleReady(sessionId);
+            // State updated via WebSocket event
+        } catch (err) {
+            setError(err instanceof Error ? err.message : 'Failed to toggle ready status');
+            console.error('Error toggling ready:', err);
+        } finally {
+            setIsTogglingReady(false);
+        }
+    }, [sessionId]);
 
     const wsUrl = useMemo(
         () => (player?.lobby_id && sessionId ? `/ws/lobby/${player.lobby_id}/player/${sessionId}` : ''),
@@ -147,7 +188,7 @@ export default function LobbyPage() {
         autoReconnect: true,
         maxRetries: 10,
         onMaxRetriesReached: () => {
-            alert('Unable to connect to lobby. Please refresh the page or check your internet connection.');
+            setWsError('Unable to connect to lobby. Please refresh the page or check your internet connection.');
         },
     });
 
@@ -176,13 +217,20 @@ export default function LobbyPage() {
     const hasTeams = lobbyInfo.teams && lobbyInfo.teams.length > 0;
     const unassignedPlayers = lobbyInfo.players.filter(p => !p.team_id);
     const hasGameStarted = lobbyInfo.teams?.some(team => team.game_id);
+    const isCompletedRound = Boolean(player?.team_id && isTeamGameCompleted);
     let gameStatus = {
         icon: '👥',
         title: 'Waiting for more players',
         description: 'Waiting for more players to join or for the admin to start the game.',
     };
 
-    if (hasGameStarted) {
+    if (hasGameStarted && isCompletedRound) {
+        gameStatus = {
+            icon: '✅',
+            title: 'Round complete',
+            description: 'Your team finished this round. You can revisit it anytime at /game.',
+        };
+    } else if (hasGameStarted) {
         gameStatus = {
             icon: '⚡️',
             title: 'Game in progress',
@@ -255,6 +303,40 @@ export default function LobbyPage() {
                 </Card>
             </div>
 
+            {/* Ready Button - Only show if player is on a team */}
+            {player.team_id && (
+                <div>
+                    <Card className='bg-elevated/70 shadow-lg'>
+                        <div className='flex items-center justify-between'>
+                            <div>
+                                <div className='text-tx-secondary text-xs font-semibold tracking-wide uppercase'>
+                                    Your Status
+                                </div>
+                                <p className='text-tx-primary text-lg font-semibold'>
+                                    {player.is_ready ? '✓ Ready' : 'Not Ready'}
+                                </p>
+                            </div>
+                            <Button
+                                onClick={handleToggleReady}
+                                disabled={isTogglingReady}
+                                variant={player.is_ready ? 'secondary' : 'primary'}
+                                size='lg'
+                                loading={isTogglingReady}
+                            >
+                                {player.is_ready ? 'Unready' : 'Ready Up'}
+                            </Button>
+                        </div>
+                    </Card>
+                </div>
+            )}
+
+            {/* Message for unassigned players */}
+            {!player.team_id && hasTeams && (
+                <div>
+                    <Alert variant='info'>You need to be assigned to a team before you can ready up.</Alert>
+                </div>
+            )}
+
             {/* No teams created yet - show all players */}
             {!hasTeams && (
                 <div className='mb-6'>
@@ -279,6 +361,11 @@ export default function LobbyPage() {
                                         <span className='text-lg' data-testid={`player-name-${playerItem.name}`}>
                                             <span className='flex items-center gap-2'>
                                                 {playerItem.name}
+                                                {playerItem.is_ready && (
+                                                    <span className='text-green text-xs' title='Ready'>
+                                                        ✓
+                                                    </span>
+                                                )}
                                                 {playerItem.id === player.id && (
                                                     <span className='border-accent/40 text-accent rounded-full border px-2 py-0.5 text-[10px] font-semibold tracking-wide uppercase'>
                                                         You
@@ -346,6 +433,11 @@ export default function LobbyPage() {
                                                         data-testid={`team-member-${teamPlayer.name}`}
                                                     >
                                                         <span>{teamPlayer.name}</span>
+                                                        {teamPlayer.is_ready && (
+                                                            <span className='text-green text-xs' title='Ready'>
+                                                                ✓
+                                                            </span>
+                                                        )}
                                                         {teamPlayer.id === player.id && (
                                                             <span className='border-accent/40 text-accent rounded-full border px-2 py-0.5 text-[10px] font-semibold tracking-wide uppercase'>
                                                                 You

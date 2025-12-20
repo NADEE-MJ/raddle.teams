@@ -8,6 +8,7 @@ export interface Player {
     session_id: string;
     lobby_id: number;
     team_id?: number;
+    is_ready: boolean;
     created_at: string;
 }
 
@@ -17,7 +18,6 @@ export interface Team {
     game_id: number;
     lobby_id: number;
     current_word_index: number;
-    completed_at?: string;
     created_at: string;
 }
 
@@ -67,10 +67,13 @@ export interface StartGameResponse {
 
 export enum LobbyWebSocketEvents {
     CONNECTION_CONFIRMED = 'connection_confirmed',
+    PLAYER_JOINED = 'player_joined',
     TEAM_ASSIGNED = 'team_assigned',
     TEAM_CHANGED = 'team_changed',
     DISCONNECTED = 'disconnected',
     PLAYER_KICKED = 'player_kicked',
+    READY_STATUS_CHANGED = 'ready_status_changed',
+    LOBBY_DELETED = 'lobby_deleted',
 }
 
 export interface WebSocketMessage {
@@ -79,6 +82,7 @@ export interface WebSocketMessage {
     player_session_id?: string;
     message?: Record<string, unknown>;
     team_id?: number;
+    team_name?: string;
     lobby_id?: number;
     state?: string;
     revealed_steps?: number[];
@@ -87,6 +91,9 @@ export interface WebSocketMessage {
     last_updated_at?: string;
     old_team_id?: number;
     new_team_id?: number;
+    placement?: number;
+    points_earned?: number;
+    first_place_team_name?: string;
 }
 
 export type ConnectionStatus =
@@ -106,6 +113,7 @@ export enum GameWebSocketEvents {
     WORD_SOLVED = 'word_solved',
     DIRECTION_CHANGED = 'direction_changed',
     TEAM_COMPLETED = 'team_completed',
+    TEAM_PLACED = 'team_placed',
     GAME_WON = 'game_won',
     STATE_UPDATE = 'state_update',
     ALREADY_SOLVED = 'already_solved',
@@ -204,6 +212,16 @@ export interface AlreadySolvedEvent {
     word_index: number;
 }
 
+export interface TeamPlacedEvent {
+    type: GameWebSocketEvents.TEAM_PLACED;
+    team_id: number;
+    team_name: string;
+    placement: number;
+    points_earned: number;
+    completed_at: string;
+    first_place_team_name: string;
+}
+
 export type GameEvent =
     | GameStartedEvent
     | GuessSubmittedEvent
@@ -211,6 +229,7 @@ export type GameEvent =
     | DirectionChangedEvent
     | StateUpdateEvent
     | TeamCompletedEvent
+    | TeamPlacedEvent
     | GameWonEvent
     | AlreadySolvedEvent;
 

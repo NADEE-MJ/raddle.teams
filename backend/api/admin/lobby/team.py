@@ -82,6 +82,20 @@ async def move_player_to_team(
     old_team_id = player.team_id or 0
     player.team_id = team_id
     db.add(player)
+
+    # Reset ready status for all players on affected teams
+    if old_team_id:
+        old_team_players = db.exec(select(Player).where(Player.team_id == old_team_id)).all()
+        for p in old_team_players:
+            p.is_ready = False
+            db.add(p)
+
+    if team_id:
+        new_team_players = db.exec(select(Player).where(Player.team_id == team_id)).all()
+        for p in new_team_players:
+            p.is_ready = False
+            db.add(p)
+
     db.commit()
 
     if team_id:
@@ -148,6 +162,7 @@ async def create_teams(
     for i, player in enumerate(players_list):
         team_index = i % team_data.num_teams
         player.team_id = teams[team_index].id
+        player.is_ready = False  # All start unready
         db.add(player)
 
     db.commit()
@@ -236,6 +251,7 @@ async def remove_team(
     players_on_team = db.exec(select(Player).where(Player.team_id == team_id)).all()
     for player in players_on_team:
         player.team_id = None
+        player.is_ready = False  # Reset ready status
         db.add(player)
     db.delete(team)
     db.commit()

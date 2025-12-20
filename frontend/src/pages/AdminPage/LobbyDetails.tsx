@@ -28,7 +28,7 @@ export default function LobbyDetails({ lobbyId, onClose, onLobbyDeleted, refresh
     const [isRefreshing, setIsRefreshing] = useState(false);
     const [error, setError] = useState('');
     const [difficulty, setDifficulty] = useState<'easy' | 'medium' | 'hard'>('medium');
-    const [puzzleMode, setPuzzleMode] = useState<'same' | 'different'>('different');
+    const [puzzleMode, setPuzzleMode] = useState<'same' | 'different'>('same');
     const [wordCountMode, setWordCountMode] = useState<'exact' | 'balanced'>('balanced');
     const [isStartingGame, setIsStartingGame] = useState(false);
     const [isEndingGame, setIsEndingGame] = useState(false);
@@ -153,15 +153,26 @@ export default function LobbyDetails({ lobbyId, onClose, onLobbyDeleted, refresh
                         };
                     });
                     break;
+                case GameWebSocketEvents.TEAM_PLACED:
+                    // Log placement for now - UI will be added in Phase 7
+                    console.log('[Admin] Team placed:', {
+                        team_name: message.team_name,
+                        placement: message.placement,
+                        points_earned: message.points_earned,
+                        first_place_team_name: message.first_place_team_name,
+                    });
+                    break;
                 case GameWebSocketEvents.GAME_STARTED:
                 case GameWebSocketEvents.GAME_WON:
                     loadGameState();
                     break;
                 case LobbyWebSocketEvents.CONNECTION_CONFIRMED:
+                case LobbyWebSocketEvents.PLAYER_JOINED:
                 case LobbyWebSocketEvents.TEAM_ASSIGNED:
                 case LobbyWebSocketEvents.TEAM_CHANGED:
                 case LobbyWebSocketEvents.DISCONNECTED:
                 case LobbyWebSocketEvents.PLAYER_KICKED:
+                case LobbyWebSocketEvents.READY_STATUS_CHANGED:
                     // Keep lobby details in sync when players join/leave or teams change
                     scheduleReload();
                     break;
@@ -401,6 +412,18 @@ export default function LobbyDetails({ lobbyId, onClose, onLobbyDeleted, refresh
         },
         [adminApiToken, selectedLobby, hasActiveGame, reloadAll]
     );
+
+    const allPlayersReady = useMemo(() => {
+        if (!selectedLobby?.players) return false;
+        const playersWithTeams = selectedLobby.players.filter(p => p.team_id !== null);
+        if (playersWithTeams.length === 0) return false;
+        return playersWithTeams.every(p => p.is_ready);
+    }, [selectedLobby]);
+
+    const notReadyPlayers = useMemo(() => {
+        if (!selectedLobby?.players) return [];
+        return selectedLobby.players.filter(p => p.team_id !== null && !p.is_ready).map(p => p.name);
+    }, [selectedLobby]);
 
     const handleStartGame = useCallback(async () => {
         if (!adminApiToken || !selectedLobby) {
@@ -765,9 +788,21 @@ export default function LobbyDetails({ lobbyId, onClose, onLobbyDeleted, refresh
                                                         data-testid={`team-player-row-${player.name}`}
                                                         className='bg-secondary border-border flex items-center justify-between rounded border p-2'
                                                     >
-                                                        <span className='text-tx-primary text-sm font-medium'>
-                                                            {player.name}
-                                                        </span>
+                                                        <div className='flex items-center gap-2'>
+                                                            <span className='text-tx-primary text-sm font-medium'>
+                                                                {player.name}
+                                                            </span>
+                                                            {player.is_ready ? (
+                                                                <span
+                                                                    className='text-green text-xs font-semibold'
+                                                                    title='Ready'
+                                                                >
+                                                                    ✓ Ready
+                                                                </span>
+                                                            ) : (
+                                                                <span className='text-tx-muted text-xs'>Not ready</span>
+                                                            )}
+                                                        </div>
                                                         <div className='flex items-center gap-1'>
                                                             <Select
                                                                 value={player.team_id || ''}
@@ -910,10 +945,10 @@ export default function LobbyDetails({ lobbyId, onClose, onLobbyDeleted, refresh
                                     />
                                 </div>
                             </div>
-                            <div className='mt-4 flex justify-end'>
+                            <div className='mt-4 flex flex-col items-end gap-2'>
                                 <Button
                                     onClick={handleStartGame}
-                                    disabled={isStartingGame || gameState?.is_game_active}
+                                    disabled={isStartingGame || gameState?.is_game_active || !allPlayersReady}
                                     variant='primary'
                                     size='md'
                                     loading={isStartingGame}
@@ -922,6 +957,11 @@ export default function LobbyDetails({ lobbyId, onClose, onLobbyDeleted, refresh
                                 >
                                     Start Game
                                 </Button>
+                                {!allPlayersReady && notReadyPlayers.length > 0 && (
+                                    <p className='text-orange text-xs'>
+                                        Waiting for players to ready up: {notReadyPlayers.join(', ')}
+                                    </p>
+                                )}
                             </div>
                             <p className='text-tx-secondary mt-3 text-xs'>
                                 {puzzleMode === 'same'

@@ -12,6 +12,7 @@ import {
     StatusIndicator,
     TextInput,
 } from '@/components';
+import { useToast } from '@/hooks/useToast';
 
 export default function ComponentShowcasePage() {
     const [textInputValue, setTextInputValue] = useState('');
@@ -21,6 +22,7 @@ export default function ComponentShowcasePage() {
     const [showHintModal, setShowHintModal] = useState(false);
     const [showSecondHintModal, setShowSecondHintModal] = useState(false);
     const [buttonLoading, setButtonLoading] = useState(false);
+    const { addToast } = useToast();
 
     const handleButtonLoadingTest = () => {
         setButtonLoading(true);
@@ -337,6 +339,84 @@ export default function ComponentShowcasePage() {
                         onCancel={() => setShowSecondHintModal(false)}
                         secondHint={true}
                     />
+                </div>
+            </section>
+
+            {/* Toast Notifications */}
+            <section className='space-y-4'>
+                <h2 className='text-tx-primary border-border border-b pb-2 text-2xl font-semibold'>
+                    Toast Notifications
+                </h2>
+                <div className='space-y-4'>
+                    <Card>
+                        <h3 className='text-tx-primary mb-3 font-semibold'>Basic Toasts</h3>
+                        <div className='flex flex-wrap gap-3'>
+                            <Button onClick={() => addToast('This is a success message!', 'success')}>
+                                Success Toast
+                            </Button>
+                            <Button
+                                onClick={() => addToast('This is an error message!', 'error')}
+                                variant='destructive'
+                            >
+                                Error Toast
+                            </Button>
+                            <Button
+                                onClick={() => addToast('This is a warning message!', 'warning')}
+                                variant='secondary'
+                            >
+                                Warning Toast
+                            </Button>
+                            <Button onClick={() => addToast('This is an info message!', 'info')} variant='secondary'>
+                                Info Toast
+                            </Button>
+                        </div>
+                    </Card>
+
+                    <Card>
+                        <h3 className='text-tx-primary mb-3 font-semibold'>Placement Toasts</h3>
+                        <div className='flex flex-wrap gap-3'>
+                            <Button onClick={() => addToast('Team Alpha finished 1st!', 'placement', 5000, 1)}>
+                                1st Place 🥇
+                            </Button>
+                            <Button onClick={() => addToast('Team Beta finished 2nd!', 'placement', 5000, 2)}>
+                                2nd Place 🥈
+                            </Button>
+                            <Button onClick={() => addToast('Team Gamma finished 3rd!', 'placement', 5000, 3)}>
+                                3rd Place 🥉
+                            </Button>
+                            <Button onClick={() => addToast('Team Delta finished 4th!', 'placement', 5000, 4)}>
+                                4th Place 🏁
+                            </Button>
+                        </div>
+                    </Card>
+
+                    <Card>
+                        <h3 className='text-tx-primary mb-3 font-semibold'>Multiple Toasts (Stacking)</h3>
+                        <div className='flex flex-wrap gap-3'>
+                            <Button
+                                onClick={() => {
+                                    addToast('First notification', 'info');
+                                    setTimeout(() => addToast('Second notification', 'info'), 500);
+                                    setTimeout(() => addToast('Third notification', 'info'), 1000);
+                                }}
+                            >
+                                Add 3 Toasts
+                            </Button>
+                            <Button
+                                onClick={() => {
+                                    for (let i = 1; i <= 5; i++) {
+                                        setTimeout(() => addToast(`Notification #${i}`, 'success'), i * 300);
+                                    }
+                                }}
+                                variant='secondary'
+                            >
+                                Add 5 Toasts Rapidly
+                            </Button>
+                        </div>
+                        <p className='text-tx-secondary mt-3 text-sm'>
+                            Toasts stack automatically and show a &quot;+N more&quot; indicator when multiple exist.
+                        </p>
+                    </Card>
                 </div>
             </section>
 

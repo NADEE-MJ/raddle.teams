@@ -18,6 +18,7 @@ class Player(SQLModel, table=True):
     session_id: str = Field(unique=True)
     lobby_id: int = Field(foreign_key="lobby.id", ondelete="CASCADE")
     team_id: Optional[int] = Field(default=None, foreign_key="team.id", ondelete="CASCADE")
+    is_ready: bool = Field(default=False)
     created_at: datetime = Field(default_factory=lambda: datetime.now(tz=timezone.utc))
 
     # Relationships
@@ -33,12 +34,7 @@ class Team(SQLModel, table=True):
     lobby_id: int = Field(foreign_key="lobby.id", ondelete="CASCADE")
     game_id: Optional[int] = Field(default=None, foreign_key="game.id", ondelete="SET NULL")  # Link to team's puzzle
     current_word_index: int = Field(default=0)  # Deprecated, not used
-    completed_at: Optional[datetime] = Field(default=None)
     created_at: datetime = Field(default_factory=lambda: datetime.now(tz=timezone.utc))
-
-    # Simplified game state - server only tracks revealed words
-    revealed_steps: str = Field(default="[]", sa_column=Column(JSON))  # JSON array of revealed step indices
-    last_updated_at: Optional[datetime] = Field(default=None)
 
     # Relationships
     lobby: "Lobby" = Relationship(back_populates="teams")
@@ -67,9 +63,11 @@ class Game(SQLModel, table=True):
     id: Optional[int] = Field(default=None, primary_key=True)
     lobby_id: int = Field(foreign_key="lobby.id", ondelete="CASCADE")  # Removed unique constraint
     difficulty: str  # "easy", "medium", "hard"
-    puzzle_data: str = Field(sa_column=Column(JSON))  # Full puzzle JSON with meta and ladder
+    puzzle_path: str  # Relative or absolute path to the puzzle JSON file on disk
     started_at: datetime = Field(default_factory=lambda: datetime.now(tz=timezone.utc))
     completed_at: Optional[datetime] = Field(default=None)
+    revealed_steps: str = Field(default="[]", sa_column=Column(JSON))  # JSON array of revealed step indices
+    last_updated_at: Optional[datetime] = Field(default=None)
 
     # Relationships
     lobby: "Lobby" = Relationship(back_populates="games")

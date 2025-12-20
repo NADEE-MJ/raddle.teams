@@ -5,7 +5,7 @@
 import { useCallback, useState } from 'react';
 import { useWebSocket } from './useWebSocket';
 import type { Puzzle } from '@/types/game';
-import type { GameWonEvent, GuessSubmittedEvent, WebSocketMessage } from '@/types';
+import type { GuessSubmittedEvent, TeamPlacedEvent, WebSocketMessage } from '@/types';
 
 interface GameState {
     revealed_steps: number[];
@@ -17,9 +17,10 @@ interface UseGameStateProps {
     puzzle: Puzzle;
     initialState: GameState;
     websocketUrl: string;
-    onGameWon?: (event: GameWonEvent) => void;
+    onTeamPlaced?: (event: TeamPlacedEvent) => void;
     onTeamCompleted?: () => void;
     onPlayerKicked?: () => void;
+    onLobbyDeleted?: () => void;
     onTeamChanged?: () => void;
     onGameEnded?: () => void;
     onGameStarted?: () => void;
@@ -33,9 +34,10 @@ export function useGameState({
     puzzle,
     initialState,
     websocketUrl,
-    onGameWon,
+    onTeamPlaced,
     onTeamCompleted,
     onPlayerKicked,
+    onLobbyDeleted,
     onTeamChanged,
     onGameEnded,
     onGameStarted,
@@ -77,9 +79,14 @@ export function useGameState({
                     onTeamCompleted?.();
                     break;
 
-                case 'game_won':
-                    console.log('[GameState] Game won!', message);
-                    onGameWon?.(message as GameWonEvent);
+                case 'team_placed':
+                    console.log('[GameState] Team placed:', {
+                        team_name: message.team_name,
+                        placement: message.placement,
+                        points_earned: message.points_earned,
+                        first_place_team_name: message.first_place_team_name,
+                    });
+                    onTeamPlaced?.(message as TeamPlacedEvent);
                     break;
 
                 case 'player_kicked':
@@ -88,6 +95,10 @@ export function useGameState({
                     if (sessionId && message.player_session_id === sessionId) {
                         onPlayerKicked?.();
                     }
+                    break;
+                case 'lobby_deleted':
+                    console.log('[GameState] Lobby deleted by admin');
+                    onLobbyDeleted?.();
                     break;
 
                 case 'team_changed':
@@ -112,7 +123,16 @@ export function useGameState({
                     break;
             }
         },
-        [onGameWon, onTeamCompleted, onPlayerKicked, onTeamChanged, onGameEnded, onGameStarted, sessionId]
+        [
+            onTeamPlaced,
+            onTeamCompleted,
+            onPlayerKicked,
+            onLobbyDeleted,
+            onTeamChanged,
+            onGameEnded,
+            onGameStarted,
+            sessionId,
+        ]
     );
 
     const { isConnected, sendMessage, connectionStatus, retryCount, manualReconnect } = useWebSocket(websocketUrl, {

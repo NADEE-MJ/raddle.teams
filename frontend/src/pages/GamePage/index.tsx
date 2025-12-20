@@ -12,6 +12,7 @@ import { useCallback, useEffect, useMemo, useRef, useState } from 'react';
 import { useNavigate, useLocation } from 'react-router-dom';
 import { useGameState } from '@/hooks/useGameState';
 import { useGlobalOutletContext } from '@/hooks/useGlobalOutletContext';
+import { useToast } from '@/hooks/useToast';
 import type { Puzzle } from '@/types/game';
 import type { Player, GameWonEvent } from '@/types';
 import { api } from '@/services/api';
@@ -45,6 +46,9 @@ export default function GamePage() {
     useEffect(() => {
         async function loadGameData() {
             try {
+                setLoading(true);
+                setError(null);
+
                 // Try to restore session ID from localStorage if not in context
                 let currentSessionId = sessionId;
                 if (!currentSessionId) {
@@ -130,16 +134,27 @@ type StepFeedbackEntry = {
     token: number;
 };
 
+// Helper function to get ordinal suffix (1st, 2nd, 3rd, etc.)
+function getOrdinalSuffix(num: number): string {
+    const j = num % 10;
+    const k = num % 100;
+    if (j === 1 && k !== 11) return 'st';
+    if (j === 2 && k !== 12) return 'nd';
+    if (j === 3 && k !== 13) return 'rd';
+    return 'th';
+}
+
 // GameProps now includes sessionId from GamePageProps
 
 function Game({ puzzle, player, teamName, lobbyId, lobbyCode, sessionId, initialState }: GameProps) {
     const navigate = useNavigate();
     const { setSessionId } = useGlobalOutletContext();
+    const { addToast } = useToast();
     const inputRef = useRef<HTMLInputElement>(null);
     const feedbackTimeoutsRef = useRef<Record<number, { token: number; timeout: ReturnType<typeof setTimeout> }>>({});
-    const [showWinModal, setShowWinModal] = useState(false);
-    const [winnerTeamName, setWinnerTeamName] = useState('');
-    const [isOurTeamWinner, setIsOurTeamWinner] = useState(false);
+    const [showPlacementModal, setShowPlacementModal] = useState(false);
+    const [placement, setPlacement] = useState<number | null>(null);
+    const [firstPlaceTeamName, setFirstPlaceTeamName] = useState('');
     const [showFullLadder, setShowFullLadder] = useState(false);
     const [stepFeedback, setStepFeedback] = useState<Record<number, StepFeedbackEntry>>({});
 
@@ -147,25 +162,31 @@ function Game({ puzzle, player, teamName, lobbyId, lobbyCode, sessionId, initial
     const wsUrl = `/ws/lobby/${lobbyId}/player/${sessionId}`;
 
     const handlePlayerKicked = useCallback(() => {
-        alert('You have been kicked from the lobby by an admin.');
+        addToast('You have been kicked from the lobby by an admin.', 'error', 5000);
         setSessionId(null);
         navigate('/');
-    }, [navigate, setSessionId]);
+    }, [addToast, navigate, setSessionId]);
+
+    const handleLobbyDeleted = useCallback(() => {
+        addToast('This lobby was deleted by an admin.', 'error', 5000);
+        setSessionId(null);
+        navigate('/');
+    }, [addToast, navigate, setSessionId]);
 
     const handleTeamChanged = useCallback(() => {
-        alert('Your team assignment has changed. Returning to lobby...');
+        addToast('Your team assignment has changed. Returning to the lobby.', 'info', 4000);
         navigate(`/lobby/${lobbyCode}`);
-    }, [navigate, lobbyCode]);
+    }, [addToast, navigate, lobbyCode]);
 
     const handleGameEnded = useCallback(() => {
-        alert('The game has been ended by an admin. Returning to lobby...');
+        addToast('The game has been ended by an admin. Returning to the lobby.', 'info', 4000);
         navigate(`/lobby/${lobbyCode}`);
-    }, [navigate, lobbyCode]);
+    }, [addToast, navigate, lobbyCode]);
 
     const handleGameStarted = useCallback(() => {
-        alert('A new game has been started! Returning to lobby...');
-        navigate(`/lobby/${lobbyCode}`);
-    }, [navigate, lobbyCode]);
+        addToast('A new game has been started! Loading the new puzzle.', 'info', 4000);
+        navigate('/game', { replace: true, state: { gameStartedAt: Date.now() } });
+    }, [addToast, navigate]);
 
     const {
         revealedSteps,
@@ -186,30 +207,48 @@ function Game({ puzzle, player, teamName, lobbyId, lobbyCode, sessionId, initial
         puzzle,
         initialState,
         websocketUrl: wsUrl,
-        onGameWon: handleGameWon,
+        onTeamPlaced: handleTeamPlaced,
         onTeamCompleted: handleTeamCompleted,
         onPlayerKicked: handlePlayerKicked,
+        onLobbyDeleted: handleLobbyDeleted,
         onTeamChanged: handleTeamChanged,
         onGameEnded: handleGameEnded,
         onGameStarted: handleGameStarted,
         sessionId,
         maxRetries: 10,
         onMaxRetriesReached: () => {
-            alert(
-                'Connection failed after multiple attempts. Please check your internet connection and click the Retry button.'
+            addToast(
+                'Connection failed after multiple attempts. Check your connection and click Retry.',
+                'error',
+                6000
             );
         },
     });
 
-    function handleGameWon(event: GameWonEvent) {
-        setWinnerTeamName(event.winning_team_name);
-        setIsOurTeamWinner(event.winning_team_id === player.team_id);
-        setShowWinModal(true);
+    function handleTeamPlaced(event: {
+        team_id: number;
+        team_name?: string;
+        placement: number;
+        first_place_team_name: string;
+    }) {
+        // Only show modal for our own team's placement
+        if (event.team_id === player.team_id) {
+            setPlacement(event.placement);
+            setFirstPlaceTeamName(event.first_place_team_name);
+            setShowPlacementModal(true);
+        } else {
+            // Show toast notification for other teams
+            const ordinalSuffix = getOrdinalSuffix(event.placement);
+            const message = event.team_name
+                ? `${event.team_name} finished ${event.placement}${ordinalSuffix}!`
+                : `A team finished ${event.placement}${ordinalSuffix}!`;
+            addToast(message, 'placement', 5000, event.placement);
+        }
     }
 
     function handleTeamCompleted() {
         console.log('[GamePage] Team completed!');
-        // Winner announcement will come via GAME_WON event
+        // Placement announcement will come via TEAM_PLACED event
     }
 
     const focusInput = useCallback(() => {
@@ -547,44 +586,48 @@ function Game({ puzzle, player, teamName, lobbyId, lobbyCode, sessionId, initial
                 </div>
             )}
 
-            {/* Win Modal */}
-            <Modal isOpen={showWinModal} onClose={() => setShowWinModal(false)} maxWidth='max-w-lg'>
+            {/* Placement Modal */}
+            <Modal isOpen={showPlacementModal} onClose={() => setShowPlacementModal(false)} maxWidth='max-w-lg'>
                 <div className='animate-pop px-6 pt-2 pb-8 text-center'>
                     <div className='bg-accent/20 mx-auto mb-4 flex h-16 w-16 items-center justify-center rounded-full text-3xl'>
-                        {isOurTeamWinner ? '🏆' : '🚀'}
+                        {placement === 1 ? '🏆' : placement === 2 ? '🥈' : placement === 3 ? '🥉' : '✅'}
                     </div>
                     <h2 className='text-tx-primary mb-2 text-3xl font-extrabold'>
-                        {isOurTeamWinner ? 'Champions!' : 'Game Over'}
+                        {placement === 1 ? 'Victory!' : `${placement}${getOrdinalSuffix(placement ?? 0)} Place`}
                     </h2>
                     <p className='text-tx-secondary text-sm'>
-                        {isOurTeamWinner
-                            ? 'You crushed the puzzle. Take a breather while the admin spins up the next round.'
-                            : `${winnerTeamName || 'Another team'} finished first. Ask the admin to drop you back into the next game.`}
+                        {placement === 1
+                            ? 'Congratulations! You solved the puzzle first!'
+                            : `You finished in ${placement}${getOrdinalSuffix(placement ?? 0)} place. ${firstPlaceTeamName} finished 1st.`}
                     </p>
 
                     <div className='mt-6 grid gap-3 text-left sm:grid-cols-2'>
                         <div className='border-border/60 bg-secondary/70 rounded-lg border p-4'>
-                            <p className='text-tx-muted text-xs tracking-wide uppercase'>Winning Team</p>
-                            <p className='text-tx-primary text-lg font-semibold'>{winnerTeamName || 'TBD'}</p>
-                            {!isOurTeamWinner && (
-                                <p className='text-tx-secondary mt-1 text-xs'>
-                                    Give them a 👏 and get ready for the rematch.
-                                </p>
-                            )}
+                            <p className='text-tx-muted text-xs tracking-wide uppercase'>Your Placement</p>
+                            <p className='text-tx-primary text-lg font-semibold'>
+                                {placement}
+                                {getOrdinalSuffix(placement ?? 0)} Place
+                            </p>
+                            <p className='text-tx-secondary mt-1 text-xs'>
+                                {placement === 1 ? 'Excellent work! 🎉' : 'Well done! 🎉'}
+                            </p>
                         </div>
                         <div className='border-border/60 bg-secondary/70 rounded-lg border p-4'>
-                            <p className='text-tx-muted text-xs tracking-wide uppercase'>Your Team</p>
-                            <p className='text-tx-primary text-lg font-semibold'>{teamName}</p>
+                            <p className='text-tx-muted text-xs tracking-wide uppercase'>1st Place</p>
+                            <p className='text-tx-primary text-lg font-semibold'>{firstPlaceTeamName}</p>
                             <p className='text-tx-secondary mt-1 text-xs'>
-                                {isOurTeamWinner
-                                    ? 'Enjoy the victory lap while we prep the next ladder.'
-                                    : 'Stay ready—once the admin assigns teams again you will jump right in.'}
+                                {placement === 1 ? "That's you!" : 'The team to beat!'}
                             </p>
                         </div>
                     </div>
 
                     <div className='mt-8 flex flex-col gap-3'>
-                        <Button onClick={() => setShowWinModal(false)} variant='primary' size='lg' className='w-full'>
+                        <Button
+                            onClick={() => setShowPlacementModal(false)}
+                            variant='primary'
+                            size='lg'
+                            className='w-full'
+                        >
                             Review Puzzle
                         </Button>
                         <Button onClick={handleReturnToLobby} variant='secondary' size='lg' className='w-full'>

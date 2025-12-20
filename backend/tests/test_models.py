@@ -48,13 +48,6 @@ class TestTeamModel:
         assert team.lobby_id == 1
         assert team.game_id is None
         assert team.current_word_index == 0
-        assert team.completed_at is None
-
-    def test_team_revealed_steps_default(self):
-        """Team should have empty revealed_steps by default."""
-        team = Team(name="Test Team", lobby_id=1)
-
-        assert team.revealed_steps == "[]"
 
     def test_team_with_game(self):
         """Team can have a game_id."""
@@ -94,16 +87,17 @@ class TestGameModel:
 
     def test_game_creation(self):
         """Game can be created with required fields."""
-        game = Game(lobby_id=1, difficulty="medium", puzzle_data='{"meta": {}, "ladder": []}')
+        game = Game(lobby_id=1, difficulty="medium", puzzle_path="easy/puzzle.json")
 
         assert game.lobby_id == 1
         assert game.difficulty == "medium"
-        assert game.puzzle_data == '{"meta": {}, "ladder": []}'
+        assert game.puzzle_path == "easy/puzzle.json"
         assert game.completed_at is None
+        assert game.revealed_steps == "[]"
 
     def test_game_started_at_default(self):
         """Game should have started_at set by default."""
-        game = Game(lobby_id=1, difficulty="easy", puzzle_data='{"meta": {}, "ladder": []}')
+        game = Game(lobby_id=1, difficulty="easy", puzzle_path="easy/puzzle.json")
 
         assert game.started_at is not None
         assert isinstance(game.started_at, datetime)
@@ -111,7 +105,7 @@ class TestGameModel:
     def test_game_difficulty_values(self):
         """Game can have different difficulty values."""
         for difficulty in ["easy", "medium", "hard"]:
-            game = Game(lobby_id=1, difficulty=difficulty, puzzle_data='{"meta": {}, "ladder": []}')
+            game = Game(lobby_id=1, difficulty=difficulty, puzzle_path="easy/puzzle.json")
             assert game.difficulty == difficulty
 
 

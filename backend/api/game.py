@@ -5,23 +5,22 @@ from datetime import datetime, timezone
 
 from fastapi import APIRouter, Depends, HTTPException
 from pydantic import BaseModel
-from sqlmodel import Session, select
+from sqlmodel import Session, func, select
 
 from backend.custom_logging import websocket_logger
 from backend.database import get_session
 from backend.database.models import Game, Guess, Lobby, Player, Team
 from backend.dependencies import check_admin_token
-from backend.game.puzzles import Puzzle as PuzzlePydantic
 from backend.game.puzzles import get_puzzle_manager
 from backend.game.state_machine import GuessResult, TeamState, TeamStateMachine
 from backend.schemas import AdminStartGameRequest
 from backend.websocket.events import (
     AlreadySolvedEvent,
     GameStartedEvent,
-    GameWonEvent,
     GuessSubmittedEvent,
     StateUpdateEvent,
     TeamCompletedEvent,
+    TeamPlacedEvent,
     WordSolvedEvent,
 )
 
@@ -55,21 +54,21 @@ def get_team_state_machine(team: Team, game: Game) -> TeamStateMachine:
     Returns:
         TeamStateMachine instance
     """
-    # Parse puzzle from game
-    puzzle = PuzzlePydantic(**game.puzzle_data)
+    puzzle_manager = get_puzzle_manager()
+    puzzle = puzzle_manager.load_puzzle_by_path(game.puzzle_path)
 
-    # Load revealed steps from team
+    # Load revealed steps from game
     revealed_steps_list = (
-        json.loads(team.revealed_steps) if isinstance(team.revealed_steps, str) else team.revealed_steps
+        json.loads(game.revealed_steps) if isinstance(game.revealed_steps, str) else game.revealed_steps
     )
     revealed_steps = set(revealed_steps_list) if revealed_steps_list else {0, len(puzzle.ladder) - 1}
 
-    # Create state from team data
-    if team.last_updated_at:
+    # Create state from game data
+    if game.last_updated_at:
         state = TeamState(
             revealed_steps=revealed_steps,
-            is_completed=team.completed_at is not None,
-            last_updated_at=team.last_updated_at,
+            is_completed=game.completed_at is not None,
+            last_updated_at=game.last_updated_at,
         )
         machine = TeamStateMachine(puzzle, initial_state=state)
     else:
@@ -79,7 +78,7 @@ def get_team_state_machine(team: Team, game: Game) -> TeamStateMachine:
     return machine
 
 
-def save_team_state(team: Team, state: TeamState, session: Session):
+def save_game_state(game: Game, state: TeamState, session: Session):
     """
     Save team state to database.
 
@@ -88,15 +87,15 @@ def save_team_state(team: Team, state: TeamState, session: Session):
         state: Team state
         session: Database session
     """
-    team.revealed_steps = json.dumps(sorted(list(state.revealed_steps)))
-    team.last_updated_at = state.last_updated_at
+    game.revealed_steps = json.dumps(sorted(list(state.revealed_steps)))
+    game.last_updated_at = state.last_updated_at
 
-    if state.is_completed and not team.completed_at:
-        team.completed_at = datetime.now(tz=timezone.utc)
+    if state.is_completed and not game.completed_at:
+        game.completed_at = datetime.now(tz=timezone.utc)
 
-    session.add(team)
+    session.add(game)
     session.commit()
-    session.refresh(team)
+    session.refresh(game)
 
 
 ####################################################################
@@ -144,15 +143,37 @@ async def start_game(
     if not teams:
         raise HTTPException(status_code=400, detail="No teams in lobby")
 
+    # Validate all players with teams are ready
+    all_players = session.exec(select(Player).where(Player.lobby_id == lobby_id)).all()
+    players_with_teams = [p for p in all_players if p.team_id is not None]
+
+    if not players_with_teams:
+        raise HTTPException(status_code=400, detail="No players assigned to teams")
+
+    unready_players = [p for p in players_with_teams if not p.is_ready]
+    if unready_players:
+        unready_names = ", ".join([p.name for p in unready_players])
+        raise HTTPException(status_code=400, detail=f"Not all players are ready. Waiting for: {unready_names}")
+
+    used_puzzle_paths = session.exec(select(Game.puzzle_path).where(Game.lobby_id == lobby_id)).all()
+    used_puzzle_paths = {path for path in used_puzzle_paths if path}
+
     # Get puzzles for each team based on configuration
     puzzle_manager = get_puzzle_manager()
     try:
         if request.puzzle_mode == "same":
             # All teams get the same puzzle
-            puzzles = puzzle_manager.get_same_puzzle_for_teams(len(teams), request.difficulty)
+            puzzles = puzzle_manager.get_same_puzzle_for_teams(
+                len(teams), request.difficulty, exclude_paths=used_puzzle_paths
+            )
         else:
             # Each team gets a different puzzle
-            puzzles = puzzle_manager.get_puzzles_for_teams(len(teams), request.difficulty, request.word_count_mode)
+            puzzles = puzzle_manager.get_puzzles_for_teams(
+                len(teams),
+                request.difficulty,
+                request.word_count_mode,
+                exclude_paths=used_puzzle_paths,
+            )
     except ValueError as e:
         raise HTTPException(status_code=400, detail=str(e))
 
@@ -160,13 +181,16 @@ async def start_game(
     from backend.websocket.managers import lobby_websocket_manager
 
     for i, team in enumerate(teams):
-        puzzle = puzzles[i]
+        puzzle_file = puzzles[i]
+        puzzle = puzzle_file.puzzle
+        puzzle_path = puzzle_manager.normalize_puzzle_path(puzzle_file.path)
+        puzzle_manager.cache_puzzle(puzzle_path, puzzle)
 
         # Create Game record for this team's puzzle
         game = Game(
             lobby_id=lobby_id,
             difficulty=request.difficulty,
-            puzzle_data=puzzle_manager.puzzle_to_dict(puzzle),
+            puzzle_path=puzzle_path,
         )
         session.add(game)
         session.flush()  # Flush to get game.id
@@ -174,17 +198,12 @@ async def start_game(
         # Link team to their puzzle
         team.game_id = game.id
 
-        # Reset team state for new game (clear previous game completion)
-        team.completed_at = None
-        team.revealed_steps = "[]"
-        team.last_updated_at = None
-
         # Initialize state machine
         machine = TeamStateMachine(puzzle)
         initial_state = machine.get_current_state()
 
-        # Save initial state to team
-        save_team_state(team, initial_state, session)
+        # Save initial state to game
+        save_game_state(game, initial_state, session)
 
         # Register all players in this team for team broadcasts
         players = session.exec(select(Player).where(Player.team_id == team.id)).all()
@@ -202,8 +221,8 @@ async def start_game(
     # Also broadcast GAME_STARTED to lobby (for admins) using the first team's event
     first_team_event = GameStartedEvent(
         team_id=teams[0].id,
-        puzzle_title=puzzles[0].meta.title,
-        puzzle_length=len(puzzles[0].ladder),
+        puzzle_title=puzzles[0].puzzle.meta.title,
+        puzzle_length=len(puzzles[0].puzzle.ladder),
     )
     await lobby_websocket_manager.broadcast_to_lobby(lobby_id, first_team_event)
 
@@ -258,7 +277,7 @@ async def get_team_puzzle(
     current_state = machine.get_current_state().to_dict()
 
     # Transform puzzle data to flatten structure for frontend
-    puzzle_data = game.puzzle_data
+    puzzle_data = machine.puzzle.model_dump()
     transformed_puzzle = {
         "title": puzzle_data.get("meta", {}).get("title", "Untitled Puzzle"),
         "ladder": puzzle_data.get("ladder", []),
@@ -370,7 +389,7 @@ async def handle_guess_submission(
             # If correct, update state and broadcast
             if result.is_correct and result.new_state:
                 # Save new state
-                save_team_state(team, result.new_state, session)
+                save_game_state(game, result.new_state, session)
 
                 # Broadcast word solved event
                 word_solved_event = WordSolvedEvent(
@@ -399,73 +418,53 @@ async def handle_guess_submission(
                     team_completed_event = TeamCompletedEvent(
                         team_id=team.id,
                         team_name=team.name,
-                        completed_at=team.completed_at.isoformat()
-                        if team.completed_at
+                        completed_at=game.completed_at.isoformat()
+                        if game.completed_at
                         else datetime.now(tz=timezone.utc).isoformat(),
                     )
                     await websocket_manager.broadcast_to_team(lobby_id, team.id, team_completed_event)
                     # Also broadcast to admins
                     await websocket_manager.admin_web_socket_manager.broadcast_to_lobby(lobby_id, team_completed_event)
 
-                    # Check if this is the first team to complete
-                    completed_teams = session.exec(
-                        select(Team).where(Team.lobby_id == lobby_id).where(Team.completed_at.isnot(None))
-                    ).all()
-
-                    if len(completed_teams) == 1:
-                        # This team won! Mark ALL games in this lobby as completed
-                        completion_time = datetime.now(tz=timezone.utc)
-                        all_lobby_games = session.exec(select(Game).where(Game.lobby_id == lobby_id)).all()
-                        for lobby_game in all_lobby_games:
-                            if not lobby_game.completed_at:
-                                lobby_game.completed_at = completion_time
-                                session.add(lobby_game)
-
-                        # Reveal all puzzles for all teams (so everyone can see complete solutions)
-                        all_teams = session.exec(select(Team).where(Team.lobby_id == lobby_id)).all()
-                        for other_team in all_teams:
-                            if not other_team.game_id:
-                                continue
-
-                            # Get the game (puzzle) for this team
-                            other_game = session.get(Game, other_team.game_id)
-                            if not other_game:
-                                continue
-
-                            # Parse the puzzle to get ladder length
-                            other_puzzle = PuzzlePydantic(**other_game.puzzle_data)
-
-                            # Reveal all steps (0 to len-1)
-                            all_steps = set(range(len(other_puzzle.ladder)))
-
-                            # Update team state
-                            other_team.revealed_steps = json.dumps(sorted(list(all_steps)))
-                            other_team.last_updated_at = datetime.now(tz=timezone.utc)
-                            if not other_team.completed_at:
-                                other_team.completed_at = datetime.now(tz=timezone.utc)
-
-                            session.add(other_team)
-
-                            # Broadcast state update to this team
-                            team_state_event = StateUpdateEvent(
-                                team_id=other_team.id,
-                                revealed_steps=sorted(list(all_steps)),
-                                is_completed=True,
-                                last_updated_at=other_team.last_updated_at.isoformat(),
+                    # Calculate placement by counting prior completions (ordered by completed_at, then id for tiebreaker)
+                    prior_completions = (
+                        session.exec(
+                            select(func.count(Team.id))
+                            .join(Game, Team.game_id == Game.id)
+                            .where(Team.lobby_id == lobby_id)
+                            .where(Game.completed_at.isnot(None))
+                            .where(
+                                (Game.completed_at < game.completed_at)
+                                | ((Game.completed_at == game.completed_at) & (Team.id < team.id))
                             )
-                            await websocket_manager.broadcast_to_team(lobby_id, other_team.id, team_state_event)
-                            # Also broadcast to admins
-                            await websocket_manager.admin_web_socket_manager.broadcast_to_lobby(
-                                lobby_id, team_state_event
-                            )
+                        ).first()
+                        or 0
+                    )
+                    placement = prior_completions + 1
 
-                        # Broadcast win to entire lobby
-                        win_event = GameWonEvent(
-                            lobby_id=lobby_id,
-                            winning_team_id=team.id,
-                            winning_team_name=team.name,
-                        )
-                        await websocket_manager.broadcast_to_lobby(lobby_id, win_event)
+                    # Get the current first place team
+                    first_place_team = session.exec(
+                        select(Team)
+                        .join(Game, Team.game_id == Game.id)
+                        .where(Team.lobby_id == lobby_id)
+                        .where(Game.completed_at.isnot(None))
+                        .order_by(Game.completed_at, Team.id)
+                        .limit(1)
+                    ).first()
+                    first_place_team_name = first_place_team.name if first_place_team else team.name
+
+                    # Broadcast TEAM_PLACED to entire lobby so all teams see placements
+                    team_placed_event = TeamPlacedEvent(
+                        team_id=team.id,
+                        team_name=team.name,
+                        placement=placement,
+                        points_earned=0,  # Will be calculated in Phase 5
+                        completed_at=game.completed_at.isoformat()
+                        if game.completed_at
+                        else datetime.now(tz=timezone.utc).isoformat(),
+                        first_place_team_name=first_place_team_name,
+                    )
+                    await websocket_manager.broadcast_to_lobby(lobby_id, team_placed_event)
 
             session.commit()
 

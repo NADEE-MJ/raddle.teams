@@ -11,7 +11,9 @@ from backend.database import Lobby, Player, Team, Game, get_session
 from backend.dependencies import check_admin_token
 from backend.schemas import GeneratedNameResponse, LobbyCreate, LobbyInfo, MessageResponse
 from backend.utils.name_generator import generate_lobby_name
+from backend.websocket.events import LobbyDeletedEvent
 from backend.websocket.managers import lobby_websocket_manager
+from backend.game.puzzles import get_puzzle_manager
 
 router = APIRouter(dependencies=[Depends(check_admin_token)])
 
@@ -89,6 +91,15 @@ async def kick_player(
     player_name = player.name
     lobby_id = player.lobby_id
     player_session_id = player.session_id
+    team_id = player.team_id
+
+    # If player was on a team, reset ready status for remaining team members
+    if team_id:
+        team_players = db.exec(select(Player).where(Player.team_id == team_id).where(Player.id != player_id)).all()
+        for team_player in team_players:
+            team_player.is_ready = False
+            db.add(team_player)
+        db.commit()
 
     await lobby_websocket_manager.kick_player(lobby_id, player_session_id)
 
@@ -107,6 +118,14 @@ async def delete_lobby(lobby_id: int, db: Session = Depends(get_session)):
     if not lobby:
         api_logger.warning(f"Delete failed: lobby not found lobby_id={lobby_id}")
         raise HTTPException(status_code=404, detail="Lobby not found")
+
+    players = db.exec(select(Player).where(Player.lobby_id == lobby_id)).all()
+    await lobby_websocket_manager.broadcast_to_lobby(
+        lobby_id,
+        LobbyDeletedEvent(lobby_id=lobby_id, player_session_id=""),
+    )
+    for player in players:
+        await lobby_websocket_manager.kick_player(lobby_id, player.session_id)
 
     # this cascades delete all related players and teams
     db.delete(lobby)
@@ -170,6 +189,7 @@ async def get_game_state(lobby_id: int, db: Session = Depends(get_session)):
 
     # Build progress data for each team
     team_progress_list = []
+    puzzle_manager = get_puzzle_manager()
     for team in teams:
         if not team.game_id:
             continue
@@ -181,12 +201,11 @@ async def get_game_state(lobby_id: int, db: Session = Depends(get_session)):
 
         # Parse revealed steps
         revealed_steps_list = (
-            json.loads(team.revealed_steps) if isinstance(team.revealed_steps, str) else team.revealed_steps
+            json.loads(game.revealed_steps) if isinstance(game.revealed_steps, str) else game.revealed_steps
         )
         revealed_steps = revealed_steps_list if revealed_steps_list else []
 
-        # Transform puzzle data to flatten structure for frontend
-        puzzle_data = game.puzzle_data
+        puzzle_data = puzzle_manager.load_puzzle_by_path(game.puzzle_path).model_dump()
         transformed_puzzle = {
             "title": puzzle_data.get("meta", {}).get("title", "Untitled Puzzle"),
             "ladder": puzzle_data.get("ladder", []),
@@ -197,8 +216,8 @@ async def get_game_state(lobby_id: int, db: Session = Depends(get_session)):
             team_name=team.name,
             puzzle=transformed_puzzle,
             revealed_steps=revealed_steps,
-            is_completed=team.completed_at is not None,
-            completed_at=team.completed_at.isoformat() if team.completed_at else None,
+            is_completed=game.completed_at is not None,
+            completed_at=game.completed_at.isoformat() if game.completed_at else None,
         )
         team_progress_list.append(team_progress)
 
@@ -237,21 +256,17 @@ async def end_game(
         api_logger.warning(f"End game failed: no active game lobby_id={lobby_id}")
         raise HTTPException(status_code=400, detail="No active game to end")
 
-    # Get all teams in the lobby
-    teams = db.exec(select(Team).where(Team.lobby_id == lobby_id)).all()
-
     # Mark all games as completed
     from datetime import datetime, timezone
 
     for game in active_games:
         game.completed_at = datetime.now(timezone.utc)
 
-    # Reset team states
-    for team in teams:
-        team.completed_at = None
-        team.revealed_steps = "[]"
-        team.last_updated_at = None
-        team.game_id = None
+    # Reset all players' ready status
+    all_players = db.exec(select(Player).where(Player.lobby_id == lobby_id)).all()
+    for player in all_players:
+        player.is_ready = False
+        db.add(player)
 
     db.commit()
 

@@ -8,10 +8,13 @@ from pydantic import BaseModel
 ####################################################################
 class LobbyWebSocketEvents(str, Enum):
     CONNECTION_CONFIRMED = "connection_confirmed"
+    PLAYER_JOINED = "player_joined"
     TEAM_ASSIGNED = "team_assigned"
     TEAM_CHANGED = "team_changed"
     DISCONNECTED = "disconnected"
     PLAYER_KICKED = "player_kicked"
+    READY_STATUS_CHANGED = "ready_status_changed"
+    LOBBY_DELETED = "lobby_deleted"
 
 
 class LobbyEvent(BaseModel):
@@ -21,7 +24,7 @@ class LobbyEvent(BaseModel):
 
 
 class JoinedLobbyEvent(LobbyEvent):
-    type: LobbyWebSocketEvents = LobbyWebSocketEvents.CONNECTION_CONFIRMED
+    type: LobbyWebSocketEvents = LobbyWebSocketEvents.PLAYER_JOINED
 
 
 class DisconnectedLobbyEvent(LobbyEvent):
@@ -42,6 +45,17 @@ class TeamChangedEvent(LobbyEvent):
     type: LobbyWebSocketEvents = LobbyWebSocketEvents.TEAM_CHANGED
 
 
+class ReadyStatusChangedEvent(LobbyEvent):
+    player_id: int
+    player_name: str
+    is_ready: bool
+    type: LobbyWebSocketEvents = LobbyWebSocketEvents.READY_STATUS_CHANGED
+
+
+class LobbyDeletedEvent(LobbyEvent):
+    type: LobbyWebSocketEvents = LobbyWebSocketEvents.LOBBY_DELETED
+
+
 ####################################################################
 # ? GAME EVENTS
 ####################################################################
@@ -51,6 +65,7 @@ class GameWebSocketEvents(str, Enum):
     WORD_SOLVED = "word_solved"
     DIRECTION_CHANGED = "direction_changed"
     TEAM_COMPLETED = "team_completed"
+    TEAM_PLACED = "team_placed"
     GAME_WON = "game_won"
     STATE_UPDATE = "state_update"
     ALREADY_SOLVED = "already_solved"
@@ -116,3 +131,12 @@ class GameWonEvent(BaseModel):
 class AlreadySolvedEvent(GameEvent):
     type: GameWebSocketEvents = GameWebSocketEvents.ALREADY_SOLVED
     word_index: int
+
+
+class TeamPlacedEvent(GameEvent):
+    type: GameWebSocketEvents = GameWebSocketEvents.TEAM_PLACED
+    team_name: str
+    placement: int
+    points_earned: int  # Will be 0 until Phase 5
+    completed_at: str
+    first_place_team_name: str  # Name of the current 1st place team

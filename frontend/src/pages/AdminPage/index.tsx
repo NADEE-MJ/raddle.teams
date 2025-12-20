@@ -46,6 +46,7 @@ export default function AdminPage() {
 
             switch (message.type) {
                 case LobbyWebSocketEvents.CONNECTION_CONFIRMED:
+                case LobbyWebSocketEvents.PLAYER_JOINED:
                 case LobbyWebSocketEvents.TEAM_ASSIGNED:
                 case LobbyWebSocketEvents.TEAM_CHANGED:
                 case LobbyWebSocketEvents.DISCONNECTED:

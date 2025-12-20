@@ -230,6 +230,15 @@ export const api = {
                     sessionId
                 );
             },
+            async toggleReady(sessionId: string): Promise<ApiResponse> {
+                return request<ApiResponse>(
+                    `/lobby/ready`,
+                    {
+                        method: 'PUT',
+                    },
+                    sessionId
+                );
+            },
         },
         game: {
             async getPuzzle(sessionId: string): Promise<{

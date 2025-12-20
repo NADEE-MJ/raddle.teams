@@ -8,7 +8,7 @@ from backend.custom_logging import api_logger
 from backend.database import Lobby, Player, get_session
 from backend.dependencies import require_player_session
 from backend.schemas import LobbyInfo, MessageResponse, PlayerCreate
-from backend.websocket.events import DisconnectedLobbyEvent, JoinedLobbyEvent
+from backend.websocket.events import DisconnectedLobbyEvent, JoinedLobbyEvent, ReadyStatusChangedEvent
 from backend.websocket.managers import lobby_websocket_manager
 
 router = APIRouter()
@@ -90,21 +90,32 @@ async def leave_current_lobby(
     api_logger.info(f"Player leave request: session_id={player.session_id}")
 
     lobby_id = player.lobby_id
+    team_id = player.team_id
+    player_session_id = player.session_id
+
+    # If player was on a team, reset ready status for remaining team members
+    if team_id:
+        team_players = db.exec(select(Player).where(Player.team_id == team_id).where(Player.id != player.id)).all()
+        for team_player in team_players:
+            team_player.is_ready = False
+            db.add(team_player)
+        db.commit()
+
     try:
         db.delete(player)
         db.commit()
-        api_logger.info(f"Player deleted session_id={player.session_id} lobby_id={lobby_id}")
+        api_logger.info(f"Player deleted session_id={player_session_id} lobby_id={lobby_id}")
     except Exception as e:
-        api_logger.exception(f"Failed to delete player {player.session_id}: {e}")
+        api_logger.exception(f"Failed to delete player {player_session_id}: {e}")
         raise HTTPException(status_code=500, detail="Failed to remove player")
 
     try:
         await lobby_websocket_manager.broadcast_to_lobby(
             lobby_id,
-            DisconnectedLobbyEvent(lobby_id=lobby_id, player_session_id=player.session_id),
+            DisconnectedLobbyEvent(lobby_id=lobby_id, player_session_id=player_session_id),
         )
     except Exception as e:
-        api_logger.exception(f"Failed to broadcast player left for session {player.session_id}: {e}")
+        api_logger.exception(f"Failed to broadcast player left for session {player_session_id}: {e}")
 
     return MessageResponse(status=True, message="Player left lobby successfully")
 
@@ -138,3 +149,38 @@ async def get_lobby_info(
     api_logger.info(f"Player returning lobby info for {lobby_id}: {len(teams)} teams, {len(players)} players")
 
     return LobbyInfo(lobby=lobby, players=players, players_by_team=players_by_team, teams=teams)
+
+
+@router.put("/lobby/ready", response_model=MessageResponse)
+async def toggle_ready_status(
+    player: Player = Depends(require_player_session),
+    db: Session = Depends(get_session),
+):
+    """Toggle the authenticated player's ready status."""
+    api_logger.info(f"Player toggle ready: session_id={player.session_id} current={player.is_ready}")
+
+    # Check if player is assigned to a team
+    if not player.team_id:
+        api_logger.warning(f"Ready toggle failed: no team session_id={player.session_id}")
+        raise HTTPException(status_code=400, detail="You must be assigned to a team before readying up")
+
+    # Toggle ready status
+    player.is_ready = not player.is_ready
+    db.add(player)
+    db.commit()
+    db.refresh(player)
+
+    # Broadcast ready status change to lobby
+    await lobby_websocket_manager.broadcast_to_lobby(
+        player.lobby_id,
+        ReadyStatusChangedEvent(
+            lobby_id=player.lobby_id,
+            player_session_id=player.session_id,
+            player_id=player.id,
+            player_name=player.name,
+            is_ready=player.is_ready,
+        ),
+    )
+
+    api_logger.info(f"Ready toggled: session_id={player.session_id} new={player.is_ready}")
+    return MessageResponse(status=True, message=f"Ready status set to {'ready' if player.is_ready else 'not ready'}")
