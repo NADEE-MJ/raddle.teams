@@ -1,0 +1,47 @@
+meta:
+  title: From STATION to FALL
+  author: Sandy Weisz
+  theme: boardgames
+  message:
+    "Now we're on to the heavy games. [Stationfall](https://boardgamegeek.com/boardgame/316624/stationfall) was one of my favorite games of the year, but be warned: it's complex and chaotic.
+    You play a character trying to survive a disintegrating space station, or possibly stay on it as it plummets.
+    There are a dozen or more characters on the board, and no one knows which one you are. Meanwhile you have a secret agenda you're trying to accomplish.
+    What's wild about this game is that every one of Stationfall's mechanics feel justified by the theme and then story that is emerging from the collection of decisions being made.
+    It's a lot, but it's hella fun."
+ladder:
+- word: STATION
+  clue: What pulls into a <>
+  transform: is where you get on a
+- word: TRAIN
+  clue: Last section of a <>
+  transform: ends in a
+- word: CABOOSE
+  clue: Exclamation found in the middle of <>
+  transform: contains
+- word: BOO
+  clue: "\"<>\" is said by a ^"
+  transform: is said by a
+- word: GHOST
+  clue: "\"<>^\", ’80s comedy"
+  transform: …
+- word: BUSTERS
+  clue: Drop a trigram (three letters) from <> to get a kind of sculpture
+  transform: -ERS
+- word: BUST
+  clue: Drop the outside letters of <> to get a country
+  transform: -B, -T
+- word: US
+  clue: "\"The ^ of <>\", popular franchise"
+  transform: who are
+- word: LAST
+  clue: Anagram <> to get a common compound
+  transform: anagramme
+- word: SALT
+  clue: Use <> to ^ food
+  transform: is used to
+- word: SEASON
+  clue: A <> when certain things ^ is called ^
+  transform: after summer
+- word: FALL
+  clue:
+  transform:

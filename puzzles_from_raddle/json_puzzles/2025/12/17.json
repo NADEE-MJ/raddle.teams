@@ -1,0 +1,74 @@
+{
+  "meta": {
+    "title": "From NEON to YEAR",
+    "author": "Sandy Weisz",
+    "theme": "hanukkah"
+  },
+  "ladder": [
+    {
+      "word": "NEON",
+      "clue": "Drop a letter from <> to get a movie protagonist",
+      "step": "-N"
+    },
+    {
+      "word": "NEO",
+      "clue": "Movie featuring <>",
+      "step": "was the star of"
+    },
+    {
+      "word": "THE MATRIX",
+      "clue": "Cereal found at the end of <>",
+      "step": "includes"
+    },
+    {
+      "word": "TRIX",
+      "clue": "Who <> is for, or so they tell us",
+      "step": "is for"
+    },
+    {
+      "word": "KIDS",
+      "clue": "Change a letter in <> to get a certain piece of candy",
+      "step": "D->S"
+    },
+    {
+      "word": "KISS",
+      "clue": "{} <>, an intimate <>",
+      "step": "with tongue"
+    },
+    {
+      "word": "FRENCH",
+      "clue": "<> {}, a popular side",
+      "step": "side dish"
+    },
+    {
+      "word": "FRIES",
+      "clue": "Typeface term that’s an anagram of <>",
+      "step": "anagrammed"
+    },
+    {
+      "word": "SERIF",
+      "clue": "{} <>, the opposite of <>",
+      "step": "might follow"
+    },
+    {
+      "word": "SANS",
+      "clue": "Change the last letter of <> to get something found at the beach",
+      "step": "S->D"
+    },
+    {
+      "word": "SAND",
+      "clue": "A device filled with <> measures this",
+      "step": "measures"
+    },
+    {
+      "word": "TIME",
+      "clue": "Unit of <> relating to orbits",
+      "step": "unit"
+    },
+    {
+      "word": "YEAR",
+      "clue": null,
+      "step": " "
+    }
+  ]
+}

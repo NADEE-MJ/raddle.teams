@@ -1,0 +1,75 @@
+{
+  "meta": {
+    "title": "From RES to ARCANA",
+    "author": "Sandy Weisz",
+    "theme": "boardgames",
+    "message": "[Res Arcana](https://store.asmodee.com/products/res-arcana) is a very tight engine builder that I never get sick of playing. In each game, you only get eight cards (out of a deck of dozens), and the game demands you figure out how to build an engine with them. Each card can be invoked to add to your engine, or can be exchanged for resources, and then put back into your deck. The expansions are also great. For something similar, I also recommend [The Vale of Eternity](https://renegadegamestudios.com/the-vale-of-eternity/), another engine builder that's a little simpler but no less fun."
+  },
+  "ladder": [
+    {
+      "word": "RES",
+      "clue": "Add a letter to the front of <> to get a god",
+      "transform": "+A"
+    },
+    {
+      "word": "ARES",
+      "clue": "Roman version of <>",
+      "transform": "to the Romans"
+    },
+    {
+      "word": "MARS",
+      "clue": "Object two before <> in a well-known sequence",
+      "transform": "is two past"
+    },
+    {
+      "word": "VENUS",
+      "clue": "Sport played by a famous <>",
+      "transform": "plays"
+    },
+    {
+      "word": "TENNIS",
+      "clue": "{} <>, a smaller version of <>",
+      "transform": "in small form is played on a"
+    },
+    {
+      "word": "TABLE",
+      "clue": "Add an L to <> and anagram to get a kind of performance",
+      "transform": "+L, then anagram"
+    },
+    {
+      "word": "BALLET",
+      "clue": "Piece of <> clothing",
+      "transform": "dancers wear a"
+    },
+    {
+      "word": "TUTU",
+      "clue": "\"<>\" sounds like someone is spelling out a 2013 song by this artist",
+      "transform": "sounds like a song by"
+    },
+    {
+      "word": "TAYLOR SWIFT",
+      "clue": "<> is a {} star",
+      "transform": "sings"
+    },
+    {
+      "word": "POP",
+      "clue": "<> {}, quick breakfast option in the US",
+      "transform": "in a"
+    },
+    {
+      "word": "TART",
+      "clue": "Add a letter to <> to get a kind of card",
+      "transform": "+O"
+    },
+    {
+      "word": "TAROT",
+      "clue": "<> includes Major and Minor {}",
+      "transform": "cards are called"
+    },
+    {
+      "word": "ARCANA",
+      "clue": null,
+      "transform": null
+    }
+  ]
+}

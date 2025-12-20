@@ -1,0 +1,41 @@
+meta:
+  title: From STOP to BULB
+  author: Sandy Weisz
+  theme: hanukkah
+ladder:
+- word: STOP
+  clue: Reverse <> to get some kitchen implements
+  step: reversed
+- word: POTS
+  clue: <> & ^
+  step: "&"
+- word: PANS
+  clue: Move the last letter of <> to the front to get a duration
+  step: anagrammed
+- word: SPAN
+  clue: Insert a letter in <> to get a country
+  step: +I
+- word: SPAIN
+  clue: Populous city in northeastern <>
+  step: is the country of
+- word: BARCELONA
+  clue: Animal found backward at the start of <>
+  step: features, backwards
+- word: CRAB
+  clue: Sign of the <>
+  step: is the symbol of
+- word: CANCER
+  clue: Change the first letter of <> to get someone who moves for a living
+  step: C->D
+- word: DANCER
+  clue: <> is the name of one of the ^
+  step: is a
+- word: REINDEER
+  clue: A male <>
+  step: that's male
+- word: BULL
+  clue: Change one letter in <> to get something planted
+  step: L->B
+- word: BULB
+  clue:
+  step: ' '

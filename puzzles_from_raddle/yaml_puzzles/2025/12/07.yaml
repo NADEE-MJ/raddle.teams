@@ -1,0 +1,48 @@
+meta:
+  title: From CODE to NAMES
+  author: Sandy Weisz
+  theme: boardgames
+  message: If you like Raddle, you'll also enjoy [Codenames](https://www.codenamesgame.com/), which is a staple of board game nights in our house.
+    You're trying to get your teammates to pick certain words out of a grid, by using only a one-word clue.
+    It's endlessly replayable, given the randomness of the setup each time.
+    If you already have Codenames and want something similar, we also love [Decrypto](https://www.hachetteboardgames.com/products/decrypto).
+ladder:
+- word: CODE
+  clue: ^ <>, in which T is written with just one line
+  transform: with dots and dashes
+- word: MORSE
+  clue: Change one letter in <> to make it less good
+  transform: M->W
+- word: WORSE
+  clue: What <> might come to, in a phrase
+  transform: E->T
+- word: WORST
+  clue: Change the vowel in <> and anagram to get something you might put in your cup
+  transform: O->A, then anagram
+- word: STRAW
+  clue: More common name for a <> man
+  transform: man is a
+- word: SCARECROW
+  clue: What The <> was missing
+  transform: is missing his
+- word: BRAIN
+  clue: Change one letter in <> to get a crop
+  transform: B->G
+- word: GRAIN
+  clue: Drop a bigram (two letters) from <> to get something you might put in your cup
+  transform: -RA
+- word: GIN
+  clue: Classic cocktail that is mostly <>
+  transform: cocktail
+- word: MARTINI
+  clue: Fictional character known for his love of <>s
+  transform: shaken for
+- word: BOND
+  clue: First name of <>
+  transform: first name
+- word: JAMES
+  clue: Change one letter in <> to get a category that <> belongs in
+  transform: J->N
+- word: NAMES
+  clue:
+  transform:

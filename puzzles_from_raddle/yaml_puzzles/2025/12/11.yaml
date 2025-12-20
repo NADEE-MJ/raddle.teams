@@ -1,0 +1,45 @@
+meta:
+  title: From SO to CLOVER
+  author: Sandy Weisz
+  theme: boardgames
+  message:
+    So Clover is a word party game where you're given four random pairs of words and have to clue them each with one word.
+    Similar to Codenames, except in this case it's co-op, and due to the physical design, your teammates have to solve all four clues at once.
+    Games go really fast, and when you're done, you can just redraw cards and start again.
+ladder:
+- word: SO
+  clue: "Craft term that sounds like \"<>\""
+  transform: sounds like
+- word: SEW
+  clue: Reverse <> then append a letter to get a direction
+  transform: +T, then reverse
+- word: WEST
+  clue: Opposite of <>
+  transform: opposite
+- word: EAST
+  clue: "\"<> of ^\", epic American novel"
+  transform: of
+- word: EDEN
+  clue: Man of <>
+  transform: was home to
+- word: ADAM
+  clue: "\"^, I’m <>\", he said reflectively"
+  transform: +M, then reverse
+- word: MADAM
+  clue: Drop two letters from <> to get angry
+  transform: -AM
+- word: MAD
+  clue: <> ^, host of a literary party
+  transform: as a
+- word: HATTER
+  clue: Drop a letter from <> to get a meanie
+  transform: -T
+- word: HATER
+  clue: Be a ^, not a <>
+  transform: "<"
+- word: LOVER
+  clue: Add a letter to the front of <> get something lucky
+  transform: +C
+- word: CLOVER
+  clue:
+  transform:
