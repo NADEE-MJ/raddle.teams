@@ -140,3 +140,17 @@ class TeamPlacedEvent(GameEvent):
     points_earned: int  # Will be 0 until Phase 5
     completed_at: str
     first_place_team_name: str  # Name of the current 1st place team
+
+
+class RoundEndedEvent(BaseModel):
+    type: str = "round_ended"
+    lobby_id: int
+    round_number: int
+    # results will contain summary data - team placements and points
+
+
+class NewRoundStartedEvent(BaseModel):
+    type: str = "new_round_started"
+    lobby_id: int
+    game_id: int
+    round_number: int

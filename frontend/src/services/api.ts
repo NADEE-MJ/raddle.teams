@@ -195,6 +195,74 @@ export const api = {
                     bearerToken
                 );
             },
+            async getGameStats(
+                gameId: number,
+                bearerToken: string
+            ): Promise<{
+                game_id: number;
+                round_number: number;
+                started_at: string;
+                teams: {
+                    team_id: number;
+                    team_name: string;
+                    placement: number | null;
+                    points_earned: number | null;
+                    wrong_guesses: number;
+                    wrong_guess_rate: number;
+                    wrong_guess_label: string;
+                    completed_at: string | null;
+                    completion_percentage: number;
+                    time_to_complete: number | null;
+                    player_stats: {
+                        player_id: number;
+                        player_name: string;
+                        correct_guesses: number;
+                        total_guesses: number;
+                        accuracy_rate: number;
+                        words_solved: number[];
+                        wrong_guesses: string[];
+                        awards: {
+                            key: string;
+                            title: string;
+                            emoji: string;
+                            description: string;
+                        }[];
+                    }[];
+                }[];
+                last_round_winner_id: number | null;
+            }> {
+                return request(`/stats/game/${gameId}`, {}, bearerToken);
+            },
+            async getAllRounds(
+                lobbyId: number,
+                bearerToken: string
+            ): Promise<{ round_number: number; game_id: number }[]> {
+                return request(`/admin/lobby/${lobbyId}/rounds`, {}, bearerToken);
+            },
+            async getLeaderboard(
+                lobbyId: number,
+                bearerToken: string
+            ): Promise<{
+                teams: {
+                    team_id: number;
+                    team_name: string;
+                    total_points: number;
+                    rounds_won: number;
+                    rounds_played: number;
+                    placement_breakdown: {
+                        first: number;
+                        second: number;
+                        third: number;
+                        dnf: number;
+                    };
+                    last_round_winner: boolean;
+                }[];
+                current_round: number;
+                total_rounds: number;
+                last_round_game_id: number | null;
+            }> {
+                return request(`/lobby/${lobbyId}/leaderboard`, {}, bearerToken);
+            },
         },
         async checkCredentials(bearerToken: string): Promise<AdminAuthAdminAuthenticatedResponse> {
             return request<AdminAuthAdminAuthenticatedResponse>('/admin/check', {}, bearerToken);
@@ -239,6 +307,30 @@ export const api = {
                     sessionId
                 );
             },
+            async getLeaderboard(
+                lobbyId: number,
+                sessionId: string
+            ): Promise<{
+                teams: {
+                    team_id: number;
+                    team_name: string;
+                    total_points: number;
+                    rounds_won: number;
+                    rounds_played: number;
+                    placement_breakdown: {
+                        first: number;
+                        second: number;
+                        third: number;
+                        dnf: number;
+                    };
+                    last_round_winner: boolean;
+                }[];
+                current_round: number;
+                total_rounds: number;
+                last_round_game_id: number | null;
+            }> {
+                return request(`/lobby/${lobbyId}/leaderboard`, {}, sessionId);
+            },
         },
         game: {
             async getPuzzle(sessionId: string): Promise<{
@@ -257,6 +349,44 @@ export const api = {
                     state: GameState;
                     guesses: Guess[];
                 }>(`/game/puzzle?player_session_id=${sessionId}`, {}, sessionId);
+            },
+            async getGameStats(
+                gameId: number,
+                sessionId: string
+            ): Promise<{
+                game_id: number;
+                round_number: number;
+                started_at: string;
+                teams: {
+                    team_id: number;
+                    team_name: string;
+                    placement: number | null;
+                    points_earned: number | null;
+                    wrong_guesses: number;
+                    wrong_guess_rate: number;
+                    wrong_guess_label: string;
+                    completed_at: string | null;
+                    completion_percentage: number;
+                    time_to_complete: number | null;
+                    player_stats: {
+                        player_id: number;
+                        player_name: string;
+                        correct_guesses: number;
+                        total_guesses: number;
+                        accuracy_rate: number;
+                        words_solved: number[];
+                        wrong_guesses: string[];
+                        awards: {
+                            key: string;
+                            title: string;
+                            emoji: string;
+                            description: string;
+                        }[];
+                    }[];
+                }[];
+                last_round_winner_id: number | null;
+            }> {
+                return request(`/stats/game/${gameId}`, {}, sessionId);
             },
         },
     },

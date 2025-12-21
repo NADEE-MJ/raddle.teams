@@ -36,6 +36,11 @@ class Team(SQLModel, table=True):
     current_word_index: int = Field(default=0)  # Deprecated, not used
     created_at: datetime = Field(default_factory=lambda: datetime.now(tz=timezone.utc))
 
+    # Tournament statistics (persist across rounds)
+    total_points: int = Field(default=0)
+    rounds_won: int = Field(default=0)
+    rounds_played: int = Field(default=0)
+
     # Relationships
     lobby: "Lobby" = Relationship(back_populates="teams")
     game: Optional["Game"] = Relationship(back_populates="teams")  # The puzzle this team is solving
@@ -96,3 +101,27 @@ class Guess(SQLModel, table=True):
     team: "Team" = Relationship(back_populates="guesses")
     player: "Player" = Relationship()
     game: "Game" = Relationship()
+
+
+class RoundResult(SQLModel, table=True):
+    __table_args__ = (
+        Index("ix_round_lobby_id", "lobby_id"),
+        Index("ix_round_team_id", "team_id"),
+    )
+
+    id: Optional[int] = Field(default=None, primary_key=True)
+    lobby_id: int = Field(foreign_key="lobby.id", ondelete="CASCADE")
+    game_id: int = Field(foreign_key="game.id", ondelete="CASCADE")
+    team_id: int = Field(foreign_key="team.id", ondelete="CASCADE")
+    round_number: int  # 1, 2, 3...
+    placement: int  # 1st, 2nd, 3rd, etc.
+    points_earned: int
+    completion_percentage: float  # 0.0 to 1.0 for DNF teams
+    time_to_complete: Optional[int]  # seconds, null if DNF
+    completed_at: Optional[datetime]
+    created_at: datetime = Field(default_factory=lambda: datetime.now(tz=timezone.utc))
+
+    # Relationships
+    lobby: "Lobby" = Relationship()
+    game: "Game" = Relationship()
+    team: "Team" = Relationship()

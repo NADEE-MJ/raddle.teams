@@ -9,6 +9,7 @@ export { default as LoadingSpinner } from '@/components/LoadingSpinner';
 export { default as Modal } from '@/components/Modal';
 export { default as Select } from '@/components/Select';
 export { default as StatusIndicator } from '@/components/StatusIndicator';
+export { TeamLeaderboard } from '@/components/TeamLeaderboard';
 export { default as TextInput } from '@/components/TextInput';
 export { Toast } from '@/components/Toast';
 export { ToastContainer } from '@/components/ToastContainer';

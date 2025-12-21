@@ -1,5 +1,5 @@
 import { useMemo, useState } from 'react';
-import { Alert, Button, Card } from '@/components';
+import { Button, Card } from '@/components';
 import type { TeamGameProgress } from '@/types';
 
 interface GameProgressViewProps {
@@ -40,7 +40,11 @@ export default function GameProgressView({ teams }: GameProgressViewProps) {
     return (
         <div className='space-y-4'>
             {stuckHints.forward && !dismissedHintSignatures.has(stuckHints.forward.signature) && (
-                <Alert variant='warning' className='flex items-start gap-3' data-testid='stuck-clue-alert-forward'>
+                <Card
+                    variant='warning'
+                    className='flex flex-col gap-3 sm:flex-row sm:items-start sm:justify-between'
+                    data-testid='stuck-clue-alert-forward'
+                >
                     <div className='flex-1 space-y-1 text-sm'>
                         <div className='text-tx-primary font-semibold'>
                             All teams are stuck on the {stuckHints.forward.directionLabel} clue
@@ -55,19 +59,23 @@ export default function GameProgressView({ teams }: GameProgressViewProps) {
                         </div>
                     </div>
                     <Button
-                        variant='link'
+                        variant='secondary'
                         size='sm'
-                        className='text-tx-secondary underline'
+                        className='text-xs'
                         onClick={() => dismissHint(stuckHints.forward!.signature)}
                         data-testid='dismiss-stuck-clue-alert-forward'
                     >
                         Dismiss
                     </Button>
-                </Alert>
+                </Card>
             )}
 
             {stuckHints.backward && !dismissedHintSignatures.has(stuckHints.backward.signature) && (
-                <Alert variant='warning' className='flex items-start gap-3' data-testid='stuck-clue-alert-backward'>
+                <Card
+                    variant='warning'
+                    className='flex flex-col gap-3 sm:flex-row sm:items-start sm:justify-between'
+                    data-testid='stuck-clue-alert-backward'
+                >
                     <div className='flex-1 space-y-1 text-sm'>
                         <div className='text-tx-primary font-semibold'>
                             All teams are stuck on the {stuckHints.backward.directionLabel} clue
@@ -82,15 +90,15 @@ export default function GameProgressView({ teams }: GameProgressViewProps) {
                         </div>
                     </div>
                     <Button
-                        variant='link'
+                        variant='secondary'
                         size='sm'
-                        className='text-tx-secondary underline'
+                        className='text-xs'
                         onClick={() => dismissHint(stuckHints.backward!.signature)}
                         data-testid='dismiss-stuck-clue-alert-backward'
                     >
                         Dismiss
                     </Button>
-                </Alert>
+                </Card>
             )}
 
             <div className='grid gap-6 md:grid-cols-2'>

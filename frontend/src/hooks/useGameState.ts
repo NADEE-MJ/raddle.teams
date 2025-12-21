@@ -114,6 +114,11 @@ export function useGameState({
                     onGameEnded?.();
                     break;
 
+                case 'round_ended':
+                    console.log('[GameState] Round ended by admin');
+                    onGameEnded?.();
+                    break;
+
                 case 'game_started':
                     console.log('[GameState] New game started');
                     onGameStarted?.();

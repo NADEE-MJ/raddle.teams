@@ -7,6 +7,39 @@ import { useDebounce } from '@/hooks/useDebounce';
 import { useToast } from '@/hooks/useToast';
 import { WebSocketMessage, LobbyWebSocketEvents, GameWebSocketEvents, Player, LobbyInfo } from '@/types';
 import { LoadingSpinner, CopyableCode, Button, ErrorMessage, Alert, Card, ConnectionBadge } from '@/components';
+import { TeamLeaderboard } from '@/components/TeamLeaderboard';
+
+interface PlayerAward {
+    key: string;
+    title: string;
+    emoji: string;
+    description: string;
+}
+
+interface PlayerGameStats {
+    player_id: number;
+    player_name: string;
+    correct_guesses: number;
+    total_guesses: number;
+    accuracy_rate: number;
+    words_solved: number[];
+    wrong_guesses: string[];
+    awards: PlayerAward[];
+}
+
+interface TeamGameStats {
+    team_id: number;
+    team_name: string;
+    placement: number | null;
+    points_earned: number | null;
+    wrong_guesses: number;
+    wrong_guess_rate: number;
+    wrong_guess_label: string;
+    completed_at: string | null;
+    completion_percentage: number;
+    time_to_complete: number | null;
+    player_stats: PlayerGameStats[];
+}
 
 export default function LobbyPage() {
     const navigate = useNavigate();
@@ -20,6 +53,11 @@ export default function LobbyPage() {
     const [wsError, setWsError] = useState<string | null>(null);
     const [isTeamGameCompleted, setIsTeamGameCompleted] = useState<boolean | null>(null);
     const [isTogglingReady, setIsTogglingReady] = useState(false);
+    const [leaderboardRefreshKey, setLeaderboardRefreshKey] = useState(0);
+    const [teamRoundStats, setTeamRoundStats] = useState<TeamGameStats | null>(null);
+    const [teamRoundNumber, setTeamRoundNumber] = useState<number | null>(null);
+    const [teamRoundError, setTeamRoundError] = useState<string | null>(null);
+    const [isTeamRoundLoading, setIsTeamRoundLoading] = useState(false);
 
     useEffect(() => {
         if (!sessionId) {
@@ -44,6 +82,9 @@ export default function LobbyPage() {
 
             const lobbyInfoData = await api.player.lobby.getLobbyInfo(playerData.lobby_id, sessionId);
             setLobbyInfo(lobbyInfoData);
+
+            // Increment refresh key to trigger leaderboard refresh
+            setLeaderboardRefreshKey(prev => prev + 1);
 
             // Check if game is already started - if so, redirect to game page
             // But don't redirect if the game is already completed
@@ -73,6 +114,49 @@ export default function LobbyPage() {
     }, [sessionId, navigate]);
 
     const scheduleReload = useDebounce(refreshLobbyInfo);
+
+    useEffect(() => {
+        if (!sessionId || !player?.team_id || !lobbyInfo?.teams || !isTeamGameCompleted) {
+            setTeamRoundStats(null);
+            setTeamRoundNumber(null);
+            setTeamRoundError(null);
+            return;
+        }
+
+        const team = lobbyInfo.teams.find(teamEntry => teamEntry.id === player.team_id);
+        if (!team?.game_id) {
+            setTeamRoundStats(null);
+            setTeamRoundNumber(null);
+            return;
+        }
+
+        let isActive = true;
+        const fetchTeamStats = async () => {
+            setIsTeamRoundLoading(true);
+            setTeamRoundError(null);
+            try {
+                const stats = await api.player.game.getGameStats(team.game_id, sessionId);
+                if (!isActive) return;
+                const matchingTeam = stats.teams.find(teamEntry => teamEntry.team_id === player.team_id) || null;
+                setTeamRoundStats(matchingTeam);
+                setTeamRoundNumber(stats.round_number);
+            } catch (err) {
+                if (!isActive) return;
+                setTeamRoundError(err instanceof Error ? err.message : 'Failed to load team results');
+                setTeamRoundStats(null);
+                setTeamRoundNumber(null);
+            } finally {
+                if (isActive) {
+                    setIsTeamRoundLoading(false);
+                }
+            }
+        };
+
+        fetchTeamStats();
+        return () => {
+            isActive = false;
+        };
+    }, [sessionId, player?.team_id, lobbyInfo?.teams, isTeamGameCompleted]);
 
     const onConnect = useCallback(() => {
         console.log('Lobby WebSocket connected');
@@ -148,6 +232,21 @@ export default function LobbyPage() {
                         },
                     });
                     return;
+                case 'round_ended':
+                    console.log('Round ended, refreshing lobby and leaderboard');
+                    addToast("Time's up! The admin ended the round.", 'warning', 5000);
+                    scheduleReload();
+                    break;
+                case 'new_round_started':
+                    console.log('New round started, refreshing lobby');
+                    // No toast notification - just reload silently
+                    scheduleReload();
+                    break;
+                case 'game_ended':
+                    console.log('Game ended by admin, refreshing lobby');
+                    addToast('Game has been ended by admin.', 'info', 5000);
+                    scheduleReload();
+                    break;
                 default:
                     console.log('Unknown lobby WebSocket message type:', message.type);
                     scheduleReload();
@@ -174,6 +273,23 @@ export default function LobbyPage() {
             setIsTogglingReady(false);
         }
     }, [sessionId]);
+
+    const formatTime = (seconds: number | null): string => {
+        if (seconds === null) return 'DNF';
+        const mins = Math.floor(seconds / 60);
+        const secs = seconds % 60;
+        return `${mins}:${secs.toString().padStart(2, '0')}`;
+    };
+
+    const getPlacementBadge = (placement: number | null) => {
+        if (placement === null) return '-';
+        const badges: Record<number, string> = {
+            1: '🥇',
+            2: '🥈',
+            3: '🥉',
+        };
+        return badges[placement] || `#${placement}`;
+    };
 
     const wsUrl = useMemo(
         () => (player?.lobby_id && sessionId ? `/ws/lobby/${player.lobby_id}/player/${sessionId}` : ''),
@@ -228,7 +344,7 @@ export default function LobbyPage() {
         gameStatus = {
             icon: '✅',
             title: 'Round complete',
-            description: 'Your team finished this round. You can revisit it anytime at /game.',
+            description: 'Your team finished this round.',
         };
     } else if (hasGameStarted) {
         gameStatus = {
@@ -298,10 +414,130 @@ export default function LobbyPage() {
                             </div>
                             <p className='text-tx-primary text-lg font-semibold'>{gameStatus.title}</p>
                             <p className='text-tx-secondary text-sm'>{gameStatus.description}</p>
+                            {hasGameStarted && isCompletedRound && (
+                                <div className='mt-3'>
+                                    <Button onClick={() => navigate('/game')} variant='primary' size='sm'>
+                                        View last round puzzle
+                                    </Button>
+                                </div>
+                            )}
                         </div>
                     </div>
                 </Card>
             </div>
+
+            {/* Team Results Card */}
+            {player.team_id && isTeamGameCompleted && (
+                <div>
+                    <Card className='bg-elevated/70 shadow-lg'>
+                        <div className='space-y-4'>
+                            <div>
+                                <div className='text-tx-secondary text-xs font-semibold tracking-wide uppercase'>
+                                    Your Team Results
+                                </div>
+                                <div className='text-tx-primary text-lg font-semibold'>
+                                    {teamRoundNumber ? `Round ${teamRoundNumber}` : 'Last round'}
+                                </div>
+                            </div>
+                            {isTeamRoundLoading && (
+                                <div className='flex items-center gap-3'>
+                                    <LoadingSpinner />
+                                    <span className='text-tx-secondary text-sm'>Loading results…</span>
+                                </div>
+                            )}
+                            {teamRoundError && <Alert variant='error'>{teamRoundError}</Alert>}
+                            {!isTeamRoundLoading && !teamRoundError && teamRoundStats && (
+                                <div className='space-y-4'>
+                                    <div className='grid gap-4 md:grid-cols-4'>
+                                        <div className='bg-secondary/60 rounded-lg p-3'>
+                                            <div className='text-tx-muted text-xs font-semibold uppercase'>
+                                                Placement
+                                            </div>
+                                            <div className='text-tx-primary text-xl font-semibold'>
+                                                {getPlacementBadge(teamRoundStats.placement)}
+                                            </div>
+                                        </div>
+                                        <div className='bg-secondary/60 rounded-lg p-3'>
+                                            <div className='text-tx-muted text-xs font-semibold uppercase'>Points</div>
+                                            <div className='text-tx-primary text-xl font-semibold'>
+                                                {teamRoundStats.points_earned ?? '-'}
+                                            </div>
+                                        </div>
+                                        <div className='bg-secondary/60 rounded-lg p-3'>
+                                            <div className='text-tx-muted text-xs font-semibold uppercase'>Time</div>
+                                            <div className='text-tx-primary text-xl font-semibold'>
+                                                {formatTime(teamRoundStats.time_to_complete)}
+                                            </div>
+                                        </div>
+                                        <div className='bg-secondary/60 rounded-lg p-3'>
+                                            <div className='text-tx-muted text-xs font-semibold uppercase'>
+                                                Completion
+                                            </div>
+                                            <div className='text-tx-primary text-xl font-semibold'>
+                                                {(teamRoundStats.completion_percentage * 100).toFixed(0)}%
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                    <div className='text-tx-secondary text-sm'>
+                                        Wrong guesses: {teamRoundStats.wrong_guesses}{' '}
+                                        <span className='text-tx-muted'>({teamRoundStats.wrong_guess_label})</span>
+                                    </div>
+
+                                    <div className='space-y-3'>
+                                        {teamRoundStats.player_stats.map(playerStat => (
+                                            <div
+                                                key={playerStat.player_id}
+                                                className='border-border rounded-lg border p-3'
+                                            >
+                                                <div className='flex flex-wrap items-start justify-between gap-2'>
+                                                    <div>
+                                                        <div className='text-tx-primary font-semibold'>
+                                                            {playerStat.player_name}
+                                                        </div>
+                                                        <div className='text-tx-muted text-sm'>
+                                                            {playerStat.correct_guesses}/{playerStat.total_guesses}{' '}
+                                                            correct ({(playerStat.accuracy_rate * 100).toFixed(0)}%
+                                                            accuracy)
+                                                        </div>
+                                                    </div>
+                                                    <div className='flex flex-wrap gap-2'>
+                                                        {playerStat.awards.length > 0 ? (
+                                                            playerStat.awards.map(award => (
+                                                                <span
+                                                                    key={award.key}
+                                                                    className='bg-secondary/80 rounded px-2 py-1 text-xs'
+                                                                    title={award.description}
+                                                                >
+                                                                    {award.emoji} {award.title}
+                                                                </span>
+                                                            ))
+                                                        ) : (
+                                                            <span className='text-tx-muted text-xs'>No awards</span>
+                                                        )}
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        ))}
+                                    </div>
+                                </div>
+                            )}
+                            {!isTeamRoundLoading && !teamRoundError && !teamRoundStats && (
+                                <div className='text-tx-muted text-sm'>Team results are not available yet.</div>
+                            )}
+                        </div>
+                    </Card>
+                </div>
+            )}
+
+            {/* Tournament Leaderboard */}
+            {sessionId && (
+                <TeamLeaderboard
+                    lobbyId={lobbyInfo.lobby.id}
+                    sessionId={sessionId}
+                    refreshKey={leaderboardRefreshKey}
+                />
+            )}
 
             {/* Ready Button - Only show if player is on a team */}
             {player.team_id && (

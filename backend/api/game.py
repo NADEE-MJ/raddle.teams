@@ -130,8 +130,13 @@ async def start_game(
     if not lobby:
         raise HTTPException(status_code=404, detail="Lobby not found")
 
-    # Check if there's an active (not completed) game
-    active_game = session.exec(select(Game).where(Game.lobby_id == lobby_id).where(Game.completed_at.is_(None))).first()
+    # Check if there's an active (not completed) game assigned to any team
+    active_game = session.exec(
+        select(Game)
+        .join(Team, Team.game_id == Game.id)
+        .where(Team.lobby_id == lobby_id)
+        .where(Game.completed_at.is_(None))
+    ).first()
     if active_game:
         raise HTTPException(
             status_code=400,

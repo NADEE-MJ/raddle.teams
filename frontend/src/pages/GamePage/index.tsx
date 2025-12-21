@@ -179,7 +179,7 @@ function Game({ puzzle, player, teamName, lobbyId, lobbyCode, sessionId, initial
     }, [addToast, navigate, lobbyCode]);
 
     const handleGameEnded = useCallback(() => {
-        addToast('The game has been ended by an admin. Returning to the lobby.', 'info', 4000);
+        addToast("Time's up! The admin ended the round. Returning to the lobby.", 'warning', 4000);
         navigate(`/lobby/${lobbyCode}`);
     }, [addToast, navigate, lobbyCode]);
 

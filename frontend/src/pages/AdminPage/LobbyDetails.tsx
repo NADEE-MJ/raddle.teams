@@ -1,11 +1,13 @@
 import { useState, useEffect, useCallback, useMemo } from 'react';
 import { LobbyInfo, GameStateResponse, GameWebSocketEvents, LobbyWebSocketEvents, WebSocketMessage } from '@/types';
 import { Modal, CopyableCode, Button, TextInput, Select, ErrorMessage, Card, ConnectionBadge } from '@/components';
+import { TeamLeaderboard } from '@/components/TeamLeaderboard';
 import { api, ApiError } from '@/services/api';
 import { useGlobalOutletContext } from '@/hooks/useGlobalOutletContext';
 import { useDebounce } from '@/hooks/useDebounce';
 import { useWebSocket } from '@/hooks/useWebSocket';
 import GameProgressView from './GameProgressView';
+import { RoundSummary } from './RoundSummary';
 
 const MIN_TEAMS = 2;
 const MAX_TEAMS = 10;
@@ -36,6 +38,9 @@ export default function LobbyDetails({ lobbyId, onClose, onLobbyDeleted, refresh
     const [removingTeamId, setRemovingTeamId] = useState<number | null>(null);
     const [editingTeamId, setEditingTeamId] = useState<number | null>(null);
     const [editingTeamName, setEditingTeamName] = useState('');
+    const [viewingRoundGameId, setViewingRoundGameId] = useState<number | null>(null);
+    const [allRounds, setAllRounds] = useState<{ round_number: number; game_id: number }[]>([]);
+    const [leaderboardRefreshKey, setLeaderboardRefreshKey] = useState(0);
 
     // Game state
     const [gameState, setGameState] = useState<GameStateResponse | null>(null);
@@ -90,17 +95,32 @@ export default function LobbyDetails({ lobbyId, onClose, onLobbyDeleted, refresh
         }
     }, [adminApiToken, lobbyId]);
 
+    const loadAllRounds = useCallback(async () => {
+        if (!adminApiToken) return;
+
+        try {
+            const rounds = await api.admin.lobby.getAllRounds(lobbyId, adminApiToken);
+            setAllRounds(rounds);
+        } catch (err) {
+            console.error('Error loading rounds:', err);
+            // Don't set error - might not have any rounds yet
+        }
+    }, [adminApiToken, lobbyId]);
+
     const reloadAll = useCallback(async () => {
         await loadLobbyDetails();
         await loadGameState();
-    }, [loadLobbyDetails, loadGameState]);
+        await loadAllRounds();
+        setLeaderboardRefreshKey(prev => prev + 1);
+    }, [loadLobbyDetails, loadGameState, loadAllRounds]);
 
     const scheduleReload = useDebounce(reloadAll);
 
     useEffect(() => {
         loadLobbyDetails();
         loadGameState();
-    }, [loadLobbyDetails, loadGameState, refreshKey]);
+        loadAllRounds();
+    }, [loadLobbyDetails, loadGameState, loadAllRounds, refreshKey]);
 
     useEffect(() => {
         setNumTeams(prev => clampTeamCount(prev));
@@ -166,6 +186,11 @@ export default function LobbyDetails({ lobbyId, onClose, onLobbyDeleted, refresh
                 case GameWebSocketEvents.GAME_WON:
                     loadGameState();
                     break;
+                case 'round_ended':
+                case 'new_round_started':
+                    // Reload everything when a round ends or starts
+                    reloadAll();
+                    break;
                 case LobbyWebSocketEvents.CONNECTION_CONFIRMED:
                 case LobbyWebSocketEvents.PLAYER_JOINED:
                 case LobbyWebSocketEvents.TEAM_ASSIGNED:
@@ -181,7 +206,7 @@ export default function LobbyDetails({ lobbyId, onClose, onLobbyDeleted, refresh
                     break;
             }
         },
-        [loadGameState, scheduleReload]
+        [loadGameState, scheduleReload, reloadAll]
     );
 
     const onError = useCallback((event: Event) => {
@@ -578,6 +603,44 @@ export default function LobbyDetails({ lobbyId, onClose, onLobbyDeleted, refresh
                         </div>
                     </Card>
                 </div>
+
+                {/* Tournament Leaderboard */}
+                {adminApiToken && allRounds.length > 0 && (
+                    <div className='mb-6'>
+                        <div className='mb-3 flex items-center justify-between'>
+                            <div className='text-tx-secondary text-sm tracking-wide uppercase'>
+                                Tournament Standings
+                            </div>
+                            {allRounds.length > 0 && (
+                                <div className='flex items-center gap-3'>
+                                    <label className='text-tx-primary text-sm font-medium'>View Round:</label>
+                                    <Select
+                                        value=''
+                                        onChange={value => {
+                                            if (value) {
+                                                setViewingRoundGameId(parseInt(value.toString()));
+                                            }
+                                        }}
+                                        options={[
+                                            { value: '', label: 'Select a round...' },
+                                            ...allRounds.map(r => ({
+                                                value: r.game_id,
+                                                label: `Round ${r.round_number}`,
+                                            })),
+                                        ]}
+                                        data-testid='round-select'
+                                    />
+                                </div>
+                            )}
+                        </div>
+                        <TeamLeaderboard
+                            lobbyId={lobbyId}
+                            adminToken={adminApiToken}
+                            onViewLastRound={gameId => setViewingRoundGameId(gameId)}
+                            refreshKey={leaderboardRefreshKey}
+                        />
+                    </div>
+                )}
 
                 {(!selectedLobby.teams || selectedLobby.teams.length === 0) && selectedLobby.players.length > 0 && (
                     <>
@@ -984,22 +1047,34 @@ export default function LobbyDetails({ lobbyId, onClose, onLobbyDeleted, refresh
                             >
                                 Game In Progress
                             </div>
-                            <Button
-                                onClick={handleEndGame}
-                                disabled={isEndingGame}
-                                variant='destructive'
-                                size='md'
-                                loading={isEndingGame}
-                                loadingIndicatorPlacement='left'
-                                data-testid='end-game-button'
-                            >
-                                End Game
-                            </Button>
+                            <div className='flex gap-2'>
+                                <Button
+                                    onClick={handleEndGame}
+                                    disabled={isEndingGame}
+                                    variant='destructive'
+                                    size='md'
+                                    loading={isEndingGame}
+                                    loadingIndicatorPlacement='left'
+                                    data-testid='end-game-button'
+                                >
+                                    End Game
+                                </Button>
+                            </div>
                         </div>
                         <GameProgressView teams={gameState.teams} />
                     </div>
                 )}
             </div>
+
+            {/* Round Summary Modal */}
+            {viewingRoundGameId && adminApiToken && (
+                <RoundSummary
+                    lobbyId={lobbyId}
+                    gameId={viewingRoundGameId}
+                    adminToken={adminApiToken}
+                    onClose={() => setViewingRoundGameId(null)}
+                />
+            )}
         </Modal>
     );
 }
