@@ -32,6 +32,8 @@ interface GamePageProps {
         is_completed: boolean;
         last_updated_at: string;
     };
+    initialTimerActive: boolean;
+    initialTimerExpiresAt: string | null;
 }
 
 export default function GamePage() {
@@ -42,6 +44,8 @@ export default function GamePage() {
     const [gameData, setGameData] = useState<GamePageProps | null>(null);
     const [loading, setLoading] = useState(true);
     const [error, setError] = useState<string | null>(null);
+    const [isTimerActive, setIsTimerActive] = useState(false);
+    const [timerExpiresAt, setTimerExpiresAt] = useState<string | null>(null);
 
     useEffect(() => {
         async function loadGameData() {
@@ -69,6 +73,18 @@ export default function GamePage() {
                 // Fetch player info
                 const player = await api.player.lobby.activeUser(currentSessionId);
                 const lobbyInfo = await api.player.lobby.getLobbyInfo(player.lobby_id, currentSessionId);
+
+                // Fetch timer state
+                try {
+                    const timerState = await api.player.game.getTimerState(currentSessionId);
+                    if (timerState.is_active && timerState.expires_at) {
+                        setIsTimerActive(true);
+                        setTimerExpiresAt(timerState.expires_at);
+                    }
+                } catch (err) {
+                    console.error('[GamePage] Failed to load timer state:', err);
+                    // Non-critical error, continue loading game
+                }
 
                 setGameData({
                     puzzle: puzzleResponse.puzzle,
@@ -118,7 +134,7 @@ export default function GamePage() {
         );
     }
 
-    return <Game {...gameData} />;
+    return <Game {...gameData} initialTimerActive={isTimerActive} initialTimerExpiresAt={timerExpiresAt} />;
 }
 
 interface GameProps extends GamePageProps {}
@@ -146,7 +162,17 @@ function getOrdinalSuffix(num: number): string {
 
 // GameProps now includes sessionId from GamePageProps
 
-function Game({ puzzle, player, teamName, lobbyId, lobbyCode, sessionId, initialState }: GameProps) {
+function Game({
+    puzzle,
+    player,
+    teamName,
+    lobbyId,
+    lobbyCode,
+    sessionId,
+    initialState,
+    initialTimerActive,
+    initialTimerExpiresAt,
+}: GameProps) {
     const navigate = useNavigate();
     const { setSessionId } = useGlobalOutletContext();
     const { addToast } = useToast();
@@ -157,6 +183,11 @@ function Game({ puzzle, player, teamName, lobbyId, lobbyCode, sessionId, initial
     const [firstPlaceTeamName, setFirstPlaceTeamName] = useState('');
     const [showFullLadder, setShowFullLadder] = useState(false);
     const [stepFeedback, setStepFeedback] = useState<Record<number, StepFeedbackEntry>>({});
+
+    // Timer state
+    const [isTimerActive, setIsTimerActive] = useState(initialTimerActive);
+    const [timerExpiresAt, setTimerExpiresAt] = useState<string | null>(initialTimerExpiresAt);
+    const [timeRemaining, setTimeRemaining] = useState<number>(0); // seconds
 
     // WebSocket URL
     const wsUrl = `/ws/lobby/${lobbyId}/player/${sessionId}`;
@@ -188,6 +219,28 @@ function Game({ puzzle, player, teamName, lobbyId, lobbyCode, sessionId, initial
         navigate('/game', { replace: true, state: { gameStartedAt: Date.now() } });
     }, [addToast, navigate]);
 
+    const handleTimerStarted = useCallback(
+        (event: { duration_seconds: number; started_at: string; expires_at: string }) => {
+            console.log('[GamePage] Timer started:', event);
+            setIsTimerActive(true);
+            setTimerExpiresAt(event.expires_at);
+            addToast(
+                `Round timer started: ${Math.floor(event.duration_seconds / 60)} minutes until auto-end`,
+                'warning',
+                5000
+            );
+        },
+        [addToast]
+    );
+
+    const handleTimerExpired = useCallback(() => {
+        console.log('[GamePage] Timer expired');
+        setIsTimerActive(false);
+        setTimerExpiresAt(null);
+        setTimeRemaining(0);
+        addToast("Time's up! The round has ended.", 'error', 5000);
+    }, [addToast]);
+
     const {
         revealedSteps,
         isCompleted,
@@ -214,6 +267,8 @@ function Game({ puzzle, player, teamName, lobbyId, lobbyCode, sessionId, initial
         onTeamChanged: handleTeamChanged,
         onGameEnded: handleGameEnded,
         onGameStarted: handleGameStarted,
+        onTimerStarted: handleTimerStarted,
+        onTimerExpired: handleTimerExpired,
         sessionId,
         maxRetries: 10,
         onMaxRetriesReached: () => {
@@ -255,10 +310,45 @@ function Game({ puzzle, player, teamName, lobbyId, lobbyCode, sessionId, initial
         setTimeout(() => inputRef.current?.focus(), 100);
     }, []);
 
+    const formatTimer = useCallback((seconds: number): string => {
+        const mins = Math.floor(seconds / 60);
+        const secs = seconds % 60;
+        return `${mins}:${secs.toString().padStart(2, '0')}`;
+    }, []);
+
     // Focus input when revealed steps change
     useEffect(() => {
         focusInput();
     }, [revealedSteps, focusInput]);
+
+    // Timer countdown effect
+    useEffect(() => {
+        if (!isTimerActive || !timerExpiresAt) {
+            setTimeRemaining(0);
+            return;
+        }
+
+        const updateTimer = () => {
+            const now = new Date().getTime();
+            const expiry = new Date(timerExpiresAt).getTime();
+            const remaining = Math.max(0, Math.floor((expiry - now) / 1000));
+
+            setTimeRemaining(remaining);
+
+            if (remaining <= 0) {
+                setIsTimerActive(false);
+                setTimerExpiresAt(null);
+            }
+        };
+
+        // Update immediately
+        updateTimer();
+
+        // Then update every second
+        const interval = setInterval(updateTimer, 1000);
+
+        return () => clearInterval(interval);
+    }, [isTimerActive, timerExpiresAt]);
 
     // Show full ladder on md and larger screens
     useEffect(() => {
@@ -476,6 +566,18 @@ function Game({ puzzle, player, teamName, lobbyId, lobbyCode, sessionId, initial
                         connectedText='Connected to game'
                     />
                 </div>
+                {/* Round Timer */}
+                {isTimerActive && !isCompleted && (
+                    <div className='bg-elevated border-border mt-3 rounded-lg border px-4 py-2'>
+                        <div className='text-tx-secondary text-xs font-semibold uppercase'>Round Timer</div>
+                        <div
+                            className={`text-2xl font-bold ${timeRemaining < 60 ? 'text-red' : 'text-orange'}`}
+                            data-testid='round-timer'
+                        >
+                            {formatTimer(timeRemaining)}
+                        </div>
+                    </div>
+                )}
             </div>
 
             {/* Back to Lobby button - Desktop (above puzzle) and Mobile (above puzzle) */}

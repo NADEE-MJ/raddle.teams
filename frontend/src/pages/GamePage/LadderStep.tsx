@@ -45,20 +45,23 @@ export default function LadderStep({
 }: LadderStepProps) {
     const [currentGuess, setCurrentGuess] = useState('');
     const wordSegments = useMemo(() => {
-        const segments: Array<{ type: 'letters'; length: number } | { type: 'space'; length: number }> = [];
+        const segments: Array<
+            { type: 'letters'; length: number } | { type: 'space'; length: number } | { type: 'hyphen'; length: number }
+        > = [];
         let letterCount = 0;
 
         for (const char of word) {
-            if (char === ' ') {
+            if (char === ' ' || char === '-') {
                 if (letterCount > 0) {
                     segments.push({ type: 'letters', length: letterCount });
                     letterCount = 0;
                 }
                 const lastSegment = segments[segments.length - 1];
-                if (lastSegment && lastSegment.type === 'space') {
+                const segmentType = char === ' ' ? 'space' : 'hyphen';
+                if (lastSegment && lastSegment.type === segmentType) {
                     lastSegment.length += 1;
                 } else {
-                    segments.push({ type: 'space', length: 1 });
+                    segments.push({ type: segmentType, length: 1 });
                 }
             } else {
                 letterCount += 1;
@@ -73,9 +76,18 @@ export default function LadderStep({
     }, [word]);
 
     const letterCountLabel = useMemo(() => {
-        const counts = wordSegments.filter(segment => segment.type === 'letters').map(segment => segment.length);
-        const formattedCounts = counts.length > 0 ? counts.join(' ') : '0';
-        return `(${formattedCounts})`;
+        let result = '';
+        for (let i = 0; i < wordSegments.length; i++) {
+            const segment = wordSegments[i];
+            if (segment.type === 'letters') {
+                result += segment.length;
+            } else if (segment.type === 'hyphen') {
+                result += '-';
+            } else if (segment.type === 'space') {
+                result += ' ';
+            }
+        }
+        return result ? `(${result})` : '(0)';
     }, [wordSegments]);
 
     const unrevealedPlaceholder = useMemo(() => {
@@ -83,8 +95,11 @@ export default function LadderStep({
             .map(segment => {
                 if (segment.type === 'letters') {
                     return '◻️'.repeat(Math.max(segment.length, 1));
+                } else if (segment.type === 'hyphen') {
+                    return '-';
+                } else {
+                    return ' '.repeat(segment.length);
                 }
-                return ' '.repeat(segment.length);
             })
             .join('');
 

@@ -9,7 +9,7 @@ from sqlmodel import Session, func, select
 
 from backend.custom_logging import websocket_logger
 from backend.database import get_session
-from backend.database.models import Game, Guess, Lobby, Player, Team
+from backend.database.models import Game, Guess, Lobby, Player, RoundResult, Team
 from backend.dependencies import check_admin_token
 from backend.game.puzzles import get_puzzle_manager
 from backend.game.state_machine import GuessResult, TeamState, TeamStateMachine
@@ -269,11 +269,20 @@ async def get_team_puzzle(
     if not team:
         raise HTTPException(status_code=404, detail="Team not found")
 
-    if not team.game_id:
-        raise HTTPException(status_code=400, detail="Game not started yet")
+    game_id = team.game_id
+    if not game_id:
+        last_round = session.exec(
+            select(RoundResult)
+            .where(RoundResult.team_id == team.id)
+            .order_by(RoundResult.round_number.desc(), RoundResult.created_at.desc())
+            .limit(1)
+        ).first()
+        if not last_round:
+            raise HTTPException(status_code=400, detail="Game not started yet")
+        game_id = last_round.game_id
 
     # Get game (puzzle)
-    game = session.get(Game, team.game_id)
+    game = session.get(Game, game_id)
     if not game:
         raise HTTPException(status_code=404, detail="Game not found")
 
@@ -295,6 +304,61 @@ async def get_team_puzzle(
         "team_name": team.name,
         "lobby_id": team.lobby_id,
         "state": current_state,
+    }
+
+
+@router.get("/game/timer-state")
+async def get_timer_state(
+    session: Session = Depends(get_session),
+    player_session_id: str = None,
+):
+    """
+    Get the current timer state for the player's lobby.
+    Returns whether a timer is active and when it expires.
+    """
+    if not player_session_id:
+        raise HTTPException(status_code=401, detail="Player session ID required")
+
+    # Get player
+    player = session.exec(select(Player).where(Player.session_id == player_session_id)).first()
+    if not player:
+        raise HTTPException(status_code=404, detail="Player not found")
+
+    lobby_id = player.lobby_id
+
+    # Get active games with timer set
+    active_games_with_timer = session.exec(
+        select(Game)
+        .where(Game.lobby_id == lobby_id)
+        .where(Game.completed_at.is_(None))
+        .where(Game.timer_started_at.isnot(None))
+        .where(Game.puzzle_path != "")
+    ).all()
+
+    if not active_games_with_timer:
+        return {"is_active": False, "duration_seconds": None, "started_at": None, "expires_at": None}
+
+    # Get the first game's timer (all games in a lobby share the same timer)
+    game = active_games_with_timer[0]
+
+    if not game.timer_started_at or not game.timer_duration_seconds:
+        return {"is_active": False, "duration_seconds": None, "started_at": None, "expires_at": None}
+
+    # Calculate expiry time
+    from datetime import timedelta
+
+    expires_at = game.timer_started_at + timedelta(seconds=game.timer_duration_seconds)
+
+    # Check if timer has already expired
+    now = datetime.now(timezone.utc)
+    if now >= expires_at:
+        return {"is_active": False, "duration_seconds": None, "started_at": None, "expires_at": None}
+
+    return {
+        "is_active": True,
+        "duration_seconds": game.timer_duration_seconds,
+        "started_at": game.timer_started_at.isoformat(),
+        "expires_at": expires_at.isoformat(),
     }
 
 

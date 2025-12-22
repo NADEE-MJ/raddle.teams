@@ -35,6 +35,8 @@ class TeamGameStats(BaseModel):
     completed_at: Optional[str]
     completion_percentage: float
     time_to_complete: Optional[int]  # seconds
+    puzzle: dict  # full puzzle data for this team's round
+    revealed_steps: list[int]
     player_stats: list[PlayerGameStats]
 
 
@@ -126,7 +128,12 @@ async def get_game_stats(game_id: int, session: Session = Depends(get_session)):
 
         # Load this team's puzzle to get the correct length
         team_puzzle = puzzle_manager.load_puzzle_by_path(team_game.puzzle_path)
+        team_puzzle_data = team_puzzle.model_dump()
         team_puzzle_length = len(team_puzzle.ladder)
+        transformed_puzzle = {
+            "title": team_puzzle_data.get("meta", {}).get("title", "Untitled Puzzle"),
+            "ladder": team_puzzle_data.get("ladder", []),
+        }
 
         # Calculate team-level stats
         team_wrong_guesses = [g for g in guesses if not g.is_correct]
@@ -230,6 +237,8 @@ async def get_game_stats(game_id: int, session: Session = Depends(get_session)):
                 completed_at=completed_at_str,
                 completion_percentage=completion_percentage,
                 time_to_complete=time_to_complete,
+                puzzle=transformed_puzzle,
+                revealed_steps=revealed_steps,
                 player_stats=player_stats_list,
             )
         )

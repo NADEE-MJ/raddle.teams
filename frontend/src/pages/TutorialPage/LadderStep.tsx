@@ -32,6 +32,68 @@ export default function LadderStep({
 }: LadderStepProps) {
     const [currentGuess, setCurrentGuess] = useState('');
 
+    const wordSegments = useMemo(() => {
+        const segments: Array<
+            { type: 'letters'; length: number } | { type: 'space'; length: number } | { type: 'hyphen'; length: number }
+        > = [];
+        let letterCount = 0;
+
+        for (const char of word) {
+            if (char === ' ' || char === '-') {
+                if (letterCount > 0) {
+                    segments.push({ type: 'letters', length: letterCount });
+                    letterCount = 0;
+                }
+                const lastSegment = segments[segments.length - 1];
+                const segmentType = char === ' ' ? 'space' : 'hyphen';
+                if (lastSegment && lastSegment.type === segmentType) {
+                    lastSegment.length += 1;
+                } else {
+                    segments.push({ type: segmentType, length: 1 });
+                }
+            } else {
+                letterCount += 1;
+            }
+        }
+
+        if (letterCount > 0) {
+            segments.push({ type: 'letters', length: letterCount });
+        }
+
+        return segments.length > 0 ? segments : [{ type: 'letters', length: 0 }];
+    }, [word]);
+
+    const letterCountLabel = useMemo(() => {
+        let result = '';
+        for (let i = 0; i < wordSegments.length; i++) {
+            const segment = wordSegments[i];
+            if (segment.type === 'letters') {
+                result += segment.length;
+            } else if (segment.type === 'hyphen') {
+                result += '-';
+            } else if (segment.type === 'space') {
+                result += ' ';
+            }
+        }
+        return result ? `(${result})` : '(0)';
+    }, [wordSegments]);
+
+    const unrevealedPlaceholder = useMemo(() => {
+        const pattern = wordSegments
+            .map(segment => {
+                if (segment.type === 'letters') {
+                    return '◻️'.repeat(Math.max(segment.length, 1));
+                } else if (segment.type === 'hyphen') {
+                    return '-';
+                } else {
+                    return ' '.repeat(segment.length);
+                }
+            })
+            .join('');
+
+        return `${pattern} ${letterCountLabel}`;
+    }, [wordSegments, letterCountLabel]);
+
     const color = useMemo(() => {
         if (isCurrentQuestion) return 'bg-question-step';
         if (isCurrentAnswer) return 'bg-answer-step';
@@ -61,14 +123,14 @@ export default function LadderStep({
         []
     );
 
-    const renderActiveStep = (wordLength: number, renderEmptyTransform: boolean) => {
+    const renderActiveStep = (lengthLabel: string, renderEmptyTransform: boolean) => {
         return (
             <div className='relative'>
                 <span
                     className='bg-transform-bg border-ladder-rungs text-tx-primary absolute top-1/2 -translate-x-1/2 -translate-y-1/2 rounded-lg border-[0.5px] p-0.5 text-sm md:text-base'
                     data-testid='word-length-indicator'
                 >
-                    ({wordLength})
+                    {lengthLabel}
                 </span>
                 <input
                     ref={inputRef}
@@ -102,12 +164,12 @@ export default function LadderStep({
         );
     };
 
-    const renderUnrevealedStep = (wordLength: number, renderEmptyTransform: boolean) => {
+    const renderUnrevealedStep = (placeholderText: string, renderEmptyTransform: boolean) => {
         return (
             <div className='relative'>
                 <input
                     type='text'
-                    placeholder={'◻️'.repeat(wordLength) + ` (${wordLength})`}
+                    placeholder={placeholderText}
                     className={inputClassNames}
                     disabled
                     autoComplete='off'
@@ -132,7 +194,7 @@ export default function LadderStep({
 
     const renderStep = (word: string, transform: string | null) => {
         if (isActive) {
-            return renderActiveStep(word.length, transform !== null && shouldRenderTransform);
+            return renderActiveStep(letterCountLabel, transform !== null && shouldRenderTransform);
         }
 
         if (isStepRevealed || isCurrentQuestion || isCurrentAnswer) {
@@ -143,7 +205,7 @@ export default function LadderStep({
             );
         }
 
-        return renderUnrevealedStep(word.length, transform !== null && shouldRenderTransform);
+        return renderUnrevealedStep(unrevealedPlaceholder, transform !== null && shouldRenderTransform);
     };
 
     const transitionClasses = 'transition-colors duration-200 ease-in-out';

@@ -74,6 +74,10 @@ class Game(SQLModel, table=True):
     revealed_steps: str = Field(default="[]", sa_column=Column(JSON))  # JSON array of revealed step indices
     last_updated_at: Optional[datetime] = Field(default=None)
 
+    # Timer fields for round countdown
+    timer_started_at: Optional[datetime] = Field(default=None)  # When admin started the timer
+    timer_duration_seconds: Optional[int] = Field(default=None)  # Timer duration in seconds
+
     # Relationships
     lobby: "Lobby" = Relationship(back_populates="games")
     teams: list["Team"] = Relationship(back_populates="game")  # Teams solving this puzzle

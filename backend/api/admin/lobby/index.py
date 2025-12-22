@@ -391,12 +391,21 @@ async def end_game(
             f"points={points} completed={completed} completion_pct={completion_pct:.2%}"
         )
 
+    # Cancel any running timer task for this lobby
+    from backend.api.admin.lobby.timer_task import cancel_timer
+
+    if cancel_timer(lobby_id):
+        api_logger.info(f"Cancelled running timer for lobby_id={lobby_id} (manual end)")
+
     # Reveal all puzzle steps for all teams (so they can see the complete puzzle)
     all_steps = list(range(puzzle_length))
     for game in active_games:
         game.revealed_steps = json.dumps(all_steps)
         game.completed_at = datetime.now(timezone.utc)
         game.last_updated_at = datetime.now(timezone.utc)
+        # Clear timer fields when manually ending game
+        game.timer_started_at = None
+        game.timer_duration_seconds = None
 
     # Reset all players' ready status
     all_players = db.exec(select(Player).where(Player.lobby_id == lobby_id)).all()
@@ -521,3 +530,190 @@ async def get_all_rounds(
 
     api_logger.info(f"Returning {len(rounds)} rounds for lobby_id={lobby_id}")
     return rounds
+
+
+class TimerStateResponse(BaseModel):
+    """Current timer state for a lobby."""
+
+    is_active: bool
+    duration_seconds: int | None = None
+    started_at: str | None = None  # ISO timestamp
+    expires_at: str | None = None  # ISO timestamp
+
+
+@router.get("/lobby/{lobby_id}/timer-state", response_model=TimerStateResponse)
+async def get_timer_state(
+    lobby_id: int,
+    db: Session = Depends(get_session),
+):
+    """
+    Get the current timer state for a lobby.
+    Returns whether a timer is active and when it expires.
+    """
+    api_logger.info(f"Fetching timer state for lobby_id={lobby_id}")
+
+    # Get active games with timer set
+    active_games_with_timer = db.exec(
+        select(Game)
+        .where(Game.lobby_id == lobby_id)
+        .where(Game.completed_at.is_(None))
+        .where(Game.timer_started_at.isnot(None))
+        .where(Game.puzzle_path != "")
+    ).all()
+
+    if not active_games_with_timer:
+        api_logger.info(f"No active timer for lobby_id={lobby_id}")
+        return TimerStateResponse(is_active=False)
+
+    # Get the first game's timer (all games in a lobby share the same timer)
+    game = active_games_with_timer[0]
+
+    if not game.timer_started_at or not game.timer_duration_seconds:
+        api_logger.info(f"Timer data incomplete for lobby_id={lobby_id}")
+        return TimerStateResponse(is_active=False)
+
+    # Calculate expiry time
+    from datetime import timedelta
+
+    expires_at = game.timer_started_at + timedelta(seconds=game.timer_duration_seconds)
+
+    # Check if timer has already expired
+    now = datetime.now(timezone.utc)
+    if now >= expires_at:
+        api_logger.info(f"Timer already expired for lobby_id={lobby_id}")
+        return TimerStateResponse(is_active=False)
+
+    api_logger.info(
+        f"Active timer for lobby_id={lobby_id}: duration={game.timer_duration_seconds}s expires_at={expires_at.isoformat()}"
+    )
+
+    return TimerStateResponse(
+        is_active=True,
+        duration_seconds=game.timer_duration_seconds,
+        started_at=game.timer_started_at.isoformat(),
+        expires_at=expires_at.isoformat(),
+    )
+
+
+class StartTimerRequest(BaseModel):
+    """Request to start the round countdown timer."""
+
+    duration_minutes: int = 3  # Default: 3 minutes
+    duration_seconds: int = 0  # Default: 0 seconds
+
+
+@router.post("/lobby/{lobby_id}/start-timer", response_model=MessageResponse)
+async def start_timer(
+    lobby_id: int,
+    request: StartTimerRequest,
+    db: Session = Depends(get_session),
+):
+    """
+    Start a countdown timer for the current round.
+
+    This endpoint:
+    1. Validates that at least one team has completed
+    2. Validates timer duration (2, 5, or 10 minutes)
+    3. Sets timer on all active games in the lobby
+    4. Broadcasts TIMER_STARTED event to all players
+    5. Schedules auto-end when timer expires
+    """
+    api_logger.info(
+        f"Admin requested to start timer: lobby_id={lobby_id} duration={request.duration_minutes}min {request.duration_seconds}sec"
+    )
+
+    # Validate timer duration
+    if request.duration_minutes < 0 or request.duration_seconds < 0:
+        api_logger.warning(f"Invalid timer duration: {request.duration_minutes}min {request.duration_seconds}sec")
+        raise HTTPException(status_code=400, detail="Timer duration must be non-negative")
+
+    if request.duration_minutes == 0 and request.duration_seconds == 0:
+        api_logger.warning("Invalid timer duration: 0 minutes 0 seconds")
+        raise HTTPException(status_code=400, detail="Timer duration must be greater than 0")
+
+    if request.duration_minutes > 60:
+        api_logger.warning(f"Timer duration too long: {request.duration_minutes} minutes")
+        raise HTTPException(status_code=400, detail="Timer duration must be 60 minutes or less")
+
+    # Check if lobby exists
+    lobby = db.get(Lobby, lobby_id)
+    if not lobby:
+        api_logger.warning(f"Start timer failed: lobby not found lobby_id={lobby_id}")
+        raise HTTPException(status_code=404, detail="Lobby not found")
+
+    # Get active games (games not yet completed)
+    active_games = db.exec(
+        select(Game).where(Game.lobby_id == lobby_id).where(Game.completed_at.is_(None)).where(Game.puzzle_path != "")
+    ).all()
+
+    if not active_games:
+        api_logger.warning(f"Start timer failed: no active game lobby_id={lobby_id}")
+        raise HTTPException(status_code=400, detail="No active game to start timer for")
+
+    # Check if timer is already running
+    if any(game.timer_started_at is not None for game in active_games):
+        api_logger.warning(f"Start timer failed: timer already running lobby_id={lobby_id}")
+        raise HTTPException(status_code=400, detail="Timer is already running")
+
+    # Check that at least one team has completed
+    teams = db.exec(select(Team).where(Team.lobby_id == lobby_id)).all()
+    teams_with_games = [team for team in teams if team.game_id is not None]
+
+    # Count teams that have completed games
+    completed_teams = []
+    for team in teams_with_games:
+        if team.game_id:
+            team_game = db.get(Game, team.game_id)
+            if team_game and team_game.completed_at is not None:
+                completed_teams.append(team)
+
+    if len(completed_teams) == 0:
+        api_logger.warning(f"Start timer failed: no teams have completed yet lobby_id={lobby_id}")
+        raise HTTPException(status_code=400, detail="Cannot start timer: no teams have completed yet")
+
+    # Set timer on all active games
+    timer_started_at = datetime.now(timezone.utc)
+    timer_duration_seconds = (request.duration_minutes * 60) + request.duration_seconds
+
+    for game in active_games:
+        game.timer_started_at = timer_started_at
+        game.timer_duration_seconds = timer_duration_seconds
+        db.add(game)
+
+    db.commit()
+
+    # Calculate expiry time
+    from datetime import timedelta
+
+    expires_at = timer_started_at + timedelta(seconds=timer_duration_seconds)
+
+    # Broadcast TIMER_STARTED event
+    from backend.websocket.events import TimerStartedEvent
+    from backend.websocket.managers import lobby_websocket_manager
+
+    timer_event = TimerStartedEvent(
+        lobby_id=lobby_id,
+        duration_seconds=timer_duration_seconds,
+        started_at=timer_started_at.isoformat(),
+        expires_at=expires_at.isoformat(),
+    )
+    await lobby_websocket_manager.broadcast_to_lobby(lobby_id, timer_event)
+
+    # Schedule timer expiry with task reference tracking
+    from backend.api.admin.lobby.timer_task import start_timer
+
+    start_timer(lobby_id, timer_duration_seconds)
+
+    api_logger.info(
+        f"Timer started for lobby_id={lobby_id}: duration={request.duration_minutes}min {request.duration_seconds}sec expires_at={expires_at.isoformat()}"
+    )
+
+    # Format message
+    time_parts = []
+    if request.duration_minutes > 0:
+        time_parts.append(f"{request.duration_minutes} minute{'s' if request.duration_minutes != 1 else ''}")
+    if request.duration_seconds > 0:
+        time_parts.append(f"{request.duration_seconds} second{'s' if request.duration_seconds != 1 else ''}")
+    time_str = " and ".join(time_parts)
+
+    return MessageResponse(status=True, message=f"Timer started: {time_str} until auto-end")

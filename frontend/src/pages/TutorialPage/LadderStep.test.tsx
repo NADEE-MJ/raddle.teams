@@ -296,6 +296,44 @@ describe('LadderStep Component', () => {
             // Should still show empty transform span
             expect(document.querySelector('span')).toBeInTheDocument();
         });
+
+        test('shows hyphen in length indicator for hyphenated words', () => {
+            render(
+                <LadderStep
+                    onGuessChange={mockOnGuessChange}
+                    inputRef={inputRef}
+                    word='X-RAY'
+                    transform={null}
+                    isCurrentQuestion={false}
+                    isCurrentAnswer={true}
+                    isStepRevealed={false}
+                    isActive={true}
+                    shouldShowTransform={false}
+                    shouldRenderTransform={false}
+                />
+            );
+
+            expect(screen.getByTestId('word-length-indicator')).toHaveTextContent('(1-3)');
+        });
+
+        test('shows hyphens in length indicator for multi-hyphenated words', () => {
+            render(
+                <LadderStep
+                    onGuessChange={mockOnGuessChange}
+                    inputRef={inputRef}
+                    word='MOBY-DICK'
+                    transform={null}
+                    isCurrentQuestion={false}
+                    isCurrentAnswer={true}
+                    isStepRevealed={false}
+                    isActive={true}
+                    shouldShowTransform={false}
+                    shouldRenderTransform={false}
+                />
+            );
+
+            expect(screen.getByTestId('word-length-indicator')).toHaveTextContent('(4-4)');
+        });
     });
 
     describe('Revealed Step (Display Mode)', () => {
@@ -398,6 +436,66 @@ describe('LadderStep Component', () => {
 
             const input = screen.getByTestId('unrevealed-step-input');
             expect(input).toHaveAttribute('placeholder', '◻️◻️◻️◻️◻️ (5)');
+        });
+
+        test('shows hyphen in placeholder for hyphenated words', () => {
+            render(
+                <LadderStep
+                    onGuessChange={mockOnGuessChange}
+                    inputRef={inputRef}
+                    word='X-RAY'
+                    transform={null}
+                    isCurrentQuestion={false}
+                    isCurrentAnswer={false}
+                    isStepRevealed={false}
+                    isActive={false}
+                    shouldShowTransform={false}
+                    shouldRenderTransform={false}
+                />
+            );
+
+            const input = screen.getByTestId('unrevealed-step-input');
+            expect(input).toHaveAttribute('placeholder', '◻️-◻️◻️◻️ (1-3)');
+        });
+
+        test('shows hyphens in placeholder for multi-hyphenated words', () => {
+            render(
+                <LadderStep
+                    onGuessChange={mockOnGuessChange}
+                    inputRef={inputRef}
+                    word='MOBY-DICK'
+                    transform={null}
+                    isCurrentQuestion={false}
+                    isCurrentAnswer={false}
+                    isStepRevealed={false}
+                    isActive={false}
+                    shouldShowTransform={false}
+                    shouldRenderTransform={false}
+                />
+            );
+
+            const input = screen.getByTestId('unrevealed-step-input');
+            expect(input).toHaveAttribute('placeholder', '◻️◻️◻️◻️-◻️◻️◻️◻️ (4-4)');
+        });
+
+        test('shows space and hyphen in placeholder for words with both', () => {
+            render(
+                <LadderStep
+                    onGuessChange={mockOnGuessChange}
+                    inputRef={inputRef}
+                    word='MERRY-GO-ROUND'
+                    transform={null}
+                    isCurrentQuestion={false}
+                    isCurrentAnswer={false}
+                    isStepRevealed={false}
+                    isActive={false}
+                    shouldShowTransform={false}
+                    shouldRenderTransform={false}
+                />
+            );
+
+            const input = screen.getByTestId('unrevealed-step-input');
+            expect(input).toHaveAttribute('placeholder', '◻️◻️◻️◻️◻️-◻️◻️-◻️◻️◻️◻️◻️ (5-2-5)');
         });
     });
 

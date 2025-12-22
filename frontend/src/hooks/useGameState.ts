@@ -24,6 +24,8 @@ interface UseGameStateProps {
     onTeamChanged?: () => void;
     onGameEnded?: () => void;
     onGameStarted?: () => void;
+    onTimerStarted?: (event: { duration_seconds: number; started_at: string; expires_at: string }) => void;
+    onTimerExpired?: () => void;
     sessionId?: string;
     maxRetries?: number;
     onMaxRetriesReached?: () => void;
@@ -41,6 +43,8 @@ export function useGameState({
     onTeamChanged,
     onGameEnded,
     onGameStarted,
+    onTimerStarted,
+    onTimerExpired,
     sessionId,
     maxRetries,
     onMaxRetriesReached,
@@ -124,6 +128,16 @@ export function useGameState({
                     onGameStarted?.();
                     break;
 
+                case 'timer_started':
+                    console.log('[GameState] Timer started');
+                    onTimerStarted?.(message as { duration_seconds: number; started_at: string; expires_at: string });
+                    break;
+
+                case 'timer_expired':
+                    console.log('[GameState] Timer expired');
+                    onTimerExpired?.();
+                    break;
+
                 default:
                     break;
             }
@@ -136,6 +150,8 @@ export function useGameState({
             onTeamChanged,
             onGameEnded,
             onGameStarted,
+            onTimerStarted,
+            onTimerExpired,
             sessionId,
         ]
     );

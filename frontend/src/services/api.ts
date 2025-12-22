@@ -195,6 +195,46 @@ export const api = {
                     bearerToken
                 );
             },
+            async startTimer(
+                lobbyId: number,
+                durationMinutes: number,
+                durationSeconds: number,
+                bearerToken: string
+            ): Promise<ApiResponse> {
+                return request<ApiResponse>(
+                    `/admin/lobby/${lobbyId}/start-timer`,
+                    {
+                        method: 'POST',
+                        body: JSON.stringify({
+                            duration_minutes: durationMinutes,
+                            duration_seconds: durationSeconds,
+                        }),
+                    },
+                    bearerToken
+                );
+            },
+            async getTimerState(
+                lobbyId: number,
+                bearerToken: string
+            ): Promise<{
+                is_active: boolean;
+                duration_seconds: number | null;
+                started_at: string | null;
+                expires_at: string | null;
+            }> {
+                return request<{
+                    is_active: boolean;
+                    duration_seconds: number | null;
+                    started_at: string | null;
+                    expires_at: string | null;
+                }>(
+                    `/admin/lobby/${lobbyId}/timer-state`,
+                    {
+                        method: 'GET',
+                    },
+                    bearerToken
+                );
+            },
             async getGameStats(
                 gameId: number,
                 bearerToken: string
@@ -213,6 +253,15 @@ export const api = {
                     completed_at: string | null;
                     completion_percentage: number;
                     time_to_complete: number | null;
+                    puzzle: {
+                        title: string;
+                        ladder: {
+                            word: string;
+                            clue: string | null;
+                            transform: string | null;
+                        }[];
+                    };
+                    revealed_steps: number[];
                     player_stats: {
                         player_id: number;
                         player_name: string;
@@ -387,6 +436,19 @@ export const api = {
                 last_round_winner_id: number | null;
             }> {
                 return request(`/stats/game/${gameId}`, {}, sessionId);
+            },
+            async getTimerState(sessionId: string): Promise<{
+                is_active: boolean;
+                duration_seconds: number | null;
+                started_at: string | null;
+                expires_at: string | null;
+            }> {
+                return request<{
+                    is_active: boolean;
+                    duration_seconds: number | null;
+                    started_at: string | null;
+                    expires_at: string | null;
+                }>(`/game/timer-state?player_session_id=${sessionId}`, {}, sessionId);
             },
         },
     },

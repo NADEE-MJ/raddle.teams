@@ -1,6 +1,6 @@
 import { useEffect, useState } from 'react';
 import { api } from '@/services/api';
-import { Card } from '@/components';
+import { Button, Card } from '@/components';
 
 interface PlacementBreakdown {
     first: number;
@@ -103,12 +103,13 @@ export function TeamLeaderboard({ lobbyId, sessionId, adminToken, onViewLastRoun
                             </div>
                         </div>
                         {onViewLastRound && leaderboard.last_round_game_id && (
-                            <button
+                            <Button
                                 onClick={() => onViewLastRound(leaderboard.last_round_game_id!)}
-                                className='text-tx-link hover:text-tx-link-hover text-sm font-medium underline'
+                                variant='secondary'
+                                size='sm'
                             >
                                 View Results
-                            </button>
+                            </Button>
                         )}
                     </div>
                 </Card>

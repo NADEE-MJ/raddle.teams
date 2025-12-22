@@ -45,6 +45,14 @@ export default function LobbyDetails({ lobbyId, onClose, onLobbyDeleted, refresh
     // Game state
     const [gameState, setGameState] = useState<GameStateResponse | null>(null);
 
+    // Timer state
+    const [timerMinutes, setTimerMinutes] = useState<number>(3); // Default 3 minutes
+    const [timerSeconds, setTimerSeconds] = useState<number>(0); // Default 0 seconds
+    const [isTimerActive, setIsTimerActive] = useState(false);
+    const [timerExpiresAt, setTimerExpiresAt] = useState<string | null>(null);
+    const [timeRemaining, setTimeRemaining] = useState<number>(0); // seconds
+    const [isStartingTimer, setIsStartingTimer] = useState(false);
+
     const maxTeamsAllowed = useMemo(() => {
         if (!selectedLobby) return MAX_TEAMS;
         const playerCount = selectedLobby.players.length;
@@ -107,12 +115,31 @@ export default function LobbyDetails({ lobbyId, onClose, onLobbyDeleted, refresh
         }
     }, [adminApiToken, lobbyId]);
 
+    const loadTimerState = useCallback(async () => {
+        if (!adminApiToken) return;
+
+        try {
+            const timerState = await api.admin.lobby.getTimerState(lobbyId, adminApiToken);
+            if (timerState.is_active && timerState.expires_at) {
+                setIsTimerActive(true);
+                setTimerExpiresAt(timerState.expires_at);
+            } else {
+                setIsTimerActive(false);
+                setTimerExpiresAt(null);
+            }
+        } catch (err) {
+            console.error('Error loading timer state:', err);
+            // Don't set error - timer might not be active
+        }
+    }, [adminApiToken, lobbyId]);
+
     const reloadAll = useCallback(async () => {
         await loadLobbyDetails();
         await loadGameState();
         await loadAllRounds();
+        await loadTimerState();
         setLeaderboardRefreshKey(prev => prev + 1);
-    }, [loadLobbyDetails, loadGameState, loadAllRounds]);
+    }, [loadLobbyDetails, loadGameState, loadAllRounds, loadTimerState]);
 
     const scheduleReload = useDebounce(reloadAll);
 
@@ -120,11 +147,41 @@ export default function LobbyDetails({ lobbyId, onClose, onLobbyDeleted, refresh
         loadLobbyDetails();
         loadGameState();
         loadAllRounds();
-    }, [loadLobbyDetails, loadGameState, loadAllRounds, refreshKey]);
+        loadTimerState();
+    }, [loadLobbyDetails, loadGameState, loadAllRounds, loadTimerState, refreshKey]);
 
     useEffect(() => {
         setNumTeams(prev => clampTeamCount(prev));
     }, [clampTeamCount]);
+
+    // Timer countdown effect
+    useEffect(() => {
+        if (!isTimerActive || !timerExpiresAt) {
+            setTimeRemaining(0);
+            return;
+        }
+
+        const updateTimer = () => {
+            const now = new Date().getTime();
+            const expiry = new Date(timerExpiresAt).getTime();
+            const remaining = Math.max(0, Math.floor((expiry - now) / 1000));
+
+            setTimeRemaining(remaining);
+
+            if (remaining <= 0) {
+                setIsTimerActive(false);
+                setTimerExpiresAt(null);
+            }
+        };
+
+        // Update immediately
+        updateTimer();
+
+        // Then update every second
+        const interval = setInterval(updateTimer, 1000);
+
+        return () => clearInterval(interval);
+    }, [isTimerActive, timerExpiresAt]);
 
     const onMessage = useCallback(
         (message: WebSocketMessage) => {
@@ -181,6 +238,17 @@ export default function LobbyDetails({ lobbyId, onClose, onLobbyDeleted, refresh
                         points_earned: message.points_earned,
                         first_place_team_name: message.first_place_team_name,
                     });
+                    break;
+                case 'timer_started':
+                    console.log('[Admin] Timer started:', message);
+                    setIsTimerActive(true);
+                    setTimerExpiresAt(message.expires_at);
+                    break;
+                case 'timer_expired':
+                    console.log('[Admin] Timer expired');
+                    setIsTimerActive(false);
+                    setTimerExpiresAt(null);
+                    setTimeRemaining(0);
                     break;
                 case GameWebSocketEvents.GAME_STARTED:
                 case GameWebSocketEvents.GAME_WON:
@@ -367,6 +435,17 @@ export default function LobbyDetails({ lobbyId, onClose, onLobbyDeleted, refresh
 
     const hasActiveGame = useMemo(() => Boolean(gameState?.is_game_active), [gameState]);
 
+    const anyTeamCompleted = useMemo(() => {
+        if (!gameState?.teams) return false;
+        return gameState.teams.some(team => team.is_completed);
+    }, [gameState]);
+
+    const formatTimer = useCallback((seconds: number): string => {
+        const mins = Math.floor(seconds / 60);
+        const secs = seconds % 60;
+        return `${mins}:${secs.toString().padStart(2, '0')}`;
+    }, []);
+
     const handleAddTeam = useCallback(async () => {
         if (!adminApiToken || !selectedLobby) {
             setError(adminApiToken ? 'Lobby not selected' : 'Admin API token is required to add teams');
@@ -507,6 +586,10 @@ export default function LobbyDetails({ lobbyId, onClose, onLobbyDeleted, refresh
                 setError('');
                 const result = await api.admin.lobby.endGame(selectedLobby.lobby.id, adminApiToken);
                 console.log('Game ended:', result);
+                // Clear timer state when manually ending game
+                setIsTimerActive(false);
+                setTimerExpiresAt(null);
+                setTimeRemaining(0);
                 // Reload lobby and game state
                 await reloadAll();
             } catch (err) {
@@ -519,6 +602,42 @@ export default function LobbyDetails({ lobbyId, onClose, onLobbyDeleted, refresh
             }
         }
     }, [adminApiToken, selectedLobby, gameState, reloadAll]);
+
+    const handleStartTimer = useCallback(async () => {
+        if (!adminApiToken || !selectedLobby) {
+            setError(adminApiToken ? 'Lobby not selected' : 'Admin API token is required to start timer');
+            return;
+        }
+
+        if (!gameState?.is_game_active) {
+            setError('No active game to start timer for');
+            return;
+        }
+
+        if (isTimerActive) {
+            setError('Timer is already running');
+            return;
+        }
+
+        setIsStartingTimer(true);
+        try {
+            setError('');
+            const result = await api.admin.lobby.startTimer(
+                selectedLobby.lobby.id,
+                timerMinutes,
+                timerSeconds,
+                adminApiToken
+            );
+            console.log('Timer started:', result);
+        } catch (err) {
+            const message =
+                err instanceof ApiError ? err.message : err instanceof Error ? err.message : 'Failed to start timer';
+            setError(message);
+            console.error('Error starting timer:', err);
+        } finally {
+            setIsStartingTimer(false);
+        }
+    }, [adminApiToken, selectedLobby, gameState, isTimerActive, timerMinutes, timerSeconds]);
 
     if (isInitialLoad) {
         return (
@@ -1061,6 +1180,80 @@ export default function LobbyDetails({ lobbyId, onClose, onLobbyDeleted, refresh
                                 </Button>
                             </div>
                         </div>
+
+                        {/* Timer Controls */}
+                        {anyTeamCompleted && (
+                            <Card className='mb-4'>
+                                <div className='flex flex-wrap items-center justify-between gap-4'>
+                                    <div className='flex items-center gap-3'>
+                                        <div className='text-tx-secondary text-sm font-semibold'>Round Timer</div>
+                                        {isTimerActive ? (
+                                            <div
+                                                className={`text-lg font-bold ${timeRemaining < 60 ? 'text-red' : 'text-orange'}`}
+                                            >
+                                                {formatTimer(timeRemaining)}
+                                            </div>
+                                        ) : (
+                                            <>
+                                                <div className='flex items-center gap-2'>
+                                                    <TextInput
+                                                        type='number'
+                                                        value={timerMinutes.toString()}
+                                                        onChange={e => {
+                                                            const val = parseInt(e.target.value) || 0;
+                                                            setTimerMinutes(Math.max(0, Math.min(60, val)));
+                                                        }}
+                                                        min={0}
+                                                        max={60}
+                                                        disabled={isTimerActive || isStartingTimer}
+                                                        placeholder='Min'
+                                                        className='w-20'
+                                                        data-testid='timer-minutes-input'
+                                                    />
+                                                    <span className='text-tx-secondary text-sm'>min</span>
+                                                    <TextInput
+                                                        type='number'
+                                                        value={timerSeconds.toString()}
+                                                        onChange={e => {
+                                                            const val = parseInt(e.target.value) || 0;
+                                                            setTimerSeconds(Math.max(0, Math.min(59, val)));
+                                                        }}
+                                                        min={0}
+                                                        max={59}
+                                                        disabled={isTimerActive || isStartingTimer}
+                                                        placeholder='Sec'
+                                                        className='w-20'
+                                                        data-testid='timer-seconds-input'
+                                                    />
+                                                    <span className='text-tx-secondary text-sm'>sec</span>
+                                                </div>
+                                                <Button
+                                                    onClick={handleStartTimer}
+                                                    disabled={
+                                                        isTimerActive ||
+                                                        isStartingTimer ||
+                                                        (timerMinutes === 0 && timerSeconds === 0)
+                                                    }
+                                                    variant='primary'
+                                                    size='sm'
+                                                    loading={isStartingTimer}
+                                                    loadingIndicatorPlacement='left'
+                                                    data-testid='start-timer-button'
+                                                >
+                                                    Start Timer
+                                                </Button>
+                                            </>
+                                        )}
+                                    </div>
+                                    {isTimerActive && (
+                                        <div className='text-tx-muted text-xs'>
+                                            Game will auto-end when timer expires
+                                        </div>
+                                    )}
+                                </div>
+                            </Card>
+                        )}
+
                         <GameProgressView teams={gameState.teams} />
                     </div>
                 )}

@@ -69,6 +69,8 @@ class GameWebSocketEvents(str, Enum):
     GAME_WON = "game_won"
     STATE_UPDATE = "state_update"
     ALREADY_SOLVED = "already_solved"
+    TIMER_STARTED = "timer_started"
+    TIMER_EXPIRED = "timer_expired"
 
 
 class GameEvent(BaseModel):
@@ -154,3 +156,16 @@ class NewRoundStartedEvent(BaseModel):
     lobby_id: int
     game_id: int
     round_number: int
+
+
+class TimerStartedEvent(BaseModel):
+    type: GameWebSocketEvents = GameWebSocketEvents.TIMER_STARTED
+    lobby_id: int
+    duration_seconds: int
+    started_at: str  # ISO timestamp
+    expires_at: str  # ISO timestamp for easier client-side handling
+
+
+class TimerExpiredEvent(BaseModel):
+    type: GameWebSocketEvents = GameWebSocketEvents.TIMER_EXPIRED
+    lobby_id: int
