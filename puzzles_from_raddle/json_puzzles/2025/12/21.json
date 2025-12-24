@@ -1,0 +1,75 @@
+{
+  "meta": {
+    "title": "From THIS IS to SPARTA",
+    "author": "Sandy Weisz",
+    "theme": "three_hundred",
+    "message": "This is the [300](https://www.youtube.com/watch?v=72CGIoS_EDU&t=126s)th Raddle! Thanks for being part of this community. Here's to 300 more! (And more after that.)"
+  },
+  "ladder": [
+    {
+      "word": "THIS IS",
+      "clue": "\"<> {}\", 2012 Apatow comedy",
+      "step": "…"
+    },
+    {
+      "word": "40",
+      "clue": "{} <> radio",
+      "step": "songs at the"
+    },
+    {
+      "word": "TOP",
+      "clue": "{} <>, place for some clowns",
+      "step": "is"
+    },
+    {
+      "word": "BIG",
+      "clue": "<> {}, a very popular sandwich",
+      "step": "sandwich"
+    },
+    {
+      "word": "MAC",
+      "clue": "<> & {}",
+      "step": "&"
+    },
+    {
+      "word": "CHEESE",
+      "clue": "Greek <>",
+      "step": "from Greece"
+    },
+    {
+      "word": "FETA",
+      "clue": "Add an S to <> and anagram to get an event where you might be served <>",
+      "step": "+S, then anagram"
+    },
+    {
+      "word": "FEAST",
+      "clue": "Extreme opposite of <>",
+      "step": "or"
+    },
+    {
+      "word": "FAMINE",
+      "clue": "Drop a bigram (two letters) from <> to get a fee",
+      "step": "-AM"
+    },
+    {
+      "word": "FINE",
+      "clue": "<> {}, some creative disciplines",
+      "step": "kind of disciplines"
+    },
+    {
+      "word": "ARTS",
+      "clue": "Add a P to the start of <> to get some components",
+      "step": "+P"
+    },
+    {
+      "word": "PARTS",
+      "clue": "Add an A to <> and anagram to get an ancient place",
+      "step": "+A, then anagram"
+    },
+    {
+      "word": "SPARTA",
+      "clue": null,
+      "step": " "
+    }
+  ]
+}

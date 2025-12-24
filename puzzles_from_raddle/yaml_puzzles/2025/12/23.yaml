@@ -1,0 +1,49 @@
+meta:
+  title: From SEANCE to MANOR
+  theme: guest_recs_25
+  author: Rita Orlov
+  author_bio:
+    "Rita is an artist, maker, and puzzlesmith, best known for being the founder of PostCurious, a company specializing in narrative tabletop puzzle games. You can find more info about her games, along with some free online puzzles, at [getpostcurious.com](https://www.getpostcurious.com/)."
+  message:
+    "Today's Raddle is by Rita Orlov.
+    Rita writes, \"[The Séance of Blake Manor](https://store.steampowered.com/app/1395520/The_Sance_of_Blake_Manor/) is a supernatural detective mystery.  After arriving in a remote hotel full of otherworldly occurrences, you must investigate the disappearance of a specific guest, as well as uncover the secrets of many others. I enjoyed exploring the house, talking to the characters, and learning a little about Celtic mythology throughout the game. Many mysteries to unravel!\""
+ladder:
+- word: SEANCE
+  clue: One leading a <>
+  step: performed by a
+- word: MEDIUM
+  clue: One size up from <>
+  step: is one before
+- word: LARGE
+  clue: <> rhymes with this exclamation from a commander
+  step: rhymes with
+- word: CHARGE
+  clue: ^ one letter in <> to get ^
+  step: R->N
+- word: CHANGE
+  clue: "\"<>s\" is a song by David ^"
+  step: +S = song by
+- word: BOWIE
+  clue: <> rhymes with a gaudy word
+  step: rhymes with
+- word: SHOWY
+  clue: Change one letter in <> for a wintry word
+  step: H->N
+- word: SNOWY
+  clue: A <> scene is mostly this color
+  step: is this color
+- word: WHITE
+  clue: <> + red
+  step: + red
+- word: PINK
+  clue: <> clothing might let you know it's a ^
+  step: is associated with a
+- word: GIRL
+  clue: A <> is a young ^
+  step: turns into a
+- word: WOMAN
+  clue: Replace the first letter of <> with an R and anagram to get a type of home
+  step: R->W, then anagram
+- word: MANOR
+  clue:
+  step: ' '
