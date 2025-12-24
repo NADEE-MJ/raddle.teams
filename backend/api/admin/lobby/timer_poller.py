@@ -75,7 +75,7 @@ async def check_expired_timers():
                     await lobby_websocket_manager.broadcast_to_lobby(lobby_id, timer_expired_event)
 
                     # Small delay to let the event propagate
-                    await asyncio.sleep(0.5)
+                    await asyncio.sleep(0.1)
 
                     # Import end_game here to avoid circular imports
                     from backend.api.admin.lobby.index import end_game
@@ -99,7 +99,7 @@ async def check_expired_timers():
 async def timer_poller_loop():
     """
     Main polling loop that runs continuously.
-    Checks for expired timers every 2 seconds.
+    Checks for expired timers every 0.1 seconds for near-instant detection.
     """
     global _poller_running
 
@@ -109,7 +109,7 @@ async def timer_poller_loop():
     try:
         while _poller_running:
             await check_expired_timers()
-            await asyncio.sleep(2)  # Check every 2 seconds
+            await asyncio.sleep(0.1)  # Check every 0.1 seconds for near-instant detection
 
     except asyncio.CancelledError:
         api_logger.info("[TIMER_POLLER] Timer poller loop cancelled")

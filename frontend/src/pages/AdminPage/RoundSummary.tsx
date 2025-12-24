@@ -432,7 +432,7 @@ export function RoundSummary({ gameId, adminToken, onClose }: RoundSummaryProps)
                                                                                                     )
                                                                                                 }
                                                                                             />
-                                                                                            <div className='bg-elevated border-border text-tx-primary absolute top-full right-0 z-20 mt-2 w-64 rounded-lg border p-3 shadow-xl'>
+                                                                                            <div className='bg-elevated border-border text-tx-primary absolute top-full left-1/2 z-20 mt-2 w-64 -translate-x-1/2 rounded-lg border p-3 shadow-xl'>
                                                                                                 <div className='text-xs font-semibold'>
                                                                                                     {award.emoji}{' '}
                                                                                                     {award.title}

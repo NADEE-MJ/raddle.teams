@@ -702,7 +702,7 @@ async def start_timer(
     await lobby_websocket_manager.broadcast_to_lobby(lobby_id, timer_event)
 
     # Timer will be automatically checked and handled by the timer poller
-    # No need to schedule individual tasks - the poller checks all active timers every 2 seconds
+    # No need to schedule individual tasks - the poller checks all active timers every 0.1 seconds
 
     api_logger.info(
         f"Timer started for lobby_id={lobby_id}: duration={request.duration_minutes}min {request.duration_seconds}sec expires_at={expires_at.isoformat()}"
