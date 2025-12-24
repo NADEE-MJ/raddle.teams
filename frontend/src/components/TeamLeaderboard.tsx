@@ -83,38 +83,8 @@ export function TeamLeaderboard({ lobbyId, sessionId, adminToken, onViewLastRoun
         return null; // Don't show leaderboard if no rounds have been played
     }
 
-    const lastRoundWinner = leaderboard.teams.find(t => t.last_round_winner);
-
     return (
         <div className='space-y-4'>
-            {/* Last Round Winner Card */}
-            {lastRoundWinner && (
-                <Card className='bg-gradient-to-r from-yellow-900/20 to-yellow-800/20 shadow-lg'>
-                    <div className='flex items-center justify-between'>
-                        <div className='flex items-center gap-3'>
-                            <div className='text-3xl' aria-label='Winner crown'>
-                                👑
-                            </div>
-                            <div>
-                                <div className='text-tx-secondary text-xs font-semibold tracking-wide uppercase'>
-                                    Last Round Winner
-                                </div>
-                                <p className='text-tx-primary text-lg font-semibold'>{lastRoundWinner.team_name}</p>
-                            </div>
-                        </div>
-                        {onViewLastRound && leaderboard.last_round_game_id && (
-                            <Button
-                                onClick={() => onViewLastRound(leaderboard.last_round_game_id!)}
-                                variant='secondary'
-                                size='sm'
-                            >
-                                View Results
-                            </Button>
-                        )}
-                    </div>
-                </Card>
-            )}
-
             {/* Leaderboard Card */}
             <Card className='bg-elevated/70 shadow-lg'>
                 <div className='mb-4 flex items-center justify-between'>
@@ -127,6 +97,15 @@ export function TeamLeaderboard({ lobbyId, sessionId, adminToken, onViewLastRoun
                             Round {leaderboard.current_round} of {leaderboard.total_rounds}
                         </p>
                     </div>
+                    {onViewLastRound && leaderboard.last_round_game_id && (
+                        <Button
+                            onClick={() => onViewLastRound(leaderboard.last_round_game_id!)}
+                            variant='secondary'
+                            size='sm'
+                        >
+                            View Last Puzzle
+                        </Button>
+                    )}
                 </div>
 
                 <div className='space-y-2'>
@@ -153,8 +132,17 @@ export function TeamLeaderboard({ lobbyId, sessionId, adminToken, onViewLastRoun
                                     <div className='text-tx-muted flex w-8 items-center justify-center text-lg font-bold'>
                                         {medal || `${index + 1}.`}
                                     </div>
-                                    <div>
+                                    <div className='flex items-center gap-2'>
                                         <div className='text-tx-primary font-semibold'>{team.team_name}</div>
+                                        {team.last_round_winner && (
+                                            <span
+                                                className='text-lg'
+                                                aria-label='Last round winner'
+                                                title='Last round winner'
+                                            >
+                                                👑
+                                            </span>
+                                        )}
                                     </div>
                                 </div>
                                 <div className='text-right'>

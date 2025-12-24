@@ -53,6 +53,7 @@ export interface StartGameRequest {
     difficulty: 'easy' | 'medium' | 'hard';
     puzzle_mode: 'same' | 'different';
     word_count_mode: 'exact' | 'balanced';
+    force_start?: boolean;
 }
 
 export interface StartGameResponse {

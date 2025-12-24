@@ -81,6 +81,7 @@ export default function LobbyPage() {
     const [isTeamRoundLoading, setIsTeamRoundLoading] = useState(false);
     const [lastRoundGameId, setLastRoundGameId] = useState<number | null>(null);
     const [activeAwardTooltip, setActiveAwardTooltip] = useState<string | null>(null);
+    const [isRoundResultsExpanded, setIsRoundResultsExpanded] = useState(false);
 
     // Timer state
     const [isTimerActive, setIsTimerActive] = useState(false);
@@ -442,106 +443,39 @@ export default function LobbyPage() {
 
     const hasTeams = lobbyInfo.teams && lobbyInfo.teams.length > 0;
     const unassignedPlayers = lobbyInfo.players.filter(p => !p.team_id);
-    const hasGameStarted = lobbyInfo.teams?.some(team => team.game_id);
-    const isCompletedRound = Boolean(player?.team_id && isTeamGameCompleted);
-    let gameStatus = {
-        icon: '👥',
-        title: 'Waiting for more players',
-        description: 'Waiting for more players to join or for the admin to start the game.',
-    };
-
-    if (hasGameStarted && isCompletedRound) {
-        gameStatus = {
-            icon: '✅',
-            title: 'Round complete',
-            description: 'Your team finished this round.',
-        };
-    } else if (hasGameStarted) {
-        gameStatus = {
-            icon: '⚡️',
-            title: 'Game in progress',
-            description: player.team_id
-                ? 'Hang tight while your team wraps up this round.'
-                : 'A round is live. Ask the admin to assign you to a team so you can join in.',
-        };
-    } else if (hasTeams) {
-        gameStatus = {
-            icon: '🚦',
-            title: 'Teams are ready',
-            description: 'Waiting for the admin to start the game.',
-        };
-    }
 
     return (
         <div className='space-y-6'>
             {/* Header */}
             <div className='border-border bg-secondary/70 rounded-xl border p-4 shadow-lg'>
-                <div className='flex flex-col gap-4 md:flex-row md:items-center md:justify-between'>
-                    <div>
-                        <p className='text-tx-muted text-xs font-semibold tracking-wide uppercase'>Lobby</p>
-                        <h1 className='text-tx-primary text-3xl font-bold'>{lobbyInfo.lobby.name}</h1>
-                        <div className='text-tx-secondary mt-2 flex flex-wrap items-center gap-2 text-sm'>
-                            <span>Lobby Code:</span>
-                            <CopyableCode code={lobbyInfo.lobby.code} className='text-lg' data-testid='lobby-code' />
+                <div className='flex flex-col gap-3 md:flex-row md:items-center md:justify-between'>
+                    <div className='min-w-0 flex-1'>
+                        <h1 className='text-tx-primary text-2xl font-bold sm:text-3xl'>{lobbyInfo.lobby.name}</h1>
+                        <div className='text-tx-secondary mt-1 flex flex-wrap items-center gap-2 text-sm'>
+                            <CopyableCode code={lobbyInfo.lobby.code} data-testid='lobby-code' />
+                            <span className='text-tx-muted text-xs'>•</span>
+                            <span className='text-tx-muted text-xs'>
+                                {lobbyInfo.players.length} {lobbyInfo.players.length === 1 ? 'player' : 'players'}
+                            </span>
+                            <span className='text-tx-muted text-xs'>•</span>
+                            <span className='text-tx-muted text-xs'>
+                                {lobbyInfo.teams?.length || 0} {lobbyInfo.teams?.length === 1 ? 'team' : 'teams'}
+                            </span>
                         </div>
                     </div>
-                    <div className='flex flex-col items-start gap-2 md:items-end'>
+                    <div className='flex-shrink-0'>
                         <ConnectionBadge
                             connectionStatus={connectionStatus}
                             retryCount={retryCount}
                             onRetry={connectionStatus === 'failed' ? manualReconnect : undefined}
-                            connectedText='Connected to lobby'
+                            connectedText='Connected'
                         />
-                        <div className='text-tx-muted flex flex-wrap gap-4 text-xs font-semibold tracking-wide uppercase'>
-                            <span className='text-tx-secondary'>
-                                Players{' '}
-                                <span className='text-tx-primary text-base font-bold'>{lobbyInfo.players.length}</span>
-                            </span>
-                            <span className='text-tx-secondary'>
-                                Teams{' '}
-                                <span className='text-tx-primary text-base font-bold'>
-                                    {lobbyInfo.teams?.length || 0}
-                                </span>
-                            </span>
-                        </div>
                     </div>
                 </div>
             </div>
 
             <ErrorMessage message={error} data-testid='lobby-error-message' />
             {wsError && <Alert variant='error'>{wsError}</Alert>}
-
-            {/* Game Status Card */}
-            <div>
-                <Card className='bg-elevated/70 shadow-lg'>
-                    <div className='flex flex-col gap-4 sm:flex-row sm:items-center sm:justify-between sm:gap-6'>
-                        <div className='flex items-start gap-3 sm:gap-4'>
-                            <div className='text-3xl sm:text-4xl' aria-hidden='true'>
-                                {gameStatus.icon}
-                            </div>
-                            <div>
-                                <div className='text-tx-secondary text-xs font-semibold tracking-wide uppercase'>
-                                    Game Status
-                                </div>
-                                <p className='text-tx-primary text-lg font-semibold'>{gameStatus.title}</p>
-                                <p className='text-tx-secondary text-sm'>{gameStatus.description}</p>
-                            </div>
-                        </div>
-                        {lastRoundGameId && player.team_id && (
-                            <div className='flex-shrink-0 self-center sm:self-auto'>
-                                <Button
-                                    onClick={() => navigate('/game')}
-                                    variant='primary'
-                                    size='md'
-                                    className='w-full sm:w-auto'
-                                >
-                                    View last round puzzle
-                                </Button>
-                            </div>
-                        )}
-                    </div>
-                </Card>
-            </div>
 
             {/* Round Timer */}
             {isTimerActive && (
@@ -570,150 +504,190 @@ export default function LobbyPage() {
                 <div>
                     <Card className='border-2 border-purple-500/30 bg-gradient-to-br from-purple-900/20 to-blue-900/20 shadow-xl'>
                         <div className='space-y-4'>
-                            <div className='flex items-center justify-between'>
-                                <div>
+                            <button
+                                onClick={() => setIsRoundResultsExpanded(!isRoundResultsExpanded)}
+                                className='w-full text-left'
+                            >
+                                <div className='flex items-center justify-between'>
                                     <div className='flex items-center gap-2'>
                                         <span className='text-2xl'>📊</span>
                                         <div>
                                             <div className='text-tx-secondary text-xs font-semibold tracking-wide uppercase'>
                                                 Latest Round Results
                                             </div>
-                                            <div className='text-tx-primary text-2xl font-bold'>
+                                            <div className='text-tx-primary text-lg font-bold'>
                                                 {teamRoundNumber ? `Round ${teamRoundNumber}` : 'Previous Round'}
                                             </div>
                                         </div>
                                     </div>
-                                </div>
-                                <div className='rounded-lg border border-purple-500/40 bg-purple-500/20 px-3 py-1.5'>
-                                    <span className='text-tx-primary text-xs font-semibold'>Your Team</span>
-                                </div>
-                            </div>
-                            {isTeamRoundLoading && (
-                                <div className='flex items-center gap-3'>
-                                    <LoadingSpinner />
-                                    <span className='text-tx-secondary text-sm'>Loading results…</span>
-                                </div>
-                            )}
-                            {teamRoundError && <Alert variant='error'>{teamRoundError}</Alert>}
-                            {!isTeamRoundLoading && !teamRoundError && teamRoundStats && (
-                                <div className='space-y-4'>
-                                    <div className='grid gap-4 md:grid-cols-4'>
-                                        <div className='bg-secondary/60 rounded-lg p-3'>
-                                            <div className='text-tx-muted text-xs font-semibold uppercase'>
-                                                Placement
+                                    <div className='flex items-center gap-3'>
+                                        {!isTeamRoundLoading && !teamRoundError && teamRoundStats && (
+                                            <div className='flex items-center gap-4 text-sm'>
+                                                <div className='text-center'>
+                                                    <div className='text-tx-primary text-lg font-bold'>
+                                                        {getPlacementBadge(teamRoundStats.placement)}
+                                                    </div>
+                                                    <div className='text-tx-muted text-xs'>Place</div>
+                                                </div>
+                                                <div className='text-center'>
+                                                    <div className='text-tx-primary text-lg font-bold'>
+                                                        {teamRoundStats.points_earned ?? '-'}
+                                                    </div>
+                                                    <div className='text-tx-muted text-xs'>Points</div>
+                                                </div>
                                             </div>
-                                            <div className='text-tx-primary text-xl font-semibold'>
-                                                {getPlacementBadge(teamRoundStats.placement)}
-                                            </div>
-                                        </div>
-                                        <div className='bg-secondary/60 rounded-lg p-3'>
-                                            <div className='text-tx-muted text-xs font-semibold uppercase'>Points</div>
-                                            <div className='text-tx-primary text-xl font-semibold'>
-                                                {teamRoundStats.points_earned ?? '-'}
-                                            </div>
-                                        </div>
-                                        <div className='bg-secondary/60 rounded-lg p-3'>
-                                            <div className='text-tx-muted text-xs font-semibold uppercase'>Time</div>
-                                            <div className='text-tx-primary text-xl font-semibold'>
-                                                {formatTime(teamRoundStats.time_to_complete)}
-                                            </div>
-                                        </div>
-                                        <div className='bg-secondary/60 rounded-lg p-3'>
-                                            <div className='text-tx-muted text-xs font-semibold uppercase'>
-                                                Completion
-                                            </div>
-                                            <div className='text-tx-primary text-xl font-semibold'>
-                                                {(teamRoundStats.completion_percentage * 100).toFixed(0)}%
-                                            </div>
+                                        )}
+                                        <div className='text-tx-muted text-2xl'>
+                                            {isRoundResultsExpanded ? '▼' : '▶'}
                                         </div>
                                     </div>
+                                </div>
+                            </button>
 
-                                    <div className='text-tx-secondary text-sm'>
-                                        Wrong guesses: {teamRoundStats.wrong_guesses}{' '}
-                                        <span className='text-tx-muted'>({teamRoundStats.wrong_guess_label})</span>
-                                    </div>
-
-                                    <div className='space-y-4'>
-                                        {teamRoundStats.player_stats.map(playerStat => {
-                                            const selectedAwards = selectRandomAwards(
-                                                playerStat.awards,
-                                                playerStat.player_id,
-                                                3
-                                            );
-                                            return (
-                                                <div
-                                                    key={playerStat.player_id}
-                                                    className='border-border rounded-lg border p-4'
-                                                >
-                                                    <div className='flex items-start justify-between gap-4'>
-                                                        <div className='flex-1'>
-                                                            <div className='text-tx-primary text-lg font-semibold'>
-                                                                {playerStat.player_name}
-                                                            </div>
-                                                            <div className='text-tx-muted text-sm'>
-                                                                {playerStat.correct_guesses}/{playerStat.total_guesses}{' '}
-                                                                correct ({(playerStat.accuracy_rate * 100).toFixed(0)}%
-                                                                accuracy)
-                                                            </div>
-                                                        </div>
-                                                        {selectedAwards.length > 0 && (
-                                                            <div className='flex flex-wrap justify-end gap-2'>
-                                                                {selectedAwards.map(award => {
-                                                                    const tooltipKey = `${playerStat.player_id}-${award.key}`;
-                                                                    const isTooltipActive =
-                                                                        activeAwardTooltip === tooltipKey;
-                                                                    return (
-                                                                        <div key={award.key} className='relative'>
-                                                                            <button
-                                                                                onClick={() =>
-                                                                                    setActiveAwardTooltip(
-                                                                                        isTooltipActive
-                                                                                            ? null
-                                                                                            : tooltipKey
-                                                                                    )
-                                                                                }
-                                                                                className='flex cursor-pointer items-center gap-2 rounded-lg border-2 border-yellow-500/40 bg-gradient-to-r from-yellow-500/20 to-orange-500/20 px-4 py-2.5 shadow-lg transition-all hover:scale-105 hover:from-yellow-500/30 hover:to-orange-500/30'
-                                                                                type='button'
-                                                                            >
-                                                                                <span className='text-2xl'>
-                                                                                    {award.emoji}
-                                                                                </span>
-                                                                                <span className='text-tx-primary text-sm font-bold'>
-                                                                                    {award.title}
-                                                                                </span>
-                                                                            </button>
-                                                                            {isTooltipActive && (
-                                                                                <>
-                                                                                    <div
-                                                                                        className='fixed inset-0 z-10'
-                                                                                        onClick={() =>
-                                                                                            setActiveAwardTooltip(null)
-                                                                                        }
-                                                                                    />
-                                                                                    <div className='bg-elevated border-border text-tx-primary absolute top-full right-0 z-20 mt-2 w-64 rounded-lg border p-3 shadow-xl'>
-                                                                                        <div className='text-xs font-semibold'>
-                                                                                            {award.emoji} {award.title}
-                                                                                        </div>
-                                                                                        <div className='text-tx-secondary mt-1 text-xs'>
-                                                                                            {award.description}
-                                                                                        </div>
-                                                                                    </div>
-                                                                                </>
-                                                                            )}
-                                                                        </div>
-                                                                    );
-                                                                })}
-                                                            </div>
-                                                        )}
+                            {isRoundResultsExpanded && (
+                                <>
+                                    {isTeamRoundLoading && (
+                                        <div className='flex items-center gap-3'>
+                                            <LoadingSpinner />
+                                            <span className='text-tx-secondary text-sm'>Loading results…</span>
+                                        </div>
+                                    )}
+                                    {teamRoundError && <Alert variant='error'>{teamRoundError}</Alert>}
+                                    {!isTeamRoundLoading && !teamRoundError && teamRoundStats && (
+                                        <div className='space-y-4'>
+                                            <div className='grid grid-cols-2 gap-4 md:grid-cols-4'>
+                                                <div className='bg-secondary/60 rounded-lg p-3'>
+                                                    <div className='text-tx-muted text-xs font-semibold uppercase'>
+                                                        Placement
+                                                    </div>
+                                                    <div className='text-tx-primary text-xl font-semibold'>
+                                                        {getPlacementBadge(teamRoundStats.placement)}
                                                     </div>
                                                 </div>
-                                            );
-                                        })}
-                                    </div>
-                                </div>
-                            )}
-                            {!isTeamRoundLoading && !teamRoundError && !teamRoundStats && (
-                                <div className='text-tx-muted text-sm'>Team results are not available yet.</div>
+                                                <div className='bg-secondary/60 rounded-lg p-3'>
+                                                    <div className='text-tx-muted text-xs font-semibold uppercase'>
+                                                        Points
+                                                    </div>
+                                                    <div className='text-tx-primary text-xl font-semibold'>
+                                                        {teamRoundStats.points_earned ?? '-'}
+                                                    </div>
+                                                </div>
+                                                <div className='bg-secondary/60 rounded-lg p-3'>
+                                                    <div className='text-tx-muted text-xs font-semibold uppercase'>
+                                                        Time
+                                                    </div>
+                                                    <div className='text-tx-primary text-xl font-semibold'>
+                                                        {formatTime(teamRoundStats.time_to_complete)}
+                                                    </div>
+                                                </div>
+                                                <div className='bg-secondary/60 rounded-lg p-3'>
+                                                    <div className='text-tx-muted text-xs font-semibold uppercase'>
+                                                        Completion
+                                                    </div>
+                                                    <div className='text-tx-primary text-xl font-semibold'>
+                                                        {(teamRoundStats.completion_percentage * 100).toFixed(0)}%
+                                                    </div>
+                                                </div>
+                                            </div>
+
+                                            <div className='text-tx-secondary text-sm'>
+                                                Wrong guesses: {teamRoundStats.wrong_guesses}{' '}
+                                                <span className='text-tx-muted'>
+                                                    ({teamRoundStats.wrong_guess_label})
+                                                </span>
+                                            </div>
+
+                                            <div className='space-y-4'>
+                                                {teamRoundStats.player_stats.map(playerStat => {
+                                                    const selectedAwards = selectRandomAwards(
+                                                        playerStat.awards,
+                                                        playerStat.player_id,
+                                                        3
+                                                    );
+                                                    return (
+                                                        <div
+                                                            key={playerStat.player_id}
+                                                            className='border-border rounded-lg border p-4'
+                                                        >
+                                                            <div className='flex flex-col gap-3 md:flex-row md:items-start md:justify-between md:gap-4'>
+                                                                <div className='flex-1'>
+                                                                    <div className='text-tx-primary text-lg font-semibold'>
+                                                                        {playerStat.player_name}
+                                                                    </div>
+                                                                    <div className='text-tx-muted text-sm'>
+                                                                        {playerStat.correct_guesses}/
+                                                                        {playerStat.total_guesses} correct (
+                                                                        {(playerStat.accuracy_rate * 100).toFixed(0)}%
+                                                                        accuracy)
+                                                                    </div>
+                                                                </div>
+                                                                {selectedAwards.length > 0 && (
+                                                                    <div className='flex flex-wrap gap-2'>
+                                                                        {selectedAwards.map(award => {
+                                                                            const tooltipKey = `${playerStat.player_id}-${award.key}`;
+                                                                            const isTooltipActive =
+                                                                                activeAwardTooltip === tooltipKey;
+                                                                            return (
+                                                                                <div
+                                                                                    key={award.key}
+                                                                                    className='relative'
+                                                                                >
+                                                                                    <button
+                                                                                        onClick={e => {
+                                                                                            e.stopPropagation();
+                                                                                            setActiveAwardTooltip(
+                                                                                                isTooltipActive
+                                                                                                    ? null
+                                                                                                    : tooltipKey
+                                                                                            );
+                                                                                        }}
+                                                                                        className='flex cursor-pointer items-center gap-2 rounded-lg border-2 border-yellow-500/40 bg-gradient-to-r from-yellow-500/20 to-orange-500/20 px-4 py-2.5 shadow-lg transition-all hover:scale-105 hover:from-yellow-500/30 hover:to-orange-500/30'
+                                                                                        type='button'
+                                                                                    >
+                                                                                        <span className='text-2xl'>
+                                                                                            {award.emoji}
+                                                                                        </span>
+                                                                                        <span className='text-tx-primary text-sm font-bold'>
+                                                                                            {award.title}
+                                                                                        </span>
+                                                                                    </button>
+                                                                                    {isTooltipActive && (
+                                                                                        <>
+                                                                                            <div
+                                                                                                className='fixed inset-0 z-10'
+                                                                                                onClick={() =>
+                                                                                                    setActiveAwardTooltip(
+                                                                                                        null
+                                                                                                    )
+                                                                                                }
+                                                                                            />
+                                                                                            <div className='bg-elevated border-border text-tx-primary absolute top-full right-0 z-20 mt-2 w-64 rounded-lg border p-3 shadow-xl'>
+                                                                                                <div className='text-xs font-semibold'>
+                                                                                                    {award.emoji}{' '}
+                                                                                                    {award.title}
+                                                                                                </div>
+                                                                                                <div className='text-tx-secondary mt-1 text-xs'>
+                                                                                                    {award.description}
+                                                                                                </div>
+                                                                                            </div>
+                                                                                        </>
+                                                                                    )}
+                                                                                </div>
+                                                                            );
+                                                                        })}
+                                                                    </div>
+                                                                )}
+                                                            </div>
+                                                        </div>
+                                                    );
+                                                })}
+                                            </div>
+                                        </div>
+                                    )}
+                                    {!isTeamRoundLoading && !teamRoundError && !teamRoundStats && (
+                                        <div className='text-tx-muted text-sm'>Team results are not available yet.</div>
+                                    )}
+                                </>
                             )}
                         </div>
                     </Card>
@@ -726,33 +700,36 @@ export default function LobbyPage() {
                     lobbyId={lobbyInfo.lobby.id}
                     sessionId={sessionId}
                     refreshKey={leaderboardRefreshKey}
+                    onViewLastRound={player.team_id ? () => navigate('/game') : undefined}
                 />
             )}
 
             {/* Ready Button - Only show if player is on a team */}
             {player.team_id && (
                 <div>
-                    <Card className='bg-elevated/70 shadow-lg'>
+                    <button
+                        onClick={handleToggleReady}
+                        disabled={isTogglingReady}
+                        className={`w-full rounded-xl border-2 p-6 text-left shadow-lg transition-all duration-200 ${
+                            isTogglingReady
+                                ? 'bg-elevated/70 border-border cursor-wait opacity-70'
+                                : player.is_ready
+                                  ? 'bg-green/10 border-green/40 hover:bg-green/20 hover:border-green/60 cursor-pointer hover:-translate-y-1 hover:shadow-xl active:scale-[0.98]'
+                                  : 'bg-red/10 border-red/40 hover:bg-red/20 hover:border-red/60 cursor-pointer hover:-translate-y-1 hover:shadow-xl active:scale-[0.98]'
+                        }`}
+                    >
                         <div className='flex items-center justify-between'>
                             <div>
                                 <div className='text-tx-secondary text-xs font-semibold tracking-wide uppercase'>
                                     Your Status
                                 </div>
-                                <p className='text-tx-primary text-lg font-semibold'>
-                                    {player.is_ready ? '✓ Ready' : 'Not Ready'}
+                                <p className='text-tx-primary text-xl font-bold'>
+                                    {player.is_ready ? '✓ Ready' : 'Tap to Ready Up'}
                                 </p>
                             </div>
-                            <Button
-                                onClick={handleToggleReady}
-                                disabled={isTogglingReady}
-                                variant={player.is_ready ? 'secondary' : 'primary'}
-                                size='lg'
-                                className='px-8 py-4 text-lg'
-                            >
-                                {player.is_ready ? 'Unready' : 'Ready Up'}
-                            </Button>
+                            <div className='text-4xl'>{player.is_ready ? '✅' : '❌'}</div>
                         </div>
-                    </Card>
+                    </button>
                 </div>
             )}
 
@@ -882,32 +859,29 @@ export default function LobbyPage() {
                     {/* Unassigned Players */}
                     {unassignedPlayers.length > 0 && (
                         <div className='mb-6'>
-                            <div className='text-tx-secondary mb-3 text-sm tracking-wide uppercase'>
-                                Unassigned Players ({unassignedPlayers.length})
-                            </div>
-                            <Card variant='warning'>
-                                <p className='text-orange/80 text-xs'>
-                                    These players still need teams. Ping the admin if you are waiting to join.
-                                </p>
-                                <div className='mt-3 space-y-2'>
+                            <Card variant='warning' className='p-3'>
+                                <div className='mb-2 flex items-center gap-2'>
+                                    <span className='text-lg'>⚠️</span>
+                                    <div className='text-orange text-xs font-semibold'>
+                                        {unassignedPlayers.length}{' '}
+                                        {unassignedPlayers.length === 1 ? 'player' : 'players'} waiting for team
+                                        assignment
+                                    </div>
+                                </div>
+                                <div className='flex flex-wrap gap-2'>
                                     {unassignedPlayers.map(playerItem => (
-                                        <div
+                                        <span
                                             key={playerItem.id}
                                             data-testid={`unassigned-player-${playerItem.name}`}
-                                            className='flex items-center justify-between'
+                                            className={`text-orange rounded-full border px-3 py-1 text-xs font-medium ${
+                                                playerItem.id === player.id
+                                                    ? 'border-orange bg-orange/20'
+                                                    : 'border-orange/40 bg-orange/10'
+                                            }`}
                                         >
-                                            <span className='text-orange text-sm font-medium'>
-                                                <span className='flex items-center gap-2'>
-                                                    {playerItem.name}
-                                                    {playerItem.id === player.id && (
-                                                        <span className='border-orange/60 text-orange rounded-full border px-2 py-0.5 text-[10px] font-semibold tracking-wide uppercase'>
-                                                            You
-                                                        </span>
-                                                    )}
-                                                </span>
-                                            </span>
-                                            <span className='text-orange text-xs'>Not assigned</span>
-                                        </div>
+                                            {playerItem.name}
+                                            {playerItem.id === player.id && ' (you)'}
+                                        </span>
                                     ))}
                                 </div>
                             </Card>

@@ -26,6 +26,7 @@ class AdminStartGameRequest(BaseModel):
     difficulty: str
     puzzle_mode: str = "different"  # "same" or "different"
     word_count_mode: str = "balanced"  # "exact" or "balanced"
+    force_start: bool = False  # Allow starting even if not all players are ready
 
 
 #############################################################################

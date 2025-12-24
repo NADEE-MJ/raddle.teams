@@ -167,12 +167,14 @@ export const api = {
                 difficulty: 'easy' | 'medium' | 'hard',
                 puzzleMode: 'same' | 'different',
                 wordCountMode: 'exact' | 'balanced',
-                bearerToken: string
+                bearerToken: string,
+                forceStart: boolean = false
             ): Promise<StartGameResponse> {
                 const requestBody: StartGameRequest = {
                     difficulty,
                     puzzle_mode: puzzleMode,
                     word_count_mode: wordCountMode,
+                    force_start: forceStart,
                 };
                 return request<StartGameResponse>(
                     `/admin/lobby/${lobbyId}/start`,

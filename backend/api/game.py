@@ -148,7 +148,7 @@ async def start_game(
     if not teams:
         raise HTTPException(status_code=400, detail="No teams in lobby")
 
-    # Validate all players with teams are ready
+    # Validate all players with teams are ready (unless force_start is True)
     all_players = session.exec(select(Player).where(Player.lobby_id == lobby_id)).all()
     players_with_teams = [p for p in all_players if p.team_id is not None]
 
@@ -156,7 +156,7 @@ async def start_game(
         raise HTTPException(status_code=400, detail="No players assigned to teams")
 
     unready_players = [p for p in players_with_teams if not p.is_ready]
-    if unready_players:
+    if unready_players and not request.force_start:
         unready_names = ", ".join([p.name for p in unready_players])
         raise HTTPException(status_code=400, detail=f"Not all players are ready. Waiting for: {unready_names}")
 

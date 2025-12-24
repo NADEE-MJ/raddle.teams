@@ -529,22 +529,26 @@ export default function LobbyDetails({ lobbyId, onClose, onLobbyDeleted, refresh
         return selectedLobby.players.filter(p => p.team_id !== null && !p.is_ready).map(p => p.name);
     }, [selectedLobby]);
 
-    const handleStartGame = useCallback(async () => {
-        if (!adminApiToken || !selectedLobby) {
-            setError(adminApiToken ? 'Lobby not selected' : 'Admin API token is required to start game');
-            return;
-        }
+    const handleStartGame = useCallback(
+        async (forceStart: boolean = false) => {
+            if (!adminApiToken || !selectedLobby) {
+                setError(adminApiToken ? 'Lobby not selected' : 'Admin API token is required to start game');
+                return;
+            }
 
-        if (!selectedLobby.teams || selectedLobby.teams.length < 2) {
-            setError('Need at least 2 teams to start the game');
-            return;
-        }
+            if (!selectedLobby.teams || selectedLobby.teams.length < 2) {
+                setError('Need at least 2 teams to start the game');
+                return;
+            }
 
-        const puzzleModeLabel = puzzleMode === 'same' ? 'the same puzzle' : 'different puzzles';
-        const wordCountLabel = wordCountMode === 'exact' ? 'exact word count' : 'balanced (±1 word)';
-        const confirmMessage = `Start the game with ${difficulty} difficulty?\n\nPuzzles: ${puzzleModeLabel}\nWord count: ${wordCountLabel}`;
+            const puzzleModeLabel = puzzleMode === 'same' ? 'the same puzzle' : 'different puzzles';
+            const wordCountLabel = wordCountMode === 'exact' ? 'exact word count' : 'balanced (±1 word)';
+            const confirmMessage = `Start the game with ${difficulty} difficulty?\n\nPuzzles: ${puzzleModeLabel}\nWord count: ${wordCountLabel}`;
 
-        if (confirm(confirmMessage)) {
+            if (!forceStart && !confirm(confirmMessage)) {
+                return;
+            }
+
             setIsStartingGame(true);
             try {
                 setError('');
@@ -553,12 +557,32 @@ export default function LobbyDetails({ lobbyId, onClose, onLobbyDeleted, refresh
                     difficulty,
                     puzzleMode,
                     wordCountMode,
-                    adminApiToken
+                    adminApiToken,
+                    forceStart
                 );
                 console.log('Game started:', result);
                 // Load game state to show progress
                 await loadGameState();
             } catch (err) {
+                // Check if error is about unready players
+                if (err instanceof ApiError && err.message.includes('Not all players are ready')) {
+                    // Extract the list of unready players from the error message
+                    const match = err.message.match(/Waiting for: (.+)/);
+                    const unreadyPlayersList = match ? match[1] : 'some players';
+
+                    // Show confirmation dialog with unready players listed
+                    const forceConfirm = confirm(
+                        `Not all players are ready!\n\nUnready players: ${unreadyPlayersList}\n\nAre you sure you want to start the game anyway?`
+                    );
+
+                    if (forceConfirm) {
+                        // Retry with force_start=true
+                        setIsStartingGame(false);
+                        await handleStartGame(true);
+                        return;
+                    }
+                }
+
                 const message =
                     err instanceof ApiError ? err.message : err instanceof Error ? err.message : 'Failed to start game';
                 setError(message);
@@ -566,8 +590,9 @@ export default function LobbyDetails({ lobbyId, onClose, onLobbyDeleted, refresh
             } finally {
                 setIsStartingGame(false);
             }
-        }
-    }, [adminApiToken, selectedLobby, difficulty, puzzleMode, wordCountMode, loadGameState]);
+        },
+        [adminApiToken, selectedLobby, difficulty, puzzleMode, wordCountMode, loadGameState]
+    );
 
     const handleEndGame = useCallback(async () => {
         if (!adminApiToken || !selectedLobby) {
@@ -1129,8 +1154,8 @@ export default function LobbyDetails({ lobbyId, onClose, onLobbyDeleted, refresh
                             </div>
                             <div className='mt-4 flex flex-col items-end gap-2'>
                                 <Button
-                                    onClick={handleStartGame}
-                                    disabled={isStartingGame || gameState?.is_game_active || !allPlayersReady}
+                                    onClick={() => handleStartGame()}
+                                    disabled={isStartingGame || gameState?.is_game_active}
                                     variant='primary'
                                     size='md'
                                     loading={isStartingGame}
@@ -1141,7 +1166,7 @@ export default function LobbyDetails({ lobbyId, onClose, onLobbyDeleted, refresh
                                 </Button>
                                 {!allPlayersReady && notReadyPlayers.length > 0 && (
                                     <p className='text-orange text-xs'>
-                                        Waiting for players to ready up: {notReadyPlayers.join(', ')}
+                                        Not all players ready: {notReadyPlayers.join(', ')}
                                     </p>
                                 )}
                             </div>
@@ -1195,37 +1220,107 @@ export default function LobbyDetails({ lobbyId, onClose, onLobbyDeleted, refresh
                                             </div>
                                         ) : (
                                             <>
-                                                <div className='flex items-center gap-2'>
-                                                    <TextInput
-                                                        type='number'
-                                                        value={timerMinutes.toString()}
-                                                        onChange={e => {
-                                                            const val = parseInt(e.target.value) || 0;
-                                                            setTimerMinutes(Math.max(0, Math.min(60, val)));
-                                                        }}
-                                                        min={0}
-                                                        max={60}
-                                                        disabled={isTimerActive || isStartingTimer}
-                                                        placeholder='Min'
-                                                        className='w-20'
-                                                        data-testid='timer-minutes-input'
-                                                    />
-                                                    <span className='text-tx-secondary text-sm'>min</span>
-                                                    <TextInput
-                                                        type='number'
-                                                        value={timerSeconds.toString()}
-                                                        onChange={e => {
-                                                            const val = parseInt(e.target.value) || 0;
-                                                            setTimerSeconds(Math.max(0, Math.min(59, val)));
-                                                        }}
-                                                        min={0}
-                                                        max={59}
-                                                        disabled={isTimerActive || isStartingTimer}
-                                                        placeholder='Sec'
-                                                        className='w-20'
-                                                        data-testid='timer-seconds-input'
-                                                    />
-                                                    <span className='text-tx-secondary text-sm'>sec</span>
+                                                <div className='flex flex-wrap items-center gap-2'>
+                                                    <div className='flex items-center gap-2'>
+                                                        <div className='bg-tertiary border-border flex items-center gap-1 rounded-md border px-2 py-1'>
+                                                            <Button
+                                                                onClick={() =>
+                                                                    setTimerMinutes(prev => Math.max(0, prev - 1))
+                                                                }
+                                                                disabled={
+                                                                    isTimerActive ||
+                                                                    isStartingTimer ||
+                                                                    timerMinutes === 0
+                                                                }
+                                                                variant='secondary'
+                                                                size='sm'
+                                                                className='text-xs'
+                                                                data-testid='decrease-timer-minutes'
+                                                            >
+                                                                -
+                                                            </Button>
+                                                            <TextInput
+                                                                type='text'
+                                                                inputMode='numeric'
+                                                                value={timerMinutes.toString()}
+                                                                onChange={value => {
+                                                                    const val = parseInt(value) || 0;
+                                                                    setTimerMinutes(Math.max(0, Math.min(60, val)));
+                                                                }}
+                                                                disabled={isTimerActive || isStartingTimer}
+                                                                placeholder='0'
+                                                                className='w-12 px-2 py-1 text-center text-sm'
+                                                                data-testid='timer-minutes-input'
+                                                            />
+                                                            <Button
+                                                                onClick={() =>
+                                                                    setTimerMinutes(prev => Math.min(60, prev + 1))
+                                                                }
+                                                                disabled={
+                                                                    isTimerActive ||
+                                                                    isStartingTimer ||
+                                                                    timerMinutes >= 60
+                                                                }
+                                                                variant='secondary'
+                                                                size='sm'
+                                                                className='text-xs'
+                                                                data-testid='increase-timer-minutes'
+                                                            >
+                                                                +
+                                                            </Button>
+                                                        </div>
+                                                        <span className='text-tx-secondary text-sm'>min</span>
+                                                    </div>
+                                                    <div className='flex items-center gap-2'>
+                                                        <div className='bg-tertiary border-border flex items-center gap-1 rounded-md border px-2 py-1'>
+                                                            <Button
+                                                                onClick={() =>
+                                                                    setTimerSeconds(prev => Math.max(0, prev - 1))
+                                                                }
+                                                                disabled={
+                                                                    isTimerActive ||
+                                                                    isStartingTimer ||
+                                                                    timerSeconds === 0
+                                                                }
+                                                                variant='secondary'
+                                                                size='sm'
+                                                                className='text-xs'
+                                                                data-testid='decrease-timer-seconds'
+                                                            >
+                                                                -
+                                                            </Button>
+                                                            <TextInput
+                                                                type='text'
+                                                                inputMode='numeric'
+                                                                value={timerSeconds.toString()}
+                                                                onChange={value => {
+                                                                    const val = parseInt(value) || 0;
+                                                                    setTimerSeconds(Math.max(0, Math.min(59, val)));
+                                                                }}
+                                                                disabled={isTimerActive || isStartingTimer}
+                                                                placeholder='0'
+                                                                className='w-12 px-2 py-1 text-center text-sm'
+                                                                data-testid='timer-seconds-input'
+                                                            />
+                                                            <Button
+                                                                onClick={() =>
+                                                                    setTimerSeconds(prev => Math.min(59, prev + 1))
+                                                                }
+                                                                disabled={
+                                                                    isTimerActive ||
+                                                                    isStartingTimer ||
+                                                                    timerSeconds >= 59
+                                                                }
+                                                                variant='secondary'
+                                                                size='sm'
+                                                                className='text-xs'
+                                                                data-testid='increase-timer-seconds'
+                                                            >
+                                                                +
+                                                            </Button>
+                                                        </div>
+                                                        <span className='text-tx-secondary text-sm'>sec</span>
+                                                    </div>
                                                 </div>
                                                 <Button
                                                     onClick={handleStartTimer}
