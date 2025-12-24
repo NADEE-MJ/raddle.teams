@@ -391,11 +391,8 @@ async def end_game(
             f"points={points} completed={completed} completion_pct={completion_pct:.2%}"
         )
 
-    # Cancel any running timer task for this lobby
-    from backend.api.admin.lobby.timer_task import cancel_timer
-
-    if cancel_timer(lobby_id):
-        api_logger.info(f"Cancelled running timer for lobby_id={lobby_id} (manual end)")
+    # Clear timer fields from all active games (the poller will skip these)
+    # When manually ending, we clear the timer fields so the poller knows not to process them
 
     # Reveal all puzzle steps for all teams (so they can see the complete puzzle)
     all_steps = list(range(puzzle_length))
@@ -575,7 +572,12 @@ async def get_timer_state(
     # Calculate expiry time
     from datetime import timedelta
 
-    expires_at = game.timer_started_at + timedelta(seconds=game.timer_duration_seconds)
+    # Ensure timer_started_at is timezone-aware
+    timer_started = game.timer_started_at
+    if timer_started.tzinfo is None:
+        timer_started = timer_started.replace(tzinfo=timezone.utc)
+
+    expires_at = timer_started + timedelta(seconds=game.timer_duration_seconds)
 
     # Check if timer has already expired
     now = datetime.now(timezone.utc)
@@ -590,7 +592,7 @@ async def get_timer_state(
     return TimerStateResponse(
         is_active=True,
         duration_seconds=game.timer_duration_seconds,
-        started_at=game.timer_started_at.isoformat(),
+        started_at=timer_started.isoformat(),
         expires_at=expires_at.isoformat(),
     )
 
@@ -699,10 +701,8 @@ async def start_timer(
     )
     await lobby_websocket_manager.broadcast_to_lobby(lobby_id, timer_event)
 
-    # Schedule timer expiry with task reference tracking
-    from backend.api.admin.lobby.timer_task import start_timer
-
-    start_timer(lobby_id, timer_duration_seconds)
+    # Timer will be automatically checked and handled by the timer poller
+    # No need to schedule individual tasks - the poller checks all active timers every 2 seconds
 
     api_logger.info(
         f"Timer started for lobby_id={lobby_id}: duration={request.duration_minutes}min {request.duration_seconds}sec expires_at={expires_at.isoformat()}"

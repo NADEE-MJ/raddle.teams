@@ -168,10 +168,7 @@ export default function LobbyDetails({ lobbyId, onClose, onLobbyDeleted, refresh
 
             setTimeRemaining(remaining);
 
-            if (remaining <= 0) {
-                setIsTimerActive(false);
-                setTimerExpiresAt(null);
-            }
+            // Don't auto-hide the timer here - let the backend handle expiry via WebSocket
         };
 
         // Update immediately
@@ -245,10 +242,12 @@ export default function LobbyDetails({ lobbyId, onClose, onLobbyDeleted, refresh
                     setTimerExpiresAt(message.expires_at);
                     break;
                 case 'timer_expired':
-                    console.log('[Admin] Timer expired');
+                    console.log('[Admin] Timer expired - backend is auto-ending game');
                     setIsTimerActive(false);
                     setTimerExpiresAt(null);
                     setTimeRemaining(0);
+                    // Backend automatically ends the game, just reload to get updated state
+                    reloadAll();
                     break;
                 case GameWebSocketEvents.GAME_STARTED:
                 case GameWebSocketEvents.GAME_WON:
@@ -517,13 +516,6 @@ export default function LobbyDetails({ lobbyId, onClose, onLobbyDeleted, refresh
         [adminApiToken, selectedLobby, hasActiveGame, reloadAll]
     );
 
-    const allPlayersReady = useMemo(() => {
-        if (!selectedLobby?.players) return false;
-        const playersWithTeams = selectedLobby.players.filter(p => p.team_id !== null);
-        if (playersWithTeams.length === 0) return false;
-        return playersWithTeams.every(p => p.is_ready);
-    }, [selectedLobby]);
-
     const notReadyPlayers = useMemo(() => {
         if (!selectedLobby?.players) return [];
         return selectedLobby.players.filter(p => p.team_id !== null && !p.is_ready).map(p => p.name);
@@ -654,6 +646,8 @@ export default function LobbyDetails({ lobbyId, onClose, onLobbyDeleted, refresh
                 adminApiToken
             );
             console.log('Timer started:', result);
+            // Reload timer state to ensure it's visible immediately
+            await loadTimerState();
         } catch (err) {
             const message =
                 err instanceof ApiError ? err.message : err instanceof Error ? err.message : 'Failed to start timer';
@@ -662,7 +656,7 @@ export default function LobbyDetails({ lobbyId, onClose, onLobbyDeleted, refresh
         } finally {
             setIsStartingTimer(false);
         }
-    }, [adminApiToken, selectedLobby, gameState, isTimerActive, timerMinutes, timerSeconds]);
+    }, [adminApiToken, selectedLobby, gameState, isTimerActive, timerMinutes, timerSeconds, loadTimerState]);
 
     if (isInitialLoad) {
         return (
@@ -1164,7 +1158,7 @@ export default function LobbyDetails({ lobbyId, onClose, onLobbyDeleted, refresh
                                 >
                                     Start Game
                                 </Button>
-                                {!allPlayersReady && notReadyPlayers.length > 0 && (
+                                {notReadyPlayers.length > 0 && (
                                     <p className='text-orange text-xs'>
                                         Not all players ready: {notReadyPlayers.join(', ')}
                                     </p>

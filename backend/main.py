@@ -1,5 +1,6 @@
 from datetime import datetime
 from pathlib import Path
+from contextlib import asynccontextmanager
 
 from fastapi import FastAPI, HTTPException
 from fastapi.responses import FileResponse
@@ -18,10 +19,32 @@ from backend.schemas import ApiRootResponse, MessageResponse
 from backend.settings import settings
 from backend.websocket.api import router as websocket_router
 
+
+@asynccontextmanager
+async def lifespan(app: FastAPI):
+    """Handle startup and shutdown events."""
+    # Startup
+    server_logger.info("Starting up application...")
+    from backend.api.admin.lobby.timer_poller import start_timer_poller
+
+    start_timer_poller()
+    server_logger.info("Timer poller started")
+
+    yield
+
+    # Shutdown
+    server_logger.info("Shutting down application...")
+    from backend.api.admin.lobby.timer_poller import stop_timer_poller
+
+    stop_timer_poller()
+    server_logger.info("Timer poller stopped")
+
+
 app = FastAPI(
     title="Raddle Teams",
     description="A team-based word chain puzzle game",
     version="1.0.0",
+    lifespan=lifespan,
 )
 
 if settings.TESTING:

@@ -91,7 +91,12 @@ async def schedule_timer_expiry(lobby_id: int, duration_seconds: int):
             # Calculate if timer actually expired
             from datetime import timedelta
 
-            expected_expiry = first_game.timer_started_at + timedelta(seconds=first_game.timer_duration_seconds)
+            # Ensure timer_started_at is timezone-aware
+            timer_started = first_game.timer_started_at
+            if timer_started.tzinfo is None:
+                timer_started = timer_started.replace(tzinfo=timezone.utc)
+
+            expected_expiry = timer_started + timedelta(seconds=first_game.timer_duration_seconds)
             now = datetime.now(timezone.utc)
 
             api_logger.info(
