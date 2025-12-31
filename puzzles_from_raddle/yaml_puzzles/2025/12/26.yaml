@@ -1,0 +1,46 @@
+meta:
+  title: From BLACK to BAG
+  theme: guest_recs_25
+  author: Sean Weitner
+  author_bio:
+    "Sean co-writes variety cryptic crosswords at [The Rackenfracker](https://www.therackenfracker.com) with JonMichael Rasmus; their work has appeared in Out of Left Field, AVCX, The Browser, Cryptic Crossweird, The Gnomon, and Minute Cryptic."
+  message:
+    "Today's Raddle is by Sean Weitner.
+    Sean writes, \"[_Black Bag_](https://letterboxd.com/film/black-bag-2025/) is a delightfully tricky marital comedy dressed up as a star-studded spy movie, a popular entertainment that's also uncompromised, personal filmmaking from Steven Soderbergh and David Koepp.\""
+ladder:
+- word: BLACK
+  clue: A magenta or burgundy can of sparkling water may taste like <> ^
+  step: fruit
+- word: CHERRY
+  clue: <> ^, famous offering at the Double R Diner in "Twin Peaks"
+  step: fills a
+- word: PIE
+  clue: Decadent topping for <>
+  step: can be topped with
+- word: ICE CREAM
+  clue: <> ^, a common kind of party
+  step: party
+- word: SOCIAL
+  clue: Remove every other letter from <> to get a crude word?
+  step: "even-placed letters"
+- word: OIL
+  clue: You can ^ a salad with <>
+  step: can be used to
+- word: DRESS
+  clue: A ^ is encouraged to say yes to a <>
+  step: is worn by a
+- word: BRIDE
+  clue: A series of essential steps for a <> take place here?
+  step: walks down an
+- word: AISLE
+  clue: One who helps you navigate the <>s
+  step: navigator
+- word: USHER
+  clue: Remove the central letter of <> and anagram to get an affirmation
+  step: -H, then anagrammed
+- word: SURE
+  clue: A <> thing is in the ^
+  step: thing is in the
+- word: BAG
+  clue:
+  step: ' '
