@@ -1,0 +1,33 @@
+[project]
+authors = [{ "name" = "NADEE-MJ" }]
+name = "superlatives-game"
+version = "0.1.0"
+description = "A Jackbox-style multiplayer superlatives party game"
+readme = "README.md"
+requires-python = ">=3.12"
+dependencies = [
+    "fastapi>=0.116.1",
+    "uvicorn>=0.35.0",
+    "websockets>=15.0.1",
+    "sqlalchemy>=2.0.43",
+    "sqlmodel>=0.0.24",
+    "aiosqlite>=0.21.0",
+    "requests>=2.32.5",
+    "pydantic>=2.11.7",
+    "pydantic-settings>=2.10.1",
+]
+
+[dependency-groups]
+dev = [
+    "ruff>=0.12.10",
+    "pytest>=8.4.1",
+    "pytest-playwright>=0.7.0",
+    "httpx>=0.28.1",
+    "pytest-asyncio>=1.1.0",
+    "typer>=0.16.1",
+    "pyyaml>=6.0.2",
+    "pre-commit>=4.0.0",
+]
+
+[tool.ruff]
+line-length = 120

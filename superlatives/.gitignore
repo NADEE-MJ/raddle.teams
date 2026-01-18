@@ -1,0 +1,23 @@
+# python files
+node_modules/
+__pycache__/
+*.pyc
+*.pyo
+.venv/
+
+# build files
+static/
+
+# log files
+*.log
+logs/*
+
+# database files
+databases/
+*.db
+
+#.env files
+*.env
+
+# test files
+e2e/recordings/*

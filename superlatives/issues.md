@@ -1,0 +1,1 @@
+- there is a bug where someone is in the lobby even though no one has actually joined yet probably from a previous game / session still existing client side
