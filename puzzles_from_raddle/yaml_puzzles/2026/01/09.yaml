@@ -1,0 +1,38 @@
+meta:
+  title: From IRVING to RADISH
+  author: Sandy Weisz
+  theme: mystery5
+ladder:
+- word: IRVING
+  clue: Composer <> ^
+  step: last name
+- word: BERLIN
+  clue: "<>’s country"
+  step: is in
+- word: GERMANY
+  clue: Northern neighbor of <>
+  step: is south of
+- word: DENMARK
+  clue: "<>’s biggest island"
+  step: owns
+- word: GREENLAND
+  clue: Mideast location that's the exact opposite of <>?
+  step: "opposite"
+- word: RED SEA
+  clue: He had a part in the <>?
+  step: was parted by
+- word: MOSES
+  clue: Change one letter in <> to get some flowers
+  step: M->R
+- word: ROSES
+  clue: ^ of the <>, 15th century event
+  step: were the subject of a 15th century
+- word: WAR
+  clue: <>^, a grizzled veteran (or what they're on)
+  step: veteran
+- word: HORSE
+  clue: <>^, a condiment
+  step: precedes
+- word: RADISH
+  clue:
+  step: ' '

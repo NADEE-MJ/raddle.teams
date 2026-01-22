@@ -1,0 +1,44 @@
+meta:
+  title: From MONTGOMERY to BUS
+  author: Sandy Weisz
+  theme: mlk
+  message: Catalyzed by the arrest of Rosa Parks in December 1955, the Montgomery bus boycott was a 13-month mass protest that ended with the U.S.
+    Supreme Court ruling that segregation on public buses is unconstitutional.
+    As the president of the Montgomery Improvement Association, which coordinated the boycott, King gained prominence as a civil rights leader at this time.
+ladder:
+- word: MONTGOMERY
+  clue: <> ^, filthy rich character on "TheSimpsons"
+  step: last name
+- word: BURNS
+  clue: Drop the outside letters of <> to get a container
+  step: -B, -S
+- word: URN
+  clue: "To deserve, a homophone of \"<>\""
+  step: sounds like
+- word: EARN
+  clue: Add a letter to the front of <> to wise up
+  step: +L
+- word: LEARN
+  clue: A place dedicated to <>ing
+  step: in a
+- word: SCHOOL
+  clue: "\"<>^ Rock!\""
+  step: …
+- word: HOUSE
+  clue: <> ^, what a doctor might make
+  step: is where you might receive a
+- word: CALL
+  clue: ^ <>, a near miss
+  step: that doesn't hit is
+- word: CLOSE
+  clue: "Change an \"oh\" sound to an \"oo\" sound in <> to get something you see here"
+  step: oh->oo
+- word: CLUES
+  clue: "\"^ <>\", popular kids show"
+  step: follows
+- word: "BLUE’S"
+  clue: Drop every other letter in <> to get a vehicle
+  step: odd letters
+- word: BUS
+  clue:
+  step: ' '

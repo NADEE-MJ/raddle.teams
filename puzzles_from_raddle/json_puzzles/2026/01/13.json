@@ -1,0 +1,69 @@
+{
+  "meta": {
+    "title": "From MANGO to NERF",
+    "author": "Sandy Weisz",
+    "theme": "mystery5"
+  },
+  "ladder": [
+    {
+      "word": "MANGO",
+      "clue": "Change one letter in <> to get an activity for two",
+      "step": "M->T"
+    },
+    {
+      "word": "TANGO",
+      "clue": "<> is a kind of {}",
+      "step": "is a"
+    },
+    {
+      "word": "DANCE",
+      "clue": "The <> {} is a hub of activity at a party",
+      "step": "on the"
+    },
+    {
+      "word": "FLOOR",
+      "clue": "Where you might be asked, \"What <>?\"",
+      "step": "is something they ask"
+    },
+    {
+      "word": "ELEVATOR",
+      "clue": "Term for an <> in the UK",
+      "step": "aka"
+    },
+    {
+      "word": "LIFT",
+      "clue": "Change a letter in <> to get one side",
+      "step": "I->E"
+    },
+    {
+      "word": "LEFT",
+      "clue": "Opposite of <>",
+      "step": "opposite"
+    },
+    {
+      "word": "RIGHT",
+      "clue": "Homophone of \"<>\" that means \"maker\"",
+      "step": "+W"
+    },
+    {
+      "word": "WRIGHT",
+      "clue": "Early 20th century pioneer {} <>",
+      "step": "first name"
+    },
+    {
+      "word": "WILBUR",
+      "clue": "She cares for <> in a 1952 book (and 1973 movie)",
+      "step": "is cared for by"
+    },
+    {
+      "word": "FERN",
+      "clue": "Anagram <> to get a toy company",
+      "step": "anagram"
+    },
+    {
+      "word": "NERF",
+      "clue": null,
+      "step": " "
+    }
+  ]
+}

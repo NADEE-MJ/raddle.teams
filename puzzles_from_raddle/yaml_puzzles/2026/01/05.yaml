@@ -1,0 +1,44 @@
+meta:
+  title: From ELIZABETH II to VIAL
+  author: Sandy Weisz
+  theme: mystery5
+ladder:
+- word: ELIZABETH II
+  clue: "First name of <>’s successor"
+  step: eldest
+- word: CHARLES
+  clue: Major New England city on the <> River
+  step: River is in
+- word: BOSTON
+  clue: Remove the last letter of <> and anagram to get some footwear
+  step: -N, then anagram
+- word: BOOTS
+  clue: "\"^ in <>\", 2011 animated film spun off from a popular franchise"
+  step: hold a cat named
+- word: PUSS
+  clue: Change the last letter of <> to get a sign on many a door
+  step: S->H
+- word: PUSH
+  clue: Opposite of <>
+  step: opposite
+- word: PULL
+  clue: Body part that one might metaphorically <>
+  step: one's
+- word: LEG
+  clue: An ^ and a <>, a lot to hand over
+  step: and an
+- word: ARM
+  clue: <> & ^, popular household brand
+  step: "&"
+- word: HAMMER
+  clue: Target of a <>, often
+  step: targets a
+- word: NAIL
+  clue: Remove one vertical line from <> to get a popular ski resort
+  step: N->V
+- word: VAIL
+  clue: Swap the middle letters of <> to get a small container
+  step: A<->I
+- word: VIAL
+  clue:
+  step: ' '

@@ -1,0 +1,44 @@
+meta:
+  title: From BAYOU to YOUNG
+  author: Sandy Weisz
+  theme: mystery5
+ladder:
+- word: BAYOU
+  clue: Drop the last two letters of <> to get a body of water
+  step: -OU
+- word: BAY
+  clue: <> ^, common soup ingredient
+  step: is a kind of
+- word: LEAF
+  clue: A <> falls from a ^
+  step: falls from a
+- word: TREE
+  clue: Insert a letter into <> to get a number
+  step: +H
+- word: THREE
+  clue: Move the last letter of <> to get something you might say while pointing
+  step: move last letter
+- word: THERE
+  clue: "\"I'll be ^ <>!\""
+  step: …
+- word: RIGHT
+  clue: Opposite of <>
+  step: opposite
+- word: LEFT
+  clue: <>^, like a lot of reheated food
+  step: …
+- word: OVER
+  clue: Opposite of <>
+  step: opposite
+- word: UNDER
+  clue: <>^ something to call it out
+  step: …
+- word: LINE
+  clue: "Name that’s an anagram of <>"
+  step: anagrammed
+- word: NEIL
+  clue: Rocker <> ^
+  step: last name
+- word: YOUNG
+  clue:
+  step: ' '

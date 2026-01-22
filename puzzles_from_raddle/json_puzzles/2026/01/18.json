@@ -1,0 +1,70 @@
+{
+  "meta": {
+    "title": "From SHADOW to DIAMOND",
+    "author": "Sandy Weisz",
+    "theme": "mitmh",
+    "message": "In 2025, Death and Mayhem brought us to [MITropolis](https://puzzles.mit.edu/2025/), where two of the town's most eligible bachelors were getting engaged. But the festivities turned sour when it was discovered that the Shadow Diamond had gone missing. We then had to solve a noir mystery involving a shady cast of characters. The coin was found by Cardinality, who wrote this year's hunt."
+  },
+  "ladder": [
+    {
+      "word": "SHADOW",
+      "clue": "{} <>, a type of makeup",
+      "step": "is makeup for your"
+    },
+    {
+      "word": "EYE",
+      "clue": "The colored part of your <>",
+      "step": "part"
+    },
+    {
+      "word": "IRIS",
+      "clue": "Append a letter to <> to get a demonym (word to describe people from a certain place)",
+      "step": "+H"
+    },
+    {
+      "word": "IRISH",
+      "clue": "Most popular <> brew",
+      "step": "stout"
+    },
+    {
+      "word": "GUINNESS",
+      "clue": "Classic actor {} <>",
+      "step": "first name"
+    },
+    {
+      "word": "ALEC",
+      "clue": "Fabric that’s an anagram of <>",
+      "step": "anagrammed"
+    },
+    {
+      "word": "LACE",
+      "clue": "{}<>, something to tie",
+      "step": "is part of many a"
+    },
+    {
+      "word": "SHOE",
+      "clue": "Homophone of \"<>\" that you’d yell in frustration",
+      "step": "E->O"
+    },
+    {
+      "word": "SHOO",
+      "clue": "Bug you might say <> to",
+      "step": "…"
+    },
+    {
+      "word": "FLY",
+      "clue": "Sport where you catch a <>",
+      "step": "is caught in"
+    },
+    {
+      "word": "BASEBALL",
+      "clue": "Where <> is played",
+      "step": "is played on a"
+    },
+    {
+      "word": "DIAMOND",
+      "clue": null,
+      "step": " "
+    }
+  ]
+}

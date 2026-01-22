@@ -1,0 +1,47 @@
+meta:
+  title: From CIVIL to RIGHTS
+  author: Sandy Weisz
+  theme: mlk
+  message: No person is more closely associated with the civil rights movement of mid-20th century America than King, and few have left behind as powerful a legacy.
+    King was present when, on July 2, 1964, U.S. President Lyndon Johnson signed into law the historic Civil Rights Act in a nationally televised ceremony at the White House.
+    His work as an activist continued until his assassination in 1968.
+ladder:
+- word: CIVIL
+  clue: Change one letter in <> to get a kind of duty
+  step: L->C
+- word: CIVIC
+  clue: The <> is made by this company
+  step: is made by
+- word: HONDA
+  clue: Remove the fourth letter from <> then anagram to get a Biblical figure
+  step: -D, then anagram
+- word: NOAH
+  clue: "Famous construction of <>’s"
+  step: built an
+- word: ARK
+  clue: Add a letter to the front of <> to get part of a tree
+  step: +B
+- word: BARK
+  clue: "What is often not as bad as one’s <>"
+  step: is often worse than one's
+- word: BITE
+  clue: "\"Have a <> to ^…\""
+  step: to
+- word: EAT
+  clue: What you <> in the evening
+  step: this in the evening
+- word: SUPPER
+  clue: "\"The ^ <>\", a famous work of art"
+  step: was someone's
+- word: LAST
+  clue: <> day of the year (abbr.)
+  step: day of the year
+- word: NYE
+  clue: ^ <>, a scientific man
+  step: in science
+- word: BILL
+  clue: The <> of ^, a famous 10-item list
+  step: of
+- word: RIGHTS
+  clue:
+  step: ' '

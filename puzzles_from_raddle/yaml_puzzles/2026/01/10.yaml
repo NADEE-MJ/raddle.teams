@@ -1,0 +1,41 @@
+meta:
+  title: From JAWS to QUIVER
+  author: Sandy Weisz
+  theme: mystery5
+ladder:
+- word: JAWS
+  clue: "\"<>\" is about this kind of creature"
+  step: is a
+- word: SHARK
+  clue: Often the only visible part of a <>
+  step: shows its
+- word: FIN
+  clue: "When seen in a movie, \"<>\" means this"
+  step: means
+- word: THE END
+  clue: The ^ is the opposite of <>
+  step: opposite
+- word: BEGINNING
+  clue: Drop a trigram (three letters) from <> to get a sports term
+  step: -BEG
+- word: INNING
+  clue: Add a letter to the front of <> to get a kind of smile
+  step: +W
+- word: WINNING
+  clue: Opposite of <>
+  step: opposite
+- word: LOSING
+  clue: Add a letter to the front of <> to get some kinds of credits
+  step: +C
+- word: CLOSING
+  clue: "\"<> ^\", 1998 hit that was written \"in anticipation of fatherhood\", like \"a bouncer clearing out a bar\""
+  step: precedes
+- word: TIME
+  clue: <> is often described as an ^, never going back
+  step: metaphor
+- word: ARROW
+  clue: Container for <>s
+  step: is stored in a
+- word: QUIVER
+  clue:
+  step: ' '
