@@ -141,8 +141,14 @@ def server(
     frontend_server: bool = typer.Option(
         False, "--frontend-server", "-fe", help="🌐 Start only the frontend dev server", is_flag=True
     ),
+    pull: bool = typer.Option(False, "--pull", "-gp", help="📥 Pull latest changes from git before starting", is_flag=True),
 ):
     rerun_in_uv()
+
+    if pull:
+        if run_command(["git", "pull"], "Pulling latest changes from git") != 0:
+            console.print("[bold yellow]⚠️  Git pull failed, continuing anyway...[/bold yellow]")
+            # Don't exit, just warn - user may want to continue anyway
 
     try:
         process = None
