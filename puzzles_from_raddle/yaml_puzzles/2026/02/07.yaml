@@ -1,0 +1,46 @@
+meta:
+  title: From SUPER to G
+  author: Sandy Weisz
+  theme: winter_olympics
+  message: "Super-G is a skiing event that stands for super giant slalom. It combines a slalom (maneuvering through gates) and downhill skiing.
+    The current World Cup leaders are Marco Odermatt (Switzerland) and Sofia Goggia (Italy)."
+ladder:
+- word: SUPER
+  clue: <> ^, annual game in the US
+  step: precedes
+- word: BOWL
+  clue: Highest possible score when you <>
+  step: 12 strikes to get a
+- word: '300'
+  clue: Add a vertical line to <> to get a scary exclamation
+  step: "+ |"
+- word: BOO
+  clue: Add a letter to <> to get a bit of skiing apparel
+  step: +T
+- word: BOOT
+  clue: Change one letter in <> to get what goes in a <>
+  step: B->F
+- word: FOOT
+  clue: ^<> might be spotted while back-country skiing
+  step: belongs to something hairy and
+- word: BIG
+  clue: <> ^, certain convenience store offering
+  step: drink from 7-11
+- word: GULP
+  clue: Reverse <> to get a stopper
+  step: reversed
+- word: PLUG
+  clue: ^ <>, part of many a car
+  step: provides a
+- word: SPARK
+  clue: Insert a space into <> and it looks like an abbreviated form of this TV show
+  step: expanded
+- word: SOUTH PARK
+  clue: "Who used to always get killed on \"<>\""
+  step: frequently kills
+- word: KENNY
+  clue: Composer and musician <> ^
+  step: last initial
+- word: G
+  clue:
+  step: ' '

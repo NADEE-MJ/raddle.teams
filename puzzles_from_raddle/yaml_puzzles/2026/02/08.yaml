@@ -1,0 +1,46 @@
+meta:
+  title: From SHOT to ROCK
+  author: Sandy Weisz
+  theme: winter_olympics
+  message:
+    In curling, the shot rock is the stone closest to the tee, i.e. the button, i.e. the center of the house, i.e. the middle of the circle. It's the stone currently winning the point. You're "sitting shot" or "lying shot" if the shot rock is yours.
+ladder:
+- word: SHOT
+  clue: A <> in the ^
+  step: in the
+- word: DARK
+  clue: Book and TV show "<> ^," named after a scientific concept
+  step: kind of
+- word: MATTER
+  clue: <>-of-^ (rational)
+  step: "-of-"
+- word: FACT
+  clue: Change one letter in <> to get a part of your body
+  step: T->E
+- word: FACE
+  clue: Stop avoiding it and <> the ^
+  step: the
+- word: MUSIC
+  clue: Five lines of <>?
+  step: lines are called a
+- word: STAFF
+  clue: ^ of <>, White House position
+  step: leader is the
+- word: CHIEF
+  clue: Change one letter in <> to get a criminal
+  step: C->T
+- word: THIEF
+  clue: Add an S to <> and anagram to get a fixation
+  step: +S, then anagram
+- word: FETISH
+  clue: Drop a bigram (two letters) from <> to get something underwater
+  step: -ET
+- word: FISH
+  clue: Many <>
+  step: group is a
+- word: SCHOOL
+  clue: "\"<> of ^\" 2003 film that ^s"
+  step: of
+- word: ROCK
+  clue:
+  step: ' '

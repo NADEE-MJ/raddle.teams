@@ -1,0 +1,45 @@
+meta:
+  title: From GROUND to HOG
+  author: Sandy Weisz
+  theme: groundhog_day
+  message: Okay, campers, rise and shine, and don't forget your booties 'cause it's cooooold out there today! That’s right, woodchuck-chuckers, it’s GROUNDHOG DAY!
+ladder:
+- word: GROUND
+  clue: Drop the first letter of <> to get something you might buy in an act of generosity
+  step: -G
+- word: ROUND
+  clue: <>^ (indirect)
+  step: precedes
+- word: ABOUT
+  clue: "\"^ <> Nothing\""
+  step: nothing there is
+- word: MUCH ADO
+  clue: Name found inside <>
+  step: contains
+- word: CHAD
+  clue: <> is in ^
+  step: is in
+- word: AFRICA
+  clue: Longest river in <>
+  step: river
+- word: NILE
+  clue: Swap the consonants of <> to get something one-dimensional
+  step: L<->N
+- word: LINE
+  clue: What Brits call a <>
+  step: is also called a
+- word: QUEUE
+  clue: "Signal that sounds like \"<>\""
+  step: sounds like
+- word: CUE
+  clue: You use a <> to ^ at the start of a certain game
+  step: is used to
+- word: BREAK
+  clue: <>^, an important discovery
+  step: precedes
+- word: THROUGH
+  clue: Drop the odd-positioned letters of <> to get a greedy person
+  step: drop odd letters
+- word: HOG
+  clue:
+  step: ' '

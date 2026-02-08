@@ -1,0 +1,80 @@
+{
+  "meta": {
+    "title": "From PURPLE to MARTIN",
+    "author": "Sandy Weisz and Elizabeth Hargrave",
+    "theme": "wingspan",
+    "message": "Native Americans hung gourds as houses for these birds, because they eat so many bugs."
+  },
+  "ladder": [
+    {
+      "word": "PURPLE",
+      "clue": "{} <>, English rock band that recorded \"Smoke on the Water\"",
+      "step": "follows"
+    },
+    {
+      "word": "DEEP",
+      "clue": "Opposite of <>",
+      "step": "opposite"
+    },
+    {
+      "word": "SHALLOW",
+      "clue": "Drop a bigram (two letters) from <> to give permission",
+      "step": "-SH"
+    },
+    {
+      "word": "ALLOW",
+      "clue": "Drop a bigram (two letters) from <> to get everything",
+      "step": "-OW"
+    },
+    {
+      "word": "ALL",
+      "clue": "\"<> in the {}\" (70's TV show)",
+      "step": "in the"
+    },
+    {
+      "word": "FAMILY",
+      "clue": "<> {}, a type of chart",
+      "step": "chart"
+    },
+    {
+      "word": "TREE",
+      "clue": "{} <> oil, an antiseptic",
+      "step": "leaves get boiled into a"
+    },
+    {
+      "word": "TEA",
+      "clue": "They hold <> cups",
+      "step": "cups go on"
+    },
+    {
+      "word": "SAUCERS",
+      "clue": "{} <>, subjects of some conspiracy theories",
+      "step": "with aliens are"
+    },
+    {
+      "word": "FLYING",
+      "clue": "Drop a letter from <> to be misleading",
+      "step": "-F"
+    },
+    {
+      "word": "LYING",
+      "clue": "<> causes these to catch fire?",
+      "step": "burns your"
+    },
+    {
+      "word": "PANTS",
+      "clue": "{} <> are called {}s",
+      "step": "that stop halfway are"
+    },
+    {
+      "word": "SHORT",
+      "clue": "Comedian {} <>",
+      "step": "first name"
+    },
+    {
+      "word": "MARTIN",
+      "clue": null,
+      "step": " "
+    }
+  ]
+}

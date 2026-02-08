@@ -1,0 +1,39 @@
+meta:
+  title: From TOCO to TOUCAN
+  author: Sandy Weisz and Elizabeth Hargrave
+  theme: wingspan
+  message: The Toco Toucan is part of the new Wingspan Americans expansion. Toucans can increase blood flow to their bills to regulate their body temperature.
+ladder:
+- word: TOCO
+  clue: Anagram <> to get a curmudgeon or a bird
+  step: anagramMED
+- word: COOT
+  clue: Add an S to <> to move
+  step: +S
+- word: SCOOT
+  clue: <> ^ to make room on a bench
+  step: on
+- word: OVER
+  clue: Opposite of <>
+  step: opposite
+- word: UNDER
+  clue: Monsters might lurk <> the ^
+  step: the
+- word: BED
+  clue: Change one letter in <> to get an insect
+  step: D->E
+- word: BEE
+  clue: A <>'s home is made of <>s^
+  step: hive is made of
+- word: WAX
+  clue: Change one letter in <> to get the most
+  step: W->M
+- word: MAX
+  clue: Change the last letter in <> to an S and reverse to get a famous uncle
+  step: X->S, then reverse
+- word: SAM
+  clue: ^ <>, a cereal hawker
+  step: is a famous
+- word: TOUCAN
+  clue:
+  step: ' '

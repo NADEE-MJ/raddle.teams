@@ -1,0 +1,46 @@
+meta:
+  title: From GROUND to HOG
+  author: Sandy Weisz
+  theme: groundhog_day
+  message: Okay, campers, rise and shine, and don't forget your booties 'cause it's cooooold out there today!
+    That’s right, woodchuck-chuckers, it’s [GROUNDHOG DAY](/2026/02/05)!
+ladder:
+- word: GROUND
+  clue: Remove an N from <> and anagram to get a kind of fruit
+  step: -N, then anagram
+- word: GOURD
+  clue: Orange <>s
+  step: that's orange
+- word: PUMPKINS
+  clue: The ^ <> rock band
+  step: are
+- word: SMASHING
+  clue: Change one letter in <> to get something a business might be doing to prices
+  step: M->L
+- word: SLASHING
+  clue: Small hair found inside <>
+  step: contains
+- word: LASH
+  clue: Change the ^ letter of <>
+  step: H->T
+- word: LAST
+  clue: <> ^ might be famous?
+  step: famous
+- word: WORDS
+  clue: Where lots of <> are "bound" to be?
+  step: contained in a
+- word: BOOK
+  clue: Split <> after the third letter, pronounce both parts separately, and it sounds like this lovely gift
+  step: mispronunced sounds like
+- word: BOUQUET
+  clue: A <> of ^
+  step: of
+- word: FLOWERS
+  clue: "^<> don’t need humans"
+  step: might be
+- word: WILD
+  clue: Go ^-<>, i.e. act as unrestrained as a <> ^
+  step: as a
+- word: HOG
+  clue:
+  step: ' '

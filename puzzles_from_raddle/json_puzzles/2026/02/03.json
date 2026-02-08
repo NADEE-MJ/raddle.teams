@@ -1,0 +1,70 @@
+{
+  "meta": {
+    "title": "From GROUND to HOG",
+    "author": "Sandy Weisz",
+    "theme": "groundhog_day",
+    "message": "Okay, campers, rise and shine, and don't forget your booties 'cause it's cooooold out there today! That’s right, woodchuck-chuckers, it’s [GROUNDHOG DAY](/2026/02/02)!"
+  },
+  "ladder": [
+    {
+      "word": "GROUND",
+      "clue": "A {}<> is found outside many an elementary school",
+      "step": "that's meant for"
+    },
+    {
+      "word": "PLAY",
+      "clue": "\"The <>’s {}\" -Shakespeare",
+      "step": "is"
+    },
+    {
+      "word": "THE THING",
+      "clue": "Director of \"<>\"",
+      "step": "is directed by"
+    },
+    {
+      "word": "CARPENTER",
+      "clue": "Slender tool found inside <>",
+      "step": "contains"
+    },
+    {
+      "word": "PEN",
+      "clue": "Counterpart of a <> (that has a <> inside of it?)",
+      "step": "counterpart"
+    },
+    {
+      "word": "PENCIL",
+      "clue": "Add an A to <> and anagram to get a bird",
+      "step": "+A, then anagram"
+    },
+    {
+      "word": "PELICAN",
+      "clue": "Large, prominent part of a <>",
+      "step": "has a large, prominent"
+    },
+    {
+      "word": "BEAK",
+      "clue": "Insert an R into <> to get an interruption",
+      "step": "+R"
+    },
+    {
+      "word": "BREAK",
+      "clue": "{} <>, a week of debauchery, for some",
+      "step": "in the"
+    },
+    {
+      "word": "SPRING",
+      "clue": "Drop the odd-placed letters in <> to get a mammal",
+      "step": "drop odd letters"
+    },
+    {
+      "word": "PIG",
+      "clue": "A large, domestic <>",
+      "step": "that's large and domesticated"
+    },
+    {
+      "word": "HOG",
+      "clue": null,
+      "step": " "
+    }
+  ]
+}

@@ -1,0 +1,46 @@
+meta:
+  title: From LINCOLN to MEMORIAL
+  author: Sandy Weisz
+  theme: mlk
+  message: King delivered his “I Have a Dream” speech from the Lincoln Memorial during the March on Washington in 1963.
+    Fittingly, King borrowed a phrase from Lincoln's Gettysburg Address and referenced the Emancipation Proclamation early in his speech.
+ladder:
+- word: LINCOLN
+  clue: He shot <>
+  step: was shot by
+- word: BOOTH
+  clue: ^ <> , a tiny place for some quick shots
+  step: for taking a
+- word: PHOTO
+  clue: It takes a <>
+  step: is taken by a
+- word: CAMERA
+  clue: Change one letter in <> to a bigram (two letters) to get a mythical creature
+  step: A->HI
+- word: CHIMERA
+  clue: The <> is depicted with the body of this animal
+  step: has the body of a
+- word: LION
+  clue: Change the second letter in <> to get a French city
+  step: I->Y
+- word: LYON
+  clue: "Anagram <> to get an adverb"
+  step: anagrammed
+- word: ONLY
+  clue: You <> live ^
+  step: live
+- word: ONCE
+  clue: "\"<> in a ^\""
+  step: in a
+- word: BLUE MOON
+  clue: A <> is the second appearance in a ^
+  step: is the second moon in a
+- word: MONTH
+  clue: Fifth <>
+  step: number five
+- word: MAY
+  clue: ^ Day is at the end of <>
+  step: holiday
+- word: MEMORIAL
+  clue:
+  step: ' '

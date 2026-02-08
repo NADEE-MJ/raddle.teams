@@ -1,0 +1,80 @@
+{
+  "meta": {
+    "title": "From GROUND to HOG",
+    "author": "Sandy Weisz",
+    "theme": "groundhog_day",
+    "message": "Okay, campers, rise and shine, and don't forget your booties 'cause it's cooooold out there today! That’s right, woodchuck-chuckers, it’s [GROUNDHOG DAY](/2026/02/04)!"
+  },
+  "ladder": [
+    {
+      "word": "GROUND",
+      "clue": "Kind of beans sometimes bought pre-<>",
+      "step": "some"
+    },
+    {
+      "word": "COFFEE",
+      "clue": "<> in French, or where you might buy a <>",
+      "step": "in French is"
+    },
+    {
+      "word": "CAFE",
+      "clue": "Swap the consonants of <> to get a part of the body",
+      "step": "C<->F"
+    },
+    {
+      "word": "FACE",
+      "clue": "A {} <> doesn't tell much?",
+      "step": "that betrays nothing during"
+    },
+    {
+      "word": "POKER",
+      "clue": "Hold {} is a style of <>",
+      "step": "version Hold"
+    },
+    {
+      "word": "EM",
+      "clue": "It comes immediately after <>",
+      "step": "M->N"
+    },
+    {
+      "word": "EN",
+      "clue": "Change <>’s first letter to get a preposition",
+      "step": "E->I"
+    },
+    {
+      "word": "IN",
+      "clue": "Double a letter <> <> to get a place to stay",
+      "step": "+N"
+    },
+    {
+      "word": "INN",
+      "clue": "{} <>, chain with a vacation-y name",
+      "step": "follows"
+    },
+    {
+      "word": "HOLIDAY",
+      "clue": "Jazz singer {} <>",
+      "step": "first name"
+    },
+    {
+      "word": "BILLIE",
+      "clue": "Often-spicy food that rhymes with <>",
+      "step": "rhymes with"
+    },
+    {
+      "word": "CHILI",
+      "clue": "<> {}, a messy handheld meal",
+      "step": "goes on a"
+    },
+    {
+      "word": "DOG",
+      "clue": "Change one letter in <> to keep for yourself",
+      "step": "D->H"
+    },
+    {
+      "word": "HOG",
+      "clue": null,
+      "step": " "
+    }
+  ]
+}

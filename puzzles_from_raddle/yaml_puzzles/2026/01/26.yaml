@@ -1,0 +1,42 @@
+meta:
+  title: From WHOOPING to CRANE
+  author: Sandy Weisz and Elizabeth Hargrave
+  theme: wingspan
+  message: From its low of 20 birds, the Whooping Crane population has risen to about 600.
+ladder:
+- word: WHOOPING
+  clue: <> ^ is prevented by the DTP vaccine
+  step: is a kind of
+- word: COUGH
+  clue: <> ^, liquid staple in a cold war?
+  step: supressant comes in a
+- word: SYRUP
+  clue: ^ <>, sweet condiment
+  step: from a
+- word: MAPLE
+  clue: Drop the last letter in <> and anagram to get a part of your hand
+  step: -E, then anagram
+- word: PALM
+  clue: Fruit of some <>s
+  step: fruit
+- word: COCONUT
+  clue: <> ^, a refreshing drink from the inside of a <>
+  step: contains
+- word: WATER
+  clue: Solid <>
+  step: in solid form
+- word: ICE
+  clue: With <>, aka "on the ^s"
+  step: nickname
+- word: ROCK
+  clue: <> loses to ^
+  step: beats
+- word: PAPER
+  clue: ^ <>, a colorful arts and crafts supply
+  step: is used for
+- word: CONSTRUCTION
+  clue: A common (often very tall) sight in urban <> projects
+  step: sight
+- word: CRANE
+  clue:
+  step: ' '
