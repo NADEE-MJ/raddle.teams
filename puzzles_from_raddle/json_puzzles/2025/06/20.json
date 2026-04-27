@@ -1,0 +1,81 @@
+{
+  "meta": {
+    "title": "From GOLF to TEE",
+    "author": "Sandy Weisz and Mao Reynolds",
+    "difficulty": "medium",
+    "theme": "Juneteenth",
+    "message": "In celebration of Juneteeth, we're building Raddles honoring Black inventors. In 1870, [Dr. George Franklin Grant](https://www.pga.com/archive/how-dr-george-f-grant-went-african-american-dentist-golf-tee-inventor) became one of the first African Americans to earn a degree in dentistry. Beyond his work as a dentist, Grant was also an avid golf player, and wanted a quick and easy way to set up golf balls. So he developed the golf tee, receiving a patent for it in 1899. He died in 1910 of liver disease and his invention almost died with him. Another golf player, Dr. William Lowell, developed his own golf tee in 1922, but today the United States Golf Association recognizes Grant as the original inventor."
+  },
+  "ladder": [
+    {
+      "word": "GOLF",
+      "clue": "Tool used to play <>",
+      "transform": "tool"
+    },
+    {
+      "word": "CLUB",
+      "clue": "<> {}, a popular mixer",
+      "transform": "…"
+    },
+    {
+      "word": "SODA",
+      "clue": "What Midwesterners call <>",
+      "transform": "to a Midwesterner"
+    },
+    {
+      "word": "POP",
+      "clue": "One might kneel to <> the {}",
+      "transform": "the"
+    },
+    {
+      "word": "QUESTION",
+      "clue": "\"Do you have a <>, {}\" should end with a <> {}",
+      "transform": "…"
+    },
+    {
+      "word": "MARK",
+      "clue": "19th century writer <> {}",
+      "transform": "who wrote"
+    },
+    {
+      "word": "TWAIN",
+      "clue": "Add an A to <> and anagram to get a country",
+      "transform": "+A, then anagram"
+    },
+    {
+      "word": "TAIWAN",
+      "clue": "Capital of <>",
+      "transform": "capital"
+    },
+    {
+      "word": "TAIPEI",
+      "clue": "Kind of personality that sounds like \"<>\"",
+      "transform": "sounds like"
+    },
+    {
+      "word": "TYPE A",
+      "clue": "Body part used to <> space",
+      "transform": "space with your"
+    },
+    {
+      "word": "THUMB",
+      "clue": "Like a gardener's <>",
+      "transform": "might be"
+    },
+    {
+      "word": "GREEN",
+      "clue": "Drink that's often black or <>",
+      "transform": "drink"
+    },
+    {
+      "word": "TEA",
+      "clue": "Homophone of \"<>\" that you wear",
+      "transform": "sounds like"
+    },
+    {
+      "word": "TEE",
+      "clue": null,
+      "transform": null
+    }
+  ]
+}

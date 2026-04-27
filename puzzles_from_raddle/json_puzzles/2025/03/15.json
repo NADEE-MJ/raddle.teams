@@ -1,0 +1,82 @@
+{
+  "meta": {
+    "title": "From JOKER to STAR",
+    "author": "Sandy Weisz",
+    "difficulty": "medium",
+    "theme": "Enigmarch 2025",
+    "fromEmoji": "🃏",
+    "toEmoji": "⭐️"
+  },
+  "ladder": [
+    {
+      "word": "JOKER",
+      "clue": "He won an Oscar for playing <>",
+      "transform": "was played by"
+    },
+    {
+      "word": "PHOENIX",
+      "clue": "<> is the capital of this",
+      "transform": "is the capital of"
+    },
+    {
+      "word": "ARIZONA",
+      "clue": "The main product made by <>",
+      "transform": "makes"
+    },
+    {
+      "word": "ICED TEA",
+      "clue": "Anagram just the first part of <> to get these objects",
+      "transform": "-TEA, anagrammed"
+    },
+    {
+      "word": "DICE",
+      "clue": "Casino game played with two <>",
+      "transform": "is used to play"
+    },
+    {
+      "word": "CRAPS",
+      "clue": "Move the last letter of <> to the beginning to get a leftover",
+      "transform": "Move last to first"
+    },
+    {
+      "word": "SCRAP",
+      "clue": "Add an E to <> to make a mark",
+      "transform": "+E"
+    },
+    {
+      "word": "SCRAPE",
+      "clue": "You might <> the bottom of this",
+      "transform": "the bottom of the"
+    },
+    {
+      "word": "BARREL",
+      "clue": "{} & <>",
+      "transform": "pairs with"
+    },
+    {
+      "word": "CRATE",
+      "clue": "Change one letter of <> to get an island",
+      "transform": "A -> E"
+    },
+    {
+      "word": "CRETE",
+      "clue": "<> is in this country",
+      "transform": "is in"
+    },
+    {
+      "word": "GREECE",
+      "clue": "To the east of <> (and across a sea) is this country",
+      "transform": "is west of"
+    },
+    {
+      "word": "TURKEY",
+      "clue": "<>'s flag has a moon and this",
+      "transform": "'s flag has a moon and a"
+    },
+    {
+      "word": "STAR",
+      "clue": "",
+      "transform": ""
+    }
+  ]
+}

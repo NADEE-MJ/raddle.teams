@@ -1,0 +1,71 @@
+{
+  "meta": {
+    "title": "From LEATHER to FACE",
+    "author": "Sandy Weisz and Mao Reynolds",
+    "difficulty": "medium",
+    "theme": "Horror movie villains",
+    "message": "This week on Raddle we're featuring horror movie villains. Leatherface — our second face-based villain in a row — is the main antagonist of the *Texas Chainsaw Massacre* franchise, known for his chainsaw and, well, his leathery face. I'm not going to tell you what the face is made of, iykyk. Apparently he's one of the most influential characters in slasher movies, as he first appeared in 1974 and inspired many of the iconic villains that followed."
+  },
+  "ladder": [
+    {
+      "word": "LEATHER",
+      "clue": "Anagram <> to get someone from a certain eastern US state (and a member of the local college team)",
+      "transform": "anagram"
+    },
+    {
+      "word": "TAR HEEL",
+      "clue": "Reverse the first part of <> to get a rodent",
+      "transform": "partially reversed"
+    },
+    {
+      "word": "RAT",
+      "clue": "Cousin of a <>",
+      "transform": "cousin"
+    },
+    {
+      "word": "MOUSE",
+      "clue": "Change one letter in <> to get a place to live",
+      "transform": "M->H"
+    },
+    {
+      "word": "HOUSE",
+      "clue": "The {} <>, arguably the most famous <> in the U.S.",
+      "transform": "in D.C. is"
+    },
+    {
+      "word": "WHITE",
+      "clue": "\"<> {}\", something you might be dreaming about (hopefully not for a few months)",
+      "transform": "…"
+    },
+    {
+      "word": "CHRISTMAS",
+      "clue": "A more poetic term for <>",
+      "transform": "aka"
+    },
+    {
+      "word": "NOEL",
+      "clue": "Add a letter to <> to get a kind of book",
+      "transform": "+V"
+    },
+    {
+      "word": "NOVEL",
+      "clue": "Bookstore section where you'd find a <>",
+      "transform": "can be found under"
+    },
+    {
+      "word": "FICTION",
+      "clue": "Counterpart to <>",
+      "transform": "Counterpart"
+    },
+    {
+      "word": "FACT",
+      "clue": "Change one letter in <> to get something you might do to music?",
+      "transform": "T->E"
+    },
+    {
+      "word": "FACE",
+      "clue": null,
+      "transform": null
+    }
+  ]
+}

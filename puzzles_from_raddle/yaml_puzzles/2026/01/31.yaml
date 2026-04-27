@@ -1,0 +1,46 @@
+meta:
+  title: From SCARLET to MACAW
+  author: Sandy Weisz and Elizabeth Hargrave
+  theme: wingspan
+  message: The Scarlet Macaw is part of the new Wingspan Americans expansion.
+    This is the national bird of Honduras, where it was often depicted in Mayan sculptures.
+ladder:
+- word: SCARLET
+  clue: The <> ^ is an A
+  step: -colored
+- word: LETTER
+  clue: Change one letter in <> to get something more than good
+  step: L->B
+- word: BETTER
+  clue: Change one letter in <> to get a taste that is usually not <>
+  step: E->I
+- word: BITTER
+  clue: Opposite of <>
+  step: opposite
+- word: SWEET
+  clue: <> ^, a special birthday
+  step: birthday
+- word: SIXTEEN
+  clue: "\"<> ^\", classic \"heavy\" song by Merle Travis"
+  step: precedes
+- word: TONS
+  clue: Land animal weighed in <>
+  step: of pounds in an
+- word: ELEPHANT
+  clue: ^ <>, a gift exchange
+  step: colored
+- word: WHITE
+  clue: <>^, a place for brainstorming
+  step: surface on an eraseable
+- word: BOARD
+  clue: A ^ <> often also has crackers
+  step: is good for presenting
+- word: CHEESE
+  clue: ^ and <>, a favorite among kids
+  step: "and"
+- word: MAC
+  clue: Append an exclamation to <> to get a frugivore
+  step: +AW
+- word: MACAW
+  clue:
+  step: ' '

@@ -1,0 +1,71 @@
+{
+  "meta": {
+    "title": "From WASTED to LOVE",
+    "author": "Sandy Weisz",
+    "difficulty": "medium",
+    "theme": "Eurovision",
+    "message": "The 2025 Eurovision Song Contest just completed, and the winning entry this year was \"Wasted Love\" by Austrian singer JJ. It beat out entries from 25 other countries, from the U.K. to San Marino. This week we'll be highlighting a few Eurovision entries, starting with the winner. You can watch JJ's [winning live performance here](https://www.youtube.com/watch?v=rN7z7BOUU9I)."
+  },
+  "ladder": [
+    {
+      "word": "WASTED",
+      "clue": "Another word for being <>",
+      "transform": "aka"
+    },
+    {
+      "word": "DRUNK",
+      "clue": "Change one letter in <> to get a part of a tree",
+      "transform": "D->T"
+    },
+    {
+      "word": "TRUNK",
+      "clue": "What they call a <> in England",
+      "transform": "in England is a"
+    },
+    {
+      "word": "BOOT",
+      "clue": "Country sometimes refered to as the <>",
+      "transform": "-shaped country"
+    },
+    {
+      "word": "ITALY",
+      "clue": "Food most associated with <>",
+      "transform": "loves its"
+    },
+    {
+      "word": "PASTA",
+      "clue": "Body part that shares its name with a type of <>",
+      "transform": "with a bend"
+    },
+    {
+      "word": "ELBOW",
+      "clue": "<> {}, something hard to get on an airplane",
+      "transform": "…"
+    },
+    {
+      "word": "ROOM",
+      "clue": "<> {}, something found at a hotel",
+      "transform": "…"
+    },
+    {
+      "word": "SERVICE",
+      "clue": "Remove two letters from <> to get something you do in the military",
+      "transform": "-IC"
+    },
+    {
+      "word": "SERVE",
+      "clue": "Sport that starts with a <>",
+      "transform": "starts a game of"
+    },
+    {
+      "word": "TENNIS",
+      "clue": "Nothing in <>",
+      "transform": "calls \"zero\""
+    },
+    {
+      "word": "LOVE",
+      "clue": null,
+      "transform": null
+    }
+  ]
+}

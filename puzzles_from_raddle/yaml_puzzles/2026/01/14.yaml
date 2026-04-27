@@ -1,0 +1,45 @@
+meta:
+  title: From MOLASSES to DAY
+  author: Sandy Weisz
+  theme: mitmh
+  message: In 2019, Setec Astronomy ran a hunt that began as a commemoration of the (very real) [Great Molasses Flood of 1919](https://www.history.com/articles/the-great-molasses-flood-of-1919), and evolved into a trek through a [Holiday Forest](https://puzzles.mit.edu/2019/). The coin was found by Left Out.
+ladder:
+- word: MOLASSES
+  clue: Girl found in the middle of <>
+  step: -MO, -ES
+- word: LASS
+  clue: Add a letter to the front of <> to get some style
+  step: +C
+- word: CLASS
+  clue: Who leads a <>
+  step: is led by a
+- word: TEACHER
+  clue: Anagram <> to get someone who might be caught by a <>
+  step: anagram
+- word: CHEATER
+  clue: "\"A <> never ^\""
+  step: never
+- word: WINS
+  clue: Opposite of <>
+  step: opposite
+- word: LOSES
+  clue: Add a letter to the front of <> to get what many a shop does every day
+  step: +C
+- word: CLOSES
+  clue: Change one letter in <> to get part of a house
+  step: S->T
+- word: CLOSET
+  clue: Bad thing for a politician to have in their <>
+  step: might hold a
+- word: SKELETON
+  clue: Longest part of a human <>
+  step: largest part
+- word: FEMUR
+  clue: Your <> is in your ^
+  step: is in your
+- word: LEG
+  clue: <> ^ (don't skip it!)
+  step: gets their own gym
+- word: DAY
+  clue:
+  step: ' '

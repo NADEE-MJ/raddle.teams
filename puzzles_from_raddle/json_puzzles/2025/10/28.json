@@ -1,0 +1,71 @@
+{
+  "meta": {
+    "title": "From WONDER to WOMAN",
+    "author": "Sandy Weisz and Mao Reynolds",
+    "difficulty": "medium",
+    "theme": "Whodunit",
+    "message": "A murder has been committed at our Halloween party! Seven witnesses (in costume) have given testimony, in the form of Raddles. Our third witness is Wonder Woman, who, with her lasso of truth, offered up one piece of the solution. [Update: the solution [can be found here](/mystery/whodunit)]"
+  },
+  "ladder": [
+    {
+      "word": "WONDER",
+      "clue": "Anagram <> to get a bummer",
+      "transform": "anagram"
+    },
+    {
+      "word": "DOWNER",
+      "clue": "Opposite of <>",
+      "transform": "opposite"
+    },
+    {
+      "word": "UPPER",
+      "clue": "Add a letter to the start of <> to get something one might sing for?",
+      "transform": "+S"
+    },
+    {
+      "word": "SUPPER",
+      "clue": "\"The {} <>\", a famous 🖼️",
+      "transform": "that was Jesus'"
+    },
+    {
+      "word": "LAST",
+      "clue": "\"The <> of {}\"",
+      "transform": "of"
+    },
+    {
+      "word": "US",
+      "clue": "What’s directly north of <>",
+      "transform": "is south of"
+    },
+    {
+      "word": "CANADA",
+      "clue": "Sweet stuff associated with <>",
+      "transform": "makes lots of"
+    },
+    {
+      "word": "MAPLE SYRUP",
+      "clue": "<> gets poured on a {}",
+      "transform": "goes on a"
+    },
+    {
+      "word": "WAFFLE",
+      "clue": "<> {}, tool for making a <>",
+      "transform": "is made in a"
+    },
+    {
+      "word": "IRON",
+      "clue": "Marvel superhero <> {}",
+      "transform": "…"
+    },
+    {
+      "word": "MAN",
+      "clue": "Counterpart to a <>",
+      "transform": "+WO"
+    },
+    {
+      "word": "WOMAN",
+      "clue": null,
+      "transform": null
+    }
+  ]
+}

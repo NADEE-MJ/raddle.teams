@@ -1,0 +1,76 @@
+{
+  "meta": {
+    "title": "From CHARLIE to BROWN",
+    "author": "Sandy Weisz and Mao Reynolds",
+    "difficulty": "medium",
+    "theme": "Whodunit",
+    "message": "A murder has been committed at our Halloween party! Seven witnesses (in costume) have given testimony, in the form of Raddles. Our fifth witness is Charlie Brown, who can barely handle all this not-so-good grief. His hint: something suspicious is appearing in some of these Raddle clues. [Update: the solution [can be found here](/mystery/whodunit)]"
+  },
+  "ladder": [
+    {
+      "word": "CHARLIE",
+      "clue": "Word that follows <> in the NATO alphabet (it’s also a Greek letter)",
+      "transform": "precedes"
+    },
+    {
+      "word": "DELTA",
+      "clue": "Drop the last letter of <> to get a muscle",
+      "transform": "-A"
+    },
+    {
+      "word": "DELT",
+      "clue": "Change one letter in <> to get a part of a wardrobe",
+      "transform": "D->B"
+    },
+    {
+      "word": "BELT",
+      "clue": "Constellation with a <>",
+      "transform": "is a feature of"
+    },
+    {
+      "word": "ORION",
+      "clue": "Drop the outside letters of <> to get a 🌎 city (familiarly)",
+      "transform": "-O -N"
+    },
+    {
+      "word": "RIO",
+      "clue": "English for <>",
+      "transform": "means"
+    },
+    {
+      "word": "RIVER",
+      "clue": "Underworld <>",
+      "transform": "in the underworld"
+    },
+    {
+      "word": "STYX",
+      "clue": "Homophone of \"<>\" that clings",
+      "transform": "sounds like"
+    },
+    {
+      "word": "STICKS",
+      "clue": "<> and {}, harmful things",
+      "transform": "and"
+    },
+    {
+      "word": "STONES",
+      "clue": "Drop the last letter of <> and anagram to get a common phone app",
+      "transform": "-S, then anagram"
+    },
+    {
+      "word": "NOTES",
+      "clue": "Drop the middle letter of <> and anagram to get a body part",
+      "transform": "-T, then anagram"
+    },
+    {
+      "word": "NOSE",
+      "clue": "{}<>, someone trying too hard",
+      "transform": "of a sycophant is"
+    },
+    {
+      "word": "BROWN",
+      "clue": null,
+      "transform": null
+    }
+  ]
+}

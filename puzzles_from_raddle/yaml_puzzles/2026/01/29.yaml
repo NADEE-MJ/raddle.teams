@@ -1,0 +1,43 @@
+meta:
+  title: From ANDEAN to CONDOR
+  author: Sandy Weisz and Elizabeth Hargrave
+  theme: wingspan
+  message: The Andean Condor is part of the new Wingspan Americans expansion.
+    Once associated with the sun god, this huge bird is still an important symbol in South America.
+ladder:
+- word: ANDEAN
+  clue: First two syllables of <> sound like this name
+  step: starts with
+- word: ANDY
+  clue: Add a letter to <> for a treat
+  step: +C
+- word: CANDY
+  clue: <> ^, a <> mostly seen in December
+  step: in the shape of a
+- word: CANE
+  clue: <> ^, invasive amphibian in Australia
+  step: amphibian
+- word: TOAD
+  clue: <>^, a fungus
+  step: sits on a
+- word: STOOL
+  clue: A ^ <>  might help you reach
+  step: follows
+- word: STEP
+  clue: ^ <>, a semitone
+  step: cut in
+- word: HALF
+  clue: <> ^, skatepark feature
+  step: of a
+- word: PIPE
+  clue: <> ^, a large wind instrument
+  step: is a kind of
+- word: ORGAN
+  clue: <> ^, a life-saver
+  step: is given up by a
+- word: DONOR
+  clue: Add a C to <> and anagram to get a bird
+  step: +C, then anagram
+- word: CONDOR
+  clue:
+  step: ' '

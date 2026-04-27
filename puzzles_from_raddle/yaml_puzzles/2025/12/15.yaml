@@ -1,0 +1,44 @@
+meta:
+  title: From LIME to BREEZE
+  author: Sandy Weisz
+  theme: hanukkah
+ladder:
+- word: LIME
+  clue: Change a letter in <> to get a world capital
+  transform: E->A
+- word: LIMA
+  clue: Country of <>
+  transform: is the capital of
+- word: PERU
+  clue: Anagram <> then add a letter to get a currency
+  transform: +E, then anagram
+- word: RUPEE
+  clue: Largest country that uses the <>
+  transform: is spent in
+- word: INDIA
+  clue: Append a bigram (two letters) to <> to get a US state
+  transform: +NA
+- word: INDIANA
+  clue: Drop a bigram (two letters) from <> to get a female name
+  transform: -IN
+- word: DIANA
+  clue: <> was Princess of ^
+  transform: was Princess of
+- word: WALES
+  clue: Mythical creature on the flag of <>
+  transform: has a flag with a
+- word: DRAGON
+  clue: Drop the first letter of <>, then anagram, to get an instrument
+  transform: -D, then anagram
+- word: ORGAN
+  clue: The <> that controls everything
+  transform: that named itself
+- word: BRAIN
+  clue: <> ^, a brief pain
+  transform: doesn't actually
+- word: FREEZE
+  clue: Change the first letter of <> to get some weather
+  transform: F->B
+- word: BREEZE
+  clue:
+  transform:

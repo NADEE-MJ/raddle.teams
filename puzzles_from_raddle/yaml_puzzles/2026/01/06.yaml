@@ -1,0 +1,41 @@
+meta:
+  title: From FLIGHT to UV
+  author: Sandy Weisz
+  theme: mystery5
+ladder:
+- word: FLIGHT
+  clue: ^ <>, to flee
+  step: is something a bird will
+- word: TAKE
+  clue: A relaxing way to <> it?
+  step: it
+- word: EASY
+  clue: "^ <> (exhale now that the danger's gone)"
+  step: is how you should
+- word: BREATHE
+  clue: Condition that makes it hard to <> sometimes
+  step: with difficulty with
+- word: ASTHMA
+  clue: Drop every other letter from <> to get a place for dough
+  step: every other letter
+- word: ATM
+  clue: What you get out of an <>
+  step: distributes
+- word: CASH
+  clue: Insert a letter in <> to get a collision
+  step: +R
+- word: CRASH
+  clue: Take a <> ^ to learn quickly
+  step: kind of
+- word: COURSE
+  clue: Drop the second letter from <> to get a bad word
+  step: -O
+- word: CURSE
+  clue: Change one letter in <> to get a geometry term
+  step: S->V
+- word: CURVE
+  clue: Drop every other letter from <> get a kind of light
+  step: every other letter
+- word: UV
+  clue:
+  step: ' '

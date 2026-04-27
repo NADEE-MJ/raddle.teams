@@ -1,0 +1,52 @@
+meta:
+  title: From KINGDOM to SPECIES
+  author: Sandy Weisz and Mao Reynolds
+  difficulty: medium
+  theme: 7x7
+  message: "
+    The seven main taxonomic ranks are kingdom, phylum, class, order, family, genus and species.
+    (Domain is also accepted as a rank, placed above kingdom.)
+    The modern taxonomy ranking arose from Carl Linnaeus in the 1700s and the birth of cladistics in the 1900s."
+ladder:
+- word: KINGDOM
+  clue: Popular Disney-based video game series <> ^
+  transform: …
+- word: HEARTS
+  clue: Suit the same color as <>
+  transform: are red and so are
+- word: DIAMONDS
+  clue: Slang for <>
+  transform: aka
+- word: ICE
+  clue: "Another way to say \"No <>!\""
+  transform: be gone; I want things
+- word: NEAT
+  clue: Change one letter in <> to become close
+  transform: T->R
+- word: NEAR
+  clue: A <> ^ almost hits
+  transform: -ly a hit
+- word: MISS
+  clue: Muppet <> ^
+  transform: …
+- word: PIGGY
+  clue: <>^, a fun way for a kid to travel
+  transform: carries you on its
+- word: BACK
+  clue: <>^, the main support
+  transform: supports with many a
+- word: BONE
+  clue: The ^<> is a forked <>
+  transform: that grants a
+- word: WISH
+  clue: Change one letter in <> to get a swimmer
+  transform: W->F
+- word: FISH
+  clue: <> sign
+  transform: sign
+- word: PISCES
+  clue: Add an E to <> and anagram to get a category for life
+  transform: +E, then anagram
+- word: SPECIES
+  clue:
+  transform:

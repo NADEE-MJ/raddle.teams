@@ -1,0 +1,47 @@
+repos:
+  # Ruff formatter and linter
+  - repo: https://github.com/astral-sh/ruff-pre-commit
+    rev: v0.14.5
+    hooks:
+      # Run the linter
+      - id: ruff
+        args: [--fix]
+      # Run the formatter
+      - id: ruff-format
+
+  # ESLint for JavaScript/TypeScript
+  - repo: https://github.com/pre-commit/mirrors-eslint
+    rev: v10.0.0-alpha.0
+    hooks:
+      - id: eslint
+        files: \.(js|jsx|ts|tsx)$
+        additional_dependencies:
+          - eslint@^9.0.0
+          - "@typescript-eslint/eslint-plugin@^8.0.0"
+          - "@typescript-eslint/parser@^8.0.0"
+
+  # Standard pre-commit hooks
+  - repo: https://github.com/pre-commit/pre-commit-hooks
+    rev: v6.0.0
+    hooks:
+      - id: trailing-whitespace
+      - id: end-of-file-fixer
+      - id: check-yaml
+      - id: check-json
+      - id: check-toml
+      - id: check-merge-conflict
+      - id: check-case-conflict
+      - id: check-added-large-files
+        args: [--maxkb=1000]
+      - id: debug-statements
+      - id: check-docstring-first
+
+  - repo: local
+    hooks:
+      - id: app-prettier
+        name: run prettier
+        language: system
+        files: ^.*$
+        types_or: [javascript, json, ts, tsx, jsx, json, css, scss, markdown, html]
+        entry: |
+          bash -c 'npx prettier --config .prettierrc.json --check --write "${@}"' --

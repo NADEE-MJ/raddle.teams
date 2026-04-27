@@ -1,0 +1,41 @@
+meta:
+  title: From HOTEL to SCORPIO
+  author: Sandy Weisz
+  theme: mystery5
+ladder:
+- word: HOTEL
+  clue: Change one letter in <> to get a cheaper version of a <>
+  step: H->M
+- word: MOTEL
+  clue: "Anagram <> and add a Y to get a word that means \"multicolored\""
+  step: +Y, then anagram
+- word: MOTLEY
+  clue: <> ^, long-time American rock band (spelled peculiarly)
+  step: precedes
+- word: CRüE
+  clue: "Change one letter in <> to get what you’re reading right now"
+  step: R->L
+- word: CLUE
+  clue: Fruit associated with the game <>
+  step: suspect Professor
+- word: PLUM
+  clue: <> is a shade of this color
+  step: is a shade of
+- word: PURPLE
+  clue: <> ^, an award for valor
+  step: award
+- word: HEART
+  clue: Drop the last letter of <> and anagram to get a mammal
+  step: -T, then anagram
+- word: HARE
+  clue: ^ <>, famously mad character
+  step: first name
+- word: MARCH
+  clue: Eight after <>
+  step: is 8 before
+- word: NOVEMBER
+  clue: "<>’s sign, mostly"
+  step: sign
+- word: SCORPIO
+  clue:
+  step: ' '

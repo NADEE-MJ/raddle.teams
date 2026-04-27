@@ -1,0 +1,65 @@
+{
+  "meta": {
+    "title": "From I HAVE to DREAM",
+    "author": "Sandy Weisz",
+    "theme": "mlk",
+    "message": "One of the most iconic and celebrated speeches in all of U.S. history, Martin Luther King’s “I Have a Dream” speech was delivered on August 28, 1963, during the March on Washington. The part of the speech in which he discussed his dream was largely improvised — not part of his prepared remarks. You can [read the full speech here](https://www.npr.org/2010/01/18/122701268/i-have-a-dream-speech-in-its-entirety)."
+  },
+  "ladder": [
+    {
+      "word": "I HAVE",
+      "clue": "Change one letter in <> to get something that’s often close",
+      "step": "I->S"
+    },
+    {
+      "word": "SHAVE",
+      "clue": "Profession who might give you a <>",
+      "step": "is given by a"
+    },
+    {
+      "word": "BARBER",
+      "clue": "Famous <> on Broadway",
+      "step": "of Fleet Street"
+    },
+    {
+      "word": "SWEENEY TODD",
+      "clue": "Body part heard in the middle of \"<>\"",
+      "step": "contains, phonetically,"
+    },
+    {
+      "word": "KNEE",
+      "clue": "The <>{} protects the <>",
+      "step": "is protected by a"
+    },
+    {
+      "word": "CAP",
+      "clue": "Change one letter in <> to get a vessel",
+      "step": "A->U"
+    },
+    {
+      "word": "CUP",
+      "clue": "Large <> with a handle, usually",
+      "step": "with a handle"
+    },
+    {
+      "word": "MUG",
+      "clue": "Contents of many a <>, in the morning",
+      "step": "contains"
+    },
+    {
+      "word": "COFFEE",
+      "clue": "Many people add {} to their <>",
+      "step": "and"
+    },
+    {
+      "word": "CREAM",
+      "clue": "Change one letter in <> to get an ideal",
+      "step": "C->D"
+    },
+    {
+      "word": "DREAM",
+      "clue": null,
+      "step": " "
+    }
+  ]
+}

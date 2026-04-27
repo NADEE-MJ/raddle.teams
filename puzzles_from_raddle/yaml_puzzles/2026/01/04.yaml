@@ -1,0 +1,48 @@
+meta:
+  title: From DOLLAR to WORKING
+  author: Sandy Weisz
+  theme: mystery5
+  message:
+ladder:
+- word: DOLLAR
+  clue: A <> is a form of ^
+  step: is
+- word: MONEY
+  clue: Change one letter in <> to get a famous artist
+  step: Y->T
+- word: MONET
+  clue: ^ <>
+  step: first name
+- word: CLAUDE
+  clue: "Homophone of \"<>\" that describes some crustaceans"
+  step: sounds like
+- word: CLAWED
+  clue: Drop a bigram (two letters) from <> to become amazed
+  step: -CL
+- word: AWED
+  clue: "Homophone of \"<>\" that describes some couples"
+  step: sounds like
+- word: ODD
+  clue: Opposite of <>
+  step: opposite
+- word: EVEN
+  clue: <> ^, rhyming way to describe something square?
+  step: is followed by
+- word: STEVEN
+  clue: Alternate spelling of the name <>
+  step: alternate spelling
+- word: STEPHEN
+  clue: 20th century scientist <> ^
+  step: last name
+- word: HAWKING
+  clue: Drop the middle three letters of <> to describe what some fruit does
+  step: -WKI
+- word: HANG
+  clue: "\"Do you want to <> ^ this weekend?\""
+  step: is followed by
+- word: OUT
+  clue: ^ <>, a way to get fit
+  step: is preceded by
+- word: WORKING
+  clue:
+  step: ' '

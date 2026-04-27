@@ -1,0 +1,69 @@
+{
+  "meta": {
+    "title": "From FLASH to SABER",
+    "author": "Sandy Weisz",
+    "theme": "hanukkah"
+  },
+  "ladder": [
+    {
+      "word": "FLASH",
+      "clue": "{} <>, a symptom of menopause",
+      "step": "can be"
+    },
+    {
+      "word": "HOT",
+      "clue": "Double a letter in <> to get a shout",
+      "step": "+O"
+    },
+    {
+      "word": "HOOT",
+      "clue": "Animal that <>s",
+      "step": "is made by an"
+    },
+    {
+      "word": "OWL",
+      "clue": "Bathroom object that rhymes with <>",
+      "step": "rhymes with"
+    },
+    {
+      "word": "TOWEL",
+      "clue": "{} in the <>",
+      "step": "is something you"
+    },
+    {
+      "word": "THROW",
+      "clue": "Anagram <> to get some value",
+      "step": "anagrammed"
+    },
+    {
+      "word": "WORTH",
+      "clue": "{} <>, Texas",
+      "step": "in Texas is a"
+    },
+    {
+      "word": "FORT",
+      "clue": "Change a letter in <> to get part of the body",
+      "step": "R->O"
+    },
+    {
+      "word": "FOOT",
+      "clue": "Append a word to <> to get a sport",
+      "step": "+BALL"
+    },
+    {
+      "word": "FOOTBALL",
+      "clue": "Chicago <> squad",
+      "step": "team in Chicago"
+    },
+    {
+      "word": "BEARS",
+      "clue": "Anagram <> to get a weapon",
+      "step": "anagrammed"
+    },
+    {
+      "word": "SABER",
+      "clue": null,
+      "step": " "
+    }
+  ]
+}

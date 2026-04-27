@@ -1,0 +1,76 @@
+{
+  "meta": {
+    "title": "From CHICAGO to VATICAN CITY",
+    "author": "Sandy Weisz",
+    "difficulty": "medium",
+    "theme": "Habemus Papam",
+    "message": "We're celebrating the Chicago Pope, Pope Leo XIV. He was born and raised mere miles from where I'm sitting, and now he sits atop the Catholic Church, in Vatican City. It took him many steps to get from here to there, but you can do it in just 13."
+  },
+  "ladder": [
+    {
+      "word": "CHICAGO",
+      "clue": "American League team from <>",
+      "transform": "baseball team"
+    },
+    {
+      "word": "WHITE SOX",
+      "clue": "Crosstown rivals of the <>",
+      "transform": "rivals"
+    },
+    {
+      "word": "CUBS",
+      "clue": "Player for the division rivals of the <>",
+      "transform": "rivals"
+    },
+    {
+      "word": "CARDINAL",
+      "clue": "A high-ranking {} might carry the title of <>",
+      "transform": "is a high-ranking"
+    },
+    {
+      "word": "BISHOP",
+      "clue": "Piece that starts two spots away from the <>",
+      "transform": "is two away from a"
+    },
+    {
+      "word": "ROOK",
+      "clue": "Swap one letter in <> to get something a pirate might have",
+      "transform": "R->H"
+    },
+    {
+      "word": "HOOK",
+      "clue": "Kind of athlete who might throw a <>",
+      "transform": "is a punch from a"
+    },
+    {
+      "word": "BOXER",
+      "clue": "Best Picture winner about a <>",
+      "transform": "in movies"
+    },
+    {
+      "word": "ROCKY",
+      "clue": "<> {}, found in the freezer aisle",
+      "transform": "…"
+    },
+    {
+      "word": "ROAD",
+      "clue": "Change one letter in <> to wander",
+      "transform": "D->M"
+    },
+    {
+      "word": "ROAM",
+      "clue": "City that sounds like <>",
+      "transform": "sounds like"
+    },
+    {
+      "word": "ROME",
+      "clue": "Country in <>",
+      "transform": "surrounds"
+    },
+    {
+      "word": "VATICAN CITY",
+      "clue": null,
+      "transform": null
+    }
+  ]
+}

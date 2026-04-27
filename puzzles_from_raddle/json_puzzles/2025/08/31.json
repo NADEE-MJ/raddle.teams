@@ -1,0 +1,71 @@
+{
+  "meta": {
+    "title": "From BROWN to SUGAR",
+    "author": "Sandy Weisz and Mao Reynolds",
+    "difficulty": "medium",
+    "theme": "Rolling Stones",
+    "message": "This week’s Raddles are inspired by songs by the Rolling Stones. Today’s is “Brown Sugar,” the lead single from their 1971 album “Sticky Fingers.” The notoriously raunchy song was controversial then and now — the Stones [dropped it](https://www.nbcnews.com/pop-culture/pop-culture-news/rolling-stones-pull-brown-sugar-song-lyrics-about-slavery-live-n1281459) from their live concert setlist in 2021. In a 1995 interview with [Rolling Stone](https://web.archive.org/web/20091205235627/http://www.rollingstone.com/news/coverstory/mick_jagger_remembers/page/5) (the magazine, not the band), Mick Jagger said, “I never would write that song now. I’d think, ‘Oh God, I can’t. I’ve got to stop.’”"
+  },
+  "ladder": [
+    {
+      "word": "BROWN",
+      "clue": "{} <> of “Peanuts”",
+      "transform": "first name"
+    },
+    {
+      "word": "CHARLIE",
+      "clue": "Drop the first four letters of <> to recline",
+      "transform": "-CHAR"
+    },
+    {
+      "word": "LIE",
+      "clue": "Opposite of a <>",
+      "transform": "opposite"
+    },
+    {
+      "word": "TRUTH",
+      "clue": "<> or {}",
+      "transform": "or"
+    },
+    {
+      "word": "DARE",
+      "clue": "Add an M to <> and anagram to get a sleep product?",
+      "transform": "+M, then anagram"
+    },
+    {
+      "word": "DREAM",
+      "clue": "{} <> (unrealistic fantasy)",
+      "transform": "from a"
+    },
+    {
+      "word": "PIPE",
+      "clue": "What travels through a <>",
+      "transform": "holds"
+    },
+    {
+      "word": "WATER",
+      "clue": "Solid form of <>",
+      "transform": "as a solid"
+    },
+    {
+      "word": "ICE",
+      "clue": "{} as <> (ruthless)",
+      "transform": "…"
+    },
+    {
+      "word": "COLD",
+      "clue": "“In <> {}” (1966 bestseller)",
+      "transform": "…"
+    },
+    {
+      "word": "BLOOD",
+      "clue": "<> {}, a human's source of energy",
+      "transform": "…"
+    },
+    {
+      "word": "SUGAR",
+      "clue": null,
+      "transform": null
+    }
+  ]
+}

@@ -1,0 +1,53 @@
+meta:
+  title: From WAKE UP to DEAD MAN
+  theme: guest_recs_25
+  author: Mark Halpin
+  author_bio:
+    "Mark Halpin is a freelance puzzle constructor known best for his annual Labor Day puzzle fundraisers.
+    Some of his cryptics are featured in Barry Joseph's \"Matching Minds with Sondheim: the Puzzles and Games of the Broadway Legend\",
+    and many others are featured at [his website](https://www.markhalpin.com/puzzles/puzzles.html)."
+  message:
+    "Today's Raddle is by Mark Halpin. Mark writes,
+    \"My recommendation is Rian Johnson's twisty mystery '[Wake Up Dead Man](https://letterboxd.com/film/wake-up-dead-man/)'.
+    The third outing for detective Benoit Blanc doesn't swing for the comedic fences like its predecessor The Glass Onion, as it has more serious things on its mind, but it's still as wildly entertaining as that and the original 'Knives Out'.
+    The mystery is intricate and fair, and the cast throughout is fantastic.\""
+ladder:
+- word: WAKE UP
+  clue: Bird that might help you <>
+  step: with the call of a
+- word: ROOSTER
+  clue: Add an M to <> and anagram to get a public facility
+  step: +M, then anagram
+- word: RESTROOM
+  clue: UK term for a <>
+  step: aka
+- word: LOO
+  clue: Append a letter to <> to get some treasure
+  step: +T
+- word: LOOT
+  clue: "Musical instrument that sounds like \"<>\""
+  step: sounds like
+- word: LUTE
+  clue: One of up to 35 on a <>
+  step: has many a
+- word: STRING
+  clue: Change a letter in <> to get powerful
+  step: I->O
+- word: STRONG
+  clue: Jeremy <>, a well-known ^
+  step: is an
+- word: ACTOR
+  clue: Double the last letter in <> and anagram to get something orange
+  step: +R, then anagram
+- word: CARROT
+  clue: Harsher alternative to a <>
+  step: or the
+- word: STICK
+  clue: ^ <>, an insect or hiker's aid
+  step: is used for
+- word: WALKING
+  clue: "Acclaimed 1995 movie \"^ <>\""
+  step: here is a
+- word: DEAD MAN
+  clue:
+  step: ' '

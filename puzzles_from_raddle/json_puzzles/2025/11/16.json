@@ -1,0 +1,66 @@
+{
+  "meta": {
+    "title": "From HEAD to TOE",
+    "author": "Sandy Weisz and Mao Reynolds",
+    "difficulty": "medium",
+    "theme": "X to Y",
+    "message": "“Head to toe” is a synonym for “completely,” as in “An extraterrestrial spat out mysterious green slime and drenched me from head to toe.”"
+  },
+  "ladder": [
+    {
+      "word": "HEAD",
+      "clue": "Change one letter in <> to get a honey-based concoction",
+      "transform": "H->M"
+    },
+    {
+      "word": "MEAD",
+      "clue": "Anagram <> to get a title",
+      "transform": "anagrammed"
+    },
+    {
+      "word": "DAME",
+      "clue": "{} <>, Paris destination",
+      "transform": "…"
+    },
+    {
+      "word": "NOTRE",
+      "clue": "Anagram <> to get a voice type",
+      "transform": "anagrammed"
+    },
+    {
+      "word": "TENOR",
+      "clue": "Banknote that sounds like \"<>\"",
+      "transform": "sounds like"
+    },
+    {
+      "word": "TENNER",
+      "clue": "Most British <>s feature the {}",
+      "transform": "features The"
+    },
+    {
+      "word": "QUEEN",
+      "clue": "Non-gendered term for a <>",
+      "transform": "generically"
+    },
+    {
+      "word": "MONARCH",
+      "clue": "<> is a species of {}",
+      "transform": "is a species of"
+    },
+    {
+      "word": "BUTTERFLY",
+      "clue": "The <> is one of four Olympic {}",
+      "transform": "is one of four Olympic"
+    },
+    {
+      "word": "STROKES",
+      "clue": "Remove every other letter in <> to get a body part",
+      "transform": "minus odd-positioned letters"
+    },
+    {
+      "word": "TOE",
+      "clue": null,
+      "transform": null
+    }
+  ]
+}

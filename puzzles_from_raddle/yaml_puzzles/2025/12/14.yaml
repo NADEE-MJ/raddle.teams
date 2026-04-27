@@ -1,0 +1,43 @@
+meta:
+  title: From ETERNAL to DECKS
+  author: Sandy Weisz
+  theme: boardgames
+  message:
+    "Our final game is [Eternal Decks](https://boardgamegeek.com/boardgame/424981/eternal-decks), a game I Kickstarted on a whim and couldn't be happier with. It's a cooperative game where every turn is quite simple: you lay down a card in one of the 3 lanes on the board, according to the specific rules of that lane. Get to the end of the lane, wake up an Eternal, and earn the stack of cards beneath them. What makes it tricky is that you're always almost on the verge of running out on cards, and you need to work together with your teammates — ﻿without revealing what's in your hand. Meanwhile, the art is simple stunning. And it has a challenging solo mode. Unfortunately it's out of print and the next delivery is late summer, but you can [pre-order it here](https://portlandgamecollective.bigcartel.com/product/eternal-decks)."
+ladder:
+- word: ETERNAL
+  clue: "\"^ springs <>\""
+  transform: springing
+- word: HOPE
+  clue: Change one letter in <> to get an opening
+  transform: P->L
+- word: HOLE
+  clue: ^ <>, a disorienting thing to (metaphorically) fall into
+  transform: for a
+- word: RABBIT
+  clue: Drop a letter from <> to get a religious leader
+  transform: -T
+- word: RABBI
+  clue: Place that employs a <>
+  transform: works in a
+- word: TEMPLE
+  clue: You have two <>s on your ^
+  transform: on the side of your
+- word: HEAD
+  clue: <>^ are part of a car
+  transform: …
+- word: LIGHTS
+  clue: "\"<> ^\", words from a counselor"
+  transform: should go
+- word: OUT
+  clue: Opposite of <>, in a sport
+  transform: Opposite
+- word: SAFE
+  clue: <> ^, topic in health class
+  transform: …
+- word: SEX
+  clue: <> rhymes with these ship parts
+  transform: /s/->/d/
+- word: DECKS
+  clue:
+  transform:

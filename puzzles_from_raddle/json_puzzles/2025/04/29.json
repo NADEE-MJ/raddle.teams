@@ -1,0 +1,71 @@
+{
+  "meta": {
+    "title": "From BUTTER to CUP",
+    "author": "Sandy Weisz",
+    "difficulty": "medium",
+    "theme": "flowers",
+    "message": "It's spring! Let's stop to smell the flowers."
+  },
+  "ladder": [
+    {
+      "word": "BUTTER",
+      "clue": "Change one letter in <> to make it improved",
+      "transform": "U->E"
+    },
+    {
+      "word": "BETTER",
+      "clue": "Opposite of <>",
+      "transform": "opposite"
+    },
+    {
+      "word": "WORSE",
+      "clue": "Change a letter in <> to get an animal",
+      "transform": "W->H"
+    },
+    {
+      "word": "HORSE",
+      "clue": "Name for a flying <>",
+      "transform": "that flies is"
+    },
+    {
+      "word": "PEGASUS",
+      "clue": "Light substance found inside <>",
+      "transform": "contains"
+    },
+    {
+      "word": "GAS",
+      "clue": "You might stop at <> {} on a trip",
+      "transform": "…"
+    },
+    {
+      "word": "STATION",
+      "clue": "Name for the big <> in space",
+      "transform": "in space is the"
+    },
+    {
+      "word": "ISS",
+      "clue": "Add a letter to <> to get something romantic",
+      "transform": "+K"
+    },
+    {
+      "word": "KISS",
+      "clue": "A very quick <>",
+      "transform": "aka"
+    },
+    {
+      "word": "PECK",
+      "clue": "Change one letter in <> to get something from hockey",
+      "transform": "E->U"
+    },
+    {
+      "word": "PUCK",
+      "clue": "Remove the last letter in <>, then reverse, to get a measurement",
+      "transform": "-K, backwards"
+    },
+    {
+      "word": "CUP",
+      "clue": null,
+      "transform": null
+    }
+  ]
+}

@@ -1,0 +1,72 @@
+{
+  "meta": {
+    "title": "From PSYCHIC to HEART",
+    "author": "Sandy Weisz",
+    "difficulty": "medium",
+    "theme": "Enigmarch 2025",
+    "fromEmoji": "🔮",
+    "toEmoji": "❤️"
+  },
+  "ladder": [
+    {
+      "word": "PSYCHIC",
+      "clue": "Insert a 'D' sound inside <> to get an assistant",
+      "transform": "+ 'D' sound"
+    },
+    {
+      "word": "SIDEKICK",
+      "clue": "A well-known fictional <> who shares their name with a bird",
+      "transform": "a famous one"
+    },
+    {
+      "word": "ROBIN",
+      "clue": "First name of a fictional kid with the last name <>",
+      "transform": "'s first name"
+    },
+    {
+      "word": "CHRISTOPHER",
+      "clue": "Swap out a name found at the front of <>, and replace it with a single letter, to get an animal",
+      "transform": "- CHRIST + G"
+    },
+    {
+      "word": "GOPHER",
+      "clue": "The <> is the mascot of this midwestern state's university",
+      "transform": "is the mascot of"
+    },
+    {
+      "word": "MINNESOTA",
+      "clue": "The postal abbreviation for <>",
+      "transform": "abbreviated"
+    },
+    {
+      "word": "MN",
+      "clue": "The two letters that follow <>, sequentially",
+      "transform": "precedes"
+    },
+    {
+      "word": "OP",
+      "clue": "In game speak, the first letter of <> stands for what preposition?",
+      "transform": "partially stands for"
+    },
+    {
+      "word": "OVER",
+      "clue": "Move the last letter of <> to the beginning, to travel about",
+      "transform": "'R' to the front"
+    },
+    {
+      "word": "ROVE",
+      "clue": "Change the first letter of <> to the opposite direction",
+      "transform": "R -> L"
+    },
+    {
+      "word": "LOVE",
+      "clue": "The symbol for <>",
+      "transform": "symbolized by"
+    },
+    {
+      "word": "HEART",
+      "clue": "",
+      "transform": ""
+    }
+  ]
+}

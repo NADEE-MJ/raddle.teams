@@ -1,0 +1,46 @@
+meta:
+  title: From GREEN to BEANS
+  author: Sandy Weisz and Mao Reynolds
+  difficulty: medium
+  theme: Thanksgiving 2025
+  message: Thanksgiving green beans are perhaps better known as a vessel for french-friend onions, the battered onion rings you buy in a plastic container at the grocery store. These crispy casserole toppings have been around since 1904 and making healthy foods less healthy for just as long.
+ladder:
+- word: GREEN
+  clue: The digit that's <> in a <>house?
+  transform: digit
+- word: THUMB
+  clue: Drop the outside letters of <> to get a kind of sound
+  transform: -T, -B
+- word: HUM
+  clue: "\"^ <>, so boring\""
+  transform: follows
+- word: HO
+  clue: Double the first letter of <> to get this liquid?
+  transform: +H =
+- word: WATER
+  clue: <>^, a summer fruit
+  transform: …
+- word: MELON
+  clue: Swap two letters in <> to get a fruit
+  transform: L<->M
+- word: LEMON
+  clue: A disappointing ^ is called a <>
+  transform: is a bad
+- word: CAR
+  clue: Rear part of <> (in The US)
+  transform: rear part
+- word: TRUNK
+  clue: Big animal with a big <>
+  transform: is big on an
+- word: ELEPHANT
+  clue: An <> can't actually fly with its ^ (sadly)
+  transform: has big
+- word: EARS
+  clue: Add a letter to the front of <> to get some predators
+  transform: +B
+- word: BEARS
+  clue: Change one letter in <> to get the makeup of a metaphorical hill
+  transform: R->N
+- word: BEANS
+  clue:
+  transform:

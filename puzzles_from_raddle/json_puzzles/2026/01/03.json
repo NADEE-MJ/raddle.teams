@@ -1,0 +1,64 @@
+{
+  "meta": {
+    "title": "From CLUB to XYLEM",
+    "author": "Sandy Weisz",
+    "theme": "mystery5"
+  },
+  "ladder": [
+    {
+      "word": "CLUB",
+      "clue": "{} <>, long-lived TV variety show",
+      "step": "dedicated to"
+    },
+    {
+      "word": "MICKEY MOUSE",
+      "clue": "<>’s dog",
+      "step": "had a dog named"
+    },
+    {
+      "word": "PLUTO",
+      "clue": "<> was a {}",
+      "step": "was a"
+    },
+    {
+      "word": "PLANET",
+      "clue": "Drop the outside letters of <> to get something it's often good to stay in",
+      "step": "-P -L"
+    },
+    {
+      "word": "LANE",
+      "clue": "{} <>, a place to roll",
+      "step": "is a place for"
+    },
+    {
+      "word": "BOWLING",
+      "clue": "Bird sometimes seen when <>?",
+      "step": "three strikes is known as a"
+    },
+    {
+      "word": "TURKEY",
+      "clue": "Island nation just south of <>",
+      "step": "is north of"
+    },
+    {
+      "word": "CYPRUS",
+      "clue": "Drop a letter from <> to get a male name",
+      "step": "-P"
+    },
+    {
+      "word": "CYRUS",
+      "clue": "Pop star {} <>",
+      "step": "first name"
+    },
+    {
+      "word": "MILEY",
+      "clue": "Change the second letter of <> to an X, then anagram to get a part of a plant",
+      "step": "I->X, then anagram"
+    },
+    {
+      "word": "XYLEM",
+      "clue": null,
+      "step": " "
+    }
+  ]
+}

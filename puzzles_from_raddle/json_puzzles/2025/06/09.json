@@ -1,0 +1,76 @@
+{
+  "meta": {
+    "title": "From TRUE to COLORS",
+    "author": "Sandy Weisz and Mao Reynolds",
+    "difficulty": "medium",
+    "theme": "Pride Month",
+    "message": "We're celebrating Pride Month with Raddles inspired by LGBTQ+ anthems. Today we honor \"True Colors\" written by Tom Kelly and Billy Steinberg, and made famous by Cyndi Lauper from her 1986 album of the same name."
+  },
+  "ladder": [
+    {
+      "word": "TRUE",
+      "clue": "Opposite of <>",
+      "transform": "Opposite"
+    },
+    {
+      "word": "FALSE",
+      "clue": "Anagram <> to get some pesky insects",
+      "transform": "anagram"
+    },
+    {
+      "word": "FLEAS",
+      "clue": "<> might be found on this creature",
+      "transform": "are bothersome to a"
+    },
+    {
+      "word": "DOG",
+      "clue": "Best friend to a <>?",
+      "transform": "'s best friend"
+    },
+    {
+      "word": "MAN",
+      "clue": "\"{} <>\", hit by The Village People",
+      "transform": "in song is"
+    },
+    {
+      "word": "MACHO",
+      "clue": "Change one letter in <> to get a kind of cheese",
+      "transform": "M->N"
+    },
+    {
+      "word": "NACHO",
+      "clue": "Add an R to <> and anagram to get something most useful when dropped",
+      "transform": "+R, then anagram"
+    },
+    {
+      "word": "ANCHOR",
+      "clue": "Profession that might compel someone to get a tattoo of an <>",
+      "transform": "tattoo might appear on a"
+    },
+    {
+      "word": "SAILOR",
+      "clue": "Anime hero <> {}",
+      "transform": "…"
+    },
+    {
+      "word": "MOON",
+      "clue": "A growing <> is said to {}",
+      "transform": "that grows is said to"
+    },
+    {
+      "word": "WAX",
+      "clue": "Writing implements made of <>",
+      "transform": "is made into"
+    },
+    {
+      "word": "CRAYONS",
+      "clue": "A box of <> come in a multitude of {}",
+      "transform": "come in a multitude of"
+    },
+    {
+      "word": "COLORS",
+      "clue": null,
+      "transform": null
+    }
+  ]
+}

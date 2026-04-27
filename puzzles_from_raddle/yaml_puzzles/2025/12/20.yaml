@@ -1,0 +1,44 @@
+meta:
+  title: From ELECTRIC to ORCHESTRA
+  author: Sandy Weisz
+  theme: hanukkah
+ladder:
+- word: ELECTRIC
+  clue: "What an <> car doesn’t need"
+  step: doesn't need
+- word: GAS
+  clue: Reverse <> to get a dip
+  step: reversed
+- word: SAG
+  clue: The first letter of <> stands for this, in Hollywood
+  step: partially stands for
+- word: SCREEN
+  clue: ^ <>, a place to see stars
+  step: is
+- word: SILVER
+  clue: One place below <>
+  step: is one better than
+- word: BRONZE
+  clue: Water birds that rhyme with <>
+  step: rhymes with
+- word: SWANS
+  clue: Change the 2nd letter of <> to get some inspections
+  step: W->C
+- word: SCANS
+  clue: Change the 1st letter of <>, then reverse, to get a tasty treat
+  step: S->K, then reverse
+- word: SNACK
+  clue: Part of a record that rhymes with <>
+  step: rhymes with
+- word: TRACK
+  clue: Vehcile that runs on <>s
+  step: supports a
+- word: TRAIN
+  clue: Who controls a <>
+  step: is run by a
+- word: CONDUCTOR
+  clue: A <> leads this kind of group
+  step: leads an
+- word: ORCHESTRA
+  clue:
+  step: ' '

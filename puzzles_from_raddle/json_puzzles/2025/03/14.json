@@ -1,0 +1,77 @@
+{
+  "meta": {
+    "title": "From POINT to JOKER",
+    "author": "Sandy Weisz",
+    "difficulty": "medium",
+    "theme": "Enigmarch 2025",
+    "fromEmoji": "👈",
+    "toEmoji": "🃏"
+  },
+  "ladder": [
+    {
+      "word": "POINT",
+      "clue": "<> of no {}",
+      "transform": "of no"
+    },
+    {
+      "word": "RETURN",
+      "clue": "<> to {}",
+      "transform": "to"
+    },
+    {
+      "word": "SENDER",
+      "clue": "Double first letter of <> then reverse it to get a symptom",
+      "transform": "+S then reverse"
+    },
+    {
+      "word": "REDNESS",
+      "clue": "<> of the skin might be this",
+      "transform": "might indicate"
+    },
+    {
+      "word": "RASH",
+      "clue": "Change the vowel in <> to get a band formed in the '60s",
+      "transform": "A -> U"
+    },
+    {
+      "word": "RUSH",
+      "clue": "Add a letter to the beginning of <> to get a squeeze",
+      "transform": "+C"
+    },
+    {
+      "word": "CRUSH",
+      "clue": "Color that prefixes <>",
+      "transform": "is"
+    },
+    {
+      "word": "ORANGE",
+      "clue": "An <> is this kind of food",
+      "transform": "is a"
+    },
+    {
+      "word": "FRUIT",
+      "clue": "Word that follows <> in a party drink",
+      "transform": "comes before"
+    },
+    {
+      "word": "PUNCH",
+      "clue": "Add four letters to <> to get something funny",
+      "transform": "+LINE"
+    },
+    {
+      "word": "PUNCHLINE",
+      "clue": "A <> comes at the end of this",
+      "transform": "finishes a"
+    },
+    {
+      "word": "JOKE",
+      "clue": "Add one letter to <> to get a card",
+      "transform": "+R"
+    },
+    {
+      "word": "JOKER",
+      "clue": "",
+      "transform": ""
+    }
+  ]
+}

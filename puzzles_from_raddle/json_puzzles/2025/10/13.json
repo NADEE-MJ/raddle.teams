@@ -1,0 +1,76 @@
+{
+  "meta": {
+    "title": "From MOLE to HILL",
+    "author": "Sandy Weisz and Mao Reynolds",
+    "difficulty": "medium",
+    "theme": "Settlers of Catan",
+    "message": " Settlers of Catan was my first foray into strategic board games. It was the game that launched an unreasonable board game collection. The game is played on a game board made up of 19 tiles. Each tile is one of 6 different terrains: hill, forest, field, mountain, pasture, or desert. This week's Raddles each use one of those terrains. A mole hill is a small mound of earth created by a mole. Or, in an common expression, a small problem that shouldn't be turned into a mountain. "
+  },
+  "ladder": [
+    {
+      "word": "MOLE",
+      "clue": "Troublesome situation named after an arcade game: {}-a-<>",
+      "transform": "pops up and gets a"
+    },
+    {
+      "word": "WHACK",
+      "clue": "Change one letter in <> to get a structure",
+      "transform": "W->S"
+    },
+    {
+      "word": "SHACK",
+      "clue": "Chain restaurant {} <>",
+      "transform": "that serves you a"
+    },
+    {
+      "word": "SHAKE",
+      "clue": "Natural phenomenon that rhymes, appropriately, with <>",
+      "transform": "rhymes with"
+    },
+    {
+      "word": "EARTHQUAKE",
+      "clue": "Scale used to measure <>s",
+      "transform": "is measured on a scale named for"
+    },
+    {
+      "word": "RICHTER",
+      "clue": "Comedian {} <>",
+      "transform": "first name"
+    },
+    {
+      "word": "ANDY",
+      "clue": "Add a letter to the front of <> to get something sweet",
+      "transform": "+C"
+    },
+    {
+      "word": "CANDY",
+      "clue": "Holiday where you get lots of <>",
+      "transform": "is collected on"
+    },
+    {
+      "word": "HALLOWEEN",
+      "clue": "Flying creature associated with <>",
+      "transform": "is associated with"
+    },
+    {
+      "word": "BAT",
+      "clue": "The <>{}, fictional aircraft",
+      "transform": "-shaped aircraft"
+    },
+    {
+      "word": "WING",
+      "clue": "Change one letter in <> to get a monarch",
+      "transform": "W->K"
+    },
+    {
+      "word": "KING",
+      "clue": "\"<> of the {}\"",
+      "transform": "of the"
+    },
+    {
+      "word": "HILL",
+      "clue": null,
+      "transform": null
+    }
+  ]
+}

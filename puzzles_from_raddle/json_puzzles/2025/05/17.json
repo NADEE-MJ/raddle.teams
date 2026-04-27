@@ -1,0 +1,81 @@
+{
+  "meta": {
+    "title": "From MAYBE to HAPPY",
+    "author": "Sandy Weisz",
+    "difficulty": "medium",
+    "theme": "Tony nominations",
+    "message": "We're honoring the Tony nominations this week. \"Maybe Happy Ending\" has 10 nominations, including Best Musical, tying it for the lead. I have heard only rave reviews about this show, which is about two robots in Seoul in the not-too-distant future who are … maybe … falling in love."
+  },
+  "ladder": [
+    {
+      "word": "MAYBE",
+      "clue": "Hit song from 2012: \"{} <>\"",
+      "transform": ", says Carly,"
+    },
+    {
+      "word": "CALL ME",
+      "clue": "Remove one letter from <> and anagram to get a mammal",
+      "transform": "-L, then anagram"
+    },
+    {
+      "word": "CAMEL",
+      "clue": "Something you'd find on a <>",
+      "transform": "has a"
+    },
+    {
+      "word": "HUMP",
+      "clue": "It's known by some as <> Day",
+      "transform": "day is"
+    },
+    {
+      "word": "WEDNESDAY",
+      "clue": "Word that can precede <> in Christianity",
+      "transform": "can follow"
+    },
+    {
+      "word": "ASH",
+      "clue": "Add two letters to the start of <> to get treasure, some might say?",
+      "transform": "+TR"
+    },
+    {
+      "word": "TRASH",
+      "clue": "A mic might pick up some <> {} in a sports game",
+      "transform": "…"
+    },
+    {
+      "word": "TALK",
+      "clue": "\"<> is {}\", some say",
+      "transform": "is"
+    },
+    {
+      "word": "CHEAP",
+      "clue": "Fruit that's an anagram of <>",
+      "transform": "anagram"
+    },
+    {
+      "word": "PEACH",
+      "clue": "Title for <> in a video game",
+      "transform": "is a"
+    },
+    {
+      "word": "PRINCESS",
+      "clue": "Disney's first <>",
+      "transform": "#1 is"
+    },
+    {
+      "word": "SNOW WHITE",
+      "clue": "Friends of <>",
+      "transform": "and the"
+    },
+    {
+      "word": "SEVEN DWARFS",
+      "clue": "Member of the <> who doesn't get down?",
+      "transform": "who isn't sad"
+    },
+    {
+      "word": "HAPPY",
+      "clue": null,
+      "transform": null
+    }
+  ]
+}

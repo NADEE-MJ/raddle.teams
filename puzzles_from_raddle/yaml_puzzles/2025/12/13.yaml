@@ -1,0 +1,40 @@
+meta:
+  title: From ARK to NOVA
+  author: Sandy Weisz
+  theme: boardgames
+  message:
+    "Another heavy one today: Ark Nova, currently ranked the [#2 game on all of Board Game Geek](https://boardgamegeek.com/boardgame/342942/ark-nova). And it deserves to be there. In it, you're running a zoo, building out enclosures for the animals while acquiring animals, funding conservation projects, and upgrading your system. The deck of cards is massive, so each game offers new ways to strategize and engine-build. It's a beast of a game, but it doesn't drag, assuming you like busting your brain on engine-building synergies for hours."
+ladder:
+- word: ARK
+  clue: Builder of a famous <>
+  transform: was built by
+- word: NOAH
+  clue: Add an I to <> and anagram to get a world capital
+  transform: +I, then anagram
+- word: HANOI
+  clue: Country of <>
+  transform: is in
+- word: VIETNAM
+  clue: <>'s northern neighbor
+  transform: is directly south of
+- word: CHINA
+  clue: Move the last letter of <> to the middle to get a type of restaurant
+  transform: move last letter to middle
+- word: CHAIN
+  clue: One unit in a <>
+  transform: unit
+- word: LINK
+  clue: Company that created <>
+  transform: was created by
+- word: NINTENDO
+  clue: Most famous <> character
+  transform: biggest star
+- word: MARIO
+  clue: Canonical descriptor of <>
+  transform: is
+- word: SUPER
+  clue: <>^, a really, really big explosion
+  transform: star type
+- word: NOVA
+  clue:
+  transform:

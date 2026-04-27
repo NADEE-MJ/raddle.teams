@@ -1,0 +1,71 @@
+{
+  "meta": {
+    "title": "From HARD to BOILED",
+    "author": "Sandy Weisz and Mao Reynolds",
+    "difficulty": "medium",
+    "theme": "Crime Fiction",
+    "message": "This week’s Raddles unpack common tropes in crime fiction. This sense of “hardboiled,” meaning “severe” or “tough,” dates to at least 1886, according to the Oxford English Dictionary. Cynical, unemotional protagonists dominated the wave of hardboiled pulp novels in the 1930s."
+  },
+  "ladder": [
+    {
+      "word": "HARD",
+      "clue": "Opposite of <>",
+      "transform": "opposite"
+    },
+    {
+      "word": "SOFT",
+      "clue": "Change one letter in <> to get something dirty",
+      "transform": "F->O"
+    },
+    {
+      "word": "SOOT",
+      "clue": "Structure in a home where <> collects",
+      "transform": "collects in a"
+    },
+    {
+      "word": "CHIMNEY",
+      "clue": "Who famously (mis)uses a <>",
+      "transform": "misuser"
+    },
+    {
+      "word": "SANTA",
+      "clue": "One who helps <>",
+      "transform": "is helped by an"
+    },
+    {
+      "word": "ELF",
+      "clue": "Rhyme for <> (as used in a famous product)",
+      "transform": "on a"
+    },
+    {
+      "word": "SHELF",
+      "clue": "{} <>, glacial feature",
+      "transform": "might be made of"
+    },
+    {
+      "word": "ICE",
+      "clue": "\"As {} as <>\"",
+      "transform": "is"
+    },
+    {
+      "word": "COLD",
+      "clue": "Change one letter in <> to get a word related to fonts",
+      "transform": "C->B"
+    },
+    {
+      "word": "BOLD",
+      "clue": "{} over (homophone of <>)",
+      "transform": "sounds like"
+    },
+    {
+      "word": "BOWLED",
+      "clue": "Change one letter in <> to describe many prepared foods",
+      "transform": "W->I"
+    },
+    {
+      "word": "BOILED",
+      "clue": null,
+      "transform": null
+    }
+  ]
+}

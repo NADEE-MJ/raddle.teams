@@ -1,0 +1,82 @@
+{
+  "meta": {
+    "title": "From LOOP to DRAW",
+    "author": "Sandy Weisz",
+    "difficulty": "medium",
+    "theme": "Enigmarch 2025",
+    "fromEmoji": "➰",
+    "toEmoji": "✍️"
+  },
+  "ladder": [
+    {
+      "word": "LOOP",
+      "clue": "The <> is in the center of this city",
+      "transform": "is in"
+    },
+    {
+      "word": "CHICAGO",
+      "clue": "Nickname for <>",
+      "transform": "is called"
+    },
+    {
+      "word": "THE WINDY CITY",
+      "clue": "The middle four letters of <> is a nickname for this city",
+      "transform": "is up I-65 from"
+    },
+    {
+      "word": "INDIANAPOLIS",
+      "clue": "Number associated with <>",
+      "transform": "is known for the"
+    },
+    {
+      "word": "500",
+      "clue": "<> in Roman numerals",
+      "transform": "in Roman numerals"
+    },
+    {
+      "word": "D",
+      "clue": "When lowercase, and rotated 180°, <> looks like this",
+      "transform": "upside-down"
+    },
+    {
+      "word": "P",
+      "clue": "Vegetable that sounds like <>",
+      "transform": "sounds like"
+    },
+    {
+      "word": "PEA",
+      "clue": "{} <> soup",
+      "transform": "can be"
+    },
+    {
+      "word": "SPLIT",
+      "clue": "<> the {} (to compromise)",
+      "transform": "the"
+    },
+    {
+      "word": "DIFFERENCE",
+      "clue": "The first two + last two letters of <> spell these objects",
+      "transform": "-FFEREN"
+    },
+    {
+      "word": "DICE",
+      "clue": "One of a pair of <>",
+      "transform": "singularly"
+    },
+    {
+      "word": "DIE",
+      "clue": "Clothing accessory that rhymes with <>",
+      "transform": "rhymes with"
+    },
+    {
+      "word": "TIE",
+      "clue": "What they call a <> in soccer",
+      "transform": "aka"
+    },
+    {
+      "word": "DRAW",
+      "clue": null,
+      "transform": null
+    }
+  ]
+}

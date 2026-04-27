@@ -1,0 +1,82 @@
+{
+  "meta": {
+    "title": "From COMPASS to ROUTE",
+    "author": "Sandy Weisz",
+    "difficulty": "medium",
+    "theme": "Enigmarch 2025",
+    "fromEmoji": "🧭",
+    "toEmoji": "↩️"
+  },
+  "ladder": [
+    {
+      "word": "COMPASS",
+      "clue": "Left on a <>",
+      "transform": "on the left is"
+    },
+    {
+      "word": "WEST",
+      "clue": "First name of legendary actress <>",
+      "transform": "as in"
+    },
+    {
+      "word": "MAE",
+      "clue": "Add a T to <> then flip to get a group",
+      "transform": "+T, then flipped"
+    },
+    {
+      "word": "TEAM",
+      "clue": "It can't be found in <>, it's said",
+      "transform": "has no"
+    },
+    {
+      "word": "I",
+      "clue": "Body part that sounds like <>",
+      "transform": "sounds like"
+    },
+    {
+      "word": "EYE",
+      "clue": "“<> of the {}”",
+      "transform": "of the"
+    },
+    {
+      "word": "TIGER",
+      "clue": "Kind of <> that isn't threatening, idiomatically",
+      "transform": "can be made of"
+    },
+    {
+      "word": "PAPER",
+      "clue": "It's beaten by <>",
+      "transform": "beats"
+    },
+    {
+      "word": "ROCK",
+      "clue": "Real name of The <>",
+      "transform": "aka"
+    },
+    {
+      "word": "DWAYNE JOHNSON",
+      "clue": "Co-star of <> in several films in a franchise",
+      "transform": "co-stars with"
+    },
+    {
+      "word": "VIN DIESEL",
+      "clue": "Character voiced by <> in six films",
+      "transform": "voices"
+    },
+    {
+      "word": "GROOT",
+      "clue": "Remove a letter from <> to get something <> is partially made of",
+      "transform": "-G"
+    },
+    {
+      "word": "ROOT",
+      "clue": "<> sounds like this kind of path",
+      "transform": "sounds like"
+    },
+    {
+      "word": "ROUTE",
+      "clue": null,
+      "transform": null
+    }
+  ]
+}

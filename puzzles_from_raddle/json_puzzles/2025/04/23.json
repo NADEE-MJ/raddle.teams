@@ -1,0 +1,81 @@
+{
+  "meta": {
+    "title": "From ROGUE to LIKE",
+    "author": "Sandy Weisz",
+    "difficulty": "medium",
+    "theme": "Blue Prince",
+    "message": "A roguelike is a genre of video games that are distinguished by procedurally generated rooms that you have to explore (i.e. a dungeon crawler), and where death is permanent, so you have to start each play from the beginning. Blue Prince ([see Monday's Raddle](/2025/04/21).) is a roguelike (or maybe a \"roguelike\") because each day you start over in an empty manor, and each door you open can be one of many different rooms. Of course you, the human player, are encouraged to take notes, so you start each day a little smarter about how to win the game."
+  },
+  "ladder": [
+    {
+      "word": "ROGUE",
+      "clue": "Swap two adjacent letters in <> to get some makeup",
+      "transform": "O←→U"
+    },
+    {
+      "word": "ROUGE",
+      "clue": "Body part that can feature <>",
+      "transform": "goes on your"
+    },
+    {
+      "word": "CHEEK",
+      "clue": "Turn the {} <>",
+      "transform": "kind that's turned"
+    },
+    {
+      "word": "OTHER",
+      "clue": "Add a letter to <> to get a relation",
+      "transform": "+M"
+    },
+    {
+      "word": "MOTHER",
+      "clue": "Animal that follows <> in nursery rhymes",
+      "transform": "…"
+    },
+    {
+      "word": "GOOSE",
+      "clue": "When repeated, it comes before <>",
+      "transform": "follows a double"
+    },
+    {
+      "word": "DUCK",
+      "clue": "Kind of <> that is vulnerable",
+      "transform": "can be"
+    },
+    {
+      "word": "SITTING",
+      "clue": "Your first job might be {}<>",
+      "transform": "the"
+    },
+    {
+      "word": "BABY",
+      "clue": "When repeated, it comes before \"<>\" in a song title",
+      "transform": "follows a double"
+    },
+    {
+      "word": "ICE",
+      "clue": "Add a bigram (two letters) to the front of <> to get a piece of pizza",
+      "transform": "+SL"
+    },
+    {
+      "word": "SLICE",
+      "clue": "Sport where you might want to hit a <>",
+      "transform": "is performed in"
+    },
+    {
+      "word": "TENNIS",
+      "clue": "Zero in <>",
+      "transform": "uses the term"
+    },
+    {
+      "word": "LOVE",
+      "clue": "A milder form of \"<>\"",
+      "transform": "is stronger than"
+    },
+    {
+      "word": "LIKE",
+      "clue": null,
+      "transform": null
+    }
+  ]
+}

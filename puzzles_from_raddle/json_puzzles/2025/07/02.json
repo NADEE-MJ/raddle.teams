@@ -1,0 +1,76 @@
+{
+  "meta": {
+    "title": "From SODA to WATER",
+    "author": "Mao Reynolds and Sandy Weisz",
+    "difficulty": "medium",
+    "theme": "250-year-old creations",
+    "message": "This week, in observation of Independence Day, we’re celebrating inventions from around 250 years ago. Joseph Priestly invented carbonated water in 1767 after collecting gas from a beer vat in Leeds, England. He wrote of its \"peculiar satisfaction\", and in 1772 he published a paper entitled *Impregnating Water with Fixed Air*."
+  },
+  "ladder": [
+    {
+      "word": "SODA",
+      "clue": "Lemon-lime <>",
+      "transform": "with a lemon-lime flavor"
+    },
+    {
+      "word": "SPRITE",
+      "clue": "Delete two letters from <> for a ritual",
+      "transform": "-SP"
+    },
+    {
+      "word": "RITE",
+      "clue": "Direction that sounds like <>",
+      "transform": "sounds like"
+    },
+    {
+      "word": "RIGHT",
+      "clue": "Opposite of <>",
+      "transform": "Opposite"
+    },
+    {
+      "word": "LEFT",
+      "clue": "Change a letter in <> to get a figure skating move",
+      "transform": "E->I"
+    },
+    {
+      "word": "LIFT",
+      "clue": "What Americans call a <>",
+      "transform": "aka"
+    },
+    {
+      "word": "ELEVATOR",
+      "clue": "What to take instead of an <>",
+      "transform": "alternative"
+    },
+    {
+      "word": "STAIRS",
+      "clue": "<> have many a {}",
+      "transform": "have many a"
+    },
+    {
+      "word": "STEP",
+      "clue": "Anagram <> to get a nuisance",
+      "transform": "anagrammed"
+    },
+    {
+      "word": "PEST",
+      "clue": "Particular <>s that are chased by cats",
+      "transform": "with cute ears and nose"
+    },
+    {
+      "word": "MICE",
+      "clue": "Drop a letter in <> to get something cold",
+      "transform": "-M"
+    },
+    {
+      "word": "ICE",
+      "clue": "Liquid form of <>",
+      "transform": "melted"
+    },
+    {
+      "word": "WATER",
+      "clue": null,
+      "transform": null
+    }
+  ]
+}

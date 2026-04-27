@@ -1,0 +1,76 @@
+{
+  "meta": {
+    "title": "From WEST to EAST",
+    "author": "Sandy Weisz",
+    "difficulty": "medium",
+    "fromEmoji": "⬅️",
+    "toEmoji": "➡️"
+  },
+  "ladder": [
+    {
+      "word": "WEST",
+      "clue": "Anagram <> to get a {}",
+      "transform": "anagrams to"
+    },
+    {
+      "word": "STEW",
+      "clue": "Append a male name to <> to get another {}",
+      "transform": "+ART"
+    },
+    {
+      "word": "STEWART",
+      "clue": "Remove first 3 letters of <> to get a {}",
+      "transform": "-STE"
+    },
+    {
+      "word": "WART",
+      "clue": "Append a letter then reverse <> to get a {}",
+      "transform": "+S then reverse"
+    },
+    {
+      "word": "STRAW",
+      "clue": "Word for a {} of <>",
+      "transform": "in a bundle is a"
+    },
+    {
+      "word": "BALE",
+      "clue": "<> famously played this {}",
+      "transform": "played"
+    },
+    {
+      "word": "BATMAN",
+      "clue": "{} of <>",
+      "transform": "is enemy of"
+    },
+    {
+      "word": "JOKER",
+      "clue": "In card games, a <> is often this {}",
+      "transform": "can be"
+    },
+    {
+      "word": "WILD",
+      "clue": "Change the first letter of <> to two new letters to get this rhyming word",
+      "transform": "-W' +CH'"
+    },
+    {
+      "word": "CHILD",
+      "clue": "A male <> is called {}",
+      "transform": "specifically is a"
+    },
+    {
+      "word": "SON",
+      "clue": "Change the middle letter of <> to form this homophone",
+      "transform": "sounds like"
+    },
+    {
+      "word": "SUN",
+      "clue": "<> can be first seen in which direction",
+      "transform": "rises in the"
+    },
+    {
+      "word": "EAST",
+      "clue": "",
+      "transform": ""
+    }
+  ]
+}

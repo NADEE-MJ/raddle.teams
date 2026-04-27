@@ -1,0 +1,42 @@
+meta:
+  title: From GRUMPY to PEOPLE
+  author: Sandy Weisz and Bailey Holtz
+  difficulty: medium
+  theme: mystery4
+ladder:
+- word: GRUMPY
+  clue: <> is the name of a Disney ^
+  transform: is a
+- word: DWARF
+  clue: Drop the outside letters of <> to get something dangerous
+  transform: -D, -F
+- word: WAR
+  clue: "\"The ^ of <>\""
+  transform: is, to some, an
+- word: ART
+  clue: Kind of <> with tiles
+  transform: of tiles
+- word: MOSAIC
+  clue: Drop the fifth letter of <> and anagram to get something run on many computers
+  transform: -I, then anagram
+- word: MACOS
+  clue: Change one letter of <> to get some handheld food
+  transform: M->T
+- word: TACOS
+  clue: Anagram <> to get an opera
+  transform: anagrammed
+- word: TOSCA
+  clue: Country that gave us <>, and where it's set
+  transform: is set in
+- word: ITALY
+  clue: Country in <>
+  transform: holds
+- word: VATICAN CITY
+  clue: Current head of <>
+  transform: is led by
+- word: POPE LEO
+  clue: Drop the last letter of <> and anagram to get what we all are
+  transform: -O, then anagram
+- word: PEOPLE
+  clue:
+  transform:

@@ -1,0 +1,43 @@
+meta:
+  title: From RESPLENDENT to QUETZAL
+  author: Sandy Weisz and Elizabeth Hargrave
+  theme: wingspan
+  message: The Resplendent Quetzal is part of the new Wingspan Americans expansion.
+    Males' display feathers can grow up to a meter long in a year; they fall out after breeding season.
+ladder:
+- word: RESPLENDENT
+  clue: The last syllable of <> makes an impression
+  step: at the end
+- word: DENT
+  clue: Add three letters to the front of <> to get a weapon
+  step: +TRI
+- word: TRIDENT
+  clue: <> is a brand of ^
+  step: is a brand of
+- word: GUM
+  clue: What <> can do to your shoe
+  step: can
+- word: STICK
+  clue: ^ <>, a support or an insect
+  step: is use dfor
+- word: WALKING
+  clue: Drop a trigram (three letters) from <> to get a leader
+  step: -WAL
+- word: KING
+  clue: <> ^, a famous monster
+  step: I->O
+- word: KONG
+  clue: ^ <>, a video game
+  step: first name?
+- word: DONKEY
+  clue: Change the first letter in <> to get an animal
+  step: D->M
+- word: MONKEY
+  clue: Drop a letter from <> to get something valuable
+  step: -K
+- word: MONEY
+  clue: Guatemala's <>
+  step: in Guatemala
+- word: QUETZAL
+  clue:
+  step: ' '

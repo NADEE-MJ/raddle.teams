@@ -1,0 +1,66 @@
+{
+  "meta": {
+    "title": "From PUMPKIN to PIE",
+    "author": "Sandy Weisz and Bailey Holtz",
+    "difficulty": "medium",
+    "theme": "Thanksgiving 2025",
+    "message": "Pumpkin pie is just one of many foods that has become a common term of endearment. Others include sweet pea, honey, dumpling, baby cakes and jelly bean. This Thanksgiving, we’re going to call people “maple-glazed Brussels sprouts” and see if that sticks."
+  },
+  "ladder": [
+    {
+      "word": "PUMPKIN",
+      "clue": "<> {}, a kind of latte",
+      "transform": "latte has"
+    },
+    {
+      "word": "SPICE",
+      "clue": "Change one letter in <> to get a piece of cake",
+      "transform": "P->L"
+    },
+    {
+      "word": "SLICE",
+      "clue": "Tool used to <>, often",
+      "transform": "with a"
+    },
+    {
+      "word": "KNIFE",
+      "clue": "Army famous for a <>",
+      "transform": "of the army that's"
+    },
+    {
+      "word": "SWISS",
+      "clue": "<> {}, something you can see through",
+      "transform": "food"
+    },
+    {
+      "word": "CHEESE",
+      "clue": "Say <> in order to do this",
+      "transform": "is something said when you"
+    },
+    {
+      "word": "SMILE",
+      "clue": "Drop the first letter of <> to get a distance",
+      "transform": "-S"
+    },
+    {
+      "word": "MILE",
+      "clue": "Swap two letters in <> to get a fruit",
+      "transform": "L<->M"
+    },
+    {
+      "word": "LIME",
+      "clue": "Kind of number that rhymes with <>",
+      "transform": "rhymes with"
+    },
+    {
+      "word": "PRIME",
+      "clue": "Drop every other letter in <> to get some dessert",
+      "transform": "every other letter"
+    },
+    {
+      "word": "PIE",
+      "clue": null,
+      "transform": null
+    }
+  ]
+}

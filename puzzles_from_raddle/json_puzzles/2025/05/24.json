@@ -1,0 +1,81 @@
+{
+  "meta": {
+    "title": "From SNAKE CHARMER to PO",
+    "author": "Sandy Weisz",
+    "difficulty": "medium",
+    "theme": "Blood on the Clocktower",
+    "message": "It's Blood on the Clocktower Week. ([See Day 1's note](https://raddle.quest/2025/05/19).) The [Snake Charmer](https://wiki.bloodontheclocktower.com/Snake_Charmer) is a good character who picks a player every night, and if they happen to snipe the Demon, they swap roles with that Demon. The Demon could be any number of characters, but in the case of this puzzle, we're looking at the [Po](https://wiki.bloodontheclocktower.com/Po), a demon who has a choice every night: either kill one person or do nothing. If they do nothing, the next night, they get to kill three people!"
+  },
+  "ladder": [
+    {
+      "word": "SNAKE CHARMER",
+      "clue": "U.S. state with the same initials as <>",
+      "transform": "shares initails with"
+    },
+    {
+      "word": "SOUTH CAROLINA",
+      "clue": "It's just to the southwest of <>",
+      "transform": "is just northeast of"
+    },
+    {
+      "word": "GEORGIA",
+      "clue": "Who went down to <>, in song",
+      "transform": "got a visit from"
+    },
+    {
+      "word": "THE DEVIL",
+      "clue": "One name for <>",
+      "transform": "aka"
+    },
+    {
+      "word": "SATAN",
+      "clue": "Legendary guy that's an anagram of <>",
+      "transform": "anagrammed"
+    },
+    {
+      "word": "SANTA",
+      "clue": "One who helps <>",
+      "transform": "employs many an"
+    },
+    {
+      "word": "ELF",
+      "clue": "Star of <>",
+      "transform": "starring"
+    },
+    {
+      "word": "WILL FERRELL",
+      "clue": "Swap the two parts of <> and it'll sound like most of the name of this singer",
+      "transform": "reversed sounds like most of"
+    },
+    {
+      "word": "PHARRELL WILLIAMS",
+      "clue": "Emotion <> famously sings about",
+      "transform": "sings about being"
+    },
+    {
+      "word": "HAPPY",
+      "clue": "\"Many <> {}\"",
+      "transform": "…"
+    },
+    {
+      "word": "RETURNS",
+      "clue": "Singular form of <>",
+      "transform": "singularly"
+    },
+    {
+      "word": "RETURN",
+      "clue": "{} of no <>",
+      "transform": "isn't possible past this"
+    },
+    {
+      "word": "POINT",
+      "clue": "Drop three letters in <> to get an abbreviation seen in some addresses",
+      "transform": "-INT"
+    },
+    {
+      "word": "PO",
+      "clue": null,
+      "transform": null
+    }
+  ]
+}

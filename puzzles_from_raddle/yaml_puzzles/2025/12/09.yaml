@@ -1,0 +1,44 @@
+meta:
+  title: From CURSED to COURT
+  author: Sandy Weisz
+  theme: boardgames
+  message:
+    "[Cursed Court](https://atlas-games.com/product_tables/AG1400) is the rare game that works best at 5 or 6 people.
+    It's a wagering game, where everyone at the table has different, limited information.
+    But, as the game progresses, you use other players' wagers to learn more information — unless they're just bluffing to throw you off the scent.
+    The rules are fairly simple, it's lovely to look at, it's very tactile (as you're holding a stack of betting chips), and it's always fun to try to solve who knows what.
+    Another recommendation that has a similar vibe but plays well at 3-4: [Courtisans](https://www.amazon.com/Pandasaurus-Games-Courtisans-Card-Game/dp/B0CZFYQY5H)."
+ladder:
+- word: CURSED
+  clue: Remove the fourth letter from <> and anagram to become vulgar
+  transform: -S, then anagram
+- word: CRUDE
+  clue: Pronounce "<>" without the last sound to get a kind of cut
+  transform: -/d/
+- word: CREW
+  clue: Another name for the sport of <>
+  transform: is another name for
+- word: ROWING
+  clue: Add a letter to the front of <> to get a springtime activity
+  transform: +G
+- word: GROWING
+  clue: <> ^, a certain discomfort
+  transform: old can yield
+- word: PAINS
+  clue: Move the last letter of <> to the front to get a place on Earth
+  transform: move S to the front
+- word: SPAIN
+  clue: "How to say \"with\" in <>"
+  transform: term for "with"
+- word: CON
+  clue: Opposite of <>
+  transform: opposite
+- word: PRO
+  clue: A ^ <> serves you quickly?
+  transform: in the sport of
+- word: TENNIS
+  clue: Play <> on a ^
+  transform: is played on a
+- word: COURT
+  clue:
+  transform:

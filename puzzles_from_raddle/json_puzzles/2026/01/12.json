@@ -1,0 +1,74 @@
+{
+  "meta": {
+    "title": "From LLAMA to OFF",
+    "author": "Sandy Weisz",
+    "theme": "mystery5"
+  },
+  "ladder": [
+    {
+      "word": "LLAMA",
+      "clue": "<>s are known to hurl {}",
+      "step": "might hurl"
+    },
+    {
+      "word": "SPIT",
+      "clue": "Insert a letter into <> to get an ice cream parlor treat",
+      "step": "+L"
+    },
+    {
+      "word": "SPLIT",
+      "clue": "<> {} soup",
+      "step": "legume in soup"
+    },
+    {
+      "word": "PEA",
+      "clue": "Append a letter to <> to get a fruit",
+      "step": "+R"
+    },
+    {
+      "word": "PEAR",
+      "clue": "Poker term that sounds like \"<>\"",
+      "step": "sounds like"
+    },
+    {
+      "word": "PAIR",
+      "clue": "{} <>, a form of household help",
+      "step": "follows"
+    },
+    {
+      "word": "AU",
+      "clue": "<> is the symbol for {}",
+      "step": "means"
+    },
+    {
+      "word": "GOLD",
+      "clue": "<>{}, a low-maintenance pet",
+      "step": "precedes"
+    },
+    {
+      "word": "FISH",
+      "clue": "Change the last letter in <> to get a \"rock\"",
+      "step": "H->T"
+    },
+    {
+      "word": "FIST",
+      "clue": "You make a <> with your {}",
+      "step": "is formed with your"
+    },
+    {
+      "word": "HAND",
+      "clue": "<>{}, a polite greeting",
+      "step": "precedes"
+    },
+    {
+      "word": "SHAKE",
+      "clue": "\"<> it {}\", 2014 banger",
+      "step": "it"
+    },
+    {
+      "word": false,
+      "clue": null,
+      "step": " "
+    }
+  ]
+}

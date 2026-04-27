@@ -1,0 +1,71 @@
+{
+  "meta": {
+    "title": "From CURRY to EVIL",
+    "author": "Sandy Weisz and Bailey Holtz",
+    "difficulty": "medium",
+    "theme": "mystery4",
+    "message": null
+  },
+  "ladder": [
+    {
+      "word": "CURRY",
+      "clue": "All-star basketballer {} <>",
+      "transform": "first name"
+    },
+    {
+      "word": "STEPH",
+      "clue": "Sports role that rhymes with <>",
+      "transform": "rhymes with"
+    },
+    {
+      "word": "REF",
+      "clue": "Change one letter in <> to get a stereotypical dog’s name",
+      "transform": "F->X"
+    },
+    {
+      "word": "REX",
+      "clue": "<> is Latin for this",
+      "transform": "is Latin for"
+    },
+    {
+      "word": "KING",
+      "clue": "Add a golf term to the start of <> to get a kind of space",
+      "transform": "+PAR"
+    },
+    {
+      "word": "PARKING",
+      "clue": "{} <>, something done for a quick errand",
+      "transform": "next to a car"
+    },
+    {
+      "word": "DOUBLE",
+      "clue": "Half of <>",
+      "transform": "divided in half"
+    },
+    {
+      "word": "SINGLE",
+      "clue": "\"<> {}\", a song by Beyoncé",
+      "transform": "…"
+    },
+    {
+      "word": "LADIES",
+      "clue": "Add a T to <> and anagram to get particulars",
+      "transform": "+T, then anagram"
+    },
+    {
+      "word": "DETAILS",
+      "clue": "What’s in the <>, it’s said",
+      "transform": "+T, then anagram"
+    },
+    {
+      "word": "DEVIL",
+      "clue": "Drop one letter from <> to get something the <> is",
+      "transform": "-D"
+    },
+    {
+      "word": "EVIL",
+      "clue": null,
+      "transform": null
+    }
+  ]
+}

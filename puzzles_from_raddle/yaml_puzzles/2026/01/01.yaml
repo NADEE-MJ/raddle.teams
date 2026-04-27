@@ -1,0 +1,41 @@
+meta:
+  title: From ADIEU to ZIPPER
+  author: Sandy Weisz
+  theme: mystery5
+ladder:
+- word: ADIEU
+  clue: How they say <> across the Pyrenees
+  step: in Spanish
+- word: ADIOS
+  clue: Drop the middle letter from <> and anagram to get a kind of water
+  step: -I, then anagram
+- word: SODA
+  clue: <> ^, aka <>, aka ^
+  step: aka
+- word: POP
+  clue: <> goes the ^
+  step: goes the
+- word: WEASEL
+  clue: "Drop the first letter from <> to get an artist’s aid"
+  step: -W
+- word: EASEL
+  clue: "Contract that’s an anagram of <>"
+  step: anagrammed
+- word: LEASE
+  clue: Change the last letter of <> to get a restraint
+  step: E->H
+- word: LEASH
+  clue: "Pet that’s often on a <>"
+  step: is on a
+- word: DOG
+  clue: ^ Russell, a <>
+  step: can be a
+- word: JACK
+  clue: <> the ^
+  step: the
+- word: RIPPER
+  clue: Change the first letter of <> to get a fastener
+  step: R->Z
+- word: ZIPPER
+  clue:
+  step: ' '

@@ -1,0 +1,48 @@
+meta:
+  title: From TAKE to DIRECTION
+  author: Sandy Weisz and Mao Reynolds
+  difficulty: medium
+  theme: Make Some Noise
+  message: "This week's Raddles are in honor of the upcoming season of \"[Make Some\
+    \ Noise](https://www.youtube.com/watch?v=tKBcWn-tqWE),\" which premieres on Monday,\
+    \ October 13. Each show features a set of improvisational prompts, along with some minigames.
+    One such game is \"[Take Some Direction](https://www.youtube.com/shorts/U4OVSVIMZG8)\", where
+    the contestants must say the same phrase over and over again,
+    each in a different way."
+ladder:
+- word: TAKE
+  clue: Anagram <> to get a kind of tree
+  transform: anagrammed
+- word: TEAK
+  clue: A piece of tableware that sounds like <> plus a direction
+  transform: +"UP"
+- word: TEACUP
+  clue: Variety you might put in a <> that starts with a double letter
+  transform: might feature
+- word: OOLONG
+  clue: Change the first letter of <> to get something said while leaving
+  transform: O->S
+- word: SO LONG
+  clue: "\"<>, ^\" a musical number"
+  transform: aka
+- word: FAREWELL
+  clue: Drop the middle 4 letters of <> to get a drop
+  transform: -REWE
+- word: FALL
+  clue: What comes after <>
+  transform: precedes
+- word: WINTER
+  clue: Drop half of <> to get a victory
+  transform: -TER
+- word: WIN
+  clue: Past tense of <>
+  transform: I->O
+- word: WON
+  clue: "Number that sounds like \"<>\""
+  transform: sounds like
+- word: ONE
+  clue: <> ^, an English band
+  transform: …
+- word: DIRECTION
+  clue:
+  transform:

@@ -1,0 +1,74 @@
+{
+  "meta": {
+    "title": "From KIWI to PAINTING",
+    "author": "Sandy Weisz",
+    "theme": "mystery5"
+  },
+  "ladder": [
+    {
+      "word": "KIWI",
+      "clue": "Swap the halves of <> to get a kind of software",
+      "step": "swap halves"
+    },
+    {
+      "word": "WIKI",
+      "clue": "One of the most popular websites of all time is a portmanteau of <> + {}",
+      "step": "+"
+    },
+    {
+      "word": "ENCYCLOPEDIA",
+      "clue": "The <> {} was in print for 245 years",
+      "step": "precedes"
+    },
+    {
+      "word": "BRITANNICA",
+      "clue": "Color found inside <>",
+      "step": "includes"
+    },
+    {
+      "word": "TAN",
+      "clue": "High school class where you can get a <> (for short)?",
+      "step": "is learned in"
+    },
+    {
+      "word": "TRIG",
+      "clue": "General subject that includes <>",
+      "step": "is a kind of"
+    },
+    {
+      "word": "MATH",
+      "clue": "Change one letter in <> to get an insect",
+      "step": "A->O"
+    },
+    {
+      "word": "MOTH",
+      "clue": "Add two letters to the end of <> to get a family member",
+      "step": "+ER"
+    },
+    {
+      "word": "MOTHER",
+      "clue": "Drop the first letter of <> to get a final option, sometimes",
+      "step": "-M"
+    },
+    {
+      "word": "OTHER",
+      "clue": "\"On the <> {}…\"",
+      "step": "precedes"
+    },
+    {
+      "word": "HAND",
+      "clue": "One of five on a <>",
+      "step": "has many a"
+    },
+    {
+      "word": "FINGER",
+      "clue": "<> {}, activity in Kindergarten",
+      "step": "is used by kids for"
+    },
+    {
+      "word": "PAINTING",
+      "clue": null,
+      "step": " "
+    }
+  ]
+}

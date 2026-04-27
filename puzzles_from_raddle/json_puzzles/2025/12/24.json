@@ -1,0 +1,81 @@
+{
+  "meta": {
+    "title": "From SMOKE to STACK",
+    "theme": "guest_recs_25",
+    "author": "Momes, Dob Olino, & Bob Weisz",
+    "author_bio": "Momes, Dob Olino, & Bob Weisz are the editors of [Cryptic Crossweird](https://www.patreon.com/CrypticCrossweird), an indie puzzle outlet coming up on its one-year anniversary. (Submissions open!)",
+    "message": "Today's Raddle is by Momes, Dob Olino, & Bob Weisz. They write, \"We chose the two main characters from one of our favorite films of the year, [_Sinners_](https://letterboxd.com/film/sinners-2025/), a deeply moving and stunning feat of cinema that's so much more than just a vampire movie. The twin brothers at the center of it all — named Smoke and Stack — made perfect sense as a theme. Also, one of our members, Bob, is brothers with Raddle's creator Sandy, and (no joke) their family comes from Transylvania! The coincidence is kind of spooky... mwahahaaaa\""
+  },
+  "ladder": [
+    {
+      "word": "SMOKE",
+      "clue": "<>{}, a total hottie",
+      "step": "…"
+    },
+    {
+      "word": "SHOW",
+      "clue": "What the <> must do",
+      "step": "must"
+    },
+    {
+      "word": "GO ON",
+      "clue": "Add a Z to <> and anagram to get a kind of journalism",
+      "step": "+Z, then anagram"
+    },
+    {
+      "word": "GONZO",
+      "clue": "<> is a famous blue {}",
+      "step": "is a blue"
+    },
+    {
+      "word": "MUPPET",
+      "clue": "The {} (<> vampire)",
+      "step": "vampire"
+    },
+    {
+      "word": "COUNT",
+      "clue": "Add two letters to the front of <> to get a version of events",
+      "step": "+AC"
+    },
+    {
+      "word": "ACCOUNT",
+      "clue": "Where you might open an <>",
+      "step": "lives at a"
+    },
+    {
+      "word": "BANK",
+      "clue": "Change one letter in <> to get a good place for a massage",
+      "step": "N->C"
+    },
+    {
+      "word": "BACK",
+      "clue": "<> in {} (fixed up and ready to go)",
+      "step": "in"
+    },
+    {
+      "word": "BUSINESS",
+      "clue": "Evil that appears inside <>",
+      "step": "contains"
+    },
+    {
+      "word": "SIN",
+      "clue": "<> + a financial word sounds like this concern for linguists",
+      "step": "+\"tax\""
+    },
+    {
+      "word": "SYNTAX",
+      "clue": "The last syllable of <> sounds like these office supplies",
+      "step": "-\"syn\""
+    },
+    {
+      "word": "TACKS",
+      "clue": "Move the last letter of <> to the front to make a pile",
+      "step": "move last to front"
+    },
+    {
+      "word": "STACK",
+      "clue": null,
+      "step": " "
+    }
+  ]
+}

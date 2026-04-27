@@ -1,0 +1,71 @@
+{
+  "meta": {
+    "title": "From DOROTHY to GALE",
+    "author": "Sandy Weisz and Mao Reynolds",
+    "difficulty": "medium",
+    "theme": "Whodunit",
+    "message": "A murder has been committed at our Halloween party! Seven witnesses (in costume) have given testimony, in the form of Raddles. Our fourth witness is Dorothy Gale, who clicked her heels and offered up one piece of the solution, before heading home. She also gave a hint: each witness is contributing one letter of the answer. [Update: the solution [can be found here](/mystery/whodunit)]"
+  },
+  "ladder": [
+    {
+      "word": "DOROTHY",
+      "clue": "Drop a trigram (three letters) from <> to get a fictional 🐟",
+      "transform": "-OTH"
+    },
+    {
+      "word": "DORY",
+      "clue": "Pixar movie that rhymes with <>",
+      "transform": "rhymes with"
+    },
+    {
+      "word": "TOY STORY",
+      "clue": "Protagonist of <>",
+      "transform": "protagonist"
+    },
+    {
+      "word": "WOODY",
+      "clue": "A <> area has many of these",
+      "transform": "area has"
+    },
+    {
+      "word": "TREES",
+      "clue": "{} <> feature your relatives",
+      "transform": "might show your"
+    },
+    {
+      "word": "FAMILY",
+      "clue": "<> {}, popular game show",
+      "transform": "vs family on The"
+    },
+    {
+      "word": "FEUD",
+      "clue": "Rough quantity that sounds like \"<>\" without the last letter",
+      "transform": "-/d/"
+    },
+    {
+      "word": "FEW",
+      "clue": "\"A <> {}\", 1992 drama",
+      "transform": "are"
+    },
+    {
+      "word": "GOOD MEN",
+      "clue": "Add two letters (in different places) to <> to get a book and current TV series",
+      "transform": "+O +S"
+    },
+    {
+      "word": "GOOD OMENS",
+      "clue": "The white-haired protagonist of <> is an {}",
+      "transform": "features an"
+    },
+    {
+      "word": "ANGEL",
+      "clue": "Drop the second letter from <> and anagram to get a weather condition",
+      "transform": "-N, then anagram"
+    },
+    {
+      "word": "GALE",
+      "clue": null,
+      "transform": null
+    }
+  ]
+}

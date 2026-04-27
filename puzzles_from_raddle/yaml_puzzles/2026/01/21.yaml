@@ -1,0 +1,41 @@
+meta:
+  title: From MARCH to SELMA
+  author: Sandy Weisz
+  theme: mlk
+  message: "In March of 1965, King led thousands of nonviolent protesters on a 5-day, 54-mile march from Selma to Montgomery, Alabama.
+    On the steps of the capitol in Montgomery, King proclaimed: “The end we seek is a society at peace with itself, a society that can live with its conscience.
+    And that will be a day not of the white man, not of the black man. That will be the day of man as man.”"
+ladder:
+- word: MARCH
+  clue: One after <>
+  step: precdeds
+- word: APRIL
+  clue: Add an S to <> and anagram to get a shape
+  step: +S, then anagram
+- word: SPIRAL
+  clue: Large thing in space sometimes shaped like a <>
+  step: is a kind of
+- word: GALAXY
+  clue: Our <>
+  step: we live in
+- word: MILKY WAY
+  clue: Sweet ingredient in a <> (in the U.S.)
+  step: contains
+- word: CARAMEL
+  clue: Drop a bigram (two letters) from <> to get a mammal
+  step: -RA
+- word: CAMEL
+  clue: Traverse a ^ with a <>
+  step: is useful in a
+- word: DESERT
+  clue: Double a letter in <> to get a treat
+  step: +S
+- word: DESSERT
+  clue: <> comes at the end of the ^
+  step: comes at the end of the
+- word: MEAL
+  clue: Add an S to <> and anagram to get a female name
+  step: +S, then anagram
+- word: SELMA
+  clue:
+  step: ' '

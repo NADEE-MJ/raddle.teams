@@ -1,0 +1,43 @@
+meta:
+  title: From GIVING to THANKS
+  author: Sandy Weisz and Bailey Holtz
+  difficulty: medium
+  theme: Thanksgiving 2025
+  message: We’re thankful for the game-lovers like you who play Raddle. Happy Thanksgiving to you and yours!
+ladder:
+- word: GIVING
+  clue: Change one letter in <> to get an Olympic sport
+  transform: G->D
+- word: DIVING
+  clue: ^<>, a thrill-seeker's activity
+  transform: from the
+- word: SKY
+  clue: "\"The <> is ^!\""
+  transform: is
+- word: FALLING
+  clue: <> ^ (tumbling)
+  transform: all the way
+- word: DOWN
+  clue: ^<>, one way to score
+  transform: in the end zone
+- word: TOUCH
+  clue: "Change one letter in <> to get something that’s lit"
+  transform: U->R
+- word: TORCH
+  clue: The ^ <>, a Marvel superhero
+  transform: who is
+- word: HUMAN
+  clue: A <> ^, something you are
+  transform: …
+- word: BEING
+  clue: Drop every other letter in <> to get huge
+  transform: -E, -N
+- word: BIG
+  clue: "Star of \"<>\""
+  transform: stars
+- word: TOM HANKS
+  clue: Drop a bigram (two letters) from <> to get some gratitude
+  transform: signs his name
+- word: THANKS
+  clue:
+  transform:

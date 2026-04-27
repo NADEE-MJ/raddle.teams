@@ -1,0 +1,76 @@
+{
+  "meta": {
+    "title": "From SALAD to DAYS",
+    "author": "Sandy Weisz and Mao Reynolds",
+    "difficulty": "medium",
+    "theme": "Shakespearean phrases",
+    "message": "Today’s theme comes from Act I, Scene V of \"Antony and Cleopatra,\" in which Cleopatra laments wasting her youth on an old flame by the name of Julius Caesar: \"My salad days, / When I was green in judgment, cold in blood.\""
+  },
+  "ladder": [
+    {
+      "word": "SALAD",
+      "clue": "Double a letter in <> then reverse to get an American city",
+      "transform": "+L, then reverse"
+    },
+    {
+      "word": "DALLAS",
+      "clue": "<>, {}",
+      "transform": "is in"
+    },
+    {
+      "word": "TEXAS",
+      "clue": "Swap two letters in <> to get some fees",
+      "transform": "A<->E"
+    },
+    {
+      "word": "TAXES",
+      "clue": "{} and <>, two certainties",
+      "transform": "and"
+    },
+    {
+      "word": "DEATH",
+      "clue": "Anagram <> to get reviled",
+      "transform": "anagrammed"
+    },
+    {
+      "word": "HATED",
+      "clue": "Opposite of <>",
+      "transform": "opposite"
+    },
+    {
+      "word": "LOVED",
+      "clue": "Change the first letter of <> to be inspired",
+      "transform": "L->M"
+    },
+    {
+      "word": "MOVED",
+      "clue": "\"Who <> My {}?\"",
+      "transform": "the"
+    },
+    {
+      "word": "CHEESE",
+      "clue": "Creature thought to enjoy <>",
+      "transform": "is loved by a"
+    },
+    {
+      "word": "MOUSE",
+      "clue": "Sound from a <>",
+      "transform": "makes a"
+    },
+    {
+      "word": "SQUEAK",
+      "clue": "Time period that rhymes with <>",
+      "transform": "rhymes with"
+    },
+    {
+      "word": "WEEK",
+      "clue": "A <> has seven {}",
+      "transform": "has seven"
+    },
+    {
+      "word": "DAYS",
+      "clue": null,
+      "transform": null
+    }
+  ]
+}

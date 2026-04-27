@@ -1,0 +1,76 @@
+{
+  "meta": {
+    "title": "From DEFIANT to JAZZ",
+    "author": "Sandy Weisz and Mao Reynolds",
+    "difficulty": "medium",
+    "theme": "Severance",
+    "message": "We are introduced to “Defiant Jazz” in S1E7 of “Severance,” In the episode, department supervisor Milchick throws Helly R. a “Music Dance Experience,” allowing her to choose from a list of colorfully named genres. Defiant Jazz is the correct choice, but I fall asleep at night wondering what Effusive Ska and Reckless Disco could be."
+  },
+  "ladder": [
+    {
+      "word": "DEFIANT",
+      "clue": "Animal found the end of <>",
+      "transform": "features an"
+    },
+    {
+      "word": "ANT",
+      "clue": "Add a letter to <> to get a title that sounds like <> (unless you talk fancy)",
+      "transform": "sounds like"
+    },
+    {
+      "word": "AUNT",
+      "clue": "Offspring from your <>",
+      "transform": "begets your"
+    },
+    {
+      "word": "COUSIN",
+      "clue": "Delete the middle two letters in <> for something you might collect",
+      "transform": "-US"
+    },
+    {
+      "word": "COIN",
+      "clue": "What a referee does to a <>",
+      "transform": "is given a"
+    },
+    {
+      "word": "FLIP",
+      "clue": "Drop a letter from <> to get part of one's body",
+      "transform": "-F"
+    },
+    {
+      "word": "LIP",
+      "clue": "Give <> to",
+      "transform": "aka"
+    },
+    {
+      "word": "SASS",
+      "clue": "Fragile material that rhymes with <>",
+      "transform": "rhymes with"
+    },
+    {
+      "word": "GLASS",
+      "clue": "Character whose shoes were famously made from <>",
+      "transform": "shoes are worn by"
+    },
+    {
+      "word": "CINDERELLA",
+      "clue": "<> is the 2nd official {}",
+      "transform": "is a"
+    },
+    {
+      "word": "DISNEY PRINCESS",
+      "clue": "<> named after a flower",
+      "transform": "named after a flower"
+    },
+    {
+      "word": "JASMINE",
+      "clue": "The first syllable of <> sounds like this genre",
+      "transform": "partially sounds like"
+    },
+    {
+      "word": "JAZZ",
+      "clue": null,
+      "transform": null
+    }
+  ]
+}

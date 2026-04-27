@@ -1,0 +1,76 @@
+{
+  "meta": {
+    "title": "From HELL to PAY",
+    "author": "Sandy Weisz and Mao Reynolds",
+    "difficulty": "medium",
+    "theme": "X to Y",
+    "message": "“Hell to pay” means unsavory consequences, though I’m not sure why you’d want to spend money on that."
+  },
+  "ladder": [
+    {
+      "word": "HELL",
+      "clue": "Change a letter in <> to get part of a living thing",
+      "transform": "H->C"
+    },
+    {
+      "word": "CELL",
+      "clue": "Append a letter to <> to get an instrument",
+      "transform": "+O"
+    },
+    {
+      "word": "CELLO",
+      "clue": "A <> has four of these",
+      "transform": "has four"
+    },
+    {
+      "word": "STRINGS",
+      "clue": "{}<>, something that might be tugged",
+      "transform": "are pulled and trigger one's"
+    },
+    {
+      "word": "HEART",
+      "clue": "It protects your <>",
+      "transform": "is inside a"
+    },
+    {
+      "word": "RIB CAGE",
+      "clue": "Add a B to <> and anagram to get a card game",
+      "transform": "+B, then anagram"
+    },
+    {
+      "word": "CRIBBAGE",
+      "clue": "Drop half of <> to copy",
+      "transform": "-BAGE"
+    },
+    {
+      "word": "CRIB",
+      "clue": "Who spends lots of time in a <>",
+      "transform": "holds a"
+    },
+    {
+      "word": "BABY",
+      "clue": "<> {}, most viewed YouTube of all time",
+      "transform": "(doo doo doo)"
+    },
+    {
+      "word": "SHARK",
+      "clue": "Once you {} the <>, it’s time to move on",
+      "transform": "gets"
+    },
+    {
+      "word": "JUMP",
+      "clue": "<> {} (to recoil)",
+      "transform": "way"
+    },
+    {
+      "word": "BACK",
+      "clue": "Something you’re owed: <> {} or {}<>",
+      "transform": "…"
+    },
+    {
+      "word": "PAY",
+      "clue": null,
+      "transform": null
+    }
+  ]
+}

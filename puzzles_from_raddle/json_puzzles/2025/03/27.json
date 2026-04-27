@@ -1,0 +1,77 @@
+{
+  "meta": {
+    "title": "From PLAY to LOOP",
+    "author": "Sandy Weisz",
+    "difficulty": "medium",
+    "theme": "Enigmarch 2025",
+    "fromEmoji": "🎭",
+    "toEmoji": "➰"
+  },
+  "ladder": [
+    {
+      "word": "PLAY",
+      "clue": "Award for a <>",
+      "transform": "award for a"
+    },
+    {
+      "word": "TONY",
+      "clue": "Last name of <> on TV",
+      "transform": "as in"
+    },
+    {
+      "word": "SOPRANO",
+      "clue": "A few steps lower than <>",
+      "transform": "is higher than a"
+    },
+    {
+      "word": "TENOR",
+      "clue": "Musician found in the middle of <>",
+      "transform": "-T -R"
+    },
+    {
+      "word": "ENO",
+      "clue": "Reverse <> to get a number",
+      "transform": "reversed"
+    },
+    {
+      "word": "ONE",
+      "clue": "One less than <>",
+      "transform": "-1"
+    },
+    {
+      "word": "ZERO",
+      "clue": "How to say <> in a particular sport",
+      "transform": "in tennis is"
+    },
+    {
+      "word": "LOVE",
+      "clue": "Add a letter to either side of <> to get a plant",
+      "transform": "+C +R"
+    },
+    {
+      "word": "CLOVER",
+      "clue": "A particular kind of <> might be ascribed this quality",
+      "transform": "is"
+    },
+    {
+      "word": "LUCKY",
+      "clue": "A fortunate outcome is a <> {}",
+      "transform": "…"
+    },
+    {
+      "word": "BREAK",
+      "clue": "You <> to start a game of this",
+      "transform": "the balls in"
+    },
+    {
+      "word": "POOL",
+      "clue": "<> backwards is this shape",
+      "transform": "reversed"
+    },
+    {
+      "word": "LOOP",
+      "clue": null,
+      "transform": null
+    }
+  ]
+}

@@ -1,0 +1,65 @@
+{
+  "meta": {
+    "title": "From PENNY to PARK",
+    "author": "Sandy Weisz",
+    "theme": "mitmh",
+    "message": "In 2020, Left Out introduced us to a theme park called [Penny Park](https://puzzles.mit.edu/2020/), and challenged teams to help generate buzz so the park could continue operation. The coin was found by ✈✈✈ Galactic Trendsetters ✈✈✈."
+  },
+  "ladder": [
+    {
+      "word": "PENNY",
+      "clue": "A <> is worth one-tenth of a {}",
+      "step": "is a tenth of a"
+    },
+    {
+      "word": "DIME",
+      "clue": "Change one letter in <> to get part of some stadiums",
+      "step": "I->O"
+    },
+    {
+      "word": "DOME",
+      "clue": "Change one letter in <> to get a bird",
+      "step": "M->V"
+    },
+    {
+      "word": "DOVE",
+      "clue": "The <> is a symbol for {}",
+      "step": "stands for"
+    },
+    {
+      "word": "PEACE",
+      "clue": "Part of a board game that sounds like \"<>\"",
+      "step": "sounds like"
+    },
+    {
+      "word": "PIECE",
+      "clue": "{}<>, an outstanding work",
+      "step": "follows"
+    },
+    {
+      "word": "MASTER",
+      "clue": "Anagram <> to get a body of water",
+      "step": "anagrams to"
+    },
+    {
+      "word": "STREAM",
+      "clue": "A {}<> happens in real time",
+      "step": "can be"
+    },
+    {
+      "word": "LIVE",
+      "clue": "<> is evil in {}",
+      "step": "is EVIL in"
+    },
+    {
+      "word": "REVERSE",
+      "clue": "One step adjacent to <>",
+      "step": "is one step below"
+    },
+    {
+      "word": "PARK",
+      "clue": null,
+      "step": " "
+    }
+  ]
+}

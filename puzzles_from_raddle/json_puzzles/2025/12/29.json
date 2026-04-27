@@ -1,0 +1,71 @@
+{
+  "meta": {
+    "title": "From LIFE to CHUCK",
+    "theme": "guest_recs_25",
+    "author": "Wil Zambole",
+    "author_bio": "Wil Zambole is a puzzle and event designer whose work includes puzzles hunts for companies and organizations. He is currently the co-writer for the BGG.con hunt, the founder of the Cardhalla event at Gen Con, and a vice-president of the [National Puzzlers’ League](https://www.puzzlers.org/).",
+    "message": "Today's Raddle is by Wil Zambole. Wil writes, \"[The Life of Chuck](https://letterboxd.com/film/the-life-of-chuck/) is a fantastic film starring Tom Hiddleston, Chiwetel Ejiofor, Karen Gillian, and Mark Hamill. It is based on a non-horror short story by Stephen King. I was absolutely stunned by how lovely, powerful, and unique this film was. It is not a typical story, and it’s not told in a typical way. The whole thing for me was emotional and uplifting at the same time. The message is thoughtful, subtle, and it may get lost, but it ties the story together very well.\""
+  },
+  "ladder": [
+    {
+      "word": "LIFE",
+      "clue": "Swap the consonants of <> to get a tool",
+      "step": "F<->L"
+    },
+    {
+      "word": "FILE",
+      "clue": "{} and <>",
+      "step": "and"
+    },
+    {
+      "word": "RANK",
+      "clue": "Add a C to <> to get a grouch",
+      "step": "+C"
+    },
+    {
+      "word": "CRANK",
+      "clue": "<>{}, a part of many engines",
+      "step": "…"
+    },
+    {
+      "word": "SHAFT",
+      "clue": "Change the vowel in <> to get a key",
+      "step": "A->I"
+    },
+    {
+      "word": "SHIFT",
+      "clue": "It's often located two places above <>",
+      "step": "is two below"
+    },
+    {
+      "word": "TAB",
+      "clue": "Add the same two vowels to the end of <> to get a tabletop game",
+      "step": "+OO"
+    },
+    {
+      "word": "TABOO",
+      "clue": "Delete the last letter of <> and anagram to get a mode of transport",
+      "step": "-O, then anagram"
+    },
+    {
+      "word": "BOAT",
+      "clue": "{} is a type of <> for commuters",
+      "step": "for commuters"
+    },
+    {
+      "word": "FERRY",
+      "clue": "Change the first letter of <> to get something edible",
+      "step": "F->B"
+    },
+    {
+      "word": "BERRY",
+      "clue": "{} <> is a famous rock ’n’ roller",
+      "step": "first name"
+    },
+    {
+      "word": "CHUCK",
+      "clue": null,
+      "step": " "
+    }
+  ]
+}

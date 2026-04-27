@@ -1,0 +1,66 @@
+{
+  "meta": {
+    "title": "From FERRIS to WHEEL",
+    "author": "Sandy Weisz and Mao Reynolds",
+    "difficulty": "medium",
+    "theme": "Tour de France",
+    "message": "We’re still riding the wave of bicycle-themed Raddles this week. The Ferris Wheel was designed and produced for the 1893 World's Columbian Exposition, in our hometown, Chicago, by a civil engineer named George Washington Gale Ferris Jr. Similar contraptions had existed centuries earlier around the world, but this one set records of engineering, coming in at 264 foot tall, and supporting 36 cars that could each hold up to 60 people."
+  },
+  "ladder": [
+    {
+      "word": "FERRIS",
+      "clue": "<> who had a day off",
+      "transform": "who had a day off"
+    },
+    {
+      "word": "BUELLER",
+      "clue": "Magazine name hidden inside <>",
+      "transform": "includes"
+    },
+    {
+      "word": "ELLE",
+      "clue": "Competitor of <> that might be in?",
+      "transform": "competitor"
+    },
+    {
+      "word": "VOGUE",
+      "clue": "Singer of \"<>\"",
+      "transform": "singer"
+    },
+    {
+      "word": "MADONNA",
+      "clue": "Titular movie role for <>",
+      "transform": "played"
+    },
+    {
+      "word": "EVITA",
+      "clue": "Award won 7 times by <>",
+      "transform": "won many a"
+    },
+    {
+      "word": "TONY",
+      "clue": "Change one letter in <> to get a quality of one's voice",
+      "transform": "Y->E"
+    },
+    {
+      "word": "TONE",
+      "clue": "Remove a letter in <> to get a body part",
+      "transform": "-N"
+    },
+    {
+      "word": "TOE",
+      "clue": "Some people walk <> to {}",
+      "transform": "to"
+    },
+    {
+      "word": "HEEL",
+      "clue": "Add a letter to <> to get something that goes around",
+      "transform": "+W"
+    },
+    {
+      "word": "WHEEL",
+      "clue": null,
+      "transform": null
+    }
+  ]
+}

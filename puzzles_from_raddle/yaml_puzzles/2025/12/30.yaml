@@ -1,0 +1,47 @@
+meta:
+  title: From TITAN to TIME
+  theme: guest_recs_25
+  author: Nathan Curtis
+  author_bio:
+    "Nathan Curtis is a puzzle constructor living in the Boston area. He mostly writes variety crosswords and cryptic crosswords, which he publishes on [Patreon](https://www.patreon.com/nathancurtis).
+    He has also written or edited a wide range of puzzle hunts, including [Verwald's Treasures](https://verwalds-treasures.tortoiseshellstudio.com/), and an upcoming large-scale puzzle hunt (codename Project Ra) that is planned for 2026 or 2027. When not writing or solving puzzles, Nathan's other activities include teaching mathematics, playing the bass trombone, and coddling the best cat ever (her name is Freyja)."
+  message:
+    "Today's Raddle is by Nathan Curtis. Nathan writes,
+    \"[Hades II](https://store.steampowered.com/app/1145350/Hades_II/) is an action roguelike from Supergiant Games. In Hades II, you play as Melinoë, daughter of Hades and Persephone, who is attempting to slay Chronos, the Titan of Time. In addition to the roguelike mechanic, Hades II features a wide variety of gods and mortals from Greek mythology, including a number of deep cuts. They take some liberties with the myths, but I mostly don't mind. Mostly.\""
+ladder:
+- word: TITAN
+  clue: Add two letters to <> to get an Oscar-winning movie
+  step: +IC
+- word: TITANIC
+  clue: Cause of <>'s demise
+  step: was downed by a
+- word: ICEBERG
+  clue: <> is a variety of ^
+  step: is a type of
+- word: LETTUCE
+  clue: You buy <> by the ^
+  step: is bought by the
+- word: HEAD
+  clue: <>^, where an organization is centered
+  step: …
+- word: QUARTERS
+  clue: Four <> make a ^
+  step: x4
+- word: DOLLAR
+  clue: ^ <>, beachcomber's find
+  step: found on the
+- word: SAND
+  clue: Change the last two letters of <> to an M to get a name
+  step: ND->M
+- word: SAM
+  clue: ^ <>, Looney Tunes character
+  step: is named after
+- word: YOSEMITE
+  clue: Drop the first half of <> to get this small creature
+  step: -YOSE
+- word: MITE
+  clue: Swap the consonants in <> to get a kind of zone
+  step: M<->T
+- word: TIME
+  clue:
+  step: ' '

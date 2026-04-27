@@ -1,0 +1,76 @@
+{
+  "meta": {
+    "title": "From GOLDEN to EAR",
+    "author": "Sandy Weisz and Mao Reynolds",
+    "difficulty": "medium",
+    "theme": "Make Some Noise",
+    "message": "We're celebrating the upcoming season of \"[Make Some  Noise](https://www.youtube.com/watch?v=tKBcWn-tqWE),\" which premieres on Monday, October 13. The Golden Ear is the prize awarded to the best improviser on the show, though the method for calculating scores is, let's say, at best, opaque. "
+  },
+  "ladder": [
+    {
+      "word": "GOLDEN",
+      "clue": "<> {}, a kind of false god",
+      "transform": "idol took the form of a"
+    },
+    {
+      "word": "CALF",
+      "clue": "Your <> is part of your {}",
+      "transform": "is part of your"
+    },
+    {
+      "word": "LEG",
+      "clue": "Add a letter to <> to get a toy brand",
+      "transform": "+O"
+    },
+    {
+      "word": "LEGO",
+      "clue": "<> unit",
+      "transform": "unit"
+    },
+    {
+      "word": "BRICK",
+      "clue": "Counterpart to <>, in construction",
+      "transform": "and"
+    },
+    {
+      "word": "MORTAR",
+      "clue": "Animal found backwards in <>",
+      "transform": "features, backwards"
+    },
+    {
+      "word": "RAT",
+      "clue": "Change one letter in <> to get an animal (some of whom are \"employed\" for <> control)",
+      "transform": "R->C"
+    },
+    {
+      "word": "CAT",
+      "clue": "Insert a letter in <> to get a part of some credits",
+      "transform": "+S"
+    },
+    {
+      "word": "CAST",
+      "clue": "What has been <>, in a phrase attributed to Caesar",
+      "transform": "a"
+    },
+    {
+      "word": "DIE",
+      "clue": "Opposite of <>",
+      "transform": "opposite"
+    },
+    {
+      "word": "LIVE",
+      "clue": "<> & {} (or don't ;)",
+      "transform": "&"
+    },
+    {
+      "word": "LEARN",
+      "clue": "Drop the first and last letters of <> to get a body part",
+      "transform": "-L, -N"
+    },
+    {
+      "word": "EAR",
+      "clue": null,
+      "transform": null
+    }
+  ]
+}

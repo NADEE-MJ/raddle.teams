@@ -1,0 +1,71 @@
+{
+  "meta": {
+    "title": "From RAGS to RICHES",
+    "author": "Sandy Weisz and Mao Reynolds",
+    "difficulty": "medium",
+    "theme": "X to Y",
+    "message": "Going from rags to riches, or from zero to hero, means to ascend, whether you're increasing your wealth or your status."
+  },
+  "ladder": [
+    {
+      "word": "RAGS",
+      "clue": "Add an S to <> and anagram to get something often covering the ground",
+      "transform": "+S, then anagram"
+    },
+    {
+      "word": "GRASS",
+      "clue": "Change one letter in <> to get some alumni",
+      "transform": "S->D"
+    },
+    {
+      "word": "GRADS",
+      "clue": "{}<>, some students",
+      "transform": "-to-be"
+    },
+    {
+      "word": "UNDER",
+      "clue": "{} <>, term for a region of the world",
+      "transform": "the equator and"
+    },
+    {
+      "word": "DOWN",
+      "clue": "Opposite of <>",
+      "transform": "opposite"
+    },
+    {
+      "word": "UP",
+      "clue": "{}<>, some cosmetics",
+      "transform": "-"
+    },
+    {
+      "word": "MAKE",
+      "clue": "Change the vowel pronunciation in <> from long to short to get a computer",
+      "transform": "Long A -> Short A"
+    },
+    {
+      "word": "MAC",
+      "clue": "Company that makes the <>",
+      "transform": "is made by"
+    },
+    {
+      "word": "APPLE",
+      "clue": "{} <>, nickname for a certain city",
+      "transform": "as in NYC is"
+    },
+    {
+      "word": "BIG",
+      "clue": "Something a snob might be too <> for?",
+      "transform": "for your"
+    },
+    {
+      "word": "BRITCHES",
+      "clue": "Drop the first letter of <> and it sounds like some wealth",
+      "transform": "-\"B\""
+    },
+    {
+      "word": "RICHES",
+      "clue": null,
+      "transform": null
+    }
+  ]
+}

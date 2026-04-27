@@ -1,0 +1,87 @@
+{
+  "meta": {
+    "title": "From QUARTER to SHIP",
+    "author": "Sandy Weisz",
+    "difficulty": "medium",
+    "theme": "Enigmarch 2025",
+    "fromEmoji": "¼",
+    "toEmoji": "🚢"
+  },
+  "ladder": [
+    {
+      "word": "QUARTER",
+      "clue": "Double <>",
+      "transform": "doubled"
+    },
+    {
+      "word": "HALF",
+      "clue": "Change first letter of <> to get an animal",
+      "transform": "H -> C"
+    },
+    {
+      "word": "CALF",
+      "clue": "Your <> is a part of this",
+      "transform": "is part of the"
+    },
+    {
+      "word": "LEG",
+      "clue": "Add a letter to <> to get a popular brand",
+      "transform": "+O"
+    },
+    {
+      "word": "LEGO",
+      "clue": "Country where <> was founded",
+      "transform": "comes from"
+    },
+    {
+      "word": "DENMARK",
+      "clue": "What they speak in <>",
+      "transform": "home of the"
+    },
+    {
+      "word": "DANISH",
+      "clue": "A <> is this kind of food",
+      "transform": "is a"
+    },
+    {
+      "word": "PASTRY",
+      "clue": "<> with a hole",
+      "transform": "with a hole"
+    },
+    {
+      "word": "DONUT",
+      "clue": "A kind of <> that's also an animal part",
+      "transform": "example"
+    },
+    {
+      "word": "BEAR CLAW",
+      "clue": "Final 3 letters of <>, also something you don't want to break",
+      "transform": "final 3 letters"
+    },
+    {
+      "word": "LAW",
+      "clue": "Change one letter of <> to an O to get an extreme",
+      "transform": "A -> O"
+    },
+    {
+      "word": "LOW",
+      "clue": "Reverse <> then double middle letter to get something warm",
+      "transform": "+O and reverse"
+    },
+    {
+      "word": "WOOL",
+      "clue": "<> comes from these animals",
+      "transform": "comes from"
+    },
+    {
+      "word": "SHEEP",
+      "clue": "Change double letter in <> to a different letter to get a vessel",
+      "transform": "EE -> I"
+    },
+    {
+      "word": "SHIP",
+      "clue": "",
+      "transform": ""
+    }
+  ]
+}

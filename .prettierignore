@@ -1,0 +1,23 @@
+# Dependencies
+node_modules/
+.venv/
+
+# Build artifacts
+static/
+dist/
+
+# Log files
+*.log
+
+# Database files
+*.db
+
+# markdown files
+*.md
+
+# yaml files
+*.yaml
+*.yml
+
+# Puzzle assets
+puzzles_from_raddle/

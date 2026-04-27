@@ -1,0 +1,46 @@
+meta:
+  title: From DARN to TOUGH
+  theme: guest_recs_25
+  author: Ben Gross
+  author_bio:
+    "Ben Gross is the mayor of [Bracket City](https://www.theatlantic.com/games/bracket-city/) and occupies some inferior position at [Montague Diner](https://montaguediner.com/) in Brooklyn."
+  message:
+    "Today's Raddle is by Ben Gross.
+    Ben writes, \"All of my socks are [Darn Tough](https://darntough.com/) socks. They are extremely comfortable, feature delightful patterns, and have an incredible lifetime warranty. If any of my socks develops a hole, I can just put it in an envelope and send it to Vermont and they give me a credit to buy new socks! If you have 8 pairs of Darn Tough socks (one backup pair) you basically never to need to buy socks again.\""
+ladder:
+- word: DARN
+  clue: "\"<>!\" is the polite version of “^!”"
+  step: R->M
+- word: DAMN
+  clue: "Woodland project that sounds like \"<>\""
+  step: -N
+- word: DAM
+  clue: Reverse <> to get angry
+  step: reversed
+- word: MAD
+  clue: A <> ^ is a serious sprint
+  step: kind of sprint
+- word: DASH
+  clue: A <> of ^ is good on eggs
+  step: of
+- word: SALT
+  clue: <> of the ^
+  step: of the
+- word: EARTH
+  clue: ^ and <>, two hard things to move
+  step: and
+- word: HEAVEN
+  clue: Replace the first two letters of <> with a single letter to get a bird
+  step: HE-R
+- word: RAVEN
+  clue: Bird often confused for a <>
+  step: is not a
+- word: CROW
+  clue: Add a letter to <> to get a big group
+  step: +D
+- word: CROWD
+  clue: A ^ <> is hard to please
+  step: can be
+- word: TOUGH
+  clue:
+  step: ' '

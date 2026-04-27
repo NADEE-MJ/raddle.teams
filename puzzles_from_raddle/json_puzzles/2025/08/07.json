@@ -1,0 +1,71 @@
+{
+  "meta": {
+    "title": "From LAB to RAT",
+    "author": "Sandy Weisz and Mao Reynolds",
+    "difficulty": "medium",
+    "theme": "Dog Days of Summer",
+    "message": "August is the \"dog days\" of summer, so we're featuring Raddles built around phrases that have a dog breed in them. Today we recognize the Lab, or Labrador Retriever, a friendly breed named after their homeland, the Canadian province of Newfoundland and Labrador. Not to be confused with the Newfoundland (or Newfie), who run bigger and fluffier. Both are excellent doggies."
+  },
+  "ladder": [
+    {
+      "word": "LAB",
+      "clue": "<> {}, something often worn in a <>",
+      "transform": "outerwear"
+    },
+    {
+      "word": "COAT",
+      "clue": "A fresh <> of {}",
+      "transform": "of"
+    },
+    {
+      "word": "PAINT",
+      "clue": "Change one letter in <> to get a virtuous person",
+      "transform": "P->S"
+    },
+    {
+      "word": "SAINT",
+      "clue": "Opposite of <>",
+      "transform": "Opposite"
+    },
+    {
+      "word": "SINNER",
+      "clue": "Change the last letter in <>, then reverse, to get the sport that <> plays",
+      "transform": "is #1 player in"
+    },
+    {
+      "word": "TENNIS",
+      "clue": "Zero in <>",
+      "transform": "zero"
+    },
+    {
+      "word": "LOVE",
+      "clue": "\"<> {}\", 1989 banger about a structure",
+      "transform": "…"
+    },
+    {
+      "word": "SHACK",
+      "clue": "Move the first letter of <> to the end to get an HBO show",
+      "transform": "Move S to the end"
+    },
+    {
+      "word": "HACKS",
+      "clue": "A tech-savvy criminal <> into one",
+      "transform": "into a"
+    },
+    {
+      "word": "COMPUTER",
+      "clue": "<> attachment with an animal name",
+      "transform": "is used with a"
+    },
+    {
+      "word": "MOUSE",
+      "clue": "Genetic cousin of the <> that is often confused for a <>",
+      "transform": "is often confused for a"
+    },
+    {
+      "word": "RAT",
+      "clue": null,
+      "transform": null
+    }
+  ]
+}

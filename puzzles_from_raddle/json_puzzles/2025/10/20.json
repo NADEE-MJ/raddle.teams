@@ -1,0 +1,71 @@
+{
+  "meta": {
+    "title": "From PRIVATE to EYE",
+    "author": "Sandy Weisz and Mao Reynolds",
+    "difficulty": "medium",
+    "theme": "Crime Fiction",
+    "message": "This week’s Raddles unpack common tropes in crime fiction. Private eyes are alternatives to conventional law enforcement, though they often work hand-in-hand. Hall & Oates released their hit song “Private Eyes” in 1981; they have yet to respond to my numerous letters suggesting a follow-up song, “Public Ears.”"
+  },
+  "ladder": [
+    {
+      "word": "PRIVATE",
+      "clue": "<> from a 1998 movie",
+      "transform": "who was saved"
+    },
+    {
+      "word": "RYAN",
+      "clue": "Current movie star <> {}",
+      "transform": "…"
+    },
+    {
+      "word": "GOSLING",
+      "clue": "A <> is a baby {}",
+      "transform": "is a baby"
+    },
+    {
+      "word": "GOOSE",
+      "clue": "Plural of <>",
+      "transform": "+ goose ="
+    },
+    {
+      "word": "GEESE",
+      "clue": "Relation that rhymes with <>",
+      "transform": "rhymes with"
+    },
+    {
+      "word": "NIECE",
+      "clue": "Add a V to <> and anagram to get a world city",
+      "transform": "+V, then anagram"
+    },
+    {
+      "word": "VENICE",
+      "clue": "One of many thoroughfares in <>",
+      "transform": "has many a"
+    },
+    {
+      "word": "CANAL",
+      "clue": "{} <>, an unpleasant procedure",
+      "transform": "into your tooth"
+    },
+    {
+      "word": "ROOT",
+      "clue": "Insert one letter in <> to get a kind of machine",
+      "transform": "+B"
+    },
+    {
+      "word": "ROBOT",
+      "clue": "\"{}, <>\", seminal sci-fi work",
+      "transform": "is"
+    },
+    {
+      "word": "I",
+      "clue": "Body part that sounds like \"<>\"",
+      "transform": "sounds like"
+    },
+    {
+      "word": "EYE",
+      "clue": null,
+      "transform": null
+    }
+  ]
+}

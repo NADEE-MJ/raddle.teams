@@ -1,0 +1,76 @@
+{
+  "meta": {
+    "title": "From ZERO to HOURS",
+    "author": "Sandy Weisz and Mao Reynolds",
+    "difficulty": "medium",
+    "theme": "Mystery Theme #2",
+    "message": "Time for another mystery theme! Every Raddle this week (Sunday thru Friday) is part of a secret theme that you can figure out. The answer is a name. When you've solved it, [submit your name here](/mystery/2) to be included in the list of solvers. One correct entry will win a prize."
+  },
+  "ladder": [
+    {
+      "word": "ZERO",
+      "clue": "\"What did <> say to {}?\" \"Nice belt!\"",
+      "transform": "with a belt"
+    },
+    {
+      "word": "EIGHT",
+      "clue": "Add a letter to the front of <> to get a measurement",
+      "transform": "+W"
+    },
+    {
+      "word": "WEIGHT",
+      "clue": "{}<>, something that might be on your desk",
+      "transform": "down some"
+    },
+    {
+      "word": "PAPER",
+      "clue": "{}<>, something that might show up on your door",
+      "transform": "shows the"
+    },
+    {
+      "word": "NEWS",
+      "clue": "An old car make that's the opposite of <>?",
+      "transform": "opposite, in a way"
+    },
+    {
+      "word": "OLDS",
+      "clue": "Move the last letter of <> to the front to get a word seen on a certain sign",
+      "transform": "S to front"
+    },
+    {
+      "word": "SOLD",
+      "clue": "Event where you might hear someone yell \"<>!\"",
+      "transform": "is yelled at an"
+    },
+    {
+      "word": "AUCTION",
+      "clue": "Drop a letter from <> to get something you might want a piece of",
+      "transform": "-U"
+    },
+    {
+      "word": "ACTION",
+      "clue": "What comes before \"<>!\" in a particular three-word sequence",
+      "transform": "comes after"
+    },
+    {
+      "word": "CAMERA",
+      "clue": "Drop the last letter of <> and anagram to a kind of soda",
+      "transform": "-A, then anagram"
+    },
+    {
+      "word": "CREAM",
+      "clue": "{} <>, a kind of topping",
+      "transform": "can be"
+    },
+    {
+      "word": "SOUR",
+      "clue": "Add an H to <> and anagram to get some time",
+      "transform": "+H, then anagram"
+    },
+    {
+      "word": "HOURS",
+      "clue": null,
+      "transform": null
+    }
+  ]
+}

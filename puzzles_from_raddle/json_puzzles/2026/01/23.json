@@ -1,0 +1,65 @@
+{
+  "meta": {
+    "title": "From LETTER to JAIL",
+    "author": "Sandy Weisz",
+    "theme": "mlk",
+    "message": "On October 30, 1967, King was arrested and forced to begin serving a jail sentence because he led a peaceful protest against unconstitutional bans on \"race mixing\" in Birmingham, Alabama in 1963. From jail, he composed “Letter from a Birmingham Jail,” which became one of the most important texts of the Civil Rights Movement."
+  },
+  "ladder": [
+    {
+      "word": "LETTER",
+      "clue": "The first three <>s",
+      "step": "at the start of the alphabet"
+    },
+    {
+      "word": "ABC",
+      "clue": "\"<>\" is a song by {}",
+      "step": "is a song by"
+    },
+    {
+      "word": "JACKSON 5",
+      "clue": "Each member of <> is a {} of the others",
+      "step": "is each a"
+    },
+    {
+      "word": "BROTHER",
+      "clue": "Counterpart to <>",
+      "step": "counterpart"
+    },
+    {
+      "word": "SISTER",
+      "clue": "One called \"<>\" might be a {}",
+      "step": "might be a"
+    },
+    {
+      "word": "NUN",
+      "clue": "Swap a letter in <> for a double letter to get a time of day",
+      "step": "U->OO"
+    },
+    {
+      "word": "NOON",
+      "clue": "What a hand points to at <>",
+      "step": "aka"
+    },
+    {
+      "word": "TWELVE",
+      "clue": "Foodstuff that you likely buy   <> of at once",
+      "step": "in a supermarket"
+    },
+    {
+      "word": "EGG",
+      "clue": "What’s coming out of an <> in an emoji",
+      "step": "might contain a"
+    },
+    {
+      "word": "BIRD",
+      "clue": "{}<>, a repeat offender",
+      "step": "is frequently in"
+    },
+    {
+      "word": "JAIL",
+      "clue": null,
+      "step": " "
+    }
+  ]
+}

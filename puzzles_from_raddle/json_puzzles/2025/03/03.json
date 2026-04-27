@@ -1,0 +1,72 @@
+{
+  "meta": {
+    "title": "From STAFF to PSYCHIC",
+    "author": "Sandy Weisz",
+    "difficulty": "medium",
+    "theme": "Enigmarch 2025",
+    "fromEmoji": "🎼",
+    "toEmoji": "🔮"
+  },
+  "ladder": [
+    {
+      "word": "STAFF",
+      "clue": "Change one letter of <> to U to get a word for {}",
+      "transform": "A -> U"
+    },
+    {
+      "word": "STUFF",
+      "clue": "Remove first letter from <> and it sounds like what word that means {}?",
+      "transform": "rhymes with"
+    },
+    {
+      "word": "TOUGH",
+      "clue": "Change middle letter of <> to S and anagram to get {}",
+      "transform": "U->S then anagram"
+    },
+    {
+      "word": "GHOST",
+      "clue": "A <> makes {}",
+      "transform": "says"
+    },
+    {
+      "word": "BOO",
+      "clue": "Insert an L into <> and it sounds like {}",
+      "transform": "Insert L"
+    },
+    {
+      "word": "BLUE",
+      "clue": "Pepsi's logo is <> and {}",
+      "transform": "Partner in Pepsi logo"
+    },
+    {
+      "word": "RED",
+      "clue": "Add the name of an alien to the front of <> to get {}",
+      "transform": "+ALF"
+    },
+    {
+      "word": "ALFRED",
+      "clue": "Last name of director <>",
+      "transform": "'s last name"
+    },
+    {
+      "word": "HITCHCOCK",
+      "clue": "<> directed {}",
+      "transform": "directed"
+    },
+    {
+      "word": "PSYCHO",
+      "clue": "Append three letters to <> to get {}",
+      "transform": "+ TIC"
+    },
+    {
+      "word": "PSYCHOTIC",
+      "clue": "Remove 'OT' from <> to get {}",
+      "transform": "- OT"
+    },
+    {
+      "word": "PSYCHIC",
+      "clue": "",
+      "transform": ""
+    }
+  ]
+}

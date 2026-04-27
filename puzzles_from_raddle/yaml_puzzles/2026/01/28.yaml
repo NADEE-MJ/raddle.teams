@@ -1,0 +1,48 @@
+meta:
+  title: From CHIHUAHUAN to RAVEN
+  author: Sandy Weisz, Eliziabeth Hargrave, and Bob Weisz
+  theme: wingspan
+  message: This bird is native to the Chihuahuan Desert of the southwest US and northern Mexico. (Co-written with Bob Weisz.)
+ladder:
+- word: CHIHUAHUAN
+  clue: Greek letter at the start of <>
+  step: at the start
+- word: CHI
+  clue: ^ <>, martial art
+  step: follows
+- word: TAI
+  clue: Add an /r/ sound inside <> to get an attempt
+  step: +/r/
+- word: TRY
+  clue: "\"^ <>, but ya missed me.\""
+  step: can be
+- word: NICE
+  clue: <>'s country
+  step: is in
+- word: FRANCE
+  clue: "\"Yes\" in <>"
+  step: yes is
+- word: OUI
+  clue: Pronoun that sounds like <>
+  step: sounds like
+- word: WE
+  clue: "\"<> three\" = \"the three of ^\""
+  step: in object form
+- word: US
+  clue: Northern neighbor of the <>
+  step: is north of
+- word: CANADA
+  clue: Most famous rapper from <>
+  step: rapper
+- word: DRAKE
+  clue: Drop a letter from <> to get a garden tool
+  step: -D
+- word: RAKE
+  clue: Change one letter in <> to get a kind of party
+  step: K->V
+- word: RAVE
+  clue: Add a letter to <> to get a certain NFL player
+  step: +N
+- word: RAVEN
+  clue:
+  step: ' '

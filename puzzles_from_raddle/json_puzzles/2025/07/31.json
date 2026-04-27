@@ -1,0 +1,71 @@
+{
+  "meta": {
+    "title": "From LAST to US",
+    "author": "Sandy Weisz and Mao Reynolds",
+    "difficulty": "medium",
+    "theme": "Emmy nominations 2025",
+    "message": "This week we're honoring some of this year's Emmy nominees, including the post-apocolyptic \"The Last of Us\"."
+  },
+  "ladder": [
+    {
+      "word": "LAST",
+      "clue": "Opposite of <>",
+      "transform": "opposite"
+    },
+    {
+      "word": "FIRST",
+      "clue": "Metal associated with finishing <>",
+      "transform": "place gets you"
+    },
+    {
+      "word": "GOLD",
+      "clue": "Change one letter in <> to get a word on a sign",
+      "transform": "G->S"
+    },
+    {
+      "word": "SOLD",
+      "clue": "Event where they yell \"<>!\"",
+      "transform": "is yelled at an"
+    },
+    {
+      "word": "AUCTION",
+      "clue": "Change one letter in <> to get a kind of cup?",
+      "transform": "A->S"
+    },
+    {
+      "word": "SUCTION",
+      "clue": "It uses <> to help you clean",
+      "transform": "is used in a"
+    },
+    {
+      "word": "VACUUM",
+      "clue": "Term for a <> in the UK",
+      "transform": "aka"
+    },
+    {
+      "word": "HOOVER",
+      "clue": "<> {}, massive structure built in the 1930s",
+      "transform": "is the namesake of a big"
+    },
+    {
+      "word": "DAM",
+      "clue": "Reverse <> to get a magazine",
+      "transform": "backwards"
+    },
+    {
+      "word": "MAD",
+      "clue": "<>{}, like a busy emergency room",
+      "transform": "…"
+    },
+    {
+      "word": "HOUSE",
+      "clue": "Pronoun found inside <>",
+      "transform": "contains"
+    },
+    {
+      "word": "US",
+      "clue": null,
+      "transform": null
+    }
+  ]
+}

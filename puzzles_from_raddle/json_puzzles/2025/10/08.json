@@ -1,0 +1,76 @@
+{
+  "meta": {
+    "title": "From NEVER to SEEN",
+    "author": "Sandy Weisz and Mao Reynolds",
+    "difficulty": "medium",
+    "theme": "Make Some Noise",
+    "message": "This week's Raddles are in honor of the upcoming season of \"[Make Some Noise](https://www.youtube.com/watch?v=tKBcWn-tqWE),\" which premieres on Monday, October 13. Each show features a set of improvisational prompts that — as emphasized by the host, Sam Reich, at the start — \"the players have never seen before.\""
+  },
+  "ladder": [
+    {
+      "word": "NEVER",
+      "clue": "Change one letter in <> to get an illness",
+      "transform": "N->F"
+    },
+    {
+      "word": "FEVER",
+      "clue": "{} <>, something you might have in the winter",
+      "transform": "from being stuck in a"
+    },
+    {
+      "word": "CABIN",
+      "clue": "An old-fashioned <> is made from giant {}s",
+      "transform": "might be made of many a"
+    },
+    {
+      "word": "LOG",
+      "clue": "Append a letter to <> to get a certain mark",
+      "transform": "+O"
+    },
+    {
+      "word": "LOGO",
+      "clue": "Nike's <>",
+      "transform": "for Nike"
+    },
+    {
+      "word": "SWOOSH",
+      "clue": "Change the double letter in <> to a single letter to get a basketball term",
+      "transform": "OO->I"
+    },
+    {
+      "word": "SWISH",
+      "clue": "Drop one letter in <> to get something typically made on a birthday",
+      "transform": "-S"
+    },
+    {
+      "word": "WISH",
+      "clue": "<>{}, part of the skeleton",
+      "transform": "…"
+    },
+    {
+      "word": "BONE",
+      "clue": "<>{}, where discarded parts are stored",
+      "transform": "…"
+    },
+    {
+      "word": "YARD",
+      "clue": "Number of feet in two <>s",
+      "transform": "features this many feet"
+    },
+    {
+      "word": "SIX",
+      "clue": "\"<>-{}!\" (modern meme)",
+      "transform": "-"
+    },
+    {
+      "word": "SEVEN",
+      "clue": "Remove the middle letter from <> to be watched",
+      "transform": "-V"
+    },
+    {
+      "word": "SEEN",
+      "clue": null,
+      "transform": null
+    }
+  ]
+}

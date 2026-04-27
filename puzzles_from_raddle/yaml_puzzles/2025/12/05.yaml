@@ -1,0 +1,45 @@
+meta:
+  title: From STAR to ARSON
+  author: Sandy Weisz and Bailey Holtz
+  difficulty: medium
+  theme: mystery4
+ladder:
+- word: STAR
+  clue: Reverse <> to get a mild curse
+  transform: reversed
+- word: RATS
+  clue: As cluttered as a <> ^
+  transform: make a messy
+- word: NEST
+  clue: Add an O to <> and anagram to get a rock
+  transform: +O, then anagram
+- word: STONE
+  clue: Organ that might produce a <>
+  transform: is produced in the
+- word: KIDNEY
+  clue: World city that rhymes with <>
+  transform: rhymes with
+- word: SYDNEY
+  clue: Country of <>
+  transform: is in
+- word: AUSTRALIA
+  clue: The ^, a massive part of <>
+  transform: wilderness
+- word: OUTBACK
+  clue: Company that makes the <>
+  transform: is made by
+- word: SUBARU
+  clue: Reverse the first half of <> to get a vehicle
+  transform: features, backwards
+- word: BUS
+  clue: Append a letter to <> to get a US president
+  transform: +H
+- word: BUSH
+  clue: ^ <>, a biblical sight
+  transform: in the bible is
+- word: BURNING
+  clue: Criminal act that involves <>
+  transform: down a building will get you charged with
+- word: ARSON
+  clue:
+  transform:

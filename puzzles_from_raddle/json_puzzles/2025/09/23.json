@@ -1,0 +1,66 @@
+{
+  "meta": {
+    "title": "From LOWER to CASE",
+    "author": "Sandy Weisz and Mao Reynolds",
+    "difficulty": "medium",
+    "theme": "Fall",
+    "message": "It’s finally feeling like fall! The Raddles this week are all related to \"fall\". Lowercase letters are more formally called minuscule letters. The terms \"lowercase\" comes from the days of hand-set type, when the small letters were kept in the lower of two cases."
+  },
+  "ladder": [
+    {
+      "word": "LOWER",
+      "clue": "Add a letter to the front of <> to get a plant",
+      "transform": "+F"
+    },
+    {
+      "word": "FLOWER",
+      "clue": "Purple <> that's also a part of one's face",
+      "transform": "that's purple"
+    },
+    {
+      "word": "IRIS",
+      "clue": "Reverse <> to get a certain assistant",
+      "transform": "reversed"
+    },
+    {
+      "word": "SIRI",
+      "clue": "Append two letters to <> to get the name of a star",
+      "transform": "+US"
+    },
+    {
+      "word": "SIRIUS",
+      "clue": "Homophone of \"<>\" that sounds severe",
+      "transform": "sounds like"
+    },
+    {
+      "word": "SERIOUS",
+      "clue": "<> {}, popular food website",
+      "transform": "…"
+    },
+    {
+      "word": "EATS",
+      "clue": "When someone <> something, it goes down their {}",
+      "transform": "with one's"
+    },
+    {
+      "word": "THROAT",
+      "clue": "Drop the final sound from <> to get a word that precedes 'off', 'up', 'out', 'over', 'away', or 'together'",
+      "transform": "-\"T\""
+    },
+    {
+      "word": "THROW",
+      "clue": "<> {}, something you might put on your sofa or bed",
+      "transform": "this on your sofa"
+    },
+    {
+      "word": "PILLOW",
+      "clue": "<>{}, what covers a <>",
+      "transform": "covering"
+    },
+    {
+      "word": "CASE",
+      "clue": null,
+      "transform": null
+    }
+  ]
+}

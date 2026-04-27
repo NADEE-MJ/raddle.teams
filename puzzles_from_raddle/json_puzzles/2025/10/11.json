@@ -1,0 +1,71 @@
+{
+  "meta": {
+    "title": "From NOISE to BOYS",
+    "author": "Sandy Weisz and Mao Reynolds",
+    "difficulty": "medium",
+    "theme": "Make Some Noise",
+    "message": "This week's Raddles are in honor of the upcoming season of \"[Make Some Noise](https://www.youtube.com/watch?v=tKBcWn-tqWE),\" which premieres on Monday, October 13. The Noise Boys are the trio of Josh Ruben, Zac Oyama, and Brennan Lee Mulligan, who appear on the show together once per season, usually in the season's first episode. Each is a hilarious improvisor on his own, but together they produce a chemistry way greater than the sum of its parts."
+  },
+  "ladder": [
+    {
+      "word": "NOISE",
+      "clue": "Remove a letter from <> to get a body part",
+      "transform": "-I"
+    },
+    {
+      "word": "NOSE",
+      "clue": "Character famous for its long <>",
+      "transform": "grows on"
+    },
+    {
+      "word": "PINOCCHIO",
+      "clue": "Type of animal that befriends <>",
+      "transform": "has a friend that's a"
+    },
+    {
+      "word": "CRICKET",
+      "clue": "Piece of equipment in <> that rhymes with <>",
+      "transform": "uses a"
+    },
+    {
+      "word": "WICKET",
+      "clue": "Change one letter in <> to get a musical",
+      "transform": "T->D"
+    },
+    {
+      "word": "WICKED",
+      "clue": "<> {}, title for a few characters in a certain story",
+      "transform": "broom-rider"
+    },
+    {
+      "word": "WITCH",
+      "clue": "{} <>, Marvel hero",
+      "transform": "in Marvel is"
+    },
+    {
+      "word": "SCARLET",
+      "clue": "<> is a shade of {}",
+      "transform": "is a shade o"
+    },
+    {
+      "word": "RED",
+      "clue": "Five after <>, in a famous sequence",
+      "transform": "orange yellow green blue"
+    },
+    {
+      "word": "INDIGO",
+      "clue": "<> {}, musical duo",
+      "transform": "…"
+    },
+    {
+      "word": "GIRLS",
+      "clue": "Counterpart to <>",
+      "transform": "Counterpart"
+    },
+    {
+      "word": "BOYS",
+      "clue": null,
+      "transform": null
+    }
+  ]
+}

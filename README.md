@@ -1,183 +1,87 @@
-# MacMiniServer Quickstart
+# Raddle Teams 🎯
 
-Services running on the Mac Mini, replacing the Debian `maida-server`.
+A team-based multiplayer word chain puzzle game inspired by raddle.quest. Players work together in teams to solve word puzzles by connecting words through clever clues.
 
-## Architecture
+## 🎮 What It Does
 
-```
-Internet → Cloudflare → Mac Mini nginx (SSL terminator)
-                              ├── mm.nadee-mj.dev      → localhost:8155
-                              ├── raddle.nadee-mj.dev  → localhost:8000
-                              ├── jeopardy.nadee-mj.dev → localhost:3000
-                              ├── jelly.nadee-mj.dev   → 192.168.1.42:8096  (Debian)
-                              ├── vault.nadee-mj.dev   → 192.168.1.42:8080  (Debian)
-                              ├── hass.nadee-mj.dev    → 192.168.1.42:8123  (Debian)
-                              └── abs.nadee-mj.dev     → 192.168.1.42:13378 (Debian)
-```
+### For Players
+- Join lobbies using 6-character codes
+- Work with your team to solve word chain puzzles in real-time
+- Compete against other teams to finish first
+- See live updates as teammates submit guesses
 
-## Prerequisites
+### For Admins
+- Create and manage game lobbies
+- Assign players to teams
+- Start games and monitor team progress
+- View real-time analytics
 
-Install via Homebrew:
-
-```sh
-brew install nginx gh uv python3
-```
-
-Install nvm (for Node.js services):
-
-```sh
-curl -o- https://raw.githubusercontent.com/nvm-sh/nvm/v0.39.7/install.sh | bash
-```
-
-## One-time setup
-
-### 1. `/opt/projects`
-
-```sh
-sudo mkdir /opt/projects
-sudo chown nadeem /opt/projects
-```
-
-### 2. SSL keys
-
-Place your Cloudflare origin certificates in `nginx/keys/` (gitignored):
-
-```sh
-mkdir -p /Users/nadeem/Documents/MacMiniServer/nginx/keys
-# Copy cloudflare.pem and cloudflare.key here
-```
-
-### 3. nginx
-
-```sh
-cd /Users/nadeem/Documents/MacMiniServer/nginx
-bash setup.sh
-```
-
-This symlinks `nginx/nginx.conf` to `/opt/homebrew/etc/nginx/nginx.conf` and reloads nginx.
-
-To start nginx on login (needs sudo to bind port 443):
-
-```sh
-sudo brew services start nginx
-```
-
-### 4. mm
-
-```sh
-cd /Users/nadeem/Documents/MacMiniServer/mm
-bash setup.sh
-# Then edit .frontend-env and .backend-env with real values
-```
-
-### 5. raddle.teams
-
-```sh
-cd /Users/nadeem/Documents/MacMiniServer/raddle.teams
-bash setup.sh
-# Then edit .env with real values
-```
-
-### 6. jeopardy
-
-```sh
-cd /Users/nadeem/Documents/MacMiniServer/jeopardy
-bash setup.sh
-# Then edit .env with real values
-```
-
-### 7. cloudflare-dns-update
-
-```sh
-cp /Users/nadeem/Documents/MacMiniServer/maida-server/cloudflare-dns-update/.env \
-   /Users/nadeem/Documents/MacMiniServer/cloudflare-dns-update/.env
-# Or create .env with API_TOKEN=... and ZONE_ID=...
-
-cd /Users/nadeem/Documents/MacMiniServer/cloudflare-dns-update
-bash setup.sh
-```
-
-To install the cron job manually instead:
-
-```sh
-crontab crontab.txt
-```
-
-## Local access
-
-`nginx/sites/local.conf` adds `listen 80` HTTP blocks for all services (no SSL) plus a `default_server` catch-all. nginx binds port 80 on all interfaces, so `http://192.168.1.69` is reachable from any LAN device immediately.
-
-For subdomain routing to work from other devices (`http://mm.nadee-mj.dev` → Mac Mini instead of Cloudflare), those devices need to resolve the subdomains to `192.168.1.69`. Options:
-
-- **Router DNS override** _(recommended)_ — add a custom DNS record `*.nadee-mj.dev → 192.168.1.69` in your router admin panel. Covers all devices automatically.
-- **Pi-hole** — add a local DNS record under Local DNS → DNS Records.
-- **Per-device `/etc/hosts`** — add on each device:
+### Game Mechanics
+Players receive a start word and end word, then find intermediate words using clues:
 
 ```
-192.168.1.69 mm.nadee-mj.dev
-192.168.1.69 raddle.nadee-mj.dev
-192.168.1.69 jeopardy.nadee-mj.dev
-192.168.1.69 jelly.nadee-mj.dev
-192.168.1.69 vault.nadee-mj.dev
-192.168.1.69 hass.nadee-mj.dev
-192.168.1.69 abs.nadee-mj.dev
-192.168.1.69 health.nadee-mj.dev
+DOWN → SOUTH → MOUTH → TONGUE → SHOE → SOLE → SOUL → HEART → EARTH
 ```
 
-On the Mac Mini itself, use `127.0.0.1` instead of `192.168.1.69` in `/etc/hosts`.
+Teams can work forwards or backwards, and all members see progress in real-time.
 
-Note: port 80 also requires `sudo brew services start nginx`.
+## 🚀 Quick Setup
 
-## Verification
+### Prerequisites
+- **Python 3.12+**
+- **Node.js 18+**
+- **uv** (install from [astral.sh/uv](https://astral.sh/uv))
 
-### Services (launchd)
+### First-Time Setup
 
-```sh
-launchctl list | grep nadeem
+```bash
+# Clone the repository
+git clone https://github.com/NADEE-MJ/raddle.teams.git
+cd raddle.teams
+
+# Run the setup command
+./rt setup
 ```
 
-All three should appear with a PID (first column) if running:
+The setup wizard will guide you through:
+1. Creating your `.env` file with required variables
+2. Installing all dependencies
+3. Preparing the application for first run
 
-```
-PID   Status  Label
-1234  0       com.nadeem.mm
-1235  0       com.nadeem.raddle
-1236  0       com.nadeem.jeopardy
-```
+### Running the Application
 
-View logs:
+```bash
+# Start the server (builds frontend and starts backend)
+./rt server
 
-```sh
-tail -f ~/Library/Logs/mm.log
-tail -f ~/Library/Logs/raddle.log
-tail -f ~/Library/Logs/jeopardy.log
+# Or with auto-rebuild on file changes
+./rt server --watch
 ```
 
-### nginx
+Then open http://localhost:8000
 
-```sh
-nginx -t                             # test config
-curl -sk https://health.nadee-mj.dev # should return 200
+## 🔧 Development
+
+For all available commands, run:
+```bash
+./rt --help
 ```
 
-### cloudflare-dns-update
+Common commands:
+- `./rt build` - Build the frontend
+- `./rt test` - Run tests
+- `./rt format` - Format code
+- `./rt vitest` - Run frontend unit tests
 
-```sh
-crontab -l                           # verify hourly job is present
-/opt/homebrew/bin/python3 /Users/nadeem/Documents/MacMiniServer/cloudflare-dns-update/script.py
-cat /Users/nadeem/Documents/MacMiniServer/cloudflare-dns-update/logs/cloudflare.log
-cat /Users/nadeem/Documents/MacMiniServer/cloudflare-dns-update/cron-logs/cron.log
-```
+## 🌐 API Documentation
 
-## Managing services
+- **Swagger UI**: http://localhost:8000/docs
+- **ReDoc**: http://localhost:8000/redoc
 
-```sh
-# Restart a service
-launchctl kickstart -k gui/$(id -u)/com.nadeem.mm
+## 📄 License
 
-# Stop a service
-launchctl bootout gui/$(id -u) ~/Library/LaunchAgents/com.nadeem.mm.plist
+This project is licensed under the MIT License.
 
-# Start a service
-launchctl bootstrap gui/$(id -u) ~/Library/LaunchAgents/com.nadeem.mm.plist
-```
+## 🙏 Acknowledgments
+
+This is a blatant rip off of [raddle.quest](https://raddle.quest) built with modern web technologies for real-time multiplayer collaboration

@@ -1,0 +1,82 @@
+{
+  "meta": {
+    "title": "From SEARCH to RANDOM",
+    "author": "Sandy Weisz",
+    "difficulty": "medium",
+    "theme": "Enigmarch 2025",
+    "fromEmoji": "🔎",
+    "toEmoji": "🎲"
+  },
+  "ladder": [
+    {
+      "word": "SEARCH",
+      "clue": "Anagram <> to get a national park",
+      "transform": "anagrams to"
+    },
+    {
+      "word": "ARCHES",
+      "clue": "Color of some well-known <>",
+      "transform": "are"
+    },
+    {
+      "word": "GOLDEN",
+      "clue": "He gave away a few <> tickets",
+      "transform": "ticket by"
+    },
+    {
+      "word": "WILLY WONKA",
+      "clue": "Color that shares its name with a guest of <>",
+      "transform": "welcomed"
+    },
+    {
+      "word": "VIOLET",
+      "clue": "Remove a letter from <> and anagram to get a color",
+      "transform": "-T, anagrammed"
+    },
+    {
+      "word": "OLIVE",
+      "clue": "Cartoon boyfriend of a woman named <>",
+      "transform": "<3s"
+    },
+    {
+      "word": "POPEYE",
+      "clue": "<> loves to eat this",
+      "transform": "eats"
+    },
+    {
+      "word": "SPINACH",
+      "clue": "<> can be the base of this",
+      "transform": "is in a"
+    },
+    {
+      "word": "SALAD",
+      "clue": "Double a letter in <> and reverse to get a city",
+      "transform": "+L, reversed"
+    },
+    {
+      "word": "DALLAS",
+      "clue": "Family at the center of “<>”",
+      "transform": "is about the family"
+    },
+    {
+      "word": "EWING",
+      "clue": "First syllable of <> sounds like this animal",
+      "transform": "partially sounds like"
+    },
+    {
+      "word": "EWE",
+      "clue": "Male counterpart of a <>",
+      "transform": "<3s a"
+    },
+    {
+      "word": "RAM",
+      "clue": "What the first letter of <> stands for",
+      "transform": "partially stands for"
+    },
+    {
+      "word": "RANDOM",
+      "clue": null,
+      "transform": null
+    }
+  ]
+}

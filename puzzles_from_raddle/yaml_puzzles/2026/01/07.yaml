@@ -1,0 +1,41 @@
+meta:
+  title: From GUM to TIE
+  author: Sandy Weisz
+  theme: mystery5
+ladder:
+- word: GUM
+  clue: Reverse <> to get something in your kitchen
+  step: reversed
+- word: MUG
+  clue: A <> ^ is taken in a police station
+  step: …
+- word: SHOT
+  clue: A <> in the ^
+  step: in the
+- word: DARK
+  clue: Opposite of <>
+  step: opposite
+- word: LIGHT
+  clue: ^<>, a tool for searchers
+  step: follows
+- word: FLASH
+  clue: "Your phone’s ^ might need to use a <>"
+  step: is used on a
+- word: CAMERA
+  clue: Popular brand of instant <>
+  step: brand
+- word: POLAROID
+  clue: Drop a trigram (three letters) from <> to describe some opposites
+  step: -OID
+- word: POLAR
+  clue: <> ^, a big beast
+  step: is a kind of
+- word: BEAR
+  clue: Add a K to <> and anagram to get a pause
+  step: +K, then anagram
+- word: BREAK
+  clue: <> a ^ with one final game
+  step: a
+- word: TIE
+  clue:
+  step: ' '

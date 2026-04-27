@@ -1,0 +1,71 @@
+{
+  "meta": {
+    "title": "From SORRY to BABY",
+    "theme": "guest_recs_25",
+    "author": "Natan Last",
+    "author_bio": "Natan Last is the author of [Across the Universe: The Past, Present, and Future of the Crossword Puzzle](https://www.penguinrandomhouse.com/books/723796/across-the-universe-by-natan-last/). He works in humanitarian immigration and has written crosswords, essays, and poems for The New Yorker, The New York Times, The Atlantic, and elsewhere.",
+    "message": "Today's Raddle is by Natan Last. Natan writes, \"[_Sorry, Baby_](https://a24films.com/films/sorry-baby) is one of the best movies of 2025—dark, literary, funny, precise. And a great winter movie besides.\""
+  },
+  "ladder": [
+    {
+      "word": "SORRY",
+      "clue": "Short exclamation that means \"<> I dropped that!\"",
+      "step": "aka"
+    },
+    {
+      "word": "OOPS",
+      "clue": "Add a bigram (two letters) to the start of <> to get uniformed groups",
+      "step": "+TR"
+    },
+    {
+      "word": "TROOPS",
+      "clue": "Drop an O in <> and reverse it to get a physical activity",
+      "step": "-O, then reverse"
+    },
+    {
+      "word": "SPORT",
+      "clue": "{} <>, one who isn't a sore loser",
+      "step": "that isn't sore is"
+    },
+    {
+      "word": "GOOD",
+      "clue": "\"This {} be <>…\" (rhyming bit of sarcasm)",
+      "step": "rhymes with"
+    },
+    {
+      "word": "SHOULD",
+      "clue": "Append a bigram (two letters) to <> to get a body part",
+      "step": "+ER"
+    },
+    {
+      "word": "SHOULDER",
+      "clue": "{} <>, what a sore loser might give you",
+      "step": "of a sore loser is"
+    },
+    {
+      "word": "COLD",
+      "clue": "Opposite of <>",
+      "step": "opposite"
+    },
+    {
+      "word": "HOT",
+      "clue": "<>{}, 1970s bottoms",
+      "step": "article of clothing"
+    },
+    {
+      "word": "PANTS",
+      "clue": "Replace the first letter of <> with an A and anagram to get someone dressed in red",
+      "step": "P->A, then anagram"
+    },
+    {
+      "word": "SANTA",
+      "clue": "\"<> {}\", Eartha Kitt hit",
+      "step": "…"
+    },
+    {
+      "word": "BABY",
+      "clue": null,
+      "step": " "
+    }
+  ]
+}

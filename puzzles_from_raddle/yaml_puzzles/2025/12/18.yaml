@@ -1,0 +1,39 @@
+meta:
+  title: From CANDLE to SPEED
+  author: Sandy Weisz
+  theme: hanukkah
+  message:
+ladder:
+- word: CANDLE
+  clue: <>^ are used to hold <>s
+  step: holders
+- word: STICKS
+  clue: <> and ^, dangerous things
+  step: and
+- word: STONES
+  clue: Rock band The ^ <>
+  step: be
+- word: ROLLING
+  clue: "\"People will be <> in the ^!\""
+  step: in the
+- word: AISLES
+  clue: Drop the outside letters of <> to get a kind of landform
+  step: -A, -S
+- word: ISLE
+  clue: Anagram <> to get some tales
+  step: anagrammed
+- word: LIES
+  clue: Add a letter to the start of <> to get some bugs
+  step: +F
+- word: FLIES
+  clue: "\"^ of the <>\""
+  step: need a
+- word: LORD
+  clue: "\"…The <> our ^…\""
+  step: aka
+- word: GOD
+  clue: <>^ (safe travels)
+  step: blesses you with
+- word: SPEED
+  clue:
+  step: ' '

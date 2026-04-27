@@ -1,0 +1,70 @@
+{
+  "meta": {
+    "title": "From YEW to LABS",
+    "author": "Sandy Weisz",
+    "theme": "mitmh",
+    "message": "In 2021, ✈✈✈ Galactic Trendsetters ✈✈✈ introduced us to Yew Labs, which had lost a professor in an alternate universe. Teams had to navigate a virtual space, called [Perpendicular Institute of the World](https://puzzles.mit.edu/2021/), to find the coin. Palindrome (my team) found the coin and won this hunt."
+  },
+  "ladder": [
+    {
+      "word": "YEW",
+      "clue": "Pronoun that sounds like \"<>\"",
+      "step": "sounds like"
+    },
+    {
+      "word": "YOU",
+      "clue": "All <> need is this?",
+      "step": "need is"
+    },
+    {
+      "word": "LOVE",
+      "clue": "Emoji that represents <>",
+      "step": "is represented by a"
+    },
+    {
+      "word": "HEART",
+      "clue": "<>{}, reaction to some food",
+      "step": "precedes"
+    },
+    {
+      "word": "BURN",
+      "clue": "Third {} <>",
+      "step": "can be of the third"
+    },
+    {
+      "word": "DEGREE",
+      "clue": "<> is a brand of {}",
+      "step": "is a brand of"
+    },
+    {
+      "word": "DEODORANT",
+      "clue": "<> is often applied in your {}",
+      "step": "goes in one's"
+    },
+    {
+      "word": "ARMPIT",
+      "clue": "Your <> is directly under your {}",
+      "step": "is beneath your"
+    },
+    {
+      "word": "SHOULDER",
+      "clue": "What might be on the <> of an angry person",
+      "step": "might carry a"
+    },
+    {
+      "word": "CHIP",
+      "clue": "Some ice cream flavors have {} <>s",
+      "step": "flavor"
+    },
+    {
+      "word": "CHOCOLATE",
+      "clue": "<> {}, some dark-haired pups",
+      "step": "dogs might be"
+    },
+    {
+      "word": "LABS",
+      "clue": null,
+      "step": " "
+    }
+  ]
+}

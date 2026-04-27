@@ -1,0 +1,76 @@
+{
+  "meta": {
+    "title": "From ELEVATOR to DOOR",
+    "author": "Mao Reynolds and Sandy Weisz",
+    "difficulty": "medium",
+    "theme": "Juneteenth",
+    "message": "In celebration of Juneteeth, we're building Raddles honoring Black inventors. The automatic elevator door was invented by [Alexander Miles](https://www.invent.org/inductees/alexander-miles), a Black man born in Ohio in 1838. Before he patented his design in 1887, doors were opened manually and often left open. Passengers would occasionally fall into the shafts. Miles' invention saved lives and made taking a lift easier and more convenient."
+  },
+  "ladder": [
+    {
+      "word": "ELEVATOR",
+      "clue": "Alternative to the <>, in most buildings",
+      "transform": "alternative"
+    },
+    {
+      "word": "STAIRS",
+      "clue": "Remove a letter from <> to get some symbols",
+      "transform": "-I"
+    },
+    {
+      "word": "STARS",
+      "clue": "\"<> and {},\" nickname for something that flies",
+      "transform": "and"
+    },
+    {
+      "word": "STRIPES",
+      "clue": "Animal with <>",
+      "transform": "appear on a"
+    },
+    {
+      "word": "ZEBRA",
+      "clue": "Add an L to <> and anagram to get a type of clothing",
+      "transform": "+L and anagram"
+    },
+    {
+      "word": "BLAZER",
+      "clue": "A <> is a type of {}",
+      "transform": "is a type of"
+    },
+    {
+      "word": "JACKET",
+      "clue": "Kind of <> you'd find on a book",
+      "transform": "protects from"
+    },
+    {
+      "word": "DUST",
+      "clue": "{} the <>, to come to an end",
+      "transform": "in a"
+    },
+    {
+      "word": "BITE",
+      "clue": "{}<>, a dental condition",
+      "transform": "can be"
+    },
+    {
+      "word": "UNDER",
+      "clue": "<>{}, quality of a certain railroad",
+      "transform": "the"
+    },
+    {
+      "word": "GROUND",
+      "clue": "<> {}, a good thing to get in on",
+      "transform": "…"
+    },
+    {
+      "word": "FLOOR",
+      "clue": "A {} in the <> might be a trap?",
+      "transform": "might have a"
+    },
+    {
+      "word": "DOOR",
+      "clue": null,
+      "transform": null
+    }
+  ]
+}

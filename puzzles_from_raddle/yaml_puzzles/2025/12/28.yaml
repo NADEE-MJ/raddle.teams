@@ -1,0 +1,52 @@
+meta:
+  title: From RICE to BALL
+  theme: guest_recs_25
+  author: Ben Tausig
+  author_bio:
+    "Ben Tausig is editor of the [AVCX](https://avxwords.com/), the largest indie crossword and games company in the world, and also the best. Subscribe today at a level that suits your budget, and get high-quality, contemporary puzzles in your inbox or your favorite app several days each week."
+  message:
+    "Today's Raddle is by Ben Tausig with his son Julian.
+    Ben writes, \"I'm very interested in categories of food that occur in different forms in many places throughout the world, such as fried dough pockets (empanadas, beignets, hotteok, et al) and dumplings (pierogi, ravioli, momos). I recently introduced my kids to arancini, Sicilian fried rice balls, and soon we'll be visiting Japan, and surely eating lots of onigiri there. Ghanaian omo tuo and Laotian khao tom are just two other versions of this frankly perfect culinary invention.\""
+ladder:
+- word: RICE
+  clue: Remove one letter from <> to get a sprain treatment
+  step: -R
+- word: ICE
+  clue: Opposite of <>, in a fantasy novel series
+  step: and
+- word: FIRE
+  clue: <> ^, place with large trucks
+  step: house aka
+- word: STATION
+  clue: Replace the last two letters in <> with a C to become <>ary
+  step: ON->C
+- word: STATIC
+  clue: Part of a house that rhymes with <>
+  step: rhymes with
+- word: ATTIC
+  clue: Anagram <> to become unspoken
+  step: anagrammed
+- word: TACIT
+  clue: Adorable animal found backwards in <>
+  step: partially backwards is
+- word: CAT
+  clue: Famous cartoon <>
+  step: in the cartoons is named
+- word: TOM
+  clue: Adversary of <>
+  step: fought
+- word: JERRY
+  clue: Change one letter in <> to become twitchy
+  step: R->K
+- word: JERKY
+  clue: ^ <>, road trip snack
+  step: is made of
+- word: BEEF
+  clue: ^ <> is found in some tacos
+  step: can be
+- word: GROUND
+  clue: A <> ^ will likely get you out
+  step: …
+- word: BALL
+  clue:
+  step: ' '

@@ -1,0 +1,76 @@
+{
+  "meta": {
+    "title": "From GUM to DROP",
+    "author": "Sandy Weisz and Mao Reynolds",
+    "difficulty": "medium",
+    "theme": "Fall",
+    "message": "It’s finally fall. The Raddles this week are all related to \"fall\". The gumdrop is a name for domed fruit gummies. The earliest recorded use of the word “gumdrop” appeared in the Illinois State Chronicle in 1859, although the candies have existed since at least 1801."
+  },
+  "ladder": [
+    {
+      "word": "GUM",
+      "clue": "Reverse <> to get a vessel",
+      "transform": "reversed"
+    },
+    {
+      "word": "MUG",
+      "clue": "<> {}, a certain photograph",
+      "transform": "for a"
+    },
+    {
+      "word": "SHOT",
+      "clue": "A <> in the {}",
+      "transform": "in the"
+    },
+    {
+      "word": "DARK",
+      "clue": "The <> {}, nickname for a superhero",
+      "transform": "…"
+    },
+    {
+      "word": "KNIGHT",
+      "clue": "Time that sounds like \"<>\"",
+      "transform": "-K"
+    },
+    {
+      "word": "NIGHT",
+      "clue": "What most of us do at <>",
+      "transform": "is when we"
+    },
+    {
+      "word": "SLEEP",
+      "clue": "Drop the outside letters of <> to get a name",
+      "transform": "-S -P"
+    },
+    {
+      "word": "LEE",
+      "clue": "Director {} <>",
+      "transform": "who directs"
+    },
+    {
+      "word": "SPIKE",
+      "clue": "Sport in which you <>",
+      "transform": "a"
+    },
+    {
+      "word": "VOLLEYBALL",
+      "clue": "<> in a 2000 movie with no speaking lines",
+      "transform": "named"
+    },
+    {
+      "word": "WILSON",
+      "clue": "<> of \"The Office\"",
+      "transform": "of \"The Office\""
+    },
+    {
+      "word": "RAINN",
+      "clue": "{} a letter from <> to get a kind of {}",
+      "transform": "-N is a"
+    },
+    {
+      "word": "DROP",
+      "clue": null,
+      "transform": null
+    }
+  ]
+}

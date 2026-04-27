@@ -1,0 +1,66 @@
+{
+  "meta": {
+    "title": "From TINKER to BELL",
+    "author": "Sandy Weisz and Mao Reynolds",
+    "difficulty": "medium",
+    "theme": "Whodunit",
+    "message": "A murder has been committed at our Halloween party! Seven witnesses (in costume) have given testimony, in the form of Raddles. Our final witness is Tinker Bell, who no one ever notices but who sees it all. Her hint: you need to solve each Raddle before being able to solve the mystery. Check the previous few Raddles for more hints! [Update: the solution [can be found here](/mystery/whodunit)]"
+  },
+  "ladder": [
+    {
+      "word": "TINKER",
+      "clue": "Change one letter in <> to get a dating app",
+      "transform": "K->D"
+    },
+    {
+      "word": "TINDER",
+      "clue": "<> is useful for starting a {}",
+      "transform": "helps start a"
+    },
+    {
+      "word": "FIRE",
+      "clue": "Change one letter in <> to get a thin metal material",
+      "transform": "F->W"
+    },
+    {
+      "word": "WIRE",
+      "clue": "City where \"The <>\" is set",
+      "transform": "is set in"
+    },
+    {
+      "word": "BALTIMORE",
+      "clue": "Poet from <>",
+      "transform": "is the home of"
+    },
+    {
+      "word": "POE",
+      "clue": "🐦 associated with <>",
+      "transform": "wrote about a"
+    },
+    {
+      "word": "RAVEN",
+      "clue": "Change the second letter in <>, then reverse the word, to get an (appropriate!) adverb",
+      "transform": "said \"More? …\""
+    },
+    {
+      "word": "NEVER",
+      "clue": "<> {} <> (don’t quit)",
+      "transform": "sits on either side of"
+    },
+    {
+      "word": "SAY",
+      "clue": "Add an /L/ sound inside <> to get a kind of conveyance",
+      "transform": "+/l/"
+    },
+    {
+      "word": "SLEIGH",
+      "clue": "<> {}, noisy thing attached to a <> horse",
+      "transform": "noisemaker"
+    },
+    {
+      "word": "BELL",
+      "clue": null,
+      "transform": null
+    }
+  ]
+}

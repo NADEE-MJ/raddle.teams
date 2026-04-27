@@ -1,0 +1,47 @@
+meta:
+  title: From SKY to TEAM
+  author: Sandy Weisz
+  theme: boardgames
+  message:
+    "Many of the games on this list play well at two players, but [Sky Team](https://www.hachetteboardgames.com/products/sky-team) is designed specifically for two.
+    In it, you and a partner are co-pilots who need to land a plane at an airport. You do this by rolling dice and positioning them in precisely the right order.
+    The catch: you can't see your partner's dice, or talk about what you dice you each have. The box comes with 21 scenarios of increasing difficulty.
+    It's tense and rewards repeated play.
+    But if planes aren't your bag, here's another two-person game that's a go-to for us: [Splendor Duel](https://boardgamegeek.com/boardgame/364073/splendor-duel)."
+ladder:
+- word: SKY
+  clue: ^ in the <> (overoptimistic)
+  transform: has a
+- word: PIE
+  clue: Drop a letter from <> to get a number
+  transform: -E
+- word: PI
+  clue: <> starts with ^
+  transform: starts with
+- word: THREE
+  clue: <> x <>
+  transform: squared
+- word: NINE
+  clue: Change one letter in <> to get <> - <>
+  transform: I->O
+- word: NONE
+  clue: Drop a letter in <> to get ^ more than <>
+  transform: -N
+- word: ONE
+  clue: "Add a letter to the front of <> to get a part of one’s body"
+  transform: +B
+- word: BONE
+  clue: Funny <> location
+  transform: that's funny is in your
+- word: ELBOW
+  clue: <> ^, some space
+  transform: space
+- word: ROOM
+  clue: In college, you'll likely get a <>^
+  transform: sharer
+- word: MATE
+  clue: Anagram <> to get a group
+  transform: anagrammed
+- word: TEAM
+  clue:
+  transform:

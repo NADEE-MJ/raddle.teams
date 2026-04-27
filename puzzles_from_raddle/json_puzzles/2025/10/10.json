@@ -1,0 +1,71 @@
+{
+  "meta": {
+    "title": "From BUZZER to SOUND",
+    "author": "Sandy Weisz and Mao Reynolds",
+    "difficulty": "medium",
+    "theme": "Make Some Noise",
+    "message": "We're celebrating the upcoming season of \"[Make Some  Noise](https://www.youtube.com/watch?v=tKBcWn-tqWE),\" which premieres on Monday, October 13. Often the players need to buzz in to play one of the minigames. Frequent guest Jacob Wysocki has taken to committing to his own buzzer sound that's different on each show. [Here's a supercut](https://www.youtube.com/watch?v=1o_igcJnIGE)."
+  },
+  "ladder": [
+    {
+      "word": "BUZZER",
+      "clue": "<> {}, an exciting end to a game",
+      "transform": "…"
+    },
+    {
+      "word": "BEATER",
+      "clue": "Anagram <> to get a shopping term",
+      "transform": "anagrammed"
+    },
+    {
+      "word": "REBATE",
+      "clue": "Change one letter in <> to make a connection",
+      "transform": "B->L"
+    },
+    {
+      "word": "RELATE",
+      "clue": "Drop the outside letters of <>, then reverse, to get a story",
+      "transform": "-R, -E, reversed"
+    },
+    {
+      "word": "TALE",
+      "clue": "Insert a letter in <> to get a piece of furniture",
+      "transform": "+B"
+    },
+    {
+      "word": "TABLE",
+      "clue": "Kind of <> with pockets",
+      "transform": "with pockets"
+    },
+    {
+      "word": "POOL",
+      "clue": "Change a letter in <> to get a fabric",
+      "transform": "P->W"
+    },
+    {
+      "word": "WOOL",
+      "clue": "A word for <> that also means to swindle",
+      "transform": "pelt is called a"
+    },
+    {
+      "word": "FLEECE",
+      "clue": "Descriptor of a mythological <>",
+      "transform": "of myth"
+    },
+    {
+      "word": "GOLDEN",
+      "clue": "\"{} is <>\", it's said (though maybe it shouldn't be)",
+      "transform": "describes"
+    },
+    {
+      "word": "SILENCE",
+      "clue": "\"The {} of <>\", song from 1964",
+      "transform": "has no"
+    },
+    {
+      "word": "SOUND",
+      "clue": null,
+      "transform": null
+    }
+  ]
+}

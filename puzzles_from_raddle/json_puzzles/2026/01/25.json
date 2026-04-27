@@ -1,0 +1,70 @@
+{
+  "meta": {
+    "title": "From SCREECH to OWL",
+    "author": "Sandy Weisz and Elizabeth Hargrave",
+    "theme": "wingspan",
+    "message": "The Eastern Screech-Owls live near humans, but because they're small and nocturnal, they're rarely seen."
+  },
+  "ladder": [
+    {
+      "word": "SCREECH",
+      "clue": "Add an M to <> and anagram to get an artist of illusions (not a rapper)",
+      "step": "+M, then anagram"
+    },
+    {
+      "word": "MC ESCHER",
+      "clue": "Drop the first half of <> to get a singer",
+      "step": "drop first half"
+    },
+    {
+      "word": "CHER",
+      "clue": "<>'s onetime partner",
+      "step": "partner"
+    },
+    {
+      "word": "SONNY",
+      "clue": "Forecast that sounds like \"<>\"",
+      "step": "O->U"
+    },
+    {
+      "word": "SUNNY",
+      "clue": "Where it's been <> for 17 seasons",
+      "step": "always in"
+    },
+    {
+      "word": "PHILADELPHIA",
+      "clue": "<> football player",
+      "step": "footballer"
+    },
+    {
+      "word": "EAGLE",
+      "clue": "An <>'s {} can be over 2 meters",
+      "step": "has a wide"
+    },
+    {
+      "word": "WINGSPAN",
+      "clue": "The board game <> takes place over four {}s",
+      "step": "has four"
+    },
+    {
+      "word": "ROUND",
+      "clue": "Term for a <> earring",
+      "step": "earring"
+    },
+    {
+      "word": "HOOP",
+      "clue": "Fictional bear that is <> backwards",
+      "step": "reversed"
+    },
+    {
+      "word": "POOH",
+      "clue": "<>'s wisest friend with an unoriginal name",
+      "step": "friend"
+    },
+    {
+      "word": "OWL",
+      "clue": null,
+      "step": " "
+    }
+  ]
+}

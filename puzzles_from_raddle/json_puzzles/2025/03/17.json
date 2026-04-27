@@ -1,0 +1,77 @@
+{
+  "meta": {
+    "title": "From BOW to LUCKY",
+    "author": "Sandy Weisz",
+    "difficulty": "medium",
+    "theme": "Enigmarch 2025",
+    "fromEmoji": "🎀",
+    "toEmoji": "🍀"
+  },
+  "ladder": [
+    {
+      "word": "BOW",
+      "clue": "Add two letters to <> to get a part of the body",
+      "transform": "+EL"
+    },
+    {
+      "word": "ELBOW",
+      "clue": "Move one letter of <> to the front to get a preposition",
+      "transform": "anagrammed"
+    },
+    {
+      "word": "BELOW",
+      "clue": "Opposite of <>",
+      "transform": "opposite"
+    },
+    {
+      "word": "ABOVE",
+      "clue": "A legit thing is <> {}",
+      "transform": "…"
+    },
+    {
+      "word": "BOARD",
+      "clue": "Homophone of <> that is tedious",
+      "transform": "sounds like"
+    },
+    {
+      "word": "BORED",
+      "clue": "<> to {}",
+      "transform": "to"
+    },
+    {
+      "word": "DEATH",
+      "clue": "Color that preceded <>, long ago",
+      "transform": "was"
+    },
+    {
+      "word": "BLACK",
+      "clue": "Opposite of <>",
+      "transform": "opposite"
+    },
+    {
+      "word": "WHITE",
+      "clue": "Great <> {}",
+      "transform": "& great"
+    },
+    {
+      "word": "SHARK",
+      "clue": "Change one letter in <> to a T to get a comic book hero",
+      "transform": "H -> T"
+    },
+    {
+      "word": "STARK",
+      "clue": "Nickname of <>'s bodyguard and close friend",
+      "transform": "works with"
+    },
+    {
+      "word": "HAPPY",
+      "clue": "<>-go-{}",
+      "transform": "-go-"
+    },
+    {
+      "word": "LUCKY",
+      "clue": "",
+      "transform": ""
+    }
+  ]
+}

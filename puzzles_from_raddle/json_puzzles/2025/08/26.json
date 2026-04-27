@@ -1,0 +1,71 @@
+{
+  "meta": {
+    "title": "From RUBY to TUESDAY",
+    "author": "Sandy Weisz and Mao Reynolds",
+    "difficulty": "medium",
+    "theme": "Rolling Stones",
+    "message": "This week’s Raddles are inspired by songs by the Rolling Stones. Today’s is “Ruby Tuesday,” released in 1966 with “Let’s Spend the Night Together.” The restaurant chain Ruby Tuesday, which formed a corporation thirty years later in 1996, took its name from the song, though they don’t seem to have collaborated with the band for any menu items (really, no “Beast of Burden” burgers?)."
+  },
+  "ladder": [
+    {
+      "word": "RUBY",
+      "clue": "Swap the consonants in <> to put something underground",
+      "transform": "anagram"
+    },
+    {
+      "word": "BURY",
+      "clue": "When we <> someone, they’re often in a {}",
+      "transform": "someone in a"
+    },
+    {
+      "word": "COFFIN",
+      "clue": "{} in the <>",
+      "transform": "is finished with a final"
+    },
+    {
+      "word": "NAIL",
+      "clue": "Tool to use on a <>",
+      "transform": "tool"
+    },
+    {
+      "word": "HAMMER",
+      "clue": "Norse god with a <>",
+      "transform": "wielder"
+    },
+    {
+      "word": "THOR",
+      "clue": "Publisher of \"<>\" (and many others)",
+      "transform": "is published by"
+    },
+    {
+      "word": "MARVEL",
+      "clue": "Co-founder of <>",
+      "transform": "co-founder"
+    },
+    {
+      "word": "STAN LEE",
+      "clue": "Delete the second letter from <> and anagram to get one-named singer",
+      "transform": "-T, then anagram"
+    },
+    {
+      "word": "SELENA",
+      "clue": "Singer-actress <> {}",
+      "transform": "…"
+    },
+    {
+      "word": "GOMEZ",
+      "clue": "Daughter of <>, on '60s TV, and now",
+      "transform": "daughter"
+    },
+    {
+      "word": "WEDNESDAY",
+      "clue": "It comes before <>",
+      "transform": "follows"
+    },
+    {
+      "word": "TUESDAY",
+      "clue": null,
+      "transform": null
+    }
+  ]
+}

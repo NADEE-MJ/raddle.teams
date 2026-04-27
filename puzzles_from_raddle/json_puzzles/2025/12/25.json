@@ -1,0 +1,71 @@
+{
+  "meta": {
+    "title": "From SPLIT to FICTION",
+    "theme": "guest_recs_25",
+    "author": "Adal Rifai",
+    "author_bio": "Adal Rifai is an improviser, podcaster, producer and writer in Chicago. He is the creator and co-host of the podcast '[Hey Riddle Riddle](https://www.heyriddleriddle.com/)' and co-hosts the podcasts '[Hello From the Magic Tavern](https://hellofromthemagictavern.com/)' and '[Gumshoes & Dragons](https://www.gumshoesanddragons.com/)'.",
+    "message": "Today's Raddle is by Adal Rifai. Adal writes, \"My wife and I both love video games but are typically at opposite ends of the spectrum; me hacking my way through Elden Ring and her cozied up to Yoshi's Crafted World. However [Split Fiction](https://www.ea.com/en/games/split-fiction/split-fiction) is the rare game/couch co-op that we both adored. In the same vein (and from the same studio Hazelight) as the incredible 'It Takes Two', 'Split Fiction' oscillates at a great pace between playing in sci-fi and fantasy worlds. From riding gravity-defying motorcycles and wielding a laser whip, to playing as farting pigs searching for apples, this game is an absolute delight.\""
+  },
+  "ladder": [
+    {
+      "word": "SPLIT",
+      "clue": "A {} <> appeals to a sweet tooth",
+      "step": "kind of fruit"
+    },
+    {
+      "word": "BANANA",
+      "clue": "<>s come in a {}",
+      "step": "grouping"
+    },
+    {
+      "word": "BUNCH",
+      "clue": "TV's {} <>",
+      "step": "on TV"
+    },
+    {
+      "word": "BRADY",
+      "clue": "Insert a letter into <> to get an alcoholic drink",
+      "step": "+N"
+    },
+    {
+      "word": "BRANDY",
+      "clue": "Drop the last two letters of <> then anagram to get a shelter for some creatures",
+      "step": "-DY, then anagram"
+    },
+    {
+      "word": "BARN",
+      "clue": "<>es & {}",
+      "step": "es &"
+    },
+    {
+      "word": "NOBLE",
+      "clue": "A <> {} isn't when a duke or marquis farts?",
+      "step": "kind of element"
+    },
+    {
+      "word": "GAS",
+      "clue": "You likely procure <> at a <> {}",
+      "step": "place"
+    },
+    {
+      "word": "STATION",
+      "clue": "Remove a trigram (three letters) from <> to get a male name",
+      "step": "-TIO"
+    },
+    {
+      "word": "STAN",
+      "clue": "A <> is an obsessive {}",
+      "step": "is an obsessive"
+    },
+    {
+      "word": "FAN",
+      "clue": "<> {} features a lot of my favorite ships",
+      "step": "-made"
+    },
+    {
+      "word": "FICTION",
+      "clue": null,
+      "step": null
+    }
+  ]
+}

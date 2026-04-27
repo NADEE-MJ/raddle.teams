@@ -1,0 +1,71 @@
+{
+  "meta": {
+    "title": "From TOMATO to TOMATO",
+    "author": "Sandy Weisz",
+    "difficulty": "medium",
+    "theme": "Summer produce",
+    "message": "We're celebrating summer with Raddles based on fresh summer produce. It's the last one today, so [let's call the whole thing off](https://www.youtube.com/watch?v=LOILZ_D3aRg#t=1m43s)."
+  },
+  "ladder": [
+    {
+      "word": "TOMATO",
+      "clue": "Italian <> sauce",
+      "transform": "sauce is called"
+    },
+    {
+      "word": "MARINARA",
+      "clue": "Animal that sounds like the first syllable of <>",
+      "transform": "partially sounds like"
+    },
+    {
+      "word": "MARE",
+      "clue": "Change one letter in <> to get a challenge",
+      "transform": "M->D"
+    },
+    {
+      "word": "DARE",
+      "clue": "Counterpart to <>, in a party game",
+      "transform": "or"
+    },
+    {
+      "word": "TRUTH",
+      "clue": "Drop a letter from <> to get a female name",
+      "transform": "-T"
+    },
+    {
+      "word": "RUTH",
+      "clue": "Candy bar {} <>",
+      "transform": "is yummy as a"
+    },
+    {
+      "word": "BABY",
+      "clue": "<>{}, someone you might hire for the night",
+      "transform": "…"
+    },
+    {
+      "word": "SITTER",
+      "clue": "Add a W to <> and anagram to get a party game first published in the '60s",
+      "transform": "+W, and anagram"
+    },
+    {
+      "word": "TWISTER",
+      "clue": "Character who famously got transported by a <>",
+      "transform": "swept away"
+    },
+    {
+      "word": "DOROTHY",
+      "clue": "Dog belonging to <>",
+      "transform": "has a dog named"
+    },
+    {
+      "word": "TOTO",
+      "clue": "Insert two letters into the middle of <> to get a fruit",
+      "transform": "+MA"
+    },
+    {
+      "word": "TOMATO",
+      "clue": null,
+      "transform": null
+    }
+  ]
+}

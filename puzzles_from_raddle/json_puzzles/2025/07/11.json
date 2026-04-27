@@ -1,0 +1,76 @@
+{
+  "meta": {
+    "title": "From TIRE to SWING",
+    "author": "Sandy Weisz and Mao Reynolds",
+    "difficulty": "medium",
+    "theme": "Tour de France",
+    "message": "Today is another stage of the Tour de France, the weeks-long cycling trek happening right now across (you guessed it) France. In the race, if a participant’s tires are punctured or go flat, they signal to a team car and are immediately given new wheels. Going on a tire swing is a much less risky endeavor. I recommend it."
+  },
+  "ladder": [
+    {
+      "word": "TIRE",
+      "clue": "Swap the consonants of <> to get a special event",
+      "transform": "T->R"
+    },
+    {
+      "word": "RITE",
+      "clue": "Add a letter to the start of <> to get a homophone of <>",
+      "transform": "+W"
+    },
+    {
+      "word": "WRITE",
+      "clue": "Utensil you <> with",
+      "transform": "with a"
+    },
+    {
+      "word": "PENCIL",
+      "clue": "<> {}, garment in many office suits",
+      "transform": "…"
+    },
+    {
+      "word": "SKIRT",
+      "clue": "Delete a letter from <> to get a routine",
+      "transform": "-R"
+    },
+    {
+      "word": "SKIT",
+      "clue": "Show with many a <>",
+      "transform": "is performed on"
+    },
+    {
+      "word": "SNL",
+      "clue": "The middle of <> stands for this",
+      "transform": "partially stands for"
+    },
+    {
+      "word": "NIGHT",
+      "clue": "Opposite of <>",
+      "transform": "opposite"
+    },
+    {
+      "word": "DAY",
+      "clue": "Add a word before <> to get something written on many forms",
+      "transform": "of your emergence"
+    },
+    {
+      "word": "BIRTHDAY",
+      "clue": "Dessert enjoyed on a <>",
+      "transform": "dessert"
+    },
+    {
+      "word": "CAKE",
+      "clue": "Mixture that turns into a <>",
+      "transform": "used to be"
+    },
+    {
+      "word": "BATTER",
+      "clue": "What a <> does",
+      "transform": "takes a"
+    },
+    {
+      "word": "SWING",
+      "clue": null,
+      "transform": null
+    }
+  ]
+}

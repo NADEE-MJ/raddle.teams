@@ -1,0 +1,70 @@
+{
+  "meta": {
+    "title": "From PUZZLE to FACTORY",
+    "author": "Sandy Weisz",
+    "theme": "mitmh",
+    "message": "In 2023, teammate's hunt started with a round of puzzles supposedly written by AI. Soon we revealed a hidden [Puzzle Factory](https://puzzles.mit.edu/2023/), full of rejected, chaotic AIs, whose puzzle-writing was … a bit erratic. Teams were tasked with fixing up the factory. TTBNL found the coin and won the hunt."
+  },
+  "ladder": [
+    {
+      "word": "PUZZLE",
+      "clue": "A {} <> has many pieces",
+      "step": "with lots of pieces"
+    },
+    {
+      "word": "JIGSAW",
+      "clue": "Profession who would own and use a <>",
+      "step": "is used by a"
+    },
+    {
+      "word": "CARPENTER",
+      "clue": "<> {}s, insect genus that includes over 1000 species",
+      "step": "is a genus of"
+    },
+    {
+      "word": "ANT",
+      "clue": "Relation that sounds like \"<>\", to some",
+      "step": "+U"
+    },
+    {
+      "word": "AUNT",
+      "clue": "Counterpart to one’s <>",
+      "step": "Counterpart"
+    },
+    {
+      "word": "UNCLE",
+      "clue": "American icon <> {}",
+      "step": "who wants you is named"
+    },
+    {
+      "word": "SAM",
+      "clue": "Reverse <> and add a letter to get a 20th century TV show",
+      "step": "+H, then reverse"
+    },
+    {
+      "word": "MASH",
+      "clue": "Change one letter in <> to get a kind of tag",
+      "step": "M->H"
+    },
+    {
+      "word": "HASH",
+      "clue": "<> {}s, a breakfast food",
+      "step": "potatoes until theyu're"
+    },
+    {
+      "word": "BROWN",
+      "clue": "{} <> has been eight years old for almost eighty years",
+      "step": "in a strip"
+    },
+    {
+      "word": "CHARLIE",
+      "clue": "Titular thing won by <>",
+      "step": "won a"
+    },
+    {
+      "word": "FACTORY",
+      "clue": null,
+      "step": " "
+    }
+  ]
+}

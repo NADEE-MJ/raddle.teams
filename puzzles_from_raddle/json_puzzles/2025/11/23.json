@@ -1,0 +1,81 @@
+{
+  "meta": {
+    "title": "From ROAST to TURKEY",
+    "author": "Sandy Weisz and Bailey Holtz",
+    "difficulty": "medium",
+    "theme": "Thanksgiving 2025",
+    "message": "The centerpiece of a Thanksgiving meal is traditionally a roast turkey, tho some adventurous chefs will find other, more flavorful ways to cook it. For some non-meat eaters, the Thanksgiving centerpiece isn’t a roast turkey but a Tofurkey, an ovoid hunk of vital wheat gluten filled with wild rice. Tofurkeys can also be tossed around the backyard after dinner, should they be deemed inadequate as food."
+  },
+  "ladder": [
+    {
+      "word": "ROAST",
+      "clue": "Change one letter in <> to get a breakfast item",
+      "transform": "R->T"
+    },
+    {
+      "word": "TOAST",
+      "clue": "Uncooked <>",
+      "transform": "starts out as"
+    },
+    {
+      "word": "BREAD",
+      "clue": "Organism that helps make <>",
+      "transform": "usually contains"
+    },
+    {
+      "word": "YEAST",
+      "clue": "Drop the first letter of <> to get a direction",
+      "transform": "-Y"
+    },
+    {
+      "word": "EAST",
+      "clue": "\"<> of {}\", famous novel",
+      "transform": "of"
+    },
+    {
+      "word": "EDEN",
+      "clue": "Woman of <>",
+      "transform": "figure"
+    },
+    {
+      "word": "EVE",
+      "clue": "Add a letter to the start and the end of <> to get a number",
+      "transform": "+S, +N"
+    },
+    {
+      "word": "SEVEN",
+      "clue": "<> {}, ancient phrase describing much of the Earth",
+      "transform": "oceans aka"
+    },
+    {
+      "word": "SEAS",
+      "clue": "Insert a T into <> to get some chairs",
+      "transform": "+T"
+    },
+    {
+      "word": "SEATS",
+      "clue": "The {} <> might make your nose bleed",
+      "transform": "that make your nose bleed are"
+    },
+    {
+      "word": "CHEAP",
+      "clue": "Anagram <> to get a fruit",
+      "transform": "anagrammed"
+    },
+    {
+      "word": "PEACH",
+      "clue": "US State associated with the <>",
+      "transform": "state is"
+    },
+    {
+      "word": "GEORGIA",
+      "clue": "Country southwest of <>",
+      "transform": "is northeast of"
+    },
+    {
+      "word": "TURKEY",
+      "clue": null,
+      "transform": null
+    }
+  ]
+}

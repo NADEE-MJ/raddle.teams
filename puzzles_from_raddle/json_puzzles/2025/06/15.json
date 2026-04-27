@@ -1,0 +1,66 @@
+{
+  "meta": {
+    "title": "From FAWN to BUCK",
+    "author": "Sandy Weisz and Mao Reynolds",
+    "difficulty": "medium",
+    "theme": "Daddle",
+    "message": "It's Daddle Week! Father's Day is today. Let's visit a few of our favorite dads in the animal kingdom."
+  },
+  "ladder": [
+    {
+      "word": "FAWN",
+      "clue": "Change one letter in <> to get a piece of property",
+      "transform": "F->L"
+    },
+    {
+      "word": "LAWN",
+      "clue": "Bird that might be displayed on a <>, en masse",
+      "transform": "might feature many a"
+    },
+    {
+      "word": "FLAMINGO",
+      "clue": "Remove a letter from <> to get some trollish behavior",
+      "transform": "-O"
+    },
+    {
+      "word": "FLAMING",
+      "clue": "Grocery store product that might be <> hot",
+      "transform": "hot"
+    },
+    {
+      "word": "CHEETOS",
+      "clue": "Species of the <> mascot",
+      "transform": "mascot is a"
+    },
+    {
+      "word": "CHEETAH",
+      "clue": "A <> is superlatively {}",
+      "transform": "is very very very"
+    },
+    {
+      "word": "FAST",
+      "clue": "Synonym of <>",
+      "transform": "aka"
+    },
+    {
+      "word": "QUICK",
+      "clue": "<>{}, trope seen in adventure movies",
+      "transform": "…"
+    },
+    {
+      "word": "SAND",
+      "clue": "<> {}, species so-named because of the shape of its skeleton",
+      "transform": "…"
+    },
+    {
+      "word": "DOLLAR",
+      "clue": "Nickname for one <>",
+      "transform": "aka"
+    },
+    {
+      "word": "BUCK",
+      "clue": null,
+      "transform": null
+    }
+  ]
+}

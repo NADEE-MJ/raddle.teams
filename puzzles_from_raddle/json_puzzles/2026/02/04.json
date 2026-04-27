@@ -1,0 +1,65 @@
+{
+  "meta": {
+    "title": "From GROUND to HOG",
+    "author": "Sandy Weisz",
+    "theme": "groundhog_day",
+    "message": "Okay, campers, rise and shine, and don't forget your booties 'cause it's cooooold out there today! That’s right, woodchuck-chuckers, it’s [GROUNDHOG DAY](/2026/02/03)!"
+  },
+  "ladder": [
+    {
+      "word": "GROUND",
+      "clue": "<> {}, a good place to get in on",
+      "step": "is covered by a"
+    },
+    {
+      "word": "FLOOR",
+      "clue": "Opposite of the <>",
+      "step": "Opposite"
+    },
+    {
+      "word": "CEILING",
+      "clue": "Kind of wax that sounds like \"<>\"",
+      "step": "sounds like"
+    },
+    {
+      "word": "SEALING",
+      "clue": "Insert a letter into <> to get a crime",
+      "step": "+T"
+    },
+    {
+      "word": "STEALING",
+      "clue": "Sport that features <>",
+      "step": "is common in"
+    },
+    {
+      "word": "BASEBALL",
+      "clue": "Home {}, destination in <>",
+      "step": "destination is home"
+    },
+    {
+      "word": "PLATE",
+      "clue": "Insert a letter into <> to get a biblical figure",
+      "step": "+I"
+    },
+    {
+      "word": "PILATE",
+      "clue": "Profession that sounds like \"<>\"",
+      "step": "sounds like"
+    },
+    {
+      "word": "PILOT",
+      "clue": "A <> writes in a {}book",
+      "step": "writes in a"
+    },
+    {
+      "word": "LOG",
+      "clue": "Change the first letter of <> to get an animal",
+      "step": "L->H"
+    },
+    {
+      "word": "HOG",
+      "clue": null,
+      "step": " "
+    }
+  ]
+}
