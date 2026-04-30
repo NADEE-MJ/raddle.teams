@@ -50,10 +50,11 @@ export interface AdminAuthAdminAuthenticatedResponse {
 }
 
 export interface StartGameRequest {
-    difficulty: 'easy' | 'medium' | 'hard';
-    puzzle_mode: 'same' | 'different';
-    word_count_mode: 'exact' | 'balanced';
-    force_start?: boolean;
+    difficulty: string;
+    puzzle_mode: string;
+    word_count_mode: string;
+    force_start: boolean;
+    puzzle_date?: string;
 }
 
 export interface StartGameResponse {

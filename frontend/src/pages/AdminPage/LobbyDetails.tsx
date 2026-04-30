@@ -32,6 +32,8 @@ export default function LobbyDetails({ lobbyId, onClose, onLobbyDeleted, refresh
     const [difficulty, setDifficulty] = useState<'easy' | 'medium' | 'hard'>('medium');
     const [puzzleMode, setPuzzleMode] = useState<'same' | 'different'>('same');
     const [wordCountMode, setWordCountMode] = useState<'exact' | 'balanced'>('balanced');
+    const [puzzleDate, setPuzzleDate] = useState<string>('');
+    const [availableDates, setAvailableDates] = useState<string[]>([]);
     const [isStartingGame, setIsStartingGame] = useState(false);
     const [isEndingGame, setIsEndingGame] = useState(false);
     const [isAddingTeam, setIsAddingTeam] = useState(false);
@@ -149,6 +151,20 @@ export default function LobbyDetails({ lobbyId, onClose, onLobbyDeleted, refresh
         loadAllRounds();
         loadTimerState();
     }, [loadLobbyDetails, loadGameState, loadAllRounds, loadTimerState, refreshKey]);
+
+    useEffect(() => {
+        const loadDates = async () => {
+            if (adminApiToken) {
+                try {
+                    const dates = await api.admin.puzzles.getDates(adminApiToken);
+                    setAvailableDates(dates);
+                } catch (err) {
+                    console.error('Failed to load puzzle dates:', err);
+                }
+            }
+        };
+        loadDates();
+    }, [adminApiToken]);
 
     useEffect(() => {
         setNumTeams(prev => clampTeamCount(prev));
@@ -544,14 +560,15 @@ export default function LobbyDetails({ lobbyId, onClose, onLobbyDeleted, refresh
             setIsStartingGame(true);
             try {
                 setError('');
-                const result = await api.admin.lobby.startGame(
-                    selectedLobby.lobby.id,
-                    difficulty,
-                    puzzleMode,
-                    wordCountMode,
-                    adminApiToken,
-                    forceStart
-                );
+            const result = await api.admin.lobby.startGame(
+                lobbyId,
+                difficulty,
+                puzzleMode,
+                wordCountMode,
+                adminApiToken,
+                forceStart,
+                puzzleDate || undefined
+            );
                 console.log('Game started:', result);
                 // Load game state to show progress
                 await loadGameState();
@@ -688,70 +705,29 @@ export default function LobbyDetails({ lobbyId, onClose, onLobbyDeleted, refresh
 
                 <div className='mb-6 flex flex-col gap-4'>
                     <div className='flex items-center justify-between'>
-                        <div>
-                            <h2 className='text-tx-primary mb-1 text-2xl font-semibold'>Lobby Details</h2>
-                            <p className='text-tx-secondary'>{selectedLobby.lobby.name}</p>
-                        </div>
-
-                        <div className='flex items-center gap-3'>
-                            <Button
-                                onClick={scheduleReload}
-                                disabled={isRefreshing}
-                                variant='primary'
-                                size='lg'
-                                loading={isRefreshing}
-                                loadingIndicatorPlacement='left'
-                                data-testid='refresh-lobby-button'
-                            >
-                                Refresh
-                            </Button>
-                            <Button
-                                onClick={handleDeleteLobby}
-                                variant='destructive'
-                                size='lg'
-                                data-testid='delete-lobby-button'
-                            >
-                                Delete Lobby
-                            </Button>
-                        </div>
-                    </div>
-                    <div className='flex justify-end'>
-                        <ConnectionBadge connectionStatus={connectionStatus} connectedText='Connected to lobby' />
-                    </div>
-                </div>
-
-                <div className='mb-6'>
-                    <Card>
-                        <div className='text-tx-secondary mb-3 text-sm tracking-wide uppercase'>Lobby Info</div>
-                        <div className='text-tx-primary space-y-2 text-sm'>
-                            <p className='flex items-center gap-2'>
-                                <strong>Code:</strong>
-                                <CopyableCode code={selectedLobby.lobby.code} />
-                            </p>
-                            <p>
-                                <strong>Name:</strong> {selectedLobby.lobby.name}
-                            </p>
-                            <p>
-                                <strong>Created:</strong>{' '}
-                                {new Date(selectedLobby.lobby.created_at).toLocaleDateString()}
-                            </p>
-                            <p>
-                                <strong>Total Players:</strong> {selectedLobby.players.length}
-                            </p>
-                        </div>
-                    </Card>
-                </div>
-
-                {/* Tournament Leaderboard */}
-                {adminApiToken && allRounds.length > 0 && (
-                    <div className='mb-6'>
-                        <div className='mb-3 flex items-center justify-between'>
-                            <div className='text-tx-secondary text-sm tracking-wide uppercase'>
-                                Tournament Standings
-                            </div>
-                            {allRounds.length > 0 && (
-                                <div className='flex items-center gap-3'>
-                                    <label className='text-tx-primary text-sm font-medium'>View Round:</label>
+                                <div>
+                                    <label className='block text-xs font-medium text-slate-500 mb-1 dark:text-slate-400'>
+                                        Date Selection
+                                    </label>
+                                    <Select
+                                        value={puzzleDate}
+                                        onChange={value => {
+                                            setPuzzleDate(value as string);
+                                            if (value) {
+                                                setPuzzleMode('same');
+                                            }
+                                        }}
+                                        options={[
+                                            { value: '', label: 'Random' },
+                                            ...availableDates.map(date => ({ value: date, label: date }))
+                                        ]}
+                                        disabled={gameState?.is_game_active || isStartingGame}
+                                    />
+                                </div>
+                                <div>
+                                    <label className='block text-xs font-medium text-slate-500 mb-1 dark:text-slate-400'>
+                                        Difficulty
+                                    </label>
                                     <Select
                                         value=''
                                         onChange={value => {

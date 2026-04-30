@@ -73,6 +73,11 @@ const request = async <T>(endpoint: string, options?: RequestInit, bearerToken?:
 
 export const api = {
     admin: {
+        puzzles: {
+            async getDates(bearerToken: string): Promise<string[]> {
+                return request<string[]>('/admin/puzzles/dates', {}, bearerToken);
+            },
+        },
         lobby: {
             async create(name: string, bearerToken: string): Promise<Lobby> {
                 return request<Lobby>(
@@ -168,13 +173,15 @@ export const api = {
                 puzzleMode: 'same' | 'different',
                 wordCountMode: 'exact' | 'balanced',
                 bearerToken: string,
-                forceStart: boolean = false
+                forceStart: boolean = false,
+                puzzleDate?: string
             ): Promise<StartGameResponse> {
                 const requestBody: StartGameRequest = {
                     difficulty,
                     puzzle_mode: puzzleMode,
                     word_count_mode: wordCountMode,
                     force_start: forceStart,
+                    puzzle_date: puzzleDate,
                 };
                 return request<StartGameResponse>(
                     `/admin/lobby/${lobbyId}/start`,

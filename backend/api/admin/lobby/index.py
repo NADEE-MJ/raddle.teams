@@ -21,6 +21,14 @@ from backend.game.puzzles import get_puzzle_manager
 router = APIRouter(dependencies=[Depends(check_admin_token)])
 
 
+@router.get("/puzzles/dates", response_model=list[str])
+async def get_puzzle_dates():
+    """Return a list of available puzzle dates (YYYY-MM-DD)."""
+    api_logger.info("Admin requested available puzzle dates")
+    manager = get_puzzle_manager()
+    return manager.get_available_puzzle_dates()
+
+
 @router.post("/lobby", response_model=Lobby)
 async def create_lobby(
     lobby_data: LobbyCreate,

@@ -330,6 +330,20 @@ class PuzzleManager:
             raise ValueError(f"Failed to load puzzle from {file_path}")
         return puzzle_file.puzzle
 
+    def get_available_puzzle_dates(self) -> List[str]:
+        """Get a list of available puzzle dates in YYYY-MM-DD format."""
+        dates = []
+        for json_file in self.puzzle_dir.rglob("*.json"):
+            # json_file looks like: .../json_puzzles/YYYY/MM/DD.json
+            parts = json_file.parts
+            if len(parts) >= 3:
+                year = parts[-3]
+                month = parts[-2]
+                day = parts[-1].replace(".json", "")
+                if year.isdigit() and month.isdigit() and day.isdigit():
+                    dates.append(f"{year}-{month}-{day}")
+        return sorted(dates, reverse=True)
+
     def validate_puzzle(self, puzzle_data: Dict[str, Any]) -> bool:
         """
         Validate a puzzle dictionary.

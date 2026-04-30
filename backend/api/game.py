@@ -166,7 +166,19 @@ async def start_game(
     # Get puzzles for each team based on configuration
     puzzle_manager = get_puzzle_manager()
     try:
-        if request.puzzle_mode == "same":
+        if request.puzzle_date:
+            # If a specific date is requested, all teams get the same puzzle for that date
+            date_parts = request.puzzle_date.split("-")
+            if len(date_parts) == 3:
+                puzzle_path_str = f"{date_parts[0]}/{date_parts[1]}/{date_parts[2]}.json"
+                puzzle = puzzle_manager.load_puzzle_by_path(puzzle_path_str)
+                puzzle_file = __import__("backend.game.puzzles").game.puzzles.PuzzleFile(
+                    puzzle=puzzle, path=puzzle_manager.resolve_puzzle_path(puzzle_path_str)
+                )
+                puzzles = [puzzle_file] * len(teams)
+            else:
+                raise ValueError("Invalid date format. Expected YYYY-MM-DD")
+        elif request.puzzle_mode == "same":
             # All teams get the same puzzle
             puzzles = puzzle_manager.get_same_puzzle_for_teams(
                 len(teams), request.difficulty, exclude_paths=used_puzzle_paths

@@ -26,18 +26,24 @@ async def lifespan(app: FastAPI):
     # Startup
     server_logger.info("Starting up application...")
     from backend.api.admin.lobby.timer_poller import start_timer_poller
+    from backend.puzzles_sync import start_puzzle_sync
 
     start_timer_poller()
     server_logger.info("Timer poller started")
+
+    start_puzzle_sync()
+    server_logger.info("Puzzle sync task started")
 
     yield
 
     # Shutdown
     server_logger.info("Shutting down application...")
     from backend.api.admin.lobby.timer_poller import stop_timer_poller
+    from backend.puzzles_sync import stop_puzzle_sync
 
     stop_timer_poller()
-    server_logger.info("Timer poller stopped")
+    stop_puzzle_sync()
+    server_logger.info("Timer poller and puzzle sync stopped")
 
 
 app = FastAPI(
