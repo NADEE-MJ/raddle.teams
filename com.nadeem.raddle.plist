@@ -7,7 +7,7 @@
     <key>ProgramArguments</key>
     <array>
         <string>/bin/bash</string>
-        <string>-lc</string>
+        <string>-c</string>
         <string>export NVM_DIR="$HOME/.nvm"; [ -s "$NVM_DIR/nvm.sh" ] &amp;&amp; . "$NVM_DIR/nvm.sh"; cd /opt/projects/raddle.teams &amp;&amp; uv run ./rt install --sync &amp;&amp; exec uv run ./rt s --host 0.0.0.0</string>
     </array>
     <key>WorkingDirectory</key>
