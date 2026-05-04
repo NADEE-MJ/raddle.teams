@@ -12,12 +12,30 @@ def get_manifest():
     return response.json()
 
 
-def create_file_path(puzzle_date):
-    """Create the folder and file path based on the puzzle date."""
-    date_parts = puzzle_date.split("-")
-    folder_path = f"yaml_puzzles/{date_parts[0]}/{date_parts[1]}"
-    file_path = f"{folder_path}/{date_parts[2]}.yaml"
-    return folder_path, file_path
+def parse_puzzle_info(puzzle):
+    """Extract year, month, day and build file path + download URL from a manifest entry.
+
+    The manifest format changed from:
+        {"date": "2026-02-08", "path": "/data/2026/02/08.yaml"}
+    to:
+        {"month": "2026-05", "slug": "04-again-life", "num": 434}
+
+    Both formats are handled here.
+    """
+    if "date" in puzzle:
+        # Old format
+        date_parts = puzzle["date"].split("-")
+        year, month, day = date_parts[0], date_parts[1], date_parts[2]
+        puzzle_url = f"https://raddle.quest{puzzle['path']}"
+    else:
+        # New format: month="2026-05", slug="04-again-life"
+        year, month = puzzle["month"].split("-")
+        day = puzzle["slug"].split("-")[0]  # e.g. "04" from "04-again-life"
+        puzzle_url = f"https://raddle.quest/data/puzzles/{year}/{month}/{puzzle['slug']}.yaml"
+
+    folder_path = f"yaml_puzzles/{year}/{month}"
+    file_path = f"{folder_path}/{day}.yaml"
+    return folder_path, file_path, puzzle_url
 
 
 def clean_content(content):
@@ -54,7 +72,11 @@ def clean_content(content):
 
 def download_puzzle(puzzle):
     """Download a single puzzle if it doesn't already exist."""
-    folder_path, file_path = create_file_path(puzzle["date"])
+    try:
+        folder_path, file_path, puzzle_url = parse_puzzle_info(puzzle)
+    except (KeyError, ValueError) as e:
+        print(f"⚠️  Skipping malformed puzzle entry {puzzle}: {e}")
+        return
 
     # Skip if puzzle already exists
     if os.path.exists(file_path):
@@ -62,16 +84,11 @@ def download_puzzle(puzzle):
         return
 
     # Download the puzzle YAML file
-    puzzle_url = f"https://raddle.quest{puzzle['path']}"
     response = requests.get(puzzle_url)
     response.raise_for_status()
 
-    # Get raw bytes and decode explicitly as UTF-8
-    # This prevents requests from using the wrong encoding
-    raw_bytes = response.content
-
-    # Clean the content (pass bytes, the function will decode properly)
-    cleaned_content = clean_content(raw_bytes)
+    # Clean the content
+    cleaned_content = clean_content(response.content)
 
     # Create directory and save file
     os.makedirs(folder_path, exist_ok=True)
