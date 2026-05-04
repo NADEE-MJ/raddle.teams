@@ -1,0 +1,44 @@
+meta:
+  title: From MAGIC to SPELL
+  theme: mystery_7
+  discord_thread_id: '1488555646885433464'
+ladder:
+  - word: MAGIC
+    clue: <> ^, stick used in a <> show
+    step: …
+  - word: WAND
+    clue: Append a letter to <> to get a first name
+    step: +A
+  - word: WANDA
+    clue: Insert a bigram into <> to get a fictional land
+    step: +KA
+  - word: WAKANDA
+    clue: Superhero from <>
+    step: is the home of
+  - word: BLACK PANTHER
+    clue: A <> is a big ^
+    step: is a big
+  - word: CAT
+    clue: ^ <>, term for a stray <>
+    step: that lives in an
+  - word: ALLEY
+    clue: <>-^, move in basketball
+    step: '-'
+  - word: OOP
+    clue: Add a letter to the front of <> to get a style of jewelry
+    step: +H
+  - word: HOOP
+    clue: ^ <>, a toy
+    step: follows
+  - word: HULA
+    clue: <> is a style of ^
+    step: is a kind of
+  - word: DANCE
+    clue: Insect known for communicating via <>
+    step: might be seen by a
+  - word: BEE
+    clue: What you might do in a <>
+    step: is where you
+  - word: SPELL
+    clue: ''
+    step: ''

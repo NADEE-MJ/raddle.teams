@@ -1,0 +1,43 @@
+meta:
+  title: From TRAIN to DREAMS
+  theme: oscars_2025
+  message: "_Train Dreams_, a Clint Bentley adaptation of a Denis Johnson novella, follows a man named Robert Grainier across eight decades of solitary life in the logging camps and forests of the early American West. 
+    It's quiet and meditative, reminiscent of what I love about Terrence Malick films, and best experienced in a distractionless movie theatre where you can get immersed in its gorgeous sights and sounds.
+    It picked up four nominations: Best Picture, Best Adapted Screenplay, Best Cinematography, and Best Original Score."
+ladder:
+  - word: TRAIN
+    clue: A <> runs on a ^
+    step: runs on a
+  - word: TRACK
+    clue: Drop the first letter of <> to get a stand
+    step: '-T'
+  - word: RACK
+    clue: Change one letter in <> to get a male name
+    step: R->J
+  - word: JACK
+    clue: A <> is the fourth-highest ^
+    step: is a
+  - word: CARD
+    clue: <> ^, one skilled at <>s
+    step: …
+  - word: SHARK
+    clue: A rival to a <>, in a 1961 movie
+    step: vs
+  - word: JET
+    clue: <> ^, a kind of fatigue
+    step: …
+  - word: LAG
+    clue: Reverse <> to get a young woman
+    step: reversed
+  - word: GAL
+    clue: Insert an O into <> to get an objective
+    step: +O
+  - word: GOAL
+    clue: ^ <>, a way to score in at least three different sports
+    step: on the
+  - word: FIELD
+    clue: '"<> of ^", movie from 1989'
+    step: of
+  - word: DREAMS
+    clue: ''
+    step: ''

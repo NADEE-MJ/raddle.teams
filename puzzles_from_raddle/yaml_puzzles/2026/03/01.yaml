@@ -1,0 +1,40 @@
+meta:
+  title: From PAY to PIPER
+  theme: one_year_of_raddle
+ladder:
+  - word: PAY
+    clue: Insert an L into <> to get what you might <> to do
+    step: +L
+  - word: PLAY
+    clue: Change one letter in <> to get a church behavior
+    step: L->R
+  - word: PRAY
+    clue: '"I <> that bear doesn''t see me as ^" (a homophone of "<>")  '
+    step: A->E
+  - word: PREY
+    clue: Insert a double letter into <> to be appealing
+    step: +TT
+  - word: PRETTY
+    clue: As <> as a ^
+    step: as a
+  - word: PICTURE
+    clue: <> ^, lacking in defects
+    step: that is
+  - word: PERFECT
+    clue: '"^ <>", 2012 film that strikes exactly the right tone'
+    step: …
+  - word: PITCH
+    clue: Change the short /i/ sound in <> to a long /ē/ sound to get a fruit
+    step: /i/->/ee/
+  - word: PEACH
+    clue: Change the last letter in <> to an N, then anagram, to get a nut
+    step: H->N, anagram
+  - word: PECAN
+    clue: <> ^, a delicacy in the southern US
+    step: …
+  - word: PIE
+    clue: Legendary figure The <>d ^
+    step: d
+  - word: PIPER
+    clue: ''
+    step: ''

@@ -1,0 +1,70 @@
+{
+  "meta": {
+    "title": "From HANIA to RANI",
+    "theme": "big_ears_2026",
+    "discord_thread_id": "1490705463904567467",
+    "message": "Polish composer Hania Rani, who goes by Chilling Bambino when performing her electronic music, put on an mesmerizing set in the round. She moved between banks of synthesizers and microphones, while lights danced around her in colors. Rani's known for her composing work; she scored last year's \"Sentimental Value\". This was very different, and very different from the kind of music I usually see, but I was entranced for the whole hour."
+  },
+  "ladder": [
+    {
+      "word": "HANIA",
+      "clue": "Drop a bigram (two letters) from <> to get a first name from sci-fi",
+      "step": "-IA"
+    },
+    {
+      "word": "HAN",
+      "clue": "Reverse <> and insert an O to get a biblical name",
+      "step": "+O, then reverse"
+    },
+    {
+      "word": "NOAH",
+      "clue": "What <> built",
+      "step": "built an"
+    },
+    {
+      "word": "ARK",
+      "clue": "Add a letter to the front of <> to get an animal sound",
+      "step": "+B"
+    },
+    {
+      "word": "BARK",
+      "clue": "<> covers a {}",
+      "step": "is on a"
+    },
+    {
+      "word": "TREE",
+      "clue": "<> creature of fantasy",
+      "step": "creature who takes its time"
+    },
+    {
+      "word": "ENT",
+      "clue": "Anagram <> to get a fishing tool",
+      "step": "anagrammed"
+    },
+    {
+      "word": "NET",
+      "clue": "Add a trigram (three letters) to the front of <> to get something in space",
+      "step": "contains"
+    },
+    {
+      "word": "PLANET",
+      "clue": "The smallest <>",
+      "step": "that's smallest"
+    },
+    {
+      "word": "MERCURY",
+      "clue": "Band fronted by <>",
+      "step": "led"
+    },
+    {
+      "word": "QUEEN",
+      "clue": "Royal title in South Asia, roughly equivalent to <>",
+      "step": "in Sanskrit"
+    },
+    {
+      "word": "RANI",
+      "clue": "",
+      "step": ""
+    }
+  ]
+}

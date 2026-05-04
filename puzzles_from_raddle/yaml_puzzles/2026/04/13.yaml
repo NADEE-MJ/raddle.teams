@@ -1,0 +1,45 @@
+meta:
+  title: From SO to PERCUSSION
+  theme: big_ears_2026
+  discord_thread_id: '1489654248303099974'
+  message: Sō Percussion is a four-piece New York-based percussion quartet who have been collaborating with Pulitzer and Grammy-winning composer and vocalist Caroline Shaw for over a decade. At Big Ears they performed their theatrical evening-length show built around the album "Rectangles and Circumstance", opening with Shaw alone under a spotlight and gradually adding marimba, vibraphone, steel drums, flowerpots, drums, and found percussion. I saw them perform three times over the weekend, including an hour-long trance-like performance of Steve Reich's "Drumming".
+ladder:
+  - word: SO
+    clue: '"<> ^?!", you say, defensively'
+    step: …
+  - word: WHAT
+    clue: '"Come <> ^…"'
+    step: …
+  - word: MAY
+    clue: Two before <>
+    step: is two after
+  - word: MARCH
+    clue: Anagram <> to get a pleasing quality
+    step: anagrammed
+  - word: CHARM
+    clue: A <> might be rubbed for ^
+    step: brings
+  - word: GOOD LUCK
+    clue: 2024 banger "<>, ^!"
+    step: …
+  - word: BABE
+    clue: Change the last letter of <> to get a small one
+    step: +/e/
+  - word: BABY
+    clue: <> ^, descriptor found on the menu of a BBQ joint
+    step: …
+  - word: BACK
+    clue: <>^, to retrace one's steps
+    step: …
+  - word: TRACK
+    clue: A film's ^<> is often released separately
+    step: of
+  - word: SOUND
+    clue: Faster than <>
+    step: is slower than
+  - word: SUPERSONIC
+    clue: Anagram <> to get a kind of instrument
+    step: anagrammed
+  - word: PERCUSSION
+    clue: ''
+    step: ''

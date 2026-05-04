@@ -1,0 +1,70 @@
+{
+  "meta": {
+    "title": "From BALL to CHALK",
+    "theme": "cockney_rhyming_slang",
+    "discord_thread_id": "1495615534883016888",
+    "message": "\"Ball of chalk\" is Cockney rhyming slang for \"walk\". As in \"I’m going out for a ball of chalk; anyone need something from bodega?\""
+  },
+  "ladder": [
+    {
+      "word": "BALL",
+      "clue": "{}<>, a \"gift\" from your cat?",
+      "step": "made of"
+    },
+    {
+      "word": "HAIR",
+      "clue": "Some <> right under one's nose",
+      "step": "on a lip"
+    },
+    {
+      "word": "MUSTACHE",
+      "clue": "Painter with a famously stylized <>",
+      "step": "of distinction on"
+    },
+    {
+      "word": "DALI",
+      "clue": "Titular animated character that rhymes with <>",
+      "step": "rhymes with"
+    },
+    {
+      "word": "WALL-E",
+      "clue": "<> is a not a human, but a {}",
+      "step": "is a"
+    },
+    {
+      "word": "ROBOT",
+      "clue": "Drop a letter from <> to get part of a tree",
+      "step": "-B"
+    },
+    {
+      "word": "ROOT",
+      "clue": "<> {}, a kind of soda",
+      "step": "is a kind of"
+    },
+    {
+      "word": "BEER",
+      "clue": "Change the vowel sound in <> to find a place to get a <>",
+      "step": "/e/->/a/"
+    },
+    {
+      "word": "BAR",
+      "clue": "Insert a letter into <> to get a mammal",
+      "step": "+O"
+    },
+    {
+      "word": "BOAR",
+      "clue": "Append a letter to <> to get a surfer's need",
+      "step": "+D"
+    },
+    {
+      "word": "BOARD",
+      "clue": "{}<>, found in some classrooms",
+      "step": "on which you write with"
+    },
+    {
+      "word": "CHALK",
+      "clue": "",
+      "step": ""
+    }
+  ]
+}

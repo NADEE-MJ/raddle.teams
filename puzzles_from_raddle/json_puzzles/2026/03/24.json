@@ -1,0 +1,70 @@
+{
+  "meta": {
+    "title": "From HALLE to BERRY",
+    "theme": "womens_history_month",
+    "discord_thread_id": "1481424985816830064",
+    "message": "On March 24, 2002, Halle Berry became the first African American woman to win the Academy Award for Best Actress, for her role in “Monster's Ball”. Before Berry, the only African American actresses to win any acting Oscar were Hattie McDaniel, for her supporting role in “Gone With the Wind” in 1939 and Whoopi Goldberg for \"Ghost\" in 1990. More than two decades later, Berry remains the only Black woman ever to win in that category."
+  },
+  "ladder": [
+    {
+      "word": "HALLE",
+      "clue": "Swap the vowels in <> to get a modern word of emphasis",
+      "step": "anagrammed"
+    },
+    {
+      "word": "HELLA",
+      "clue": "Drop the last letter from <> to get a hot place",
+      "step": "-A"
+    },
+    {
+      "word": "HELL",
+      "clue": "Append a letter to <> to get a greeting",
+      "step": "+O"
+    },
+    {
+      "word": "HELLO",
+      "clue": "\"<>\" in Spanish",
+      "step": "in spanish"
+    },
+    {
+      "word": "HOLA",
+      "clue": "Change one letter in <> to get a cold drink",
+      "step": "H->C"
+    },
+    {
+      "word": "COLA",
+      "clue": "Popular brand {}-<>",
+      "step": "L->C"
+    },
+    {
+      "word": "COCA",
+      "clue": "Insert a letter into <> to get a hot drink",
+      "step": "+O"
+    },
+    {
+      "word": "COCOA",
+      "clue": "<> {}, an ingredient in some lotions",
+      "step": "…"
+    },
+    {
+      "word": "BUTTER",
+      "clue": "Many cookie recipes will have you {} <>",
+      "step": "is something you"
+    },
+    {
+      "word": "BROWN",
+      "clue": "<> {}, large apex predators",
+      "step": "is a kind of"
+    },
+    {
+      "word": "BEAR",
+      "clue": "Add a long /e/ sound to the end of <> to get a fruit",
+      "step": "+/e/"
+    },
+    {
+      "word": "BERRY",
+      "clue": "",
+      "step": ""
+    }
+  ]
+}

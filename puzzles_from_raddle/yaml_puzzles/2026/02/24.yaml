@@ -1,0 +1,40 @@
+meta:
+  title: From PEARL to ME
+  theme: mystery_6
+ladder:
+  - word: PEARL
+    clue: '"^ with a <> Earring"'
+    step: WAS ON THE EAR OF A
+  - word: GIRL
+    clue: Opposite of <>
+    step: OPPOSITE
+  - word: BOY
+    clue: '"<> ^ <>!"'
+    step: …
+  - word: OH
+    clue: Reverse <> and insert a letter to get a TV channel
+    step: +B, then reverse
+  - word: HBO
+    clue: Streaming service <> ^
+    step: PRECEDES
+  - word: MAX
+    clue: Insert a letter in <> to get a philosopher
+    step: +R
+  - word: MARX
+    clue: Lead <> Brother
+    step: BROTHER
+  - word: GROUCHO
+    clue: Drop a letter from <> to get a grump
+    step: '-O'
+  - word: GROUCH
+    clue: ^ the <>
+    step: NAMED
+  - word: OSCAR
+    clue: '<> : Movie :: ^ : TV'
+    step: COUNTERPART
+  - word: EMMY
+    clue: '"<>" sounds like it''s spelling out ^'
+    step: SOUNDS LIKE IT'S SPELLING
+  - word: ME
+    clue: ''
+    step: ''

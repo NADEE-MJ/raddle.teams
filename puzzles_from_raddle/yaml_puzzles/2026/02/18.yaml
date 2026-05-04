@@ -1,0 +1,40 @@
+meta:
+  title: From SKI to MO
+  theme: winter_olympics
+  message: Ski mountaineering, or Ski Mo for short, is making its debut at the 2026 Games. 
+    In it, athletes race uphill and downhill on skis equipped with special skins and bindings.
+    It combines endurance climbing and technical skills while traversing mountain terrain.
+ladder:
+  - word: SKI
+    clue: Add an S to <> and anagram to get a small candy
+    step: '-S'
+  - word: KISS
+    clue: A ^ <> is officially called a "cataglottism" (maybe because of what the "cat g(l)ot"?)
+    step: might be
+  - word: FRENCH
+    clue: <> ^, popular breakfast treat
+    step: breakfast
+  - word: TOAST
+    clue: What turns into <>
+    step: used to be
+  - word: BREAD
+    clue: ^ <>, alliterative thing made with old ^s
+    step: is yummy with
+  - word: BANANA
+    clue: Drop two letters from <> to get a female name
+    step: "- two letters"
+  - word: ANNA
+    clue: Last name of the actor who voiced Princess <> in a pair of recent films
+    step: voiced
+  - word: BELL
+    clue: A ^<> is used to keep track of your ^s (or play music)
+    step: is hung on a
+  - word: COW
+    clue: What a <> says
+    step: says
+  - word: MOO
+    clue: Drop a letter from <> to get an abbreviation for how you do things
+    step: -O
+  - word: MO
+    clue: ''
+    step: ''

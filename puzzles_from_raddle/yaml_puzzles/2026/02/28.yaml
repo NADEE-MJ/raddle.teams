@@ -1,0 +1,44 @@
+meta:
+  title: From TOMMY to AIR
+  theme: mystery_6
+  message: "[Visit the Mystery Theme page](https://raddle.quest/mystery/6) for some hints"
+ladder:
+  - word: TOMMY
+    clue: '"<>", a rock opera by The ^'
+    step: by THe
+  - word: WHO
+    clue: Change a letter in <> to get another question
+    step: O->Y
+  - word: WHY
+    clue: Append an /r/ sound to <> to get a tool for spies
+    step: +/r/
+  - word: WIRE
+    clue: ^ to the <>
+    step: the to
+  - word: DOWN
+    clue: Opposite of <>
+    step: opposite
+  - word: UP
+    clue: Append a letter to <> to get a Fortune 50 company
+    step: +S
+  - word: UPS
+    clue: Insert an M into <> to get some judges, of a sort
+    step: +M
+  - word: UMPS
+    clue: <> stand behind ^
+    step: stand behind
+  - word: HOME
+    clue: <> ^ <>
+    step: precedes
+  - word: SWEET
+    clue: <>^, a term of endearment
+    step: …
+  - word: HEART
+    clue: What might pierce a <>, at least in comic form
+    step: is pierced by an
+  - word: ARROW
+    clue: The first syllable of <> sounds like this common substance
+    step: '-/o/'
+  - word: AIR
+    clue: ''
+    step: ''

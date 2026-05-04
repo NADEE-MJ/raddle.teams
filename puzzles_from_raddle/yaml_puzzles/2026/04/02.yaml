@@ -1,0 +1,45 @@
+meta:
+  title: From SKRILLEX to KRILL
+  theme: lent
+  discord_thread_id: '1485366821732352172'
+  message: By giving up SEX, SKRILLEX turns into KRILL.
+ladder:
+  - word: SKRILLEX
+    clue: Drop the last letter from <> and anagram to get some assassins
+    step: '-X, then anagram'
+  - word: KILLERS
+    clue: ^<> might be in pill form
+    step: of
+  - word: PAIN
+    clue: Add a letter to the front of <> to get a country
+    step: +S
+  - word: SPAIN
+    clue: Money of <>
+    step: currency
+  - word: EURO
+    clue: Add a G to <> and anagram to get some makeup
+    step: +G, then anagram
+  - word: ROUGE
+    clue: Reverse a bigram (two letters) in <> to get a scamp
+    step: U<->G
+  - word: ROGUE
+    clue: Change one letter in <> to get a magazine
+    step: R->V
+  - word: VOGUE
+    clue: Artist who sang "<>"
+    step: IS A SONG BY
+  - word: MADONNA
+    clue: Drop the first two and last two letters of <> to get a first name
+    step: INCLUDES
+  - word: DON
+    clue: Insert a letter into <> to get some feathers
+    step: +W
+  - word: DOWN
+    clue: ^ <>, examine something in depth
+    step: FOLLOWS
+  - word: DRILL
+    clue: Change one letter in <> to get a crustacean
+    step: D->K
+  - word: KRILL
+    clue: ''
+    step: ''

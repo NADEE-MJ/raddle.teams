@@ -1,0 +1,75 @@
+{
+  "meta": {
+    "title": "From ALICE to PAUL",
+    "theme": "womens_history_month",
+    "discord_thread_id": "1481651406409699591",
+    "message": "Alice Paul was a pioneering women's suffragist in the early 1900s. She spent many years as leader of the National Woman's Party, championing the Equal Rights Amendment, to codify the prohibition of sex discrimination. In 1943, the amendment was renamed the \"Alice Paul Amendment\" in her honor. On March 22, 1972, the Equal Rights Amendment was passed by Congress. It has since been ratified by 38 states, meeting the threshold required for constitutional amendments, thus making it the law of the land. But it hasn’t been officially added to the U.S. Constitution, or recognized by the National Archives."
+  },
+  "ladder": [
+    {
+      "word": "ALICE",
+      "clue": "Drop the first letter from <> to get nitpicker's targets?",
+      "step": "-A"
+    },
+    {
+      "word": "LICE",
+      "clue": "Add a letter to the front of <> to get a portion of food",
+      "step": "+S"
+    },
+    {
+      "word": "SLICE",
+      "clue": "Opposite of a <>, in golf",
+      "step": "opposite"
+    },
+    {
+      "word": "HOOK",
+      "clue": "Change one letter in <> to get something you do in a kitchen",
+      "step": "H->C"
+    },
+    {
+      "word": "COOK",
+      "clue": "A professional <>",
+      "step": "in a restaurant"
+    },
+    {
+      "word": "CHEF",
+      "clue": "\"{}, <>!\", exclamation in a restaurant",
+      "step": ","
+    },
+    {
+      "word": "YES",
+      "clue": "Add a letter to the front of <> to get parts of the body",
+      "step": "+E"
+    },
+    {
+      "word": "EYES",
+      "clue": "Keep your <> on the {}",
+      "step": "should be kept on"
+    },
+    {
+      "word": "BALL",
+      "clue": "<>{} pen",
+      "step": "…"
+    },
+    {
+      "word": "POINT",
+      "clue": "Change one letter in <> to get something used in home decor",
+      "step": "O->A"
+    },
+    {
+      "word": "PAINT",
+      "clue": "Change one letter in <> to get a religious figure",
+      "step": "P->S"
+    },
+    {
+      "word": "SAINT",
+      "clue": "<> {}, a state capital in the US Midwest",
+      "step": "precedes"
+    },
+    {
+      "word": "PAUL",
+      "clue": "",
+      "step": ""
+    }
+  ]
+}

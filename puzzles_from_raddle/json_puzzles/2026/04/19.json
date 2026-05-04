@@ -1,0 +1,70 @@
+{
+  "meta": {
+    "title": "From HADES to PLUTO",
+    "theme": "greek_to_roman",
+    "discord_thread_id": "1491460680484655305",
+    "message": "Hades (Greek) / Pluto (Roman) is the god of the underworld (way down under the ground) ruling over the realm of the dead."
+  },
+  "ladder": [
+    {
+      "word": "HADES",
+      "clue": "Word for \"ghost\" that is an anagram of <> (appropriately)",
+      "step": "anagrammed"
+    },
+    {
+      "word": "SHADE",
+      "clue": "You might {} <> if you're being sassy",
+      "step": "is something to"
+    },
+    {
+      "word": "THROW",
+      "clue": "Something a frustrated toddler might <>",
+      "step": "a"
+    },
+    {
+      "word": "TANTRUM",
+      "clue": "Drop the first letter from <> and anagram to get a US President",
+      "step": "-T, then anagram"
+    },
+    {
+      "word": "TRUMAN",
+      "clue": "<>'s middle \"name\"",
+      "step": "middle name"
+    },
+    {
+      "word": "S",
+      "clue": "<>-{} tops the ranks",
+      "step": "-"
+    },
+    {
+      "word": "TIER",
+      "clue": "Insert a letter into <> to get a mammal",
+      "step": "+G"
+    },
+    {
+      "word": "TIGER",
+      "clue": "A <> is a big {}",
+      "step": "is a big"
+    },
+    {
+      "word": "CAT",
+      "clue": "A <>-and-{} game",
+      "step": "and"
+    },
+    {
+      "word": "MOUSE",
+      "clue": "Famous <> mascot",
+      "step": "mascot"
+    },
+    {
+      "word": "MICKEY",
+      "clue": "<>'s pet",
+      "step": "has a pet named"
+    },
+    {
+      "word": "PLUTO",
+      "clue": "",
+      "step": ""
+    }
+  ]
+}

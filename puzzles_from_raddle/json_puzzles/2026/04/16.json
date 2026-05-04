@@ -1,0 +1,70 @@
+{
+  "meta": {
+    "title": "From PERFUME to GENIUS",
+    "theme": "big_ears_2026",
+    "discord_thread_id": "1490513731380318208",
+    "message": "The fun thing about seeing Perfume Genius live is he spends a lot of time on stage mimicking his album art and promo photos — laying on the ground and draped across chairs and wielding the mic stand like a joust. Of course it also helps that his music is so lively and catchy."
+  },
+  "ladder": [
+    {
+      "word": "PERFUME",
+      "clue": "<> usually comes in a {}",
+      "step": "comes in a"
+    },
+    {
+      "word": "BOTTLE",
+      "clue": "A {} in a <> might take years to arrive",
+      "step": "might contain a"
+    },
+    {
+      "word": "MESSAGE",
+      "clue": "Drop a trigram (three letters) from <> to get a wise person",
+      "step": "-MES"
+    },
+    {
+      "word": "SAGE",
+      "clue": "Drop the last letter from <> to slump",
+      "step": "-E"
+    },
+    {
+      "word": "SAG",
+      "clue": "Change one letter in <> to get a container",
+      "step": "S->B"
+    },
+    {
+      "word": "BAG",
+      "clue": "{} <>, a piece of camping gear",
+      "step": "used for"
+    },
+    {
+      "word": "SLEEPING",
+      "clue": "\"<> {}\" (1959)",
+      "step": "…"
+    },
+    {
+      "word": "BEAUTY",
+      "clue": "\"<> and the {}\" (1991)",
+      "step": "and the"
+    },
+    {
+      "word": "BEAST",
+      "clue": "Insert a letter into <> to get a part of the body",
+      "step": "+R"
+    },
+    {
+      "word": "BREAST",
+      "clue": "<>{}, category of several Olympic events",
+      "step": "…"
+    },
+    {
+      "word": "STROKE",
+      "clue": "\"Bravo! What a <> of {}!\"",
+      "step": "of"
+    },
+    {
+      "word": "GENIUS",
+      "clue": "",
+      "step": ""
+    }
+  ]
+}

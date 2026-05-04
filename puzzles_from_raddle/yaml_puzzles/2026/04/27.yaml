@@ -1,0 +1,42 @@
+meta:
+  title: From BROWN to BREAD
+  theme: cockney_rhyming_slang
+  discord_thread_id: '1494376753467097170'
+  message: '"Brown bread" is Cockney rhyming slang for "dead". As in, "my little brother threw a loaf of pumpernickel at me while I was napping, and now he’s brown bread!"'
+ladder:
+  - word: BROWN
+    clue: <> ^ lunch, so named after the container it comes in
+    step: IS THE COLOR OF A LUNCH
+  - word: BAG
+    clue: Kind of <> often given out as swag
+    step: from NPR
+  - word: TOTE
+    clue: Insert a letter into <> to get a dessert
+    step: +R
+  - word: TORTE
+    clue: Anagram <> to get a mammal
+    step: anagrammed
+  - word: OTTER
+    clue: Change one letter in <> to become external
+    step: T->U
+  - word: OUTER
+    clue: Opposite of <>
+    step: opposite
+  - word: INNER
+    clue: 'Add a letter to the front of <> to get something you eat '
+    step: +D
+  - word: DINNER
+    clue: '"<>^!" your parent might yell'
+    step: is at this
+  - word: TIME
+    clue: Word that ^s with <>
+    step: rhymes with
+  - word: RHYME
+    clue: Drop every other letter from <> to get a liquor
+    step: ODDLY
+  - word: RYE
+    clue: You might order <> ^ in a deli
+    step: IS A KIND OF
+  - word: BREAD
+    clue: ''
+    step: ''

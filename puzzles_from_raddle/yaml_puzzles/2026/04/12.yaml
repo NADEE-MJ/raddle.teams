@@ -1,0 +1,42 @@
+meta:
+  title: From GHOST to TRAIN
+  theme: big_ears_2026
+  discord_thread_id: '1489378143692394677'
+  message: "[Ghost Train Orchestra](https://www.ghosttrainorchestra.com/) played two captivating sets of Moondog compositions, with a rotating cast of guests including David Byrne and Joan As Police Woman. Moondog was a blind composer who was a staple on the streets of Manhattan in the mid-century, often found dressed in a cloak and a horned helmet. He invented his own instruments, and became a formative influence on everyone from Charlie Parker to Philip Glass."
+ladder:
+  - word: GHOST
+    clue: ^ <>, one of a triad
+    step: might be
+  - word: HOLY
+    clue: Change one letter in <> to embrace
+    step: Y->D
+  - word: HOLD
+    clue: <> one's ^, stay silent
+    step: your
+  - word: TONGUE
+    clue: ^ <>, how you first communicate
+    step: as
+  - word: MOTHER
+    clue: ^<>, your <>'s <>
+    step: of mother is
+  - word: GRAND
+    clue: A <> is a ^ dollars
+    step: '='
+  - word: THOUSAND
+    clue: Prefix meaning "<>"
+    step: '='
+  - word: KILO
+    clue: <>^, a measurement in computing
+    step: …
+  - word: BYTE
+    clue: A <> is eight digits in ^
+    step: is 8
+  - word: BINARY
+    clue: Drop the last letter from <> and anagram to get an organ
+    step: '-Y, then anagram'
+  - word: BRAIN
+    clue: Change one letter in <> to get a method of transport
+    step: B->T
+  - word: TRAIN
+    clue: ''
+    step: ''

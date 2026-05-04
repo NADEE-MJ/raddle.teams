@@ -1,0 +1,41 @@
+meta:
+  title: From GUNDERSEN to METHOD
+  theme: winter_olympics
+  message: The Gundersen Method is a format for the Nordic Combined competition, wherein the athletes perform a ski jump first, and those results determine the starting order and time gaps for the cross-country skiing race. The first skier to then cross the finish line wins overall.
+ladder:
+- word: GUNDERSEN
+  clue: Color found backwards in <>
+  step: partially contains, backwards,
+- word: RED
+  clue: The <> ^'s ranks were filled with Soviet people, not <> or ^ ants
+  step: fighting force
+- word: ARMY
+  clue: "Name that’s an anagram of <>"
+  step: anagrammed
+- word: MARY
+  clue: <> ^, "name" for a drug
+  step: precedes
+- word: JANE
+  clue: <> ^, pioneering anthropologist
+  step: last name
+- word: GOODALL
+  clue: Drop every other letter from <> to get a score
+  step: drop every other letter
+- word: GOAL
+  clue: <>^, position in many sports
+  step: is protected by a
+- word: KEEPER
+  clue: ^ <>, someone looking out for others
+  step: of 
+- word: BROTHERS
+  clue: "1980 comedy \"The ^ <>\""
+  step: who love the
+- word: BLUES
+  clue: Counterpart to <>, musically
+  step: counterpart
+- word: RHYTHM
+  clue: The <> ^ is, on average, 75% effective
+  step: is a contraceptive
+- word: METHOD
+  clue:
+  step: ' '

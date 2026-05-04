@@ -1,0 +1,64 @@
+{
+  "meta": {
+    "title": "From BROKEN to ARM",
+    "theme": "mystery_7",
+    "discord_thread_id": "1488603239795392702"
+  },
+  "ladder": [
+    {
+      "word": "BROKEN",
+      "clue": "Unrequited love might lead to a <> {}",
+      "step": "…"
+    },
+    {
+      "word": "HEART",
+      "clue": "<> of {}, vegetable harvested from within a {} tree",
+      "step": "of"
+    },
+    {
+      "word": "PALM",
+      "clue": "Anagram <> to get a desktop appliance",
+      "step": "anagrammed"
+    },
+    {
+      "word": "LAMP",
+      "clue": "A <> provides {}",
+      "step": "offers"
+    },
+    {
+      "word": "LIGHT",
+      "clue": "Change one letter in <> to get a number",
+      "step": "L->E"
+    },
+    {
+      "word": "EIGHT",
+      "clue": "<> turned 90°",
+      "step": "turned 90°"
+    },
+    {
+      "word": "INFINITY",
+      "clue": "Group who fought the <> War",
+      "step": "war fought by the"
+    },
+    {
+      "word": "AVENGERS",
+      "clue": "God who is in The <> ",
+      "step": "member"
+    },
+    {
+      "word": "THOR",
+      "clue": "Tool famously held by <>",
+      "step": "wields a"
+    },
+    {
+      "word": "HAMMER",
+      "clue": "Consumer brand {} & <>",
+      "step": "&"
+    },
+    {
+      "word": "ARM",
+      "clue": "",
+      "step": ""
+    }
+  ]
+}

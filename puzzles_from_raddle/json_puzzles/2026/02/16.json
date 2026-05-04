@@ -1,0 +1,74 @@
+{
+  "meta": {
+    "title": "From V to STYLE",
+    "theme": "winter_olympics",
+    "message": "The V-style is a ski jumping technique where the skier positions their skis in a V-shape (tips apart, tails together) during flight to maximize lift and distance, replacing the older parallel ski technique."
+  },
+  "ladder": [
+    {
+      "word": "V",
+      "clue": "Abbreviation that looks like six <>'s in a row",
+      "step": "six times"
+    },
+    {
+      "word": "WWW",
+      "clue": "The last letter of <> stands for this",
+      "step": "partially stands for"
+    },
+    {
+      "word": "WEB",
+      "clue": "Creature that makes a <>",
+      "step": "is spun by a"
+    },
+    {
+      "word": "SPIDER",
+      "clue": "Last name of the \"man\" who behaves like a <>",
+      "step": "-Man aka Peter"
+    },
+    {
+      "word": "PARKER",
+      "clue": "Actress <> {}",
+      "step": "last name"
+    },
+    {
+      "word": "POSEY",
+      "clue": "Drop the last letter of <> and anagram to get a currency",
+      "step": "-Y, then anagram"
+    },
+    {
+      "word": "PESO",
+      "clue": "<> : Mexico :: {} : USA",
+      "step": "is currency as is the"
+    },
+    {
+      "word": "DOLLAR",
+      "clue": "The <> {} is just above 4, for some",
+      "step": "…"
+    },
+    {
+      "word": "SIGN",
+      "clue": "You might <> {} for an extra shift",
+      "step": "-"
+    },
+    {
+      "word": "UP",
+      "clue": "\"{} <>, you’re running late!\"",
+      "step": "follows"
+    },
+    {
+      "word": "HURRY",
+      "clue": "Change one letter in <> to get a first name",
+      "step": "U->A"
+    },
+    {
+      "word": "HARRY",
+      "clue": "Musician <> {}s",
+      "step": "last name, mostly"
+    },
+    {
+      "word": "STYLE",
+      "clue": null,
+      "step": " "
+    }
+  ]
+}

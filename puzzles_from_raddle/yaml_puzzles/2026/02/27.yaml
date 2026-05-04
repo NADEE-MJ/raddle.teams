@@ -1,0 +1,44 @@
+meta:
+  title: From BISCUIT to GLADIATOR
+  theme: mystery_6
+  message: "[Visit the Mystery Theme page](https://raddle.quest/mystery/6) for some hints"
+ladder:
+  - word: BISCUIT
+    clue: The beginning of <> sounds like this soup
+    step: '- "it"'
+  - word: BISQUE
+    clue: <> is served in a ^
+    step: is served in a
+  - word: BOWL
+    clue: Add an E to <> and anagram to get a body part (no, the other one)
+    step: +E, then anagram
+  - word: ELBOW
+    clue: <> ^, vigorous effort
+    step: …
+  - word: GREASE
+    clue: Country that sounds like "<>"
+    step: SOUNDS LIKE
+  - word: GREECE
+    clue: Capital of <>
+    step: CAPITAL
+  - word: ATHENS
+    clue: Change a letter in <> to get who <> was named after
+    step: S->A
+  - word: ATHENA
+    clue: Drop every other letter in <> to get a drink
+    step: '- ODD LETTERS'
+  - word: TEA
+    clue: Append a letter to <> to get something bad to do to a muscle
+    step: +R
+  - word: TEAR
+    clue: ^ <>s aren't sincere
+    step: OF A
+  - word: CROCODILE
+    clue: Cousin to a <>
+    step: COUSIN
+  - word: ALLIGATOR
+    clue: Change the 2nd letter of <> to a D and anagram to get a fighter
+    step: L-> THEN ANAGRAM
+  - word: GLADIATOR
+    clue: ''
+    step: ''

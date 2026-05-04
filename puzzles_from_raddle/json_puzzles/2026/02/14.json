@@ -1,0 +1,74 @@
+{
+  "meta": {
+    "title": "From FORTNER to ACTION",
+    "theme": "winter_olympics",
+    "message": "The Fortner action is a rifle mechanism used in biathlon competitions, allowing athletes to reload quickly without lifting the rifle from their shoulder."
+  },
+  "ladder": [
+    {
+      "word": "FORTNER",
+      "clue": "Add an I to <> then anagram to get a low-fare airline",
+      "step": "+I, then anagram"
+    },
+    {
+      "word": "FRONTIER",
+      "clue": "Space, the {} <>",
+      "step": "might be"
+    },
+    {
+      "word": "FINAL",
+      "clue": "The {}<>s are right before the <>s",
+      "step": "follows a"
+    },
+    {
+      "word": "SEMI",
+      "clue": "Add a D to <> then reverse to get some currency",
+      "step": "+D, then reverse"
+    },
+    {
+      "word": "DIMES",
+      "clue": "{}-and-<>, behaves cheaply",
+      "step": "and"
+    },
+    {
+      "word": "NICKELS",
+      "clue": "Drop the first letter from <> and anagram to get a farming tool",
+      "step": "-N, then anagram"
+    },
+    {
+      "word": "SICKLE",
+      "clue": "Change the first letter of <> to get a condiment",
+      "step": "S->P"
+    },
+    {
+      "word": "PICKLE",
+      "clue": "<>{}, a modern sport",
+      "step": "…"
+    },
+    {
+      "word": "BALL",
+      "clue": "{}<> is a simple cocktail",
+      "step": "glass that's"
+    },
+    {
+      "word": "HIGH",
+      "clue": "{} <>, be ambitious",
+      "step": "is how you should"
+    },
+    {
+      "word": "AIM",
+      "clue": "Reverse <> to get a name",
+      "step": "reverse"
+    },
+    {
+      "word": "MIA",
+      "clue": "What the last letter of <> stands for",
+      "step": "partially stands for"
+    },
+    {
+      "word": "ACTION",
+      "clue": "",
+      "step": ""
+    }
+  ]
+}

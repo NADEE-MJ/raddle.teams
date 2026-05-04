@@ -1,0 +1,75 @@
+{
+  "meta": {
+    "title": "From NIKE to VICTORIA",
+    "theme": "greek_to_roman",
+    "discord_thread_id": "1493333523048960030",
+    "message": "Nike (Greek) / Victoria (Roman) is the goddess of victory, depicted as a winged figure who descends from the heavens to bestow laurels on champions — while wearing Air Jordans."
+  },
+  "ladder": [
+    {
+      "word": "NIKE",
+      "clue": "Change one letter in <> to get a vehicle",
+      "step": "N->B"
+    },
+    {
+      "word": "BIKE",
+      "clue": "'80s movie whose poster features a flying <>",
+      "step": "is flying because of"
+    },
+    {
+      "word": "ET",
+      "clue": "<> {}, final item on some lists?",
+      "step": "…"
+    },
+    {
+      "word": "AL",
+      "clue": "Element <>",
+      "step": "stands for"
+    },
+    {
+      "word": "ALUMINUM",
+      "clue": "<> {}, common kitchen product",
+      "step": "…"
+    },
+    {
+      "word": "FOIL",
+      "clue": "At the Olympics, a <> is a {}",
+      "step": "is a"
+    },
+    {
+      "word": "SWORD",
+      "clue": "\"The <> in the {}\"",
+      "step": "in the"
+    },
+    {
+      "word": "STONE",
+      "clue": "<> {}, a certain wrestler's epithet",
+      "step": "…"
+    },
+    {
+      "word": "COLD",
+      "clue": "\"<> {} inside!\", sign found outside many a bar",
+      "step": "as in"
+    },
+    {
+      "word": "BEER",
+      "clue": "Necessary ingredient in making <>",
+      "step": "is made with"
+    },
+    {
+      "word": "HOPS",
+      "clue": "Anagram <> to become fancy",
+      "step": "anagrammed"
+    },
+    {
+      "word": "POSH",
+      "clue": "First name of <> Spice",
+      "step": "spice aka"
+    },
+    {
+      "word": "VICTORIA",
+      "clue": "",
+      "step": ""
+    }
+  ]
+}

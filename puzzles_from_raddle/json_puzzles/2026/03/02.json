@@ -1,0 +1,63 @@
+{
+  "meta": {
+    "title": "From PAINT to DIPPER",
+    "theme": "one_year_of_raddle"
+  },
+  "ladder": [
+    {
+      "word": "PAINT",
+      "clue": "Add a C to <> and anagram to get a feline treat",
+      "step": "+C, then anagram"
+    },
+    {
+      "word": "CATNIP",
+      "clue": "Add an A to <> and anagram to get a military rank",
+      "step": "+A, then anagram"
+    },
+    {
+      "word": "CAPTAIN",
+      "clue": "Fictional villain <> {}, known for his silvery {}",
+      "step": "of the jolly roger"
+    },
+    {
+      "word": "HOOK",
+      "clue": "Change one letter in <> to get some reading material",
+      "step": "H->B"
+    },
+    {
+      "word": "BOOK",
+      "clue": "The vertical part of a <> that usually faces outwards",
+      "step": "has writing on its"
+    },
+    {
+      "word": "SPINE",
+      "clue": "Change one letter in <> to get a stake",
+      "step": "N->K"
+    },
+    {
+      "word": "SPIKE",
+      "clue": "Director <> {}",
+      "step": "last name"
+    },
+    {
+      "word": "LEE",
+      "clue": "Append a /g/ sound to <> to get a coalition",
+      "step": "+/g/"
+    },
+    {
+      "word": "LEAGUE",
+      "clue": "The {} <>s, where you go when you're pro",
+      "step": "can be small or"
+    },
+    {
+      "word": "BIG",
+      "clue": "The <> {} can be seen in the night sky",
+      "step": "…"
+    },
+    {
+      "word": "DIPPER",
+      "clue": "",
+      "step": ""
+    }
+  ]
+}

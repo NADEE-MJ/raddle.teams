@@ -1,0 +1,75 @@
+{
+  "meta": {
+    "title": "From HELIOS to SOL",
+    "theme": "greek_to_roman",
+    "discord_thread_id": "1492208052869398559",
+    "message": "Helios (Greek) / Sol (Roman) is the god of the sun, driving a chariot across the sky each day to bring light to the world."
+  },
+  "ladder": [
+    {
+      "word": "HELIOS",
+      "clue": "Drop the fourth letter from <> and anagram to get some sights on a golf course",
+      "step": "-I, then anagram"
+    },
+    {
+      "word": "HOLES",
+      "clue": "Cheese with <>",
+      "step": "in this cheese"
+    },
+    {
+      "word": "SWISS",
+      "clue": "Change one letter in <> to get a basketball term",
+      "step": "S->H"
+    },
+    {
+      "word": "SWISH",
+      "clue": "A <> is nothing but {}",
+      "step": "means nothing but"
+    },
+    {
+      "word": "NET",
+      "clue": "Change middle letter of <> and reverse to get an element",
+      "step": "E->I, then reverse"
+    },
+    {
+      "word": "TIN",
+      "clue": "A musician likely doesn't have a <> {} ",
+      "step": "…"
+    },
+    {
+      "word": "EAR",
+      "clue": "A {} might go from <> to <>",
+      "step": "to ear"
+    },
+    {
+      "word": "SMILE",
+      "clue": "Insert a letter into <> to get a figure of speech",
+      "step": "+I"
+    },
+    {
+      "word": "SIMILE",
+      "clue": "Change one letter in <> to become straightforward",
+      "step": "I->P"
+    },
+    {
+      "word": "SIMPLE",
+      "clue": "If it's {} and <>, no other details are needed",
+      "step": "and"
+    },
+    {
+      "word": "PURE",
+      "clue": "Anagram <> to get a country",
+      "step": "anagrammed"
+    },
+    {
+      "word": "PERU",
+      "clue": "Currency of <>",
+      "step": "currency"
+    },
+    {
+      "word": "SOL",
+      "clue": "",
+      "step": ""
+    }
+  ]
+}

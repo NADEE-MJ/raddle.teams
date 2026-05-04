@@ -1,0 +1,73 @@
+{
+  "meta": {
+    "title": "From PAIN to THUMPER",
+    "theme": "one_year_of_raddle"
+  },
+  "ladder": [
+    {
+      "word": "PAIN",
+      "clue": "Insert an L into <> to get grassland",
+      "step": "+L"
+    },
+    {
+      "word": "PLAIN",
+      "clue": "<> ice cream flavor",
+      "step": "ICE CREAM FLAVOR"
+    },
+    {
+      "word": "VANILLA",
+      "clue": "Counterpart to <>, a lot of the time",
+      "step": "VS"
+    },
+    {
+      "word": "CHOCOLATE",
+      "clue": "A <> {} is wrapped in foil",
+      "step": "…"
+    },
+    {
+      "word": "KISS",
+      "clue": "<> and {}",
+      "step": "AND"
+    },
+    {
+      "word": "TELL",
+      "clue": "{} and <>",
+      "step": "AND"
+    },
+    {
+      "word": "SHOW",
+      "clue": "Change the first two letters of <> to an L to get short",
+      "step": "SH->L"
+    },
+    {
+      "word": "LOW",
+      "clue": "Change the long /o/ sound in <> to a long /u/ to get a first name",
+      "step": "W->U"
+    },
+    {
+      "word": "LOU",
+      "clue": "Musician <> {}",
+      "step": "LAST NAME"
+    },
+    {
+      "word": "REED",
+      "clue": "Reverse <> to get an animal",
+      "step": "reversed"
+    },
+    {
+      "word": "DEER",
+      "clue": "Disney movie about a <>",
+      "step": "NAMED"
+    },
+    {
+      "word": "BAMBI",
+      "clue": "<>'s rabbit friend",
+      "step": "FRIEND"
+    },
+    {
+      "word": "THUMPER",
+      "clue": "",
+      "step": ""
+    }
+  ]
+}

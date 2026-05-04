@@ -1,0 +1,74 @@
+{
+  "meta": {
+    "title": "From BACKSIDE to AIR",
+    "theme": "winter_olympics",
+    "message": "In a backside air, the snowboarder \"takes off from a quarterpipe and spins so that their backside turns towards the outside of the pipe before landing back in the quarterpipe riding forwards.\" (via [Burton](https://www.burton.com/discover/s/article/snowboarding-terms))"
+  },
+  "ladder": [
+    {
+      "word": "BACKSIDE",
+      "clue": "A person’s <> is their {}",
+      "step": "aka your"
+    },
+    {
+      "word": "ASS",
+      "clue": "Zoologically, an <> is a {}",
+      "step": "is also called a"
+    },
+    {
+      "word": "DONKEY",
+      "clue": "Character with a <> friend named <>",
+      "step": "was friends with"
+    },
+    {
+      "word": "SHREK",
+      "clue": "Add an O to <> and anagram to get a word on some food packaging",
+      "step": "+O, then anagram"
+    },
+    {
+      "word": "KOSHER",
+      "clue": "Easy-to-make sandwich that isn’t <>",
+      "step": "diets disallow a"
+    },
+    {
+      "word": "BLT",
+      "clue": "Insert a letter into <> to get a piece of clothing",
+      "step": "+E"
+    },
+    {
+      "word": "BELT",
+      "clue": "Constellation with a <>",
+      "step": "in the sky"
+    },
+    {
+      "word": "ORION",
+      "clue": "Drop the outside letters of <> to get a world city",
+      "step": "-O, -N"
+    },
+    {
+      "word": "RIO",
+      "clue": "<> is Spanish for {}",
+      "step": "in English is"
+    },
+    {
+      "word": "RIVER",
+      "clue": "The longest <>",
+      "step": "in Africa"
+    },
+    {
+      "word": "NILE",
+      "clue": "Change one letter in <> to get a Greek god",
+      "step": "L->K"
+    },
+    {
+      "word": "NIKE",
+      "clue": "<> {}, brand that might be afoot?",
+      "step": "brand"
+    },
+    {
+      "word": "AIR",
+      "clue": null,
+      "step": " "
+    }
+  ]
+}

@@ -1,0 +1,39 @@
+meta:
+  title: From FRANK to STEIN
+  theme: oscars_2025
+  message: 
+    Guillermo del Toro's long-gestating _Frankenstein_ adaptation stars Oscar Isaac as the obsessed scientist and Jacob Elordi as his tragic creature. It picked up nine Oscar nominations including Best Picture, Best Supporting Actor (Elordi), and Best Adapted Screenplay. I tried watching this one at home, and found it befuddling and tedious. 
+ladder:
+  - word: FRANK
+    clue: American crooner <> ^
+    step: last name
+  - word: SINATRA
+    clue: Anagram <> to get a skilled maker of things
+    step: anagrammed
+  - word: ARTISAN
+    clue: Insert a U into <> and anagram to someone from a certain European country
+    step: +U, then anagram
+  - word: AUSTRIAN
+    clue: Most famous <> composer
+    step: composer
+  - word: MOZART
+    clue: Acclaimed movie about, and named after, <>
+    step: middle name
+  - word: AMADEUS
+    clue: Drop the first letter of <> and anagram to get a mythical being
+    step: '-A, then anagram'
+  - word: MEDUSA
+    clue: One of many atop <>
+    step: is part
+  - word: SNAKE
+    clue: Drop one letter in <> to get an alcoholic drink
+    step: '-N'
+  - word: SAKE
+    clue: A <> bomb is <> dropped in ^
+    step: or
+  - word: BEER
+    clue: In Germany, <> might get served in a ^
+    step: is served in a
+  - word: STEIN
+    clue: ''
+    step: ''

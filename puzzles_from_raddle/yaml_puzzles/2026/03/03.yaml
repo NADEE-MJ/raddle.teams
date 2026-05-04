@@ -1,0 +1,40 @@
+meta:
+  title: From PAGE to KEEPER
+  theme: one_year_of_raddle
+ladder:
+  - word: PAGE
+    clue: ^ the <> and make a new start
+    step: is something to
+  - word: TURN
+    clue: Insert a letter into <> to get an Italian city
+    step: +I
+  - word: TURIN
+    clue: ^ of <>, a venerated religious artifact
+    step: is the home of a famous
+  - word: SHROUD
+    clue: Remove the last letter of <> and anagram to get some units of time
+    step: '-D, then anagram'
+  - word: HOURS
+    clue: ^-<>, like some late-night events
+    step: that happen
+  - word: AFTER
+    clue: One <> eight
+    step: eight is
+  - word: NINE
+    clue: Change one letter in <> to get a drink
+    step: N->W
+  - word: WINE
+    clue: <> is made from many a ^
+    step: is made from many a
+  - word: GRAPE
+    clue: Anagram <> to get a piece of '90s electronics
+    step: anagrammed
+  - word: PAGER
+    clue: Alternate name for a <>, based on the sound it makes
+    step: aka
+  - word: BEEPER
+    clue: Change one letter in <> to get a good partner
+    step: B->K
+  - word: KEEPER
+    clue: ''
+    step: ''

@@ -1,0 +1,41 @@
+meta:
+  title: From HERRING to BONE
+  theme: winter_olympics
+  message: The herringbone is a cross-country skiing technique for climbing steep hills where the skier points the ski tips outward in a V-shape while pushing off the inside edges, creating a pattern in the snow that resembles a fish skeleton.
+ladder:
+  - word: HERRING
+    clue: A ^ <> should be ignored
+    step: might be
+  - word: RED
+    clue: Saint ^ is famous for wearing <>
+    step: guy is St.
+  - word: NICK
+    clue: Change one letter in <> to get a thrill
+    step: N->K
+  - word: KICK
+    clue: <>^, a site with many goals
+    step: …
+  - word: STARTER
+    clue: Reverse the last two letters of <>, then add a letter, to get a popular franchise
+    step: +K, then anagram
+  - word: STAR TREK
+    clue: One <> captain was known to say this a lot
+    step: captain says
+  - word: MAKE IT SO
+    clue: Drop the last letter of <> and anagram to get an error
+    step: '-O, then anagram'
+  - word: MISTAKE
+    clue: ^ <>, something veterans don't do
+    step: from a
+  - word: ROOKIE
+    clue: Change one letter in <> to get a baked good
+    step: R->C
+  - word: COOKIE
+    clue: Appropriately sweet title for some kids who might sell you <>s
+    step: are sold by
+  - word: BROWNIES
+    clue: Drop every other letter from <> to get something inside you
+    step: odd letters
+  - word: BONE
+    clue: ''
+    step: ''

@@ -1,0 +1,70 @@
+{
+  "meta": {
+    "title": "From ACTION STAR to ACTOR",
+    "theme": "lent",
+    "discord_thread_id": "1485635649330741368",
+    "message": "By giving up INSTA(gram), you can turn an ACTION STAR into just an ACTOR."
+  },
+  "ladder": [
+    {
+      "word": "ACTION STAR",
+      "clue": "Charged things found inside <>",
+      "step": "features"
+    },
+    {
+      "word": "IONS",
+      "clue": "Add a letter to the front of <> to get some animals",
+      "step": "+L"
+    },
+    {
+      "word": "LIONS",
+      "clue": "\"In the <> {},\" metaphor taken from the bible",
+      "step": "home"
+    },
+    {
+      "word": "DEN",
+      "clue": "Anagram <> to get a conclusion",
+      "step": "anagrammed"
+    },
+    {
+      "word": "END",
+      "clue": "\"{} <>\", famous last words?",
+      "step": "follows"
+    },
+    {
+      "word": "THE",
+      "clue": "\"<> more <> {}!\"",
+      "step": "more the"
+    },
+    {
+      "word": "MERRIER",
+      "clue": "Name heard at the start of \"<>\" (for Americans)",
+      "step": "starts with"
+    },
+    {
+      "word": "MARY",
+      "clue": "{} <>, a desperate attempt",
+      "step": "follows"
+    },
+    {
+      "word": "HAIL",
+      "clue": "Large mammal that rhymes with <>",
+      "step": "rhymes with"
+    },
+    {
+      "word": "WHALE",
+      "clue": "A killer <>",
+      "step": "that's black and white"
+    },
+    {
+      "word": "ORCA",
+      "clue": "Add a T to <> and anagram to get a kind of performer",
+      "step": "+T, then anagram"
+    },
+    {
+      "word": "ACTOR",
+      "clue": "",
+      "step": ""
+    }
+  ]
+}

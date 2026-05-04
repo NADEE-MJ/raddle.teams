@@ -1,0 +1,41 @@
+meta:
+  title: From CAMEL to SPIN
+  theme: winter_olympics
+  message: The camel spin is a figure skating spin performed on one leg with the free leg extended backward and the upper body bent forward, creating a position roughly parallel to the ice.
+ladder:
+  - word: CAMEL
+    clue: There's at least one ^ on a <>
+    step: has at least one
+  - word: HUMP
+    clue: <>^ whale
+    step: …
+  - word: BACK
+    clue: Change one letter in <> to get part of a tree
+    step: C->R
+  - word: BARK
+    clue: Change one letter in <> to get a male name
+    step: B->M
+  - word: MARK
+    clue: American author <> ^
+    step: last name
+  - word: TWAIN
+    clue: Remove the last letter of <> and anagram to pause
+    step: -N, then anagram
+  - word: WAIT
+    clue: Measurement that sounds like "<>"
+    step: sounds like
+  - word: WEIGHT
+    clue: Change the long /a/ sound in <> to a long /i/ sound to get a shade
+    step: '-G, then anagram'
+  - word: WHITE
+    clue: Alcoholic drink that might be <>
+    step: …
+  - word: WINE
+    clue: Container that <> usually comes in
+    step: comes in a
+  - word: BOTTLE
+    clue: Party game ^ the <>
+    step: might get a
+  - word: SPIN
+    clue: ''
+    step: ''

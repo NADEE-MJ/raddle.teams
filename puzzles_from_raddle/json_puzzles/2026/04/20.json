@@ -1,0 +1,70 @@
+{
+  "meta": {
+    "title": "From ARTEMIS to DIANA",
+    "theme": "greek_to_roman",
+    "discord_thread_id": "1491779828226064526",
+    "message": "Artemis (Greek) / Diana (Roman) is the goddess of the hunt, the moon, and the wild. She roams the forests with her bow, protecting nature and the creatures within it."
+  },
+  "ladder": [
+    {
+      "word": "ARTEMIS",
+      "clue": "Anagram <> to get a tiny candy",
+      "step": "anagrammed"
+    },
+    {
+      "word": "SMARTIE",
+      "clue": "<> {}, a know-it-all",
+      "step": "…"
+    },
+    {
+      "word": "PANTS",
+      "clue": "What a fabricator's <> might be on?",
+      "step": "are on"
+    },
+    {
+      "word": "FIRE",
+      "clue": "Change one letter in <> to get the opposite of <>",
+      "step": "F->H"
+    },
+    {
+      "word": "HIRE",
+      "clue": "Positional adjective that sounds like \"<>\"",
+      "step": "sounds like"
+    },
+    {
+      "word": "HIGHER",
+      "clue": "<> {}, an advantageous position",
+      "step": "…"
+    },
+    {
+      "word": "GROUND",
+      "clue": "<>, aka the surface of the {}",
+      "step": "="
+    },
+    {
+      "word": "EARTH",
+      "clue": "<>{}, something shaky",
+      "step": "movement can yield"
+    },
+    {
+      "word": "QUAKE",
+      "clue": "Drop every other letter in <> to get a country",
+      "step": "even letters"
+    },
+    {
+      "word": "UK",
+      "clue": "<>'s head of state",
+      "step": "head of state"
+    },
+    {
+      "word": "CHARLES III",
+      "clue": "<>'s first wife",
+      "step": "first wife"
+    },
+    {
+      "word": "DIANA",
+      "clue": "",
+      "step": ""
+    }
+  ]
+}

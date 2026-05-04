@@ -1,0 +1,75 @@
+{
+  "meta": {
+    "title": "From ADAM to EVE",
+    "theme": "cockney_rhyming_slang",
+    "discord_thread_id": "1494068324374417559",
+    "message": "\"Adam and Eve\" is slang for \"believe\". As in, \"Would you Adam and Eve there’s a talking serpent here, and it wants us to take a bite of that apple?\""
+  },
+  "ladder": [
+    {
+      "word": "ADAM",
+      "clue": "<>'s {}, part of the body",
+      "step": "'s"
+    },
+    {
+      "word": "APPLE",
+      "clue": "One of the founders of <>",
+      "step": "FOUNDER"
+    },
+    {
+      "word": "JOBS",
+      "clue": "Gig workers often take {} <>",
+      "step": "MIGHT BE"
+    },
+    {
+      "word": "ODD",
+      "clue": "Every other {} is <>",
+      "step": "OR EVEN"
+    },
+    {
+      "word": "NUMBER",
+      "clue": "Change one letter in <> to get a building material",
+      "step": "N->L"
+    },
+    {
+      "word": "LUMBER",
+      "clue": "A <>{} works in the forest",
+      "step": "…"
+    },
+    {
+      "word": "JACK",
+      "clue": "{} <>, a form of exercise",
+      "step": "YOU DO BY"
+    },
+    {
+      "word": "JUMPING",
+      "clue": "<> the {} might get you disqualified",
+      "step": "THE"
+    },
+    {
+      "word": "GUN",
+      "clue": "Change one letter in <> to get a celestial body",
+      "step": "G->S"
+    },
+    {
+      "word": "SUN",
+      "clue": "Counterpart to the <>",
+      "step": "COUNTERPART"
+    },
+    {
+      "word": "MOON",
+      "clue": "The <> is usually seen at {}",
+      "step": "IS SEEN AT"
+    },
+    {
+      "word": "NIGHT",
+      "clue": "The <> before",
+      "step": "BEFORE"
+    },
+    {
+      "word": "EVE",
+      "clue": "",
+      "step": ""
+    }
+  ]
+}

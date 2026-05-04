@@ -1,0 +1,46 @@
+meta:
+  title: From ALMOND to ROCKS
+  theme: cockney_rhyming_slang
+  discord_thread_id: '1496189852931326043'
+  message: 
+    '"Almond rocks" is Cockney rhyming slang for "socks", as in "Aw nuts, after hiking on the beach my almond rocks are full of pebbles."'
+ladder:
+  - word: ALMOND
+    clue: Anagram <> to get an elderly person
+    step: anagrammed
+  - word: OLD MAN
+    clue: '"The <> and ^"'
+    step: and
+  - word: THE SEA
+    clue: Drop the last letter from <> to get a pronoun
+    step: '-A'
+  - word: THESE
+    clue: Anagram <> to get a piece of paper
+    step: anagrammed
+  - word: SHEET
+    clue: Something made with a <>?
+    step: goes on a
+  - word: BED
+    clue: A ^ <> is a <> atop a <>
+    step: on a bed =
+  - word: BUNK
+    clue: Car part that rhymes with <>
+    step: rhymes with
+  - word: TRUNK
+    clue: Plant that often has a central <>
+    step: is the center of a
+  - word: TREE
+    clue: Use <> ^s to date a <>
+    step: has many a
+  - word: RING
+    clue: Shape of a <>
+    step: shape
+  - word: CIRCLE
+    clue: Drop every other letter in <> to get something frozen
+    step: evenly
+  - word: ICE
+    clue: Nickname for <>
+    step: '='
+  - word: ROCKS
+    clue: ''
+    step: ''

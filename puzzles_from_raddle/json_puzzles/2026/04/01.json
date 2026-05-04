@@ -1,0 +1,60 @@
+{
+  "meta": {
+    "title": "From TWO-IN-ONE to TOON",
+    "theme": "lent",
+    "discord_thread_id": "1485019296198299731",
+    "message": "By giving up WINE, something TWO-IN-ONE is now a TOON."
+  },
+  "ladder": [
+    {
+      "word": "TWO-IN-ONE",
+      "clue": "<> utensil",
+      "step": "utenisl"
+    },
+    {
+      "word": "SPORK",
+      "clue": "Change one letter in <> to get a sci-fi character",
+      "step": "R->C"
+    },
+    {
+      "word": "SPOCK",
+      "clue": "Pointy part of <>",
+      "step": "has a pointy"
+    },
+    {
+      "word": "EAR",
+      "clue": "{} <>, unlikely quality for a bandmate",
+      "step": "on a musician isn't"
+    },
+    {
+      "word": "TIN",
+      "clue": "<> Man's human friend",
+      "step": "man's friend"
+    },
+    {
+      "word": "DOROTHY",
+      "clue": "Where <> isn't anymore",
+      "step": "isn't in"
+    },
+    {
+      "word": "KANSAS",
+      "clue": "Remove every other letter from <> to get an animal",
+      "step": "- odd letters"
+    },
+    {
+      "word": "ASS",
+      "clue": "To {} is to show one's <> (literally)",
+      "step": "is shown when you"
+    },
+    {
+      "word": "MOON",
+      "clue": "Change one letter in <> to get a comic",
+      "step": "M->T"
+    },
+    {
+      "word": "TOON",
+      "clue": "",
+      "step": ""
+    }
+  ]
+}

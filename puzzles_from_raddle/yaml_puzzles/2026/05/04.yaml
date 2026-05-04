@@ -1,0 +1,41 @@
+meta:
+  title: From AGAIN to LIFE
+  theme: mystery_8
+  discord_thread_id: '1496860957924790424'
+ladder:
+  - word: AGAIN
+    clue: ^ <>, off <>
+    step: IT'S
+  - word: 'ON'
+    clue: '"^ <>!" 🤘🎉'
+    step: IT IS SO WE SHOULD
+  - word: PARTY
+    clue: A <> ^ might be given at the end of a <>
+    step: GIFT
+  - word: FAVOR
+    clue: Insert a letter into <> to get taste
+    step: +L
+  - word: FLAVOR
+    clue: Organ used to detect <>
+    step: DETECTED BY
+  - word: TONGUE
+    clue: Where your <> might be, when speaking insincerely?
+    step: IN
+  - word: CHEEK
+    clue: Body part with two <>s (no, the other one)
+    step: IS PART OF YOUR
+  - word: BUTT
+    clue: Animal that <>s
+    step: BY A
+  - word: GOAT
+    clue: Baby <>
+    step: BABY
+  - word: KID
+    clue: '"I <> you ^!"'
+    step: YOU
+  - word: NOT
+    clue: '"<> on your ^!"'
+    step: ON YOUR
+  - word: LIFE
+    clue: ''
+    step: ''

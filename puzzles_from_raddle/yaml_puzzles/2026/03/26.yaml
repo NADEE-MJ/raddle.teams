@@ -1,0 +1,45 @@
+meta:
+  title: From JULIETTE to LOW
+  theme: womens_history_month
+  discord_thread_id: '1482426100473659606'
+  message: On March 26, 2025, the Girl Scouts of the USA celebrated the launch of a commemorative quarter featuring their founder, Juliette Gordon Low. Low was the founder of the Girl Scouts of the USA, whose mission is to 'build girls of courage, confidence, and character, who make the world a better place.'
+ladder:
+  - word: JULIETTE
+    clue: Partner to <>, phonetically
+    step: partner, phonetically
+  - word: ROMEO
+    clue: Change one letter in <> to get a kind of competition
+    step: M->D
+  - word: RODEO
+    clue: '"This ain''t my ^ <>!"'
+    step: is not my
+  - word: FIRST
+    clue: Opposite of <>
+    step: opposite
+  - word: LAST
+    clue: Add an A to <> and anagram to get a reference book
+    step: +A, then anagram
+  - word: ATLAS
+    clue: An <> is full of ^
+    step: contains
+  - word: MAPS
+    clue: Reverse <> to get a canned food
+    step: reversed
+  - word: SPAM
+    clue: '"Sorry, that ^ went to <>."'
+    step: is unwanted
+  - word: EMAIL
+    clue: Kind of line at the top of an <>
+    step: has a
+  - word: SUBJECT
+    clue: '"Don''t ^ the <>!"'
+    step: might
+  - word: CHANGE
+    clue: Drop the outside letters from <> to get a casual get-together
+    step: '-C, -E'
+  - word: HANG
+    clue: Snow-covered branches often <> ^
+    step: …
+  - word: LOW
+    clue: ''
+    step: ''

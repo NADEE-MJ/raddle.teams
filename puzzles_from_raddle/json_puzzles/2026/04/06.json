@@ -1,0 +1,69 @@
+{
+  "meta": {
+    "title": "From KICK to OUT",
+    "theme": "mystery_7",
+    "discord_thread_id": "1486500084257656993"
+  },
+  "ladder": [
+    {
+      "word": "KICK",
+      "clue": "Don't <> the {} before finishing your {} list",
+      "step": "the"
+    },
+    {
+      "word": "BUCKET",
+      "clue": "Young chocolate lover of book and film {} <>",
+      "step": "comma"
+    },
+    {
+      "word": "CHARLIE",
+      "clue": "<> {}, early movie star",
+      "step": "aka mr."
+    },
+    {
+      "word": "CHAPLIN",
+      "clue": "Fella found at the start of <>",
+      "step": "-LIN"
+    },
+    {
+      "word": "CHAP",
+      "clue": "<>{}, a balm",
+      "step": "…"
+    },
+    {
+      "word": "STICK",
+      "clue": "\"Don't be a <> in the {}!\"",
+      "step": "in the"
+    },
+    {
+      "word": "MUD",
+      "clue": "<> = dirt + {}",
+      "step": "= dirt +"
+    },
+    {
+      "word": "WATER",
+      "clue": "<> {}, an Olympic sport",
+      "step": "sport"
+    },
+    {
+      "word": "POLO",
+      "clue": "Swap two letters in <> to get a location for some <>",
+      "step": "L<->O"
+    },
+    {
+      "word": "POOL",
+      "clue": "One of six in <>",
+      "step": "ball goes in a"
+    },
+    {
+      "word": "POCKET",
+      "clue": "In modern terms, wild behavior can be {} of <> ",
+      "step": "is in, don't be"
+    },
+    {
+      "word": "OUT",
+      "clue": "",
+      "step": ""
+    }
+  ]
+}

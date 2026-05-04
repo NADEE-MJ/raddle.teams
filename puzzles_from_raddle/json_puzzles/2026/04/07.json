@@ -1,0 +1,69 @@
+{
+  "meta": {
+    "title": "From ROD to REEL",
+    "theme": "mystery_7",
+    "discord_thread_id": "1487084662433251333"
+  },
+  "ladder": [
+    {
+      "word": "ROD",
+      "clue": "{}en<>, a yellowish plant",
+      "step": "colored"
+    },
+    {
+      "word": "GOLD",
+      "clue": "First: <> :: Second :: {}",
+      "step": "is better than"
+    },
+    {
+      "word": "SILVER",
+      "clue": "South American country whose name means \"<>y\", as its first and third letters represent <>",
+      "step": "land aka"
+    },
+    {
+      "word": "ARGENTINA",
+      "clue": "Fella found inside <>",
+      "step": "includes"
+    },
+    {
+      "word": "GENT",
+      "clue": "Add a letter to the front of <> to get a representative",
+      "step": "+A"
+    },
+    {
+      "word": "AGENT",
+      "clue": "A secret <>",
+      "step": "might be a"
+    },
+    {
+      "word": "SPY",
+      "clue": "Number associated with a very popular <>",
+      "step": "of film is"
+    },
+    {
+      "word": "007",
+      "clue": "Rotate <> 180° and it looks like a good place to go?",
+      "step": "rotated 180°"
+    },
+    {
+      "word": "LOO",
+      "clue": "First name that sounds like \"<>\"",
+      "step": "O->U"
+    },
+    {
+      "word": "LOU",
+      "clue": "American rocker <> {}",
+      "step": "last name"
+    },
+    {
+      "word": "REED",
+      "clue": "Change one letter in <> to get a part of a movie",
+      "step": "D->L"
+    },
+    {
+      "word": "REEL",
+      "clue": "",
+      "step": ""
+    }
+  ]
+}

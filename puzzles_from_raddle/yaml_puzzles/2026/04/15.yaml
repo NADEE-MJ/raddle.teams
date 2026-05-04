@@ -1,0 +1,49 @@
+meta:
+  title: From DIRTY to THREE
+  theme: big_ears_2026
+  discord_thread_id: '1490343269522215043'
+  message: Dirty Three played a late-night set at the Tennessee Theater on Friday, part of their first North American tour in 14 years.
+    It was unhinged and Ellis was slightly off-putting, but it also melted my face off and left me invigorated, so, really, no complaints.
+ladder:
+  - word: DIRTY
+    clue: Opposite of <>
+    step: opposite
+  - word: CLEAN
+    clue: Anagram <> to get a weapon
+    step: anagrammed
+  - word: LANCE
+    clue: Change one letter in <> to get an art form
+    step: L->D
+  - word: DANCE
+    clue: <> that requires two, canonically
+    step: with two
+  - word: TANGO
+    clue: Change one letter in <> to get a fruit
+    step: T->M
+  - word: MANGO
+    clue: Anagram <> to get a preposition
+    step: anagrammed
+  - word: AMONG
+    clue: Popular video game "<> ^"
+    step: …
+  - word: US
+    clue: Popular TV show "The ^ of <>"
+    step: are the
+  - word: LAST
+    clue: The <> ^, a tipping point
+    step: …
+  - word: STRAW
+    clue: Animal metaphorically injured by a <>
+    step: broke the back of a
+  - word: CAMEL
+    clue: Drop the fourth letter from <> and anagram to get relaxed
+    step: '-E, then anagram'
+  - word: CALM
+    clue: To <> someone you might say "^, ^"
+    step: 'someone with there, '
+  - word: THERE
+    clue: Reverse a bigram (two letters) in <> to get a number
+    step: anagrammed
+  - word: THREE
+    clue: ''
+    step: ''

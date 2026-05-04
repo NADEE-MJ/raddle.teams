@@ -1,0 +1,70 @@
+{
+  "meta": {
+    "title": "From PAPYRUS to SANS",
+    "theme": "siblings",
+    "discord_thread_id": "1480562323629539389",
+    "message": "Sans and Papyrus are brother skeletons who exist in the video game “Undertale”. The two patrol Snowdin Forest, where Papyrus, an aspiring Royal Guard, sets puzzles in hopes of capturing a human, while the lazier Sans tags along, cracking jokes and commentating on his brother's schemes. The brothers quickly became beloved by the internet and have been widely meme-ified."
+  },
+  "ladder": [
+    {
+      "word": "PAPYRUS",
+      "clue": "<> is an old form of {}",
+      "step": "is a kind of"
+    },
+    {
+      "word": "PAPER",
+      "clue": "A {}<> might be delivered to your door",
+      "step": "that features the"
+    },
+    {
+      "word": "NEWS",
+      "clue": "<>, letters seen on the four sides of a {}",
+      "step": "are the points of a"
+    },
+    {
+      "word": "COMPASS",
+      "clue": "Swap the two vowel sounds in <> to get a part of a college",
+      "step": "change vowel sounds"
+    },
+    {
+      "word": "CAMPUS",
+      "clue": "Drop a letter from <> to get an author and philosopher",
+      "step": "-P"
+    },
+    {
+      "word": "CAMUS",
+      "clue": "Reverse <> to get a plant",
+      "step": "reversed"
+    },
+    {
+      "word": "SUMAC",
+      "clue": "Drop the outside letters of <> to get the first name of an actress",
+      "step": "-S, -C"
+    },
+    {
+      "word": "UMA",
+      "clue": "Add a letter to the front of <> to get a mammal",
+      "step": "+P"
+    },
+    {
+      "word": "PUMA",
+      "clue": "<> is a popular brand of {}",
+      "step": "is a brand of"
+    },
+    {
+      "word": "SHOE",
+      "clue": "<> brand associated with skateboarding",
+      "step": "brand for skateboarders"
+    },
+    {
+      "word": "VANS",
+      "clue": "Change one letter in <> to get a word used in typesetting",
+      "step": "V->S"
+    },
+    {
+      "word": "SANS",
+      "clue": "",
+      "step": ""
+    }
+  ]
+}

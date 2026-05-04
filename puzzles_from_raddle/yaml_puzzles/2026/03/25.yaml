@@ -1,0 +1,42 @@
+meta:
+  title: From ROSA to PARKS
+  theme: womens_history_month
+  discord_thread_id: '1482012424717733888'
+  message: The Selma to Montgomery March, which arrived in Montgomery on March 25, 1965, was a landmark civil rights milestone, shaped in large part by women activists whose contributions are often underrecognized. Diane Nash, Amelia Boynton Robinson, and Rosa Parks were among those instrumental to the strategy and success of the broader voting rights movement.
+ladder:
+  - word: ROSA
+    clue: Change one letter in <> to get a flower
+    step: A->E
+  - word: ROSE
+    clue: Opposite of <>
+    step: opposite
+  - word: FELL
+    clue: Change one letter in <> to get something you might find on a cow
+    step: F->B
+  - word: BELL
+    clue: ^<>, a heavy thing with a handle
+    step: shaped like a
+  - word: KETTLE
+    clue: A ^<> might be warmed up for ^ time
+    step: is used to make
+  - word: TEA
+    clue: You might read <> ^ to learn about your future
+    step: …
+  - word: LEAVES
+    clue: It's rare to find a ^ with four <>
+    step: of four on a
+  - word: CLOVER
+    clue: Drop the first letter from <> to get a Taylor Swift album
+    step: '-C'
+  - word: LOVER
+    clue: Add a U to <> and anagram to get a museum
+    step: +U, then anagram
+  - word: LOUVRE
+    clue: The <> is in ^
+    step: is in
+  - word: PARIS
+    clue: Change one letter in <> to get some green places
+    step: I->K
+  - word: PARKS
+    clue: ''
+    step: ''

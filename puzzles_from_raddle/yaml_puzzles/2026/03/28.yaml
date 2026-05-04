@@ -1,0 +1,42 @@
+meta:
+  title: From BARBARA to JORDAN
+  theme: womens_history_month
+  discord_thread_id: '1483477379073577134'
+  message: Barbara Jordan was elected to the Texas Senate in 1966, becoming one of the first Black people to serve there since Reconstruction. On March 28, 1972, she was elected president pro tempore of the Texas Senate, making her the first Black woman in America to preside over a legislative body. She went on to serve in the US House of Representatives, where she worked to expand the reach of the Voting Rights Act of 1965. In 1994, she received the Presidential Medal of Freedom.
+ladder:
+  - word: BARBARA
+    clue: Doll whose full first name is <>
+    step: nickname
+  - word: BARBIE
+    clue: Drop the E from <> and anagram to get a religious figure
+    step: '-E, then anagram'
+  - word: RABBI
+    clue: Append a letter to <> to get a mammal
+    step: +T
+  - word: RABBIT
+    clue: Change one letter in <> to get an animal sound
+    step: A->I
+  - word: RIBBIT
+    clue: A ^ says "<>"
+    step: comes from a
+  - word: FROG
+    clue: ^ the <>, star of TV and film
+    step: named
+  - word: KERMIT
+    clue: Change one letter in <> to get someone you don't see very often
+    step: K->H
+  - word: HERMIT
+    clue: A <> ^ is adept at finding new homes
+    step: crustacean
+  - word: CRAB
+    clue: <> ^ is an exercise where you ^ on all fours
+    step: is a kind of
+  - word: WALK
+    clue: '"The <>ing ^"'
+    step: ing
+  - word: DEAD
+    clue: River that flows into the <> Sea
+    step: sea is fed by the river
+  - word: JORDAN
+    clue: ''
+    step: ''

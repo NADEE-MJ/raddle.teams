@@ -1,0 +1,42 @@
+meta:
+  title: From KATNISS to PRIMROSE
+  theme: siblings
+  message: Hunger Games
+  discord_thread_id: '1480562871917089011'
+ladder:
+  - word: KATNISS
+    clue: 'Drop the K from <> and anagram to get some holy figures '
+    step: '-K, then anagram'
+  - word: SAINTS
+    clue: ^ <>' Day
+    step: day for them
+  - word: ALL
+    clue: '"<> That ^", 1979 movie'
+    step: that
+  - word: JAZZ
+    clue: Change one letter in <> to get a rapper
+    step: Z->Y
+  - word: JAY-Z
+    clue: Spouse of <>
+    step: is married to
+  - word: BEYONCE
+    clue: Drop a trigram (three letters) from <> to get an adverb
+    step: '-BEY'
+  - word: ONCE
+    clue: Anagram <> to get a shape
+    step: anagrammed
+  - word: CONE
+    clue: Part of the body that has many a <>
+    step: is in the
+  - word: EYE
+    clue: <> ^, part of a pirate costume
+    step: …
+  - word: PATCH
+    clue: Drop a letter from <> to get a way to go
+    step: '-C'
+  - word: PATH
+    clue: ^ <>, Shakespearean coinage about foolish pursuit
+    step: is made of many a
+  - word: PRIMROSE
+    clue: ''
+    step: ''

@@ -1,0 +1,41 @@
+meta:
+  title: From ITALY to FRANCE
+  theme: winter_olympics
+  message: The Winter Olympics are coming to a close. The closing ceremonies will see Italy hand off hosting duties to their neighbor France, where the winter games will be in four years.
+ladder:
+  - word: ITALY
+    clue: <> is shaped like a ^
+    step: is shaped like
+  - word: BOOT
+    clue: Change one letter in <> to get something that goes in a <>
+    step: B->F
+  - word: FOOT
+    clue: <>^, two different things to play
+    step: precedes
+  - word: BALL
+    clue: Change one letter in <> to get a mammal
+    step: A->U
+  - word: BULL
+    clue: Sign of the <>
+    step: is the symbol of
+  - word: TAURUS
+    clue: 3D shape that sounds like <>
+    step: sounds like
+  - word: TORUS
+    clue: Sweet foodstuff that's a <>
+    step: is the shape of a
+  - word: DONUT
+    clue: A <> ^ is a tiny <> that's about 1/4 the volume of a <>
+    step: middle
+  - word: HOLE
+    clue: A Black <> is found in ^ space
+    step: that's black is in space that's
+  - word: OUTER
+    clue: Drop the fourth letter of <> and anagram to get something guided
+    step: '-E, then anagram'
+  - word: TOUR
+    clue: <> de ^
+    step: de
+  - word: FRANCE
+    clue: ''
+    step: ''

@@ -1,0 +1,40 @@
+meta:
+  title: From SLIVER to POCKET
+  theme: mystery_6
+ladder:
+  - word: SLIVER
+    clue: Reverse a bigram (two letters) in <> to get a metal
+    step: anagrammed
+  - word: SILVER
+    clue: ^ is one above <>
+    step: is only bested by
+  - word: GOLD
+    clue: ^ is the symbol for <>
+    step: symbol
+  - word: AU
+    clue: <> ^, someone who might live with you for a year
+    step: precedes
+  - word: PAIR
+    clue: Fruit that sounds like "<>"
+    step: sounds like
+  - word: PEAR
+    clue: Drop one letter from <> to get a vegetable
+    step: '-R'
+  - word: PEA
+    clue: A ^<> is edible but is neither a ^ nor a <>
+    step: follows
+  - word: CHICK
+    clue: Father to a <>
+    step: father
+  - word: ROOSTER
+    clue: Change one letter in <> to get a second shot
+    step: R->B
+  - word: BOOSTER
+    clue: A <> is a ^ that temporarily helps you get really, really high?
+    step: might be a
+  - word: ROCKET
+    clue: Change one letter in <> to get a part of one's clothing
+    step: R->P
+  - word: POCKET
+    clue: ''
+    step: ''

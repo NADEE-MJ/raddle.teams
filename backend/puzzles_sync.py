@@ -1,7 +1,6 @@
 import asyncio
-import os
 import subprocess
-from datetime import datetime
+from datetime import datetime, timedelta
 from pathlib import Path
 from backend.custom_logging import server_logger
 
@@ -22,12 +21,18 @@ def sync_puzzles_blocking():
 
 async def puzzle_sync_task():
     while True:
+        # Calculate seconds until next 5:00 AM local time
+        now = datetime.now()
+        next_run = now.replace(hour=5, minute=0, second=0, microsecond=0)
+        if now >= next_run:
+            # Already past 5am today, schedule for tomorrow
+            next_run += timedelta(days=1)
+        sleep_seconds = (next_run - now).total_seconds()
+        server_logger.info(f"Next puzzle sync scheduled at {next_run.strftime('%Y-%m-%d %H:%M:%S')} (in {sleep_seconds:.0f}s)")
+        await asyncio.sleep(sleep_seconds)
+
         server_logger.info("Starting daily puzzle sync...")
-        # Run blocking code in an executor
         await asyncio.to_thread(sync_puzzles_blocking)
-        
-        # Sleep for 24 hours
-        await asyncio.sleep(24 * 60 * 60)
 
 _sync_task = None
 

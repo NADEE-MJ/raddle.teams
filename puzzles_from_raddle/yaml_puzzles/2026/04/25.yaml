@@ -1,0 +1,40 @@
+meta:
+  title: From APHRODITE to VENUS
+  theme: greek_to_roman
+  discord_thread_id: '1493620670674895020'
+  message: Aphrodite (Greek) / Venus (Roman) is the goddess of love, beauty, and desire, 
+    born from the sea foam itself, as depicted in that famous Botticelli.
+ladder:
+  - word: APHRODITE
+    clue: Stick found inside <>
+    step: includes a
+  - word: ROD
+    clue: Reverse <> and double a letter to get something you open
+    step: reverse, then +O
+  - word: DOOR
+    clue: A ^ <> might open up beneath you
+    step: might be a
+  - word: TRAP
+    clue: ^<>, a form of pest control
+    step: a
+  - word: MOUSE
+    clue: Canonical enemy of a <>
+    step: vs.
+  - word: CAT
+    clue: Supervillain who mimics a <>
+    step: contains
+  - word: CATWOMAN
+    clue: Nemesis of <>
+    step: vs.
+  - word: BATMAN
+    clue: Partner of <>
+    step: and
+  - word: ROBIN
+    clue: Comedian and actor <> ^
+    step: …
+  - word: WILLIAMS
+    clue: Tennis star ^ <>
+    step: first name
+  - word: VENUS
+    clue: ''
+    step: ''

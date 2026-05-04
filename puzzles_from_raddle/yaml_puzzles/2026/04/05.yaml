@@ -1,0 +1,44 @@
+meta:
+  title: From BALLOT to BOX
+  theme: mystery_7
+  discord_thread_id: '1486727979596775517'
+ladder:
+  - word: BALLOT
+    clue: Change one letter in <> to get a dance
+    step: O->E
+  - word: BALLET
+    clue: Change one letter in <> to get a hammer
+    step: B->M
+  - word: MALLET
+    clue: Lawn game played with a <>
+    step: is used in
+  - word: CROQUET
+    clue: Drop the first letter from <> and anagram to get a kind of force
+    step: '-C, then anagram'
+  - word: TORQUE
+    clue: Meat that rhymes with <>
+    step: rhymes with
+  - word: PORK
+    clue: <> comes from a ^
+    step: is made from
+  - word: PIG
+    clue: Titular <> in an Oscar-winning film
+    step: named
+  - word: BABE
+    clue: Change one letter in <> to get an A-list movie star
+    step: B->L
+  - word: BALE
+    clue: What a <> may be full of, on a farm
+    step: contains
+  - word: HAY
+    clue: Change one letter in <> to get an article of clothing
+    step: Y->T
+  - word: HAT
+    clue: Where you might throw your <> into, figuratively
+    step: gets throw in
+  - word: RING
+    clue: Activity you might do in a <>, or what a <> often comes in
+    step: is where you
+  - word: BOX
+    clue: ''
+    step: ''

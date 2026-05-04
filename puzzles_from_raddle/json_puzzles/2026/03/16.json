@@ -1,0 +1,64 @@
+{
+  "meta": {
+    "title": "From JINX to VI",
+    "theme": "siblings",
+    "message": "Jinx and Vi are orphan sisters from Zaun, the underbelly of the rich Piltover, in the animated series _Arcane_. Set in the universe of the game _League of Legends_, _Arcane_ showcases a stunning animation style and deep, thoughtful worldbuilding as it explores themes of inequity and oppression within this steampunk world. This show is a favorite of my teenage daughter, who recently dressed up in a homemade Jinx costume for Halloween."
+  },
+  "ladder": [
+    {
+      "word": "JINX",
+      "clue": "A <> brings bad {}",
+      "step": "brings bad"
+    },
+    {
+      "word": "LUCK",
+      "clue": "Change one letter in <> to get something horny? ;)",
+      "step": "L->B"
+    },
+    {
+      "word": "BUCK",
+      "clue": "{} the <> if you don't wanna own it",
+      "step": "is something you shouldn't"
+    },
+    {
+      "word": "PASS",
+      "clue": "<>/{}, a way to go through some courses",
+      "step": "or"
+    },
+    {
+      "word": "FAIL",
+      "clue": "Insert a letter into <> to become feeble",
+      "step": "+R"
+    },
+    {
+      "word": "FRAIL",
+      "clue": "Anagram <> to get some panache",
+      "step": "anagrammed"
+    },
+    {
+      "word": "FLAIR",
+      "clue": "Change one letter in <> to get a British PM",
+      "step": "F->B"
+    },
+    {
+      "word": "BLAIR",
+      "clue": "Anagram <> to get a Zodiac sign",
+      "step": "anagrammed"
+    },
+    {
+      "word": "LIBRA",
+      "clue": "It comes right before <> (in the fall)",
+      "step": "follows"
+    },
+    {
+      "word": "VIRGO",
+      "clue": "Drop the last three letters from <> to get six",
+      "step": "-RGO"
+    },
+    {
+      "word": "VI",
+      "clue": "",
+      "step": ""
+    }
+  ]
+}

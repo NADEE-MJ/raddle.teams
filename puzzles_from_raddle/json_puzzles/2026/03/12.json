@@ -1,0 +1,69 @@
+{
+  "meta": {
+    "title": "From HAM to NET",
+    "theme": "oscars_2025",
+    "message": "Chloé Zhao's adaptation of Maggie O'Farrell's novel follows a young man named William Shakespeare (Paul Mescal) and his wife Agnes (Jessie Buckley) and their three children, until one gets sick and dies, which plunges the family, especially Agnes, into an all-consuming grief. It picked up eight nominations including Best Picture, Best Director, and Best Actress for Buckley, who will win, and deservedly so. In a word, this movie is gutting. Jacobi Jupe as little Hamnet is a wonder. Wish we had more time to spend with him, but I guess that's the point."
+  },
+  "ladder": [
+    {
+      "word": "HAM",
+      "clue": "<> comes from this animal",
+      "step": "is made from"
+    },
+    {
+      "word": "PIG",
+      "clue": "<> {}, where ashtray means trash",
+      "step": "langauge"
+    },
+    {
+      "word": "LATIN",
+      "clue": "<> phrase associated with one's school",
+      "step": "term for your schol"
+    },
+    {
+      "word": "ALMA MATER",
+      "clue": "Family member found inside <>, appropriately",
+      "step": "includes"
+    },
+    {
+      "word": "MAMA",
+      "clue": "Change two letters in <> to the same new letter to get <>'s <>",
+      "step": "of your mama is your"
+    },
+    {
+      "word": "NANA",
+      "clue": "Reverse a bigram (two letters) in <> to get a kind of bread",
+      "step": "anagrammed"
+    },
+    {
+      "word": "NAAN",
+      "clue": "Change a double letter in <> to a different double letter to get a time of day",
+      "step": "AA->OO"
+    },
+    {
+      "word": "NOON",
+      "clue": "<> on a {} means two hands straight up",
+      "step": "is twelve on a"
+    },
+    {
+      "word": "CLOCK",
+      "clue": "A {} <> is a   <> from which a {} emerges and goes \"{}\"",
+      "step": "might contain a"
+    },
+    {
+      "word": "CUCKOO",
+      "clue": "\"<>’s {}\", the last two words of a ’60s book and ’70s movie",
+      "step": "'S"
+    },
+    {
+      "word": "NEST",
+      "clue": "Drop a letter in <> to get a fishing tool",
+      "step": "-S"
+    },
+    {
+      "word": "NET",
+      "clue": "",
+      "step": ""
+    }
+  ]
+}

@@ -1,0 +1,46 @@
+meta:
+  title: From APPLES to PEARS
+  theme: cockney_rhyming_slang
+  discord_thread_id: '1495420509997891737'
+  message: 
+    '"Apples and pears" is Cockney rhyming slang for "stairs", as in "Take the apples and pears to the basement and bring up that crate of bananas".'
+ladder:
+  - word: APPLES
+    clue: ^ <> are smaller, tarter <>, but not ^s
+    step: that are tiny and tart
+  - word: CRAB
+    clue: Add an O to <> and anagram to get a reptile
+    step: +O, then anagram
+  - word: COBRA
+    clue: Advance every letter in <> three spaces forward in the alphabet to get an influential historical figure
+    step: shifted 3 letters
+  - word: FREUD
+    clue: Drop a letter from <> to get a rivalry
+    step: '-R'
+  - word: FEUD
+    clue: '"^ <>", game show'
+    step: between FAMILY AND
+  - word: FAMILY
+    clue: Diagram for mapping out your <>
+    step: diagram
+  - word: TREE
+    clue: What falls from many a <>
+    step: drops a
+  - word: LEAF
+    clue: Plural of <>
+    step: plural
+  - word: LEAVES
+    clue: <> ^, omits
+    step: …
+  - word: OUT
+    clue: Three ^s lead to one <>
+    step: has three
+  - word: STRIKE
+    clue: '<> : X :: ^ : /'
+    step: is better than a
+  - word: SPARE
+    clue: Anagram <> to get some fruit
+    step: anagrammed
+  - word: PEARS
+    clue: ''
+    step: ''

@@ -1,0 +1,41 @@
+meta:
+  title: From DOC to JUMP
+  theme: mystery_6
+  message: "Hint: there's an accidental red herring in this Raddle. [Visit the Mystery Theme page](https://raddle.quest/mystery/6) for more hints"
+ladder:
+  - word: DOC
+    clue: '"^ up, <>?"'
+    step: a question for you…
+  - word: WHAT'S
+    clue: Drop every other letter of <> to get a verb
+    step: '- every other letter'
+  - word: WAS
+    clue: Reverse <> to get a tool
+    step: reversed
+  - word: SAW
+    clue: ^<>, something you might ^ on a playground
+    step: follows
+  - word: SEE
+    clue: <> ^ to ^
+    step: eye to
+  - word: EYE
+    clue: 'Change one letter in <> to get a parting word'
+    step: E->B
+  - word: BYE
+    clue: '"<> <> ^"'
+    step: bye
+  - word: BIRDIE
+    clue: One above a <>
+    step: is 1 under
+  - word: PAR
+    clue: Reverse <> to get a musical style
+    step: reversed
+  - word: RAP
+    clue: Change the /a/ in <> to a long /o/ to get a piece of climbing gear
+    step: /a/->/o/
+  - word: ROPE
+    clue: ^ <>, a playground activity
+    step: is something you
+  - word: JUMP
+    clue: ''
+    step: ''

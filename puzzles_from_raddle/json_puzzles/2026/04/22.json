@@ -1,0 +1,70 @@
+{
+  "meta": {
+    "title": "From HERMES to MERCURY",
+    "theme": "greek_to_roman",
+    "discord_thread_id": "1492533645746114590",
+    "message": "Hermes (Greek) / Mercury (Roman) is the messenger of the gods, patron of travelers, merchants, and thieves, and the god who escorts souls to the underworld."
+  },
+  "ladder": [
+    {
+      "word": "HERMES",
+      "clue": "Change one letter in <> to get some brave folk",
+      "step": "M->O"
+    },
+    {
+      "word": "HEROES",
+      "clue": "\"<>\" is a song by {}",
+      "step": "is sung by"
+    },
+    {
+      "word": "BOWIE",
+      "clue": "Insert a letter into <> to get a bit of formal wear",
+      "step": "+T"
+    },
+    {
+      "word": "BOW TIE",
+      "clue": "Pasta also known as <>",
+      "step": "aka"
+    },
+    {
+      "word": "FARFALLE",
+      "clue": "Drop the third letter from <> and anagram to get a Middle Eastern food",
+      "step": "-R, then anagram"
+    },
+    {
+      "word": "FALAFEL",
+      "clue": "<> is often served in a {}",
+      "step": "is served in"
+    },
+    {
+      "word": "PITA",
+      "clue": "Insert a letter into <> to get a famous sculpture",
+      "step": "+E"
+    },
+    {
+      "word": "PIETA",
+      "clue": "Change the second letter of <> to an L and anagram to get part of a flower",
+      "step": "I->L, then anagram"
+    },
+    {
+      "word": "PETAL",
+      "clue": "In biology, the {} kingdom contains lifeforms with <>s",
+      "step": "appears on a"
+    },
+    {
+      "word": "PLANT",
+      "clue": "Insert a letter into <> to get something in space",
+      "step": "+E"
+    },
+    {
+      "word": "PLANET",
+      "clue": "The smallest <>",
+      "step": "that's smallest"
+    },
+    {
+      "word": "MERCURY",
+      "clue": "",
+      "step": ""
+    }
+  ]
+}

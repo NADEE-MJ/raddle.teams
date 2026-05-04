@@ -1,0 +1,44 @@
+meta:
+  title: From MABEL to DIPPER
+  theme: siblings
+  message: 
+    Mabel and Dipper Pines are the tween protagonists of the show _Gravity Falls_. 
+    When the twins are sent to stay with their Great Uncle (Grunkle) Stan, they find town secrets and paranormal activity aplenty.
+    They may bicker and joke like all siblings, but as an interdimensional demon threatens the world, they always have each other's backs.
+ladder:
+  - word: MABEL
+    clue: Anagram <> to hold accountable
+    step: anagrammed
+  - word: BLAME
+    clue: <> ^, a pastime of politicians
+    step: is a kind of
+  - word: GAME
+    clue: 'Hate: <> :: Love : ^'
+    step: should be hated, not the
+  - word: PLAYER
+    clue: Drop the first letter from <> to get a coat, for instance
+    step: '-P'
+  - word: LAYER
+    clue: Anagram <> to get a good way to arrive, often
+    step: anagrammed
+  - word: EARLY
+    clue: Opposite of <>
+    step: opposite
+  - word: LATE
+    clue: What <> is better than, so it's said
+    step: is worse than
+  - word: NEVER
+    clue: <> <> ^, a mythical ^
+    step: NEVER
+  - word: LAND
+    clue: Change one letter in <> to get a part of the body
+    step: L->H
+  - word: HAND
+    clue: "Let's give them a ^ <>"
+    step: should be
+  - word: BIG
+    clue: <> ^, something to spot in the sky
+    step: or Little
+  - word: DIPPER
+    clue: ''
+    step: ''

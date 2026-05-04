@@ -1,0 +1,64 @@
+{
+  "meta": {
+    "title": "From BATTLE to BATTLE",
+    "theme": "oscars_2025",
+    "message": "Paul Thomas Anderson's _One Battle_ is a loose adaptation of Thomas Pynchon's _Vineland_. It follows a burned-out revolutionary (Leonardo DiCaprio) living off-grid with his teenage daughter Willa, until a psychotic military officer (Sean Penn) resurfaces to settle old scores. It racked up 13 nominations, all deserving. I was all the right movie-going ages to revere PTA's work over the last 30 years, making me the precise demographic to adore this one. Obviously I'm not alone. Every aspect of the storytelling, score, cinematography, and direction are crafted so precisely, making it a wonder to watch. Even the Pynchonian absurdity, which normally turns me off, felt in harmony with the grounded political message. On top of that, Chase Infiniti, the actor who plays Willa, may have been at [the same opening weekend screening](https://www.youtube.com/watch?v=cz1I-7oHrEE&t=43s) I was at."
+  },
+  "ladder": [
+    {
+      "word": "BATTLE",
+      "clue": "Anagram <> to get a kind of pill",
+      "step": "anagrammed"
+    },
+    {
+      "word": "TABLET",
+      "clue": "<> by Apple",
+      "step": "by apple"
+    },
+    {
+      "word": "IPAD",
+      "clue": "Add an L to <> and anagram to get a pattern",
+      "step": "+L, then anagram"
+    },
+    {
+      "word": "PLAID",
+      "clue": "Insert a C into <> to get calm",
+      "step": "+C"
+    },
+    {
+      "word": "PLACID",
+      "clue": "{} <>, two-time Olympic host",
+      "step": "is a"
+    },
+    {
+      "word": "LAKE",
+      "clue": "What a <> is filled with",
+      "step": "is filled with"
+    },
+    {
+      "word": "WATER",
+      "clue": "Insert an L into <> to get a male name",
+      "step": "+L"
+    },
+    {
+      "word": "WALTER",
+      "clue": "Modern TV anti-hero <> {}",
+      "step": "last name"
+    },
+    {
+      "word": "WHITE",
+      "clue": "Fresh snow makes the {} turn <>",
+      "step": "…"
+    },
+    {
+      "word": "GROUND",
+      "clue": "Conflict happens on a {}<>",
+      "step": "for"
+    },
+    {
+      "word": "BATTLE",
+      "clue": "",
+      "step": ""
+    }
+  ]
+}

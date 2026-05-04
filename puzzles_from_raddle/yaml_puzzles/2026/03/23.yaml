@@ -1,0 +1,45 @@
+meta:
+  title: From SHANNON to LUCID
+  theme: womens_history_month
+  discord_thread_id: '1481337144692703501'
+  message: Shannon Lucid is a U.S. astronaut and biochemist. On this day in 1996, she transferred to the Russian space station Mir, becoming the first female U.S. astronaut to live on a space station She stayed in space for almost six months. Until 2007, she held the record for longest time lived in space by an American and by a woman. She was the first woman awarded the Congressional Space Medal of Honor, when President Clinton bestowed the honor on her in 1996. 
+ladder:
+  - word: SHANNON
+    clue: The River <> is in this country
+    step: river is in
+  - word: IRELAND
+    clue: Change the second letter of <> to get a country
+    step: R->C
+  - word: ICELAND
+    clue: Famous musician from <>
+    step: musician
+  - word: BJöRK
+    clue: Swap a bigram (two letters) in <> for a single letter to get part of a tree
+    step: JO->A
+  - word: BARK
+    clue: Animal that <>s
+    step: comes from a
+  - word: DOG
+    clue: Reverse <> to get a deity
+    step: reversed
+  - word: GOD
+    clue: Double a letter in <> to get kind
+    step: +O
+  - word: GOOD
+    clue: A battle of <> vs ^
+    step: vs
+  - word: EVIL
+    clue: Drop the last sound of <> to get a palindromic name
+    step: '-/l/'
+  - word: EVE
+    clue: Fruit associated with <>
+    step: ate an
+  - word: APPLE
+    clue: Storage service provided by <>
+    step: service
+  - word: ICLOUD
+    clue: Drop the O from <> and anagram to become understandable
+    step: '-O, then anagram'
+  - word: LUCID
+    clue: ''
+    step: ''

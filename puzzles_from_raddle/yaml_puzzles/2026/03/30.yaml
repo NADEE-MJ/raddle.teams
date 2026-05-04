@@ -1,0 +1,39 @@
+meta:
+  title: From BELIEVER to LIVE
+  theme: lent
+  discord_thread_id: '1484181225089536138'
+  message: By giving up BEER, you can make a BELIEVER LIVE.
+ladder:
+  - word: BELIEVER
+    clue: '"^ <>", song by The Monkees'
+    step: follows
+  - word: I'M A
+    clue: '"<> Little ^", children''s song'
+    step: little
+  - word: TEAPOT
+    clue: ^ in a <>, something taken too far
+    step: contains a
+  - word: TEMPEST
+    clue: Author of "The <>"
+    step: by
+  - word: SHAKESPEARE
+    clue: Site of many a <> premiere
+    step: performed at
+  - word: GLOBE
+    clue: ^ <>, a handheld souvenir
+    step: features
+  - word: SNOW
+    clue: '"The <> ^", story that inspired a 2013 movie about a <>-loving ^'
+    step: '-controllling'
+  - word: QUEEN
+    clue: Partner to a <>
+    step: partner
+  - word: KING
+    clue: He was known as "The <>"
+    step: aka
+  - word: ELVIS
+    clue: Drop a letter from <> and anagram to get a way that <> performed
+    step: '-S, then anagram'
+  - word: LIVE
+    clue: ''
+    step: ''

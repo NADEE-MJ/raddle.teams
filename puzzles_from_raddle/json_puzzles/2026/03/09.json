@@ -1,0 +1,64 @@
+{
+  "meta": {
+    "title": "From SECRET to AGENT",
+    "theme": "oscars_2025",
+    "message": "_The Secret Agent_ is a Brazilian film that follows a man hiding from the military dictatorship in 1977, while trying to get himself and his son out of the country. In addition to the Best Picture nom, lead Wagner Moura earned the first Best Actor nomination for a Brazilian. Oops, I hated this one! The whole time, it felt like the director was going out of his way to make the experience difficult for the audience, which isn't a feeling I love. I will give credit to Moura, who is wonderful, as is every actor in a supporting role."
+  },
+  "ladder": [
+    {
+      "word": "SECRET",
+      "clue": "<> {}, a gift-giving workplace activity",
+      "step": "…"
+    },
+    {
+      "word": "SANTA",
+      "clue": "US state capital <> {}",
+      "step": "precedes"
+    },
+    {
+      "word": "FE",
+      "clue": "<> is the symbol for {}",
+      "step": "is the symbol for"
+    },
+    {
+      "word": "IRON",
+      "clue": "Reverse <> to get a sushi component",
+      "step": "reversed"
+    },
+    {
+      "word": "NORI",
+      "clue": "Add a G to <> and anagram to get the name of a drummer",
+      "step": "+G, then anagram"
+    },
+    {
+      "word": "RINGO",
+      "clue": "<>'s last name",
+      "step": "last name"
+    },
+    {
+      "word": "STARR",
+      "clue": "Change the last letter of <> to an E to get a kind of look",
+      "step": "R->E"
+    },
+    {
+      "word": "STARE",
+      "clue": "Insert a V into <> to get a way to be famished",
+      "step": "+V"
+    },
+    {
+      "word": "STARVE",
+      "clue": "Change the first letter of <> to a L and anagram to move",
+      "step": "S->T, then anagram"
+    },
+    {
+      "word": "TRAVEL",
+      "clue": "<> {}, someone to help you plan a trip",
+      "step": "with an"
+    },
+    {
+      "word": "AGENT",
+      "clue": "",
+      "step": ""
+    }
+  ]
+}

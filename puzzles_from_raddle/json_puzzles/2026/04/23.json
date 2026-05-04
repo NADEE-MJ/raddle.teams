@@ -1,0 +1,75 @@
+{
+  "meta": {
+    "title": "From EROS to CUPID",
+    "theme": "greek_to_roman",
+    "discord_thread_id": "1492878810255986870",
+    "message": "Eros (Greek) / Cupid (Roman) is the god of love and desire, often depicted as a winged youth armed with a bow and arrow."
+  },
+  "ladder": [
+    {
+      "word": "EROS",
+      "clue": "Reverse <> to get a wound",
+      "step": "reversed"
+    },
+    {
+      "word": "SORE",
+      "clue": "<> {}, a bad sport",
+      "step": "+L, then anagram"
+    },
+    {
+      "word": "LOSER",
+      "clue": "Add a letter to the front of <> to get nearer",
+      "step": "+C"
+    },
+    {
+      "word": "CLOSER",
+      "clue": "Change one letter in <> to get a part of some rooms",
+      "step": "R->T"
+    },
+    {
+      "word": "CLOSET",
+      "clue": "Undesirable thing to find in one's <>?",
+      "step": "might hold a"
+    },
+    {
+      "word": "SKELETON",
+      "clue": "{} is sometimes depicted as a <>",
+      "step": "is the form of"
+    },
+    {
+      "word": "DEATH",
+      "clue": "Counterpart to <>",
+      "step": "counterpart"
+    },
+    {
+      "word": "LIFE",
+      "clue": "{} in <>, in old age",
+      "step": "in"
+    },
+    {
+      "word": "LATE",
+      "clue": "A <> {} might take a while to blossom",
+      "step": "…"
+    },
+    {
+      "word": "BLOOMER",
+      "clue": "Drop a letter from <> to get a member of a certain generation",
+      "step": "-L"
+    },
+    {
+      "word": "BOOMER",
+      "clue": "\"{} <>\", you say with an eye roll",
+      "step": "speaks and you say"
+    },
+    {
+      "word": "OK",
+      "clue": "<>{}, a popular dating site",
+      "step": "…"
+    },
+    {
+      "word": "CUPID",
+      "clue": "",
+      "step": ""
+    }
+  ]
+}

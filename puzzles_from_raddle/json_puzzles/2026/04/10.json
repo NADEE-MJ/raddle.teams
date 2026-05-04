@@ -1,0 +1,74 @@
+{
+  "meta": {
+    "title": "From SHADOW to PUPPET",
+    "theme": "mystery_7",
+    "discord_thread_id": "1488899062701887720"
+  },
+  "ladder": [
+    {
+      "word": "SHADOW",
+      "clue": "Beyond a <> of a {}",
+      "step": "of a"
+    },
+    {
+      "word": "DOUBT",
+      "clue": "<>ING {}, a skeptic",
+      "step": "ing"
+    },
+    {
+      "word": "THOMAS",
+      "clue": "Nickname for a kid named <>",
+      "step": "aka"
+    },
+    {
+      "word": "TOMMY",
+      "clue": "Actor <> {} Jones",
+      "step": "…"
+    },
+    {
+      "word": "LEE",
+      "clue": "Reverse <> to get a fish",
+      "step": "reversed"
+    },
+    {
+      "word": "EEL",
+      "clue": "Add a letter to the front of <> to get a body part",
+      "step": "+H"
+    },
+    {
+      "word": "HEEL",
+      "clue": "Hero with a famously weak <>",
+      "step": "was weak on"
+    },
+    {
+      "word": "ACHILLES",
+      "clue": "Land formation found inside <>",
+      "step": "contains"
+    },
+    {
+      "word": "HILL",
+      "clue": "An {}<> protects {}-made tunnels",
+      "step": "made by many an"
+    },
+    {
+      "word": "ANT",
+      "clue": "An <> {} is necessary to keep <>s as pets",
+      "step": "habitat"
+    },
+    {
+      "word": "FARM",
+      "clue": "<>{}, a helper on a <>",
+      "step": "…"
+    },
+    {
+      "word": "HAND",
+      "clue": "A {} comes to life when worn on one's <>",
+      "step": "enlivens a"
+    },
+    {
+      "word": "PUPPET",
+      "clue": "",
+      "step": ""
+    }
+  ]
+}

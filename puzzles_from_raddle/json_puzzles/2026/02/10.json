@@ -1,0 +1,69 @@
+{
+  "meta": {
+    "title": "From OMEGA to CURVE",
+    "theme": "winter_olympics",
+    "message": "Omega curves are a type of high-speed turn in bobsledding that resemble, from above, the Greek letter Ω. Omega curves can subject the crew to as much as 5 G's of force."
+  },
+  "ladder": [
+    {
+      "word": "OMEGA",
+      "clue": "Drop a letter from <> to get a prefix",
+      "step": "-O"
+    },
+    {
+      "word": "MEGA",
+      "clue": "<> means one {}",
+      "step": "means one"
+    },
+    {
+      "word": "MILLION",
+      "clue": "Animal found at the end of <>",
+      "step": "-MIL"
+    },
+    {
+      "word": "LION",
+      "clue": "<>{} (brave and determined)",
+      "step": "…"
+    },
+    {
+      "word": "HEARTED",
+      "clue": "Drop a letter from <> to get a modern kind of rivalry",
+      "step": "-R"
+    },
+    {
+      "word": "HEATED",
+      "clue": "Drop a vowel from <> and anagram to get an end",
+      "step": "-E, then anagram"
+    },
+    {
+      "word": "DEATH",
+      "clue": "In the Bible, <> appears atop a {}",
+      "step": "rides atop a pale"
+    },
+    {
+      "word": "HORSE",
+      "clue": "A female <>",
+      "step": "that's female"
+    },
+    {
+      "word": "MARE",
+      "clue": "Insert an I into <> to get a name",
+      "step": "+I"
+    },
+    {
+      "word": "MARIE",
+      "clue": "Scientist <> {}",
+      "step": "last name"
+    },
+    {
+      "word": "CURIE",
+      "clue": "Change one letter in <> to get a pitch",
+      "step": "I->V"
+    },
+    {
+      "word": "CURVE",
+      "clue": null,
+      "step": " "
+    }
+  ]
+}

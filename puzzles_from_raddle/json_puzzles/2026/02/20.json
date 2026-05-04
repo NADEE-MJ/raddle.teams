@@ -1,0 +1,64 @@
+{
+  "meta": {
+    "title": "From HEATED to RIVALRY",
+    "theme": "winter_olympics",
+    "message": "A heated rivalry is a hockey term for when two players from opposing teams despise each other intensely on the ice while hiding a secret love affair off of it. 😉"
+  },
+  "ladder": [
+    {
+      "word": "HEATED",
+      "clue": "Hotel amenity that might be <>",
+      "step": "…"
+    },
+    {
+      "word": "POOL",
+      "clue": "Reverse <> to get a bend",
+      "step": "reversed"
+    },
+    {
+      "word": "LOOP",
+      "clue": "{} for a <>, caught off-guard",
+      "step": "make make you"
+    },
+    {
+      "word": "THROWN",
+      "clue": "Change the first two letters of <> to a single letter to get an expression",
+      "step": "TH->F"
+    },
+    {
+      "word": "FROWN",
+      "clue": "An upside-down <>",
+      "step": "upside down"
+    },
+    {
+      "word": "SMILE",
+      "clue": "You might <> from {} to {}",
+      "step": "from ear to"
+    },
+    {
+      "word": "EAR",
+      "clue": "An <>{} is a {} worn on your <>",
+      "step": "jewelry"
+    },
+    {
+      "word": "RING",
+      "clue": "Term for flashy <>s, etc. that rhymes with <>",
+      "step": "that's flashy"
+    },
+    {
+      "word": "BLING",
+      "clue": "Add two letters to the start of <> to get a relative",
+      "step": "+SI"
+    },
+    {
+      "word": "SIBLING",
+      "clue": "<> {}, a kind of competition for many kids",
+      "step": "…"
+    },
+    {
+      "word": "RIVALRY",
+      "clue": "",
+      "step": ""
+    }
+  ]
+}

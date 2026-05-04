@@ -1,0 +1,45 @@
+meta:
+  title: From MARTY to SUPREME
+  theme: oscars_2025
+  message: Josh Safdie directed this movie about a narcissistic, self-destructive table tennis player (Timothée Chalamet) 
+    clawing his way to world champion while burning every relationship he has along the way. 
+    Chalamet is nominated for Best Actor, but may have talked his way out of the win through various unhinged promotional stunts.
+    Safdie's manic energy feels like a magic trick to me, ensorcelling me to root for a protagonist who is a total shitheel.
+    The movie is full of novelty casting for some of the bigger roles, which I have mixed feelings about, but all the supporting characters are so perfect it feels like you've taken a time machine to '50s Lower East Side.
+ladder:
+  - word: MARTY
+    clue: <> is a nickname for people named ^
+    step: is a nickname for
+  - word: MARTIN
+    clue: Reformer <> ^
+    step: last name
+  - word: LUTHER
+    clue: Change one letter in <> to get the last name of a comic book villain
+    step: E->O
+  - word: LUTHOR
+    clue: Change one letter in <> to get a writing professional
+    step: L->A
+  - word: AUTHOR
+    clue: Add an E to <> and anagram to get a nineteenth-century American <>
+    step: +E, then anagram
+  - word: THOREAU
+    clue: God found at the start of <>
+    step: is partially
+  - word: THOR
+    clue: Add an N to <> to get something sharp
+    step: +N
+  - word: THORN
+    clue: Flower that has <>s
+    step: is found on a
+  - word: ROSE
+    clue: Present tense of <>
+    step: O->I
+  - word: RISE
+    clue: Setting where you might hear "All <>!"
+    step: in a
+  - word: COURT
+    clue: ^ <>, the highest <>
+    step: in D.C. is
+  - word: SUPREME
+    clue: ''
+    step: ''

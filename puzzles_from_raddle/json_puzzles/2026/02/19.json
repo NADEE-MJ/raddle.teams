@@ -1,0 +1,69 @@
+{
+  "meta": {
+    "title": "From CLAP to SKATE",
+    "theme": "winter_olympics",
+    "message": "In long track speed skating, athletes use a clap skate, a blade with a hinge at the front that allows the heel to lift off the blade during each stride, while the toe remains in contact with the ice longer, allowing them to move faster."
+  },
+  "ladder": [
+    {
+      "word": "CLAP",
+      "clue": "Body parts used to <>",
+      "step": "your"
+    },
+    {
+      "word": "HANDS",
+      "clue": "Add an I to <> and anagram to get a pastry",
+      "step": "+I, then anagram"
+    },
+    {
+      "word": "DANISH",
+      "clue": "Where <> people are from",
+      "step": "people are from"
+    },
+    {
+      "word": "DENMARK",
+      "clue": "Play set in <>",
+      "step": "-set play"
+    },
+    {
+      "word": "HAMLET",
+      "clue": "First words in a speech by <>",
+      "step": "quote starts with"
+    },
+    {
+      "word": "TO BE",
+      "clue": "\"<> {} in the next episode…\"",
+      "step": "…"
+    },
+    {
+      "word": "CONTINUED",
+      "clue": "The first two and last two letters of <>, together make this term that describes most colleges",
+      "step": "minus middle"
+    },
+    {
+      "word": "CO-ED",
+      "clue": "Swap the last two letters of <> to get a set of principles",
+      "step": "D<->E"
+    },
+    {
+      "word": "CODE",
+      "clue": "{} the <> and reveal the secret message",
+      "step": "…"
+    },
+    {
+      "word": "BREAK",
+      "clue": "Change the first letter of <> to a bigram (two letters) to get something one does naked",
+      "step": "B->ST"
+    },
+    {
+      "word": "STREAK",
+      "clue": "Drop a letter from <> and anagram to get an underwater creature",
+      "step": "-R, then anagram"
+    },
+    {
+      "word": "SKATE",
+      "clue": "",
+      "step": ""
+    }
+  ]
+}

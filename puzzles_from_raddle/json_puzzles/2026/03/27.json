@@ -1,0 +1,70 @@
+{
+  "meta": {
+    "title": "From BILLIE to HOLIDAY",
+    "theme": "womens_history_month",
+    "discord_thread_id": "1483228096105549834",
+    "message": "On March 27, 1948, Billie Holiday took the stage at Carnegie Hall for a legendary sold-out concert — just days after being released from prison. She performed 32 songs that night, including 'Strange Fruit,' to an audience of over 2,700. Throughout her career, Holiday left a lasting mark on jazz and swing music through her one-of-a-kind vocal stylings."
+  },
+  "ladder": [
+    {
+      "word": "BILLIE",
+      "clue": "Change the first letter of <> to an S and it sounds ridiculous",
+      "step": "B->S sounds like"
+    },
+    {
+      "word": "SILLY",
+      "clue": "<> {}, one who behaves like a goofy bird?",
+      "step": "…"
+    },
+    {
+      "word": "GOOSE",
+      "clue": "A baby <>",
+      "step": "baby"
+    },
+    {
+      "word": "GOSLING",
+      "clue": "Actor {} <>",
+      "step": "first name"
+    },
+    {
+      "word": "RYAN",
+      "clue": "Anagram <> to get some thread",
+      "step": "anagrammed"
+    },
+    {
+      "word": "YARN",
+      "clue": "A <> is a long {}",
+      "step": "is a long"
+    },
+    {
+      "word": "STORY",
+      "clue": "What you might take while going from one <> to the next",
+      "step": "to story, take the"
+    },
+    {
+      "word": "STAIRS",
+      "clue": "Individual part of some <>",
+      "step": "part"
+    },
+    {
+      "word": "STEP",
+      "clue": "{}<>, part of your foot",
+      "step": "follows"
+    },
+    {
+      "word": "IN",
+      "clue": "Double a letter <> <> to get a place to stay",
+      "step": "+N"
+    },
+    {
+      "word": "INN",
+      "clue": "{} <>, a popular chain with over 1,000 locations",
+      "step": "for a"
+    },
+    {
+      "word": "HOLIDAY",
+      "clue": "",
+      "step": ""
+    }
+  ]
+}

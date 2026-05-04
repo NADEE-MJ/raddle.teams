@@ -1,0 +1,44 @@
+meta:
+  title: From F to ONE
+  theme: oscars_2025
+  message: 
+    'Brad Pitt plays a washed-up F1 driver coaxed out of retirement to mentor a hotshot rookie (Damson Idris) for a struggling team. 
+    This is basically the "Top Gun: Maverick" model — action hero make expensive machine go fast. (Not surprising since it’s exact same director and writer.)
+    It’s a grotesque celebration of the excesses of capitalism, down to using the official F1 logo as the title card, but fast car go vroom vroom, so I guess it wasn’t all bad.'
+ladder:
+  - word: F
+    clue: <> is the worst ^ you can get
+    step: is the worst
+  - word: GRADE
+    clue: Anagram <> to get a male name
+    step: anagrammed
+  - word: EDGAR
+    clue: Change the last letter of <> to an S and anagram to get a famous <>
+    step: R->S, then anagram
+  - word: DEGAS
+    clue: Change one letter in <> to get a US city (for short)
+    step: D->V
+  - word: VEGAS
+    clue: <> is known for this kind of business
+    step: has many a
+  - word: CASINO
+    clue: Wickedness found inside <>, appropriately
+    step: features
+  - word: SIN
+    clue: <> is Spanish for ^
+    step: is spanish for
+  - word: WITHOUT
+    clue: <> a ^ (definitely)
+    step: a
+  - word: DOUBT
+    clue: ^ <>, American rock group
+    step: follows
+  - word: 'NO'
+    clue: Add a letter to the front of <> to get a card game
+    step: +U
+  - word: UNO
+    clue: <> is Spanish for ^
+    step: is spanish for
+  - word: ONE
+    clue: ''
+    step: ''

@@ -1,0 +1,42 @@
+meta:
+  title: From NEWS ALERT to NEWER
+  theme: lent
+  message: By giving up SALT, a NEWS ALERT becomes NEWER.
+  discord_thread_id: '1484542825793327194'
+ladder:
+  - word: NEWS ALERT
+    clue: Good deal found inside <>
+    step: features
+  - word: SALE
+    clue: At a <>, you'll often find low ^
+    step: has low
+  - word: PRICES
+    clue: Insert a letter into <> to get some royalty
+    step: +N
+  - word: PRINCES
+    clue: Append a letter to <> to get a counterpart to some <>
+    step: +S
+  - word: PRINCESS
+    clue: Nintendo character <> ^
+    step: in the castle
+  - word: PEACH
+    clue: Inedible thing found in a <>
+    step: has a hard
+  - word: PIT
+    clue: <> ^, a fast break
+    step: …
+  - word: STOP
+    clue: A <>^ will fix it for now
+    step: …
+  - word: GAP
+    clue: ^ the <>, underground warning
+    step: should be on your
+  - word: MIND
+    clue: '"^<>!", you might say in frustration, or relief'
+    step: follows
+  - word: NEVER
+    clue: Change one letter in <> to become more novel
+    step: V->W
+  - word: NEWER
+    clue: ''
+    step: ''

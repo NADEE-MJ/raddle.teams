@@ -1,0 +1,68 @@
+{
+  "meta": {
+    "title": "From PALE to HOPPER",
+    "theme": "one_year_of_raddle"
+  },
+  "ladder": [
+    {
+      "word": "PALE",
+      "clue": "Move the 2nd letter of <> to the end to get a request",
+      "step": "A TO THE END"
+    },
+    {
+      "word": "PLEA",
+      "clue": "<> {}, something discussed in court",
+      "step": "…"
+    },
+    {
+      "word": "DEAL",
+      "clue": "Swap the first and last letters of <> to be in charge",
+      "step": "L<->D"
+    },
+    {
+      "word": "LEAD",
+      "clue": "Symbol for <>",
+      "step": "SYMBOL"
+    },
+    {
+      "word": "PB",
+      "clue": "<> & {}",
+      "step": "&"
+    },
+    {
+      "word": "J",
+      "clue": "What airline follows <>?",
+      "step": "IS FOLLOWED BY"
+    },
+    {
+      "word": "KLM",
+      "clue": "Reverse <> and insert an I to get a liquid",
+      "step": "+I, then reverse"
+    },
+    {
+      "word": "MILK",
+      "clue": "<> & {}, a term of abundance",
+      "step": "&"
+    },
+    {
+      "word": "HONEY",
+      "clue": "<> is stored in a {} (at least in the emoji)",
+      "step": "…"
+    },
+    {
+      "word": "POT",
+      "clue": "A greener term for <>",
+      "step": "AKA"
+    },
+    {
+      "word": "GRASS",
+      "clue": "<>{}, an insect",
+      "step": "…"
+    },
+    {
+      "word": "HOPPER",
+      "clue": "",
+      "step": ""
+    }
+  ]
+}

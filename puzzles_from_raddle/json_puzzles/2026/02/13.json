@@ -1,0 +1,74 @@
+{
+  "meta": {
+    "title": "From NOSE to BUTTER",
+    "theme": "winter_olympics",
+    "message": "A nose butter is a snowboarding trick where the rider shifts their weight onto the nose (front) of the board, lifting the tail off the snow while rotating."
+  },
+  "ladder": [
+    {
+      "word": "NOSE",
+      "clue": "With a space inserted, <> is Spanish for {}",
+      "step": "means"
+    },
+    {
+      "word": "I DON'T KNOW",
+      "clue": "<> played {} base",
+      "step": "played"
+    },
+    {
+      "word": "THIRD",
+      "clue": "<> {}, something you might be given by a detective",
+      "step": "…"
+    },
+    {
+      "word": "DEGREE",
+      "clue": "Where you can earn a <>",
+      "step": "is earned at"
+    },
+    {
+      "word": "COLLEGE",
+      "clue": "Residence at <>",
+      "step": "residence"
+    },
+    {
+      "word": "DORM",
+      "clue": "You might have to {} a <> room with someone",
+      "step": "mates"
+    },
+    {
+      "word": "SHARE",
+      "clue": "Change one letter in <> to get a look",
+      "step": "H->T"
+    },
+    {
+      "word": "STARE",
+      "clue": "A {} <> conveys a lack of understanding",
+      "step": "can be"
+    },
+    {
+      "word": "BLANK",
+      "clue": "Append two letters to <> to get a cover",
+      "step": "+ET"
+    },
+    {
+      "word": "BLANKET",
+      "clue": "Animals found in a <>, at a party?",
+      "step": "hold"
+    },
+    {
+      "word": "PIGS",
+      "clue": "\"When <> {}!\"",
+      "step": "can't"
+    },
+    {
+      "word": "FLY",
+      "clue": "{}<>, an insect",
+      "step": "follows"
+    },
+    {
+      "word": "BUTTER",
+      "clue": "",
+      "step": ""
+    }
+  ]
+}

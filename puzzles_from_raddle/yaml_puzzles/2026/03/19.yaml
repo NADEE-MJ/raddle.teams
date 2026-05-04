@@ -1,0 +1,42 @@
+meta:
+  title: From PUGSLEY to WEDNESDAY
+  theme: siblings
+  discord_thread_id: '1480567893883228361'
+  message: 'Pugsley and Wednesday Addams have a dangerous sibling dynamic. As the older sister, Wednesday takes it upon herself to test Pugsley’s mettle through attempted beheadings and electrocutions.'
+ladder:
+  - word: PUGSLEY
+    clue: Dog at the start of <>
+    step: '-sley'
+  - word: PUG
+    clue: Insert a letter into <> to get a stopper
+    step: +L
+  - word: PLUG
+    clue: ^ <>, part of many cars
+    step: that generates a
+  - word: SPARK
+    clue: Drop the outside letters from <> to get an expectated level of quality
+    step: '-S, -K'
+  - word: PAR
+    clue: Two better than <>
+    step: is two above
+  - word: EAGLE
+    clue: Add a letter to the start of <> to get a dog
+    step: +B
+  - word: BEAGLE
+    clue: Drop the last letter from <> and anagram to get a breakfast foodstuff
+    step: '-E, then anagram'
+  - word: BAGEL
+    clue: Number resembling a <>
+    step: looks like a
+  - word: ZERO
+    clue: Having <> strength
+    step: strength means
+  - word: WEAK
+    clue: Timeframe that sounds like "<>"
+    step: homophone
+  - word: WEEK
+    clue: Middle of a <>
+    step: middle
+  - word: WEDNESDAY
+    clue: ''
+    step: ''

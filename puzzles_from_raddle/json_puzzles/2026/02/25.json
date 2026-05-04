@@ -1,0 +1,68 @@
+{
+  "meta": {
+    "title": "From WITCH to VEGAN",
+    "theme": "mystery_6"
+  },
+  "ladder": [
+    {
+      "word": "WITCH",
+      "clue": "A <> might cast a {}",
+      "step": "CASTS A"
+    },
+    {
+      "word": "SPELL",
+      "clue": "Competition that requires you know how to <>",
+      "step": "AT A"
+    },
+    {
+      "word": "BEE",
+      "clue": "An angry <> might {}",
+      "step": "MIGHT"
+    },
+    {
+      "word": "STING",
+      "clue": "Change one letter in <> to get an odor",
+      "step": "G->K"
+    },
+    {
+      "word": "STINK",
+      "clue": "Mammal with a notorious <>",
+      "step": "MADE BY A"
+    },
+    {
+      "word": "SKUNK",
+      "clue": "Drop a letter from <> to get deep?",
+      "step": "-K"
+    },
+    {
+      "word": "SUNK",
+      "clue": "\"You <> my {}!\"",
+      "step": "YOUR"
+    },
+    {
+      "word": "BATTLESHIP",
+      "clue": "Fighting force that operates a <>",
+      "step": "IS OPERATED BY THE"
+    },
+    {
+      "word": "NAVY",
+      "clue": "<> {}s, the {} typically used in baked {}s",
+      "step": "…"
+    },
+    {
+      "word": "BEAN",
+      "clue": "Insert a G into <> to get started",
+      "step": "+G"
+    },
+    {
+      "word": "BEGAN",
+      "clue": "Change one letter in <> to get a kind of diet",
+      "step": "B->V"
+    },
+    {
+      "word": "VEGAN",
+      "clue": "",
+      "step": ""
+    }
+  ]
+}

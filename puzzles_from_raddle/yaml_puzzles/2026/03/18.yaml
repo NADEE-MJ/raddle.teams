@@ -1,0 +1,41 @@
+meta:
+  title: From JEM to SCOUT
+  theme: siblings
+  message: From the classic book _To Kill a Mockingbird_ by Harper Lee, siblings Jem and Scout Finch face the racial prejudices and learn the meaning of justice in 1930’s Alabama. This book is frequently banned by misguided school districts, but it remains an important part of civil rights history. 
+ladder:
+  - word: JEM
+    clue: Change one letter in <> to get part of a jacuzzi
+    step: M->T
+  - word: JET
+    clue: A fast ^ is called a <>
+    step: is an
+  - word: AIRPLANE
+    clue: ^ <>, American rock band from the '60s
+    step: follows
+  - word: JEFFERSON
+    clue: US president ^ <>
+    step: first name
+  - word: THOMAS
+    clue: Add a C to <> and anagram to get an organ
+    step: +C, then anagram
+  - word: STOMACH
+    clue: 'Food poisoning can cause an ^ <> '
+    step: might be
+  - word: UPSET
+    clue: Drop a bigram (two letters) from <> to get a worldwide company
+    step: '-ET'
+  - word: UPS
+    clue: ^-<>, how relationships end
+    step: follows
+  - word: BREAK
+    clue: <>^, a kind of success
+    step: …
+  - word: THROUGH
+    clue: <>^ (everywhere)
+    step: …
+  - word: OUT
+    clue: Add two letters to the front of <> to get kind of spotter
+    step: +SC
+  - word: SCOUT
+    clue: ''
+    step: ''

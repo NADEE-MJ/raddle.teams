@@ -1,0 +1,38 @@
+meta:
+  title: From MOVIE to PART
+  theme: mystery_7
+  discord_thread_id: '1488307720598589591'
+ladder:
+  - word: MOVIE
+    clue: Person in charge of a <>
+    step: maker
+  - word: DIRECTOR
+    clue: Append a letter to <> to get an kind of listing
+    step: +Y
+  - word: DIRECTORY
+    clue: Replace a string of letters in the middle of <> with an A to get a journal
+    step: RECTO->A
+  - word: DIARY
+    clue: Reverse a bigram (two letters) in <> to get a section of the grocery
+    step: anagrammed
+  - word: DAIRY
+    clue: <> ^, animal found on many a farm
+    step: animal
+  - word: COW
+    clue: '"Don''t ^ a <>!"'
+    step: is something you shouldn't
+  - word: HAVE
+    clue: Change one letter in <> to get a kind of greeting
+    step: H->W
+  - word: WAVE
+    clue: Vessel that might get rocked by a <>
+    step: may rock a
+  - word: BOAT
+    clue: Left side of a <>
+    step: left side
+  - word: PORT
+    clue: Change one letter in <> to get a section
+    step: O->A
+  - word: PART
+    clue: ''
+    step: ''

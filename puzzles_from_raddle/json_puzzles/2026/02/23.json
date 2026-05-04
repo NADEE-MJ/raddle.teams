@@ -1,0 +1,68 @@
+{
+  "meta": {
+    "title": "From MARCH to CRADLE",
+    "theme": "mystery_6"
+  },
+  "ladder": [
+    {
+      "word": "MARCH",
+      "clue": "\"Beware the {} of <>!\"",
+      "step": "has dangerous"
+    },
+    {
+      "word": "IDES",
+      "clue": "Move the last letter of <> to the front to get an edge",
+      "step": "anagrammed"
+    },
+    {
+      "word": "SIDE",
+      "clue": "Remove the last letter of <> then reverse to get an insult",
+      "step": "-E, then reverse"
+    },
+    {
+      "word": "DIS",
+      "clue": "\"I guess we'll have to {} to <>{}\"",
+      "step": "…"
+    },
+    {
+      "word": "AGREE",
+      "clue": "Remove every other letter of <> to get a common verb",
+      "step": "- every other letter"
+    },
+    {
+      "word": "ARE",
+      "clue": "Append a letter to <> to get a god",
+      "step": "+S"
+    },
+    {
+      "word": "ARES",
+      "clue": "Sign that sounds like \"<>\"",
+      "step": "+I"
+    },
+    {
+      "word": "ARIES",
+      "clue": "<> is represented by a {}",
+      "step": "is the sign of the"
+    },
+    {
+      "word": "RAM",
+      "clue": "The last letter of <> stands for {}",
+      "step": "partially stands for"
+    },
+    {
+      "word": "MEMORY",
+      "clue": "\"<>\" is a song from {}",
+      "step": "is a song from"
+    },
+    {
+      "word": "CATS",
+      "clue": "<> {}, a game with string",
+      "step": "…"
+    },
+    {
+      "word": "CRADLE",
+      "clue": "",
+      "step": ""
+    }
+  ]
+}

@@ -1,0 +1,43 @@
+meta:
+  title: From PATRICK to WATSON
+  theme: big_ears_2026
+  discord_thread_id: '1489826014036099284'
+  message: I had never heard of Patrick Watson before Big Ears, and I only attended his show because SML had just let out nearby and I had an hour to kill. I was blown away.
+    It was lush, with Patrick alternating between souful piano playing and moody falsetto singing at a candlelit microphone at center stage.
+ladder:
+  - word: PATRICK
+    clue: <> ^, close friend of a sponge
+    step: …
+  - word: STAR
+    clue: The closest <>
+    step: THAT'S CLOSEST IS THE
+  - word: SUN
+    clue: One day before <>
+    step: FOLLOWS
+  - word: SAT
+    clue: Add a letter to the front of <> to get a standardized exam
+    step: +L
+  - word: LSAT
+    clue: Anagram <> to get a condiment
+    step: anagrammed
+  - word: SALT
+    clue: Counterpart to <>
+    step: AND
+  - word: PEPPER
+    clue: Change the third letter of <> to get someone sneaky
+    step: P->E
+  - word: PEEPER
+    clue: Your <>s are your ^s
+    step: '='
+  - word: EYE
+    clue: A private <>
+    step: THAT IS PRIVATE
+  - word: DETECTIVE
+    clue: Famous <> of fiction
+    step: OF FICTION
+  - word: SHERLOCK HOLMES
+    clue: Assistant to <>
+    step: ASSISTANT
+  - word: WATSON
+    clue: ''
+    step: ''

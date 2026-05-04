@@ -1,0 +1,45 @@
+meta:
+  title: From STEVEN to SEEN
+  theme: lent
+  discord_thread_id: '1486001097058287616'
+  message: By giving up TV, STEVEN becomes SEEN.
+ladder:
+  - word: STEVEN
+    clue: When we're ^-<>, we're all tied up
+    step: '-ST'
+  - word: EVEN
+    clue: Opposite of <>
+    step: opposite
+  - word: ODD
+    clue: <> one ^, something different
+    step: D->U, D->T
+  - word: OUT
+    clue: '"OK boomer, you’re <> of ^"'
+    step: of
+  - word: TOUCH
+    clue: Change one letter in <> to get a piece of furniture
+    step: T->C
+  - word: COUCH
+    clue: A <> ^ is lazy
+    step: …
+  - word: POTATO
+    clue: What you could describe as <> sticks
+    step: sticks are
+  - word: FRENCH FRIES
+    clue: Popular condiment for <>
+    step: are dipped in
+  - word: KETCHUP
+    clue: Counterpart to <>
+    step: counterpart
+  - word: MUSTARD
+    clue: To ^ the <> is to be good enough
+    step: might be
+  - word: CUT
+    clue: One might yell "<>!" at the end of a ^
+    step: is yelled to end of a
+  - word: SCENE
+    clue: Homophone of "<>" that is a modern way to feel
+    step: '-C, then anagram'
+  - word: SEEN
+    clue: ''
+    step: ''

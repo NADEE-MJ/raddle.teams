@@ -1,0 +1,69 @@
+{
+  "meta": {
+    "title": "From SAVE to PLANET",
+    "theme": "oscars_2025",
+    "message": "Yorgos Lanthimos' _Bugonia_ is a remake of the cult 2003 Korean film _Save the Green Planet!_ It stars Jesse Plemons as a conspiracy theorist who kidnaps a pharma CEO (Emma Stone) he's convinced is an alien sent to destroy Earth. It also landed a Best Lead Actress nom for Stone, who apparently can't stop getting nominated. Much to my surprise, this movie was extremely my shit. It's dark and weird and funny, at all the right pitches. Where I found _Poor Things_ to be humorlessly upsetting, I found _Bugonia_ to be comfortably weird."
+  },
+  "ladder": [
+    {
+      "word": "SAVE",
+      "clue": "Insert an H into <> to get something you might do every morning",
+      "step": "+H"
+    },
+    {
+      "word": "SHAVE",
+      "clue": "Tool used to <>",
+      "step": "with a"
+    },
+    {
+      "word": "RAZOR",
+      "clue": "Philosopher with a famous <>",
+      "step": "by"
+    },
+    {
+      "word": "OCCAM",
+      "clue": "Change the middle letter of <> to an M and anagram to get a piece of punctuation",
+      "step": "C->M, then anagram"
+    },
+    {
+      "word": "COMMA",
+      "clue": "<> with a circle above it",
+      "step": "with a circle on top"
+    },
+    {
+      "word": "SEMICOLON",
+      "clue": "What a <> indicates in a text",
+      "step": "means a"
+    },
+    {
+      "word": "WINK",
+      "clue": "\"<> <> {} {}\"",
+      "step": "WINK NUDGE"
+    },
+    {
+      "word": "NUDGE",
+      "clue": "Change one letter in <> to get a confection",
+      "step": "N->F"
+    },
+    {
+      "word": "FUDGE",
+      "clue": "A hot <> {} is actually mostly cold",
+      "step": "goes on a"
+    },
+    {
+      "word": "SUNDAE",
+      "clue": "Drop half of <> to get a big hot thing",
+      "step": "-DAE"
+    },
+    {
+      "word": "SUN",
+      "clue": "One of eight around the <>",
+      "step": "is orbited by many a"
+    },
+    {
+      "word": "PLANET",
+      "clue": "",
+      "step": ""
+    }
+  ]
+}

@@ -1,0 +1,45 @@
+meta:
+  title: From MEDICATE to DICE
+  theme: lent
+  discord_thread_id: '1483823626133311589'
+  message: By giving up MEAT, you can turn MEDICATE into some DICE.
+ladder:
+  - word: MEDICATE
+    clue: Drop the first letter from <> and anagram to get a summertime drink
+    step: '-M, then anagram'
+  - word: ICED TEA
+    clue: Actor whose name evokes <>
+    step: sounds kinda like
+  - word: ICE T
+    clue: Add a W to <> and anagram to get a certain number of times
+    step: +W, then anagram
+  - word: TWICE
+    clue: '"Going ^, going <>…"'
+    step: is after
+  - word: ONCE
+    clue: <> is Spanish for this number
+    step: is spanish for
+  - word: ELEVEN
+    clue: <> is the main character on "^"
+    step: is the main character on
+  - word: STRANGER THINGS
+    clue: Drop a sequence of letters from the middle of <> to get parts of some instruments
+    step: '-ANGERTH'
+  - word: STRINGS
+    clue: <> are one section of an ^
+    step: are part of an
+  - word: ORCHESTRA
+    clue: <> contains this body part
+    step: contains
+  - word: CHEST
+    clue: Protective structure in one's <>
+    step: holds one's
+  - word: RIBCAGE
+    clue: Your <> has 37 ^, all told
+    step: has 37
+  - word: BONES
+    clue: Objects that are nicknamed "<>" by some gamblers
+    step: aka
+  - word: DICE
+    clue: ''
+    step: ''

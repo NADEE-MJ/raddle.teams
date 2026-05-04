@@ -1,0 +1,74 @@
+{
+  "meta": {
+    "title": "From SENTIMENTAL to VALUE",
+    "theme": "oscars_2025",
+    "message": "Joachim Trier's Norwegian family drama follows two sisters reconnecting with their film director father, from whom they've been estranged. I _loved_ Trier's _Worst Person In The World_ and found lots to like in _Value_, especially the way the film centers the family home as a character that has borne witness to generations of family drama and trauma. For whatever reason, I didn't fully connect emotionally with it, so this one gets filed under \"respect, from a distance\"."
+  },
+  "ladder": [
+    {
+      "word": "SENTIMENTAL",
+      "clue": "Magazine found inside <>",
+      "step": "includes"
+    },
+    {
+      "word": "TIME",
+      "clue": "\"For the <> {}…\"",
+      "step": "…"
+    },
+    {
+      "word": "BEING",
+      "clue": "You are a {} <>",
+      "step": "follows"
+    },
+    {
+      "word": "HUMAN",
+      "clue": "Change one letter in <> to get a muscular superhero",
+      "step": "U->E"
+    },
+    {
+      "word": "HE-MAN",
+      "clue": "Add a letter to the front of <> to get someone to whom you should stick it",
+      "step": "+T"
+    },
+    {
+      "word": "THE MAN",
+      "clue": "{}. <>, American rock band",
+      "step": "follows"
+    },
+    {
+      "word": "PORTUGAL",
+      "clue": "<> is just west of {}",
+      "step": "is west of"
+    },
+    {
+      "word": "SPAIN",
+      "clue": "Drop a letter in <> to get an ache",
+      "step": "-S"
+    },
+    {
+      "word": "PAIN",
+      "clue": "\"A <> in the {}\"",
+      "step": "in the"
+    },
+    {
+      "word": "NECK",
+      "clue": "It sits on one's <>",
+      "step": "is below your"
+    },
+    {
+      "word": "HEAD",
+      "clue": "The front of your <>",
+      "step": "features your"
+    },
+    {
+      "word": "FACE",
+      "clue": "At <> {}, one way to take something",
+      "step": "…"
+    },
+    {
+      "word": "VALUE",
+      "clue": "",
+      "step": ""
+    }
+  ]
+}

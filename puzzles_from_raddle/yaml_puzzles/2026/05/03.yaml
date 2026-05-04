@@ -1,0 +1,41 @@
+meta:
+  title: From START to IDES
+  theme: mystery_8
+  discord_thread_id: '1496701102148554783'
+ladder:
+  - word: START
+    clue: Insert a letter into <> to get a first name
+    step: +U
+  - word: STUART
+    clue: '"<> ^", classic American kids book'
+    step: was very
+  - word: LITTLE
+    clue: Greek letter that means a <>
+    step: as in
+  - word: IOTA
+    clue: Add an R to <> and anagram to get a math term
+    step: +R, then anagram
+  - word: RATIO
+    clue: ^ <>, aesthetically pleasing measurement 
+    step: that is
+  - word: GOLDEN
+    clue: <> ^, a fortuitous creature of myth
+    step: eggs come from a
+  - word: GOOSE
+    clue: A <> ^ might be wild?
+    step: that's wild is on a
+  - word: CHASE
+    clue: Change one letter in <> to get something deep
+    step: E->M
+  - word: CHASM
+    clue: Change one letter in <> to get something lucky
+    step: S->R
+  - word: CHARM
+    clue: Anagram <> to get a month
+    step: anagrammed
+  - word: MARCH
+    clue: Famously dangerous part of <>
+    step: is here, beware the
+  - word: IDES
+    clue: ''
+    step: ''

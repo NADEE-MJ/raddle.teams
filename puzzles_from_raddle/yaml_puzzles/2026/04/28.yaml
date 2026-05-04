@@ -1,0 +1,39 @@
+meta:
+  title: From BRASS to TACKS
+  theme: cockney_rhyming_slang
+  discord_thread_id: '1495414643093672101'
+  message: '"Brass tacks" is Cockney rhyming slang for "facts". Of course, you probably already know this, as it arguably has the biggest leap of any Cockney phrase into mainstream English, with "getting down to brass tacks" being a widely used idiom. Now you know where it comes from!'
+ladder:
+  - word: BRASS
+    clue: Change one letter in <> to get a plant
+    step: B->G
+  - word: GRASS
+    clue: Color of healthy <>
+    step: is
+  - word: GREEN
+    clue: It appears right after <>
+    step: comes before
+  - word: BLUE
+    clue: When you're <>, you're feeling ^
+    step: '='
+  - word: SAD
+    clue: '"<>, but ^", you might say about a regrettable situation'
+    step: but
+  - word: 'TRUE'
+    clue: Append a /p/ sound to <> to get a military term
+    step: +/p/
+  - word: TROOP
+    clue: Drop the first letter from <> and anagram to become unfortunate
+    step: '-T, then anagram'
+  - word: POOR
+    clue: Opposite of <>
+    step: opposite
+  - word: RICH
+    clue: '"^ the <>", progressive rallying cry'
+    step: '->'
+  - word: TAX
+    clue: Fasteners that sound like "<>"
+    step: sounds like
+  - word: TACKS
+    clue: ''
+    step: ''

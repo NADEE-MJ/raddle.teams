@@ -1,0 +1,70 @@
+{
+  "meta": {
+    "title": "From SHERBET to DAB",
+    "theme": "cockney_rhyming_slang",
+    "discord_thread_id": "1496547429145645148",
+    "message": "\"Sherbet dab\" is Cockney rhyming slang for \"cab\" as in \"Better call me a sherbet dab, I’m getting tipsy on this boozy dessert.\""
+  },
+  "ladder": [
+    {
+      "word": "SHERBET",
+      "clue": "Type of plant found inside <>",
+      "step": "includes"
+    },
+    {
+      "word": "HERB",
+      "clue": "<> that sounds like a wise person",
+      "step": "that sounds smart"
+    },
+    {
+      "word": "SAGE",
+      "clue": "Swap two letters in <> to get a game company",
+      "step": "anagrammed"
+    },
+    {
+      "word": "SEGA",
+      "clue": "<>'s famous blue character ",
+      "step": "mascot"
+    },
+    {
+      "word": "SONIC",
+      "clue": "Change one letter in <> to get a refreshing substance",
+      "step": "S->T"
+    },
+    {
+      "word": "TONIC",
+      "clue": "{} & <>",
+      "step": "and"
+    },
+    {
+      "word": "GIN",
+      "clue": "A <> is used to process {}",
+      "step": "processes"
+    },
+    {
+      "word": "COTTON",
+      "clue": "<> {}, a confection",
+      "step": "…"
+    },
+    {
+      "word": "CANDY",
+      "clue": "Liquor that rhymes with <>",
+      "step": "rhymes with"
+    },
+    {
+      "word": "BRANDY",
+      "clue": "Drop every other letter in <> to be wicked",
+      "step": "oddly"
+    },
+    {
+      "word": "BAD",
+      "clue": "Reverse <> to get a modern gesture",
+      "step": "reversed"
+    },
+    {
+      "word": "DAB",
+      "clue": "",
+      "step": ""
+    }
+  ]
+}
